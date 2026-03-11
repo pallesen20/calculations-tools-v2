@@ -95,6 +95,16 @@ const entries: Entry[] = [
     units: 'kg, g, lb, oz, stone, tonne',
   },
   {
+    path: '/conversion/height-converter',
+    title: 'Height Converter — cm to Feet and Inches',
+    description: 'Convert height between centimetres, feet and inches, metres, and inches. Instant results with a full reference table.',
+    changefreq: 'weekly' as const,
+    priority: 1.0,
+    icon: '📐',
+    short: 'Height & body measurements',
+    units: 'cm, m, ft, in, ft+in',
+  },
+  {
     path: '/conversion/temperature-converter',
     title: 'Temperature Converter — °C, °F, Kelvin & more',
     description: 'Convert between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur with instant results.',
@@ -123,16 +133,6 @@ const entries: Entry[] = [
     icon: 'Aa',
     short: 'Text case transformation',
     units: 'Sentence, lower, UPPER, Title, camelCase, alternating',
-  },
-  {
-    path: '/conversion/height-converter',
-    title: 'Height Converter — cm to Feet and Inches',
-    description: 'Convert height between centimetres, feet and inches, metres, and inches. Instant results with a full reference table.',
-    changefreq: 'weekly' as const,
-    priority: 1.0,
-    icon: '📐',
-    short: 'Height & body measurements',
-    units: 'cm, m, ft, in, ft+in',
   },
   {
     path: '/compare-text',
