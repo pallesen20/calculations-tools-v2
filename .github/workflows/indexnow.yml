@@ -1,0 +1,49 @@
+name: IndexNow Publish
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/pages/**/*.astro'
+
+jobs:
+  submit-indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Gather changed URLs
+        run: |
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- 'src/pages/**/*.astro' \
+            | grep -v 'src/pages/embed/' \
+            | grep -v 'src/pages/sitemap' \
+            | grep -v 'src/pages/llms' \
+            || true)
+
+          if [ -n "$CHANGED_FILES" ]; then
+            URLS=$(echo "$CHANGED_FILES" \
+              | sed 's|src/pages||' \
+              | sed 's|\.astro$||' \
+              | sed 's|/index$|/|' \
+              | sed 's|^|https://calculations.tools|')
+            echo "CHANGED_URLS<<EOF" >> $GITHUB_ENV
+            echo "$URLS" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+          fi
+
+      - name: Submit to IndexNow
+        if: env.CHANGED_URLS != ''
+        run: |
+          URL_JSON=$(echo "$CHANGED_URLS" | awk '{printf "\"%s\",", $0}' | sed 's/,$//')
+
+          curl -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"host\": \"calculations.tools\",
+              \"key\": \"2095e7971ef44da8bf52b45c356470bc\",
+              \"keyLocation\": \"https://calculations.tools/2095e7971ef44da8bf52b45c356470bc.txt\",
+              \"urlList\": [${URL_JSON}]
+            }"
