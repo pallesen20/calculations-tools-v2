@@ -1,0 +1,30 @@
+---
+/**
+ * Formula — renders a LaTeX expression via KaTeX auto-render.
+ *
+ * Usage:
+ *   import Formula from '../components/Formula.astro';
+ *
+ *   // In frontmatter, define the expression as a plain JS string.
+ *   // Use double-escaped backslashes so Astro doesn't misparse { } as
+ *   // template expressions when the string is written directly in HTML.
+ *   const expr = "$$\\frac{P}{100}$$";
+ *
+ *   // In template:
+ *   <Formula expr={expr} />
+ *
+ * The `display` prop (default true) wraps in a block-level element.
+ * Set display={false} for inline math inside a sentence.
+ */
+interface Props {
+  expr: string;
+  display?: boolean;
+}
+
+const { expr, display = true } = Astro.props;
+---
+
+{display
+  ? <p class="formula formula--display" set:html={expr} />
+  : <span class="formula formula--inline" set:html={expr} />
+}

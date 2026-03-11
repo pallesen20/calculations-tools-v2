@@ -115,6 +115,86 @@
     padding-inline-start: 40px;
     unicode-bidi: isolate;
 }
+
+/* ── AEO / SEO content components ────────────────────────────────────────── */
+
+.answer-box {
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    background: rgba(59, 130, 246, 0.08);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+.answer-box-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.5rem;
+}
+.answer-box p:last-child {
+    margin-bottom: 0;
+    color: #D1D5DB;
+}
+
+/* Formula component */
+.formula--display {
+    margin: 1.25rem 0;
+}
+.formula--inline {
+    display: inline;
+}
+
+/* KaTeX display math block spacing */
+.katex-display {
+    margin: 0;
+    overflow-x: auto;
+}
+
+/* Reset: the global .seo-container span rule sets margin-bottom: 1rem on all
+   spans, which breaks KaTeX's internal fraction/layout positioning. Zero it
+   out for all KaTeX elements. */
+.seo-container .katex span,
+.seo-container .katex-display span {
+    margin-bottom: 0;
+    color: inherit;
+}
+
+/* Related tools list */
+.related-tools-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+}
+.related-tools-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.related-tools-list li:last-child {
+    border-bottom: none;
+}
+.related-tools-list .tool-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    width: 1.5rem;
+    text-align: center;
+    padding-top: 0.05rem;
+}
+.related-tools-list a {
+    font-weight: 600;
+    color: var(--brand-from);
+    text-decoration: none;
+}
+.related-tools-list a:hover {
+    text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
 .breadcrumb-nav {
     max-width: 1200px;
     margin: 0 auto;

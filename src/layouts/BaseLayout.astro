@@ -54,6 +54,7 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-512x512.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/base.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
 
     <!-- GTM -->
     <script>
@@ -76,5 +77,32 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
     <Breadcrumbs />
     <slot />
     <Footer />
+
+    <!-- KaTeX JS — loads only on pages that contain .formula elements -->
+    <script is:inline>
+      (function () {
+        if (!document.querySelector('.formula')) return;
+        function loadScript(src, cb) {
+          var s = document.createElement('script');
+          s.src = src;
+          s.crossOrigin = 'anonymous';
+          s.onload = cb;
+          document.body.appendChild(s);
+        }
+        function renderMath() {
+          if (typeof renderMathInElement === 'undefined') return;
+          renderMathInElement(document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '$', right: '$', display: false }
+            ],
+            throwOnError: false
+          });
+        }
+        loadScript('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js', function () {
+          loadScript('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js', renderMath);
+        });
+      })();
+    </script>
   </body>
 </html>

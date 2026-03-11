@@ -1,5 +1,20 @@
 ---
 import CalculatorLayout from '../layouts/CalculatorLayout.astro';
+import Formula from '../components/Formula.astro';
+
+// LaTeX formulas — defined as JS strings so Astro doesn't misparse { } in
+// the template as expression delimiters. Backslashes are double-escaped.
+const f = {
+  basic:      "$$\\text{Result} = N \\times \\frac{P}{100}$$",
+  basicEx:    "$$\\text{Result} = 80 \\times \\frac{15}{100} = 80 \\times 0.15 = 12$$",
+  increase:   "$$\\% \\text{ Increase} = \\frac{\\text{New} - \\text{Old}}{\\text{Old}} \\times 100$$",
+  increaseEx: "$$\\% \\text{ Increase} = \\frac{58{,}000 - 50{,}000}{50{,}000} \\times 100 = \\frac{8{,}000}{50{,}000} \\times 100 = 16\\%$$",
+  decrease:   "$$\\% \\text{ Decrease} = \\frac{\\text{Old} - \\text{New}}{\\text{Old}} \\times 100$$",
+  decreaseEx: "$$\\% \\text{ Decrease} = \\frac{200 - 150}{200} \\times 100 = \\frac{50}{200} \\times 100 = 25\\%$$",
+  whatPct:    "$$P = \\frac{X}{Y} \\times 100$$",
+  whatPctEx:  "$$P = \\frac{45}{180} \\times 100 = 0.25 \\times 100 = 25\\%$$",
+  pctDiff:    "$$\\% \\text{ Difference} = \\frac{|V_1 - V_2|}{\\dfrac{V_1 + V_2}{2}} \\times 100$$",
+};
 
 const tocItems = [
   { id: 'how-to-use', label: 'How to use this calculator' },
@@ -7,27 +22,98 @@ const tocItems = [
   { id: 'percentage-increase', label: 'Percentage increase' },
   { id: 'percentage-decrease', label: 'Percentage decrease' },
   { id: 'what-percentage', label: 'What percentage is X of Y?' },
-  { id: 'formulas', label: 'Percentage formulas' },
+  { id: 'formulas', label: 'All percentage formulas' },
+  { id: 'common-pitfalls', label: 'Common mistakes' },
   { id: 'faq', label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
 ];
 
 const schema = [
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Advanced Percentage Calculator",
+    "name": "Percentage Calculator",
     "url": "https://calculations.tools/percentage-calculator",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
+    "description": "Calculate percentages, percentage increase, percentage decrease, and what percentage one number is of another. Free, instant, no registration.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Calculate a Percentage",
+    "description": "Use this calculator to solve any percentage problem in three steps.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Select a calculation mode",
+        "text": "Choose one of four modes: Basic Percentage, Percentage Increase, Percentage Decrease, or What Percentage."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Enter your values",
+        "text": "Fill in the input fields. For basic percentage, enter the percentage and the base number."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Read the result",
+        "text": "The result appears instantly as you type. No button press is needed."
+      }
+    ]
   },
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "What percentage of X is Y?", "acceptedAnswer": { "@type": "Answer", "text": "Use (Y ÷ X) × 100. Example: (50 ÷ 200) × 100 = 25%." } },
-      { "@type": "Question", "name": "How do you calculate percentage increase?", "acceptedAnswer": { "@type": "Answer", "text": "Use ((New − Old) ÷ Old) × 100. Example: (65 − 50) ÷ 50 × 100 = 30%." } },
-      { "@type": "Question", "name": "How do you calculate percentage decrease?", "acceptedAnswer": { "@type": "Answer", "text": "Use ((Old − New) ÷ Old) × 100. Example: (800 − 600) ÷ 800 × 100 = 25%." } },
+      {
+        "@type": "Question",
+        "name": "How do you calculate a percentage of a number?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Multiply the number by the percentage, then divide by 100. Example: 20% of 150 = (150 × 20) ÷ 100 = 30."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate percentage increase?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Subtract the old value from the new value, divide by the old value, and multiply by 100. Example: from 50 to 65 is ((65 - 50) ÷ 50) × 100 = 30% increase."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate percentage decrease?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Subtract the new value from the old value, divide by the old value, and multiply by 100. Example: from 800 to 600 is ((800 - 600) ÷ 800) × 100 = 25% decrease."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between percentage change and percentage difference?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Percentage change measures movement from a known starting point; the original value is always the base. Percentage difference compares two values with no defined starting point, using their average as the base. Use percentage change for before-and-after scenarios; use percentage difference when comparing two independent values."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does a percentage increase followed by the same percentage decrease return to the original value?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. A 50% increase on 100 gives 150. A 50% decrease on 150 gives 75, not 100. The base changes between operations, so they are not symmetrical."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert a fraction to a percentage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Divide the numerator by the denominator, then multiply by 100. Example: 3 ÷ 4 = 0.75 × 100 = 75%."
+        }
+      }
     ]
   }
 ];
@@ -35,8 +121,8 @@ const schema = [
 
 <CalculatorLayout
   title="Percentage Calculator"
-  metaTitle="Advanced Percentage Calculator - Free Online Tool"
-  description="Calculate percentages, increases, decreases, and ratios instantly. Free, accurate, and works on any device."
+  metaTitle="Percentage Calculator — Find %, Increase, Decrease & More"
+  description="Calculate any percentage instantly: find X% of a number, work out a percentage increase or decrease, or see what percentage one number is of another. Free tool with full formula explanations."
   canonical="https://calculations.tools/percentage-calculator"
   tocItems={tocItems}
   embedSlug="percentage-calculator"
@@ -93,48 +179,159 @@ const schema = [
   <div slot="content">
     <div class="seo-container">
 
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>To find <strong>X% of a number</strong>, multiply the number by X then divide by 100. To calculate a <strong>percentage increase or decrease</strong>, divide the difference by the original value and multiply by 100.</p>
+      </div>
+
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Pick one of the four modes at the top, fill in the fields, and the result appears instantly. You don't need to press any button.</p>
+      <p>Select one of the four modes at the top of the tool, enter your values, and the result updates immediately. No submit button needed.</p>
+      <ul>
+        <li><strong>Basic Percentage:</strong> find what X% of a given number equals</li>
+        <li><strong>Percentage Increase:</strong> calculate how much a value has grown</li>
+        <li><strong>Percentage Decrease:</strong> calculate how much a value has fallen</li>
+        <li><strong>What Percentage:</strong> find what percentage one number is of another</li>
+      </ul>
 
       <h2 id="basic-percentage">Basic percentage</h2>
-      <p>Use this to find X% of a number. Enter the percentage and the number, and the calculator tells you the result. For example, 20% of 150 is 30.</p>
+      <p>A basic percentage calculation returns the portion that a given percentage represents of a whole number. It answers: "What is X% of N?"</p>
+
+      <Formula expr={f.basic} />
+
+      <p>Where <strong>N</strong> is the base number and <strong>P</strong> is the percentage.</p>
+
+      <p><strong>Example:</strong> What is 15% of 80?</p>
+      <Formula expr={f.basicEx} />
+
+      <p>Common uses: calculating a discount at checkout, working out tax on a purchase, or finding a sales commission amount.</p>
 
       <h2 id="percentage-increase">Percentage increase</h2>
-      <p>Enter an original value and a new higher value to find how much it increased in percentage terms. For example, a price going from $50 to $65 is a 30% increase.</p>
+      <p>Percentage increase measures how much a value has grown relative to its original value, expressed as a proportion of that original.</p>
+
+      <Formula expr={f.increase} />
+
+      <p><strong>Example:</strong> A salary rises from 50,000 to 58,000.</p>
+      <Formula expr={f.increaseEx} />
+
+      <p>The denominator is always the <em>original</em> (old) value. Using the new value as the base is the most common error in these calculations.</p>
 
       <h2 id="percentage-decrease">Percentage decrease</h2>
-      <p>Enter an original value and a new lower value to find the percentage drop. For example, a price dropping from $800 to $600 is a 25% decrease.</p>
+      <p>Percentage decrease measures how much a value has fallen relative to its original value.</p>
+
+      <Formula expr={f.decrease} />
+
+      <p><strong>Example:</strong> A product drops from 200 to 150.</p>
+      <Formula expr={f.decreaseEx} />
+
+      <p>Percentage increase and decrease are not symmetrical. A 25% increase followed by a 25% decrease does not return to the starting value, because the base changes between operations. Starting at 100: a 25% increase gives 125, then a 25% decrease on 125 gives 93.75.</p>
 
       <h2 id="what-percentage">What percentage is X of Y?</h2>
-      <p>Enter two numbers to find what percentage the first is of the second. For example, 30 is 15% of 200.</p>
+      <p>This calculation finds what percentage one number (X) represents of another (Y). It answers: "30 is what percent of 120?"</p>
 
-      <h2 id="formulas">Percentage formulas</h2>
-      <p><strong>Basic percentage:</strong> Result = Number × (Percentage ÷ 100)</p>
-      <p><strong>Percentage increase:</strong> ((New − Old) ÷ Old) × 100</p>
-      <p><strong>Percentage decrease:</strong> ((Old − New) ÷ Old) × 100</p>
-      <p><strong>What percentage:</strong> (X ÷ Y) × 100</p>
+      <Formula expr={f.whatPct} />
+
+      <p><strong>Example:</strong> 45 is what percentage of 180?</p>
+      <Formula expr={f.whatPctEx} />
+
+      <p>This formula underlies grading (what percentage is 72 out of 90?), market share analysis, and survey response rates.</p>
+
+      <h2 id="formulas">All percentage formulas</h2>
+      <p>All four percentage calculations are variations of the same core relationship: divide a part by a base and multiply by 100.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Calculation</th>
+            <th>Formula</th>
+            <th>Verified example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>X% of a number</td>
+            <td>N × (P ÷ 100)</td>
+            <td>20% of 150 = 30</td>
+          </tr>
+          <tr>
+            <td>Percentage increase</td>
+            <td>((New − Old) ÷ Old) × 100</td>
+            <td>(65 − 50) ÷ 50 × 100 = 30%</td>
+          </tr>
+          <tr>
+            <td>Percentage decrease</td>
+            <td>((Old − New) ÷ Old) × 100</td>
+            <td>(800 − 600) ÷ 800 × 100 = 25%</td>
+          </tr>
+          <tr>
+            <td>What % is X of Y</td>
+            <td>(X ÷ Y) × 100</td>
+            <td>(45 ÷ 180) × 100 = 25%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Percentage change vs. percentage difference</h3>
+      <p><strong>Percentage change</strong> has a direction. You know which value is the starting point, and the original is always the base. Use it for before-and-after comparisons: an old price vs. a new price, or last year's revenue vs. this year's.</p>
+      <p><strong>Percentage difference</strong> is used when neither value is clearly the original. The base is the average of the two values:</p>
+
+      <Formula expr={f.pctDiff} />
+
+      <p>Use percentage difference when comparing two independent measurements with no defined reference point, for example the prices of two competing products where neither is the baseline.</p>
+
+      <h2 id="common-pitfalls">Common mistakes</h2>
+      <p>Most percentage errors come from one of three causes: using the wrong base, misunderstanding symmetry, or treating percentages as if they can be added directly.</p>
+
+      <h3>Using the wrong base</h3>
+      <p>When calculating percentage increase or decrease, always divide by the original value, not the new one. Using the new value as the denominator produces a smaller and incorrect result.</p>
+
+      <h3>Assuming increases and decreases cancel out</h3>
+      <p>A 20% increase followed by a 20% decrease does not return to the starting value. From 100: a 20% increase gives 120, and a 20% decrease on 120 gives 96. The base shifts with each step, so the two percentages act on different numbers.</p>
+
+      <h3>Adding percentages with different bases</h3>
+      <p>You cannot meaningfully add percentages unless they share the same base. A 5% raise on a 40,000 salary and a 5% raise on a 60,000 salary are different amounts in absolute terms. The average of two percentage changes is also not the same as the percentage change of their averages.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
-      <h3>What percentage of X is Y?</h3>
-      <p>Use (Y ÷ X) × 100. Example: (50 ÷ 200) × 100 = 25%.</p>
+      <h3>How do you calculate a percentage of a number?</h3>
+      <p>Multiply the number by the percentage, then divide by 100. Example: 20% of 150 = (150 × 20) ÷ 100 = 30.</p>
 
       <h3>How do you calculate percentage increase?</h3>
-      <p>Subtract the old value from the new, divide by the old value, then multiply by 100. Example: (65 − 50) ÷ 50 × 100 = 30%.</p>
+      <p>Subtract the old value from the new, divide by the old value, then multiply by 100. Example: from 50 to 65 is (15 ÷ 50) × 100 = 30% increase.</p>
 
       <h3>How do you calculate percentage decrease?</h3>
-      <p>Subtract the new value from the old, divide by the old value, multiply by 100. Example: (800 − 600) ÷ 800 × 100 = 25%.</p>
+      <p>Subtract the new value from the old, divide by the old value, then multiply by 100. Example: from 800 to 600 is (200 ÷ 800) × 100 = 25% decrease.</p>
 
-      <h3>How do you find a percentage of a number?</h3>
-      <p>Multiply the number by the percentage and divide by 100. Example: 20% of 150 = (20 × 150) ÷ 100 = 30.</p>
+      <h3>What is the difference between percentage change and percentage difference?</h3>
+      <p>Percentage change measures movement from a known starting point; the original is always the base. Percentage difference compares two values with no fixed reference, using their average as the base. Use percentage change for before-and-after scenarios; use percentage difference when comparing two independent figures.</p>
 
-      <h3>How do you convert a fraction to a percent?</h3>
-      <p>Divide the numerator by the denominator, then multiply by 100. Example: 3/4 = 0.75 × 100 = 75%.</p>
+      <h3>Does a percentage increase followed by the same percentage decrease return to the original value?</h3>
+      <p>No. A 50% increase on 100 gives 150. A 50% decrease on 150 gives 75, not 100. The operations use different bases, so they are not symmetrical.</p>
 
-      <h3>How do you convert a decimal to a percent?</h3>
+      <h3>How do you convert a fraction to a percentage?</h3>
+      <p>Divide the numerator by the denominator, then multiply by 100. Example: 3 ÷ 4 = 0.75 × 100 = 75%.</p>
+
+      <h3>How do you convert a decimal to a percentage?</h3>
       <p>Multiply by 100. Example: 0.45 × 100 = 45%.</p>
 
+      <h2 id="related-tools">Related tools</h2>
+      <p>These calculators are commonly used alongside percentage calculations:</p>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💱</span>
+          <span><a href="/conversion/currency-converter">Currency Converter</a>: convert between 150+ currencies when working with financial percentages across different markets</span>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <span><a href="/conversion/weight-converter">Weight Converter</a>: useful when percentage calculations involve unit conversions for mass or ingredients</span>
+        </li>
+        <li>
+          <span class="tool-icon">📝</span>
+          <span><a href="/word-counter">Word Counter</a>: count words, characters, and paragraphs with reading time estimates</span>
+        </li>
+      </ul>
+
     </div>
+
   </div>
 
 </CalculatorLayout>
