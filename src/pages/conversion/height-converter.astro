@@ -1,0 +1,201 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use', label: 'How to use this converter' },
+  { id: 'cm-to-feet', label: 'cm to feet and inches' },
+  { id: 'feet-to-cm', label: 'feet and inches to cm' },
+  { id: 'reference',  label: 'Common height reference table' },
+  { id: 'formulas',   label: 'Height conversion formulas' },
+  { id: 'faq',        label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How tall is 5'10\" in cm?",
+      "acceptedAnswer": { "@type": "Answer", "text": "(5 × 12 + 10) × 2.54 = 177.8 cm" }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you convert cm to feet and inches?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Divide cm by 2.54 to get total inches. Then divide by 12 — the whole number is feet, the remainder is inches. Example: 175 cm ÷ 2.54 = 68.9 in = 5 ft 8.9 in." }
+    },
+    {
+      "@type": "Question",
+      "name": "How tall is 6 feet in cm?",
+      "acceptedAnswer": { "@type": "Answer", "text": "6 × 30.48 = 182.88 cm" }
+    },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Height Converter"
+  metaTitle='Fast Height Converter | Convert cm, meters, feet & inches ᐅ'
+  description="Convert height between centimetres, feet and inches, metres, and inches. Instant results with a full reference table."
+  canonical="https://calculations.tools/conversion/height-converter"
+  tocItems={tocItems}
+  embedSlug="height-converter"
+  schema={schema}
+>
+
+  <!-- CALCULATOR WIDGET -->
+  <div slot="calculator">
+    <section class="calculator-interface" id="hc-calculator">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Height Converter</h2>
+          <p>Enter a value and select units — result updates instantly</p>
+        </div>
+
+        <!-- Quick conversions -->
+        <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
+        <div id="hc-quick" class="lc-quick"></div>
+
+        <!-- Inputs -->
+        <div class="lc-inputs">
+          <div class="input-group">
+            <label for="hc-value">Value</label>
+            <div class="hc-value-wrap">
+              <input id="hc-value" type="number" value="180" placeholder="Enter value" />
+              <input id="hc-in-part" type="number" placeholder="in" min="0" max="11" step="0.1" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="hc-from">From</label>
+            <select id="hc-from"></select>
+          </div>
+          <div class="unit-swap-wrap">
+            <button class="unit-swap" id="hc-swap" title="Swap units" aria-label="Swap units">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
+          <div class="input-group">
+            <label for="hc-to">To</label>
+            <select id="hc-to"></select>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="lc-result-box">
+          <div class="result-label">Result</div>
+          <div class="lc-result" id="hc-result">—</div>
+          <div class="lc-result-desc" id="hc-result-desc"></div>
+        </div>
+
+        <!-- Common conversions -->
+        <div class="lc-common-section">
+          <h3 id="hc-common-title" class="lc-common-title"></h3>
+          <div id="hc-common" class="lc-common-grid"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/height-converter.js" is:inline></script>
+  </div>
+
+  <!-- LONG-FORM CONTENT -->
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this converter</h2>
+      <p>Pick your "From" and "To" units from the dropdowns, then type a value. The result updates instantly. When you select "Feet &amp; Inches" as the from unit, a second input field appears for the inches part — enter the feet in the first box and the inches in the second. Use the quick conversion buttons at the top to jump straight to the most common height conversions.</p>
+
+      <h2 id="cm-to-feet">cm to feet and inches</h2>
+      <p>Converting centimetres to feet and inches takes three steps. Here is a worked example using 180 cm:</p>
+      <ol>
+        <li><strong>Divide by 2.54</strong> to get total inches: 180 ÷ 2.54 = 70.866 inches</li>
+        <li><strong>Divide by 12</strong> to find feet: 70.866 ÷ 12 = 5 feet with a remainder</li>
+        <li><strong>Multiply the remainder by 12</strong> to get inches: 0.866 × 12 = 10.4 inches</li>
+      </ol>
+      <p><strong>Result: 180 cm = 5 ft 10.4 in</strong></p>
+      <p>The key relationship to remember is that 1 inch = 2.54 cm exactly, and 1 foot = 12 inches = 30.48 cm.</p>
+
+      <h2 id="feet-to-cm">feet and inches to cm</h2>
+      <p>Converting feet and inches to centimetres is straightforward. Here is a worked example using 5'11":</p>
+      <ol>
+        <li><strong>Convert feet to inches:</strong> 5 × 12 = 60 inches</li>
+        <li><strong>Add the remaining inches:</strong> 60 + 11 = 71 total inches</li>
+        <li><strong>Multiply by 2.54:</strong> 71 × 2.54 = 180.34 cm</li>
+      </ol>
+      <p><strong>Result: 5'11" = 180.34 cm</strong></p>
+
+      <h2 id="reference">Common height reference table</h2>
+      <p>This table covers the most common human heights from 4'11" to 6'4".</p>
+      <table>
+        <thead>
+          <tr><th>Feet &amp; Inches</th><th>Centimetres</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>4'11"</td><td>149.9 cm</td></tr>
+          <tr><td>5'0"</td><td>152.4 cm</td></tr>
+          <tr><td>5'1"</td><td>154.9 cm</td></tr>
+          <tr><td>5'2"</td><td>157.5 cm</td></tr>
+          <tr><td>5'3"</td><td>160.0 cm</td></tr>
+          <tr><td>5'4"</td><td>162.6 cm</td></tr>
+          <tr><td>5'5"</td><td>165.1 cm</td></tr>
+          <tr><td>5'6"</td><td>167.6 cm</td></tr>
+          <tr><td>5'7"</td><td>170.2 cm</td></tr>
+          <tr><td>5'8"</td><td>172.7 cm</td></tr>
+          <tr><td>5'9"</td><td>175.3 cm</td></tr>
+          <tr><td>5'10"</td><td>177.8 cm</td></tr>
+          <tr><td>5'11"</td><td>180.3 cm</td></tr>
+          <tr><td>6'0"</td><td>182.9 cm</td></tr>
+          <tr><td>6'1"</td><td>185.4 cm</td></tr>
+          <tr><td>6'2"</td><td>187.9 cm</td></tr>
+          <tr><td>6'3"</td><td>190.5 cm</td></tr>
+          <tr><td>6'4"</td><td>193.0 cm</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="formulas">Height conversion formulas</h2>
+      <table>
+        <thead>
+          <tr><th>From</th><th>To</th><th>Formula</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>cm</td><td>inches</td><td>cm ÷ 2.54</td></tr>
+          <tr><td>cm</td><td>feet (decimal)</td><td>cm ÷ 30.48</td></tr>
+          <tr><td>inches</td><td>cm</td><td>in × 2.54</td></tr>
+          <tr><td>feet</td><td>cm</td><td>ft × 30.48</td></tr>
+          <tr><td>feet + inches</td><td>cm</td><td>(ft × 30.48) + (in × 2.54)</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>How tall is 5'10" in cm?</h3>
+      <p>5'10" equals <strong>177.8 cm</strong>. Calculation: (5 × 12 + 10) × 2.54 = 70 × 2.54 = 177.8 cm.</p>
+
+      <h3>How tall is 170 cm in feet?</h3>
+      <p>170 cm equals <strong>5 ft 6.9 in</strong>. Calculation: 170 ÷ 2.54 = 66.929 inches = 5 feet and 6.929 inches.</p>
+
+      <h3>How tall is 6 feet in cm?</h3>
+      <p>6 feet equals <strong>182.88 cm</strong>. Calculation: 6 × 30.48 = 182.88 cm.</p>
+
+      <h3>How do I convert my height from cm to feet?</h3>
+      <p>There are two approaches. For decimal feet, divide your height in cm by 30.48. For feet and inches, first divide by 2.54 to get total inches, then divide by 12 — the whole number is your feet, and the remainder is your inches. For example, 175 cm ÷ 30.48 = 5.741 ft, or as feet and inches: 175 ÷ 2.54 = 68.9 in = 5 ft 8.9 in.</p>
+
+      <h3>What is the average height?</h3>
+      <p>The world average adult male height is approximately <strong>171 cm (5'7")</strong> and the average adult female is approximately <strong>159 cm (5'2.5")</strong>. These figures vary significantly by country — Dutch men average around 183 cm, while the global range spans from under 160 cm to over 175 cm for men.</p>
+
+      <h3>How many cm is one inch?</h3>
+      <p>One inch equals exactly <strong>2.54 cm</strong>. This is an exact definition established by international agreement in 1959, making all inch/cm conversions precise rather than approximate.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .hc-value-wrap { display: flex; gap: 0.5rem; }
+  .hc-value-wrap input { flex: 1; min-width: 0; }
+</style>

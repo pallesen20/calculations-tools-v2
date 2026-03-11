@@ -1,0 +1,201 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',  label: 'How to use this converter' },
+  { id: 'scales',      label: 'The five temperature scales' },
+  { id: 'common',      label: 'Common conversions' },
+  { id: 'reference',   label: 'Reference points' },
+  { id: 'formulas',    label: 'All formulas' },
+  { id: 'faq',         label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How do I convert Celsius to Fahrenheit?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply by 9/5 then add 32. Example: 20°C × 9/5 + 32 = 68°F." } },
+    { "@type": "Question", "name": "How do I convert Fahrenheit to Celsius?", "acceptedAnswer": { "@type": "Answer", "text": "Subtract 32 then multiply by 5/9. Example: (72°F - 32) × 5/9 = 22.2°C." } },
+    { "@type": "Question", "name": "Can Kelvin be negative?", "acceptedAnswer": { "@type": "Answer", "text": "No. Kelvin starts at absolute zero (0 K) and has no negative values." } },
+    { "@type": "Question", "name": "What temperature is the same in Celsius and Fahrenheit?", "acceptedAnswer": { "@type": "Answer", "text": "-40 degrees is the only point where both scales are equal." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Temperature Converter"
+  metaTitle='Temperature Converter | Convert Celsius to Fahrenheit fast ᐅ'
+  description="Convert between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur instantly. Exact formulas and live results."
+  canonical="https://calculations.tools/conversion/temperature-converter"
+  tocItems={tocItems}
+  embedSlug="temperature-converter"
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface" id="tc-calculator">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Temperature Conversion Calculator</h2>
+          <p>Enter a value and select units — result updates instantly</p>
+        </div>
+        <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
+        <div id="tc-quick" class="lc-quick"></div>
+
+        <div class="lc-inputs">
+          <div class="input-group">
+            <label for="tc-value">Value</label>
+            <input id="tc-value" type="number" value="0" placeholder="Enter temperature" />
+          </div>
+          <div class="input-group">
+            <label for="tc-from">From</label>
+            <select id="tc-from"></select>
+          </div>
+          <div class="unit-swap-wrap">
+            <button class="unit-swap" id="tc-swap" title="Swap units" aria-label="Swap units">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
+          <div class="input-group">
+            <label for="tc-to">To</label>
+            <select id="tc-to"></select>
+          </div>
+        </div>
+
+        <div class="lc-result-box">
+          <div class="result-label">Result</div>
+          <div class="lc-result" id="tc-result">—</div>
+          <div class="lc-result-desc" id="tc-result-desc"></div>
+        </div>
+
+        <div>
+          <h3 id="tc-common-title" class="lc-common-title"></h3>
+          <div id="tc-common" class="tc-common-grid"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/temperature-converter.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this converter</h2>
+      <p>Type a temperature value, choose your "From" and "To" scales, and the result updates immediately. Use the quick buttons to jump straight to the most common conversions like °C to °F or °F to °C.</p>
+
+      <h2 id="scales">The five temperature scales</h2>
+      <p><strong>Celsius (°C)</strong> — The standard in almost every country. Water freezes at 0°C and boils at 100°C. Part of the metric system.</p>
+      <p><strong>Fahrenheit (°F)</strong> — Used primarily in the United States. Water freezes at 32°F and boils at 212°F.</p>
+      <p><strong>Kelvin (K)</strong> — The SI unit for temperature. Starts at absolute zero, so there are no negative values. Used in science and engineering worldwide.</p>
+      <p><strong>Rankine (°R)</strong> — An absolute scale that uses the same degree size as Fahrenheit. Used in US engineering and thermodynamics.</p>
+      <p><strong>Réaumur (°Ré)</strong> — A largely historical scale where water freezes at 0°Ré and boils at 80°Ré. Still used in some traditional food production in Europe.</p>
+
+      <h2 id="common">Common conversions</h2>
+      <p><strong>Celsius to Fahrenheit:</strong> °F = (°C × 9/5) + 32. Example: 25°C = 77°F</p>
+      <p><strong>Fahrenheit to Celsius:</strong> °C = (°F - 32) × 5/9. Example: 98.6°F = 37°C</p>
+      <p><strong>Celsius to Kelvin:</strong> K = °C + 273.15. Example: 25°C = 298.15 K</p>
+      <p><strong>Kelvin to Celsius:</strong> °C = K - 273.15. Example: 300 K = 26.85°C</p>
+      <p><strong>Fahrenheit to Kelvin:</strong> K = (°F - 32) × 5/9 + 273.15. Example: 77°F = 298.15 K</p>
+
+      <h2 id="reference">Key reference points</h2>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Point</th><th>°C</th><th>°F</th><th>K</th><th>°R</th><th>°Ré</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Absolute zero</td><td>-273.15</td><td>-459.67</td><td>0</td><td>0</td><td>-218.52</td></tr>
+          <tr><td>Water freezes</td><td>0</td><td>32</td><td>273.15</td><td>491.67</td><td>0</td></tr>
+          <tr><td>Room temperature</td><td>20</td><td>68</td><td>293.15</td><td>527.67</td><td>16</td></tr>
+          <tr><td>Body temperature</td><td>37</td><td>98.6</td><td>310.15</td><td>558.27</td><td>29.6</td></tr>
+          <tr><td>Water boils</td><td>100</td><td>212</td><td>373.15</td><td>671.67</td><td>80</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h2 id="formulas">All formulas</h2>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>From</th><th>To</th><th>Formula</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>°C</td><td>°F</td><td>°F = °C × 9/5 + 32</td></tr>
+          <tr><td>°F</td><td>°C</td><td>°C = (°F - 32) × 5/9</td></tr>
+          <tr><td>°C</td><td>K</td><td>K = °C + 273.15</td></tr>
+          <tr><td>K</td><td>°C</td><td>°C = K - 273.15</td></tr>
+          <tr><td>°F</td><td>K</td><td>K = (°F - 32) × 5/9 + 273.15</td></tr>
+          <tr><td>K</td><td>°F</td><td>°F = (K - 273.15) × 9/5 + 32</td></tr>
+          <tr><td>°F</td><td>°R</td><td>°R = °F + 459.67</td></tr>
+          <tr><td>°R</td><td>°F</td><td>°F = °R - 459.67</td></tr>
+          <tr><td>K</td><td>°R</td><td>°R = K × 9/5</td></tr>
+          <tr><td>°C</td><td>°Ré</td><td>°Ré = °C × 4/5</td></tr>
+          <tr><td>°Ré</td><td>°C</td><td>°C = °Ré × 5/4</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h2 id="faq">FAQs</h2>
+
+      <h3>How do I convert Celsius to Fahrenheit?</h3>
+      <p>Multiply by 9/5 then add 32. So 20°C = (20 × 9/5) + 32 = 68°F. For a quick rough estimate, double it and add 30.</p>
+
+      <h3>How do I convert Fahrenheit to Celsius?</h3>
+      <p>Subtract 32 then multiply by 5/9. So 72°F = (72 - 32) × 5/9 = 22.2°C.</p>
+
+      <h3>Can Kelvin be negative?</h3>
+      <p>No. Kelvin starts at absolute zero (0 K), the lowest possible temperature. There are no negative Kelvin values.</p>
+
+      <h3>What temperature is the same in Celsius and Fahrenheit?</h3>
+      <p>-40 degrees. It's the only point where both scales intersect.</p>
+
+      <h3>What is absolute zero?</h3>
+      <p>The lowest theoretically possible temperature — 0 K, -273.15°C, or -459.67°F — where all molecular motion stops.</p>
+
+      <h3>Why does the US use Fahrenheit?</h3>
+      <p>The US adopted Fahrenheit before the metric system became widespread, and retained it while most other countries switched to Celsius during the 19th and 20th centuries.</p>
+
+      <h3>What is Rankine used for?</h3>
+      <p>Primarily US engineering — thermodynamics, aerospace, and HVAC — where absolute temperatures are needed but engineers work in Fahrenheit.</p>
+
+      <h3>Is Réaumur still used?</h3>
+      <p>Rarely. It shows up in some traditional European cheese and sugar production, and in historical scientific documents. Celsius has replaced it almost everywhere.</p>
+
+      <h3>Can I use this for cooking?</h3>
+      <p>Yes. Oven temperatures, meat internal temperatures, and candy-making all require accurate Celsius/Fahrenheit conversions, especially when using recipes from other countries.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .tc-common-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  @media (min-width: 768px) {
+    .tc-common-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .tc-common-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: white;
+    transition: background 0.2s;
+  }
+  .tc-common-card:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .tc-common-from { font-weight: 500; }
+  .tc-common-eq   { color: #93c5fd; font-size: 0.75rem; margin: 0.2rem 0; }
+  .tc-common-to   { font-weight: 500; }
+</style>

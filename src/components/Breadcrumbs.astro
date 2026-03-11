@@ -1,0 +1,66 @@
+---
+const { pathname } = Astro.url;
+
+const NAME_MAP: Record<string, string> = {
+  'percentage-calculator': 'Percentage Calculator',
+  'compare-text': 'Compare Text',
+  'compare-excel': 'Compare Excel',
+  'word-counter': 'Word Counter',
+  'week-number': 'Week Number',
+  'about-us': 'About Us',
+  'privacy-policy': 'Privacy Policy',
+  'length-converter': 'Length Converter',
+  'weight-converter': 'Weight Converter',
+  'temperature-converter': 'Temperature Converter',
+  'case-converter': 'Case Converter',
+  'currency-converter': 'Currency Converter',
+  'conversion': 'Conversion',
+};
+
+function slugToName(slug: string) {
+  return NAME_MAP[slug] ?? slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+const segments = pathname.replace(/\/$/, '').split('/').filter(Boolean);
+if (segments.length === 0) return;
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  ...segments.map((seg, i) => ({
+    name: slugToName(seg),
+    url: i < segments.length - 1 ? '/' + segments.slice(0, i + 1).join('/') : null,
+  }))
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": crumbs.map((c, i) => ({
+    "@type": "ListItem",
+    "position": i + 1,
+    "name": c.name,
+    "item": { "@type": "Thing", "@id": `https://calculations.tools${c.url ?? pathname}` }
+  }))
+};
+---
+
+{segments.length > 0 && (
+  <>
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <ol class="breadcrumb-list">
+        {crumbs.map((crumb, i) => (
+          <>
+            <li>
+              {crumb.url
+                ? <a href={crumb.url} class="breadcrumb-link">{crumb.name}</a>
+                : <span class="breadcrumb-current">{crumb.name}</span>
+              }
+            </li>
+            {i < crumbs.length - 1 && <span class="breadcrumb-separator">›</span>}
+          </>
+        ))}
+      </ol>
+    </nav>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </>
+)}

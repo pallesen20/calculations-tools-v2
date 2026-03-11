@@ -1,0 +1,167 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',     label: 'How to use this converter' },
+  { id: 'metric',         label: 'Metric system' },
+  { id: 'imperial',       label: 'Imperial system' },
+  { id: 'common',         label: 'Common conversions' },
+  { id: 'reference',      label: 'Quick reference table' },
+  { id: 'faq',            label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How many centimeters are in an inch?", "acceptedAnswer": { "@type": "Answer", "text": "1 inch equals exactly 2.54 centimeters." } },
+    { "@type": "Question", "name": "How many feet are in a meter?", "acceptedAnswer": { "@type": "Answer", "text": "1 meter equals 3.28084 feet." } },
+    { "@type": "Question", "name": "How do I convert miles to kilometers?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply miles by 1.60934. Example: 5 miles × 1.60934 = 8.047 km." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Length Converter"
+  metaTitle='Length Unit Converter | Length Conversion Calculator ᐅ'
+  description="Convert between metric and imperial length units instantly. Meters, feet, inches, kilometers, miles, and more."
+  canonical="https://calculations.tools/conversion/length-converter"
+  tocItems={tocItems}
+  embedSlug="length-converter"
+  schema={schema}
+>
+
+  <!-- CALCULATOR WIDGET -->
+  <div slot="calculator">
+    <section class="calculator-interface" id="lc-calculator">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Length Unit Converter</h2>
+          <p>Enter a value and select units — result updates instantly</p>
+        </div>
+
+        <!-- Quick conversions -->
+        <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
+        <div id="lc-quick" class="lc-quick"></div>
+
+        <!-- Inputs -->
+        <div class="lc-inputs">
+          <div class="input-group">
+            <label for="lc-value">Value</label>
+            <input id="lc-value" type="number" value="1" placeholder="Enter value" />
+          </div>
+          <div class="input-group">
+            <label for="lc-from">From</label>
+            <select id="lc-from"></select>
+          </div>
+          <div class="unit-swap-wrap">
+            <button class="unit-swap" id="lc-swap" title="Swap units" aria-label="Swap units">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
+          <div class="input-group">
+            <label for="lc-to">To</label>
+            <select id="lc-to"></select>
+          </div>
+        </div>
+
+        <!-- Result -->
+        <div class="lc-result-box">
+          <div class="result-label">Result</div>
+          <div class="lc-result" id="lc-result">—</div>
+          <div class="lc-result-desc" id="lc-result-desc"></div>
+        </div>
+
+        <!-- Common conversions -->
+        <div class="lc-common-section">
+          <h3 id="lc-common-title" class="lc-common-title"></h3>
+          <div id="lc-common" class="lc-common-grid"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/length-converter.js" is:inline></script>
+  </div>
+
+  <!-- LONG-FORM CONTENT -->
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this converter</h2>
+      <p>Type a value in the input field, then choose your "From" and "To" units. The result updates immediately. You can also click any of the quick conversion buttons to jump straight to the most common pairs.</p>
+
+      <h2 id="metric">Metric system</h2>
+      <p>The metric system is based on powers of 10, which makes converting between units straightforward. The base unit is the meter.</p>
+      <ul>
+        <li>1 kilometer = 1,000 meters</li>
+        <li>1 meter = 100 centimeters</li>
+        <li>1 centimeter = 10 millimeters</li>
+      </ul>
+
+      <h2 id="imperial">Imperial system</h2>
+      <p>The imperial system is primarily used in the United States. Its relationships between units are less regular than metric.</p>
+      <ul>
+        <li>1 mile = 5,280 feet</li>
+        <li>1 yard = 3 feet</li>
+        <li>1 foot = 12 inches</li>
+        <li>1 inch = 2.54 centimeters</li>
+      </ul>
+
+      <h2 id="common">Common conversions</h2>
+      <p><strong>CM to inches:</strong> divide by 2.54. Example: 30 cm ÷ 2.54 = 11.81 in</p>
+      <p><strong>Inches to CM:</strong> multiply by 2.54. Example: 10 in × 2.54 = 25.4 cm</p>
+      <p><strong>Meters to feet:</strong> multiply by 3.28084. Example: 2 m × 3.28084 = 6.56 ft</p>
+      <p><strong>Feet to meters:</strong> divide by 3.28084. Example: 10 ft ÷ 3.28084 = 3.048 m</p>
+      <p><strong>Miles to km:</strong> multiply by 1.60934. Example: 5 mi × 1.60934 = 8.047 km</p>
+      <p><strong>KM to miles:</strong> divide by 1.60934. Example: 10 km ÷ 1.60934 = 6.214 mi</p>
+
+      <h2 id="reference">Quick reference table</h2>
+      <table>
+        <thead>
+          <tr><th>From</th><th>To</th><th>Formula</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>cm</td><td>inches</td><td>÷ 2.54</td></tr>
+          <tr><td>inches</td><td>cm</td><td>× 2.54</td></tr>
+          <tr><td>cm</td><td>feet</td><td>÷ 30.48</td></tr>
+          <tr><td>feet</td><td>cm</td><td>× 30.48</td></tr>
+          <tr><td>meters</td><td>feet</td><td>× 3.28084</td></tr>
+          <tr><td>feet</td><td>meters</td><td>÷ 3.28084</td></tr>
+          <tr><td>miles</td><td>km</td><td>× 1.60934</td></tr>
+          <tr><td>km</td><td>miles</td><td>÷ 1.60934</td></tr>
+          <tr><td>yards</td><td>meters</td><td>× 0.9144</td></tr>
+          <tr><td>meters</td><td>yards</td><td>÷ 0.9144</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>How many centimeters are in an inch?</h3>
+      <p>Exactly 2.54 centimeters.</p>
+
+      <h3>How many feet are in a meter?</h3>
+      <p>1 meter equals 3.28084 feet.</p>
+
+      <h3>How do I convert miles to kilometers?</h3>
+      <p>Multiply miles by 1.60934. So 5 miles = 8.047 km.</p>
+
+      <h3>How do I convert km to miles?</h3>
+      <p>Divide kilometers by 1.60934. So 10 km = 6.214 miles.</p>
+
+      <h3>How do I convert meters to inches?</h3>
+      <p>Multiply meters by 39.3701. So 2 m = 78.74 inches.</p>
+
+      <h3>How do I convert feet to miles?</h3>
+      <p>Divide feet by 5,280. So 10,560 ft = 2 miles.</p>
+
+      <h3>What is the difference between metric and imperial?</h3>
+      <p>Metric uses meters, centimeters, and kilometers based on powers of 10. Imperial uses inches, feet, yards, and miles with less regular relationships between units.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>

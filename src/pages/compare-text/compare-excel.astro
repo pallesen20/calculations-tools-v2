@@ -1,0 +1,361 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',  label: 'How to use this tool' },
+  { id: 'formats',     label: 'Supported formats' },
+  { id: 'use-cases',   label: 'Use cases' },
+  { id: 'how-it-works', label: 'How it works' },
+  { id: 'faq',         label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How do I compare two Excel files?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your original file on the left and the changed file on the right, then click Find Differences. The tool highlights changed cells in yellow, added rows in green, and removed rows in red." } },
+    { "@type": "Question", "name": "Is my data safe?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All processing happens in your browser using JavaScript. Your files are never uploaded to any server." } },
+    { "@type": "Question", "name": "What formats are supported?", "acceptedAnswer": { "@type": "Answer", "text": "xlsx, xls, xlsm, xlsb, csv, txt, dif, and ods. You can even compare files of different formats." } },
+    { "@type": "Question", "name": "Can I compare files with multiple sheets?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. When you upload a multi-sheet workbook, tabs appear below the preview so you can select which sheet to compare." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Compare Excel Files"
+  metaTitle='Compare Excel Files Online Free | Spreadsheet Diff Checker ᐅ'
+  description="Compare two Excel, CSV, or ODS files online. Find changed cells, added rows, and removed rows instantly with color-coded results. Free, private, no upload."
+  canonical="https://calculations.tools/compare-text/compare-excel"
+  tocItems={tocItems}
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <!-- SheetJS -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" is:inline></script>
+
+    <section class="calculator-interface">
+      <div class="calculator-container ce-container">
+
+        <div class="calculator-header">
+          <h2>Excel Files & Spreadsheets Difference Checker</h2>
+          <p>Upload two files to see every changed cell, added row, and removed row</p>
+          <p class="ce-formats">Supported: .xlsx .xls .xlsm .xlsb .csv .txt .dif .ods</p>
+        </div>
+
+        <!-- Drop zones -->
+        <div class="ce-grid">
+
+          <!-- Original -->
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Original File</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerUpload('original')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="downloadSheet('original')" title="Download CSV"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+                <button class="diff-tbtn" onclick="copySheet('original')" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="diff-tbtn" onclick="clearFile('original')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="ce-drop-original" onclick="triggerUpload('original')">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+                <div class="ce-drop-label">Drop file here or click to upload</div>
+                <div class="ce-drop-sub">xlsx, xls, xlsm, xlsb, csv, ods…</div>
+              </div>
+              <div class="ce-file-info" id="ce-info-original"></div>
+              <div class="ce-tabs" id="ce-tabs-original"></div>
+              <div class="ce-preview-wrap">
+                <table class="ce-preview-table" id="ce-table-original"></table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Changed -->
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Changed File</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerUpload('changed')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="downloadSheet('changed')" title="Download CSV"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+                <button class="diff-tbtn" onclick="copySheet('changed')" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="diff-tbtn" onclick="clearFile('changed')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="ce-drop-changed" onclick="triggerUpload('changed')">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+                <div class="ce-drop-label">Drop file here or click to upload</div>
+                <div class="ce-drop-sub">xlsx, xls, xlsm, xlsb, csv, ods…</div>
+              </div>
+              <div class="ce-file-info" id="ce-info-changed"></div>
+              <div class="ce-tabs" id="ce-tabs-changed"></div>
+              <div class="ce-preview-wrap">
+                <table class="ce-preview-table" id="ce-table-changed"></table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="diff-actions">
+          <button class="diff-btn-primary" onclick="compareFiles()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+          <button class="diff-btn-secondary" onclick="swapFiles()">⇄ Swap</button>
+          <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
+        </div>
+
+        <!-- Diff output -->
+        <div id="diff-output" class="diff-output">
+          <div class="diff-header">
+            <div class="diff-stats">
+              <span class="diff-changed"   id="ce-stat-changed">0 changed</span>
+              <span class="diff-added"     id="ce-stat-added">+0 added</span>
+              <span class="diff-removed"   id="ce-stat-removed">−0 removed</span>
+              <span class="diff-unchanged" id="ce-stat-unchanged">0 unchanged</span>
+            </div>
+            <button class="diff-tbtn" onclick="copyDiffResult()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
+          </div>
+          <div class="ce-diff-table-wrap" id="ce-diff-container"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- File inputs -->
+    <input type="file" id="ce-file-original" style="display:none"
+      accept=".xls,.xlsx,.xlsm,.xlsb,.csv,.txt,.dif,.ods" />
+    <input type="file" id="ce-file-changed" style="display:none"
+      accept=".xls,.xlsx,.xlsm,.xlsb,.csv,.txt,.dif,.ods" />
+
+    <!-- Toast -->
+    <div class="diff-toast"></div>
+
+    <script src="/js/compare-excel.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Upload your original spreadsheet on the left and the updated version on the right — either drag and drop or click to browse. Then click "Find Differences." Changed cells are highlighted in yellow with the old value shown in parentheses. Added rows are green, removed rows are red. You can copy the full diff to clipboard or download either sheet as CSV.</p>
+      <p>If your workbook has multiple sheets, tabs appear below the preview so you can pick which sheet to compare independently on each side.</p>
+
+      <h2 id="formats">Supported formats</h2>
+      <table>
+        <thead>
+          <tr><th>Format</th><th>Extension</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Excel Workbook</td><td>.xlsx</td><td>Modern Excel (Office 2007+)</td></tr>
+          <tr><td>Excel 97–2003</td><td>.xls</td><td>Legacy binary format</td></tr>
+          <tr><td>Excel Macro-Enabled</td><td>.xlsm</td><td>Excel with macros</td></tr>
+          <tr><td>Excel Binary</td><td>.xlsb</td><td>Faster for large files</td></tr>
+          <tr><td>CSV</td><td>.csv</td><td>Comma-separated values</td></tr>
+          <tr><td>Text</td><td>.txt</td><td>Tab-delimited text</td></tr>
+          <tr><td>DIF</td><td>.dif</td><td>Data Interchange Format</td></tr>
+          <tr><td>OpenDocument</td><td>.ods</td><td>LibreOffice / OpenOffice</td></tr>
+        </tbody>
+      </table>
+      <p>You can even compare files of different formats — for example an .xlsx against a .csv.</p>
+
+      <h2 id="use-cases">Use cases</h2>
+      <p><strong>Financial reporting:</strong> Spot discrepancies between monthly or quarterly report versions. Find any cell that changed between the draft and the final.</p>
+      <p><strong>Data migration:</strong> After migrating data between systems, verify that every row and value transferred correctly.</p>
+      <p><strong>Version control:</strong> Track changes between pricing sheets, inventory lists, project plans, or employee rosters without manually scanning hundreds of rows.</p>
+      <p><strong>QA and testing:</strong> Compare expected vs. actual output data exported from your application to find where results diverge from what's expected.</p>
+      <p><strong>Research data:</strong> Compare datasets across experiment iterations or survey rounds to see exactly what changed between collection periods.</p>
+
+      <h2 id="how-it-works">How it works</h2>
+      <p>Both files are parsed in your browser using SheetJS — no data is ever sent to a server. The tool normalizes each selected sheet into a row/column grid, then compares them cell by cell. Rows are matched by position. Each row is classified as unchanged, changed (at least one cell value differs), added (only in the changed file), or removed (only in the original). Results are displayed in a unified table with color coding.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>Is my data safe?</h3>
+      <p>Yes. Everything runs in your browser. Your files are never uploaded anywhere, never stored, and never shared.</p>
+
+      <h3>Can I compare files with multiple sheets?</h3>
+      <p>Yes. When you upload a multi-sheet workbook, tabs appear below the preview. Select the sheet you want to compare on each side independently.</p>
+
+      <h3>What types of differences does it detect?</h3>
+      <p>Changed cells (same row, different value — shown in yellow with the old value), added rows (green), and removed rows (red).</p>
+
+      <h3>Is there a file size limit?</h3>
+      <p>No hard limit. Files with up to 100,000 rows work well on modern devices. Very large files may take a few seconds to parse depending on your hardware.</p>
+
+      <h3>Can I compare a .csv against an .xlsx?</h3>
+      <p>Yes. The tool normalizes all formats to the same grid structure before comparing, so any supported format can be compared against any other.</p>
+
+      <h3>Do I need to install anything?</h3>
+      <p>No. It runs entirely in your browser — no plugins, extensions, or software required.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style>
+  .ce-container { max-width: 100% !important; }
+  .ce-formats {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.25rem;
+  }
+  /* ── Grid ── */
+  .ce-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 640px) { .ce-grid { grid-template-columns: 1fr; } }
+  /* ── Drop zone ── */
+  .ce-drop {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    background: rgba(0,0,0,0.3);
+    border: 2px dashed rgba(255,255,255,0.18);
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  .ce-drop:hover { border-color: rgba(255,255,255,0.35); background: rgba(0,0,0,0.38); }
+  .ce-drop.dragover {
+    border-color: #3b82f6;
+    background: rgba(59,130,246,0.08);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+  }
+  .ce-drop.has-file {
+    border-style: solid;
+    border-color: rgba(255,255,255,0.12);
+    cursor: default;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  /* Prompt (hidden when has-file) */
+  .ce-drop-prompt { display: flex; flex-direction: column; align-items: center; padding: 1.5rem; }
+  .ce-drop.has-file .ce-drop-prompt { display: none; }
+  .ce-drop-icon  { font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.55; }
+  .ce-drop-label { color: #94a3b8; font-size: 0.95rem; margin-bottom: 0.2rem; }
+  .ce-drop-sub   { color: #94a3b8; font-size: 0.75rem; }
+  /* File info */
+  .ce-file-info {
+    display: none;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.78rem;
+    color: #94a3b8;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ce-drop.has-file .ce-file-info { display: block; }
+  /* Sheet tabs */
+  .ce-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.35rem 0.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ce-tab {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #94a3b8;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ce-tab:hover  { background: rgba(255,255,255,0.14); color: white; }
+  .ce-tab.active { background: rgba(59,130,246,0.3); border-color: #3b82f6; color: white; }
+  /* Preview table wrapper */
+  .ce-preview-wrap {
+    display: none;
+    width: 100%;
+    overflow: auto;
+    max-height: 320px;
+    flex: 1;
+  }
+  .ce-drop.has-file .ce-preview-wrap { display: block; }
+  .ce-preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.72rem;
+    font-family: 'Courier New', monospace;
+  }
+  .ce-preview-table th {
+    background: rgba(255,255,255,0.07);
+    color: #94a3b8;
+    font-weight: 600;
+    padding: 0.3rem 0.5rem;
+    text-align: left;
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.68rem;
+  }
+  .ce-preview-table td {
+    padding: 0.25rem 0.5rem;
+    color: #e2e8f0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    white-space: nowrap;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ce-preview-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .ce-row-num { color: #94a3b8 !important; font-size: 0.65rem !important; min-width: 2rem; text-align: right; }
+  .ce-more    { color: #94a3b8; text-align: center; padding: 0.5rem !important; }
+  /* ── Diff table ── */
+  .ce-diff-table-wrap {
+    overflow: auto;
+    max-height: 580px;
+    background: rgba(0,0,0,0.28);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+  }
+  .ce-diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Courier New', monospace;
+    font-size: 0.77rem;
+  }
+  .ce-diff-table th {
+    background: rgba(0,0,0,0.28);
+    color: #94a3b8;
+    padding: 0.45rem 0.65rem;
+    text-align: left;
+    position: sticky;
+    top: 0;
+    font-size: 0.68rem;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    z-index: 1;
+  }
+  .ce-diff-table td {
+    padding: 0.3rem 0.65rem;
+    color: #e2e8f0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    white-space: nowrap;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ce-status           { font-size: 0.68rem; white-space: nowrap; }
+  .ce-status-unchanged { color: #94a3b8; }
+  .ce-status-added     { color: #4ade80; }
+  .ce-status-removed   { color: #f87171; }
+  .ce-status-changed   { color: #fbbf24; }
+  .ce-row-added   td { background: rgba(74,222,128,0.06); }
+  .ce-row-removed td { background: rgba(248,113,113,0.06); }
+  .ce-cell-added   { background: rgba(74,222,128,0.1) !important;  color: #4ade80 !important; }
+  .ce-cell-removed { background: rgba(248,113,113,0.1) !important; color: #f87171 !important; text-decoration: line-through; }
+  .ce-cell-changed { background: rgba(251,191,36,0.12) !important; color: #fbbf24 !important; font-weight: 500; }
+  .ce-was { color: #94a3b8; font-size: 0.65rem; }
+</style>

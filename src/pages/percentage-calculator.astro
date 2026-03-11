@@ -1,0 +1,140 @@
+---
+import CalculatorLayout from '../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use', label: 'How to use this calculator' },
+  { id: 'basic-percentage', label: 'Basic percentage' },
+  { id: 'percentage-increase', label: 'Percentage increase' },
+  { id: 'percentage-decrease', label: 'Percentage decrease' },
+  { id: 'what-percentage', label: 'What percentage is X of Y?' },
+  { id: 'formulas', label: 'Percentage formulas' },
+  { id: 'faq', label: 'FAQs' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Advanced Percentage Calculator",
+    "url": "https://calculations.tools/percentage-calculator",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What percentage of X is Y?", "acceptedAnswer": { "@type": "Answer", "text": "Use (Y ÷ X) × 100. Example: (50 ÷ 200) × 100 = 25%." } },
+      { "@type": "Question", "name": "How do you calculate percentage increase?", "acceptedAnswer": { "@type": "Answer", "text": "Use ((New − Old) ÷ Old) × 100. Example: (65 − 50) ÷ 50 × 100 = 30%." } },
+      { "@type": "Question", "name": "How do you calculate percentage decrease?", "acceptedAnswer": { "@type": "Answer", "text": "Use ((Old − New) ÷ Old) × 100. Example: (800 − 600) ÷ 800 × 100 = 25%." } },
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Percentage Calculator"
+  metaTitle="Advanced Percentage Calculator - Free Online Tool"
+  description="Calculate percentages, increases, decreases, and ratios instantly. Free, accurate, and works on any device."
+  canonical="https://calculations.tools/percentage-calculator"
+  tocItems={tocItems}
+  embedSlug="percentage-calculator"
+  schema={schema}
+>
+  <div slot="calculator">
+    <section class="calculator-types" aria-label="Calculator type">
+      <div class="calculator-grid">
+        {[
+          { type: 'basic', icon: '%', iconClass: 'basic-icon', title: 'Basic Percentage', desc: 'X% of a number' },
+          { type: 'increase', icon: '↗', iconClass: 'increase-icon', title: 'Percentage Increase', desc: 'Increase between two numbers' },
+          { type: 'decrease', icon: '↘', iconClass: 'decrease-icon', title: 'Percentage Decrease', desc: 'Decrease between two numbers' },
+          { type: 'whatPercent', icon: '?', iconClass: 'what-percent-icon', title: 'What Percentage', desc: 'X is what % of Y?' },
+        ].map(c => (
+          <button class="calculator-card" data-type={c.type}>
+            <div class={`card-icon ${c.iconClass}`}>{c.icon}</div>
+            <div class="card-content">
+              <h3>{c.title}</h3>
+              <p>{c.desc}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <section class="calculator-interface" aria-label="Calculator">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2 id="calculator-title">Basic Percentage</h2>
+          <p id="calculator-description">Calculate what X% of a number is</p>
+        </div>
+
+        <div id="inputsContainer" class="inputs-container"></div>
+
+        <div id="formulaDisplay" class="formula-display hidden">
+          <p class="formula-label">Formula:</p>
+          <p id="formulaText" class="formula-text"></p>
+        </div>
+
+        <div id="resultDisplay" class="result-display hidden">
+          <p class="result-label" id="resultLabel">Result</p>
+          <div class="result-value">
+            <span id="resultValue"></span>
+            <button type="button" id="copyButton" class="copy-button" title="Copy result"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+          </div>
+        </div>
+
+        <button type="button" id="resetButton" class="reset-button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg> Reset</button>
+      </div>
+    </section>
+
+    <script src="/js/percentage-calculator.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Pick one of the four modes at the top, fill in the fields, and the result appears instantly. You don't need to press any button.</p>
+
+      <h2 id="basic-percentage">Basic percentage</h2>
+      <p>Use this to find X% of a number. Enter the percentage and the number, and the calculator tells you the result. For example, 20% of 150 is 30.</p>
+
+      <h2 id="percentage-increase">Percentage increase</h2>
+      <p>Enter an original value and a new higher value to find how much it increased in percentage terms. For example, a price going from $50 to $65 is a 30% increase.</p>
+
+      <h2 id="percentage-decrease">Percentage decrease</h2>
+      <p>Enter an original value and a new lower value to find the percentage drop. For example, a price dropping from $800 to $600 is a 25% decrease.</p>
+
+      <h2 id="what-percentage">What percentage is X of Y?</h2>
+      <p>Enter two numbers to find what percentage the first is of the second. For example, 30 is 15% of 200.</p>
+
+      <h2 id="formulas">Percentage formulas</h2>
+      <p><strong>Basic percentage:</strong> Result = Number × (Percentage ÷ 100)</p>
+      <p><strong>Percentage increase:</strong> ((New − Old) ÷ Old) × 100</p>
+      <p><strong>Percentage decrease:</strong> ((Old − New) ÷ Old) × 100</p>
+      <p><strong>What percentage:</strong> (X ÷ Y) × 100</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What percentage of X is Y?</h3>
+      <p>Use (Y ÷ X) × 100. Example: (50 ÷ 200) × 100 = 25%.</p>
+
+      <h3>How do you calculate percentage increase?</h3>
+      <p>Subtract the old value from the new, divide by the old value, then multiply by 100. Example: (65 − 50) ÷ 50 × 100 = 30%.</p>
+
+      <h3>How do you calculate percentage decrease?</h3>
+      <p>Subtract the new value from the old, divide by the old value, multiply by 100. Example: (800 − 600) ÷ 800 × 100 = 25%.</p>
+
+      <h3>How do you find a percentage of a number?</h3>
+      <p>Multiply the number by the percentage and divide by 100. Example: 20% of 150 = (20 × 150) ÷ 100 = 30.</p>
+
+      <h3>How do you convert a fraction to a percent?</h3>
+      <p>Divide the numerator by the denominator, then multiply by 100. Example: 3/4 = 0.75 × 100 = 75%.</p>
+
+      <h3>How do you convert a decimal to a percent?</h3>
+      <p>Multiply by 100. Example: 0.45 × 100 = 45%.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>

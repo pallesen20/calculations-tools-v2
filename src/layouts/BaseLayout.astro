@@ -1,26 +1,82 @@
 ---
-const { title, description } = Astro.props;
+import Header from '../components/Header.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Footer from '../components/Footer.astro';
+
+const isProduction = import.meta.env.PUBLIC_SITE_ENV === 'production';
+
+interface Props {
+  title: string;
+  metaTitle?: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  schema?: object | object[];
+}
+
+const {
+  title,
+  metaTitle,
+  description,
+  canonical = Astro.url.href,
+  ogImage = 'https://calculations.tools/open-graph.webp',
+  schema,
+} = Astro.props;
+
+const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
 ---
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {!isProduction && <meta name="robots" content="noindex, nofollow" />}
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <title>{title} | Calculations.tools</title>
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-512x512.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-512x512.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/base.css" />
+
+    <!-- GTM -->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-599FWKZL');
+    </script>
+
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
   <body>
-    <header>
-      <a href="/">Calculations.tools</a>
-    </header>
+    <!-- GTM noscript -->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-599FWKZL"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
 
-    <main>
-      <slot />
-    </main>
-
-    <footer>
-      <p>© 2025 Calculations.tools</p>
-    </footer>
+    <Header />
+    <Breadcrumbs />
+    <slot />
+    <Footer />
   </body>
 </html>

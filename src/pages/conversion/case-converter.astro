@@ -1,0 +1,194 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use', label: 'How to use this tool' },
+  { id: 'case-types', label: 'Case types explained' },
+  { id: 'use-cases',  label: 'Common use cases' },
+  { id: 'tips',       label: 'Tips for case usage' },
+  { id: 'faq',        label: 'FAQs' },
+];
+
+const BTNS = [
+  { type: 'sentence',    label: 'Sentence case',    toast: 'Converted to sentence case',    gradient: 'from-blue-500 to-blue-600' },
+  { type: 'lower',       label: 'lower case',       toast: 'Converted to lower case',       gradient: 'from-green-500 to-green-600' },
+  { type: 'upper',       label: 'UPPER CASE',       toast: 'Converted to UPPER CASE',       gradient: 'from-purple-500 to-purple-600' },
+  { type: 'capitalized', label: 'Capitalized Case', toast: 'Converted to Capitalized Case', gradient: 'from-orange-500 to-orange-600' },
+  { type: 'alternating', label: 'aLtErNaTiNg',      toast: 'Converted to aLtErNaTiNg cAsE', gradient: 'from-pink-500 to-pink-600' },
+  { type: 'title',       label: 'Title Case',       toast: 'Converted to Title Case',       gradient: 'from-cyan-500 to-cyan-600' },
+  { type: 'inverse',     label: 'iNVERSE cASE',     toast: 'Converted to iNVERSE cASE',     gradient: 'from-red-500 to-red-600' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What is a case converter?", "acceptedAnswer": { "@type": "Answer", "text": "A case converter transforms text between different capitalization formats like uppercase, lowercase, title case, and sentence case." } },
+    { "@type": "Question", "name": "What is the difference between title case and sentence case?", "acceptedAnswer": { "@type": "Answer", "text": "Sentence case capitalizes only the first letter of each sentence. Title case capitalizes major words while keeping articles and short prepositions lowercase." } },
+    { "@type": "Question", "name": "What is inverse case useful for?", "acceptedAnswer": { "@type": "Answer", "text": "Inverse case flips every letter's capitalization. It's useful for fixing text accidentally typed with Caps Lock on." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Case Converter"
+  metaTitle="Case Converter Tool | Change Uppercase to Lowercase & more ᐅ"
+  description="Convert text to uppercase, lowercase, title case, sentence case, alternating case, and more — instantly."
+  canonical="https://calculations.tools/conversion/case-converter"
+  tocItems={tocItems}
+  embedSlug="case-converter"
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface" id="cc-calculator">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Sentence Case Converter</h2>
+          <p>Paste your text, then click a case to convert</p>
+        </div>
+
+        <textarea
+          id="cc-input"
+          class="cc-textarea"
+          placeholder="Start typing or paste your text here..."
+          rows="7"
+        ></textarea>
+
+        <div class="cc-actions">
+          <button id="cc-copy"  class="wc-btn text-white" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="width:1rem;height:1rem"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M5.333 10.667H4a1.333 1.333 0 0 1-1.333-1.333V4A1.333 1.333 0 0 1 4 2.667h5.333A1.333 1.333 0 0 1 10.666 4v1.333m-4 8h5.333A1.333 1.333 0 0 0 13.332 12V6.667a1.333 1.333 0 0 0-1.333-1.333H6.666a1.333 1.333 0 0 0-1.333 1.333V12a1.333 1.333 0 0 0 1.333 1.333"/></svg> Copy text</button>
+          <button id="cc-reset" class="wc-btn text-white wc-btn-ghost" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M2.667 2.667V6h.388m10.237 1.333A5.334 5.334 0 0 0 3.055 6m0 0H6m7.333 7.333V10h-.387m0 0A5.335 5.335 0 0 1 2.708 8.667M12.946 10H10"/></svg> Reset</button>
+        </div>
+
+        <div id="cc-btns" class="cc-btns">
+          {BTNS.map(b => (
+            <button
+              class={`cc-case-btn`}
+              data-case={b.type}
+              data-toast={b.toast}
+              disabled
+            >
+              {b.label}
+            </button>
+          ))}
+        </div>
+
+        <div id="cc-stats" class="cc-stats hidden">
+          {[
+            { id: 'cc-chars',     label: 'Characters' },
+            { id: 'cc-words',     label: 'Words' },
+            { id: 'cc-sentences', label: 'Sentences' },
+            { id: 'cc-spaces',    label: 'Spaces' },
+          ].map(s => (
+            <div class="cc-stat">
+              <div class="cc-stat-label">{s.label}</div>
+              <div class="cc-stat-value" id={s.id}>0</div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/case-converter.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Paste or type your text into the box, then click whichever case button you need. The text updates in place so you can keep converting or copy it straight to your clipboard.</p>
+
+      <h2 id="case-types">Case types explained</h2>
+
+      <h3>Sentence case</h3>
+      <p>Capitalizes the first letter of each sentence and proper nouns, everything else stays lowercase. This is the standard for paragraphs, articles, and most written content.</p>
+      <p><strong>Example:</strong> "the quick brown fox" → "The quick brown fox"</p>
+
+      <h3>lower case</h3>
+      <p>Converts every letter to lowercase. Useful for URLs, email addresses, hashtags, and programming variables.</p>
+      <p><strong>Example:</strong> "THE QUICK BROWN FOX" → "the quick brown fox"</p>
+
+      <h3>UPPER CASE</h3>
+      <p>Converts every letter to capitals. Good for headings, acronyms, and constants in code. Use sparingly in body text — all caps reads as shouting.</p>
+      <p><strong>Example:</strong> "the quick brown fox" → "THE QUICK BROWN FOX"</p>
+
+      <h3>Capitalized Case</h3>
+      <p>Capitalizes the first letter of every word without exception, including articles and prepositions. Sometimes called Start Case.</p>
+      <p><strong>Example:</strong> "the quick brown fox" → "The Quick Brown Fox"</p>
+
+      <h3>Title Case</h3>
+      <p>Capitalizes major words but keeps short articles (a, an, the), conjunctions (and, but, or), and prepositions (in, on, at) lowercase unless they start the title. Follows standard style guide rules.</p>
+      <p><strong>Example:</strong> "the quick brown fox jumps over the lazy dog" → "The Quick Brown Fox Jumps over the Lazy Dog"</p>
+
+      <h3>aLtErNaTiNg cAsE</h3>
+      <p>Alternates between lowercase and uppercase on each letter. Mostly used in memes and sarcastic online comments. Not for professional use.</p>
+      <p><strong>Example:</strong> "the quick brown fox" → "tHe QuIcK bRoWn FoX"</p>
+
+      <h3>iNVERSE cASE</h3>
+      <p>Flips every letter — uppercase becomes lowercase and vice versa. The most common use is fixing text you accidentally typed with Caps Lock on.</p>
+      <p><strong>Example:</strong> "The Quick Brown Fox" → "tHE qUICK bROWN fOX"</p>
+
+      <h2 id="use-cases">Common use cases</h2>
+      <p><strong>Content writing:</strong> Quickly format headings and titles to match a style guide without editing manually.</p>
+      <p><strong>Development:</strong> Convert variable names and constants to the right case for your codebase.</p>
+      <p><strong>Social media:</strong> Format hashtags, captions, and post copy for different platforms.</p>
+      <p><strong>Academic writing:</strong> Format titles, headings, and citations according to APA, MLA, or Chicago style.</p>
+      <p><strong>Email marketing:</strong> Test subject lines in different cases to see what performs best.</p>
+
+      <h2 id="tips">Tips for case usage</h2>
+      <p>Know which style guide your field follows — AP Style, Chicago, APA, and MLA all have slightly different rules for title capitalization. Maintain consistency once you pick a style for headings or titles. And always preserve brand names with their official capitalization (iPhone, eBay, WordPress) — no converter will know those automatically.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>What is the difference between title case and sentence case?</h3>
+      <p>Sentence case only capitalizes the first letter of each sentence. Title case capitalizes major words throughout, following style guide rules about which words to skip (articles, short prepositions, conjunctions).</p>
+
+      <h3>What is capitalized case vs title case?</h3>
+      <p>Capitalized case capitalizes every single word with no exceptions. Title case follows grammar rules and keeps small words like "and", "the", and "in" lowercase.</p>
+
+      <h3>When should I use alternating case?</h3>
+      <p>Only for informal content like memes or sarcastic social media posts. Never in professional, academic, or business writing.</p>
+
+      <h3>What is inverse case useful for?</h3>
+      <p>Mainly for fixing text typed with Caps Lock accidentally on. It also works for creative text effects.</p>
+
+      <h3>Does it work with special characters?</h3>
+      <p>Yes. Numbers, punctuation, spaces, and special characters are preserved — only alphabetic letters are transformed.</p>
+
+      <h3>Can I undo a conversion?</h3>
+      <p>There's no undo button, but you can paste your original text again or use inverse case to partially reverse changes. Keep a copy before converting if the original matters.</p>
+
+      <h3>Is there a character limit?</h3>
+      <p>No. The tool handles any length of text instantly, including full articles and long documents.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style>
+  .cc-textarea { min-height: 180px; }
+  .cc-actions { margin-bottom: 1.25rem; }
+  .cc-btns {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .cc-btns { grid-template-columns: repeat(4, 1fr); }
+  }
+  .cc-case-btn:hover:not(:disabled) { transform: translateY(-2px); }
+  .cc-case-btn:active:not(:disabled) { transform: translateY(0); }
+  .cc-case-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .cc-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .cc-stats { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>

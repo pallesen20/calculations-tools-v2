@@ -1,0 +1,164 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use', label: 'How to use this converter' },
+  { id: 'metric',     label: 'Metric system' },
+  { id: 'imperial',   label: 'Imperial system' },
+  { id: 'common',     label: 'Common conversions' },
+  { id: 'reference',  label: 'Quick reference table' },
+  { id: 'faq',        label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How do I convert kg to pounds?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply kilograms by 2.20462. Example: 70 kg × 2.20462 = 154.32 pounds." } },
+    { "@type": "Question", "name": "How many ounces are in a pound?", "acceptedAnswer": { "@type": "Answer", "text": "1 pound equals exactly 16 ounces." } },
+    { "@type": "Question", "name": "How do I convert grams to ounces?", "acceptedAnswer": { "@type": "Answer", "text": "Divide grams by 28.3495. Example: 100 grams ÷ 28.3495 = 3.53 ounces." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Weight Converter"
+  metaTitle='Weight Unit Converter | Weight Conversion Calculator ᐅ'
+  description="Convert between metric and imperial weight units instantly. Kilograms, pounds, ounces, grams, tons, and more."
+  canonical="https://calculations.tools/conversion/weight-converter"
+  tocItems={tocItems}
+  embedSlug="weight-converter"
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface" id="wt-calculator">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Weight Unit Converter</h2>
+          <p>Enter a value and select units — result updates instantly</p>
+        </div>
+        <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
+        <div id="wt-quick" class="lc-quick"></div>
+
+        <div class="lc-inputs">
+          <div class="input-group">
+            <label for="wt-value">Value</label>
+            <input id="wt-value" type="number" value="1" placeholder="Enter value" />
+          </div>
+          <div class="input-group">
+            <label for="wt-from">From</label>
+            <select id="wt-from"></select>
+          </div>
+          <div class="unit-swap-wrap">
+            <button class="unit-swap" id="wt-swap" title="Swap units" aria-label="Swap units">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
+          <div class="input-group">
+            <label for="wt-to">To</label>
+            <select id="wt-to"></select>
+          </div>
+        </div>
+
+        <div class="lc-result-box">
+          <div class="result-label">Result</div>
+          <div class="lc-result" id="wt-result">—</div>
+          <div class="lc-result-desc" id="wt-result-desc"></div>
+        </div>
+
+        <div>
+          <h3 id="wt-common-title" class="lc-common-title"></h3>
+          <div id="wt-common" class="lc-common-grid"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/weight-converter.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this converter</h2>
+      <p>Type a value, choose your "From" and "To" units, and the result appears immediately. Use the quick conversion buttons to jump straight to the most common pairs.</p>
+
+      <h2 id="metric">Metric system</h2>
+      <p>The metric system uses grams and kilograms as its base weight units, with units scaling by powers of 1000.</p>
+      <ul>
+        <li>1 metric ton = 1,000 kilograms</li>
+        <li>1 kilogram = 1,000 grams</li>
+        <li>1 gram = 1,000 milligrams</li>
+      </ul>
+
+      <h2 id="imperial">Imperial system</h2>
+      <p>The imperial system is primarily used in the United States and has less regular relationships between units.</p>
+      <ul>
+        <li>1 short ton = 2,000 pounds</li>
+        <li>1 stone = 14 pounds</li>
+        <li>1 pound = 16 ounces</li>
+        <li>1 ounce = 28.3495 grams</li>
+      </ul>
+
+      <h2 id="common">Common conversions</h2>
+      <p><strong>KG to pounds:</strong> multiply by 2.20462. Example: 75 kg × 2.20462 = 165.35 lbs</p>
+      <p><strong>Pounds to KG:</strong> divide by 2.20462. Example: 150 lbs ÷ 2.20462 = 68.04 kg</p>
+      <p><strong>Grams to ounces:</strong> divide by 28.3495. Example: 250 g ÷ 28.3495 = 8.82 oz</p>
+      <p><strong>Ounces to grams:</strong> multiply by 28.3495. Example: 10 oz × 28.3495 = 283.5 g</p>
+      <p><strong>Stones to pounds:</strong> multiply by 14. Example: 12 st × 14 = 168 lbs</p>
+      <p><strong>Metric tons to pounds:</strong> multiply by 2204.62. Example: 2 t × 2204.62 = 4409.24 lbs</p>
+
+      <h2 id="reference">Quick reference table</h2>
+      <table>
+        <thead>
+          <tr><th>From</th><th>To</th><th>Formula</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>kg</td><td>pounds</td><td>× 2.20462</td></tr>
+          <tr><td>pounds</td><td>kg</td><td>÷ 2.20462</td></tr>
+          <tr><td>grams</td><td>ounces</td><td>÷ 28.3495</td></tr>
+          <tr><td>ounces</td><td>grams</td><td>× 28.3495</td></tr>
+          <tr><td>pounds</td><td>ounces</td><td>× 16</td></tr>
+          <tr><td>ounces</td><td>pounds</td><td>÷ 16</td></tr>
+          <tr><td>kg</td><td>grams</td><td>× 1000</td></tr>
+          <tr><td>grams</td><td>kg</td><td>÷ 1000</td></tr>
+          <tr><td>metric tons</td><td>pounds</td><td>× 2204.62</td></tr>
+          <tr><td>stones</td><td>pounds</td><td>× 14</td></tr>
+          <tr><td>pounds</td><td>stones</td><td>÷ 14</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>How do I convert kg to pounds?</h3>
+      <p>Multiply by 2.20462. Example: 70 kg × 2.20462 = 154.32 lbs.</p>
+
+      <h3>How many ounces are in a pound?</h3>
+      <p>Exactly 16 ounces.</p>
+
+      <h3>How do I convert grams to ounces?</h3>
+      <p>Divide by 28.3495. Example: 100 g ÷ 28.3495 = 3.53 oz.</p>
+
+      <h3>How many grams are in a kilogram?</h3>
+      <p>Exactly 1,000 grams.</p>
+
+      <h3>How many pounds are in a stone?</h3>
+      <p>Exactly 14 pounds.</p>
+
+      <h3>What is the difference between a metric ton and a US ton?</h3>
+      <p>A metric ton equals 1,000 kg or 2,204.62 lbs. A US short ton equals exactly 2,000 lbs.</p>
+
+      <h3>How do I convert body weight from kg to pounds?</h3>
+      <p>Multiply by 2.20462. Example: 70 kg = 154.32 lbs. For a quick estimate, multiply by 2.2.</p>
+
+      <h3>Can I use this for cooking measurements?</h3>
+      <p>Yes — convert between grams, ounces, pounds, and kilograms for any recipe.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>

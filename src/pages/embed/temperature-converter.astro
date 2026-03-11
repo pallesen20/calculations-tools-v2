@@ -1,0 +1,59 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Temperature Converter — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Temperature Converter</h2>
+        <p>Enter a value and select units</p>
+      </div>
+
+      <div id="tc-quick" class="lc-quick"></div>
+
+      <div class="lc-inputs">
+        <div class="input-group">
+          <label for="tc-value">Value</label>
+          <input id="tc-value" type="number" value="0" placeholder="Enter temperature" />
+        </div>
+        <div class="input-group">
+          <label for="tc-from">From</label>
+          <select id="tc-from"></select>
+        </div>
+        <div class="unit-swap-wrap">
+          <button class="unit-swap" id="tc-swap" title="Swap units" aria-label="Swap units">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+          </button>
+        </div>
+        <div class="input-group">
+          <label for="tc-to">To</label>
+          <select id="tc-to"></select>
+        </div>
+      </div>
+
+      <div class="lc-result-box">
+        <div class="result-label">Result</div>
+        <div class="lc-result" id="tc-result">—</div>
+        <div class="lc-result-desc" id="tc-result-desc"></div>
+      </div>
+
+      <div>
+        <h3 id="tc-common-title" class="lc-common-title"></h3>
+        <div id="tc-common" class="tc-common-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/temperature-converter.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .tc-common-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  .tc-common-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.6rem; text-align: center; font-size: 0.8rem; color: white; }
+  .tc-common-from { font-weight: 500; }
+  .tc-common-eq   { color: #93c5fd; font-size: 0.7rem; margin: 0.15rem 0; }
+  .tc-common-to   { font-weight: 500; }
+</style>

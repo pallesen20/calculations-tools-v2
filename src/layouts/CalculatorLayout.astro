@@ -1,0 +1,288 @@
+---
+import { execSync } from 'child_process';
+import BaseLayout from './BaseLayout.astro';
+
+interface TocItem {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  metaTitle?: string;
+  description: string;
+  canonical?: string;
+  schema?: object | object[];
+  tocItems?: TocItem[];
+  embedSlug?: string;
+}
+
+const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug } = Astro.props;
+
+const _pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/index';
+const _filePath = `src/pages${_pathname}.astro`;
+
+let lastUpdated = '';
+try {
+  const result = execSync(
+    `git log -1 --format="%ci" -- "${_filePath}"`,
+    { encoding: 'utf-8' }
+  ).trim();
+  lastUpdated = result
+    ? new Date(result).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+} catch {
+  lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+const embedUrl = embedSlug ? `https://calculations.tools/embed/${embedSlug}` : null;
+const iframeSnippet = embedUrl
+  ? `<iframe src="${embedUrl}" width="100%" height="480" frameborder="0" style="border-radius:12px"></iframe>`
+  : null;
+---
+
+<BaseLayout {title} {metaTitle} {description} {canonical} {schema}>
+  <main class="main-content">
+    <div class="container">
+      <div class="calculator-page-container">
+
+        <!-- HEADER: H1 + subtitle -->
+        <div class="page-header">
+          <h1 class="main-title">{title}</h1>
+          <p class="subtitle">{description}</p>
+        </div>
+
+        <!-- CALCULATOR WIDGET -->
+        <div class="page-calculator">
+          <slot name="calculator" />
+        </div>
+
+        <!-- SIDEBAR: info + TOC + embed -->
+        <aside class="page-sidebar">
+          <div class="info-box">
+            <aside>
+              <img src="/jesper.webp" height="50" width="50" alt="Jesper Pallesen" />
+              <div class="author-box">
+                <span class="eyebrow">Created by</span>
+                <a class="author" href="/about-us">Jesper Pallesen</a>
+              </div>
+              <div class="last-updated">
+                <span class="eyebrow">Last updated</span>
+                <time datetime={lastUpdated}><span>{lastUpdated}</span></time>
+              </div>
+            </aside>
+          </div>
+
+          {tocItems.length > 0 && (
+            <nav class="toc" aria-label="Table of contents">
+              <p class="toc-title">Table of contents</p>
+              <ul class="toc-list">
+                {tocItems.map(item => (
+                  <li><a href={`#${item.id}`} class="toc-link">{item.label}</a></li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
+          {embedUrl && (
+            <div class="embed-section">
+              <button class="embed-button" id="embedToggle">
+                &lt;/&gt; Embed this calculator
+              </button>
+              <div class="embed-panel hidden" id="embedPanel">
+                <p class="embed-label">Copy and paste this code into your website:</p>
+                <textarea class="embed-code" readonly id="embedCode">{iframeSnippet}</textarea>
+                <button class="copy-embed-btn" id="copyEmbedBtn">Copy code</button>
+                <p class="embed-attribution">
+                  Powered by <a href="https://calculations.tools" target="_blank">calculations.tools</a>
+                </p>
+              </div>
+            </div>
+          )}
+        </aside>
+
+        <!-- CONTENT: long-form SEO -->
+        <div class="page-content">
+          <slot name="content" />
+        </div>
+
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('.toc-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector((link as HTMLAnchorElement).getAttribute('href')!);
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  const embedToggle = document.getElementById('embedToggle');
+  const embedPanel = document.getElementById('embedPanel');
+  const copyEmbedBtn = document.getElementById('copyEmbedBtn');
+  const embedCode = document.getElementById('embedCode') as HTMLTextAreaElement;
+
+  embedToggle?.addEventListener('click', () => embedPanel?.classList.toggle('hidden'));
+
+  copyEmbedBtn?.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(embedCode.value);
+    copyEmbedBtn.textContent = 'Copied!';
+    setTimeout(() => copyEmbedBtn.textContent = 'Copy code', 2000);
+  });
+</script>
+<style>
+  .calculator-page-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "header    calculator"
+      "sidebar   calculator"
+      "sidebar   content";
+    gap: 2rem;
+    align-items: start;
+  }
+  .page-header     { grid-area: header; }
+  .page-calculator { grid-area: calculator; min-width: 0; }
+  .page-sidebar    { grid-area: sidebar; position: sticky; top: 1.5rem; }
+  .page-content    { grid-area: content; min-width: 0; }
+  .info-box {
+    margin-bottom: 1rem;
+  }
+  .info-box aside {
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  .info-box img {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    height: 50px;
+  }
+  .eyebrow {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.2rem;
+  }
+  .author {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+  }
+  .author:hover { text-decoration: underline; }
+  .last-updated time {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .toc {
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .toc-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.75rem;
+  }
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .toc-link {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    line-height: 1.4;
+    transition: color 0.2s;
+  }
+  .toc-link:hover { color: white; }
+  .embed-section { margin-top: 1rem; }
+  .embed-button {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .embed-button:hover { background: rgba(255,255,255,0.12); }
+  .embed-panel {
+    margin-top: 0.75rem;
+    padding: 1rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .embed-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.5rem;
+  }
+  .embed-code {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.75rem;
+    font-family: monospace;
+    padding: 0.5rem;
+    resize: none;
+    height: 80px;
+    box-sizing: border-box;
+  }
+  .copy-embed-btn {
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .copy-embed-btn:hover { background: rgba(255,255,255,0.18); }
+  .embed-attribution {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  .embed-attribution a { color: rgba(255,255,255,0.6); }
+  @media (max-width: 768px) {
+    .calculator-page-container {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "header"
+        "calculator"
+        "sidebar"
+        "content";
+    }
+    .page-sidebar { position: static; }
+  }
+</style>

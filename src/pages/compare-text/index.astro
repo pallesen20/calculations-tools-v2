@@ -1,0 +1,348 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',  label: 'How to use this tool' },
+  { id: 'use-cases',   label: 'Use cases' },
+  { id: 'algorithm',   label: 'How the diff algorithm works' },
+  { id: 'privacy',     label: 'Privacy' },
+  { id: 'faq',         label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What is a difference checker?", "acceptedAnswer": { "@type": "Answer", "text": "A difference checker compares two blocks of text or code and highlights what has been added, removed, or changed — typically shown with green for additions and red for removals." } },
+    { "@type": "Question", "name": "Is my data private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All processing happens in your browser. Your text is never sent to any server." } },
+    { "@type": "Question", "name": "Can I compare code files?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The tool handles any programming language and supports uploading .js, .py, .html, .css, .json, .xml, .md, .sql, and many more file types." } },
+    { "@type": "Question", "name": "What is the difference between unified and side-by-side view?", "acceptedAnswer": { "@type": "Answer", "text": "Unified view shows all changes in one column with additions and removals interleaved. Side-by-side shows the two texts in parallel columns for easier visual comparison." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Text & Code Difference Checker"
+  metaTitle='Text & Code Difference Checker | Compare Text Online Free ᐅ'
+  description="Compare two texts or code files side by side. Find additions, removals, and changes instantly with color-coded unified and side-by-side diff views."
+  canonical="https://calculations.tools/compare-text"
+  tocItems={tocItems}
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container ct-container">
+
+        <div class="calculator-header">
+          <h2>Compare Text & Code Online</h2>
+          <p>Paste or upload two texts to compare them line by line</p>
+        </div>
+
+        <!-- Editors -->
+        <div class="ct-editors">
+
+          <!-- Original -->
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Original Text</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="uploadFile('ct-original')" title="Upload file"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+                <button class="diff-tbtn" onclick="downloadText('ct-original')" title="Download"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+                <button class="diff-tbtn" onclick="copyText('ct-original')" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="diff-tbtn" onclick="clearText('ct-original')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ct-editor-wrap" id="ct-original-wrap">
+              <div class="ct-gutter" id="ct-original-gutter"><div>1</div></div>
+              <div class="ct-hl" id="ct-original-hl" style="top:0.75rem"></div>
+              <textarea
+                id="ct-original"
+                class="ct-textarea"
+                wrap="off"
+                placeholder="Paste your original text or code here..."
+                spellcheck="false"
+                oninput="updateEditor('ct-original')"
+                onfocus="document.getElementById('ct-original-wrap').classList.add('focused')"
+                onblur="document.getElementById('ct-original-wrap').classList.remove('focused')"
+                onkeyup="updateActiveLine('ct-original')"
+                onclick="updateActiveLine('ct-original')"
+                onscroll="syncScroll('ct-original')"
+              ></textarea>
+            </div>
+            <div class="ct-stats">
+              <span id="ct-original-lines">Lines: 0</span>
+              <span id="ct-original-chars">Characters: 0</span>
+            </div>
+          </div>
+
+          <!-- Changed -->
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Changed Text</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="uploadFile('ct-changed')" title="Upload file"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+                <button class="diff-tbtn" onclick="downloadText('ct-changed')" title="Download"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+                <button class="diff-tbtn" onclick="copyText('ct-changed')" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="diff-tbtn" onclick="clearText('ct-changed')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ct-editor-wrap" id="ct-changed-wrap">
+              <div class="ct-gutter" id="ct-changed-gutter"><div>1</div></div>
+              <div class="ct-hl" id="ct-changed-hl" style="top:0.75rem"></div>
+              <textarea
+                id="ct-changed"
+                class="ct-textarea"
+                wrap="off"
+                placeholder="Paste your changed text or code here..."
+                spellcheck="false"
+                oninput="updateEditor('ct-changed')"
+                onfocus="document.getElementById('ct-changed-wrap').classList.add('focused')"
+                onblur="document.getElementById('ct-changed-wrap').classList.remove('focused')"
+                onkeyup="updateActiveLine('ct-changed')"
+                onclick="updateActiveLine('ct-changed')"
+                onscroll="syncScroll('ct-changed')"
+              ></textarea>
+            </div>
+            <div class="ct-stats">
+              <span id="ct-changed-lines">Lines: 0</span>
+              <span id="ct-changed-chars">Characters: 0</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="diff-actions">
+          <button class="diff-btn-primary" onclick="findDifferences()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+          <button class="diff-btn-secondary" onclick="swapTexts()">⇄ Swap</button>
+          <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
+        </div>
+
+        <!-- Diff output -->
+        <div id="diff-output" class="diff-output">
+          <div class="diff-header">
+            <div class="diff-stats">
+              <span class="diff-added"   id="ct-stat-added">+0 added</span>
+              <span class="diff-removed" id="ct-stat-removed">−0 removed</span>
+              <span class="diff-unchanged" id="ct-stat-unchanged">0 unchanged</span>
+            </div>
+            <div class="ct-diff-controls">
+              <div class="ct-view-toggle">
+                <button id="ct-btn-unified" onclick="setView('unified')">Unified</button>
+                <button id="ct-btn-sbs"     onclick="setView('sbs')">Side-by-Side</button>
+              </div>
+              <button class="diff-tbtn" onclick="copyDiff()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
+            </div>
+          </div>
+          <div class="ct-diff-container" id="ct-diff-container"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Hidden file input -->
+    <input type="file" id="ct-file-input" style="display:none"
+      accept=".txt,.js,.ts,.py,.html,.css,.json,.xml,.md,.csv,.jsx,.tsx,.php,.rb,.go,.java,.c,.cpp,.h,.sql,.yaml,.yml,.sh,.bat,.log,.cfg,.ini,.toml" />
+
+    <!-- Toast -->
+    <div class="diff-toast"></div>
+
+    <script src="/js/compare-text.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Paste your original text in the left editor and the changed version in the right editor, then click "Find Differences." The output highlights every addition in green and every removal in red. Toggle between Unified and Side-by-Side views depending on how you prefer to review changes. You can also upload files directly using the upload button on each panel.</p>
+
+      <h2 id="use-cases">Use cases</h2>
+
+      <h3>Code review</h3>
+      <p>Compare your working copy against the original to catch bugs, unintended changes, or missing lines before merging. Works with any language — JavaScript, Python, HTML, CSS, SQL, and more.</p>
+
+      <h3>Document proofreading</h3>
+      <p>Compare a draft against a revised version to spot what was added, deleted, or reworded — without reading both documents line by line.</p>
+
+      <h3>Legal and contract review</h3>
+      <p>Even a single word change in a legal document can matter. A diff tool makes sure nothing slips through.</p>
+
+      <h3>Config and server files</h3>
+      <p>Upload two versions of a config file to instantly see every line that changed between deployments.</p>
+
+      <h3>Content versioning</h3>
+      <p>Track changes between article drafts, blog post revisions, or CMS updates over time.</p>
+
+      <h2 id="algorithm">How the diff algorithm works</h2>
+      <p>The tool uses a Longest Common Subsequence (LCS) algorithm. Both texts are split into lines, then the algorithm builds a comparison matrix to find the longest sequence of matching lines shared between them. Any lines not in that common sequence are classified as either added (only in the changed text) or removed (only in the original). The result is an accurate, line-by-line diff with line numbers and color coding.</p>
+
+      <h2 id="privacy">Privacy</h2>
+      <p>All processing happens entirely in your browser. Your text is never sent to any server, never stored, and never shared. It stays on your device the whole time.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>Can I compare code files?</h3>
+      <p>Yes. Upload .js, .ts, .py, .html, .css, .json, .xml, .md, .sql, .yaml, and many other text-based formats using the upload button on each panel.</p>
+
+      <h3>What is unified vs side-by-side view?</h3>
+      <p>Unified shows all changes in one column with additions and removals interleaved. Side-by-side shows the two texts in parallel columns so you can compare corresponding lines directly.</p>
+
+      <h3>Is there a size limit?</h3>
+      <p>No hard limit. The tool runs in your browser so it handles any reasonable length. Very large files (100k+ lines) may take a moment depending on your device.</p>
+
+      <h3>Can I download the diff output?</h3>
+      <p>You can copy the full diff to clipboard with the "Copy Diff" button, or download either text as a .txt file using the download button on each editor panel.</p>
+
+      <h3>Does it work on mobile?</h3>
+      <p>Yes. On small screens the two editors stack vertically and all features — file upload, copy, diff views — work on phones and tablets.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .ct-container { max-width: 100% !important; }
+  /* ── Editors grid ── */
+  .ct-editors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  @media (max-width: 640px) {
+    .ct-editors { grid-template-columns: 1fr; }
+  }
+  /* ── Editor wrap ── */
+  .ct-editor-wrap {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-height: 260px;
+    max-height: 460px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .ct-editor-wrap.focused {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+  }
+  /* ── Gutter ── */
+  .ct-gutter {
+    min-width: 2.75rem;
+    padding: 0.75rem 0.4rem 0.75rem 0;
+    text-align: right;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: #4a5568;
+    user-select: none;
+    overflow: hidden;
+    background: rgba(255,255,255,0.02);
+    border-right: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+  }
+  .ct-gutter div { padding: 0 0.2rem; }
+  .ct-gutter div.active-ln { color: #94a3b8; }
+  /* ── Active line highlight ── */
+  .ct-hl {
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    background: rgba(255,255,255,0.035);
+    transition: top 0.05s;
+  }
+  /* ── Textarea ── */
+  .ct-textarea {
+    flex: 1;
+    min-height: 260px;
+    max-height: 460px;
+    background: transparent;
+    border: none;
+    color: #e2e8f0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8125rem;
+    padding: 0.75rem 0.75rem 0.75rem 0.5rem;
+    resize: none;
+    line-height: 1.6;
+    outline: none;
+    overflow-y: auto;
+    white-space: pre;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    overflow-x: auto;
+  }
+  .ct-textarea::placeholder { color: #94a3b8; }
+  /* ── Stats bar ── */
+  .ct-stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.35rem;
+    font-size: 0.72rem;
+    color: #94a3b8;
+  }
+  /* ── Diff controls ── */
+  .ct-diff-controls { display: flex; align-items: center; gap: 0.5rem; }
+  .ct-view-toggle {
+    display: flex;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .ct-view-toggle button {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .ct-view-toggle button.active { background: rgba(255,255,255,0.18); color: white; }
+  /* ── Diff lines ── */
+  .ct-diff-container {
+    background: rgba(0,0,0,0.28);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow: auto;
+    max-height: 480px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+  }
+  .ct-diff-line {
+    display: flex;
+    line-height: 1.6;
+    min-height: 1.6em;
+  }
+  .ct-line-num {
+    min-width: 2.75rem;
+    text-align: right;
+    padding: 0 0.5rem;
+    color: #4a5568;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .ct-line-content {
+    padding: 0 0.75rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+    flex: 1;
+    color: #94a3b8;
+  }
+  .ct-diff-line.added   { background: rgba(74,222,128,0.08); }
+  .ct-diff-line.added   .ct-line-content { color: #4ade80; }
+  .ct-diff-line.removed { background: rgba(248,113,113,0.08); }
+  .ct-diff-line.removed .ct-line-content { color: #f87171; }
+  /* ── Side-by-side ── */
+  .ct-sbs { display: grid; grid-template-columns: 1fr 1fr; }
+  .ct-sbs-panel + .ct-sbs-panel { border-left: 1px solid rgba(255,255,255,0.08); }
+  @media (max-width: 640px) {
+    .ct-sbs { grid-template-columns: 1fr; }
+    .ct-sbs-panel + .ct-sbs-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
+  }
+</style>

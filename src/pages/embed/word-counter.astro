@@ -1,0 +1,64 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Word Counter — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Word Counter</h2>
+        <p>Paste or type below — stats update as you type</p>
+      </div>
+
+      <textarea
+        id="wc-input"
+        class="wc-textarea"
+        placeholder="Start typing or paste your text here..."
+        rows="6"
+      ></textarea>
+
+      <div class="wc-actions">
+        <button id="wc-copy-stats" class="wc-btn" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="width:1rem;height:1rem"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M5.333 10.667H4a1.333 1.333 0 0 1-1.333-1.333V4A1.333 1.333 0 0 1 4 2.667h5.333A1.333 1.333 0 0 1 10.666 4v1.333m-4 8h5.333A1.333 1.333 0 0 0 13.332 12V6.667a1.333 1.333 0 0 0-1.333-1.333H6.666a1.333 1.333 0 0 0-1.333 1.333V12a1.333 1.333 0 0 0 1.333 1.333"/></svg> Copy stats</button>
+        <button id="wc-reset" class="wc-btn wc-btn-ghost" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg> Reset</button>
+      </div>
+
+      <div id="wc-stats-grid" class="wc-stats-grid hidden">
+        {[
+          { id: 'wc-words',      label: 'Words',                 gradient: 'from-blue-500 to-purple-600' },
+          { id: 'wc-chars',      label: 'Characters',             gradient: 'from-green-500 to-teal-600' },
+          { id: 'wc-chars-ns',   label: 'Chars (no spaces)',     gradient: 'from-orange-500 to-yellow-600' },
+          { id: 'wc-sentences',  label: 'Sentences',              gradient: 'from-red-500 to-pink-600' },
+          { id: 'wc-reading',    label: 'Reading time',           gradient: 'from-cyan-500 to-blue-600' },
+          { id: 'wc-speaking',   label: 'Speaking time',          gradient: 'from-emerald-500 to-green-600' },
+        ].map(stat => (
+          <div class={`wc-stat-card bg-gradient-to-r ${stat.gradient}`}>
+            <div class="wc-stat-label">{stat.label}</div>
+            <div class="wc-stat-value" id={stat.id}>0</div>
+          </div>
+        ))}
+      </div>
+
+      <div id="wc-empty" class="wc-empty">
+        <p>Start typing to see your stats</p>
+      </div>
+
+      <!-- hidden elements needed by JS but not shown in embed -->
+      <div id="wc-spaces" style="display:none"></div>
+      <div id="wc-paragraphs" style="display:none"></div>
+      <div id="wc-keyword-card" style="display:none">
+        <div id="wc-keywords"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/word-counter.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .wc-textarea { min-height: 150px; }
+  .wc-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 1rem; }
+  .wc-stat-card { border-radius: 10px; padding: 1rem; color: white; }
+  .wc-stat-label { font-size: 0.7rem; opacity: 0.85; margin-bottom: 0.3rem; }
+  .wc-stat-value { font-size: 1.5rem; font-weight: 700; }
+  .wc-empty { text-align: center; padding: 2rem 1rem; color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+</style>

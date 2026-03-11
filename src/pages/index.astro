@@ -1,6 +1,133 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const tools = [
+  { href: '/percentage-calculator', icon: '%', iconClass: 'basic-icon', title: 'Percentage Calculator', description: 'Calculate percentages, increases, decreases, and ratios with multiple modes' },
+  { href: '/word-counter', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>', iconStyle: 'background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', title: 'Word Counter', description: 'Count words, characters, sentences, and paragraphs in your text instantly' },
+  { href: '/conversion/length-converter', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="1"/><line x1="6" y1="8" x2="6" y2="12"/><line x1="10" y1="8" x2="10" y2="13"/><line x1="14" y1="8" x2="14" y2="12"/><line x1="18" y1="8" x2="18" y2="13"/></svg>', iconStyle: 'background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', title: 'Length Converter', description: 'Convert between meters, feet, inches, kilometers, miles, and more' },
+  { href: '/conversion/weight-converter', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1z"/><path d="M7 21h10"/><path d="M12 21V7"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>', iconStyle: 'background: linear-gradient(135deg, #fa709a 0%, #fee140 100%)', title: 'Weight Converter', description: 'Convert between kilograms, pounds, ounces, grams, and tons' },
+  { href: '/conversion/temperature-converter', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>', iconStyle: 'background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%)', title: 'Temperature Converter', description: 'Convert between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur' },
+  { href: '/conversion/case-converter', icon: 'Aa', iconClass: 'temp-icon', title: 'Case Converter', description: 'Convert text between different cases: uppercase, lowercase, title case, and more' },
+  { href: '/conversion/currency-converter', icon: '$', iconClass: 'basic-icon', title: 'Currency Converter', description: 'Convert between 150+ world currencies with real-time mid-market exchange rates' },
+  { href: '/compare-text', icon: '⇆', iconStyle: 'background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%)', title: 'Text & Code Diff Checker', description: 'Compare two texts or code files side by side and find differences instantly' },
+  { href: '/compare-text/compare-excel', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>', iconStyle: 'background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%)', title: 'Excel & Spreadsheet Diff', description: 'Compare two Excel files, CSV, or ODS spreadsheets and find every difference instantly' },
+  { href: '/week-number', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>', iconStyle: 'background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%)', title: 'Week Number', description: 'Instantly see the current ISO 8601 week number with full year calendar' },
+];
+
+const features = [
+  { icon: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>', title: 'Lightning Fast', description: 'All calculations happen instantly in your browser. No waiting, no delays.' },
+  { icon: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>', title: 'Accurate Results', description: 'Precision-tested algorithms ensure you get the right answer every time.' },
+  { icon: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2"/></svg>', title: 'Mobile Friendly', description: 'Fully responsive design works perfectly on phones, tablets, and desktops.' },
+  { icon: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7" stroke-width="2.5"/></svg>', title: 'Completely Free', description: 'No subscriptions, no hidden fees. All tools are 100% free to use.' },
+  { icon: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>', title: 'Privacy First', description: "All calculations happen locally in your browser. Your data never leaves your device." },
+  { icon: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.5 5.7 0-4.6 3.3 1.8 5.5L12 14l-4.7 3.3 1.8-5.5L4.5 8.5l5.7 0z"/><path d="M19 3l.75 2.25L22 6l-2.25.75L19 9l-.75-2.25L16 6l2.25-.75z"/><path d="M5 17l.5 1.5 1.5.5-1.5.5L5 21l-.5-1.5L3 19l1.5-.5z"/></svg>', title: 'Beautiful Design', description: 'Modern, clean interface with smooth animations and intuitive controls.' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculations.tools",
+    "description": "Free online calculation tools and converters",
+    "url": "https://calculations.tools/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+];
 ---
-<BaseLayout title="Free Online Calculators" description="Fast, accurate calculators and converters for everyday use.">
-  <h1>Welcome to Calculations.tools</h1>
+
+<BaseLayout
+  title="Free Online Calculators & Conversion Tools"
+  metaTitle="Calculations.tools - Free Online Calculators & Conversion Tools"
+  description="Free online calculation tools and converters. Percentage calculator, word counter, length converter, weight converter, and temperature converter. Fast, accurate, and easy to use."
+  schema={schema}
+>
+  <div class="text-center mb-12">
+    <h1 class="main-title">Professional Calculation Tools</h1>
+    <p class="subtitle">Fast, accurate, and beautifully designed calculators and converters for everyday use</p>
+  </div>
+
+  <main class="main-content">
+    <div class="container">
+
+      <section class="calculator-interface" style="margin-bottom: 3rem;">
+        <div class="calculator-container" style="text-align: center;">
+          <h2 style="text-align:center;font-size:2rem;margin-bottom:2rem;color:white;font-weight:700;">Your Go-To Source for Quick Calculations</h2>
+          <p style="font-size:1.125rem;color:rgba(255,255,255,0.9);max-width:800px;margin:0 auto 2rem;line-height:1.6;">
+            Calculations.tools provides a suite of professional-grade calculation and conversion tools, all completely free. We've got you covered with fast, instant, accurate, and user-friendly tools.
+          </p>
+        </div>
+      </section>
+
+      <section class="calculator-types">
+        <h2 style="text-align:center;font-size:2rem;margin-bottom:2rem;color:white;font-weight:700;">Our Tools</h2>
+        <div class="frontpage-grid">
+          {tools.map(tool => (
+            <a href={tool.href} class="calculator-card" style="text-decoration:none;cursor:pointer;">
+              <div class={`card-icon ${tool.iconClass ?? ''}`} style={tool.iconStyle ?? ''} set:html={tool.icon} />
+              <div class="card-content">
+                <h3>{tool.title}</h3>
+                <p>{tool.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="features">
+        <h2>Why Choose Calculations.tools?</h2>
+        <div class="frontpage-grid">
+          {features.map(f => (
+            <div class="feature-card">
+              <div class="feature-icon" set:html={f.icon} />
+              <h3>{f.title}</h3>
+              <p>{f.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+	<div class="seo-container">
+        <h2>Professional Calculation Tools for Everyone</h2>
+        <p>Calculations.tools is your comprehensive resource for fast, accurate online calculations and conversions. Whether you're a student working on math homework, a professional handling business calculations, or someone who needs quick unit conversions, our tools are designed to make your life easier.</p>
+        <h3>Our Collection of Tools</h3>
+        <p>We offer a carefully curated selection of the most commonly needed calculation and conversion tools:</p>
+        <h4>Percentage Calculator</h4>
+        <p>Our advanced percentage calculator handles all types of percentage calculations. Calculate basic percentages, percentage increases and decreases, find what percentage one number is of another, and more. Perfect for financial calculations, grade calculations, discount calculations, and statistical analysis.</p>
+        <h4>Word Counter</h4>
+        <p>The word counter tool provides instant analysis of your text. It counts words, characters (with and without spaces), sentences, paragraphs, and even estimates reading time. Perfect for writers, students, content creators, and anyone who needs to track text metrics.</p>
+        <h4>Length Converter</h4>
+        <p>Convert between various units of length with ease. Our length converter supports metric units (millimeters, centimeters, meters, kilometers) and imperial units (inches, feet, yards, miles), plus specialized units like nautical miles.</p>
+        <h4>Weight Converter</h4>
+        <p>The weight converter handles conversions between metric and imperial weight units. Convert between grams, kilograms, metric tons, ounces, pounds, and US/UK tons. Essential for cooking, shipping, scientific applications, and fitness tracking.</p>
+        <h4>Temperature Converter</h4>
+        <p>Convert between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur temperature scales. Perfect for cooking, weather comparisons, scientific calculations, and understanding temperature readings from different countries.</p>
+        <h3>Why Use Online Calculation Tools?</h3>
+        <p>Online calculators offer numerous advantages over manual calculations or traditional calculator devices. They're always available, accessible from any device with a browser, and provide more specialized functionality than basic calculators. Our tools eliminate calculation errors, save time, and provide clear, formatted results.</p>
+        <h3>Features That Set Us Apart</h3>
+        <p>All our tools share common features: instant real-time calculations as you type, clean and intuitive interfaces, comprehensive unit support, mobile-responsive design, and complete privacy — all calculations happen in your browser, not on our servers.</p>
+        <h3>Who Uses Calculations.tools?</h3>
+        <p>Students use our calculators for homework and test preparation, professionals rely on them for business calculations and data analysis, content creators use the word counter for writing projects, international traders use converters for unit standardization, and home cooks use measurement converters for recipes.</p>
+        <h3>Commitment to Quality</h3>
+        <p>We're committed to providing the most accurate, reliable, and user-friendly calculation tools available. Each tool is thoroughly tested for accuracy, optimized for performance, and designed with user experience in mind — completely free with no registration required.</p>
+        <h2>Frequently Asked Questions</h2>
+        <h3>Are these tools really free?</h3>
+        <p>Yes, all tools on Calculations.tools are completely free to use. There are no hidden fees, no subscription required, and no limitations on usage.</p>
+        <h3>Do I need to create an account?</h3>
+        <p>No account is needed. All tools are immediately accessible without any registration. Simply visit the tool you need and start calculating right away.</p>
+        <h3>Are my calculations private?</h3>
+        <p>Absolutely. All calculations happen locally in your web browser. We don't store, track, or transmit your calculation data to our servers.</p>
+        <h3>Can I use these tools on my phone?</h3>
+        <p>Yes, all our tools are fully responsive and work perfectly on smartphones, tablets, and desktop computers.</p>
+        <h3>How accurate are the calculations?</h3>
+        <p>All our tools use precision-tested algorithms to ensure accurate results. We regularly verify and update our calculation methods to maintain the highest standards of accuracy.</p>
+        <h3>Can I use these tools offline?</h3>
+        <p>Once a tool page is loaded, basic functionality works offline. However, the initial page load requires an internet connection.</p>
+        <h3>What browsers are supported?</h3>
+        <p>Our tools work on all modern browsers including Chrome, Firefox, Safari, Edge, and Opera.</p>
+        <h3>Can I embed these tools on my website?</h3>
+        <p>Some of our tools offer embeddable widgets. Check individual tool pages for embed options and instructions.</p>
+      </div>
+    </div>
+  </main>
 </BaseLayout>

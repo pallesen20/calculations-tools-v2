@@ -1,0 +1,59 @@
+---
+const navItems = [
+  { label: 'Percentage Calculator', href: '/percentage-calculator' },
+  {
+    label: 'Conversion', href: '/conversion', dropdown: [
+      { label: 'Length Converter', href: '/conversion/length-converter' },
+      { label: 'Weight Converter', href: '/conversion/weight-converter' },
+      { label: 'Temperature Converter', href: '/conversion/temperature-converter' },
+      { label: 'Case Converter', href: '/conversion/case-converter' },
+      { label: 'Currency Converter', href: '/conversion/currency-converter' },
+    ]
+  },
+  { label: 'Word Counter', href: '/word-counter' },
+  {
+    label: 'Compare Text', dropdown: [
+      { label: 'Compare Text & Code', href: '/compare-text' },
+      { label: 'Compare Excel Files', href: '/compare-text/compare-excel' },
+    ]
+  },
+  { label: 'Week Number', href: '/week-number' },
+  { label: 'About', href: '/about-us' },
+];
+---
+
+<header class="header-glass">
+  <div class="header-container">
+    <a href="/" class="site-logo">
+      <img src="/favicon-512x512.png" width="32" height="32" alt="Calculations.tools" style="border-radius: 6px;" />
+    </a>
+    <nav class="nav-menu">
+      {navItems.map(item => (
+        item.dropdown ? (
+          <div class="nav-dropdown">
+            {item.href
+              ? <a href={item.href} class="nav-link dropdown-toggle">{item.label} <svg class="dropdown-arrow" viewBox="0 0 10 6"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"></path></svg></a>
+              : <span class="nav-link dropdown-toggle">{item.label} <svg class="dropdown-arrow" viewBox="0 0 10 6"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"></path></svg></span>
+            }
+            <div class="dropdown-content">
+              {item.dropdown.map(sub => (
+                <a href={sub.href} class="dropdown-link">{sub.label}</a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a href={item.href} class="nav-link">{item.label}</a>
+        )
+      ))}
+    </nav>
+    <div class="mobile-menu-btn" id="mobileMenuBtn">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobileMenuBtn');
+  const nav = document.querySelector('.nav-menu');
+  btn?.addEventListener('click', () => nav?.classList.toggle('active'));
+</script>

@@ -1,0 +1,405 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use', label: 'How to use this converter' },
+  { id: 'mid-market', label: 'What is the mid-market rate?' },
+  { id: 'popular',    label: 'Popular conversions' },
+  { id: 'bank-rates', label: 'Why bank rates differ' },
+  { id: 'faq',        label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How accurate are the exchange rates?", "acceptedAnswer": { "@type": "Answer", "text": "Rates are sourced from a reliable financial data provider and updated daily. We display the mid-market rate — the fairest rate available without markups." } },
+    { "@type": "Question", "name": "What is the mid-market exchange rate?", "acceptedAnswer": { "@type": "Answer", "text": "The mid-market rate is the midpoint between the buy and sell prices of two currencies — the real rate without any bank or broker markup." } },
+    { "@type": "Question", "name": "Why is my bank's rate different?", "acceptedAnswer": { "@type": "Answer", "text": "Banks add a margin to the mid-market rate — typically 2–5% or more. Our converter shows the mid-market rate so you can see the true value and compare." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Currency Converter"
+  metaTitle='Currency Converter | Live Exchange Rates Calculator ᐅ'
+  description="Convert between 150+ currencies with live mid-market exchange rates. Updated daily, free, no registration needed."
+  canonical="https://calculations.tools/conversion/currency-converter"
+  tocItems={tocItems}
+  embedSlug="currency-converter"
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface" id="cc-calculator">
+      <div class="calculator-container">
+
+        <!-- Main converter card -->
+        <div class="cc-card">
+          <h2 class="cc-title">Currency Conversion Calculator</h2>
+          <div class="cc-live">
+            <span class="cc-dot"></span>
+            <span>Mid-market exchange rate</span>
+          </div>
+
+          <div class="cc-field">
+            <label class="cc-label">Amount</label>
+            <div class="cc-row">
+              <input id="cc-amount" class="cc-input" type="text" inputmode="decimal" value="1000" placeholder="1,000" />
+              <select id="cc-from" class="cc-select"></select>
+            </div>
+          </div>
+
+          <div class="cc-swap-wrap">
+            <button id="cc-swap" class="cc-swap" title="Swap currencies">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="18" height="18">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="cc-field">
+            <label class="cc-label">Converted to</label>
+            <div class="cc-row">
+              <input id="cc-result" class="cc-input" type="text" readonly placeholder="0.00" />
+              <select id="cc-to" class="cc-select"></select>
+            </div>
+          </div>
+
+          <div class="cc-result-box">
+            <div class="cc-result-label">Exchange Rate</div>
+            <div class="cc-result-rate" id="cc-rate">—</div>
+            <div class="cc-result-updated" id="cc-updated">Loading rates…</div>
+          </div>
+
+          <div class="wise-banner">
+            <svg class="wise-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="wise-body">
+              <p class="wise-msg" id="cc-wise-msg">Sending USD to EUR? You could save money with Wise.</p>
+              <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener" class="wise-btn no-underline" id="cc-wise-btn">See your saved amount (free)</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison table card -->
+        <div class="cc-table-card">
+          <h3 class="cc-table-title">Currency Comparison Table</h3>
+          <p class="cc-table-sub">Click any row to edit the amount — all others update automatically</p>
+
+          <div id="cc-table-body" class="cc-table-body"></div>
+
+          <select id="cc-table-add" class="cc-table-add">
+            <option value="">Add a currency…</option>
+          </select>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/currency-converter.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this converter</h2>
+      <p>Enter your amount, select your source currency, then pick your target currency. The result updates as you type. Hit the swap button to reverse the direction instantly. Your last used currencies and amount are saved for next time.</p>
+      <p>The comparison table below the converter lets you see multiple currencies at once. Click any row and type a new amount — everything else updates automatically.</p>
+
+      <h2 id="mid-market">What is the mid-market rate?</h2>
+      <p>The mid-market rate (also called the interbank rate) is the midpoint between the buy and sell prices of two currencies on the global market. It's the "real" exchange rate — the one you see on Google or financial news sites, and the rate banks use when trading with each other.</p>
+      <p>Most currency exchange services add a markup to this rate to make a profit. Showing you the mid-market rate means you can see the true value of your money and compare it to what banks or exchange bureaus are actually offering.</p>
+
+      <h2 id="popular">Popular conversions</h2>
+      <p><strong>USD to EUR:</strong> The most traded currency pair globally. Used for European travel, EU online shopping, and international business.</p>
+      <p><strong>GBP to USD:</strong> Common for US travel from the UK and purchasing from American retailers.</p>
+      <p><strong>EUR to GBP:</strong> Used for UK travel, property transactions, and business with British companies.</p>
+      <p><strong>JPY to USD:</strong> The yen is the third most traded currency globally. Used for Japanese imports and investments.</p>
+      <p><strong>AUD to USD:</strong> Common for cross-border transactions between Australia and the United States.</p>
+      <p><strong>CAD to USD:</strong> Heavily traded due to close trade ties between Canada and the US.</p>
+
+      <h2 id="bank-rates">Why bank rates differ</h2>
+      <p>Banks and exchange bureaus add a margin to the mid-market rate — typically 2–5% for major currencies, and sometimes more for minor ones. Airport exchange desks are usually the worst, often charging 8–12% above mid-market. Our converter shows the mid-market rate so you know what you should be getting and can spot when you're being overcharged.</p>
+      <p>Credit cards typically convert close to the mid-market rate and charge a 1–3% foreign transaction fee, making them one of the better options for international spending.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>How often are exchange rates updated?</h3>
+      <p>Once per day. The exact update time is shown below the exchange rate in the converter.</p>
+
+      <h3>Why is my bank's rate different from what I see here?</h3>
+      <p>Banks add a markup to the mid-market rate — that's how they make money on currency conversions. The gap is typically 2–5% for major currencies.</p>
+
+      <h3>Can I use this for business transactions?</h3>
+      <p>It's good for estimating values, but use your bank or payment provider's actual rate for any real transactions since theirs will differ.</p>
+
+      <h3>How do I convert USD to EUR?</h3>
+      <p>Select USD from the first dropdown, enter your amount, then select EUR from the second. The conversion appears instantly.</p>
+
+      <h3>What does the swap button do?</h3>
+      <p>It reverses your currency selection and uses the converted result as the new starting amount, so you can immediately see the conversion going the other way.</p>
+
+      <h3>Can I use this offline?</h3>
+      <p>No — the converter needs an internet connection to fetch live exchange rates.</p>
+
+      <h3>Are cryptocurrency conversions supported?</h3>
+      <p>Not currently. This converter covers traditional fiat currencies only.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .cc-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .cc-title {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  /* ── Live dot ── */
+  .cc-live {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-bottom: 1.75rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+  }
+  .cc-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: cc-pulse 2s cubic-bezier(0.4,0,0.6,1) infinite;
+  }
+  @keyframes cc-pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:.5; transform:scale(1.25); }
+  }
+  /* ── Field + row ── */
+  .cc-field { margin-bottom: 1.5rem; }
+  .cc-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  .cc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .cc-input,
+  .cc-select {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: white;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .cc-input::placeholder { color: rgba(255,255,255,0.3); font-weight: 400; }
+  .cc-input[readonly]    { opacity: 0.85; cursor: default; }
+  .cc-input:focus,
+  .cc-select:focus       { outline: none; border-color: rgba(255,255,255,0.4); }
+  .cc-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.25rem;
+    cursor: pointer;
+  }
+  /* ── Swap ── */
+  .cc-swap-wrap {
+    display: flex;
+    justify-content: center;
+    margin: -1rem 0;
+    position: relative;
+    z-index: 1;
+  }
+  .cc-swap {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid var(--glass-border-strong);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.35s;
+  }
+  .cc-swap:hover { background: rgba(255,255,255,0.22); transform: rotate(180deg); }
+  /* ── Result box ── */
+  .cc-result-box {
+    background: var(--brand-gradient);
+    border-radius: 12px;
+    padding: 1.25rem 1rem;
+    text-align: center;
+    margin-top: 1.25rem;
+  }
+  .cc-result-label   { font-size: 0.8rem; color: rgba(255,255,255,0.75); margin-bottom: 0.4rem; }
+  .cc-result-rate    { font-size: 1.75rem; font-weight: 700; color: white; }
+  .cc-result-updated { font-size: 0.75rem; color: rgba(255,255,255,0.65); margin-top: 0.3rem; }
+  /* ── Wise affiliate banner ── */
+  .wise-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(159, 232, 112, 0.25);
+    border: 1px solid rgba(159, 232, 112, 0.25);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-top: 1rem;
+  }
+  .wise-icon {
+    width: 22px;
+    height: 22px;
+    color: #9fe870;
+    flex-shrink: 0;
+  }
+  .wise-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-width: 0;
+  }
+  .wise-msg {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.4;
+    margin: 0;
+  }
+  .wise-btn {
+    display: inline-block;
+    background: #9fe870;
+    color: #1a1a1a;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    text-align: center;
+  }
+  .wise-btn:hover { background: #80e142; transform: translateY(-1px); }
+  /* ── Comparison table card ── */
+  .cc-table-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem 1.75rem;
+  }
+  .cc-table-title {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.35rem;
+  }
+  .cc-table-sub {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-bottom: 1.25rem;
+  }
+  /* ── Table rows (card style) ── */
+  .cc-table-body { display: flex; flex-direction: column; gap: 0.6rem; }
+  .ct-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 36px;
+    align-items: center;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 0.875rem 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .ct-row:hover { background: rgba(255,255,255,0.12); }
+  .ct-code {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+  }
+  .ct-name {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.4);
+    margin-top: 3px;
+  }
+  .ct-amount-cell { display: flex; flex-direction: column; }
+  .ct-input {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    width: 100%;
+    padding: 0;
+    outline: none;
+    line-height: 1.2;
+  }
+  .ct-input:focus { color: #a5b4fc; }
+  .ct-remove {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.25);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    transition: color 0.2s, background 0.2s;
+  }
+  .ct-remove:hover { color: #ef4444; background: rgba(239,68,68,0.15); }
+  /* ── Add currency select ── */
+  .cc-table-add {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    appearance: none;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: white;
+    padding: 0.875rem 2.25rem 0.875rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    box-sizing: border-box;
+  }
+  .cc-table-add:focus { outline: none; border-color: rgba(255,255,255,0.35); }
+  @media (max-width: 500px) {
+    .cc-card, .cc-table-card { padding: 1.25rem 1rem; }
+    .cc-result-rate { font-size: 1.4rem; }
+    .cc-row { grid-template-columns: 1fr; }
+  }
+</style>

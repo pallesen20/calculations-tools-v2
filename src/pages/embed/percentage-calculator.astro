@@ -1,0 +1,48 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Percentage Calculator — calculations.tools">
+  <section class="calculator-types">
+    <div class="calculator-grid">
+      {[
+        { type: 'basic', icon: '%', iconClass: 'basic-icon', title: 'Basic', desc: 'X% of a number' },
+        { type: 'increase', icon: '↗', iconClass: 'increase-icon', title: 'Increase', desc: 'Between two numbers' },
+        { type: 'decrease', icon: '↘', iconClass: 'decrease-icon', title: 'Decrease', desc: 'Between two numbers' },
+        { type: 'whatPercent', icon: '?', iconClass: 'what-percent-icon', title: 'What %', desc: 'X is what % of Y?' },
+      ].map(c => (
+        <button class="calculator-card" data-type={c.type}>
+          <div class={`card-icon ${c.iconClass}`}>{c.icon}</div>
+          <div class="card-content">
+            <h3>{c.title}</h3>
+            <p>{c.desc}</p>
+          </div>
+        </button>
+      ))}
+    </div>
+  </section>
+
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2 id="calculator-title">Basic Percentage</h2>
+        <p id="calculator-description">Calculate what X% of a number is</p>
+      </div>
+      <div id="inputsContainer" class="inputs-container"></div>
+      <div id="formulaDisplay" class="formula-display hidden">
+        <p class="formula-label">Formula:</p>
+        <p id="formulaText" class="formula-text"></p>
+      </div>
+      <div id="resultDisplay" class="result-display hidden">
+        <p class="result-label" id="resultLabel">Result</p>
+        <div class="result-value">
+          <span id="resultValue"></span>
+          <button type="button" id="copyButton" class="copy-button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+        </div>
+      </div>
+      <button type="button" id="resetButton" class="reset-button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg> Reset</button>
+    </div>
+  </section>
+
+  <script src="/js/percentage-calculator.js" is:inline></script>
+</EmbedLayout>

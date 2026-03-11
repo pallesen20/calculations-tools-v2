@@ -1,0 +1,153 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { getConversionTools } from '../../utils/getPages';
+
+const tocItems = [
+  { id: 'tools',       label: 'All conversion tools' },
+  { id: 'why-convert', label: 'Why use an online converter?' },
+  { id: 'accuracy',    label: 'Accuracy & rounding' },
+  { id: 'faq',         label: 'FAQs' },
+];
+---
+
+<CalculatorLayout
+  title="Online Conversion Tools"
+  metaTitle="Free Online Conversion Tools | Unit Converters ᐅ"
+  description="Free online unit converters for length, weight, temperature, currency, and more. Fast, accurate, and no registration needed."
+  canonical="https://calculations.tools/conversion"
+  tocItems={tocItems}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container cv-container">
+
+        <div class="calculator-header">
+          <h2>Conversion Tools</h2>
+          <p>Pick a converter below to get started</p>
+        </div>
+
+        <div class="cv-grid">
+          {getConversionTools().map(tool => (
+            <a href={`/conversion/${tool.slug}`} class="cv-card no-underline">
+              <div class="cv-icon">{tool.icon}</div>
+              <div class="cv-body">
+                <div class="cv-title">{tool.title}</div>
+                <div class="cv-short">{tool.short}</div>
+                <div class="cv-desc">{tool.description}</div>
+                {tool.units && <div class="cv-units">{tool.units}</div>}
+              </div>
+              <div class="cv-arrow">→</div>
+            </a>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="tools">All conversion tools</h2>
+      <p>This collection covers the most common unit conversions people search for. Each tool works instantly in your browser — no app, no login, no ads. Just type a value and get the result.</p>
+
+      <h2 id="why-convert">Why use an online converter?</h2>
+      <p>Manual unit conversion is error-prone, especially when working across different measurement systems. The metric system, imperial system, and US customary system all have overlapping but distinct units — and getting them wrong can matter a lot, whether you're cooking, shipping, building, or coding.</p>
+      <p>Online converters remove the mental overhead. You don't need to remember that 1 mile is 1.60934 km or that 1 stone is 6.35029 kg. Just enter the number, pick your units, and move on.</p>
+      <p>For currency, the advantage is even clearer — exchange rates change daily, and any hardcoded conversion in your head is already out of date. Our currency converter fetches live mid-market rates so you always see the real value.</p>
+
+      <h2 id="accuracy">Accuracy and rounding</h2>
+      <p>All converters use the exact conversion factors defined by the International Bureau of Weights and Measures (BIPM) and other relevant standards bodies. Results are rounded to a sensible number of decimal places to avoid false precision — for example, converting 1 mile gives you 1.60934 km, not 1.6093439999999999 km.</p>
+      <p>For currency, rates are sourced from a reliable financial data provider and updated daily. They reflect the mid-market rate — the rate before any bank or broker markup is added.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>Are these converters free?</h3>
+      <p>Yes, completely. No registration, no usage limits, no premium tiers.</p>
+
+      <h3>Do the converters work on mobile?</h3>
+      <p>Yes. Every tool is fully responsive and works on phones and tablets.</p>
+
+      <h3>How accurate is the currency converter?</h3>
+      <p>It uses live mid-market rates updated daily. These are the real exchange rates — the same ones you see on financial news sites. Banks and exchange bureaus add their own markup on top of these rates.</p>
+
+      <h3>Can I convert between metric and imperial units?</h3>
+      <p>Yes. All the unit converters support both metric and imperial (and US customary) units in the same tool. Just pick your source and target unit from the dropdowns.</p>
+
+      <h3>How do I suggest a new converter?</h3>
+      <p>Use the contact link in the footer. We're always adding new tools based on what people actually need.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style>
+  .cv-container { max-width: 100% !important; }
+  .cv-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .cv-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .cv-card:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.25);
+    transform: translateX(3px);
+  }
+  .cv-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    width: 2.5rem;
+    text-align: center;
+    margin-top: 0.1rem;
+  }
+  .cv-body { flex: 1; min-width: 0; }
+  .cv-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.1rem;
+  }
+  .cv-short {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+  .cv-desc {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.4;
+  }
+  .cv-units {
+    margin-top: 0.4rem;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.3);
+    font-family: 'Courier New', monospace;
+  }
+  .cv-arrow {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    align-self: center;
+    transition: color 0.2s, transform 0.15s;
+  }
+  .cv-card:hover .cv-arrow {
+    color: rgba(255,255,255,0.7);
+    transform: translateX(3px);
+  }
+</style>

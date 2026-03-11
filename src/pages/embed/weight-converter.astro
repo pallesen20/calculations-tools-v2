@@ -1,0 +1,51 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Weight Converter — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Weight Converter</h2>
+        <p>Enter a value and select units</p>
+      </div>
+
+      <div id="wt-quick" class="lc-quick"></div>
+
+      <div class="lc-inputs">
+        <div class="input-group">
+          <label for="wt-value">Value</label>
+          <input id="wt-value" type="number" value="1" placeholder="Enter value" />
+        </div>
+        <div class="input-group">
+          <label for="wt-from">From</label>
+          <select id="wt-from"></select>
+        </div>
+        <div class="unit-swap-wrap">
+          <button class="unit-swap" id="wt-swap" title="Swap units" aria-label="Swap units">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+          </button>
+        </div>
+        <div class="input-group">
+          <label for="wt-to">To</label>
+          <select id="wt-to"></select>
+        </div>
+      </div>
+
+      <div class="lc-result-box">
+        <div class="result-label">Result</div>
+        <div class="lc-result" id="wt-result">—</div>
+        <div class="lc-result-desc" id="wt-result-desc"></div>
+      </div>
+
+      <div>
+        <h3 id="wt-common-title" class="lc-common-title"></h3>
+        <div id="wt-common" class="lc-common-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/weight-converter.js" is:inline></script>
+</EmbedLayout>

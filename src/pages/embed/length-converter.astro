@@ -1,0 +1,66 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Length Converter — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Length Converter</h2>
+        <p>Enter a value and select units</p>
+      </div>
+
+      <div id="lc-quick" class="lc-quick"></div>
+
+      <div class="lc-inputs">
+        <div class="input-group">
+          <label for="lc-value">Value</label>
+          <input id="lc-value" type="number" value="1" placeholder="Enter value" />
+        </div>
+        <div class="input-group">
+          <label for="lc-from">From</label>
+          <select id="lc-from"></select>
+        </div>
+        <div class="unit-swap-wrap">
+          <button class="unit-swap" id="lc-swap" title="Swap units" aria-label="Swap units">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+          </button>
+        </div>
+        <div class="input-group">
+          <label for="lc-to">To</label>
+          <select id="lc-to"></select>
+        </div>
+      </div>
+
+      <div class="lc-result-box">
+        <div class="result-label">Result</div>
+        <div class="lc-result" id="lc-result">—</div>
+        <div class="lc-result-desc" id="lc-result-desc"></div>
+      </div>
+
+      <div class="lc-common-section">
+        <h3 id="lc-common-title" class="lc-common-title"></h3>
+        <div id="lc-common" class="lc-common-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/length-converter.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .lc-quick { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .lc-quick-btn { padding: 0.35rem 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; color: rgba(255,255,255,0.85); font-size: 0.75rem; cursor: pointer; }
+  .lc-inputs { display: grid; grid-template-columns: 1fr 1fr auto 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+  .lc-inputs input, .lc-inputs select { width: 100%; padding: 0.5rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 0.875rem; box-sizing: border-box; }
+  .lc-result-box { background: linear-gradient(135deg, #2563eb, #7c3aed); border-radius: 10px; padding: 1rem; text-align: center; margin-bottom: 1rem; }
+  .lc-result { font-size: 1.75rem; font-weight: 700; color: white; }
+  .lc-result-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 0.25rem; }
+  .lc-common-title { font-size: 0.9rem; font-weight: 600; color: white; margin-bottom: 0.5rem; }
+  .lc-common-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+  .lc-common-row { display: flex; justify-content: space-between; background: rgba(255,255,255,0.05); border-radius: 6px; padding: 0.5rem 0.6rem; font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+  .lc-common-val { color: #93c5fd; font-weight: 600; }
+  @media (max-width: 480px) { .lc-inputs { grid-template-columns: 1fr; } .lc-common-grid { grid-template-columns: 1fr; } }
+</style>

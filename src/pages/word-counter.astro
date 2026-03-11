@@ -1,0 +1,208 @@
+---
+import CalculatorLayout from '../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use', label: 'How to use this tool' },
+  { id: 'what-is', label: 'What is a word counter?' },
+  { id: 'why-use', label: 'Why use a word counter?' },
+  { id: 'character-limits', label: 'Character limits by platform' },
+  { id: 'seo', label: 'How it helps with SEO' },
+  { id: 'faq', label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What is a word counter?", "acceptedAnswer": { "@type": "Answer", "text": "A word counter is an online tool that counts words, characters, sentences, and paragraphs in your text instantly." } },
+    { "@type": "Question", "name": "Are spaces counted as characters?", "acceptedAnswer": { "@type": "Answer", "text": "Most character counters show counts both including and excluding spaces." } },
+    { "@type": "Question", "name": "Is my text saved when I use this tool?", "acceptedAnswer": { "@type": "Answer", "text": "No. All analysis happens locally in your browser. Nothing is sent to any server." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="Word Counter"
+  metaTitle='Online Word and Character Counter | Free Word Count Tool ᐅ'
+  description="Count words, characters, sentences, and paragraphs in real time. Get reading time, speaking time, and keyword stats instantly."
+  canonical="https://calculations.tools/word-counter"
+  tocItems={tocItems}
+  embedSlug="word-counter"
+  schema={schema}
+>
+
+  <!-- CALCULATOR WIDGET -->
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Enter your text</h2>
+          <p>Paste or type below — stats update as you type</p>
+        </div>
+
+        <textarea
+          id="wc-input"
+          class="wc-textarea"
+          placeholder="Start typing or paste your text here..."
+          rows="8"
+        ></textarea>
+
+        <div class="wc-actions">
+          <button id="wc-copy-stats" class="wc-btn" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="width:1rem;height:1rem"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M5.333 10.667H4a1.333 1.333 0 0 1-1.333-1.333V4A1.333 1.333 0 0 1 4 2.667h5.333A1.333 1.333 0 0 1 10.666 4v1.333m-4 8h5.333A1.333 1.333 0 0 0 13.332 12V6.667a1.333 1.333 0 0 0-1.333-1.333H6.666a1.333 1.333 0 0 0-1.333 1.333V12a1.333 1.333 0 0 0 1.333 1.333"/></svg> Copy stats</button>
+          <button id="wc-reset" class="wc-btn wc-btn-ghost" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M2.667 2.667V6h.388m10.237 1.333A5.334 5.334 0 0 0 3.055 6m0 0H6m7.333 7.333V10h-.387m0 0A5.335 5.335 0 0 1 2.708 8.667M12.946 10H10"/></svg> Reset</button>
+        </div>
+
+        <!-- Stats grid -->
+        <div id="wc-stats-grid" class="wc-stats-grid hidden">
+          {[
+            { id: 'wc-words',      label: 'Words',                   gradient: 'from-blue-500 to-purple-600' },
+            { id: 'wc-chars',      label: 'Characters',               gradient: 'from-green-500 to-teal-600' },
+            { id: 'wc-chars-ns',   label: 'Characters (no spaces)',   gradient: 'from-orange-500 to-yellow-600' },
+            { id: 'wc-spaces',     label: 'Spaces',                   gradient: 'from-pink-500 to-rose-600' },
+            { id: 'wc-sentences',  label: 'Sentences',                gradient: 'from-red-500 to-pink-600' },
+            { id: 'wc-paragraphs', label: 'Paragraphs',               gradient: 'from-purple-500 to-indigo-600' },
+            { id: 'wc-reading',    label: 'Reading time',             gradient: 'from-cyan-500 to-blue-600' },
+            { id: 'wc-speaking',   label: 'Speaking time',            gradient: 'from-emerald-500 to-green-600' },
+          ].map(stat => (
+            <div class={`wc-stat-card bg-gradient-to-r ${stat.gradient}`}>
+              <div class="wc-stat-label">{stat.label}</div>
+              <div class="wc-stat-value" id={stat.id}>0</div>
+            </div>
+          ))}
+
+          <div id="wc-keyword-card" class="wc-keyword-card hidden">
+            <div class="wc-keyword-title">Top keywords</div>
+            <div id="wc-keywords" class="wc-keyword-grid"></div>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div id="wc-empty" class="wc-empty">
+          <p>Start typing to see your stats</p>
+          <p class="wc-empty-sub">Words, characters, reading time and more — all update in real time</p>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/word-counter.js" is:inline></script>
+  </div>
+
+  <!-- LONG-FORM CONTENT -->
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Type or paste your text into the box above. Every stat updates instantly as you type — no button to press. Hit "Copy stats" to grab a summary you can paste elsewhere, or "Reset" to clear and start fresh.</p>
+
+      <h2 id="what-is">What is a word counter?</h2>
+      <p>A word counter is a tool that measures text length across multiple dimensions: word count, character count, sentence count, and paragraph count. This one also calculates reading time, speaking time, and keyword density so you get a complete picture of your text in one place.</p>
+
+      <h2 id="why-use">Why use a word counter?</h2>
+      <p>Every platform and format has different requirements. Twitter has a 280-character limit. Google meta descriptions work best between 150–160 characters. University assignments often require a minimum word count. A word counter removes the guesswork — you see exactly where you stand and can adjust before publishing or submitting.</p>
+      <p>It's useful for writers, students, social media managers, marketers, editors, and developers. Anyone who writes for a specific format or platform benefits from having accurate counts on demand.</p>
+
+      <h2 id="character-limits">Character limits by platform</h2>
+      <p>Here are the most common limits worth knowing:</p>
+      <ul>
+        <li>Twitter/X: 280 characters</li>
+        <li>Instagram caption: 2,200 characters</li>
+        <li>LinkedIn post: 3,000 characters</li>
+        <li>Facebook post: 63,206 characters (shorter performs better)</li>
+        <li>Google meta title: 50–60 characters</li>
+        <li>Google meta description: 150–160 characters</li>
+        <li>Google Ads headline: 30 characters</li>
+        <li>SMS: 160 characters</li>
+      </ul>
+
+      <h2 id="seo">How it helps with SEO</h2>
+      <p>Search engines care about content length and keyword relevance. Meta titles, descriptions, and headings all have ideal character ranges. Going over those limits means your text gets truncated in search results, which hurts click-through rates. The keyword density feature also helps you check that your main topic appears enough times without being overused.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>What is a word counter?</h3>
+      <p>A tool that counts words, characters, sentences, and paragraphs in your text. This one also shows reading time, speaking time, and keyword density.</p>
+
+      <h3>Are spaces counted as characters?</h3>
+      <p>This tool shows both — characters including spaces and characters without spaces — so you can use whichever number the platform requires.</p>
+
+      <h3>How is reading time calculated?</h3>
+      <p>Based on an average reading speed of 200 words per minute, which is a widely accepted estimate for adult readers.</p>
+
+      <h3>How is speaking time calculated?</h3>
+      <p>Based on an average speaking pace of 150 words per minute, which is typical for presentations and speeches.</p>
+
+      <h3>Is my text saved or shared?</h3>
+      <p>No. All analysis happens locally in your browser. Nothing you type is sent to any server.</p>
+
+      <h3>Does it work on mobile?</h3>
+      <p>Yes, it's fully responsive and works on any device with a browser.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style>
+  .wc-textarea { min-height: 200px; }
+  .wc-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .wc-keyword-card {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    border-radius: 12px;
+    padding: 1.25rem;
+    color: white;
+  }
+  .wc-keyword-title {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .wc-keyword-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .keyword-item {
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    text-align: center;
+    min-width: 80px;
+  }
+  .keyword-word { font-weight: 600; text-transform: capitalize; }
+  .keyword-pct  { font-size: 0.8rem; opacity: 0.8; }
+  .keyword-count { font-size: 0.7rem; opacity: 0.6; }
+  .wc-empty {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: rgba(255,255,255,0.5);
+  }
+  .wc-empty-sub {
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    opacity: 0.7;
+  }
+  .wc-toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    color: white;
+    font-size: 0.875rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s, transform 0.25s;
+    z-index: 100;
+  }
+  .wc-toast-show { opacity: 1; transform: translateY(0); }
+</style>

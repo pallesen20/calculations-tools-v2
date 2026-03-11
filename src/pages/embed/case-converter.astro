@@ -1,0 +1,70 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+
+const BTNS = [
+  { type: 'sentence',    label: 'Sentence case', toast: 'Converted to sentence case',    gradient: 'from-blue-500 to-blue-600' },
+  { type: 'lower',       label: 'lower case',    toast: 'Converted to lower case',       gradient: 'from-green-500 to-green-600' },
+  { type: 'upper',       label: 'UPPER CASE',    toast: 'Converted to UPPER CASE',       gradient: 'from-purple-500 to-purple-600' },
+  { type: 'capitalized', label: 'Capitalized',   toast: 'Converted to Capitalized Case', gradient: 'from-orange-500 to-orange-600' },
+  { type: 'title',       label: 'Title Case',    toast: 'Converted to Title Case',       gradient: 'from-cyan-500 to-cyan-600' },
+  { type: 'inverse',     label: 'iNVERSE',       toast: 'Converted to iNVERSE cASE',     gradient: 'from-red-500 to-red-600' },
+];
+---
+
+<EmbedLayout title="Case Converter — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Case Converter</h2>
+        <p>Paste your text, then click a case to convert</p>
+      </div>
+
+      <textarea
+        id="cc-input"
+        class="cc-textarea"
+        placeholder="Paste your text here..."
+        rows="5"
+      ></textarea>
+
+      <div class="cc-actions">
+        <button id="cc-copy"  class="wc-btn" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+        <button id="cc-reset" class="wc-btn wc-btn-ghost" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg> Reset</button>
+      </div>
+
+      <div id="cc-btns" class="cc-btns">
+        {BTNS.map(b => (
+          <button
+            class={`cc-case-btn bg-gradient-to-r ${b.gradient}`}
+            data-case={b.type}
+            data-toast={b.toast}
+            disabled
+          >
+            {b.label}
+          </button>
+        ))}
+      </div>
+
+      <div id="cc-stats" class="cc-stats hidden">
+        <div class="cc-stat"><div class="cc-stat-label">Characters</div><div class="cc-stat-value" id="cc-chars">0</div></div>
+        <div class="cc-stat"><div class="cc-stat-label">Words</div><div class="cc-stat-value" id="cc-words">0</div></div>
+        <div class="cc-stat"><div class="cc-stat-label">Sentences</div><div class="cc-stat-value" id="cc-sentences">0</div></div>
+        <div class="cc-stat"><div class="cc-stat-label">Spaces</div><div class="cc-stat-value" id="cc-spaces">0</div></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/case-converter.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .cc-textarea { width: 100%; min-height: 130px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 0.875rem; color: white; font-size: 0.95rem; resize: vertical; box-sizing: border-box; margin-top: 1rem; }
+  .cc-textarea::placeholder { color: rgba(255,255,255,0.35); }
+  .cc-actions { display: flex; gap: 0.5rem; margin: 0.75rem 0 1rem; }
+  .cc-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1rem; }
+  .cc-case-btn { padding: 0.6rem 0.4rem; border: none; border-radius: 8px; color: white; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
+  .cc-case-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .cc-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+  .cc-stat { background: rgba(255,255,255,0.05); border-radius: 8px; padding: 0.75rem 0.5rem; text-align: center; }
+  .cc-stat-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 0.25rem; }
+  .cc-stat-value { font-size: 1.4rem; font-weight: 700; color: white; }
+</style>

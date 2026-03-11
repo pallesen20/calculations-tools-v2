@@ -1,0 +1,485 @@
+---
+import CalculatorLayout from '../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'what-is-iso',   label: 'What is ISO 8601?' },
+  { id: 'week-53',       label: 'Years with 53 weeks' },
+  { id: 'code',          label: 'Programming routines' },
+  { id: 'faq',           label: 'FAQs' },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What is the current week number?", "acceptedAnswer": { "@type": "Answer", "text": "The current ISO 8601 week number is shown at the top of this page and updates automatically every week." } },
+    { "@type": "Question", "name": "How is the ISO 8601 week number calculated?", "acceptedAnswer": { "@type": "Answer", "text": "Week 1 is the week containing the first Thursday of the year. Weeks start on Monday. A year can have 52 or 53 weeks." } },
+    { "@type": "Question", "name": "How do I get the week number in Excel?", "acceptedAnswer": { "@type": "Answer", "text": "Use =ISOWEEKNUM(TODAY()) for the ISO week number. In older versions, use =WEEKNUM(TODAY(),21) where 21 means ISO-8601." } },
+  ]
+};
+---
+
+<CalculatorLayout
+  title="What Week Number Is It?"
+  metaTitle='What Week Number Is It? | Current Week Number 2026 ᐅ'
+  description="Instantly see the current ISO 8601 week number. Full calendar of all weeks in the year with start and end dates, plus code snippets for 20+ programming languages."
+  canonical="https://calculations.tools/week-number"
+  tocItems={tocItems}
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container wn-container">
+
+        <!-- Hero -->
+        <div class="wn-hero">
+          <div class="wn-hero-bg"></div>
+          <div class="wn-label">Current Week Number</div>
+          <div class="wn-number" id="wn-number">--</div>
+          <div class="wn-range" id="wn-range">Loading…</div>
+          <div class="wn-live">
+            <span class="wn-dot"></span>
+            <span>Updates automatically every week</span>
+          </div>
+          <div class="wn-bar-wrap">
+            <div class="wn-bar-fill" id="wn-progress" style="width:0%"></div>
+          </div>
+          <div class="wn-bar-label" id="wn-progress-label">Year progress</div>
+        </div>
+
+        <!-- Info cards -->
+        <div class="wn-cards">
+          <div class="wn-card">
+            <div class="wn-card-val" id="wn-day">--</div>
+            <div class="wn-card-lbl">Day of Year</div>
+          </div>
+          <div class="wn-card">
+            <div class="wn-card-val" id="wn-remaining">--</div>
+            <div class="wn-card-lbl">Days Remaining</div>
+          </div>
+          <div class="wn-card">
+            <div class="wn-card-val" id="wn-quarter">--</div>
+            <div class="wn-card-lbl">Quarter</div>
+          </div>
+          <div class="wn-card">
+            <div class="wn-card-val" id="wn-leap">--</div>
+            <div class="wn-card-lbl">Leap Year</div>
+          </div>
+        </div>
+
+        <!-- Week table -->
+        <div class="wn-table-card">
+          <h2 class="wn-table-title">
+            All Week Numbers <span id="wn-table-year">2026</span>
+          </h2>
+          <p class="wn-table-sub">ISO 8601 week numbering · Weeks start on Monday</p>
+          <div class="wn-table-wrap">
+            <table class="wn-table">
+              <thead>
+                <tr>
+                  <th>Week</th>
+                  <th>From (Monday)</th>
+                  <th>To (Sunday)</th>
+                </tr>
+              </thead>
+              <tbody id="wn-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Programming routines -->
+        <div class="wn-code-card">
+          <h2 class="wn-code-title">Programming Routines</h2>
+          <p class="wn-code-sub">Get the current ISO 8601 week number in your language</p>
+
+          {[
+            { lang: 'Excel',      label: 'Microsoft Excel / LibreOffice Calc',
+              code: `=ISOWEEKNUM(TODAY())`,
+              note: `Or in older versions: <code>=WEEKNUM(TODAY(),21)</code> where 21 is ISO-8601. In Excel 2007 use <code>WEEKNUM(TODAY(),2)</code>.` },
+            { lang: 'Sheets',     label: 'Google Sheets',
+              code: `=WEEKNUM(TODAY();21)`,
+              note: `Type 21 is ISO-8601 — compatible with Excel and LibreOffice.` },
+            { lang: 'PHP',        label: 'PHP',
+              code: `$weekNumber = date("W");`,
+              note: `Or <code>date("W", epoch)</code> for other dates. Use capital <code>W</code>, not <code>w</code>.` },
+            { lang: 'Python',     label: 'Python',
+              code: `datetime.date.today().isocalendar()[1]` },
+            { lang: 'Perl',       label: 'Perl',
+              code: `my $weekNumber = POSIX::strftime("%V", gmtime time);`,
+              note: `Replace <code>time</code> with other epoch timestamps for other week numbers.` },
+            { lang: 'Java',       label: 'Java',
+              code: `Calendar now = Calendar.getInstance();\nnow.get(Calendar.WEEK_OF_YEAR);`,
+              note: `Use <code>WEEK_OF_YEAR</code> from the Calendar class.` },
+            { lang: 'JS',         label: 'JavaScript',
+              code: `Date.prototype.getWeek = function () {\n    var target  = new Date(this.valueOf());\n    var dayNr   = (this.getDay() + 6) % 7;\n    target.setDate(target.getDate() - dayNr + 3);\n    var firstThursday = target.valueOf();\n    target.setMonth(0, 1);\n    if (target.getDay() != 4) {\n        target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);\n    }\n    return 1 + Math.ceil((firstThursday - target) / 604800000);\n}\n\nvar d = new Date();\nalert(d.getWeek());`,
+              note: `Extend the Date prototype using the above code.` },
+            { lang: 'C#',         label: 'C#',
+              code: `CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(\n    DateTime.Now,\n    CalendarWeekRule.FirstFourDayWeek,\n    DayOfWeek.Monday\n);` },
+            { lang: 'MySQL',      label: 'MySQL',
+              code: `SELECT WEEKOFYEAR(NOW())`,
+              note: `Or <code>SELECT WEEK(NOW(), 3)</code> using mode 3 for ISO-8601.` },
+            { lang: 'PostgreSQL', label: 'PostgreSQL',
+              code: `SELECT EXTRACT(WEEK FROM CURRENT_DATE)` },
+            { lang: 'MS SQL',     label: 'MS SQL Server',
+              code: `SELECT DATEPART(wk, GETDATE())` },
+            { lang: 'Oracle',     label: 'Oracle',
+              code: `SELECT TO_CHAR(SYSDATE, 'IW') FROM DUAL`,
+              note: `<code>IW</code> = ISO-8601 week (1–52 or 1–53). <code>WW</code> = week starting Jan 1 (mostly unused).` },
+            { lang: 'iSeries',    label: 'iSeries SQL',
+              code: `SELECT WEEK(NOW()) FROM sysibm.sysdummy1` },
+            { lang: 'Obj-C',      label: 'Objective-C (iPhone / Mac)',
+              code: `[NSString stringWithFormat:@"Week %d",\n  [calendar ordinalityOfUnit:NSWeekCalendarUnit\n                      inUnit:NSYearCalendarUnit\n                     forDate:date]];` },
+            { lang: 'Swift',      label: 'Swift (iOS)',
+              code: `let gregorian = NSCalendar(calendarIdentifier:\n    NSCalendarIdentifierGregorian)!\ngregorian.firstWeekday = 2 // Monday\ngregorian.minimumDaysInFirstWeek = 4\nlet components = gregorian.components(\n    .WeekOfYearCalendarUnit | .YearForWeekOfYearCalendarUnit,\n    fromDate: date)\nlet week = components.weekOfYear` },
+            { lang: 'R',          label: 'R',
+              code: `lubridate::week()` },
+            { lang: 'Ruby',       label: 'Ruby',
+              code: `week_number = Time.now.strftime("%V")`,
+              note: `<code>%U</code> = week starting Sunday · <code>%V</code> = ISO-8601 · <code>%W</code> = week starting Monday.` },
+            { lang: 'Go',         label: 'Go',
+              code: `year, week := time.Now().ISOWeek()` },
+            { lang: 'Bash',       label: 'Linux / Bash',
+              code: `date +%V`,
+              note: `Returns the ISO-8601 week number. See <code>man date</code> for more formats.` },
+            { lang: 'Lua',        label: 'Lua',
+              code: `Current_week = os.date("%V")` },
+            { lang: 'PowerShell', label: 'Windows PowerShell',
+              code: `Get-Date -UFormat %V\n# or\n"{0:d2}" -f ($(Get-Culture).Calendar.GetWeekOfYear(\n  $(Get-Date),\n  [System.Globalization.CalendarWeekRule]::FirstFourDayWeek,\n  [DayOfWeek]::Monday))` },
+            { lang: 'X++',        label: 'X++ (Microsoft Dynamics AX)',
+              code: `int weeknum;\nweeknum = weekOfYear(today());` },
+            { lang: 'C/AL',       label: 'C/AL (Microsoft Dynamics NAV)',
+              code: `MESSAGE(FORMAT(CALCDATE('CW', TODAY), 0, '<week>'));` },
+          ].map(({ lang, label, code, note }) => (
+            <div class="wn-snippet">
+              <div class="wn-snippet-title">
+                <span class="wn-lang">{lang}</span>
+                {label}
+              </div>
+              <div class="wn-code-block">
+                <button class="wn-copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>{code}</code>
+              </div>
+              {note && <div class="wn-note" set:html={note} />}
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/week-number.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <h2 id="what-is-iso">What is the ISO 8601 week number?</h2>
+      <p>ISO 8601 is an international standard for representing dates and times. Under this standard, week 1 of the year is defined as the week containing the first Thursday of the year — which means it's always the week with at least 4 days in the new year. Weeks start on Monday and end on Sunday.</p>
+      <p>This system is widely used in Europe, Scandinavia, and many business and government contexts. It's also the standard used by most programming languages and databases when you request a "week number."</p>
+      <p>A practical implication: January 1st is not always in week 1. If January 1st falls on a Friday, Saturday, or Sunday, those days belong to the last week of the previous year under ISO 8601.</p>
+
+      <h2 id="week-53">Years with 53 weeks</h2>
+      <p>Most years have exactly 52 ISO weeks. A year has 53 weeks when January 1st or December 31st falls on a Thursday. This happens roughly every 5 or 6 years. Week 53 only ever contains 1–3 days, bridging the gap between two calendar years.</p>
+
+      <h2 id="code">Using week numbers in code</h2>
+      <p>The programming routines above cover Excel, Google Sheets, PHP, Python, JavaScript, Java, C#, MySQL, PostgreSQL, Oracle, Go, Ruby, Swift, and many more. They all follow the ISO 8601 standard — week starts Monday, week 1 contains the first Thursday.</p>
+      <p>One common gotcha: in JavaScript, the Date object has no built-in ISO week method. The snippet above extends the Date prototype with a correct implementation. In Python, <code>isocalendar()[1]</code> is the cleanest approach. In PHP, use uppercase <code>W</code> — lowercase <code>w</code> returns the day of the week instead.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>Why doesn't week 1 always start on January 1?</h3>
+      <p>Because ISO 8601 defines week 1 by its Thursday, not its first day. If January 1st is a Friday, it's in week 53 of the previous year. Week 1 of the new year starts on the following Monday.</p>
+
+      <h3>What's the difference between ISO week numbers and US week numbers?</h3>
+      <p>In the US, weeks traditionally start on Sunday and week 1 is simply the week containing January 1st. ISO 8601 weeks start on Monday and week 1 is the week with the first Thursday. This means they can differ by 1 week, especially early and late in the year.</p>
+
+      <h3>How do I get the ISO week number in Excel?</h3>
+      <p>Use <code>=ISOWEEKNUM(TODAY())</code>. In older versions of Excel that don't have this function, use <code>=WEEKNUM(TODAY(),21)</code> — return type 21 is ISO-8601.</p>
+
+      <h3>Can a week span two different years?</h3>
+      <p>Yes. The last few days of December can belong to week 1 of the following year, and the first few days of January can belong to week 52 or 53 of the previous year, depending on what day of the week they fall on.</p>
+
+      <h3>Do all countries use the ISO week numbering system?</h3>
+      <p>No. The US, Canada, and some other countries traditionally count weeks starting on Sunday with week 1 anchored to January 1st. The ISO system is the norm in Europe and is the international standard for business communication.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .wn-container { max-width: 100% !important; }
+  /* ── Hero ── */
+  .wn-hero {
+    position: relative;
+    text-align: center;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .wn-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1));
+    pointer-events: none;
+  }
+  .wn-hero > * { position: relative; z-index: 1; }
+  .wn-label {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .wn-number {
+    font-size: clamp(4rem, 12vw, 7rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    animation: wn-pulse 3s ease-in-out infinite;
+  }
+  @keyframes wn-pulse {
+    0%,100% { transform: scale(1); }
+    50%      { transform: scale(1.02); }
+  }
+  .wn-range {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-top: 0.75rem;
+  }
+  .wn-live {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .wn-dot {
+    width: 8px; height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: wn-dot-pulse 2s ease-in-out infinite;
+  }
+  @keyframes wn-dot-pulse {
+    0%,100% { box-shadow: 0 0 6px rgba(34,197,94,.6); }
+    50%      { box-shadow: 0 0 14px rgba(34,197,94,.9); }
+  }
+  .wn-bar-wrap {
+    max-width: 380px;
+    margin: 1.25rem auto 0;
+    background: rgba(255,255,255,0.1);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .wn-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--brand-from), var(--brand-to));
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+  .wn-bar-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+  }
+  /* ── Info cards ── */
+  .wn-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 640px) { .wn-cards { grid-template-columns: repeat(2, 1fr); } }
+  .wn-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    text-align: center;
+  }
+  .wn-card-val {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: white;
+  }
+  .wn-card-lbl {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  /* ── Week table ── */
+  .wn-table-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .wn-table-title {
+    text-align: center;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+  }
+  .wn-table-sub {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+  .wn-table-wrap { overflow-x: auto; }
+  .wn-table {
+    width: 100%;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  .wn-table thead { background: rgba(0,0,0,0.25); }
+  .wn-table th {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .wn-table td {
+    padding: 0.6rem 1.25rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s;
+  }
+  .wn-table tbody tr:last-child td { border-bottom: none; }
+  .wn-table tbody tr:hover td { background: rgba(255,255,255,0.04); }
+  .wn-current-row td {
+    background: rgba(59,130,246,0.18) !important;
+    color: white !important;
+    font-weight: 600;
+  }
+  .wn-badge {
+    display: inline-block;
+    background: var(--brand-gradient);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    margin-left: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+  }
+  /* ── Code section ── */
+  .wn-code-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 1rem;
+    padding: 1.75rem;
+  }
+  .wn-code-title {
+    text-align: center;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+  }
+  .wn-code-sub {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+  .wn-snippet { margin-bottom: 1.5rem; }
+  .wn-snippet-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.4rem;
+  }
+  .wn-lang {
+    background: rgba(59,130,246,0.25);
+    color: #93c5fd;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+  .wn-code-block {
+    position: relative;
+    background: rgba(0,0,0,0.38);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0.65rem;
+    padding: 1.1rem 1rem;
+    overflow-x: auto;
+  }
+  .wn-code-block code {
+    font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: #93c5fd;
+    line-height: 1.6;
+    white-space: pre;
+    display: block;
+  }
+  .wn-copy-btn {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .wn-copy-btn:hover { background: rgba(255,255,255,0.18); color: white; }
+  .wn-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+    line-height: 1.55;
+  }
+  .wn-note code {
+    background: rgba(255,255,255,0.1);
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+  }
+  @media (max-width: 640px) {
+    .wn-hero       { padding: 1.75rem 1rem; border-radius: 1rem; }
+    .wn-table th,
+    .wn-table td   { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+    .wn-code-block { font-size: 0.75rem; }
+    .wn-badge      { display: none; }
+  }
+</style>
