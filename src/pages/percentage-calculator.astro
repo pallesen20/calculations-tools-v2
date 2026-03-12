@@ -37,6 +37,7 @@ const schema = [
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
     "description": "Calculate percentages, percentage increase, percentage decrease, and what percentage one number is of another. Free, instant, no registration.",
+    "isAccessibleForFree": true,
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   },
   {
@@ -121,7 +122,7 @@ const schema = [
 
 <CalculatorLayout
   title="Percentage Calculator"
-  metaTitle="Percentage Calculator — Find %, Increase, Decrease & More"
+  metaTitle="Percentage Calculator - Find %, Increase, Decrease & More ᐅ"
   description="Calculate any percentage instantly: find X% of a number, work out a percentage increase or decrease, or see what percentage one number is of another. Free tool with full formula explanations."
   canonical="https://calculations.tools/percentage-calculator"
   tocItems={tocItems}
@@ -185,7 +186,7 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Select one of the four modes at the top of the tool, enter your values, and the result updates immediately. No submit button needed.</p>
+      <p>Select one of the four modes at the top of the tool, enter your values, and the result updates immediately. No submit button needed. All calculations run locally in your browser, nothing is sent to a server, and results are rounded to four decimal places.</p>
       <ul>
         <li><strong>Basic Percentage:</strong> find what X% of a given number equals</li>
         <li><strong>Percentage Increase:</strong> calculate how much a value has grown</li>
@@ -238,6 +239,7 @@ const schema = [
       <h2 id="formulas">All percentage formulas</h2>
       <p>All four percentage calculations are variations of the same core relationship: divide a part by a base and multiply by 100.</p>
 
+      <div class="responsive-table">
       <table>
         <thead>
           <tr>
@@ -269,6 +271,7 @@ const schema = [
           </tr>
         </tbody>
       </table>
+      </div>
 
       <h3>Percentage change vs. percentage difference</h3>
       <p><strong>Percentage change</strong> has a direction. You know which value is the starting point, and the original is always the base. Use it for before-and-after comparisons: an old price vs. a new price, or last year's revenue vs. this year's.</p>

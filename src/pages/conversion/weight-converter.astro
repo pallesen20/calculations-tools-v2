@@ -2,29 +2,62 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const tocItems = [
-  { id: 'how-to-use', label: 'How to use this converter' },
-  { id: 'metric',     label: 'Metric system' },
-  { id: 'imperial',   label: 'Imperial system' },
-  { id: 'common',     label: 'Common conversions' },
-  { id: 'reference',  label: 'Quick reference table' },
-  { id: 'faq',        label: 'FAQs' },
+  { id: 'how-to-use',        label: 'How to use this converter' },
+  { id: 'metric',            label: 'Metric weight units' },
+  { id: 'imperial',          label: 'Imperial and traditional units' },
+  { id: 'three-tons',        label: 'The three tons explained' },
+  { id: 'common',            label: 'Common conversions' },
+  { id: 'reference',         label: 'Quick reference table' },
+  { id: 'common-mistakes',   label: 'Common mistakes' },
+  { id: 'faq',               label: 'FAQs' },
+  { id: 'related-tools',     label: 'Related tools' },
 ];
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": "How do I convert kg to pounds?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply kilograms by 2.20462. Example: 70 kg × 2.20462 = 154.32 pounds." } },
-    { "@type": "Question", "name": "How many ounces are in a pound?", "acceptedAnswer": { "@type": "Answer", "text": "1 pound equals exactly 16 ounces." } },
-    { "@type": "Question", "name": "How do I convert grams to ounces?", "acceptedAnswer": { "@type": "Answer", "text": "Divide grams by 28.3495. Example: 100 grams ÷ 28.3495 = 3.53 ounces." } },
-  ]
-};
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Weight Converter",
+    "url": "https://calculations.tools/conversion/weight-converter",
+    "description": "Convert between metric and imperial weight units instantly. Supports kilograms, grams, milligrams, metric tons, pounds, ounces, stone, US short tons, and UK long tons.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert weight units",
+    "description": "Step-by-step guide to converting between metric and imperial weight units using the weight converter.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter a value", "text": "Type the number you want to convert in the value field." },
+      { "@type": "HowToStep", "position": 2, "name": "Select the source unit", "text": "Choose the unit you are converting from in the From dropdown." },
+      { "@type": "HowToStep", "position": 3, "name": "Select the target unit", "text": "Choose the unit you want to convert to in the To dropdown." },
+      { "@type": "HowToStep", "position": 4, "name": "Read the result", "text": "The converted value appears instantly below the inputs. Use the swap button to reverse the conversion direction." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I convert kg to pounds?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply kilograms by 2.20462. Example: 70 kg x 2.20462 = 154.32 pounds. For a quick mental estimate, multiply by 2.2." } },
+      { "@type": "Question", "name": "How many ounces are in a pound?", "acceptedAnswer": { "@type": "Answer", "text": "Exactly 16 avoirdupois ounces. This is the standard for everyday goods. Note that precious metals use troy ounces, where 1 troy pound = 12 troy ounces, not 16." } },
+      { "@type": "Question", "name": "What is the difference between a metric ton and a US ton?", "acceptedAnswer": { "@type": "Answer", "text": "A metric ton (tonne) is exactly 1,000 kg or 2,204.62 pounds. A US short ton is exactly 2,000 pounds or 907.185 kg. A UK long ton is 2,240 pounds or 1,016.05 kg. The metric ton is about 10% heavier than the US ton." } },
+      { "@type": "Question", "name": "How do I convert grams to ounces?", "acceptedAnswer": { "@type": "Answer", "text": "Divide grams by 28.3495. Example: 100 g / 28.3495 = 3.527 oz. Or multiply by 0.035274." } },
+      { "@type": "Question", "name": "What is a stone in weight?", "acceptedAnswer": { "@type": "Answer", "text": "A stone is exactly 14 pounds or 6.35029 kg. It is used almost exclusively in the United Kingdom and Ireland for expressing body weight. It is not used in the United States or in scientific contexts." } },
+      { "@type": "Question", "name": "How do I convert pounds to kilograms?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply pounds by 0.453592, or divide by 2.20462. Example: 150 lbs x 0.453592 = 68.039 kg." } },
+      { "@type": "Question", "name": "What is the difference between weight and mass?", "acceptedAnswer": { "@type": "Answer", "text": "Mass is the amount of matter in an object, measured in kilograms. Weight is the gravitational force acting on that mass, measured in Newtons. In everyday use the two terms are used interchangeably, but in physics and engineering they are distinct. All conversions on this page are for mass." } }
+    ]
+  }
+];
 ---
 
 <CalculatorLayout
   title="Weight Converter"
-  metaTitle='Weight Unit Converter | Weight Conversion Calculator ᐅ'
-  description="Convert between metric and imperial weight units instantly. Kilograms, pounds, ounces, grams, tons, and more."
+  metaTitle="Weight Converter | Weight Conversion Calculator ᐅ"
+  description="Convert between metric and imperial weight units instantly. Kilograms, grams, pounds, ounces, stone, metric tons, US tons, and UK long tons. Free, accurate, no sign-up."
   canonical="https://calculations.tools/conversion/weight-converter"
   tocItems={tocItems}
   embedSlug="weight-converter"
@@ -36,8 +69,8 @@ const schema = {
       <div class="calculator-container">
 
         <div class="calculator-header">
-          <h2>Weight Unit Converter</h2>
-          <p>Enter a value and select units — result updates instantly</p>
+          <h2>Instant Weight Conversion Calculator</h2>
+          <p>Enter a value and select units - result updates instantly</p>
         </div>
         <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
         <div id="wt-quick" class="lc-quick"></div>
@@ -66,7 +99,7 @@ const schema = {
 
         <div class="lc-result-box">
           <div class="result-label">Result</div>
-          <div class="lc-result" id="wt-result">—</div>
+          <div class="lc-result" id="wt-result">-</div>
           <div class="lc-result-desc" id="wt-result-desc"></div>
         </div>
 
@@ -84,79 +117,186 @@ const schema = {
   <div slot="content">
     <div class="seo-container">
 
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This converter handles all common metric and imperial weight units: milligrams, grams, kilograms, metric tons, ounces, pounds, stone, US short tons, and UK long tons. Enter a value, pick your units, and the result appears immediately. All conversions use internationally defined factors and run entirely in your browser.</p>
+      </div>
+
       <h2 id="how-to-use">How to use this converter</h2>
-      <p>Type a value, choose your "From" and "To" units, and the result appears immediately. Use the quick conversion buttons to jump straight to the most common pairs.</p>
+      <p>Type a value in the input field, select the unit you are converting from, then select the unit you want. The result updates as you type. The swap button reverses the direction without retyping. Quick conversion buttons at the top jump straight to the most common pairs: kg to lbs, lbs to kg, g to oz, and oz to g.</p>
+      <p>All calculations run locally in your browser. No data is sent anywhere. Results use exact conversion factors rather than approximations.</p>
 
-      <h2 id="metric">Metric system</h2>
-      <p>The metric system uses grams and kilograms as its base weight units, with units scaling by powers of 1000.</p>
-      <ul>
-        <li>1 metric ton = 1,000 kilograms</li>
-        <li>1 kilogram = 1,000 grams</li>
-        <li>1 gram = 1,000 milligrams</li>
-      </ul>
-
-      <h2 id="imperial">Imperial system</h2>
-      <p>The imperial system is primarily used in the United States and has less regular relationships between units.</p>
-      <ul>
-        <li>1 short ton = 2,000 pounds</li>
-        <li>1 stone = 14 pounds</li>
-        <li>1 pound = 16 ounces</li>
-        <li>1 ounce = 28.3495 grams</li>
-      </ul>
-
-      <h2 id="common">Common conversions</h2>
-      <p><strong>KG to pounds:</strong> multiply by 2.20462. Example: 75 kg × 2.20462 = 165.35 lbs</p>
-      <p><strong>Pounds to KG:</strong> divide by 2.20462. Example: 150 lbs ÷ 2.20462 = 68.04 kg</p>
-      <p><strong>Grams to ounces:</strong> divide by 28.3495. Example: 250 g ÷ 28.3495 = 8.82 oz</p>
-      <p><strong>Ounces to grams:</strong> multiply by 28.3495. Example: 10 oz × 28.3495 = 283.5 g</p>
-      <p><strong>Stones to pounds:</strong> multiply by 14. Example: 12 st × 14 = 168 lbs</p>
-      <p><strong>Metric tons to pounds:</strong> multiply by 2204.62. Example: 2 t × 2204.62 = 4409.24 lbs</p>
-
-      <h2 id="reference">Quick reference table</h2>
+      <h2 id="metric">Metric weight units</h2>
+      <p>The metric system measures mass in grams, scaling by powers of 1000. The kilogram is the SI base unit of mass and is the most widely used unit in science, medicine, and international trade.</p>
+      <div class="responsive-table">
       <table>
         <thead>
-          <tr><th>From</th><th>To</th><th>Formula</th></tr>
+          <tr><th>Unit</th><th>Symbol</th><th>Kilograms (exact)</th><th>Common use</th></tr>
         </thead>
         <tbody>
-          <tr><td>kg</td><td>pounds</td><td>× 2.20462</td></tr>
-          <tr><td>pounds</td><td>kg</td><td>÷ 2.20462</td></tr>
-          <tr><td>grams</td><td>ounces</td><td>÷ 28.3495</td></tr>
-          <tr><td>ounces</td><td>grams</td><td>× 28.3495</td></tr>
-          <tr><td>pounds</td><td>ounces</td><td>× 16</td></tr>
-          <tr><td>ounces</td><td>pounds</td><td>÷ 16</td></tr>
-          <tr><td>kg</td><td>grams</td><td>× 1000</td></tr>
-          <tr><td>grams</td><td>kg</td><td>÷ 1000</td></tr>
-          <tr><td>metric tons</td><td>pounds</td><td>× 2204.62</td></tr>
-          <tr><td>stones</td><td>pounds</td><td>× 14</td></tr>
-          <tr><td>pounds</td><td>stones</td><td>÷ 14</td></tr>
+          <tr><td>Metric ton (tonne)</td><td>t</td><td>1,000 kg</td><td>Bulk goods, shipping, steel</td></tr>
+          <tr><td>Kilogram</td><td>kg</td><td>1 kg</td><td>Body weight, groceries, science</td></tr>
+          <tr><td>Gram</td><td>g</td><td>0.001 kg</td><td>Cooking, nutrition labels</td></tr>
+          <tr><td>Milligram</td><td>mg</td><td>0.000001 kg</td><td>Medicine, supplements, chemistry</td></tr>
         </tbody>
       </table>
+      </div>
+
+      <h2 id="imperial">Imperial and traditional units</h2>
+      <p>Imperial weight units (the avoirdupois system) are anchored to the pound, which is defined as exactly 453.59237 grams by international agreement. All other imperial weight units follow from this.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Unit</th><th>Symbol</th><th>Kilograms (exact)</th><th>Common use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>UK long ton</td><td>long ton</td><td>1,016.047 kg</td><td>UK shipping, older industry</td></tr>
+          <tr><td>US short ton</td><td>US ton</td><td>907.185 kg</td><td>US industry, agriculture</td></tr>
+          <tr><td>Stone</td><td>st</td><td>6.35029 kg</td><td>Body weight (UK, Ireland only)</td></tr>
+          <tr><td>Pound</td><td>lb</td><td>0.453592 kg</td><td>Body weight (US), groceries, recipes</td></tr>
+          <tr><td>Ounce</td><td>oz</td><td>0.028350 kg</td><td>Cooking, postal weights, small goods</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>A note on ounces: this converter uses the avoirdupois ounce (28.3495 g), which is the standard for all everyday goods. Precious metals use a different unit, the troy ounce, which is 31.1035 g. If you are weighing gold, silver, or other precious metals, do not use this converter for ounces without accounting for the difference. The troy ounce is about 9.7% heavier than the avoirdupois ounce.</p>
+
+      <h2 id="three-tons">The three tons explained</h2>
+      <p>Three different units are all called a "ton," and they are not interchangeable. Mixing them up in shipping, engineering, or commodities trading is a costly mistake.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Also called</th><th>In pounds</th><th>In kilograms</th><th>Used where</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Metric ton</td><td>Tonne</td><td>2,204.62 lb</td><td>1,000 kg exactly</td><td>International trade, science, most of the world</td></tr>
+          <tr><td>US short ton</td><td>Ton (US)</td><td>2,000 lb exactly</td><td>907.185 kg</td><td>United States industry, agriculture</td></tr>
+          <tr><td>UK long ton</td><td>Imperial ton</td><td>2,240 lb exactly</td><td>1,016.047 kg</td><td>UK (historical), some Commonwealth countries</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The metric ton is the most common in international contexts. When a commodity price is quoted "per ton" in a financial or trade document without qualification, it usually means the metric ton. When you see "ton" in a US context, it usually means the short ton.</p>
+
+      <h2 id="common">Common conversions</h2>
+
+      <h3>Kilograms and pounds</h3>
+      <p>1 lb = 0.453592 kg exactly. 1 kg = 2.20462 lb.</p>
+      <ul>
+        <li>70 kg to lbs: 70 × 2.20462 = 154.32 lbs</li>
+        <li>150 lbs to kg: 150 × 0.453592 = 68.039 kg</li>
+        <li>A typical adult body weight of 75 kg = 165.35 lbs = 11 st 11.3 lb</li>
+      </ul>
+
+      <h3>Grams and ounces</h3>
+      <p>1 oz = 28.3495 g exactly (avoirdupois). 1 g = 0.035274 oz.</p>
+      <ul>
+        <li>100 g to oz: 100 ÷ 28.3495 = 3.527 oz</li>
+        <li>500 g to lbs: 500 × 0.453592 = 1.1023 lbs (just over 1 lb)</li>
+        <li>1 lb to g: 453.592 g (useful for recipes converting US to metric)</li>
+      </ul>
+
+      <h3>Stone and pounds</h3>
+      <p>1 stone = 14 lbs exactly. 1 stone = 6.35029 kg.</p>
+      <ul>
+        <li>10 stone to kg: 10 × 6.35029 = 63.503 kg</li>
+        <li>11 stone 5 lbs: (11 × 14) + 5 = 159 lbs = 72.121 kg</li>
+        <li>To convert kg to stone: divide kg by 6.35029, then separate the decimal into whole stones and pounds × 14</li>
+      </ul>
+
+      <h3>Metric tons and other units</h3>
+      <ul>
+        <li>1 metric ton to lbs: 1,000 × 2.20462 = 2,204.62 lbs</li>
+        <li>1 US short ton to kg: 2,000 × 0.453592 = 907.185 kg</li>
+        <li>1 metric ton vs 1 US ton: the metric ton is 92.815 kg (about 204.6 lbs) heavier</li>
+      </ul>
+
+      <h2 id="reference">Quick reference table</h2>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>From</th><th>To</th><th>Multiply by</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>kg</td><td>lbs</td><td>2.20462</td><td>70 kg × 2.20462 = 154.32 lbs</td></tr>
+          <tr><td>lbs</td><td>kg</td><td>0.453592</td><td>150 lbs × 0.453592 = 68.04 kg</td></tr>
+          <tr><td>g</td><td>oz</td><td>0.035274</td><td>100 g × 0.035274 = 3.527 oz</td></tr>
+          <tr><td>oz</td><td>g</td><td>28.3495</td><td>10 oz × 28.3495 = 283.5 g</td></tr>
+          <tr><td>lbs</td><td>oz</td><td>16</td><td>2.5 lbs × 16 = 40 oz</td></tr>
+          <tr><td>oz</td><td>lbs</td><td>÷ 16</td><td>24 oz ÷ 16 = 1.5 lbs</td></tr>
+          <tr><td>kg</td><td>g</td><td>1,000</td><td>1.5 kg × 1000 = 1,500 g</td></tr>
+          <tr><td>g</td><td>kg</td><td>÷ 1,000</td><td>750 g ÷ 1000 = 0.75 kg</td></tr>
+          <tr><td>stone</td><td>lbs</td><td>14</td><td>11 st × 14 = 154 lbs</td></tr>
+          <tr><td>stone</td><td>kg</td><td>6.35029</td><td>10 st × 6.35029 = 63.5 kg</td></tr>
+          <tr><td>metric ton</td><td>lbs</td><td>2,204.62</td><td>2 t × 2204.62 = 4,409.24 lbs</td></tr>
+          <tr><td>metric ton</td><td>US ton</td><td>1.10231</td><td>5 t × 1.10231 = 5.512 US tons</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Mixing up the three types of ton</h3>
+      <p>A metric ton (1,000 kg), US short ton (907 kg), and UK long ton (1,016 kg) differ by up to 10%. When a price or weight is expressed in "tons" without qualification, check which system the source is using. In international trade and scientific contexts, assume metric. In US domestic contexts, assume short tons.</p>
+
+      <h3>Using the avoirdupois ounce for precious metals</h3>
+      <p>Gold, silver, platinum, and other precious metals are quoted and traded in troy ounces (31.1035 g), not avoirdupois ounces (28.3495 g). A troy ounce is about 9.7% heavier. If you type "1 oz" into this converter, you get the avoirdupois result. For precious metals, multiply your troy ounces by 31.1035 to get grams directly.</p>
+
+      <h3>Entering mixed stone and pounds as a decimal</h3>
+      <p>"12 stone 7 lbs" is not 12.7 stone. It is 12 + (7/14) = 12.5 stone = 79.379 kg. To convert a mixed stone-and-pounds value, convert the pounds to a fraction of a stone first (divide by 14), then add to the whole stone number before entering it in the converter.</p>
 
       <h2 id="faq">FAQs</h2>
 
       <h3>How do I convert kg to pounds?</h3>
-      <p>Multiply by 2.20462. Example: 70 kg × 2.20462 = 154.32 lbs.</p>
+      <p>Multiply kilograms by 2.20462. Example: 70 kg × 2.20462 = 154.32 lbs. For a quick mental estimate, multiply by 2.2 - this gives a result about 0.21% lower than the exact value, which is fine for everyday purposes but not for precision work.</p>
 
       <h3>How many ounces are in a pound?</h3>
-      <p>Exactly 16 ounces.</p>
-
-      <h3>How do I convert grams to ounces?</h3>
-      <p>Divide by 28.3495. Example: 100 g ÷ 28.3495 = 3.53 oz.</p>
-
-      <h3>How many grams are in a kilogram?</h3>
-      <p>Exactly 1,000 grams.</p>
-
-      <h3>How many pounds are in a stone?</h3>
-      <p>Exactly 14 pounds.</p>
+      <p>Exactly 16 avoirdupois ounces. This is the standard for all everyday goods including food, postal items, and body care products. Precious metals use the troy system, where 1 troy pound = 12 troy ounces, but the troy pound itself is rarely used. Gold and silver prices are almost always quoted per troy ounce.</p>
 
       <h3>What is the difference between a metric ton and a US ton?</h3>
-      <p>A metric ton equals 1,000 kg or 2,204.62 lbs. A US short ton equals exactly 2,000 lbs.</p>
+      <p>A metric ton (also written "tonne") is exactly 1,000 kg or 2,204.62 lbs. A US short ton is exactly 2,000 lbs or 907.185 kg. The metric ton is about 10% heavier. A UK long ton sits between them at 2,240 lbs or 1,016.05 kg. In international trade, "ton" almost always means metric unless the context is specifically US domestic.</p>
 
-      <h3>How do I convert body weight from kg to pounds?</h3>
-      <p>Multiply by 2.20462. Example: 70 kg = 154.32 lbs. For a quick estimate, multiply by 2.2.</p>
+      <h3>How do I convert grams to ounces?</h3>
+      <p>Divide by 28.3495, or multiply by 0.035274. Example: 250 g ÷ 28.3495 = 8.818 oz. The exact factor is derived from 1 lb = 453.59237 g and 1 lb = 16 oz, so 1 oz = 453.59237 ÷ 16 = 28.34952... g.</p>
 
-      <h3>Can I use this for cooking measurements?</h3>
-      <p>Yes — convert between grams, ounces, pounds, and kilograms for any recipe.</p>
+      <h3>What is a stone, and where is it used?</h3>
+      <p>A stone is exactly 14 pounds or 6.35029 kg. It is used almost exclusively in the UK and Ireland for expressing human body weight. You will see it on UK bathroom scales and in British medical contexts ("the patient weighs 12 stone 4"). It is not used in the US, not used in science, and not used in any international context.</p>
+
+      <h3>How do I convert pounds to kilograms?</h3>
+      <p>Multiply by 0.453592 (or divide by 2.20462). Example: 150 lbs × 0.453592 = 68.039 kg. The exact definition is 1 lb = 0.45359237 kg, set by international agreement in 1959.</p>
+
+      <h3>What is the difference between weight and mass?</h3>
+      <p>Mass is the amount of matter in an object, measured in kilograms. Weight is the gravitational force acting on that mass, measured in Newtons. On the surface of the Earth, an object with a mass of 1 kg has a weight of about 9.81 N. In everyday language, the two terms are used interchangeably. All values on this page are mass conversions, which is what people mean when they say "I weigh 70 kg."</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter</a>
+            <p>Convert between meters, kilometers, feet, inches, miles, and more.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📐</span>
+          <div>
+            <a href="/conversion/height-converter">Height Converter</a>
+            <p>Convert between cm, meters, feet, and the combined ft+in format used for personal height.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter">Temperature Converter</a>
+            <p>Convert between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/percentage-calculator">Percentage Calculator</a>
+            <p>Calculate percentage increases and decreases, find what percent one number is of another.</p>
+          </div>
+        </li>
+      </ul>
 
     </div>
   </div>
