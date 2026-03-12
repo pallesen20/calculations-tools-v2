@@ -69,7 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  input.addEventListener('input', refresh);
+  input.addEventListener('input',  refresh);
+  input.addEventListener('change', refresh);
+  input.addEventListener('keyup',  refresh);
 
   document.getElementById('cc-btns').addEventListener('click', e => {
     const btn = e.target.closest('.cc-case-btn');

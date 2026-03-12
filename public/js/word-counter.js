@@ -107,7 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hasText) updateStats(stats);
   }
 
-  input.addEventListener('input', refresh);
+  input.addEventListener('input',  refresh);
+  input.addEventListener('change', refresh);
+  input.addEventListener('keyup',  refresh);
 
   resetBtn.addEventListener('click', () => {
     input.value = '';

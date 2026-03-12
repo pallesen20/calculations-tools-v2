@@ -2,28 +2,62 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const tocItems = [
-  { id: 'how-to-use', label: 'How to use this converter' },
-  { id: 'mid-market', label: 'What is the mid-market rate?' },
-  { id: 'popular',    label: 'Popular conversions' },
-  { id: 'bank-rates', label: 'Why bank rates differ' },
-  { id: 'faq',        label: 'FAQs' },
+  { id: 'how-to-use',           label: 'How to use this converter' },
+  { id: 'mid-market',           label: 'The mid-market rate' },
+  { id: 'how-rates-work',       label: 'How exchange rates work' },
+  { id: 'provider-comparison',  label: 'Comparing exchange providers' },
+  { id: 'popular-pairs',        label: 'Popular currency pairs' },
+  { id: 'travelers',            label: 'Practical tips for travelers' },
+  { id: 'common-mistakes',      label: 'Common mistakes' },
+  { id: 'faq',                  label: 'FAQs' },
+  { id: 'related-tools',        label: 'Related tools' },
 ];
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": "How accurate are the exchange rates?", "acceptedAnswer": { "@type": "Answer", "text": "Rates are sourced from a reliable financial data provider and updated daily. We display the mid-market rate — the fairest rate available without markups." } },
-    { "@type": "Question", "name": "What is the mid-market exchange rate?", "acceptedAnswer": { "@type": "Answer", "text": "The mid-market rate is the midpoint between the buy and sell prices of two currencies — the real rate without any bank or broker markup." } },
-    { "@type": "Question", "name": "Why is my bank's rate different?", "acceptedAnswer": { "@type": "Answer", "text": "Banks add a margin to the mid-market rate — typically 2–5% or more. Our converter shows the mid-market rate so you can see the true value and compare." } },
-  ]
-};
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Currency Converter",
+    "url": "https://calculations.tools/conversion/currency-converter",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Convert between 150+ currencies using live mid-market exchange rates. Includes a multi-currency comparison table. Free, no sign-up.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert currencies with this tool",
+    "description": "Step-by-step guide to converting between currencies using live mid-market rates.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter an amount", "text": "Type the amount you want to convert in the Amount field." },
+      { "@type": "HowToStep", "position": 2, "name": "Select source currency", "text": "Choose the currency you are converting from in the left dropdown." },
+      { "@type": "HowToStep", "position": 3, "name": "Select target currency", "text": "Choose the currency you want to convert to in the right dropdown." },
+      { "@type": "HowToStep", "position": 4, "name": "Read the result", "text": "The converted amount and current exchange rate appear instantly below. Use the swap button to reverse the conversion direction." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is the mid-market exchange rate?", "acceptedAnswer": { "@type": "Answer", "text": "The mid-market rate is the midpoint between the buy and sell prices for two currencies on the global foreign exchange market. It is the rate banks use when trading with each other - also called the interbank rate. It has no markup added, which is why it differs from what banks and exchange bureaus offer to consumers." } },
+      { "@type": "Question", "name": "Why is my bank's exchange rate different?", "acceptedAnswer": { "@type": "Answer", "text": "Banks add a profit margin - typically 2 to 5% - to the mid-market rate for retail customers. Airport exchange desks often charge 8 to 12% above mid-market. This converter shows the mid-market rate so you can see the true exchange rate and identify how much markup you are paying elsewhere." } },
+      { "@type": "Question", "name": "How often are the exchange rates updated?", "acceptedAnswer": { "@type": "Answer", "text": "Rates are updated once per day. The exact update time is shown below the exchange rate in the converter. For high-value or time-sensitive transactions, always confirm the rate with your actual payment provider." } },
+      { "@type": "Question", "name": "What is a bid-ask spread in currency exchange?", "acceptedAnswer": { "@type": "Answer", "text": "The bid price is what a market maker will pay to buy a currency from you. The ask price is what they charge to sell it to you. The difference between these two prices is the spread, which is the market maker's profit. The mid-market rate sits exactly between the bid and ask." } },
+      { "@type": "Question", "name": "What is the cheapest way to exchange currency?", "acceptedAnswer": { "@type": "Answer", "text": "Fintech transfer services (such as Wise or Revolut) typically offer the closest rates to mid-market with transparent flat fees, making them the most cost-effective for most amounts. Credit cards with no foreign transaction fee are also competitive. Bank wire transfers and airport exchange desks tend to be the most expensive options." } },
+      { "@type": "Question", "name": "How do I convert USD to EUR?", "acceptedAnswer": { "@type": "Answer", "text": "Select USD in the left dropdown, enter your amount, then select EUR in the right dropdown. The converted amount appears instantly. You can also use the swap button to reverse the conversion." } },
+      { "@type": "Question", "name": "What is a currency cross rate?", "acceptedAnswer": { "@type": "Answer", "text": "A cross rate is the exchange rate between two currencies that are neither the US dollar nor the domestic currency of the country where the rate is quoted. For example, EUR/JPY is a cross rate. Cross rates are usually calculated through their USD values - the USD acts as an intermediary in most global currency pricing." } },
+      { "@type": "Question", "name": "Are cryptocurrency conversions supported?", "acceptedAnswer": { "@type": "Answer", "text": "No. This converter covers traditional fiat currencies only. Cryptocurrency markets are open 24/7 and use entirely different pricing mechanisms, so they require separate tools." } }
+    ]
+  }
+];
 ---
 
 <CalculatorLayout
   title="Currency Converter"
-  metaTitle='Currency Converter | Live Exchange Rates Calculator ᐅ'
-  description="Convert between 150+ currencies with live mid-market exchange rates. Updated daily, free, no registration needed."
+  metaTitle="Currency Converter | Live Exchange Rates for 150+ Currencies ᐅ"
+  description="Convert between 150+ currencies with live mid-market exchange rates. Updated daily. Includes multi-currency comparison table, provider cost guide, and practical tips for travelers."
   canonical="https://calculations.tools/conversion/currency-converter"
   tocItems={tocItems}
   embedSlug="currency-converter"
@@ -68,7 +102,7 @@ const schema = {
 
           <div class="cc-result-box">
             <div class="cc-result-label">Exchange Rate</div>
-            <div class="cc-result-rate" id="cc-rate">—</div>
+            <div class="cc-result-rate" id="cc-rate">-</div>
             <div class="cc-result-updated" id="cc-updated">Loading rates…</div>
           </div>
 
@@ -79,7 +113,7 @@ const schema = {
             </svg>
             <div class="wise-body">
               <p class="wise-msg" id="cc-wise-msg">Sending USD to EUR? You could save money with Wise.</p>
-              <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener" class="wise-btn no-underline" id="cc-wise-btn">See your saved amount (free)</a>
+              <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener noreferrer" class="wise-btn no-underline" id="cc-wise-btn">See your saved amount (free)</a>
             </div>
           </div>
         </div>
@@ -87,7 +121,7 @@ const schema = {
         <!-- Comparison table card -->
         <div class="cc-table-card">
           <h3 class="cc-table-title">Currency Comparison Table</h3>
-          <p class="cc-table-sub">Click any row to edit the amount — all others update automatically</p>
+          <p class="cc-table-sub">Click any row to edit the amount - all others update automatically</p>
 
           <div id="cc-table-body" class="cc-table-body"></div>
 
@@ -105,48 +139,172 @@ const schema = {
   <div slot="content">
     <div class="seo-container">
 
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This converter uses the <strong>mid-market rate</strong> - the real exchange rate without any bank markup. To convert, enter your amount, choose your source currency and target currency, and read the result instantly. Banks and exchange bureaus typically charge 2-12% above this rate, so comparing the mid-market rate to what you are being offered tells you exactly how much a conversion is costing you.</p>
+      </div>
+
       <h2 id="how-to-use">How to use this converter</h2>
-      <p>Enter your amount, select your source currency, then pick your target currency. The result updates as you type. Hit the swap button to reverse the direction instantly. Your last used currencies and amount are saved for next time.</p>
-      <p>The comparison table below the converter lets you see multiple currencies at once. Click any row and type a new amount — everything else updates automatically.</p>
+      <p>Enter your amount in the top field, choose the currency you are converting from, then pick your target currency. The result and current exchange rate update instantly as you type. The swap button reverses the direction and uses the converted amount as the new starting value, so you can immediately see the conversion both ways without retyping.</p>
+      <p>The Currency Comparison Table below the main converter lets you track multiple currencies at once. Click any row, type a new value, and all other rows update automatically to reflect that amount. You can add or remove currencies using the dropdown at the bottom of the table. Your settings are saved automatically for your next visit.</p>
 
-      <h2 id="mid-market">What is the mid-market rate?</h2>
-      <p>The mid-market rate (also called the interbank rate) is the midpoint between the buy and sell prices of two currencies on the global market. It's the "real" exchange rate — the one you see on Google or financial news sites, and the rate banks use when trading with each other.</p>
-      <p>Most currency exchange services add a markup to this rate to make a profit. Showing you the mid-market rate means you can see the true value of your money and compare it to what banks or exchange bureaus are actually offering.</p>
+      <h2 id="mid-market">The mid-market rate</h2>
+      <p>The mid-market rate is the midpoint between the buy price (bid) and sell price (ask) for a currency pair on the global foreign exchange market. It is also called the interbank rate or spot rate. This is the rate banks use when trading large amounts with each other - it has no markup added.</p>
+      <p>When you exchange money at a bank or exchange bureau, the provider buys your currency at the bid price (lower than mid-market) and sells the target currency at the ask price (higher than mid-market). The difference is their profit margin. The mid-market rate sits exactly halfway between the two, making it the fairest reference point for judging any exchange offer.</p>
 
-      <h2 id="popular">Popular conversions</h2>
-      <p><strong>USD to EUR:</strong> The most traded currency pair globally. Used for European travel, EU online shopping, and international business.</p>
-      <p><strong>GBP to USD:</strong> Common for US travel from the UK and purchasing from American retailers.</p>
-      <p><strong>EUR to GBP:</strong> Used for UK travel, property transactions, and business with British companies.</p>
-      <p><strong>JPY to USD:</strong> The yen is the third most traded currency globally. Used for Japanese imports and investments.</p>
-      <p><strong>AUD to USD:</strong> Common for cross-border transactions between Australia and the United States.</p>
-      <p><strong>CAD to USD:</strong> Heavily traded due to close trade ties between Canada and the US.</p>
+      <h3>Bid, ask, and spread</h3>
+      <p>The spread is the difference between the bid and ask price. On major currency pairs like EUR/USD, the interbank spread can be as low as 0.01-0.03% for large institutional trades. For retail customers at a bank branch, the effective spread is typically 2-5%. At airport exchange desks, it can reach 8-12%.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Term</th><th>Definition</th><th>Example (EUR/USD)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Bid price</td><td>What the market maker pays to buy EUR from you</td><td>1.0820</td></tr>
+          <tr><td>Ask price</td><td>What the market maker charges to sell EUR to you</td><td>1.0880</td></tr>
+          <tr><td>Mid-market rate</td><td>Midpoint between bid and ask</td><td>1.0850</td></tr>
+          <tr><td>Spread</td><td>Ask minus bid - the market maker's margin</td><td>0.0060 (0.55%)</td></tr>
+        </tbody>
+      </table>
+      </div>
 
-      <h2 id="bank-rates">Why bank rates differ</h2>
-      <p>Banks and exchange bureaus add a margin to the mid-market rate — typically 2–5% for major currencies, and sometimes more for minor ones. Airport exchange desks are usually the worst, often charging 8–12% above mid-market. Our converter shows the mid-market rate so you know what you should be getting and can spot when you're being overcharged.</p>
-      <p>Credit cards typically convert close to the mid-market rate and charge a 1–3% foreign transaction fee, making them one of the better options for international spending.</p>
+      <h2 id="how-rates-work">How exchange rates work</h2>
+      <p>Exchange rates are determined by supply and demand in the global foreign exchange (forex) market, which trades approximately $7.5 trillion per day - making it the largest financial market in the world. Most currencies float freely, meaning their value against other currencies shifts continuously based on trading activity.</p>
+
+      <h3>What moves exchange rates</h3>
+      <p>Several factors drive short and long-term rate movements:</p>
+      <ul>
+        <li><strong>Interest rates:</strong> Higher interest rates attract foreign investment, increasing demand for that currency and pushing its value up. Central bank rate decisions are among the biggest short-term drivers of exchange rates.</li>
+        <li><strong>Inflation:</strong> Countries with lower inflation rates tend to see their currency appreciate over time, since their purchasing power erodes more slowly.</li>
+        <li><strong>Economic data:</strong> GDP growth, employment figures, and trade balance data all signal economic strength or weakness and move currency values.</li>
+        <li><strong>Political stability:</strong> Political uncertainty increases currency risk. Investors tend to move out of currencies when a country faces instability or policy unpredictability.</li>
+        <li><strong>Market sentiment:</strong> In risk-off environments (recessions, crises), investors move toward "safe haven" currencies such as USD, CHF, and JPY.</li>
+      </ul>
+
+      <h3>Fixed vs floating exchange rates</h3>
+      <p>Most major currencies float freely against each other. Some currencies, however, are pegged to another currency - most commonly the USD. Examples include the UAE Dirham (AED), Saudi Riyal (SAR), and Hong Kong Dollar (HKD). Pegged currencies change rarely or not at all against their peg, while floating currencies move continuously.</p>
+
+      <h2 id="provider-comparison">Comparing exchange providers</h2>
+      <p>The exchange rate you get depends heavily on which provider you use. The mid-market rate shown in this converter is the baseline - every provider charges above it to varying degrees. The table below shows typical markup ranges for different provider types.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Provider type</th><th>Typical markup above mid-market</th><th>Additional fees</th><th>Best for</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Fintech transfer (Wise, Revolut)</td><td>0.35-0.6% on major pairs</td><td>Small flat fee</td><td>International transfers, expats</td></tr>
+          <tr><td>No-fee credit card abroad</td><td>0-1%</td><td>No foreign transaction fee</td><td>Travel purchases, online shopping</td></tr>
+          <tr><td>Standard credit card abroad</td><td>1-2%</td><td>1.5-3% foreign transaction fee</td><td>Emergency use only</td></tr>
+          <tr><td>Bank wire transfer</td><td>2-5%</td><td>$15-50 per transfer</td><td>Large transfers where rate is negotiated</td></tr>
+          <tr><td>Bank branch exchange</td><td>3-6%</td><td>Sometimes a flat handling fee</td><td>Small amounts of cash in advance</td></tr>
+          <tr><td>Local ATM abroad</td><td>1-3% (card issuer)</td><td>ATM fee + possible dynamic conversion</td><td>Cash on arrival - decline DCC offer</td></tr>
+          <tr><td>Airport exchange desk</td><td>8-12%</td><td>Sometimes additional service charge</td><td>Absolute emergency only</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>These ranges are indicative. Actual rates vary by provider, currency pair, amount, and whether a promotional rate applies. Always check the all-in cost (markup plus fees) rather than comparing rates alone.</p>
+
+      <h2 id="popular-pairs">Popular currency pairs</h2>
+      <p>Seven currency pairs account for the vast majority of global forex trading volume. These are called major pairs - all include the US dollar and have the tightest spreads because of their high liquidity.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Pair</th><th>Nickname</th><th>Share of forex volume</th><th>Common use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>EUR/USD</td><td>Fiber</td><td>~23%</td><td>Europe-US trade, travel, online shopping</td></tr>
+          <tr><td>USD/JPY</td><td>Ninja / Gopher</td><td>~14%</td><td>Asian market exposure, Japanese imports</td></tr>
+          <tr><td>GBP/USD</td><td>Cable</td><td>~10%</td><td>UK-US travel, UK online retail</td></tr>
+          <tr><td>AUD/USD</td><td>Aussie</td><td>~6%</td><td>Australian travel and trade</td></tr>
+          <tr><td>USD/CAD</td><td>Loonie</td><td>~6%</td><td>Canada-US cross-border trade</td></tr>
+          <tr><td>USD/CHF</td><td>Swissie</td><td>~5%</td><td>Safe-haven flows, Swiss imports</td></tr>
+          <tr><td>NZD/USD</td><td>Kiwi</td><td>~4%</td><td>New Zealand travel and trade</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Pairs that do not include the US dollar are called minor pairs or cross rates (for example EUR/GBP, EUR/JPY). These typically have wider spreads than majors because they are less liquid. When you convert between two non-USD currencies, most providers route the trade through USD intermediately - EUR to JPY is effectively EUR to USD, then USD to JPY.</p>
+
+      <h2 id="travelers">Practical tips for travelers</h2>
+
+      <h3>Use a no-fee card for most spending</h3>
+      <p>A credit or debit card with no foreign transaction fee is usually the most cost-effective way to pay abroad. The card network (Visa or Mastercard) converts at a rate very close to mid-market, with a markup of around 0.5-1%. Cards like Wise, Revolut, Monzo, and Charles Schwab (US) are purpose-built for international use.</p>
+
+      <h3>Always pay in the local currency</h3>
+      <p>When a card terminal or ATM abroad asks "Pay in USD?" or "Pay in your home currency?", always decline and pay in the local currency. This is called Dynamic Currency Conversion (DCC). The merchant's conversion rate is typically 3-6% worse than your card's rate, and the cardholder has no upside from choosing DCC.</p>
+
+      <h3>Withdraw cash at local ATMs, not airport kiosks</h3>
+      <p>ATMs operated by local banks generally use rates much closer to mid-market than airport exchange desks. Use your card's app to check whether foreign ATM fees apply. When you do need cash before departure, ordering currency through an online bank service a few days in advance usually beats any airport or high-street exchange rate.</p>
+
+      <h3>Check the all-in cost, not just the rate</h3>
+      <p>A provider advertising "0% commission" may still apply a large markup on the rate itself. Compare by calculating how many units of the target currency you actually receive per unit of your home currency, then compare that to the mid-market rate shown here. The difference, as a percentage, is the true cost of the conversion.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Confusing the rate with the amount</h3>
+      <p>An exchange rate of 1.08 (EUR/USD) means 1 euro costs 1.08 US dollars. The rate and the converted amount are different things. If you convert 500 EUR to USD at 1.08, you receive 540 USD - the rate is 1.08, the amount is 540. Mixing these up leads to errors when calculating expected costs for travel budgets or invoices.</p>
+
+      <h3>Ignoring fees when comparing providers</h3>
+      <p>A provider offering a slightly better rate but charging a $30 flat transfer fee may still cost more than one charging 0.5% with no fixed fee - depending on the amount. For small amounts (under $500), flat fees dominate. For large amounts, the percentage markup dominates. Always calculate total cost for your specific amount.</p>
+
+      <h3>Assuming the mid-market rate is available to you</h3>
+      <p>The mid-market rate shown here is a reference rate - it is not a rate you can directly transact at unless you are a large institutional trader. It is the most useful benchmark for comparison, but you should expect to pay something above it regardless of which provider you use. The best retail providers (fintechs) typically get within 0.5% of mid-market.</p>
+
+      <h3>Using the exchange rate from one date for a future transaction</h3>
+      <p>Exchange rates move continuously. A rate quoted today may be significantly different in a week or a month. For future transactions, forward contracts (offered by specialist providers) allow you to lock in a rate today. For ordinary travel and shopping, the daily rate is fine - but don't budget a long trip based on a rate checked weeks in advance without allowing a buffer.</p>
 
       <h2 id="faq">FAQs</h2>
 
+      <h3>What is the mid-market exchange rate?</h3>
+      <p>The mid-market rate is the midpoint between the buy and sell prices for a currency pair on the global forex market. It is the benchmark rate used by banks when trading with each other and the fairest reference point for comparing any retail exchange offer. Banks and bureaus charge above it; this converter shows it.</p>
+
+      <h3>Why is my bank's exchange rate different from what I see here?</h3>
+      <p>Banks add a profit margin - typically 2 to 5% above mid-market for retail customers. Airport kiosks and high-street bureaus can charge 8-12% above mid-market. This page shows the mid-market rate so you can see the real value of your money and identify how much any provider is charging you above that baseline.</p>
+
       <h3>How often are exchange rates updated?</h3>
-      <p>Once per day. The exact update time is shown below the exchange rate in the converter.</p>
+      <p>Once per day. The exact update time is shown below the exchange rate display in the converter. For high-value or time-sensitive transactions, always confirm with your actual payment provider before committing.</p>
 
-      <h3>Why is my bank's rate different from what I see here?</h3>
-      <p>Banks add a markup to the mid-market rate — that's how they make money on currency conversions. The gap is typically 2–5% for major currencies.</p>
+      <h3>What is the cheapest way to send money internationally?</h3>
+      <p>Fintech services like Wise and Revolut typically charge the lowest all-in cost: a small flat fee plus a margin of 0.35-0.6% on the mid-market rate for major pairs. This is significantly cheaper than bank wire transfers, which often combine a worse rate with fixed fees of $15-50.</p>
 
-      <h3>Can I use this for business transactions?</h3>
-      <p>It's good for estimating values, but use your bank or payment provider's actual rate for any real transactions since theirs will differ.</p>
+      <h3>What is a currency cross rate?</h3>
+      <p>A cross rate is an exchange rate between two currencies where neither is the US dollar. EUR/GBP and EUR/JPY are examples. Most cross rates are calculated through USD as an intermediary. Cross pairs typically have wider spreads than major pairs because they are less liquid.</p>
 
-      <h3>How do I convert USD to EUR?</h3>
-      <p>Select USD from the first dropdown, enter your amount, then select EUR from the second. The conversion appears instantly.</p>
+      <h3>Can I use this for business invoicing?</h3>
+      <p>It works well for estimating values and setting indicative prices. For actual invoicing, use your bank or payment provider's confirmed rate on the day of the transaction - their rate will differ from mid-market, and your invoice should reflect what you actually receive.</p>
 
-      <h3>What does the swap button do?</h3>
-      <p>It reverses your currency selection and uses the converted result as the new starting amount, so you can immediately see the conversion going the other way.</p>
-
-      <h3>Can I use this offline?</h3>
-      <p>No — the converter needs an internet connection to fetch live exchange rates.</p>
+      <h3>Why does the same currency pair show a different rate on different sites?</h3>
+      <p>Mid-market rates vary slightly between data providers due to different sourcing methods and update times. A difference of 0.01-0.05% between sources is normal and not significant for most purposes. Larger discrepancies usually mean one source is showing a retail rate with markup applied.</p>
 
       <h3>Are cryptocurrency conversions supported?</h3>
-      <p>Not currently. This converter covers traditional fiat currencies only.</p>
+      <p>No. This converter covers traditional fiat currencies only. Crypto markets operate 24/7 and price through different mechanisms, so they require purpose-built crypto tools.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <a href="/conversion/weight-converter">
+            <span class="tool-icon">⚖️</span>
+            <span><strong>Weight Converter</strong> - kg, lbs, oz, stone, metric tons</span>
+          </a>
+        </li>
+        <li>
+          <a href="/conversion/length-converter">
+            <span class="tool-icon">📏</span>
+            <span><strong>Length Converter</strong> - km, miles, feet, inches, meters</span>
+          </a>
+        </li>
+        <li>
+          <a href="/conversion/temperature-converter">
+            <span class="tool-icon">🌡️</span>
+            <span><strong>Temperature Converter</strong> - Celsius, Fahrenheit, Kelvin</span>
+          </a>
+        </li>
+        <li>
+          <a href="/percentage-calculator">
+            <span class="tool-icon">%</span>
+            <span><strong>Percentage Calculator</strong> - increases, decreases, and differences</span>
+          </a>
+        </li>
+      </ul>
 
     </div>
   </div>
