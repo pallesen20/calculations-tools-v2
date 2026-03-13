@@ -2,29 +2,61 @@
 import CalculatorLayout from '../layouts/CalculatorLayout.astro';
 
 const tocItems = [
-  { id: 'how-to-use', label: 'How to use this tool' },
-  { id: 'what-is', label: 'What is a word counter?' },
-  { id: 'why-use', label: 'Why use a word counter?' },
-  { id: 'character-limits', label: 'Character limits by platform' },
-  { id: 'seo', label: 'How it helps with SEO' },
-  { id: 'faq', label: 'FAQs' },
+  { id: 'how-to-use',        label: 'How to use this tool' },
+  { id: 'how-stats-work',    label: 'How each stat is calculated' },
+  { id: 'word-count-targets', label: 'Word count targets by format' },
+  { id: 'character-limits',  label: 'Character limits by platform' },
+  { id: 'keyword-density',   label: 'Keyword density' },
+  { id: 'seo',               label: 'Word count and SEO' },
+  { id: 'common-mistakes',   label: 'Common mistakes' },
+  { id: 'faq',               label: 'FAQs' },
+  { id: 'related-tools',     label: 'Related tools' },
 ];
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": "What is a word counter?", "acceptedAnswer": { "@type": "Answer", "text": "A word counter is an online tool that counts words, characters, sentences, and paragraphs in your text instantly." } },
-    { "@type": "Question", "name": "Are spaces counted as characters?", "acceptedAnswer": { "@type": "Answer", "text": "Most character counters show counts both including and excluding spaces." } },
-    { "@type": "Question", "name": "Is my text saved when I use this tool?", "acceptedAnswer": { "@type": "Answer", "text": "No. All analysis happens locally in your browser. Nothing is sent to any server." } },
-  ]
-};
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Counter",
+    "url": "https://calculations.tools/word-counter",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Count words, characters, sentences, paragraphs, reading time, speaking time, and keyword density instantly. Free, private, no sign-up.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to count words and characters",
+    "description": "Use this tool to get an instant count of words, characters, sentences, and more.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Paste or type your text", "text": "Click inside the text area and type or paste the content you want to analyse." },
+      { "@type": "HowToStep", "position": 2, "name": "Read your stats instantly", "text": "Word count, character count, sentence count, reading time, speaking time, and top keywords all update as you type - no button press needed." },
+      { "@type": "HowToStep", "position": 3, "name": "Copy or reset", "text": "Use Copy stats to copy a text summary of all counts to your clipboard. Use Reset to clear the text and start fresh." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How is reading time calculated?", "acceptedAnswer": { "@type": "Answer", "text": "Reading time is based on an average adult silent reading speed of 200 words per minute. This is a widely accepted estimate for general non-technical text. Technical or dense academic content is typically read at 100-150 words per minute." } },
+      { "@type": "Question", "name": "How is speaking time calculated?", "acceptedAnswer": { "@type": "Answer", "text": "Speaking time is based on an average presentation pace of 150 words per minute. Conversational speech runs faster (180-200 WPM), while formal speeches and audiobooks typically run at 130-150 WPM. TED Talks average around 130-150 WPM." } },
+      { "@type": "Question", "name": "Are spaces counted as characters?", "acceptedAnswer": { "@type": "Answer", "text": "Both counts are shown separately. 'Characters' includes spaces. 'Characters (no spaces)' excludes them. Most platform character limits (Twitter, SMS, meta descriptions) count spaces, so use the Characters figure when checking against those limits." } },
+      { "@type": "Question", "name": "What is keyword density?", "acceptedAnswer": { "@type": "Answer", "text": "Keyword density is the percentage of times a word appears relative to total word count, excluding common stop words. For SEO, a density of 1-2% for your primary keyword is generally considered healthy. Above 3% risks appearing as keyword stuffing, which can negatively affect search rankings." } },
+      { "@type": "Question", "name": "What counts as a word?", "acceptedAnswer": { "@type": "Answer", "text": "Any sequence of characters separated by whitespace. Hyphenated words like 'state-of-the-art' count as one word. Numbers count as words. A line of only punctuation does not count as a word." } },
+      { "@type": "Question", "name": "Is my text saved or shared?", "acceptedAnswer": { "@type": "Answer", "text": "No. All analysis runs locally in your browser using JavaScript. Nothing you type is sent to any server." } },
+      { "@type": "Question", "name": "What is the ideal word count for a blog post?", "acceptedAnswer": { "@type": "Answer", "text": "For SEO, long-form blog posts of 1,500-2,500 words tend to rank better than shorter posts because they cover topics more thoroughly. For news and updates, 300-600 words is standard. Pillar content and comprehensive guides often exceed 3,000 words." } },
+      { "@type": "Question", "name": "How many words is a 5-minute speech?", "acceptedAnswer": { "@type": "Answer", "text": "At a typical presentation pace of 150 words per minute, a 5-minute speech is approximately 750 words. At a faster conversational pace of 180 WPM, it would be around 900 words. For a formal speech or talk, 750 words is a reliable estimate." } }
+    ]
+  }
+];
 ---
 
 <CalculatorLayout
   title="Word Counter"
-  metaTitle='Online Word and Character Counter | Free Word Count Tool ᐅ'
-  description="Count words, characters, sentences, and paragraphs in real time. Get reading time, speaking time, and keyword stats instantly."
+  metaTitle="Word Counter | Free Online Word & Character Count Tool ᐅ"
+  description="Count words, characters, sentences, paragraphs, reading time, speaking time, and keyword density instantly. Includes platform character limits and word count targets by content type. Free, private, no sign-up."
   canonical="https://calculations.tools/word-counter"
   tocItems={tocItems}
   embedSlug="word-counter"
@@ -37,8 +69,8 @@ const schema = {
       <div class="calculator-container">
 
         <div class="calculator-header">
-          <h2>Enter your text</h2>
-          <p>Paste or type below — stats update as you type</p>
+          <h2>Free Online Word & Character Count Tool</h2>
+          <p>Paste or type below - stats update as you type</p>
         </div>
 
         <textarea
@@ -80,7 +112,7 @@ const schema = {
         <!-- Empty state -->
         <div id="wc-empty" class="wc-empty">
           <p>Start typing to see your stats</p>
-          <p class="wc-empty-sub">Words, characters, reading time and more — all update in real time</p>
+          <p class="wc-empty-sub">Words, characters, reading time and more - all update in real time</p>
         </div>
 
       </div>
@@ -93,51 +125,172 @@ const schema = {
   <div slot="content">
     <div class="seo-container">
 
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Paste or type your text into the box above. <strong>Words, characters, sentences, paragraphs, reading time, speaking time, and top keywords</strong> all update instantly as you type. Nothing is sent to a server - all analysis runs in your browser. Use "Copy stats" to grab a summary, or "Reset" to clear and start fresh.</p>
+      </div>
+
       <h2 id="how-to-use">How to use this tool</h2>
-      <p>Type or paste your text into the box above. Every stat updates instantly as you type — no button to press. Hit "Copy stats" to grab a summary you can paste elsewhere, or "Reset" to clear and start fresh.</p>
+      <p>Type or paste your text into the box. Every stat updates as you type - no button to press. The stats grid shows all counts once text is present. "Copy stats" copies a plain-text summary of all counts to your clipboard. "Reset" clears everything.</p>
 
-      <h2 id="what-is">What is a word counter?</h2>
-      <p>A word counter is a tool that measures text length across multiple dimensions: word count, character count, sentence count, and paragraph count. This one also calculates reading time, speaking time, and keyword density so you get a complete picture of your text in one place.</p>
+      <h2 id="how-stats-work">How each stat is calculated</h2>
 
-      <h2 id="why-use">Why use a word counter?</h2>
-      <p>Every platform and format has different requirements. Twitter has a 280-character limit. Google meta descriptions work best between 150–160 characters. University assignments often require a minimum word count. A word counter removes the guesswork — you see exactly where you stand and can adjust before publishing or submitting.</p>
-      <p>It's useful for writers, students, social media managers, marketers, editors, and developers. Anyone who writes for a specific format or platform benefits from having accurate counts on demand.</p>
+      <h3>Word count</h3>
+      <p>Any sequence of characters separated by whitespace counts as one word. Hyphenated compounds like "state-of-the-art" count as one word. Numbers count as words. A run of only punctuation or whitespace does not.</p>
+
+      <h3>Character count</h3>
+      <p>Two counts are shown: Characters (including spaces) and Characters (no spaces). Most platform limits - Twitter, SMS, Google meta fields - count spaces, so use the "Characters" figure when checking against those limits.</p>
+
+      <h3>Sentence count</h3>
+      <p>Sentences are detected by terminal punctuation: periods, exclamation marks, and question marks. Abbreviations like "Dr." or "e.g." can overcount slightly if they appear mid-sentence, but for practical purposes the count is accurate enough for all common use cases.</p>
+
+      <h3>Reading time</h3>
+      <p>Calculated at <strong>200 words per minute</strong> - a widely accepted average for adult silent reading of general non-technical text. Dense academic or technical content is typically read at 100-150 WPM, so the displayed time may be an underestimate for highly specialised material.</p>
+
+      <h3>Speaking time</h3>
+      <p>Calculated at <strong>150 words per minute</strong> - a typical pace for presentations, speeches, and formal talks. Conversational speech runs faster (180-200 WPM); slow, deliberate oratory runs slower (120-130 WPM). TED Talks average around 130-150 WPM. For most presentation planning, 150 WPM is a reliable middle estimate.</p>
+
+      <h3>Top keywords</h3>
+      <p>The five most frequent words in your text, excluding common stop words (the, a, and, is, in, etc.). Each keyword shows its count and its density as a percentage of total word count. This helps you quickly check whether your main topic appears enough - or too often.</p>
+
+      <h2 id="word-count-targets">Word count targets by format</h2>
+      <p>Every writing format has an expected length. Falling significantly short or over affects readability, platform performance, and - for academic or professional work - compliance with requirements.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Format</th><th>Typical word count</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tweet / X post</td><td>up to ~70 words</td><td>280-character limit; shorter posts tend to get more engagement</td></tr>
+          <tr><td>Instagram caption</td><td>up to ~330 words</td><td>2,200-character limit; text truncates after ~125 chars in feed</td></tr>
+          <tr><td>LinkedIn post</td><td>up to ~450 words</td><td>3,000-character limit; algorithm favours posts over 150 words</td></tr>
+          <tr><td>Email newsletter</td><td>200-500 words</td><td>Longer emails have lower read-through rates</td></tr>
+          <tr><td>Press release</td><td>400-600 words</td><td>One page is the standard; leads should be in the first paragraph</td></tr>
+          <tr><td>Short blog post / news</td><td>300-600 words</td><td>Good for timely updates and news; limited SEO value alone</td></tr>
+          <tr><td>Standard blog post</td><td>1,000-1,500 words</td><td>Minimum for ranking on competitive keywords</td></tr>
+          <tr><td>Long-form blog / SEO article</td><td>1,500-2,500 words</td><td>Sweet spot for most informational keywords</td></tr>
+          <tr><td>Pillar / comprehensive guide</td><td>3,000+ words</td><td>For broad, high-competition topics</td></tr>
+          <tr><td>Undergraduate essay</td><td>1,000-3,000 words</td><td>Depends on level and institution; always check the brief</td></tr>
+          <tr><td>Postgraduate / master's essay</td><td>3,000-6,000 words</td><td>Varies widely; dissertations are typically 10,000-15,000 words</td></tr>
+          <tr><td>Academic journal article</td><td>5,000-8,000 words</td><td>Varies by journal; always check submission guidelines</td></tr>
+          <tr><td>Short story</td><td>1,000-7,500 words</td><td>Flash fiction is under 1,000; novelette is 7,500-17,500</td></tr>
+          <tr><td>Novel</td><td>70,000-100,000 words</td><td>Genre varies: romance 50-90k, fantasy 100-120k</td></tr>
+          <tr><td>Resume / CV</td><td>300-700 words</td><td>One page for under 10 years experience; two pages otherwise</td></tr>
+        </tbody>
+      </table>
+      </div>
 
       <h2 id="character-limits">Character limits by platform</h2>
-      <p>Here are the most common limits worth knowing:</p>
-      <ul>
-        <li>Twitter/X: 280 characters</li>
-        <li>Instagram caption: 2,200 characters</li>
-        <li>LinkedIn post: 3,000 characters</li>
-        <li>Facebook post: 63,206 characters (shorter performs better)</li>
-        <li>Google meta title: 50–60 characters</li>
-        <li>Google meta description: 150–160 characters</li>
-        <li>Google Ads headline: 30 characters</li>
-        <li>SMS: 160 characters</li>
-      </ul>
+      <p>Character limits are measured including spaces and punctuation unless noted otherwise. All counts below use the standard definition - one character equals one Unicode code point.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Platform / field</th><th>Limit</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Twitter / X post</td><td>280</td><td>URLs count as 23 characters regardless of actual length</td></tr>
+          <tr><td>Instagram caption</td><td>2,200</td><td>Feed shows ~125 chars before "more" truncation</td></tr>
+          <tr><td>LinkedIn post</td><td>3,000</td><td>Article headline: 150 chars; article body: 125,000 chars</td></tr>
+          <tr><td>Facebook post</td><td>63,206</td><td>Engagement drops sharply after the first ~80 chars visible</td></tr>
+          <tr><td>YouTube title</td><td>100</td><td>Only ~60-70 chars visible in search results</td></tr>
+          <tr><td>YouTube description</td><td>5,000</td><td>First 157 chars show in search snippets</td></tr>
+          <tr><td>Google meta title</td><td>~60</td><td>Pixel-based; ~580px. Roughly 50-60 characters</td></tr>
+          <tr><td>Google meta description</td><td>~160</td><td>Pixel-based; roughly 150-160 characters</td></tr>
+          <tr><td>Google Ads headline</td><td>30</td><td>Up to 3 headlines of 30 chars each</td></tr>
+          <tr><td>Google Ads description</td><td>90</td><td>Up to 2 descriptions of 90 chars each</td></tr>
+          <tr><td>SMS (single message)</td><td>160</td><td>GSM-7 encoding; extended characters reduce limit to 70</td></tr>
+          <tr><td>WhatsApp message</td><td>65,536</td><td>No practical limit for most uses</td></tr>
+          <tr><td>Email subject line</td><td>78 recommended</td><td>RFC 5322; most clients display 40-70 chars on mobile</td></tr>
+        </tbody>
+      </table>
+      </div>
 
-      <h2 id="seo">How it helps with SEO</h2>
-      <p>Search engines care about content length and keyword relevance. Meta titles, descriptions, and headings all have ideal character ranges. Going over those limits means your text gets truncated in search results, which hurts click-through rates. The keyword density feature also helps you check that your main topic appears enough times without being overused.</p>
+      <h2 id="keyword-density">Keyword density</h2>
+      <p>Keyword density is the percentage of times a specific word appears relative to the total word count. The top keywords panel shows the five most frequent non-stop words in your text, along with their count and density percentage.</p>
+
+      <h3>What density to aim for in SEO content</h3>
+      <p>There is no single correct keyword density, but the following ranges reflect current best practice:</p>
+      <ul>
+        <li><strong>0.5-2%:</strong> Healthy range for a primary keyword. The topic is present without repetition feeling forced.</li>
+        <li><strong>2-3%:</strong> Borderline. May be fine in very long articles where natural repetition occurs.</li>
+        <li><strong>Above 3%:</strong> Risks looking like keyword stuffing to search engine algorithms. This was a common over-optimisation tactic before 2012; it is now more likely to hurt rankings than help.</li>
+      </ul>
+      <p>A word appearing 15 times in a 1,000-word article has a density of 1.5% - a reasonable level for a primary keyword. The same word appearing 35 times is at 3.5% - likely excessive. Use the keyword panel to spot-check your main topics before publishing.</p>
+
+      <h2 id="seo">Word count and SEO</h2>
+      <p>Word count alone is not a Google ranking factor, but it correlates with ranking because longer content tends to cover a topic more thoroughly. A 2,000-word guide that answers ten related questions will typically outrank a 300-word page that answers one, because it satisfies more search intent and earns more links.</p>
+
+      <h3>Meta titles and descriptions</h3>
+      <p>Google truncates meta titles around 580 pixels wide - roughly 50-60 characters. Titles cut off in search results lose context and reduce click-through rates. Meta descriptions truncate around 920 pixels - roughly 150-160 characters. Neither truncation affects rankings directly, but both affect the click-through rate that brings visitors to your page.</p>
+      <p>The character counts panel in this tool gives you the number you need to check against these limits before publishing.</p>
+
+      <h3>Readability</h3>
+      <p>Shorter sentences and paragraphs improve readability scores, which correlates with lower bounce rates. A paragraph count that is low relative to sentence count suggests very long paragraphs - which can reduce readability on mobile screens. As a rough guide, aim for paragraphs of 3-5 sentences for web content.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Using word count when a platform requires character count</h3>
+      <p>Twitter, SMS, and all Google Ads fields enforce character limits, not word limits. A 50-word sentence with long words can easily exceed 280 characters, while a 50-word sentence using short words stays well under. Always check character count for these platforms - word count is irrelevant.</p>
+
+      <h3>Forgetting that character limits include spaces</h3>
+      <p>Almost all platform character limits count spaces as characters. The "Characters" figure in this tool (not "Characters no spaces") is the one to compare against Twitter's 280, SMS's 160, or Google's ~60 for meta titles.</p>
+
+      <h3>Using reading time for presentation planning</h3>
+      <p>Reading time (200 WPM) and speaking time (150 WPM) are different. A 1,000-word script takes 5 minutes to read silently but 6-7 minutes to speak aloud. Using the wrong figure leads to presentations that run over time. Always use the Speaking time stat when planning a talk, not the Reading time.</p>
+
+      <h3>Mistaking keyword density for a guaranteed ranking signal</h3>
+      <p>Hitting a specific keyword density percentage does not guarantee better rankings. Modern search algorithms use semantic understanding and hundreds of other signals. Keyword density is useful as a basic sanity check - to confirm a topic is present and not over-repeated - not as a target to optimise toward precisely.</p>
 
       <h2 id="faq">FAQs</h2>
 
-      <h3>What is a word counter?</h3>
-      <p>A tool that counts words, characters, sentences, and paragraphs in your text. This one also shows reading time, speaking time, and keyword density.</p>
-
-      <h3>Are spaces counted as characters?</h3>
-      <p>This tool shows both — characters including spaces and characters without spaces — so you can use whichever number the platform requires.</p>
-
       <h3>How is reading time calculated?</h3>
-      <p>Based on an average reading speed of 200 words per minute, which is a widely accepted estimate for adult readers.</p>
+      <p>At 200 words per minute, the widely accepted average for adult silent reading of general text. Dense technical or academic content is typically read at 100-150 WPM, so reading time for specialised material will be longer than shown.</p>
 
       <h3>How is speaking time calculated?</h3>
-      <p>Based on an average speaking pace of 150 words per minute, which is typical for presentations and speeches.</p>
+      <p>At 150 words per minute - a standard estimate for presentations, speeches, and formal talks. TED Talks average 130-150 WPM. Conversational speech is faster, around 180-200 WPM. For presentation planning, 150 WPM is a safe middle estimate.</p>
 
-      <h3>Is my text saved or shared?</h3>
-      <p>No. All analysis happens locally in your browser. Nothing you type is sent to any server.</p>
+      <h3>How many words is a 5-minute speech?</h3>
+      <p>At 150 WPM, approximately 750 words. At a faster conversational 180 WPM, around 900 words. For a formal presentation or talk, 750 words is a reliable estimate.</p>
+
+      <h3>Are spaces counted in the character count?</h3>
+      <p>Both versions are shown. "Characters" includes spaces. "Characters (no spaces)" excludes them. Use "Characters" when checking against platform limits - most platforms (Twitter, SMS, Google meta fields) count spaces.</p>
+
+      <h3>What counts as a word?</h3>
+      <p>Any sequence of characters separated by whitespace. Hyphenated compounds like "well-known" count as one word. Numbers count as words.</p>
+
+      <h3>What is keyword density and why does it matter?</h3>
+      <p>Keyword density is how often a word appears as a percentage of total words. The top keywords panel shows your five most frequent non-stop words. A density of 1-2% for your main topic is generally healthy for SEO; above 3% risks looking like keyword stuffing.</p>
+
+      <h3>Is my text saved or shared anywhere?</h3>
+      <p>No. Everything runs locally in your browser. Nothing is sent to any server at any point.</p>
 
       <h3>Does it work on mobile?</h3>
-      <p>Yes, it's fully responsive and works on any device with a browser.</p>
+      <p>Yes. The tool is fully responsive and works on phones and tablets without any app download.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">Aa</span>
+          <div>
+            <a href="/conversion/case-converter">Case Converter</a>
+            <p>Convert text to sentence case, UPPER CASE, Title Case, camelCase, and more.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⇄</span>
+          <div>
+            <a href="/compare-text">Diff Checker</a>
+            <p>Compare two texts or code files and find every addition, removal, and change.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/percentage-calculator">Percentage Calculator</a>
+            <p>Calculate percentages, increases, decreases, and differences instantly.</p>
+          </div>
+        </li>
+      </ul>
 
     </div>
   </div>

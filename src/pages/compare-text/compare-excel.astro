@@ -2,29 +2,62 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const tocItems = [
-  { id: 'how-to-use',  label: 'How to use this tool' },
-  { id: 'formats',     label: 'Supported formats' },
-  { id: 'use-cases',   label: 'Use cases' },
-  { id: 'how-it-works', label: 'How it works' },
-  { id: 'faq',         label: 'FAQs' },
+  { id: 'how-to-use',      label: 'How to use this tool' },
+  { id: 'color-coding',    label: 'Reading the color coding' },
+  { id: 'formats',         label: 'Supported formats' },
+  { id: 'use-cases',       label: 'Use cases' },
+  { id: 'how-it-works',    label: 'How the comparison works' },
+  { id: 'row-matching',    label: 'Row matching and limitations' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
 ];
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    { "@type": "Question", "name": "How do I compare two Excel files?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your original file on the left and the changed file on the right, then click Find Differences. The tool highlights changed cells in yellow, added rows in green, and removed rows in red." } },
-    { "@type": "Question", "name": "Is my data safe?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All processing happens in your browser using JavaScript. Your files are never uploaded to any server." } },
-    { "@type": "Question", "name": "What formats are supported?", "acceptedAnswer": { "@type": "Answer", "text": "xlsx, xls, xlsm, xlsb, csv, txt, dif, and ods. You can even compare files of different formats." } },
-    { "@type": "Question", "name": "Can I compare files with multiple sheets?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. When you upload a multi-sheet workbook, tabs appear below the preview so you can select which sheet to compare." } },
-  ]
-};
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Excel and CSV File Comparison Tool",
+    "url": "https://calculations.tools/compare-text/compare-excel",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Compare two Excel, CSV, or spreadsheet files online. Find changed cells, added rows, and removed rows instantly with color-coded results. Free, private, no upload to server.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to compare two Excel or CSV files online",
+    "description": "Use this tool to find every changed cell, added row, and removed row between two spreadsheet files.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Upload your original file", "text": "Drop your original or older spreadsheet into the left panel, or click to browse for the file." },
+      { "@type": "HowToStep", "position": 2, "name": "Upload your changed file", "text": "Drop the updated or newer version into the right panel." },
+      { "@type": "HowToStep", "position": 3, "name": "Select sheets if needed", "text": "If either file has multiple sheets, tabs appear below the preview. Select which sheet to compare on each side." },
+      { "@type": "HowToStep", "position": 4, "name": "Click Find Differences", "text": "Press Find Differences. Changed cells appear in yellow (with the old value shown), added rows in green, removed rows in red." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I compare two Excel files?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your original file on the left and the changed file on the right, then click Find Differences. Changed cells are highlighted in yellow with the old value shown in parentheses. Added rows appear in green, removed rows in red." } },
+      { "@type": "Question", "name": "How do I compare two CSV files?", "acceptedAnswer": { "@type": "Answer", "text": "Upload the original CSV on the left and the updated CSV on the right, then click Find Differences. The tool normalizes CSV and Excel files to the same row/column grid, so comparison works identically for both formats." } },
+      { "@type": "Question", "name": "Is my data safe when comparing Excel files online?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All processing happens entirely in your browser using JavaScript and SheetJS. Your files are never uploaded to any server, never stored, and never shared with any third party." } },
+      { "@type": "Question", "name": "What formats are supported?", "acceptedAnswer": { "@type": "Answer", "text": "xlsx, xls, xlsm, xlsb, csv, txt (tab-delimited), dif, and ods. You can also compare files of different formats - for example, an xlsx against a csv." } },
+      { "@type": "Question", "name": "Can I compare files with multiple sheets?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. When you upload a multi-sheet workbook, tabs appear below the preview so you can select which sheet to compare. Each side selects its sheet independently." } },
+      { "@type": "Question", "name": "Does this tool compare cell by cell or row by row?", "acceptedAnswer": { "@type": "Answer", "text": "Both. Rows are matched by position (row 1 in the original is compared to row 1 in the changed file). Within each matched row, every cell is compared individually. If a row exists in one file but not the other due to row count differences, it is marked as added or removed." } },
+      { "@type": "Question", "name": "Is there a file size limit?", "acceptedAnswer": { "@type": "Answer", "text": "No hard limit. Files with up to 100,000 rows work well on modern devices. Very large files may take a few seconds to parse depending on your device." } },
+      { "@type": "Question", "name": "Can I compare an Excel file against a CSV file?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The tool normalizes all supported formats to the same internal grid structure before comparing, so you can mix formats freely." } }
+    ]
+  }
+];
 ---
 
 <CalculatorLayout
   title="Compare Excel Files"
-  metaTitle='Compare Excel Files Online Free | Spreadsheet Diff Checker ᐅ'
-  description="Compare two Excel, CSV, or ODS files online. Find changed cells, added rows, and removed rows instantly with color-coded results. Free, private, no upload."
+  metaTitle="Compare Excel & CSV Files Online Free | Spreadsheet Diff Checker ᐅ"
+  description="Compare two Excel, CSV, or spreadsheet files online and find every changed cell, added row, and removed row instantly. Color-coded results. Free, private, no upload to server."
   canonical="https://calculations.tools/compare-text/compare-excel"
   tocItems={tocItems}
   schema={schema}
@@ -38,7 +71,7 @@ const schema = {
       <div class="calculator-container ce-container">
 
         <div class="calculator-header">
-          <h2>Excel Files & Spreadsheets Difference Checker</h2>
+          <h2>Excel & CSV Comparison Tool</h2>
           <p>Upload two files to see every changed cell, added row, and removed row</p>
           <p class="ce-formats">Supported: .xlsx .xls .xlsm .xlsb .csv .txt .dif .ods</p>
         </div>
@@ -111,7 +144,7 @@ const schema = {
             <div class="diff-stats">
               <span class="diff-changed"   id="ce-stat-changed">0 changed</span>
               <span class="diff-added"     id="ce-stat-added">+0 added</span>
-              <span class="diff-removed"   id="ce-stat-removed">−0 removed</span>
+              <span class="diff-removed"   id="ce-stat-removed">-0 removed</span>
               <span class="diff-unchanged" id="ce-stat-unchanged">0 unchanged</span>
             </div>
             <button class="diff-tbtn" onclick="copyDiffResult()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
@@ -137,57 +170,164 @@ const schema = {
   <div slot="content">
     <div class="seo-container">
 
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Upload your original spreadsheet on the left and the updated version on the right, then click <strong>Find Differences</strong>. Changed cells are highlighted in yellow with the old value shown in parentheses. Added rows are green, removed rows are red. Works with .xlsx, .xls, .csv, .ods, and more. Nothing is ever uploaded to a server - all processing runs in your browser.</p>
+      </div>
+
       <h2 id="how-to-use">How to use this tool</h2>
-      <p>Upload your original spreadsheet on the left and the updated version on the right — either drag and drop or click to browse. Then click "Find Differences." Changed cells are highlighted in yellow with the old value shown in parentheses. Added rows are green, removed rows are red. You can copy the full diff to clipboard or download either sheet as CSV.</p>
-      <p>If your workbook has multiple sheets, tabs appear below the preview so you can pick which sheet to compare independently on each side.</p>
+      <p>Drop your original (older) spreadsheet into the left panel and the revised (newer) version into the right panel. Then click "Find Differences." The diff output appears below with every change color-coded by type.</p>
+      <p>If either file contains multiple sheets, tabs appear below the file preview so you can select which sheet to compare. Each side selects its sheet independently - useful when sheets have been renamed or reordered between file versions.</p>
+      <p>The Swap button exchanges the contents of both panels without re-uploading. The Sample button loads a short example spreadsheet if you want to see how the output looks before using your own files. The Copy Diff button copies the full result to your clipboard as tab-separated text.</p>
+
+      <h2 id="color-coding">Reading the color coding</h2>
+      <p>Once you click Find Differences, every row in the output is classified into one of four states:</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Color</th><th>Meaning</th><th>Detail</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Yellow</td><td>Changed row</td><td>At least one cell in this row has a different value. The old value is shown in parentheses next to the new value.</td></tr>
+          <tr><td>Green</td><td>Added row</td><td>This row exists in the changed (right) file but not in the original (left). It was added.</td></tr>
+          <tr><td>Red</td><td>Removed row</td><td>This row exists in the original (left) file but not in the changed (right). It was deleted.</td></tr>
+          <tr><td>None</td><td>Unchanged row</td><td>Every cell in this row is identical in both files. Shown without color to keep focus on what changed.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The summary bar above the diff table shows the total count of changed rows, added rows, removed rows, and unchanged rows. Within a changed row, only the cells that differ are highlighted in yellow - cells that stayed the same are not marked.</p>
 
       <h2 id="formats">Supported formats</h2>
+      <p>The tool accepts all common spreadsheet and tabular data formats. You can also compare files of different formats - for example, an .xlsx against a .csv.</p>
+      <div class="responsive-table">
       <table>
         <thead>
           <tr><th>Format</th><th>Extension</th><th>Notes</th></tr>
         </thead>
         <tbody>
-          <tr><td>Excel Workbook</td><td>.xlsx</td><td>Modern Excel (Office 2007+)</td></tr>
-          <tr><td>Excel 97–2003</td><td>.xls</td><td>Legacy binary format</td></tr>
-          <tr><td>Excel Macro-Enabled</td><td>.xlsm</td><td>Excel with macros</td></tr>
-          <tr><td>Excel Binary</td><td>.xlsb</td><td>Faster for large files</td></tr>
-          <tr><td>CSV</td><td>.csv</td><td>Comma-separated values</td></tr>
-          <tr><td>Text</td><td>.txt</td><td>Tab-delimited text</td></tr>
-          <tr><td>DIF</td><td>.dif</td><td>Data Interchange Format</td></tr>
-          <tr><td>OpenDocument</td><td>.ods</td><td>LibreOffice / OpenOffice</td></tr>
+          <tr><td>Excel Workbook</td><td>.xlsx</td><td>Modern Excel (Office 2007 and later). Most common format for spreadsheet comparison.</td></tr>
+          <tr><td>Excel 97-2003</td><td>.xls</td><td>Legacy binary format. Still widely used in older enterprise systems.</td></tr>
+          <tr><td>Excel Macro-Enabled</td><td>.xlsm</td><td>Excel workbook with macros. Macros are ignored; cell data is compared normally.</td></tr>
+          <tr><td>Excel Binary</td><td>.xlsb</td><td>Compact binary format used for large workbooks. Faster to parse than .xlsx.</td></tr>
+          <tr><td>CSV</td><td>.csv</td><td>Comma-separated values. Most common format for data exports from databases and web apps.</td></tr>
+          <tr><td>Tab-delimited text</td><td>.txt</td><td>Tab-separated values. Common export format from legacy software and some databases.</td></tr>
+          <tr><td>DIF</td><td>.dif</td><td>Data Interchange Format. Used by some older spreadsheet and financial applications.</td></tr>
+          <tr><td>OpenDocument</td><td>.ods</td><td>Open standard used by LibreOffice Calc and Apache OpenOffice Calc.</td></tr>
         </tbody>
       </table>
-      <p>You can even compare files of different formats — for example an .xlsx against a .csv.</p>
+      </div>
 
       <h2 id="use-cases">Use cases</h2>
-      <p><strong>Financial reporting:</strong> Spot discrepancies between monthly or quarterly report versions. Find any cell that changed between the draft and the final.</p>
-      <p><strong>Data migration:</strong> After migrating data between systems, verify that every row and value transferred correctly.</p>
-      <p><strong>Version control:</strong> Track changes between pricing sheets, inventory lists, project plans, or employee rosters without manually scanning hundreds of rows.</p>
-      <p><strong>QA and testing:</strong> Compare expected vs. actual output data exported from your application to find where results diverge from what's expected.</p>
-      <p><strong>Research data:</strong> Compare datasets across experiment iterations or survey rounds to see exactly what changed between collection periods.</p>
 
-      <h2 id="how-it-works">How it works</h2>
-      <p>Both files are parsed in your browser using SheetJS — no data is ever sent to a server. The tool normalizes each selected sheet into a row/column grid, then compares them cell by cell. Rows are matched by position. Each row is classified as unchanged, changed (at least one cell value differs), added (only in the changed file), or removed (only in the original). Results are displayed in a unified table with color coding.</p>
+      <h3>Financial reporting and reconciliation</h3>
+      <p>Compare monthly or quarterly financial reports between the draft version and the final signed-off version. Upload both files and the diff immediately shows every cell that changed - useful for catching last-minute edits, formula overrides, or figures that were manually adjusted after the original was shared. Also useful when reconciling two independently prepared reports that should agree on every number.</p>
+
+      <h3>Data migration verification</h3>
+      <p>After migrating data between systems - for example from an old CRM to a new one, or from one database to another - export the source data and the migrated data as CSV or Excel and compare them. The diff confirms that every row transferred correctly and no values were dropped, truncated, or reformatted differently. This is far more reliable than spot-checking a sample.</p>
+
+      <h3>Pricing sheet and inventory updates</h3>
+      <p>Track exactly which rows and cells changed between two versions of a pricing list, product catalog, or inventory spreadsheet. When a supplier sends an updated price file, compare it against the previous version to see which SKUs changed price, which were added, and which were removed - without reading both files manually.</p>
+
+      <h3>QA and output testing</h3>
+      <p>Compare the expected output of a data pipeline or application against the actual output exported as CSV. The cell-level diff immediately shows where results diverge from what is expected - which rows, which columns, and what the values should be versus what they are. This is especially useful for regression testing when a code change could affect calculated outputs.</p>
+
+      <h3>Research and survey data</h3>
+      <p>Compare datasets across experiment iterations, survey rounds, or data cleaning passes. Uploading before-and-after versions of a dataset shows exactly which rows were modified during cleaning, which were added from a new data collection batch, and which were excluded. This creates an auditable record of data changes.</p>
+
+      <h3>Compliance and audit trails</h3>
+      <p>Many regulatory frameworks require organizations to demonstrate that data was not altered after a certain point, or to document what changed and when. Comparing two versions of a spreadsheet with this tool produces a clear, copy-able diff that documents which cells, rows, and values changed between two file versions.</p>
+
+      <h2 id="how-it-works">How the comparison works</h2>
+      <p>Both files are parsed entirely in your browser using <a href="https://sheetjs.com" rel="nofollow">SheetJS</a>, a widely used open-source spreadsheet parsing library. No data is sent to any server at any point. Here is the comparison process step by step:</p>
+      <ol>
+        <li>Each file is read and the selected sheet is extracted into an internal row/column grid.</li>
+        <li>Both grids are normalized to the same dimensions - missing cells are treated as empty strings.</li>
+        <li>Rows are matched by position: row 1 from the original is compared to row 1 from the changed file.</li>
+        <li>Within each matched row pair, every cell is compared individually by its string representation.</li>
+        <li>A row is classified as unchanged, changed, added, or removed based on the cell comparison results.</li>
+        <li>The diff table is rendered with color coding and the summary counts are updated.</li>
+      </ol>
+      <p>Values are compared as strings after normalization, so a cell containing the number 1.5 and a cell containing the text "1.5" will match. Formatting differences (bold, background color, font size) are not compared - only cell values.</p>
+
+      <h2 id="row-matching">Row matching and limitations</h2>
+      <p>This tool uses <strong>positional row matching</strong>: row N in the original is always compared to row N in the changed file. This is the simplest and most predictable approach, but it has a specific implication you should understand before relying on the results.</p>
+
+      <h3>Inserted and deleted rows cause cascading mismatches</h3>
+      <p>If a row was inserted at position 5 in the changed file, every row from position 5 onward will appear as "changed" in the diff - because row 5 in the original is now being compared to row 6 in the changed file. The diff is technically correct (those rows do have different values at those positions) but it is not describing what you intended to compare.</p>
+      <p>In practice this means positional comparison works best when:</p>
+      <ul>
+        <li>Rows were not inserted or deleted - only cell values changed.</li>
+        <li>New rows were appended at the bottom rather than inserted in the middle.</li>
+        <li>You are comparing exports from a fixed schema where row order is determined by a consistent sort.</li>
+      </ul>
+
+      <h3>When to sort before comparing</h3>
+      <p>If your data has a unique identifier column (an ID, a SKU, an account number), sort both files by that column before uploading. This aligns rows by entity rather than by position, so inserted or deleted rows produce clean added/removed results rather than cascading mismatches. You can sort directly in Excel or in a text editor before uploading here.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Uploading files in the wrong order</h3>
+      <p>The left panel is "Original" and the right panel is "Changed." Uploading the newer file on the left will reverse the color coding - added rows will appear as removed and vice versa. If the output looks backwards, use the Swap button to exchange both files without re-uploading.</p>
+
+      <h3>Comparing different sheets from the same workbook</h3>
+      <p>If you upload the same workbook file on both sides intending to compare two of its sheets, remember that both panels default to the first sheet. Use the sheet tabs below each preview to select the correct sheet on each side before running the comparison.</p>
+
+      <h3>Formula values vs. formula text</h3>
+      <p>This tool compares the calculated cell values, not the formula strings. If cell A1 contains =SUM(B1:B10) and the sum is 100, the tool compares the value 100. If the formula changed but the result is still 100, the tool will show that cell as unchanged. If you need to compare formulas themselves, export both sheets as .xlsx and use a native Excel comparison tool, or copy the formulas to a text editor and use the <a href="/compare-text">diff checker</a>.</p>
+
+      <h3>CSV encoding and delimiter issues</h3>
+      <p>CSV files exported from different systems sometimes use different delimiters (comma, semicolon, tab) or different text encodings (UTF-8, Windows-1252). SheetJS auto-detects the most common formats, but if cell values appear garbled or cells are not splitting correctly, try opening the CSV in Excel or LibreOffice and saving it again as a new .csv before uploading.</p>
 
       <h2 id="faq">FAQs</h2>
 
+      <h3>How do I compare two Excel files?</h3>
+      <p>Upload your original .xlsx file on the left and the changed version on the right, then click Find Differences. Changed cells are highlighted in yellow with the previous value shown in parentheses. Added rows appear in green, removed rows in red.</p>
+
+      <h3>How do I compare two CSV files?</h3>
+      <p>Exactly the same way - upload the original CSV on the left and the updated CSV on the right, then click Find Differences. CSV and Excel files are normalized to the same grid structure internally, so the process is identical.</p>
+
       <h3>Is my data safe?</h3>
-      <p>Yes. Everything runs in your browser. Your files are never uploaded anywhere, never stored, and never shared.</p>
+      <p>Yes. All processing happens entirely in your browser. Your files are never uploaded to any server, never stored, and never shared. You can confirm this by opening your browser's network panel (F12, then Network tab) and verifying that no network requests are made when you click Find Differences.</p>
 
       <h3>Can I compare files with multiple sheets?</h3>
-      <p>Yes. When you upload a multi-sheet workbook, tabs appear below the preview. Select the sheet you want to compare on each side independently.</p>
+      <p>Yes. When you upload a multi-sheet workbook, tabs appear below the file preview. Select which sheet to compare on each side independently.</p>
 
-      <h3>What types of differences does it detect?</h3>
-      <p>Changed cells (same row, different value — shown in yellow with the old value), added rows (green), and removed rows (red).</p>
+      <h3>Does the tool compare formulas or values?</h3>
+      <p>Values. The tool compares what each cell displays, not the formula behind it. If a formula changed but the result is the same, the cell will show as unchanged.</p>
+
+      <h3>Can I compare an .xlsx against a .csv?</h3>
+      <p>Yes. The tool normalizes all supported formats to the same internal grid structure before comparing, so you can mix formats freely.</p>
 
       <h3>Is there a file size limit?</h3>
-      <p>No hard limit. Files with up to 100,000 rows work well on modern devices. Very large files may take a few seconds to parse depending on your hardware.</p>
+      <p>No hard limit. Files with up to 100,000 rows work well on modern devices. Very large files may take a few seconds to parse. Everything runs locally so performance depends on your device.</p>
 
-      <h3>Can I compare a .csv against an .xlsx?</h3>
-      <p>Yes. The tool normalizes all formats to the same grid structure before comparing, so any supported format can be compared against any other.</p>
+      <h3>What does "changed" mean in the summary count?</h3>
+      <p>"Changed" counts rows where at least one cell value differs between the two files. A row can have 1 changed cell or 50 changed cells - it counts as 1 changed row in the summary.</p>
 
-      <h3>Do I need to install anything?</h3>
-      <p>No. It runs entirely in your browser — no plugins, extensions, or software required.</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⇄</span>
+          <div>
+            <a href="/compare-text">Diff Checker</a>
+            <p>Compare two plain-text or code files line by line. Shows additions, removals, and unchanged lines with unified or side-by-side views.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📝</span>
+          <div>
+            <a href="/word-counter">Word Counter</a>
+            <p>Count words, characters, sentences, reading time, and keyword density in any block of text.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">Aa</span>
+          <div>
+            <a href="/conversion/case-converter">Case Converter</a>
+            <p>Convert text to sentence case, UPPER CASE, Title Case, camelCase, and more.</p>
+          </div>
+        </li>
+      </ul>
 
     </div>
   </div>

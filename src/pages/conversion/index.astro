@@ -3,19 +3,50 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import { getConversionTools } from '../../utils/getPages';
 
 const tocItems = [
-  { id: 'tools',       label: 'All conversion tools' },
-  { id: 'why-convert', label: 'Why use an online converter?' },
-  { id: 'accuracy',    label: 'Accuracy & rounding' },
-  { id: 'faq',         label: 'FAQs' },
+  { id: 'tools',              label: 'All conversion tools' },
+  { id: 'which-converter',   label: 'Which converter to use' },
+  { id: 'metric-vs-imperial', label: 'Metric vs imperial' },
+  { id: 'accuracy',          label: 'Accuracy & rounding' },
+  { id: 'faq',               label: 'FAQs' },
+];
+
+const tools = getConversionTools();
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Online Conversion Tools",
+    "url": "https://calculations.tools/conversion",
+    "description": "Free online unit converters for length, weight, temperature, currency, height, and text case. All tools are free, instant, and require no registration.",
+    "hasPart": tools.map(t => ({
+      "@type": "WebApplication",
+      "name": t.title,
+      "url": `https://calculations.tools/conversion/${t.slug}`,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Are these converters free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No registration, no usage limits, no premium tiers. All tools run locally in your browser." } },
+      { "@type": "Question", "name": "Do the converters work on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool is fully responsive and works on phones and tablets without an app." } },
+      { "@type": "Question", "name": "How accurate are the unit converters?", "acceptedAnswer": { "@type": "Answer", "text": "All unit converters use exact conversion factors as defined by the International Bureau of Weights and Measures (BIPM) and relevant standards bodies. Results are displayed with enough decimal places for practical use without false precision." } },
+      { "@type": "Question", "name": "How accurate is the currency converter?", "acceptedAnswer": { "@type": "Answer", "text": "The currency converter uses live mid-market rates updated once per day. These are the real exchange rates, the same ones shown on financial news sites. Banks and exchange bureaus add their own markup on top of these rates." } },
+      { "@type": "Question", "name": "What is the difference between metric and imperial units?", "acceptedAnswer": { "@type": "Answer", "text": "The metric system (SI) uses base units scaled by powers of 10 - metres, kilograms, litres - and is the standard in most of the world. The imperial system uses units like miles, pounds, and gallons, primarily in the United States. The UK uses a mix: metric for most official purposes but imperial for road distances, pints of beer, and body weight in stone." } },
+      { "@type": "Question", "name": "Can I convert between metric and imperial units?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All unit converters support both metric and imperial units in the same tool. Pick your source unit and target unit from the dropdowns and the result appears instantly." } }
+    ]
+  }
 ];
 ---
 
 <CalculatorLayout
   title="Online Conversion Tools"
   metaTitle="Free Online Conversion Tools | Unit Converters ᐅ"
-  description="Free online unit converters for length, weight, temperature, currency, and more. Fast, accurate, and no registration needed."
+  description="Free online unit converters for length, weight, temperature, currency, height, and text case. Instant results, no registration, no limits. All tools run in your browser."
   canonical="https://calculations.tools/conversion"
   tocItems={tocItems}
+  schema={schema}
 >
 
   <div slot="calculator">
@@ -49,34 +80,114 @@ const tocItems = [
   <div slot="content">
     <div class="seo-container">
 
-      <h2 id="tools">All conversion tools</h2>
-      <p>This collection covers the most common unit conversions people search for. Each tool works instantly in your browser — no app, no login, no ads. Just type a value and get the result.</p>
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This collection covers the most common unit conversions: <a href="/conversion/length-converter">length</a>, <a href="/conversion/weight-converter">weight</a>, <a href="/conversion/height-converter">height</a>, <a href="/conversion/temperature-converter">temperature</a>, <a href="/conversion/currency-converter">currency</a>, and <a href="/conversion/case-converter">text case</a>. Every tool is free, works instantly in your browser, and requires no login. Type a value, choose your units, and the result appears immediately.</p>
+      </div>
 
-      <h2 id="why-convert">Why use an online converter?</h2>
-      <p>Manual unit conversion is error-prone, especially when working across different measurement systems. The metric system, imperial system, and US customary system all have overlapping but distinct units — and getting them wrong can matter a lot, whether you're cooking, shipping, building, or coding.</p>
-      <p>Online converters remove the mental overhead. You don't need to remember that 1 mile is 1.60934 km or that 1 stone is 6.35029 kg. Just enter the number, pick your units, and move on.</p>
-      <p>For currency, the advantage is even clearer — exchange rates change daily, and any hardcoded conversion in your head is already out of date. Our currency converter fetches live mid-market rates so you always see the real value.</p>
+      <h2 id="tools">All conversion tools</h2>
+      <p>Each tool handles a distinct category of conversion. All run entirely in your browser - no data is sent to a server, and results appear as you type without any button press.</p>
+
+      <h2 id="which-converter">Which converter to use</h2>
+      <p>Not sure which tool you need? Use this table to match your conversion task to the right tool.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>What you are converting</th><th>Examples</th><th>Tool</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Distance and length</td>
+            <td>km to miles, feet to metres, inches to cm, nautical miles</td>
+            <td><a href="/conversion/length-converter">Length Converter</a></td>
+          </tr>
+          <tr>
+            <td>Body weight or mass</td>
+            <td>kg to lbs, stone to kg, grams to ounces, metric tons</td>
+            <td><a href="/conversion/weight-converter">Weight Converter</a></td>
+          </tr>
+          <tr>
+            <td>Height (person or object)</td>
+            <td>cm to feet and inches, 5'11" to cm, meters to feet</td>
+            <td><a href="/conversion/height-converter">Height Converter</a></td>
+          </tr>
+          <tr>
+            <td>Temperature</td>
+            <td>°C to °F, Kelvin to Celsius, Fahrenheit to Kelvin</td>
+            <td><a href="/conversion/temperature-converter">Temperature Converter</a></td>
+          </tr>
+          <tr>
+            <td>Money and exchange rates</td>
+            <td>USD to EUR, GBP to JPY, live mid-market rates</td>
+            <td><a href="/conversion/currency-converter">Currency Converter</a></td>
+          </tr>
+          <tr>
+            <td>Text case</td>
+            <td>Sentence case, UPPER CASE, Title Case, camelCase, alternating</td>
+            <td><a href="/conversion/case-converter">Case Converter</a></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="metric-vs-imperial">Metric vs imperial</h2>
+      <p>Most unit conversion confusion comes from the fact that the world uses two main measurement systems that are not compatible with each other. Knowing which system a value comes from is the first step in converting it correctly.</p>
+
+      <h3>The metric system (SI)</h3>
+      <p>The International System of Units (SI) is the modern form of the metric system. It is the official measurement standard in almost every country in the world and the only system used in science and engineering internationally. All units scale by powers of 10 - a kilometre is exactly 1,000 metres, a kilogram is exactly 1,000 grams. This makes arithmetic straightforward: moving between metric units is just moving a decimal point.</p>
+
+      <h3>The imperial and US customary systems</h3>
+      <p>The United States uses a system derived from the old British imperial system. The UK officially moved to metric in the 1960s but retains imperial units in daily life: miles for roads, pints for beer, stone for body weight, and Fahrenheit in some contexts. The US never made the switch and continues to use miles, pounds, gallons, and Fahrenheit as primary units.</p>
+      <p>US customary and imperial units look similar but are not identical. The US gallon (3.785 L) is smaller than the UK imperial gallon (4.546 L). This distinction matters for fuel economy, brewing, and shipping calculations.</p>
+
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Measurement</th><th>Metric unit</th><th>Imperial/US unit</th><th>Conversion</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Length</td><td>metre (m)</td><td>foot (ft)</td><td>1 m = 3.28084 ft</td></tr>
+          <tr><td>Distance</td><td>kilometre (km)</td><td>mile (mi)</td><td>1 km = 0.621371 mi</td></tr>
+          <tr><td>Mass</td><td>kilogram (kg)</td><td>pound (lb)</td><td>1 kg = 2.20462 lb</td></tr>
+          <tr><td>Temperature</td><td>Celsius (°C)</td><td>Fahrenheit (°F)</td><td>°F = °C × 9/5 + 32</td></tr>
+          <tr><td>Volume (liquid)</td><td>litre (L)</td><td>US gallon (gal)</td><td>1 L = 0.264172 US gal</td></tr>
+          <tr><td>Short distance</td><td>centimetre (cm)</td><td>inch (in)</td><td>1 in = 2.54 cm exactly</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>When conversion errors matter most</h3>
+      <p>Most of the time, a small rounding error in a unit conversion is inconsequential. But in some contexts, precision matters:</p>
+      <ul>
+        <li><strong>Medical dosing:</strong> Drug concentrations and body weight affect dosing calculations. A kg/lb mix-up can result in a dose 2.2 times too large or too small.</li>
+        <li><strong>Engineering and construction:</strong> A foot/metre mix-up in structural calculations caused the loss of the Mars Climate Orbiter in 1999 - a $327 million spacecraft.</li>
+        <li><strong>International shipping:</strong> Customs declarations require accurate weight in the destination country's units. Errors can cause clearance delays or fines.</li>
+        <li><strong>Currency in invoicing:</strong> Using an outdated exchange rate or confusing similar currencies (such as USD vs AUD or CAD) can create significant discrepancies in international invoices.</li>
+      </ul>
 
       <h2 id="accuracy">Accuracy and rounding</h2>
-      <p>All converters use the exact conversion factors defined by the International Bureau of Weights and Measures (BIPM) and other relevant standards bodies. Results are rounded to a sensible number of decimal places to avoid false precision — for example, converting 1 mile gives you 1.60934 km, not 1.6093439999999999 km.</p>
-      <p>For currency, rates are sourced from a reliable financial data provider and updated daily. They reflect the mid-market rate — the rate before any bank or broker markup is added.</p>
+      <p>All unit converters use exact conversion factors as defined by the International Bureau of Weights and Measures (BIPM) and relevant standards bodies. For example, 1 inch is defined as exactly 2.54 centimetres by international agreement - there is no approximation involved. Results are displayed with enough decimal places for practical use, without showing false precision.</p>
+      <p>For currency, rates are sourced from a financial data provider and updated once per day. They reflect the mid-market rate - the rate before any bank or broker markup is applied. For time-sensitive or high-value transactions, always confirm the rate with your actual payment provider.</p>
 
       <h2 id="faq">FAQs</h2>
 
       <h3>Are these converters free?</h3>
-      <p>Yes, completely. No registration, no usage limits, no premium tiers.</p>
+      <p>Yes, completely. No registration, no usage limits, no premium tiers. Every tool on this site is free to use.</p>
 
       <h3>Do the converters work on mobile?</h3>
-      <p>Yes. Every tool is fully responsive and works on phones and tablets.</p>
+      <p>Yes. Every tool is fully responsive and works on phones and tablets without an app download.</p>
 
-      <h3>How accurate is the currency converter?</h3>
-      <p>It uses live mid-market rates updated daily. These are the real exchange rates — the same ones you see on financial news sites. Banks and exchange bureaus add their own markup on top of these rates.</p>
+      <h3>How accurate are the unit converters?</h3>
+      <p>All converters use exact conversion factors as defined by BIPM and relevant standards bodies. For example, 1 inch = 2.54 cm exactly; 1 pound = 0.45359237 kg exactly. Results are rounded to a practical number of decimal places to avoid false precision.</p>
 
-      <h3>Can I convert between metric and imperial units?</h3>
-      <p>Yes. All the unit converters support both metric and imperial (and US customary) units in the same tool. Just pick your source and target unit from the dropdowns.</p>
+      <h3>What is the difference between metric and imperial?</h3>
+      <p>The metric system (SI) uses units that scale by powers of 10 and is the international standard for science and most everyday use worldwide. Imperial units (miles, pounds, Fahrenheit) are primarily used in the United States and partially in the UK. The two systems are not compatible - you always need a conversion factor to move between them.</p>
 
-      <h3>How do I suggest a new converter?</h3>
-      <p>Use the contact link in the footer. We're always adding new tools based on what people actually need.</p>
+      <h3>Can I convert between metric and imperial?</h3>
+      <p>Yes. All unit converters support both metric and imperial units in the same tool. Pick your source and target unit from the dropdowns, enter a value, and the result appears instantly.</p>
+
+      <h3>Why does the height converter have a separate tool from length?</h3>
+      <p>The height converter includes a dedicated feet-and-inches input mode (5 ft 11 in as two separate fields) and a reference table of common adult heights. This makes it faster and less error-prone for the specific task of converting personal height, which has different UX needs from general length conversion.</p>
 
     </div>
   </div>
