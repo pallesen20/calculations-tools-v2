@@ -1,0 +1,297 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Date Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container dc-container">
+
+      <div class="calculator-header">
+        <h2>Days Between Two Dates</h2>
+        <p>Calculate days between dates or add and subtract days from any date</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="dc-tabs">
+        <button class="dc-tab active" data-panel="dc-diff">Date Difference</button>
+        <button class="dc-tab" data-panel="dc-add">Add / Subtract</button>
+      </div>
+
+      <!-- Panel 1: Date Difference -->
+      <div id="dc-diff" class="dc-panel active">
+        <div class="dc-inputs">
+          <div class="dc-field">
+            <label class="dc-label" for="dc-date1">Start date</label>
+            <div class="dc-input-row">
+              <input type="date" id="dc-date1" class="dc-date-input" />
+              <button class="dc-today-btn" id="dc-today1">Today</button>
+            </div>
+          </div>
+          <button class="dc-swap-btn" id="dc-swap" title="Swap dates">⇄</button>
+          <div class="dc-field">
+            <label class="dc-label" for="dc-date2">End date</label>
+            <div class="dc-input-row">
+              <input type="date" id="dc-date2" class="dc-date-input" />
+              <button class="dc-today-btn" id="dc-today2">Today</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="dc-diff-result" class="dc-result hidden">
+          <div class="dc-dir-label" id="dc-diff-dir"></div>
+          <div class="dc-stats-grid">
+            <div class="dc-stat dc-stat-primary">
+              <div class="dc-stat-val" id="dc-stat-days">—</div>
+              <div class="dc-stat-lbl">Total days</div>
+            </div>
+            <div class="dc-stat">
+              <div class="dc-stat-val" id="dc-stat-weeks">—</div>
+              <div class="dc-stat-lbl">Weeks</div>
+            </div>
+            <div class="dc-stat">
+              <div class="dc-stat-val" id="dc-stat-workdays">—</div>
+              <div class="dc-stat-lbl">Workdays (Mon-Fri)</div>
+            </div>
+            <div class="dc-stat">
+              <div class="dc-stat-val" id="dc-stat-ymd">—</div>
+              <div class="dc-stat-lbl">Years, months &amp; days</div>
+            </div>
+            <div class="dc-stat">
+              <div class="dc-stat-val" id="dc-stat-hours">—</div>
+              <div class="dc-stat-lbl">Hours</div>
+            </div>
+            <div class="dc-stat">
+              <div class="dc-stat-val" id="dc-stat-minutes">—</div>
+              <div class="dc-stat-lbl">Minutes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 2: Add / Subtract -->
+      <div id="dc-add" class="dc-panel">
+        <div class="dc-inputs dc-add-inputs">
+          <div class="dc-field">
+            <label class="dc-label" for="dc-add-date">Start date</label>
+            <div class="dc-input-row">
+              <input type="date" id="dc-add-date" class="dc-date-input" />
+              <button class="dc-today-btn" id="dc-add-today">Today</button>
+            </div>
+          </div>
+          <div class="dc-field dc-field-sm">
+            <label class="dc-label" for="dc-add-mode">Operation</label>
+            <select id="dc-add-mode" class="dc-select">
+              <option value="add">Add</option>
+              <option value="sub">Subtract</option>
+            </select>
+          </div>
+          <div class="dc-field dc-field-sm">
+            <label class="dc-label" for="dc-add-days">Days</label>
+            <input type="number" id="dc-add-days" class="dc-num-input" min="0" max="99999" value="30" />
+          </div>
+        </div>
+
+        <div id="dc-add-result" class="dc-result dc-add-result-box hidden">
+          <div class="dc-add-result-date" id="dc-add-result-date">—</div>
+          <div class="dc-add-result-meta" id="dc-add-result-week">—</div>
+          <div class="dc-add-result-from-today" id="dc-add-result-from-today">—</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="/js/date-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .dc-container { max-width: 600px; }
+
+  .dc-tabs {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 0.3rem;
+  }
+  .dc-tab {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .dc-tab:hover { color: rgba(255,255,255,0.85); }
+  .dc-tab.active {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    font-weight: 600;
+  }
+
+  .dc-panel { display: none; }
+  .dc-panel.active { display: block; }
+
+  .dc-inputs {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.75rem;
+    align-items: end;
+    margin-bottom: 1.5rem;
+  }
+  .dc-add-inputs { grid-template-columns: 1fr auto auto; }
+  .dc-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .dc-field-sm { min-width: 90px; }
+  .dc-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .dc-input-row { display: flex; gap: 0.4rem; }
+
+  .dc-date-input,
+  .dc-num-input,
+  .dc-select {
+    flex: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 0.65rem 0.75rem;
+    color: white;
+    font-size: 0.9rem;
+    min-width: 0;
+    transition: border-color 0.2s;
+    color-scheme: dark;
+  }
+  .dc-date-input:focus,
+  .dc-num-input:focus,
+  .dc-select:focus { outline: none; border-color: rgba(59,130,246,0.7); }
+  .dc-num-input { width: 80px; flex: none; }
+  .dc-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23ffffff60' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    background-color: rgba(255,255,255,0.08);
+    padding-right: 1.8rem;
+  }
+  .dc-today-btn {
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.6);
+    padding: 0.65rem 0.65rem;
+    font-size: 0.78rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+  }
+  .dc-today-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+  .dc-swap-btn {
+    align-self: end;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.45);
+    padding: 0.65rem 0.8rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1;
+  }
+  .dc-swap-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+
+  .hidden { display: none; }
+  .dc-result { animation: dc-fadein 0.2s ease; }
+  @keyframes dc-fadein {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .dc-dir-label {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1rem;
+  }
+
+  .dc-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.65rem;
+  }
+  .dc-stat {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 0.85rem 0.65rem;
+    text-align: center;
+  }
+  .dc-stat-primary {
+    grid-column: span 3;
+    background: rgba(59,130,246,0.12);
+    border-color: rgba(59,130,246,0.25);
+  }
+  .dc-stat-val {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.2rem;
+    word-break: break-word;
+  }
+  .dc-stat-primary .dc-stat-val { font-size: 2.5rem; }
+  .dc-stat-lbl {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .dc-add-result-box {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+  }
+  .dc-add-result-date {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.4rem;
+  }
+  .dc-add-result-meta {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 0.15rem;
+  }
+  .dc-add-result-from-today {
+    display: inline-block;
+    margin-top: 0.65rem;
+    background: rgba(59,130,246,0.18);
+    border: 1px solid rgba(59,130,246,0.3);
+    border-radius: 999px;
+    padding: 0.25rem 0.9rem;
+    font-size: 0.82rem;
+    color: #93c5fd;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .dc-inputs { grid-template-columns: 1fr; }
+    .dc-add-inputs { grid-template-columns: 1fr 1fr; }
+    .dc-add-inputs .dc-field:first-child { grid-column: span 2; }
+    .dc-swap-btn { display: none; }
+    .dc-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .dc-stat-primary { grid-column: span 2; }
+    .dc-stat-primary .dc-stat-val { font-size: 2rem; }
+  }
+</style>
