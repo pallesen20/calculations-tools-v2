@@ -68,6 +68,13 @@ const entries: Entry[] = [
     priority: 1.0,
   },
   {
+    path: '/date-calculator',
+    title: 'Date Calculator — Days Between Dates & Add Subtract Days',
+    description: 'Calculate the number of days between two dates, or add and subtract days from any date. Shows total days, workdays, weeks, and years-months-days. Free date difference calculator.',
+    changefreq: 'weekly',
+    priority: 1.0,
+  },
+  {
     path: '/conversion',
     title: 'Online Conversion Tools — Free Unit Converters',
     description: 'Free online unit converters for length, weight, temperature, currency, text case, and more. Fast, accurate, no registration needed.',
