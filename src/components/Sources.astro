@@ -1,0 +1,87 @@
+---
+export interface Source {
+  author: string;
+  title: string;
+  journal?: string;
+  year: string | number;
+  url: string;
+}
+
+interface Props {
+  sources: Source[];
+}
+
+const { sources } = Astro.props;
+---
+
+<details class="sources-box">
+  <summary class="sources-toggle">
+    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sources-icon" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Based on {sources.length} source{sources.length !== 1 ? 's' : ''}
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="sources-chevron" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+  </summary>
+  <ol class="sources-list">
+    {sources.map(s => (
+      <li>
+        {s.author}.{' '}
+        <a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a>
+        {s.journal && <>{'; '}<em>{s.journal}</em></>}{'; '}{s.year}.
+      </li>
+    ))}
+  </ol>
+</details>
+
+<style>
+  .sources-box {
+    margin-top: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .sources-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  .sources-toggle::-webkit-details-marker { display: none; }
+  .sources-toggle::marker { display: none; }
+  .sources-toggle:hover { color: rgba(255,255,255,0.85); }
+  .sources-icon { flex-shrink: 0; }
+  .sources-chevron {
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  details[open] .sources-chevron { transform: rotate(180deg); }
+  .sources-list {
+    margin: 0;
+    padding: 0.75rem 0.9rem 0.9rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    height: 20vh;
+    overflow-y: scroll;
+  }
+  .sources-list li {
+    font-size: 0.73rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.55;
+  }
+  .sources-list a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: underline;
+    text-decoration-color: rgba(255,255,255,0.2);
+    transition: color 0.15s;
+  }
+  .sources-list a:hover { color: white; text-decoration-color: rgba(255,255,255,0.5); }
+  .sources-list em { font-style: italic; }
+</style>

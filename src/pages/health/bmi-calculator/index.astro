@@ -1,0 +1,434 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import type { Source } from '../../../components/Sources.astro';
+
+const f = {
+  metric:    "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
+  imperial:  "$$\\text{BMI} = \\frac{703 \\times \\text{weight (lb)}}{\\text{height (in)}^2}$$",
+  example:   "$$\\text{BMI} = \\frac{70}{1.75^2} = \\frac{70}{3.0625} = 22.9$$",
+  bfGeneral: "$$\\text{BF\\%} = 1.20 \\times \\text{BMI} + 0.23 \\times \\text{Age} - 10.8 \\times S - 5.4$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',        label: 'How to use' },
+  { id: 'what-is-bmi',       label: 'What is BMI?' },
+  { id: 'bmi-categories',    label: 'BMI categories' },
+  { id: 'bmi-by-age-sex',    label: 'BMI by age and sex' },
+  { id: 'body-fat-estimate', label: 'Estimated body fat %' },
+  { id: 'bmi-limitations',   label: 'Limitations of BMI' },
+  { id: 'healthy-weight',    label: 'Healthy weight by height' },
+  { id: 'how-to-calculate',  label: 'How to calculate BMI' },
+  { id: 'common-mistakes',   label: 'Common mistakes' },
+  { id: 'faq',               label: 'FAQs' },
+  { id: 'related-tools',     label: 'Related tools' },
+];
+
+const sources: Source[] = [
+  {
+    author: 'World Health Organization',
+    title: 'Body mass index - BMI',
+    journal: 'WHO Regional Office for Europe',
+    year: 2024,
+    url: 'https://www.euro.who.int/en/health-topics/disease-prevention/nutrition/a-healthy-lifestyle/body-mass-index-bmi',
+  },
+  {
+    author: 'Centers for Disease Control and Prevention',
+    title: 'About Adult BMI',
+    journal: 'CDC',
+    year: 2023,
+    url: 'https://www.cdc.gov/bmi/about/index.html',
+  },
+  {
+    author: 'Nuttall FQ',
+    title: 'Body Mass Index: Obesity, BMI, and Health - A Critical Review',
+    journal: 'Nutrition Today',
+    year: 2015,
+    url: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4890841/',
+  },
+  {
+    author: 'Deurenberg P, Weststrate JA, Seidell JC',
+    title: 'Body mass index as a measure of body fatness: age- and sex-specific prediction formulas',
+    journal: 'British Journal of Nutrition',
+    year: 1991,
+    url: 'https://doi.org/10.1079/bjn19910073',
+  },
+  {
+    author: 'Aune D, Sen A, Prasad M, Norat T, Janszky I, Tonstad S, Romundstad P, Vatten LJ',
+    title: 'BMI and all cause mortality: systematic review and non-linear dose-response meta-analysis of 230 cohort studies',
+    journal: 'BMJ',
+    year: 2016,
+    url: 'https://www.bmj.com/content/353/bmj.i2156',
+  },
+  {
+    author: 'Flegal KM, Shepherd JA, Looker AC, Graubard BI, Borrud LG, Ogden CL',
+    title: 'Comparisons of percentage body fat, body mass index, waist circumference, and waist-stature ratio in adults',
+    journal: 'American Journal of Clinical Nutrition',
+    year: 2009,
+    url: 'https://doi.org/10.3945/ajcn.2008.26847',
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BMI Calculator by Age and Sex",
+    "url": "https://calculations.tools/health/bmi-calculator",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate BMI by age and sex. Returns BMI category, estimated body fat %, healthy weight range, and age- and sex-specific interpretation in metric or imperial units.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate your BMI",
+    "description": "Use this BMI calculator to find your Body Mass Index, estimated body fat %, and personalised context in four steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Choose your unit system", "text": "Select Metric (kg and cm) or Imperial (lbs, feet, and inches) using the toggle at the top of the calculator." },
+      { "@type": "HowToStep", "position": 2, "name": "Select your sex", "text": "Choose Male or Female. Sex is used to estimate body fat percentage and provide context relevant to your biology." },
+      { "@type": "HowToStep", "position": 3, "name": "Enter your age", "text": "Type your age in years. Age is used to estimate body fat percentage and apply age-appropriate interpretation (e.g. adjusted thresholds for adults 65 and over). If you are under 20, the calculator will link you to the appropriate age-specific tool." },
+      { "@type": "HowToStep", "position": 4, "name": "Enter your weight and height", "text": "Type your weight and height. Your BMI, estimated body fat %, healthy weight range, and a personalised context note appear instantly." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is a healthy BMI?", "acceptedAnswer": { "@type": "Answer", "text": "A healthy (Normal) BMI is between 18.5 and 24.9. Below 18.5 is Underweight; 25.0 to 29.9 is Overweight; 30.0 and above is Obese (Class I: 30-34.9, Class II: 35-39.9, Class III: 40+). These thresholds are set by the World Health Organization for adults aged 18 and over." } },
+      { "@type": "Question", "name": "What does BMI stand for?", "acceptedAnswer": { "@type": "Answer", "text": "BMI stands for Body Mass Index. It is a number calculated from a person's weight and height used as a screening tool to identify whether a person is Underweight, Normal weight, Overweight, or Obese." } },
+      { "@type": "Question", "name": "What is the BMI formula?", "acceptedAnswer": { "@type": "Answer", "text": "In metric units: BMI = weight (kg) / height (m)². In imperial units: BMI = 703 × weight (lb) / height (in)². For example, a person who weighs 70 kg and is 1.75 m tall has a BMI of 70 / 1.75² = 22.9." } },
+      { "@type": "Question", "name": "What BMI is considered overweight?", "acceptedAnswer": { "@type": "Answer", "text": "A BMI of 25.0 to 29.9 is classified as Overweight. A BMI of 30.0 or above is classified as Obese (Class I, II, or III). These categories are based on associations with health risks in large population studies." } },
+      { "@type": "Question", "name": "Is BMI accurate?", "acceptedAnswer": { "@type": "Answer", "text": "BMI is a useful population-level screening tool but has well-documented limitations for individuals. It cannot distinguish between muscle and fat, and does not account for age, sex, or ethnicity differences in body composition. This calculator adds age and sex to estimate body fat percentage (Deurenberg formula) and provide more context, but a doctor should interpret results alongside other health measures." } },
+      { "@type": "Question", "name": "What is a normal BMI for a woman?", "acceptedAnswer": { "@type": "Answer", "text": "The Normal weight BMI range (18.5 to 24.9) applies to both men and women under WHO guidelines. Women naturally carry 3 to 5 percentage points more body fat than men at the same BMI, which is physiologically normal. This calculator notes this when you enter female sex and a normal BMI." } },
+      { "@type": "Question", "name": "How does BMI change with age?", "acceptedAnswer": { "@type": "Answer", "text": "The BMI formula and standard WHO thresholds do not change with age, but interpretation differs. Older adults (65+) tend to lose muscle and gain fat without BMI changing much. Some geriatric guidelines suggest BMI 23-27 is acceptable for adults over 65, and BMI below 23 may indicate frailty risk. This calculator shows age-specific notes when you enter your age." } },
+      { "@type": "Question", "name": "How is body fat percentage estimated from BMI?", "acceptedAnswer": { "@type": "Answer", "text": "This calculator uses the Deurenberg formula (1991): BF% = 1.20 × BMI + 0.23 × Age - 10.8 × Sex - 5.4 (where Sex = 1 for males, 0 for females). It requires age and sex in addition to BMI. The estimate has a margin of error of ±3-5% and is not as accurate as DEXA scanning or hydrostatic weighing, but provides a useful indication." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="BMI Calculator by Age and Sex"
+  metaTitle="BMI Calculator by Age & Sex | Body Fat Estimate ᐅ"
+  description="Calculate BMI by age and sex. Get your BMI category, estimated body fat %, healthy weight range, and age-specific interpretation — metric or imperial."
+  canonical="https://calculations.tools/health/bmi-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="bmi-calculator"
+  sources={sources}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Your Body Mass Index</h2>
+          <p>Body Mass Index by age and sex — metric or imperial</p>
+        </div>
+
+        <div class="bmi-unit-toggle">
+          <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
+          <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
+        </div>
+
+        <div class="bmi-shared-fields">
+          <div class="bmi-field">
+            <label class="bmi-label">Sex</label>
+            <div class="bmi-sex-toggle">
+              <button class="bmi-sex-btn active" data-sex="male">Male</button>
+              <button class="bmi-sex-btn" data-sex="female">Female</button>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-age">Age</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-age" class="bmi-input" min="2" max="120" step="1" placeholder="35" />
+              <span class="bmi-unit-tag">yrs</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="bmi-metric" class="bmi-inputs active">
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-weight-kg">Weight</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-weight-kg" class="bmi-input" min="1" max="500" step="0.1" placeholder="70" />
+              <span class="bmi-unit-tag">kg</span>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-height-cm">Height</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-height-cm" class="bmi-input" min="50" max="280" step="1" placeholder="175" />
+              <span class="bmi-unit-tag">cm</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="bmi-imperial" class="bmi-inputs">
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-weight-lb">Weight</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-weight-lb" class="bmi-input" min="1" max="1100" step="0.5" placeholder="154" />
+              <span class="bmi-unit-tag">lbs</span>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label">Height</label>
+            <div class="bmi-ftin">
+              <div class="bmi-input-wrap">
+                <input type="number" id="bmi-height-ft" class="bmi-input" min="1" max="9" step="1" placeholder="5" />
+                <span class="bmi-unit-tag">ft</span>
+              </div>
+              <div class="bmi-input-wrap">
+                <input type="number" id="bmi-height-in" class="bmi-input" min="0" max="11" step="1" placeholder="9" />
+                <span class="bmi-unit-tag">in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="bmi-age-redirect" class="bmi-k-redirect hidden"></div>
+
+        <div id="bmi-result" class="bmi-result hidden">
+          <div class="bmi-value-row">
+            <div class="bmi-value" id="bmi-value">—</div>
+            <div class="bmi-category-badge" id="bmi-category-badge">—</div>
+          </div>
+          <div class="bmi-scale">
+            <div class="bmi-scale-bar">
+              <div class="bmi-seg bmi-seg-underweight"></div>
+              <div class="bmi-seg bmi-seg-normal"></div>
+              <div class="bmi-seg bmi-seg-overweight"></div>
+              <div class="bmi-seg bmi-seg-obese"></div>
+              <div class="bmi-indicator" id="bmi-indicator"></div>
+            </div>
+            <div class="bmi-scale-labels">
+              <span style="left:0%">10</span>
+              <span style="left:28.3%">18.5</span>
+              <span style="left:50%">25</span>
+              <span style="left:66.7%">30</span>
+              <span style="left:100%">40+</span>
+            </div>
+          </div>
+          <div class="bmi-details">
+            <div class="bmi-detail" id="bmi-healthy-range"></div>
+            <div class="bmi-detail bmi-detail-hint" id="bmi-next-category"></div>
+            <div class="bmi-detail hidden" id="bmi-bf-row"><span id="bmi-bf-value"></span></div>
+            <div class="bmi-detail bmi-detail-note hidden" id="bmi-context-note"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/bmi-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">BMI categories at a glance</div>
+        <p>BMI below <strong>18.5</strong> is Underweight. <strong>18.5–24.9</strong> is Normal weight. <strong>25.0–29.9</strong> is Overweight. <strong>30.0–34.9</strong> is Obese Class I. <strong>35.0–39.9</strong> is Obese Class II. <strong>40.0+</strong> is Obese Class III. These ranges are defined by the WHO for adults aged 18 and over. Enter your age and sex above to also get an estimated body fat % and personalised context.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Select <strong>Metric</strong> or <strong>Imperial</strong>, then choose your <strong>sex</strong> and enter your <strong>age</strong>. Finally, enter your weight and height — results appear instantly. The calculator shows your BMI, category, visual scale, healthy weight range, estimated body fat %, and a personalised context note based on your age and sex.</p>
+      <p>Age and sex are optional for the basic BMI result but required for the body fat estimate and context notes. If you enter an age under 20, the calculator will direct you to the appropriate growth-chart-based tool for children or teenagers.</p>
+
+      <h2 id="what-is-bmi">What is BMI?</h2>
+      <p>Body Mass Index (BMI) is a number derived from weight and height. It was developed by the Belgian statistician Adolphe Quetelet in the 1830s as a population-level measure of body size and was later adopted by the WHO as a simple screening tool for weight categories associated with health risks.</p>
+      <p>BMI does not directly measure body fat. Instead, it uses weight and height as a proxy, based on the observation that weight scales roughly with the square of height in populations. Because it requires only two easily measurable inputs and no equipment, it became the standard epidemiological tool for tracking obesity globally.</p>
+      <p>The metric formula is:</p>
+      <Formula expr={f.metric} />
+      <p>The imperial formula uses a conversion factor of 703 to account for the difference between kilograms/metres and pounds/inches:</p>
+      <Formula expr={f.imperial} />
+      <p>Example — a person weighing 70 kg at 1.75 m:</p>
+      <Formula expr={f.example} />
+
+      <h2 id="bmi-categories">BMI categories</h2>
+      <p>The WHO defines four primary categories for adults, with obesity further divided into three classes based on increasing health risk:</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>BMI range</th><th>Health risk</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Underweight</td><td>Below 18.5</td><td>Increased risk of malnutrition, osteoporosis, anaemia, immune suppression</td></tr>
+          <tr><td>Normal weight</td><td>18.5 – 24.9</td><td>Lowest risk in population studies; associated with good health outcomes</td></tr>
+          <tr><td>Overweight</td><td>25.0 – 29.9</td><td>Moderately increased risk of cardiovascular disease, type 2 diabetes, hypertension</td></tr>
+          <tr><td>Obese Class I</td><td>30.0 – 34.9</td><td>High risk; substantially elevated cardiometabolic risk</td></tr>
+          <tr><td>Obese Class II</td><td>35.0 – 39.9</td><td>Very high risk; significant reduction in life expectancy</td></tr>
+          <tr><td>Obese Class III</td><td>40.0 and above</td><td>Extremely high risk; also called severe or morbid obesity</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Risk associations are statistical and population-based. An individual's health cannot be diagnosed from BMI alone.</p>
+
+      <h2 id="bmi-by-age-sex">BMI by age and sex</h2>
+      <p>The standard WHO BMI thresholds (18.5, 25, 30) apply to all adults aged 18 and over and do not formally differ by age or sex. In practice, body composition changes across the lifespan and differs markedly between men and women in ways that a single number cannot capture.</p>
+
+      <h3>BMI and sex</h3>
+      <p>Women naturally carry 3–5 percentage points more body fat than men at the same BMI. This is physiologically normal and related to reproductive function. A woman and a man with identical BMIs will typically have different body fat percentages. Some researchers have proposed sex-specific thresholds, but WHO guidelines use the same ranges for both sexes. This calculator notes this difference when you select Female and receive a Normal weight result.</p>
+      <p>Men tend to carry more muscle mass, which inflates BMI without increasing health risk. A muscular man with BMI 27 may have an excellent body composition. This calculator surfaces a context note for men in the Overweight range, highlighting waist circumference as a complementary check.</p>
+
+      <h3>BMI and age</h3>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Age group</th><th>Key consideration</th><th>Practical threshold adjustment</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>18–65 (adults)</td><td>Standard WHO thresholds apply</td><td>None — use 18.5 / 25.0 / 30.0</td></tr>
+          <tr><td>65+ (older adults)</td><td>Muscle loss (sarcopenia) can make normal BMI hide poor body composition; low BMI increases frailty risk</td><td>BMI 23–27 considered acceptable; BMI &lt;23 warrants attention</td></tr>
+          <tr><td>Under 20</td><td>Growth and puberty make fixed thresholds inappropriate</td><td>Use BMI-for-age percentiles (CDC growth charts)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3>BMI and ethnicity</h3>
+      <p>People of Asian descent tend to have higher body fat percentages and greater cardiometabolic risk at lower BMI values than people of European descent. The WHO recommends lower action points for Asian populations: BMI 23.0 as the overweight threshold (vs 25.0) and BMI 27.5 as the obese threshold (vs 30.0). These adjusted thresholds are used clinically in many Asian countries.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>General (WHO)</th><th>Asian (WHO recommendation)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Normal weight upper limit</td><td>24.9</td><td>22.9</td></tr>
+          <tr><td>Overweight threshold</td><td>25.0</td><td>23.0</td></tr>
+          <tr><td>Obese threshold</td><td>30.0</td><td>27.5</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="body-fat-estimate">Estimated body fat %</h2>
+      <p>When you enter your age and sex, the calculator adds an estimated body fat percentage using the Deurenberg formula (1991), one of the most widely cited equations for estimating body fat from BMI:</p>
+      <Formula expr={f.bfGeneral} />
+      <p>Where S = 1 for males and 0 for females. This simplifies to: males: BF% = 1.20 × BMI + 0.23 × Age − 16.2; females: BF% = 1.20 × BMI + 0.23 × Age − 5.4.</p>
+      <p>The estimate carries a margin of error of approximately ±3–5 percentage points compared to DEXA scanning. It is most accurate for adults aged 20–80 of European descent with normal-range BMI. It will overestimate body fat in highly muscular people and may underestimate in very elderly individuals with severe muscle loss.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Body fat % category</th><th>Men</th><th>Women</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Essential fat only</td><td>Below 6%</td><td>Below 14%</td></tr>
+          <tr><td>Athletic</td><td>6–13%</td><td>14–20%</td></tr>
+          <tr><td>Fitness</td><td>14–17%</td><td>21–24%</td></tr>
+          <tr><td>Acceptable</td><td>18–24%</td><td>25–31%</td></tr>
+          <tr><td>High</td><td>25% and above</td><td>32% and above</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Body fat categories above are based on ACE (American Council on Exercise) guidelines. Note that women in the Athletic and Fitness ranges are still well within a healthy body composition despite having higher absolute percentages than men — the sex difference is physiological, not pathological.</p>
+
+      <h2 id="bmi-limitations">Limitations of BMI</h2>
+      <p>BMI is a population screening tool, not an individual diagnostic test. Its limitations are well-documented in medical literature.</p>
+
+      <h3>It cannot distinguish muscle from fat</h3>
+      <p>BMI measures total weight relative to height and has no way of knowing whether that weight is fat or muscle. A professional athlete or bodybuilder with very low body fat may have a BMI of 27 or 28 and be classified as Overweight, despite being in excellent metabolic health. Conversely, a sedentary person with low muscle mass may have a Normal BMI while carrying a high proportion of visceral fat. This is why this calculator adds an estimated body fat percentage to give a fuller picture.</p>
+
+      <h3>It does not account for fat distribution</h3>
+      <p>Where fat is stored matters as much as how much fat there is. Visceral fat (around internal organs, associated with a large waist circumference) carries significantly higher health risk than subcutaneous fat (under the skin). BMI is blind to fat distribution. Waist circumference is a better predictor of cardiometabolic risk in some populations: risk rises above 94 cm (37 in) for men and 80 cm (31.5 in) for women.</p>
+
+      <h3>It was not designed for individuals</h3>
+      <p>Quetelet's original index was designed to describe the average person in a population, not to classify individuals. Despite this, it has been widely adopted as an individual health metric. For a more complete individual assessment, body fat percentage measurement (via DEXA scan, bioelectrical impedance, or skinfold calipers) combined with waist circumference provides a better picture than BMI alone.</p>
+
+      <h2 id="healthy-weight">Healthy weight range by height</h2>
+      <p>The table below shows the BMI 18.5–24.9 weight range (Normal weight) for common heights. These are independent of age and sex.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Height (cm)</th><th>Height (ft/in)</th><th>Healthy weight (kg)</th><th>Healthy weight (lbs)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>147 cm</td><td>4'10"</td><td>40.0 – 53.9 kg</td><td>88 – 119 lbs</td></tr>
+          <tr><td>152 cm</td><td>5'0"</td><td>42.7 – 57.5 kg</td><td>94 – 127 lbs</td></tr>
+          <tr><td>157 cm</td><td>5'2"</td><td>45.6 – 61.4 kg</td><td>100 – 135 lbs</td></tr>
+          <tr><td>163 cm</td><td>5'4"</td><td>49.2 – 66.2 kg</td><td>108 – 146 lbs</td></tr>
+          <tr><td>168 cm</td><td>5'6"</td><td>52.2 – 70.3 kg</td><td>115 – 155 lbs</td></tr>
+          <tr><td>173 cm</td><td>5'8"</td><td>55.4 – 74.5 kg</td><td>122 – 164 lbs</td></tr>
+          <tr><td>178 cm</td><td>5'10"</td><td>58.6 – 79.0 kg</td><td>129 – 174 lbs</td></tr>
+          <tr><td>183 cm</td><td>6'0"</td><td>62.0 – 83.4 kg</td><td>137 – 184 lbs</td></tr>
+          <tr><td>188 cm</td><td>6'2"</td><td>65.4 – 88.0 kg</td><td>144 – 194 lbs</td></tr>
+          <tr><td>193 cm</td><td>6'4"</td><td>68.9 – 92.7 kg</td><td>152 – 204 lbs</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="how-to-calculate">How to calculate BMI manually</h2>
+      <p>To calculate BMI manually in metric units:</p>
+      <ol>
+        <li>Convert your height to metres (divide cm by 100). Example: 175 cm = 1.75 m.</li>
+        <li>Square your height in metres: 1.75 × 1.75 = 3.0625.</li>
+        <li>Divide your weight in kg by that result: 70 ÷ 3.0625 = 22.9.</li>
+      </ol>
+      <p>To calculate in imperial units:</p>
+      <ol>
+        <li>Convert your height to total inches (feet × 12 + inches). Example: 5'9" = 69 inches.</li>
+        <li>Square your height in inches: 69 × 69 = 4761.</li>
+        <li>Multiply your weight in lbs by 703: 154 × 703 = 108,262.</li>
+        <li>Divide: 108,262 ÷ 4761 = 22.7.</li>
+      </ol>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Using the wrong height unit</h3>
+      <p>The most common calculation error is entering height in cm when the formula expects metres, or forgetting to convert feet + inches to total inches. The calculator on this page handles all unit conversion automatically.</p>
+
+      <h3>Treating BMI as a diagnosis</h3>
+      <p>BMI is a screening number, not a health diagnosis. A BMI in the Normal range does not mean a person is healthy, and a BMI slightly outside the Normal range does not mean a person is unhealthy. Blood pressure, blood glucose, cholesterol, physical fitness, and waist circumference are all necessary for a proper health assessment.</p>
+
+      <h3>Using adult BMI for children and teenagers</h3>
+      <p>The standard adult BMI formula and WHO category thresholds do not apply to children and teenagers under 18. For those under 20, BMI is plotted on age- and sex-specific growth charts and interpreted as a percentile. A BMI of 22 means something very different for a 10-year-old than for a 35-year-old. Use the <a href="/health/bmi-calculator/kids">BMI Calculator for Kids</a> (ages 2–12) or <a href="/health/bmi-calculator/teens">BMI Calculator for Teens</a> (ages 13–19) instead.</p>
+
+      <h3>Ignoring the muscle mass caveat for athletes</h3>
+      <p>If you are highly muscular, your BMI will overstate your body fat level. Professional athletes and bodybuilders routinely have BMIs in the Overweight range with normal or low body fat. The body fat estimate in this calculator will help identify this case, since an Athletic body fat reading alongside an Overweight BMI signals that BMI is likely misclassifying you.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>What is a healthy BMI?</h3>
+      <p>A BMI between 18.5 and 24.9 is classified as Normal weight by the WHO and is associated with the lowest health risks in population studies. This applies to adults aged 18 and over. For adults of Asian descent, some guidelines suggest a lower upper threshold of 22.9.</p>
+
+      <h3>What does BMI stand for?</h3>
+      <p>Body Mass Index. It is a number calculated from weight and height used as a population-level screening tool to categorize weight status.</p>
+
+      <h3>Is BMI accurate?</h3>
+      <p>BMI is a useful population-level tool but has well-documented limitations for individuals. It cannot distinguish muscle from fat, does not account for fat distribution, and uses the same thresholds regardless of age, sex, or ethnicity. This calculator adds age and sex to provide an estimated body fat % and personalised context, which together give a more complete picture than BMI alone.</p>
+
+      <h3>What BMI is considered obese?</h3>
+      <p>A BMI of 30.0 or above is classified as Obese — further divided into Class I (30.0–34.9), Class II (35.0–39.9), and Class III (40.0 and above). Each class carries progressively higher health risks.</p>
+
+      <h3>What is a normal BMI for women?</h3>
+      <p>The Normal weight range (18.5–24.9) applies equally to women and men under WHO guidelines. Women naturally carry more body fat than men at the same BMI due to physiological differences, but the same numerical thresholds are used clinically for both sexes.</p>
+
+      <h3>Does BMI change with age?</h3>
+      <p>The BMI formula and standard thresholds do not change, but interpretation differs in older adults. Adults 65 and over tend to lose muscle and gain fat, so a normal BMI may mask poor body composition. Some geriatric guidelines consider BMI 23–27 acceptable for adults over 65, and BMI below 23 may indicate increased frailty risk.</p>
+
+      <h3>How is body fat estimated from BMI?</h3>
+      <p>This calculator uses the Deurenberg formula: BF% = 1.20 × BMI + 0.23 × Age − 10.8 × Sex − 5.4 (Sex = 1 for males, 0 for females). It requires age and sex. The margin of error is approximately ±3–5 percentage points compared to DEXA scanning.</p>
+
+      <h3>What is the difference between BMI and body fat percentage?</h3>
+      <p>BMI is a calculated proxy based on weight and height. Body fat percentage measures the actual proportion of your body that is fat tissue. BMI is easier to measure (no equipment needed) but less precise. This calculator estimates body fat percentage from BMI using the Deurenberg formula, giving you both metrics in one place.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/health/bmi-calculator/men', blurb: 'Men-specific BMI guide covering the testosterone-obesity connection, FFMI, waist circumference thresholds, and why BMI misclassifies muscular men.' },
+        { path: '/health/bmi-calculator/women', blurb: 'Women-specific BMI guide covering menopause, normal weight obesity, fat distribution, and the best complementary health metrics for women.' },
+        { path: '/health/bmi-calculator/kids', blurb: 'BMI-for-age percentile calculator for children aged 2–12 using CDC 2000 growth charts.' },
+        { path: '/health/bmi-calculator/teens', blurb: 'BMI-for-age percentile calculator for teenagers aged 13–19 with puberty and body image guidance.' },
+        { path: '/health/bmi-calculator/pregnancy', blurb: 'Gestational weight gain recommendations based on pre-pregnancy BMI category, with trimester-by-trimester guidance.' },
+        { path: '/health/bmi-calculator/seniors' },
+        { path: '/health/bmi-calculator/weight-loss' },
+        { path: '/health/lean-body-mass-calculator' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

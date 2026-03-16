@@ -1,0 +1,357 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import type { Source } from '../../../components/Sources.astro';
+
+const f = {
+  metric:       "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
+  weightLoss:   "$$\\Delta\\text{weight} = (\\text{BMI}_{\\text{current}} - \\text{BMI}_{\\text{target}}) \\times \\text{height (m)}^2$$",
+  targetWeight: "$$\\text{weight}_{\\text{target}} = \\text{BMI}_{\\text{target}} \\times \\text{height (m)}^2$$",
+  bfGeneral:    "$$\\text{BF\\%} = 1.20 \\times \\text{BMI} + 0.23 \\times \\text{Age} - 10.8 \\times S - 5.4$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',        label: 'How to use' },
+  { id: 'the-formula',       label: 'The formula' },
+  { id: 'weight-per-unit',   label: 'Weight per 1 BMI unit (table)' },
+  { id: 'target-bmi',        label: 'Choosing a target BMI' },
+  { id: 'rate-of-loss',      label: 'Safe rate of weight loss' },
+  { id: 'bmi-vs-fat',        label: 'BMI vs actual fat loss' },
+  { id: 'body-fat-estimate', label: 'Body fat % estimate' },
+  { id: 'faq',               label: 'FAQs' },
+  { id: 'related-tools',     label: 'Related tools' },
+];
+
+const sources: Source[] = [
+  {
+    author: 'World Health Organization',
+    title: 'Body mass index - BMI',
+    journal: 'WHO Regional Office for Europe',
+    year: 2024,
+    url: 'https://www.euro.who.int/en/health-topics/disease-prevention/nutrition/a-healthy-lifestyle/body-mass-index-bmi',
+  },
+  {
+    author: 'Jensen MD, Ryan DH, Apovian CM, et al.',
+    title: '2013 AHA/ACC/TOS Guideline for the Management of Overweight and Obesity in Adults',
+    journal: 'Circulation',
+    year: 2014,
+    url: 'https://doi.org/10.1161/01.cir.0000437739.71477.ee',
+  },
+  {
+    author: 'Hall KD, Sacks G, Chandramohan D, et al.',
+    title: 'Quantification of the effect of energy imbalance on bodyweight',
+    journal: 'The Lancet',
+    year: 2011,
+    url: 'https://doi.org/10.1016/S0140-6736(11)60812-X',
+  },
+  {
+    author: 'Deurenberg P, Weststrate JA, Seidell JC',
+    title: 'Body mass index as a measure of body fatness: age- and sex-specific prediction formulas',
+    journal: 'British Journal of Nutrition',
+    year: 1991,
+    url: 'https://doi.org/10.1079/bjn19910073',
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BMI Weight Loss Calculator",
+    "url": "https://calculations.tools/health/bmi-calculator/weight-loss",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate how much weight you need to lose to reach your target BMI. Shows target weight, weight to lose, estimated time at your chosen weekly pace, and estimated body fat % at current and goal weight.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate weight loss needed to reach your target BMI",
+    "description": "Use the BMI weight loss calculator to find your target weight and estimated time to reach your goal BMI.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Choose your unit system", "text": "Select Metric (kg and cm) or Imperial (lbs, feet, and inches) using the toggle at the top of the calculator." },
+      { "@type": "HowToStep", "position": 2, "name": "Select sex and enter age", "text": "Choose Male or Female and enter your age. These are used to estimate your current and goal body fat percentage using the Deurenberg formula." },
+      { "@type": "HowToStep", "position": 3, "name": "Enter current weight and height", "text": "Type your current weight and height. Your current BMI and category appear instantly." },
+      { "@type": "HowToStep", "position": 4, "name": "Set your target BMI", "text": "Enter your goal BMI in the Target BMI field. The default is 24.9 (the top of the Normal weight range). You can set any value from 18.5 to 40." },
+      { "@type": "HowToStep", "position": 5, "name": "Choose your weekly pace and read results", "text": "Select how much weight you plan to lose per week. The calculator shows the weight to lose, your target weight, estimated time to goal, and estimated body fat at current and goal weight." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How much weight do I need to lose to lower my BMI?", "acceptedAnswer": { "@type": "Answer", "text": "The weight to lose equals the difference between your current and target BMI multiplied by your height in metres squared: Δweight = (BMI_current − BMI_target) × height_m². For example, a person who is 1.75 m tall needs to lose 1.75² = 3.06 kg to lower their BMI by 1 unit. This calculator computes this automatically for any target BMI." } },
+      { "@type": "Question", "name": "What should my target BMI be?", "acceptedAnswer": { "@type": "Answer", "text": "For most adults, a target BMI in the Normal weight range (18.5–24.9) is clinically appropriate. The default of 24.9 is a common goal. If you are currently in the Obese range, an intermediate target (e.g. BMI 27 or 25) may be more realistic than aiming straight for 24.9. You should not target a BMI below 18.5 as this is the Underweight threshold and is associated with health risks." } },
+      { "@type": "Question", "name": "What is a safe rate of weight loss?", "acceptedAnswer": { "@type": "Answer", "text": "Clinical guidelines (AHA/ACC/TOS 2013) recommend a rate of 0.5–1 kg (1–2 lbs) per week as safe and sustainable. This corresponds to a daily caloric deficit of approximately 500–1000 kcal. Faster weight loss (above 1 kg/week) is associated with greater muscle loss and is difficult to maintain. Slower loss (0.25 kg/week) is also effective and produces less hunger and muscle loss." } },
+      { "@type": "Question", "name": "How long will it take to reach a healthy BMI?", "acceptedAnswer": { "@type": "Answer", "text": "The time depends on how much weight you need to lose and your weekly pace. At 0.5 kg/week, losing 10 kg takes approximately 20 weeks (about 5 months). At 1 kg/week it takes 10 weeks. Use the calculator to get a personalised estimate based on your current BMI, target BMI, and chosen weekly pace." } },
+      { "@type": "Question", "name": "Why does this calculator estimate body fat percentage?", "acceptedAnswer": { "@type": "Answer", "text": "BMI alone cannot tell you whether you are losing fat or muscle. The calculator estimates your current and target body fat percentage using the Deurenberg formula (1991): BF% = 1.20 × BMI + 0.23 × Age − 10.8 × Sex − 5.4. Seeing both BMI and estimated body fat at your goal weight gives a more complete picture of what your weight loss will actually achieve." } },
+      { "@type": "Question", "name": "Should I aim for BMI 18.5 or 24.9?", "acceptedAnswer": { "@type": "Answer", "text": "For most people, BMI 24.9 is a good target — it is the upper boundary of the Normal weight range and is associated with the lowest health risks. Aiming for 18.5 (the lower boundary) is rarely necessary and may be too restrictive. If you are very short, muscular, or have a specific clinical goal, your doctor may recommend a different target. The most important step is moving out of the Obese range." } },
+      { "@type": "Question", "name": "Does losing weight always lower BMI?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — if you lose weight without changing height, your BMI will always decrease. BMI = weight / height². Height stays fixed in adults, so BMI changes in direct proportion to weight change. However, BMI does not distinguish between fat and muscle, so rapid weight loss that includes significant muscle loss will lower BMI while leaving body composition worse than expected." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="BMI Weight Loss Calculator"
+  metaTitle="BMI Weight Loss Calculator | Current & Target BMI ᐅ"
+  description="Calculate how much weight you need to lose to reach your target BMI. Get your target weight, weight to lose, time estimate at your chosen pace, and estimated body fat — metric or imperial."
+  canonical="https://calculations.tools/health/bmi-calculator/weight-loss"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="bmi-calculator"
+  sources={sources}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Your Weight Loss</h2>
+          <p>How much weight to lose to reach your target BMI</p>
+        </div>
+
+        <div class="bmi-unit-toggle">
+          <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
+          <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
+        </div>
+
+        <div class="bmi-shared-fields">
+          <div class="bmi-field">
+            <label class="bmi-label">Sex</label>
+            <div class="bmi-sex-toggle">
+              <button class="bmi-sex-btn active" data-sex="male">Male</button>
+              <button class="bmi-sex-btn" data-sex="female">Female</button>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-age">Age</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-age" class="bmi-input" min="2" max="120" step="1" placeholder="35" />
+              <span class="bmi-unit-tag">yrs</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="bmi-metric" class="bmi-inputs active">
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-weight-kg">Current weight</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-weight-kg" class="bmi-input" min="1" max="500" step="0.1" placeholder="85" />
+              <span class="bmi-unit-tag">kg</span>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-height-cm">Height</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-height-cm" class="bmi-input" min="50" max="280" step="1" placeholder="175" />
+              <span class="bmi-unit-tag">cm</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="bmi-imperial" class="bmi-inputs">
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-weight-lb">Current weight</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-weight-lb" class="bmi-input" min="1" max="1100" step="0.5" placeholder="187" />
+              <span class="bmi-unit-tag">lbs</span>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label">Height</label>
+            <div class="bmi-ftin">
+              <div class="bmi-input-wrap">
+                <input type="number" id="bmi-height-ft" class="bmi-input" min="1" max="9" step="1" placeholder="5" />
+                <span class="bmi-unit-tag">ft</span>
+              </div>
+              <div class="bmi-input-wrap">
+                <input type="number" id="bmi-height-in" class="bmi-input" min="0" max="11" step="1" placeholder="9" />
+                <span class="bmi-unit-tag">in</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bmi-shared-fields bmi-goal-fields">
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-target-bmi">Target BMI</label>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-target-bmi" class="bmi-input" min="18.5" max="40" step="0.1" value="24.9" placeholder="24.9" />
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="bmi-pace">Weekly pace</label>
+            <div class="bmi-input-wrap">
+              <select id="bmi-pace" class="bmi-select">
+                <option value="0.25">0.25&thinsp;kg/wk</option>
+                <option value="0.5" selected>0.5&thinsp;kg/wk</option>
+                <option value="0.75">0.75&thinsp;kg/wk</option>
+                <option value="1">1&thinsp;kg/wk</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div id="bmi-age-redirect" class="bmi-k-redirect hidden"></div>
+
+        <div id="bmi-result" class="bmi-result hidden">
+          <div class="bmi-value-row">
+            <div class="bmi-value" id="bmi-value">—</div>
+            <div class="bmi-category-badge" id="bmi-category-badge">—</div>
+          </div>
+          <div class="bmi-scale">
+            <div class="bmi-scale-bar">
+              <div class="bmi-seg bmi-seg-underweight"></div>
+              <div class="bmi-seg bmi-seg-normal"></div>
+              <div class="bmi-seg bmi-seg-overweight"></div>
+              <div class="bmi-seg bmi-seg-obese"></div>
+              <div class="bmi-indicator" id="bmi-indicator"></div>
+            </div>
+            <div class="bmi-scale-labels">
+              <span style="left:0%">10</span>
+              <span style="left:28.3%">18.5</span>
+              <span style="left:50%">25</span>
+              <span style="left:66.7%">30</span>
+              <span style="left:100%">40+</span>
+            </div>
+          </div>
+          <div class="bmi-details">
+            <div class="bmi-detail bmi-wl-lose" id="bmi-weight-diff"></div>
+            <div class="bmi-detail" id="bmi-target-weight"></div>
+            <div class="bmi-detail bmi-detail-hint" id="bmi-time-estimate"></div>
+            <div class="bmi-detail hidden" id="bmi-bf-row"><span id="bmi-bf-value"></span></div>
+            <div class="bmi-detail hidden" id="bmi-goal-bf-row"><span id="bmi-goal-bf-value"></span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/bmi-weight-loss-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Weight to lose for target BMI — direct answer</div>
+        <p>Weight to lose = (current BMI − target BMI) × height (m)². At 1.75 m, each BMI unit equals <strong>3.1 kg (6.8 lbs)</strong>. To go from BMI 30 to 25 at that height, you need to lose 5 × 3.06 = <strong>15.3 kg (33.7 lbs)</strong>. Enter your numbers above to get an exact figure plus an estimated time at your chosen weekly pace.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Select your unit system and sex, enter your age (optional but needed for body fat estimates), then enter your current weight and height. Set your target BMI in the Goal section — the default of 24.9 is the top of the Normal weight range. Choose a weekly pace and the calculator instantly shows the weight to lose, your target weight, estimated time, and estimated body fat percentage at both your current and goal weight.</p>
+      <p>Age and sex are optional. Without them, the calculator still shows weight to lose, target weight, and time estimate. Age and sex unlock the body fat estimates using the Deurenberg formula.</p>
+
+      <h2 id="the-formula">The formula: weight loss for a target BMI</h2>
+      <p>BMI is defined as weight divided by height squared. Rearranging to find target weight:</p>
+      <Formula expr={f.targetWeight} />
+      <p>The weight you need to lose is simply the difference between your current weight and your target weight:</p>
+      <Formula expr={f.weightLoss} />
+      <p>Example — a person who is 1.75 m tall, currently weighs 91.5 kg (BMI 30), and wants to reach BMI 24.9:</p>
+      <p>Target weight = 24.9 × 1.75² = 24.9 × 3.0625 = <strong>76.3 kg</strong>. Weight to lose = 91.5 − 76.3 = <strong>15.2 kg (33.5 lbs)</strong>.</p>
+      <p>The formula works identically in imperial units, with BMI = 703 × weight(lb) / height(in)². The calculator handles all unit conversion automatically.</p>
+
+      <h2 id="weight-per-unit">Weight per 1 BMI unit by height</h2>
+      <p>Since weight per BMI unit = height (m)², taller people need to lose more weight to move the same number of BMI points. The table below shows how many kilograms and pounds correspond to 1 BMI unit at common heights.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Height (cm)</th><th>Height (ft/in)</th><th>kg per 1 BMI unit</th><th>lbs per 1 BMI unit</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>150 cm</td><td>4′11″</td><td>2.3 kg</td><td>5.0 lbs</td></tr>
+          <tr><td>155 cm</td><td>5′1″</td><td>2.4 kg</td><td>5.3 lbs</td></tr>
+          <tr><td>160 cm</td><td>5′3″</td><td>2.6 kg</td><td>5.6 lbs</td></tr>
+          <tr><td>165 cm</td><td>5′5″</td><td>2.7 kg</td><td>6.0 lbs</td></tr>
+          <tr><td>170 cm</td><td>5′7″</td><td>2.9 kg</td><td>6.4 lbs</td></tr>
+          <tr><td>175 cm</td><td>5′9″</td><td>3.1 kg</td><td>6.8 lbs</td></tr>
+          <tr><td>180 cm</td><td>5′11″</td><td>3.2 kg</td><td>7.1 lbs</td></tr>
+          <tr><td>185 cm</td><td>6′1″</td><td>3.4 kg</td><td>7.5 lbs</td></tr>
+          <tr><td>190 cm</td><td>6′3″</td><td>3.6 kg</td><td>7.9 lbs</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>To find the weight to lose for a multi-unit BMI change: multiply the figure above by the number of BMI units. For example, to go from BMI 32 to 25 (7 units) at 175 cm: 7 × 3.1 = <strong>21.7 kg (47.8 lbs)</strong>.</p>
+
+      <h2 id="target-bmi">Choosing a target BMI</h2>
+      <p>The most common weight loss target is <strong>BMI 24.9</strong> — the upper boundary of the Normal weight range. This is appropriate for most adults and is clinically associated with the lowest all-cause mortality risk in large population studies.</p>
+      <p>Several other situations call for different targets:</p>
+      <ul>
+        <li><strong>Currently Obese Class II or III (BMI ≥ 35):</strong> Setting an intermediate target of BMI 30 or 27 is often more motivating and realistic than aiming directly for 24.9. Clinical guidelines note that even 5–10% body weight loss produces meaningful improvements in blood pressure, blood glucose, and lipids.</li>
+        <li><strong>Athletes and muscular individuals:</strong> A BMI of 25–27 may be physiologically optimal if you carry significant muscle mass. The body fat estimate in this calculator will show whether your Overweight BMI reflects fat or muscle — if your estimated body fat is Athletic or Fitness range, a BMI above 25 is not a health concern.</li>
+        <li><strong>Adults over 65:</strong> Geriatric guidelines recommend a BMI of 23–27.5 for older adults, which is higher than the standard Normal range. Use the <a href="/health/bmi-calculator/seniors">BMI Calculator for Seniors</a> for age-adjusted interpretation.</li>
+        <li><strong>Never target BMI below 18.5:</strong> This is the Underweight threshold and is associated with malnutrition, bone loss, immune suppression, and increased mortality risk.</li>
+      </ul>
+
+      <h2 id="rate-of-loss">Safe rate of weight loss</h2>
+      <p>The AHA/ACC/TOS 2013 clinical guideline recommends <strong>0.5–1 kg (1–2 lbs) per week</strong> as the target range for safe, sustainable weight loss. This rate corresponds to a daily caloric deficit of approximately 500–1000 kcal.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Weekly pace</th><th>Daily caloric deficit</th><th>Suitability</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0.25 kg / 0.5 lbs</td><td>~275 kcal/day</td><td>Gentle, easy to sustain, minimal hunger; suitable for long-term maintenance and small goals</td></tr>
+          <tr><td>0.5 kg / 1 lb</td><td>~550 kcal/day</td><td>Recommended starting rate; clinically validated; good muscle preservation</td></tr>
+          <tr><td>0.75 kg / 1.5 lbs</td><td>~825 kcal/day</td><td>Moderately aggressive; acceptable for short periods; monitor energy and mood</td></tr>
+          <tr><td>1 kg / 2 lbs</td><td>~1100 kcal/day</td><td>Maximum recommended rate; appropriate for high BMI with medical supervision; higher hunger and muscle loss risk</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The "3,500 kcal per pound" rule (and its metric equivalent of ~7,700 kcal per kg) is an approximation. Hall et al. (2011, Lancet) showed that the actual calorie-to-weight relationship changes dynamically as body weight decreases — lighter bodies require fewer calories and lose weight more slowly at the same deficit. This means real-world weight loss typically slows as you approach your goal, so the time estimates from this calculator should be treated as a starting approximation.</p>
+
+      <h2 id="bmi-vs-fat">BMI vs actual fat loss</h2>
+      <p>BMI measures total weight relative to height. It cannot determine whether a kilogram of lost weight is fat, muscle, or water. Two people who reach BMI 24.9 via different methods will have very different body compositions:</p>
+      <ul>
+        <li><strong>Slow weight loss with resistance training:</strong> Most weight lost is fat. Muscle mass is preserved. Body fat percentage drops substantially. Metabolic rate stays higher.</li>
+        <li><strong>Rapid weight loss by severe caloric restriction alone:</strong> A significant portion of weight lost (often 25–30%) may be muscle. Body fat percentage decreases less than expected. Metabolic rate drops, making maintenance harder.</li>
+      </ul>
+      <p>This is why the calculator shows estimated body fat at both your current and target weight. If your goal body fat at target BMI is still in the Acceptable or High range (particularly for women above 32% or men above 25%), your actual health outcome will depend more on your body composition strategy — combining a caloric deficit with resistance training — than on the BMI number alone.</p>
+
+      <h2 id="body-fat-estimate">Body fat % estimate</h2>
+      <p>When you enter your age and sex, the calculator shows an estimated body fat percentage at both your current and target weight. It uses the Deurenberg formula (1991):</p>
+      <Formula expr={f.bfGeneral} />
+      <p>Where S = 1 for males, 0 for females. The margin of error is approximately ±3–5 percentage points compared to DEXA scanning. The formula is most accurate for adults aged 20–80 with BMI in the 18–30 range. It will overestimate body fat in highly muscular individuals and underestimate in very elderly individuals with severe muscle wasting.</p>
+      <p>The goal body fat estimate assumes body composition changes only through the change in BMI — in other words, it models the Deurenberg relationship at your goal BMI and the same age and sex. It does not model the muscle-to-fat ratio of your weight loss, which depends on how you lose the weight. Use it as a directional indicator, not a precise forecast.</p>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>How much weight do I need to lose to lower my BMI?</h3>
+      <p>Weight to lose = (current BMI − target BMI) × height (m)². For example, a person who is 1.70 m tall (h² = 2.89) needs to lose 2.89 kg to drop their BMI by 1 point. To drop 5 BMI points at that height: 5 × 2.89 = 14.5 kg (32 lbs). See the table above for common heights.</p>
+
+      <h3>What should my target BMI be?</h3>
+      <p>For most adults, BMI 24.9 (the top of the Normal weight range) is clinically appropriate. If you are currently in the Obese range, an intermediate goal of BMI 27 or 25 is more practical and still delivers significant health benefits. Do not target a BMI below 18.5 as this is clinically Underweight.</p>
+
+      <h3>What is a safe rate of weight loss?</h3>
+      <p>0.5–1 kg (1–2 lbs) per week is the range recommended by clinical guidelines (AHA/ACC/TOS 2013). This corresponds to a 500–1000 kcal daily deficit. Faster than 1 kg/week significantly increases muscle loss and is not recommended without medical supervision.</p>
+
+      <h3>How long will it take to reach a healthy BMI?</h3>
+      <p>It depends on the gap between your current and target BMI and your weekly pace. At 0.5 kg/week and 175 cm: going from BMI 30 to 25 requires losing 15.3 kg, which takes ~31 weeks (~7 months). The calculator gives a personalised estimate for your inputs.</p>
+
+      <h3>Why does this calculator estimate body fat percentage?</h3>
+      <p>BMI alone cannot tell you whether you are losing fat or muscle. The Deurenberg body fat estimate (which requires age and sex) shows your approximate body fat at both current and goal weight, making the weight loss goal more meaningful than a single BMI number.</p>
+
+      <h3>Should I aim for BMI 18.5 or 24.9?</h3>
+      <p>For most people, 24.9 is appropriate. Aiming for 18.5 is rarely necessary — it sits at the Underweight boundary. A BMI in the 21–24 range offers the lowest statistical risk for most adults, but 24.9 is a practical, achievable starting goal for anyone currently in the Overweight or Obese range.</p>
+
+      <h3>Does losing weight always lower BMI?</h3>
+      <p>Yes — since BMI = weight / height² and height is fixed in adults, any weight loss reduces BMI. However, losing muscle rather than fat will lower BMI while leaving body composition poor. Resistance training during a caloric deficit preserves muscle and ensures weight loss is predominantly fat.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/health/bmi-calculator', blurb: 'Standard BMI calculator by age and sex — get your current BMI, estimated body fat %, and personalised context.' },
+        { path: '/health/bmi-calculator/seniors', blurb: 'BMI calculator for adults 65+ with the 23–27.5 senior optimal range and frailty risk guidance.' },
+        { path: '/health/bmi-calculator/men', blurb: 'Men-specific BMI guide covering the testosterone-obesity connection, FFMI, and waist circumference thresholds.' },
+        { path: '/health/bmi-calculator/women', blurb: 'Women-specific BMI guide covering menopause, normal weight obesity, and fat distribution.' },
+        { path: '/conversion/weight-converter' },
+        { path: '/conversion/height-converter' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

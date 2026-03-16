@@ -18,6 +18,23 @@ export interface CardMeta {
   units?: string;
 }
 
+// Lightweight record used by RelatedTools component
+export interface RelatedToolMeta {
+  path: string;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface HealthToolMeta {
+  path: string;
+  title: string;
+  short: string;
+  description: string;
+  icon: string;
+  group: string;
+}
+
 // ─── Add new pages here — sitemap.xml and llms.txt update automatically ───────
 
 const registry: Omit<PageMeta, 'url'>[] = []; // populated below
@@ -31,6 +48,7 @@ const entries: Entry[] = [
     description: 'Free online calculators and converters for percentages, unit conversion, text analysis, currency, and more. No registration, no ads, instant results.',
     changefreq: 'weekly',
     priority: 1.0,
+    icon: '🏠',
   },
   {
     path: '/about-us',
@@ -38,6 +56,7 @@ const entries: Entry[] = [
     description: 'Learn about calculations.tools — free, accurate calculation tools for everyone, built by Jesper Pallesen.',
     changefreq: 'weekly',
     priority: 1.0,
+    icon: 'ℹ️',
   },
   {
     path: '/privacy-policy',
@@ -45,6 +64,7 @@ const entries: Entry[] = [
     description: 'Privacy policy explaining how calculations.tools collects, uses, and handles visitor data, including Google Analytics and advertising.',
     changefreq: 'yearly',
     priority: 0.3,
+    icon: '🔒',
   },
   {
     path: '/percentage-calculator',
@@ -52,6 +72,8 @@ const entries: Entry[] = [
     description: 'Calculate percentages, percentage increases, decreases, and differences instantly. Free online percentage calculator with multiple modes.',
     changefreq: 'weekly',
     priority: 1.0,
+    icon: '%',
+    short: 'Percentages, increases & differences',
   },
   {
     path: '/word-counter',
@@ -59,6 +81,8 @@ const entries: Entry[] = [
     description: 'Count words, characters, sentences, and paragraphs instantly. Free online word counter with reading time estimate.',
     changefreq: 'weekly',
     priority: 1.0,
+    icon: '📝',
+    short: 'Words, characters & reading time',
   },
   {
     path: '/week-number',
@@ -66,6 +90,8 @@ const entries: Entry[] = [
     description: 'Instantly see the current ISO 8601 week number. View all week numbers for the year with start and end dates. Plus code snippets for 20+ languages.',
     changefreq: 'daily',
     priority: 1.0,
+    icon: '📅',
+    short: 'ISO 8601 week number & year calendar',
   },
   {
     path: '/date-calculator',
@@ -73,6 +99,124 @@ const entries: Entry[] = [
     description: 'Calculate the number of days between two dates, or add and subtract days from any date. Shows total days, workdays, weeks, and years-months-days. Free date difference calculator.',
     changefreq: 'weekly',
     priority: 1.0,
+    icon: '📆',
+    short: 'Days between dates & date arithmetic',
+  },
+  {
+    path: '/health',
+    title: 'Health Calculators — Free BMI & Body Composition Tools',
+    description: 'Free health calculators: BMI by age and sex, specialist BMI tools for men, women, kids, teens, seniors, and pregnancy, BMI weight loss planner, and lean body mass with FFMI for athletes.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '🏥',
+  },
+  {
+    path: '/health/bmi-calculator',
+    title: 'BMI Calculator by Age & Sex — Body Fat Estimate & Chart',
+    description: 'Calculate BMI by age and sex. Get your BMI category, estimated body fat %, healthy weight range, and personalised age-specific interpretation — metric or imperial.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '⚤',
+    short: 'Body Mass Index by age & sex',
+  },
+  {
+    path: '/health/bmi-calculator/men',
+    title: 'BMI Calculator for Men — Normal BMI Range by Age & Chart',
+    description: 'Free BMI calculator for men. See the normal BMI range for men, BMI by age, waist circumference thresholds, the testosterone-obesity connection, and why BMI reads differently for muscular men.',
+    changefreq: 'weekly',
+    icon: '♂️',
+    priority: 1.0,
+    short: 'Men-specific thresholds & waist',
+  },
+  {
+    path: '/health/bmi-calculator/women',
+    title: 'BMI Calculator for Women — Healthy BMI Range, Chart & Age Guide',
+    description: 'Free BMI calculator for women. See the healthy BMI range, BMI chart by age, how menopause affects body composition, normal weight obesity, and the best complementary health metrics.',
+    changefreq: 'weekly',
+    icon: '♀️',
+    priority: 1.0,
+    short: 'Menopause, NWO & female context',
+  },
+  {
+    path: '/health/bmi-calculator/pregnancy',
+    title: 'BMI Calculator During Pregnancy — Gestational Weight Gain by BMI',
+    description: 'Calculate your pre-pregnancy BMI and get recommended gestational weight gain targets based on IOM 2009 guidelines. Covers weight gain by trimester, complications by BMI, and pre-conception guidance.',
+    changefreq: 'weekly',
+    icon: '🤰',
+    priority: 1.0,
+    short: 'Gestational weight gain (IOM)',
+  },
+  {
+    path: '/health/bmi-calculator/kids',
+    title: 'BMI Calculator for Kids — BMI-for-Age Percentile (Ages 2–12)',
+    description: 'Free BMI calculator for children aged 2–12. Uses CDC 2000 growth charts to show BMI-for-age percentile and weight category. Healthy weight is the 5th to 85th percentile for your child\'s age and sex.',
+    changefreq: 'weekly',
+    icon: '🧒',
+    priority: 1.0,
+    short: 'BMI-for-age percentile, ages 2–12',
+  },
+  {
+    path: '/health/bmi-calculator/seniors',
+    title: 'BMI Calculator for Seniors — Adjusted Thresholds & Frailty Risk',
+    description: 'BMI calculator for adults 65 and over. Shows the 23–27.5 senior optimal range, estimated body fat %, frailty risk, and sarcopenia guidance based on ESPEN and geriatric guidelines.',
+    changefreq: 'weekly',
+    icon: '👴',
+    priority: 1.0,
+    short: 'Adjusted thresholds for 65+',
+  },
+  {
+    path: '/health/bmi-calculator/teens',
+    title: 'BMI Calculator for Teens — BMI-for-Age Percentile (Ages 13–19)',
+    description: 'Free BMI calculator for teenagers aged 13–19. Uses CDC 2000 growth charts to show BMI-for-age percentile and weight category. Covers puberty\'s effect on BMI, athletic teens, and the transition to adult categories at 20.',
+    changefreq: 'weekly',
+    icon: '🧑',
+    priority: 1.0,
+    short: 'BMI-for-age percentile, ages 13–19',
+  },
+  {
+    path: '/health/bmi-calculator/weight-loss',
+    title: 'BMI Weight Loss Calculator — Target BMI & Weight to Lose',
+    description: 'Calculate how much weight you need to lose to reach your target BMI. Get your target weight, estimated time at your chosen weekly pace, and estimated body fat at current and goal weight.',
+    changefreq: 'weekly',
+    icon: '⚖️',
+    priority: 1.0,
+    short: 'Target BMI & time estimate',
+  },
+  {
+    path: '/health/lean-body-mass-calculator',
+    title: 'Lean Body Mass Calculator — LBM, FFMI & Body Fat %',
+    description: 'Calculate lean body mass using Boer, Hume, and James formulas. Get fat mass, body fat %, and FFMI (Fat-Free Mass Index) with category — for athletes and fitness tracking.',
+    changefreq: 'weekly',
+    icon: '💪',
+    priority: 1.0,
+    short: 'Boer / Hume / James + FFMI',
+  },
+  {
+    path: '/health/ffmi-calculator',
+    title: 'FFMI Calculator — Fat-Free Mass Index & Natural Muscle Limit',
+    description: 'Calculate your FFMI (Fat-Free Mass Index) from weight, height, and body fat %. See your muscle category, normalised FFMI, and how you compare to the Kouri 1995 natural limit — for athletes and strength trainers.',
+    changefreq: 'weekly',
+    icon: '🏋️',
+    priority: 1.0,
+    short: 'FFMI, category & natural limit',
+  },
+  {
+    path: '/health/body-fat-calculator',
+    title: 'Body Fat Calculator — Navy Tape Method & BMI Estimate',
+    description: 'Calculate body fat percentage using the US Navy tape method (waist, neck, hip measurements). Compares with the Deurenberg BMI-based estimate. Shows fat mass, lean body mass, and body fat category.',
+    changefreq: 'weekly',
+    icon: '📏',
+    priority: 1.0,
+    short: 'Navy tape method + Deurenberg',
+  },
+  {
+    path: '/health/ideal-weight-calculator',
+    title: 'Ideal Weight Calculator — IBW by Height & Sex',
+    description: 'Calculate your ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO healthy BMI weight range for your height — metric or imperial.',
+    changefreq: 'weekly',
+    icon: '🎯',
+    priority: 1.0,
+    short: 'Devine, Robinson, Miller & Hamwi',
   },
   {
     path: '/conversion',
@@ -80,6 +224,7 @@ const entries: Entry[] = [
     description: 'Free online unit converters for length, weight, temperature, currency, text case, and more. Fast, accurate, no registration needed.',
     changefreq: 'weekly',
     priority: 1.0,
+    icon: '🔄',
   },
   {
     path: '/conversion/length-converter',
@@ -147,6 +292,8 @@ const entries: Entry[] = [
     description: 'Compare two texts or code files side by side. Find additions, removals, and changes instantly with color-coded unified and side-by-side diff views.',
     changefreq: 'weekly',
     priority: 1.0,
+    icon: '📊',
+    short: 'Side-by-side diff with color highlights',
   },
   {
     path: '/compare-text/compare-excel',
@@ -154,6 +301,8 @@ const entries: Entry[] = [
     description: 'Compare two Excel, CSV, or ODS files online. Find changed cells, added rows, and removed rows instantly. Free, private, no upload to server.',
     changefreq: 'weekly',
     priority: 1.0,
+    icon: '📊',
+    short: 'Cell-by-cell Excel & CSV comparison',
   },
 ];
 
@@ -177,4 +326,91 @@ export function getConversionTools(): CardMeta[] {
       icon: e.icon ?? '',
       units: e.units,
     }));
+}
+
+const HEALTH_GROUPS: Record<string, string> = {
+  'bmi-calculator':            'BMI Calculators',
+  'lean-body-mass-calculator': 'Body Composition',
+  'ffmi-calculator':           'Body Composition',
+  'body-fat-calculator':       'Body Composition',
+  'ideal-weight-calculator':   'Body Composition',
+};
+
+export function getHealthTools(): HealthToolMeta[] {
+  return entries
+    .filter(e => e.path.startsWith('/health/'))
+    .map(e => {
+      const seg = e.path.replace('/health/', '').split('/')[0];
+      return {
+        path:        e.path,
+        title:       e.title.split(' — ')[0],
+        short:       e.short ?? '',
+        description: e.description,
+        icon:        e.icon ?? '',
+        group:       HEALTH_GROUPS[seg] ?? 'Other',
+      };
+    });
+}
+
+export interface FrontPageGroup {
+  category:  string;
+  indexPath: string | null;
+  tools:     HealthToolMeta[];
+}
+
+const FRONT_TOOL_CATEGORIES: Record<string, string> = {
+  '/percentage-calculator':      'Math',
+  '/word-counter':               'Text & Writing',
+  '/compare-text':               'Text & Writing',
+  '/compare-text/compare-excel': 'Text & Writing',
+  '/week-number':                'Date & Time',
+  '/date-calculator':            'Date & Time',
+};
+
+const CATEGORY_INDEX: Record<string, string> = {
+  'Health Calculators': '/health',
+  'Conversion Tools':   '/conversion',
+};
+
+const CATEGORY_ORDER = ['Health Calculators', 'Conversion Tools', 'Math', 'Text & Writing', 'Date & Time'];
+
+export function getFrontPageGroups(): FrontPageGroup[] {
+  const groupMap: Record<string, HealthToolMeta[]> = {};
+  for (const e of entries) {
+    let cat: string | null = null;
+    if (e.path.startsWith('/health/') && e.path !== '/health') {
+      cat = 'Health Calculators';
+    } else if (e.path.startsWith('/conversion/')) {
+      cat = 'Conversion Tools';
+    } else {
+      cat = FRONT_TOOL_CATEGORIES[e.path] ?? null;
+    }
+    if (!cat) continue;
+    (groupMap[cat] ??= []).push({
+      path:        e.path,
+      title:       e.title.split(' — ')[0],
+      short:       e.short ?? '',
+      description: e.description,
+      icon:        e.icon ?? '',
+      group:       cat,
+    });
+  }
+  return CATEGORY_ORDER
+    .filter(cat => groupMap[cat])
+    .map(cat => ({
+      category:  cat,
+      indexPath: CATEGORY_INDEX[cat] ?? null,
+      tools:     groupMap[cat],
+    }));
+}
+
+/** Returns icon, display title, and description for a given path — used by RelatedTools component. */
+export function getRelatedTool(path: string): RelatedToolMeta {
+  const entry = entries.find(e => e.path === path);
+  return {
+    path,
+    icon: entry?.icon ?? '',
+    title: entry?.title.split(' — ')[0] ?? path,
+    description: entry?.description ?? '',
+  };
 }

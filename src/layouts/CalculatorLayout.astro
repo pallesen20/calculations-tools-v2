@@ -1,6 +1,8 @@
 ---
 import { execSync } from 'child_process';
 import BaseLayout from './BaseLayout.astro';
+import Sources from '../components/Sources.astro';
+import type { Source } from '../components/Sources.astro';
 
 interface TocItem {
   id: string;
@@ -15,9 +17,10 @@ interface Props {
   schema?: object | object[];
   tocItems?: TocItem[];
   embedSlug?: string;
+  sources?: Source[];
 }
 
-const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug } = Astro.props;
+const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources } = Astro.props;
 
 const _pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/index';
 const _filePath = `src/pages${_pathname}.astro`;
@@ -42,22 +45,16 @@ const iframeSnippet = embedUrl
 ---
 
 <BaseLayout {title} {metaTitle} {description} {canonical} {schema}>
-  <main class="main-content">
+  <main class="main-content" style="margin-top: 1rem;">
     <div class="container">
       <div class="calculator-page-container">
-
-        <!-- HEADER: H1 + subtitle -->
         <div class="page-header">
           <h1 class="main-title">{title}</h1>
           <p class="subtitle">{description}</p>
         </div>
-
-        <!-- CALCULATOR WIDGET -->
         <div class="page-calculator">
           <slot name="calculator" />
         </div>
-
-        <!-- SIDEBAR: info + TOC + embed -->
         <aside class="page-sidebar">
           <div class="info-box">
             <aside>
@@ -98,9 +95,9 @@ const iframeSnippet = embedUrl
               </div>
             </div>
           )}
-        </aside>
 
-        <!-- CONTENT: long-form SEO -->
+          {sources && sources.length > 0 && <Sources sources={sources} />}
+        </aside>
         <div class="page-content">
           <slot name="content" />
         </div>
@@ -145,7 +142,7 @@ const iframeSnippet = embedUrl
     align-items: start;
   }
   .page-header     { grid-area: header; }
-  .page-calculator { grid-area: calculator; min-width: 0; }
+  .page-calculator { grid-area: calculator; min-width: 0; align-self: center; }
   .page-sidebar    { grid-area: sidebar; position: sticky; top: 1.5rem; }
   .page-content    { grid-area: content; min-width: 0; }
   .info-box {

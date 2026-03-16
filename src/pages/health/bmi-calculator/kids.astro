@@ -1,0 +1,448 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import type { Source } from '../../../components/Sources.astro';
+
+const f = {
+  metric:   "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
+  imperial: "$$\\text{BMI} = \\frac{703 \\times \\text{weight (lb)}}{\\text{height (in)}^2}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'what-is-bmi-for-age', label: 'What is BMI-for-age?' },
+  { id: 'categories',          label: 'BMI categories for children' },
+  { id: 'bmi-chart-by-age',    label: 'BMI chart: ages 2–12' },
+  { id: 'adiposity-rebound',   label: 'Adiposity rebound' },
+  { id: 'healthy-growth',      label: 'Supporting healthy growth' },
+  { id: 'limitations',         label: 'Limitations of BMI for children' },
+  { id: 'when-to-see-doctor',  label: 'When to see a doctor' },
+  { id: 'faq',                 label: 'FAQs' },
+  { id: 'related-tools',       label: 'Related tools' },
+];
+
+const sources: Source[] = [
+  {
+    author: 'Centers for Disease Control and Prevention',
+    title: 'About Child & Teen BMI',
+    journal: 'CDC',
+    year: 2023,
+    url: 'https://www.cdc.gov/bmi/child-teen-calculator/',
+  },
+  {
+    author: 'Barlow SE; Expert Committee',
+    title: 'Expert committee recommendations regarding the prevention, assessment, and treatment of child and adolescent overweight and obesity: summary report',
+    journal: 'Pediatrics',
+    year: 2007,
+    url: 'https://doi.org/10.1542/peds.2007-2329C',
+  },
+  {
+    author: 'Freedman DS, Mei Z, Srinivasan SR, Berenson GS, Dietz WH',
+    title: 'Cardiovascular risk factors and excess adiposity among overweight children and adolescents: the Bogalusa Heart Study',
+    journal: 'Journal of Pediatrics',
+    year: 2007,
+    url: 'https://doi.org/10.1016/j.jpeds.2006.08.045',
+  },
+  {
+    author: 'Rolland-Cachera MF, Deheeger M, Bellisle F, Sempe M, Guilloud-Bataille M, Patois E',
+    title: 'Adiposity rebound in children: a simple indicator for predicting obesity',
+    journal: 'American Journal of Clinical Nutrition',
+    year: 1984,
+    url: 'https://doi.org/10.1093/ajcn/39.1.129',
+  },
+  {
+    author: 'Flegal KM, Cole TJ',
+    title: 'Construction of LMS parameters for the Centers for Disease Control and Prevention 2000 growth charts',
+    journal: 'National Health Statistics Reports',
+    year: 2013,
+    url: 'https://www.cdc.gov/nchs/data/nhsr/nhsr063.pdf',
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BMI Calculator for Kids (Ages 2–12)",
+    "url": "https://calculations.tools/health/bmi-calculator/kids",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "description": "Free BMI calculator for children aged 2–12. Uses CDC 2000 growth chart LMS parameters to calculate BMI-for-age percentile and weight category.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate BMI percentile for a child aged 2–12",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Select sex and enter age", "text": "Choose Boy or Girl, then enter your child's age in years and months. For teens aged 13–19, use the BMI Calculator for Teens." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter weight and height", "text": "Choose Metric (kg and cm) or Imperial (lbs, feet, inches), then enter weight and height. Results update instantly." },
+      { "@type": "HowToStep", "position": 3, "name": "Read the percentile", "text": "Your child's BMI, percentile, and category appear immediately. Healthy weight is 5th to 85th percentile for the child's age and sex." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a healthy BMI for a child aged 2–12?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A healthy BMI for a child aged 2–12 is any value between the 5th and 85th percentile for their age and sex. For example, a healthy BMI for a 5-year-old boy is approximately 13.6 to 16.8, and for a 10-year-old boy approximately 14.4 to 18.8. These ranges shift at every age, which is why a percentile result is more informative than a raw BMI number." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a normal BMI for a 5-year-old?",
+        "acceptedAnswer": { "@type": "Answer", "text": "For a 5-year-old boy, a healthy BMI (5th–85th percentile) is approximately 13.6 to 16.8. For a 5-year-old girl it is approximately 13.3 to 16.6. These are CDC 2000 reference values. The 50th percentile (median) for a 5-year-old is approximately 15.5 for boys and 15.2 for girls." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a normal BMI for a 10-year-old?",
+        "acceptedAnswer": { "@type": "Answer", "text": "For a 10-year-old boy, a healthy BMI (5th–85th percentile) is approximately 14.4 to 18.8. For a 10-year-old girl it is approximately 14.2 to 19.2. The overweight threshold (85th percentile) for a 10-year-old boy is approximately 18.8, and for a 10-year-old girl approximately 19.2." }
+      },
+      {
+        "@type": "Question",
+        "name": "How is BMI calculated for children?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The formula is the same as for adults: weight (kg) divided by height (m) squared. The difference is interpretation: the result is compared against age- and sex-specific CDC percentile charts, not fixed adult thresholds. This is because a child's healthy BMI changes at every age as they grow." }
+      },
+      {
+        "@type": "Question",
+        "name": "At what BMI percentile is a child overweight?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A child is classified as overweight when their BMI-for-age is at or above the 85th percentile and below the 95th percentile for their age and sex. A BMI at or above the 95th percentile is classified as obese." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is adiposity rebound in children?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Adiposity rebound is the natural rise in BMI that occurs after the early childhood dip. BMI falls from age 1 to a minimum (nadir) between ages 4 and 6, then rises again. Children who experience an early rebound before age 5 have a higher risk of adult obesity, even if their BMI is in the healthy range at the time." }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I put my child on a diet if they have a high BMI?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No — caloric restriction or dieting is not recommended for growing children. The goal for overweight or obese children is typically to maintain their current weight while height continues to increase, allowing BMI percentile to improve over time. Sustainable changes to diet quality and physical activity, guided by a paediatrician or dietitian, are far more effective and safer than weight-loss diets." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use an adult BMI calculator for my child?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Adult BMI calculators use fixed thresholds (18.5 / 25 / 30) that are not appropriate for children. A healthy BMI for children changes at every age and differs between boys and girls. Using adult cutoffs will give misleading results." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="BMI Calculator for Kids"
+  metaTitle="BMI Calculator for Kids | BMI-for-Age Percentile (Ages 2–12) ᐅ"
+  description="Free BMI calculator for children aged 2–12. Uses CDC 2000 growth charts to show BMI-for-age percentile and weight category. Healthy weight is the 5th to 85th percentile for your child's age and sex."
+  canonical="https://calculations.tools/health/bmi-calculator/kids"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="bmi-calculator"
+  sources={sources}
+>
+
+  <div slot="calculator">
+    <div id="bmi-k-container" class="calculator-container bmi-container" data-bmi-mode="kids">
+
+      <div class="calculator-header">
+        <h2>Child BMI Calculator (Ages 2–12)</h2>
+        <p>Uses CDC 2000 growth chart percentiles</p>
+      </div>
+
+      <!-- Sex toggle -->
+      <div class="bmi-unit-toggle">
+        <button class="bmi-k-sex-btn bmi-unit-btn active" data-sex="M">Boy</button>
+        <button class="bmi-k-sex-btn bmi-unit-btn" data-sex="F">Girl</button>
+      </div>
+
+      <!-- Age inputs -->
+      <div class="bmi-k-age-row">
+        <label class="bmi-label">Age (2–12 years)</label>
+        <div class="bmi-k-age-inputs">
+          <div class="bmi-input-wrap">
+            <input type="number" id="bmi-k-age-yr" class="bmi-input" min="2" max="12" step="1" placeholder="8" />
+            <span class="bmi-unit-tag">yr</span>
+          </div>
+          <div class="bmi-input-wrap">
+            <input type="number" id="bmi-k-age-mo" class="bmi-input" min="0" max="11" step="1" placeholder="0" />
+            <span class="bmi-unit-tag">mo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unit toggle -->
+      <div class="bmi-unit-toggle">
+        <button class="bmi-k-unit-btn bmi-unit-btn active" data-unit="metric">Metric</button>
+        <button class="bmi-k-unit-btn bmi-unit-btn" data-unit="imperial">Imperial</button>
+      </div>
+
+      <!-- Metric inputs -->
+      <div id="bmi-k-metric" class="bmi-inputs active">
+        <div class="bmi-field">
+          <label class="bmi-label" for="bmi-k-weight-kg">Weight</label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="bmi-k-weight-kg" class="bmi-input" min="5" max="120" step="0.1" placeholder="28" />
+            <span class="bmi-unit-tag">kg</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bmi-k-height-cm">Height</label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="bmi-k-height-cm" class="bmi-input" min="50" max="180" step="1" placeholder="128" />
+            <span class="bmi-unit-tag">cm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imperial inputs -->
+      <div id="bmi-k-imperial" class="bmi-inputs">
+        <div class="bmi-field">
+          <label class="bmi-label" for="bmi-k-weight-lb">Weight</label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="bmi-k-weight-lb" class="bmi-input" min="10" max="265" step="0.5" placeholder="62" />
+            <span class="bmi-unit-tag">lbs</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">Height</label>
+          <div class="bmi-ftin">
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-k-height-ft" class="bmi-input" min="2" max="6" step="1" placeholder="4" />
+              <span class="bmi-unit-tag">ft</span>
+            </div>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-k-height-in" class="bmi-input" min="0" max="11" step="1" placeholder="2" />
+              <span class="bmi-unit-tag">in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Age-out-of-range redirect message -->
+      <div id="bmi-k-redirect" class="bmi-k-redirect hidden"></div>
+
+      <!-- Result -->
+      <div id="bmi-k-result" class="bmi-result hidden">
+        <div class="bmi-value-row">
+          <div>
+            <div class="bmi-value" id="bmi-k-value">—</div>
+            <div class="bmi-k-percentile" id="bmi-k-percentile">—</div>
+          </div>
+          <div class="bmi-category-badge" id="bmi-k-category-badge">—</div>
+        </div>
+        <div class="bmi-scale">
+          <div class="bmi-scale-bar">
+            <div class="bmi-seg bmi-seg-underweight" style="width:5%"></div>
+            <div class="bmi-seg bmi-seg-normal"      style="width:80%"></div>
+            <div class="bmi-seg bmi-seg-overweight"  style="width:10%"></div>
+            <div class="bmi-seg bmi-seg-obese"       style="width:5%"></div>
+            <div class="bmi-indicator" id="bmi-k-indicator"></div>
+          </div>
+          <div class="bmi-scale-labels bmi-k-scale-labels">
+            <span style="left:0%">0</span>
+            <span style="left:5%">5th</span>
+            <span style="left:85%">85th</span>
+            <span style="left:95%">95th</span>
+            <span style="left:100%">100th</span>
+          </div>
+        </div>
+        <div class="bmi-details">
+          <div class="bmi-detail" id="bmi-k-healthy-range"></div>
+          <div class="bmi-detail bmi-detail-hint" id="bmi-k-next-category"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="/js/bmi-kids-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">BMI for kids at a glance</div>
+        <p>Children's BMI is interpreted using <strong>age- and sex-specific percentiles</strong>, not fixed adult thresholds. A healthy BMI for a child aged 2–12 is between the <strong>5th and 85th percentile</strong> for their age and sex. Below the 5th is Underweight; 85th–95th is Overweight; 95th and above is Obese. This calculator uses the <strong>CDC 2000 growth chart LMS method</strong>. For teenagers aged 13–19, use the <a href="/health/bmi-calculator/teens">BMI Calculator for Teens</a>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Select <strong>Boy</strong> or <strong>Girl</strong>, enter your child's age in years and months (ages 2–12), then choose Metric or Imperial and enter weight and height. The calculator shows the BMI value, percentile rank, weight category, and the healthy weight range for that exact age and sex. If your child is 13 or older, the calculator will prompt you to use the <a href="/health/bmi-calculator/teens">BMI Calculator for Teens</a>.</p>
+
+      <h2 id="what-is-bmi-for-age">What is BMI-for-age?</h2>
+      <p>BMI-for-age uses the same formula as adult BMI — weight (kg) divided by height (m) squared — but interprets the result as a percentile compared to a reference population of children the same age and sex. A fixed threshold like 25 cannot work for children because a normal BMI at age 6 would be overweight at age 10 and obese at age 14.</p>
+
+      <h3>The BMI formula</h3>
+      <Formula expr={f.metric} />
+      <Formula expr={f.imperial} />
+
+      <h2 id="categories">BMI categories for children aged 2–12</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Category</th><th>BMI percentile</th><th>What it means</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Underweight</td>
+              <td>Below 5th</td>
+              <td>BMI lower than 95% of peers; may indicate inadequate nutrition or underlying condition</td>
+            </tr>
+            <tr>
+              <td>Healthy weight</td>
+              <td>5th to below 85th</td>
+              <td>Within the expected range for age and sex; lowest risk of weight-related complications</td>
+            </tr>
+            <tr>
+              <td>Overweight</td>
+              <td>85th to below 95th</td>
+              <td>Higher than 85–94% of peers; increased metabolic and cardiovascular risk; lifestyle review recommended</td>
+            </tr>
+            <tr>
+              <td>Obese</td>
+              <td>95th and above</td>
+              <td>Higher than 95%+ of peers; elevated risk of insulin resistance, hypertension, sleep apnoea, and joint complications</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="bmi-chart-by-age">BMI-for-age reference chart: ages 2–12</h2>
+      <p>The tables below show BMI at the 5th, 50th, 85th, and 95th percentiles for boys and girls at ages 2–12, based on CDC 2000 LMS parameters. These values define the category boundaries at each age.</p>
+
+      <h3>Boys (ages 2–12)</h3>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Age</th>
+              <th>5th %ile (Underweight)</th>
+              <th>50th %ile (Median)</th>
+              <th>85th %ile (Overweight)</th>
+              <th>95th %ile (Obese)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>2 yr</td><td>14.8</td><td>16.4</td><td>18.0</td><td>19.3</td></tr>
+            <tr><td>4 yr</td><td>13.6</td><td>15.7</td><td>17.1</td><td>18.2</td></tr>
+            <tr><td>5 yr</td><td>13.6</td><td>15.5</td><td>16.8</td><td>17.9</td></tr>
+            <tr><td>6 yr</td><td>13.6</td><td>15.4</td><td>16.9</td><td>18.1</td></tr>
+            <tr><td>8 yr</td><td>13.9</td><td>15.6</td><td>17.4</td><td>19.2</td></tr>
+            <tr><td>10 yr</td><td>14.4</td><td>16.6</td><td>18.8</td><td>21.2</td></tr>
+            <tr><td>12 yr</td><td>15.2</td><td>18.0</td><td>21.5</td><td>24.3</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Girls (ages 2–12)</h3>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Age</th>
+              <th>5th %ile (Underweight)</th>
+              <th>50th %ile (Median)</th>
+              <th>85th %ile (Overweight)</th>
+              <th>95th %ile (Obese)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>2 yr</td><td>14.5</td><td>16.1</td><td>17.7</td><td>19.0</td></tr>
+            <tr><td>4 yr</td><td>13.4</td><td>15.5</td><td>16.9</td><td>18.1</td></tr>
+            <tr><td>5 yr</td><td>13.3</td><td>15.2</td><td>16.6</td><td>17.7</td></tr>
+            <tr><td>6 yr</td><td>13.3</td><td>15.1</td><td>16.7</td><td>18.0</td></tr>
+            <tr><td>8 yr</td><td>13.6</td><td>15.4</td><td>17.5</td><td>19.5</td></tr>
+            <tr><td>10 yr</td><td>14.2</td><td>16.5</td><td>19.2</td><td>21.8</td></tr>
+            <tr><td>12 yr</td><td>15.0</td><td>18.0</td><td>21.7</td><td>24.9</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="adiposity-rebound">Adiposity rebound: the most important pattern in childhood BMI</h2>
+      <p>Between ages 1 and 6, BMI naturally falls as children grow taller faster than they gain weight. It reaches a minimum — the <strong>adiposity nadir</strong> — typically between ages 4 and 6. It then rises again; this is the <strong>adiposity rebound</strong>.</p>
+      <p>The timing of rebound matters significantly. Research by Rolland-Cachera et al. (1984) showed that children who begin their rebound <strong>before age 5</strong> have a substantially higher risk of adult obesity and metabolic disease, even when their BMI at the time appears normal. A child at the 50th percentile who rebounds early carries more future risk than a child at the 70th percentile who rebounds at age 7.</p>
+      <p>This means that looking at BMI percentile <em>over time</em> — across multiple paediatric visits — is far more informative than any single measurement. A steady rise in percentile through ages 4–8 warrants attention even if the current percentile is below the 85th.</p>
+
+      <h2 id="healthy-growth">Supporting healthy growth in children aged 2–12</h2>
+      <p>For children in the overweight or obese range, the clinical recommendation is not weight loss but <strong>weight maintenance while height increases</strong>. As a child grows taller without gaining excess weight, their BMI percentile naturally falls into the healthy range. This is a realistic and child-safe target that does not require caloric restriction.</p>
+
+      <h3>Practical guidance for parents</h3>
+      <ul>
+        <li><strong>Serve regular meals and snacks</strong> at set times rather than continuous grazing — structure reduces overconsumption without restriction</li>
+        <li><strong>Offer vegetables and fruit first</strong> when children are hungry — this displaces calorie-dense snacks without banning them</li>
+        <li><strong>Limit sugary drinks</strong> including fruit juice — a glass of apple juice has as much sugar as a glass of fizzy drink</li>
+        <li><strong>At least 60 minutes of moderate-to-vigorous physical activity daily</strong> for children aged 6–12; active play covers most of this naturally</li>
+        <li><strong>Limit recreational screen time</strong> — sedentary hours displace active play and are independently associated with higher BMI regardless of diet</li>
+        <li><strong>Do not comment on a child's weight or body shape</strong> — children internalise body-image messages very early; focus on health and energy, not appearance</li>
+      </ul>
+      <p>Never put a primary-school child on a calorie-counting or weight-loss diet without direct supervision by a paediatrician and registered dietitian. Caloric restriction can impair growth, bone mineralisation, and cognitive development in children.</p>
+
+      <h2 id="limitations">Limitations of BMI for children</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Limitation</th><th>Why it matters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cannot distinguish muscle from fat</td>
+              <td>A physically active, muscular child may be classified as overweight despite healthy body composition</td>
+            </tr>
+            <tr>
+              <td>Single measurement is limited</td>
+              <td>BMI percentile trajectory over time is far more meaningful than any one data point</td>
+            </tr>
+            <tr>
+              <td>Ethnicity differences</td>
+              <td>Children of South Asian and East Asian descent tend to carry more body fat at the same BMI percentile than European-descent peers</td>
+            </tr>
+            <tr>
+              <td>Normal variation in growth rates</td>
+              <td>During growth spurts, BMI may temporarily dip or rise in ways unrelated to actual fat change</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-see-doctor">When to talk to your child's doctor</h2>
+      <ul>
+        <li>BMI below the 5th percentile — especially if the child is eating poorly, losing weight, or has slowed linear growth</li>
+        <li>BMI at or above the 85th percentile — especially if it has been rising across consecutive visits</li>
+        <li>BMI at or above the 95th percentile — clinical evaluation is recommended regardless of other factors</li>
+        <li>Any rapid shift of 10+ percentile points upward between routine visits</li>
+        <li>Signs of early puberty (before age 8 in girls, before age 9 in boys) alongside rising BMI</li>
+        <li>Acanthosis nigricans — darkened skin folds at the neck, armpits, or groin — which can indicate insulin resistance in overweight children</li>
+      </ul>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>What is a healthy BMI for a child aged 2–12?</h3>
+      <p>Between the 5th and 85th percentile for the child's age and sex. For a 5-year-old boy, that is approximately 13.6–16.8. For a 10-year-old boy it is approximately 14.4–18.8. Use the calculator for exact values at any age.</p>
+
+      <h3>What is a normal BMI for a 5-year-old?</h3>
+      <p>Healthy weight (5th–85th percentile): approximately 13.6–16.8 for boys, 13.3–16.6 for girls. The median (50th percentile) is approximately 15.5 for boys and 15.2 for girls at age 5.</p>
+
+      <h3>What is a normal BMI for a 10-year-old?</h3>
+      <p>Healthy weight: approximately 14.4–18.8 for boys, 14.2–19.2 for girls. The overweight threshold (85th percentile) for a 10-year-old boy is approximately 18.8 and for a girl approximately 19.2.</p>
+
+      <h3>Can I use an adult BMI calculator for my child?</h3>
+      <p>No. Adult cutoffs (18.5 / 25 / 30) are not appropriate for children. A healthy 12-year-old girl may have a BMI of 20, which adult charts would classify as healthy by luck but for the wrong reason — and any younger child would be severely misclassified. Always use a child-specific percentile calculator.</p>
+
+      <h3>Should I put my child on a diet if their BMI is high?</h3>
+      <p>No — restrictive dieting is not recommended for growing children. The goal is typically to maintain current weight while height continues to increase, naturally lowering BMI percentile over time. A paediatrician or registered dietitian can guide appropriate changes.</p>
+
+      <h3>Is this calculator accurate for a 12-year-old who has started puberty?</h3>
+      <p>It gives a valid percentile result. However, puberty creates a specific context — body fat increases normally in girls and muscle mass in boys — that makes interpretation more nuanced for early adolescents. For children 13 and older, use the <a href="/health/bmi-calculator/teens">BMI Calculator for Teens</a>, which addresses puberty-specific BMI interpretation.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/health/bmi-calculator/teens', blurb: 'BMI percentile calculator for adolescents aged 13–19. Covers puberty\'s effect on BMI, body image and eating disorders, athletic teens, and the transition to adult BMI at 20.' },
+        { path: '/health/bmi-calculator', label: 'BMI Calculator (adults)', blurb: 'Adult BMI calculator with full background on the formula, categories, limitations, and healthy weight ranges for adults aged 20+.' },
+        { path: '/conversion/weight-converter' },
+        { path: '/conversion/height-converter' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

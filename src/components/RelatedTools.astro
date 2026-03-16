@@ -1,0 +1,37 @@
+---
+import { getRelatedTool } from '../utils/getPages';
+
+interface RelatedToolItem {
+  path: string;
+  label?: string;  // override the page title
+  blurb?: string;  // override the description
+}
+
+interface Props {
+  tools: RelatedToolItem[];
+}
+
+const { tools } = Astro.props;
+
+const resolved = tools.map(({ path, label, blurb }) => {
+  const meta = getRelatedTool(path);
+  return {
+    path,
+    icon: meta.icon,
+    label: label ?? meta.title,
+    blurb: blurb ?? meta.description,
+  };
+});
+---
+
+<ul class="related-tools-list">
+  {resolved.map(({ path, icon, label, blurb }) => (
+    <li>
+      <span class="tool-icon">{icon}</span>
+      <div>
+        <a href={path}>{label}</a>
+        <p>{blurb}</p>
+      </div>
+    </li>
+  ))}
+</ul>
