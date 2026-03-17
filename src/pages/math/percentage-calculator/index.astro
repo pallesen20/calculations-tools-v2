@@ -1,6 +1,7 @@
 ---
-import CalculatorLayout from '../layouts/CalculatorLayout.astro';
-import Formula from '../components/Formula.astro';
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
 
 // LaTeX formulas — defined as JS strings so Astro doesn't misparse { } in
 // the template as expression delimiters. Backslashes are double-escaped.
@@ -33,7 +34,7 @@ const schema = [
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Percentage Calculator",
-    "url": "https://calculations.tools/percentage-calculator",
+    "url": "https://calculations.tools/math/percentage-calculator",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
     "description": "Calculate percentages, percentage increase, percentage decrease, and what percentage one number is of another. Free, instant, no registration.",
@@ -124,7 +125,7 @@ const schema = [
   title="Percentage Calculator"
   metaTitle="Percentage Calculator - Find %, Increase, Decrease & More ᐅ"
   description="Calculate any percentage instantly: find X% of a number, work out a percentage increase or decrease, or see what percentage one number is of another. Free tool with full formula explanations."
-  canonical="https://calculations.tools/percentage-calculator"
+  canonical="https://calculations.tools/math/percentage-calculator"
   tocItems={tocItems}
   embedSlug="percentage-calculator"
   schema={schema}
@@ -317,21 +318,18 @@ const schema = [
       <p>Multiply by 100. Example: 0.45 × 100 = 45%.</p>
 
       <h2 id="related-tools">Related tools</h2>
-      <p>These calculators are commonly used alongside percentage calculations:</p>
-      <ul class="related-tools-list">
-        <li>
-          <span class="tool-icon">💱</span>
-          <span><a href="/conversion/currency-converter">Currency Converter</a>: convert between 150+ currencies when working with financial percentages across different markets</span>
-        </li>
-        <li>
-          <span class="tool-icon">⚖️</span>
-          <span><a href="/conversion/weight-converter">Weight Converter</a>: useful when percentage calculations involve unit conversions for mass or ingredients</span>
-        </li>
-        <li>
-          <span class="tool-icon">📝</span>
-          <span><a href="/word-counter">Word Counter</a>: count words, characters, and paragraphs with reading time estimates</span>
-        </li>
-      </ul>
+      <RelatedTools tools={[
+        { path: '/math/percentage-calculator/increase', blurb: 'Dedicated calculator for percentage increases — shows the formula, absolute change, and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decrease', blurb: 'Dedicated calculator for percentage decreases and discounts — shows formula, absolute change, and step-by-step workings.' },
+        { path: '/math/percentage-calculator/change',      blurb: 'Percentage change calculator — single tool covering increases and decreases with signed result.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on when to use weighted averaging.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',       blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
+        { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% — covers successive discounts and why stacking percentages cannot simply be added.' },
+        { path: '/date-calculator',                  blurb: 'Calculate days between dates — useful when the percentage change spans a defined time period.' },
+        { path: '/conversion/currency-converter',  blurb: 'Convert between 150+ currencies with live rates — useful for financial percentage calculations across markets.' },
+      ]} />
 
     </div>
 

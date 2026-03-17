@@ -1,0 +1,275 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  main:     "$$\\% \\text{ Change} = \\frac{\\text{New} - \\text{Old}}{|\\text{Old}|} \\times 100$$",
+  incEx:    "$$\\frac{58{,}000 - 50{,}000}{50{,}000} \\times 100 = +16\\%$$",
+  decEx:    "$$\\frac{150 - 200}{200} \\times 100 = -25\\%$$",
+  reverse:  "$$\\text{New Value} = \\text{Old} \\times \\left(1 + \\frac{\\%\\text{ Change}}{100}\\right)$$",
+  diff:     "$$\\% \\text{ Difference} = \\frac{|V_1 - V_2|}{\\dfrac{V_1 + V_2}{2}} \\times 100$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',     label: 'How to use' },
+  { id: 'formula',        label: 'Percentage change formula' },
+  { id: 'examples',       label: 'Worked examples' },
+  { id: 'reverse',        label: 'Reverse: finding the new value' },
+  { id: 'vs-difference',  label: 'Change vs. difference' },
+  { id: 'vs-points',      label: 'Change vs. percentage points' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',            label: 'FAQs' },
+  { id: 'related-tools',  label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Percentage Change Calculator",
+    "url": "https://calculations.tools/math/percentage-calculator/change",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate the percentage change between two values. Shows whether the change is an increase or decrease, the absolute difference, and step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate percentage change",
+    "description": "Calculate the percentage change between an original value and a new value in three steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Subtract", "text": "Subtract the original value from the new value to find the signed difference." },
+      { "@type": "HowToStep", "position": 2, "name": "Divide", "text": "Divide the difference by the absolute value of the original." },
+      { "@type": "HowToStep", "position": 3, "name": "Multiply by 100", "text": "Multiply by 100. A positive result is an increase; a negative result is a decrease." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the formula for percentage change?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change = ((New Value − Original Value) ÷ |Original Value|) × 100. A positive result means an increase; a negative result means a decrease. Example: a value that moves from 200 to 150 has a percentage change of ((150 − 200) ÷ 200) × 100 = −25%." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between percentage change and percentage difference?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change has a defined direction: you know which value is the starting point and which is the end point, and the original value is always the base. Percentage difference is used when there is no defined starting point — it uses the average of the two values as the base and returns an unsigned result. Use percentage change for before-and-after comparisons; use percentage difference when comparing two independent measurements." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between percentage change and percentage points?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A percentage point is an absolute arithmetic difference between two percentage values. If a tax rate rises from 20% to 25%, it has increased by 5 percentage points. The percentage change in the tax rate is (5 ÷ 20) × 100 = 25%. Percentage points and percentage change measure different things and are not interchangeable." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can percentage change be negative?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. A negative percentage change means the value decreased. For example, a drop from 200 to 150 is a −25% change. There is no lower limit; a value falling to zero represents a −100% change." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does a +20% change followed by a −20% change return to the original?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. A +20% change on 100 gives 120. A −20% change on 120 gives 96, not 100. Because the base changes between operations, equal percentage increases and decreases are not symmetrical." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is the denominator the absolute value of the original?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Using |Old| ensures that the sign of the result correctly reflects the direction of change. If the original value is negative, dividing by Old would flip the sign and give a counterintuitive result. For positive original values, |Old| and Old are identical, so the formula reduces to the standard (New − Old) ÷ Old × 100." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Percentage Change Calculator"
+  metaTitle="Percentage Change Calculator | Formula & Examples ᐅ"
+  description="Calculate the percentage change between two values. See whether the result is an increase or decrease, the absolute difference, and a full step-by-step breakdown."
+  canonical="https://calculations.tools/math/percentage-calculator/change"
+  tocItems={tocItems}
+  schema={schema}
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Percentage Change</h2>
+          <p>Enter the original value and the new value</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pc-original">Original Value</label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="pc-original" class="bmi-input" step="any" placeholder="e.g. 200" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pc-new">New Value</label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="pc-new" class="bmi-input" step="any" placeholder="e.g. 150" />
+          </div>
+        </div>
+
+        <div id="pc-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="pc-pct">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Percentage Change</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pc-abs">—</div>
+              <div class="lbm-card-lbl">Absolute change</div>
+              <div class="lbm-card-badge" id="pc-badge">—</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">How it was calculated</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1 — Subtract</span>
+              <span id="pc-step1" class="pi-step-val">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2 — Divide</span>
+              <span id="pc-step2" class="pi-step-val">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 3 — Multiply by 100</span>
+              <span id="pc-step3" class="pi-step-val">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/percentage-change-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Formula</p>
+        <p>Percentage change = <strong>((New − Old) ÷ |Old|) × 100</strong>. A positive result is an increase; a negative result is a decrease. The original value is always the base.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the original value and the new value. The result shows the percentage change with its sign (positive for an increase, negative for a decrease), the absolute difference, and a three-step breakdown. The calculator works for any two real numbers except when the original value is zero.</p>
+
+      <h2 id="formula">Percentage change formula</h2>
+      <p>Percentage change measures how much a value has moved relative to its starting point, expressed as a percentage of that starting point:</p>
+
+      <Formula expr={f.main} />
+
+      <p>The denominator uses the absolute value of Old so the sign of the result is determined entirely by the direction of change. For positive original values, |Old| = Old, so the formula reduces to the familiar (New − Old) ÷ Old × 100.</p>
+
+      <p>The result is <strong>signed</strong>: positive means the value grew, negative means it fell. There is no upper limit on positive results (a doubling is +100%, a tripling is +200%), and the lower limit for positive starting values is −100% (reaching zero).</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: increase (salary)</h3>
+      <p>A salary rises from 50,000 to 58,000.</p>
+      <Formula expr={f.incEx} />
+      <p>The salary increased by <strong>+16%</strong>.</p>
+
+      <h3>Example 2: decrease (product price)</h3>
+      <p>A product price falls from 200 to 150.</p>
+      <Formula expr={f.decEx} />
+      <p>The price decreased by <strong>−25%</strong> (or 25% less than the original).</p>
+
+      <h2 id="reverse">Reverse: finding the new value from a known percentage change</h2>
+      <p>To find the resulting value after a known percentage change, apply the multiplier to the original:</p>
+
+      <Formula expr={f.reverse} />
+
+      <p>Examples of the multiplier pattern:</p>
+      <ul>
+        <li>+10% change → multiply by 1.10</li>
+        <li>−25% change → multiply by 0.75</li>
+        <li>+100% change → multiply by 2.00 (doubles)</li>
+        <li>−100% change → multiply by 0.00 (reaches zero)</li>
+      </ul>
+
+      <h2 id="vs-difference">Percentage change vs. percentage difference</h2>
+      <p>These two terms are often confused but measure fundamentally different things:</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th></th><th>Percentage change</th><th>Percentage difference</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>When to use</td><td>Before-and-after comparisons where one value is the clear starting point</td><td>Comparing two values with no defined starting point</td></tr>
+            <tr><td>Base</td><td>The original (old) value</td><td>The average of the two values</td></tr>
+            <tr><td>Sign</td><td>Signed (+ or −)</td><td>Always positive (unsigned)</td></tr>
+            <tr><td>Formula</td><td>(New − Old) ÷ Old × 100</td><td>|V₁ − V₂| ÷ ((V₁ + V₂) ÷ 2) × 100</td></tr>
+            <tr><td>Example use</td><td>Revenue this year vs. last year</td><td>Price of product A vs. product B</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Percentage difference formula for reference:</p>
+      <Formula expr={f.diff} />
+
+      <h2 id="vs-points">Percentage change vs. percentage points</h2>
+      <p>A <strong>percentage point</strong> is the arithmetic difference between two percentage values — it is an absolute measure. A <strong>percentage change</strong> is a relative measure.</p>
+      <p><strong>Example:</strong> An approval rating rises from 40% to 50%.</p>
+      <ul>
+        <li>Change in percentage points: 50 − 40 = <strong>10 percentage points</strong></li>
+        <li>Percentage change in the rating: (10 ÷ 40) × 100 = <strong>+25%</strong></li>
+      </ul>
+      <p>Both statements are correct but describe different quantities. News reporting frequently conflates them, which is why the distinction matters.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Using the new value as the base</h3>
+      <p>Always divide by the <em>original</em> value. For a move from 200 to 150: the correct base is 200, giving −25%. Using 150 gives −33.3%, which overstates the decrease.</p>
+
+      <h3>Confusing percentage change with percentage points</h3>
+      <p>If a conversion rate falls from 4% to 3%, it has dropped 1 percentage point but decreased by 25% relative to its original value. Always clarify which measure is being reported.</p>
+
+      <h3>Treating sequential changes as additive</h3>
+      <p>A +10% change followed by a −10% change does not return to the starting value. From 100: +10% gives 110, then −10% of 110 gives 99. Each percentage acts on a different base.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is the formula for percentage change?</h3>
+      <p>Percentage change = ((New − Old) ÷ |Old|) × 100. Positive results are increases; negative results are decreases.</p>
+
+      <h3>What is the difference between percentage change and percentage difference?</h3>
+      <p>Percentage change requires a defined starting point and is signed. Percentage difference uses the average of two values as the base and is always positive. Use percentage change for before-and-after scenarios; use percentage difference when comparing two independent values with no reference direction.</p>
+
+      <h3>What is the difference between percentage change and percentage points?</h3>
+      <p>A percentage point is an absolute gap between two percentages (e.g. 20% → 25% is 5 pp). Percentage change is the relative movement (5 ÷ 20 × 100 = 25%). They measure different things.</p>
+
+      <h3>Can percentage change be negative?</h3>
+      <p>Yes. A negative result means the value decreased. A drop from 200 to 150 is −25%. The floor for positive original values is −100% (reaching zero).</p>
+
+      <h3>Does a +20% change followed by a −20% change return to the original?</h3>
+      <p>No. +20% on 100 gives 120; −20% on 120 gives 96. Because the base shifts with each step, symmetric percentages do not cancel out.</p>
+
+      <h3>Why is the denominator |Old| and not just Old?</h3>
+      <p>Using the absolute value prevents sign-flipping when the original value is negative. For positive originals, |Old| = Old and the formula is identical to the standard version.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator/increase', blurb: 'Dedicated percentage increase calculator with step-by-step workings.' },
+        { path: '/math/percentage-calculator/decrease',   blurb: 'Dedicated percentage decrease calculator — useful for discounts and price drops.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
+        { path: '/date-calculator',                           blurb: 'Calculate days between dates — useful when a percentage change spans a defined time period.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

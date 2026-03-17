@@ -67,13 +67,93 @@ const entries: Entry[] = [
     icon: '🔒',
   },
   {
-    path: '/percentage-calculator',
+    path: '/math',
+    title: 'Math Calculators — Free Online Tools',
+    description: 'Free online math calculators: percentage calculators, doubling time, and more. Fast, accurate, no registration needed.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '∑',
+  },
+  {
+    path: '/math/percentage-calculator',
     title: 'Percentage Calculator — Free Online Tool',
     description: 'Calculate percentages, percentage increases, decreases, and differences instantly. Free online percentage calculator with multiple modes.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: '%',
     short: 'Percentages, increases & differences',
+  },
+  {
+    path: '/math/percentage-calculator/increase',
+    title: 'Percentage Increase Calculator — Formula & Examples',
+    description: 'Calculate the percentage increase between two values instantly. See the formula, step-by-step workings, and a reference table for common percentage increases.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '↗',
+    short: 'From old value to new value',
+  },
+  {
+    path: '/math/percentage-calculator/decrease',
+    title: 'Percentage Decrease Calculator — Formula & Examples',
+    description: 'Calculate the percentage decrease between two values instantly. See the formula, step-by-step workings, and a reference table for common percentage decreases.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '↘',
+    short: 'From old value to new (lower) value',
+  },
+  {
+    path: '/math/percentage-calculator/change',
+    title: 'Percentage Change Calculator — Formula & Examples',
+    description: 'Calculate the percentage change between two values. Shows whether the result is an increase or decrease, the absolute difference, and step-by-step workings.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '↕',
+    short: 'Increase or decrease, signed result',
+  },
+  {
+    path: '/math/percentage-calculator/difference',
+    title: 'Percentage Difference Calculator — Formula & Examples',
+    description: 'Calculate the percentage difference between two values. Uses the average of both as the base — ideal for comparing two independent values with no defined starting point.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '⇔',
+    short: 'Compare two values, unsigned result',
+  },
+  {
+    path: '/math/percentage-calculator/average',
+    title: 'Average Percentage Calculator — Formula & Examples',
+    description: 'Calculate the average of multiple percentages instantly. Covers the arithmetic mean, weighted average, and when each method gives the correct result.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: 'x̄',
+    short: 'Average of multiple percentages',
+  },
+  {
+    path: '/math/percentage-calculator/fraction-to-percent',
+    title: 'Fraction to Percent Calculator — Convert & Examples',
+    description: 'Convert any fraction to a percentage instantly. Enter a numerator and denominator to get the percentage, decimal equivalent, and step-by-step workings.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '½',
+    short: 'Numerator ÷ denominator × 100',
+  },
+  {
+    path: '/math/percentage-calculator/decimal-to-percent',
+    title: 'Decimal to Percent Calculator — Convert & Examples',
+    description: 'Convert any decimal to a percentage instantly. Multiply by 100 — see the step-by-step working, a reference table for common decimals, and the reverse conversion.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '0.x',
+    short: 'Decimal × 100 = percentage',
+  },
+  {
+    path: '/math/percentage-calculator/percentage-of-percentage',
+    title: 'Percentage of a Percentage Calculator — Formula & Examples',
+    description: 'Calculate what P% of Q% equals. Covers the formula, successive discounts, commission tiers, and why stacking percentages is not the same as adding them.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '%%',
+    short: 'P% of Q% = P×Q÷100',
   },
   {
     path: '/word-counter',
@@ -328,6 +408,19 @@ export function getConversionTools(): CardMeta[] {
     }));
 }
 
+export function getMathTools(): CardMeta[] {
+  return entries
+    .filter(e => e.path.startsWith('/math/') && e.path !== '/math')
+    .map(e => ({
+      slug: e.path.replace('/math/', ''),
+      title: e.title.split(' — ')[0],
+      short: e.short ?? '',
+      description: e.description,
+      icon: e.icon ?? '',
+      units: e.units,
+    }));
+}
+
 const HEALTH_GROUPS: Record<string, string> = {
   'bmi-calculator':            'BMI Calculators',
   'lean-body-mass-calculator': 'Body Composition',
@@ -359,7 +452,7 @@ export interface FrontPageGroup {
 }
 
 const FRONT_TOOL_CATEGORIES: Record<string, string> = {
-  '/percentage-calculator':      'Math',
+  '/math/percentage-calculator': 'Math',
   '/word-counter':               'Text & Writing',
   '/compare-text':               'Text & Writing',
   '/compare-text/compare-excel': 'Text & Writing',
@@ -370,6 +463,7 @@ const FRONT_TOOL_CATEGORIES: Record<string, string> = {
 const CATEGORY_INDEX: Record<string, string> = {
   'Health Calculators': '/health',
   'Conversion Tools':   '/conversion',
+  'Math':               '/math',
 };
 
 const CATEGORY_ORDER = ['Health Calculators', 'Conversion Tools', 'Math', 'Text & Writing', 'Date & Time'];

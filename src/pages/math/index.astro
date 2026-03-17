@@ -1,0 +1,183 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { getMathTools } from '../../utils/getPages';
+
+const tools = getMathTools();
+const totalTools = tools.length;
+
+const tocItems = [
+  { id: 'tools',       label: 'All math tools' },
+  { id: 'which-tool',  label: 'Which tool to use' },
+  { id: 'faq',         label: 'FAQs' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Math Calculators",
+    "url": "https://calculations.tools/math",
+    "description": "Free online math calculators: percentage calculators, doubling time, and more.",
+    "hasPart": tools.map(t => ({
+      "@type": "WebApplication",
+      "name": t.title,
+      "url": `https://calculations.tools/math/${t.slug}`,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Are these math calculators free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No registration, no usage limits, no premium tiers. All tools run locally in your browser." } },
+      { "@type": "Question", "name": "Do the calculators work on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool is fully responsive and works on phones and tablets without an app." } },
+      { "@type": "Question", "name": "What is the difference between percentage change and percentage difference?", "acceptedAnswer": { "@type": "Answer", "text": "Percentage change measures movement from a known starting point — the original value is always the base. Percentage difference compares two independent values using their average as the base. Use percentage change for before-and-after comparisons; use percentage difference when neither value is clearly the starting point." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Math Calculators"
+  metaTitle="Free Online Math Calculators ᐅ"
+  description="Free online math calculators: percentage calculators, fraction and decimal converters, and more. Instant results, no registration required."
+  canonical="https://calculations.tools/math"
+  tocItems={tocItems}
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container cv-container">
+
+        <div class="calculator-header">
+          <h2>Math Calculators</h2>
+          <p>Pick a calculator below to get started</p>
+        </div>
+
+        <div class="cv-grid">
+          {tools.map(tool => (
+            <a href={`/math/${tool.slug}`} class="cv-card no-underline">
+              <div class="cv-icon">{tool.icon}</div>
+              <div class="cv-body">
+                <div class="cv-title">{tool.title}</div>
+                <div class="cv-short">{tool.short}</div>
+                <div class="cv-desc">{tool.description}</div>
+              </div>
+              <div class="cv-arrow">→</div>
+            </a>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">What's in the math section</div>
+        <p>This section contains {totalTools} free math calculators. The <a href="/math/percentage-calculator">Percentage Calculator</a> hub covers basic percentages, increases, decreases, and comparisons. Dedicated tools handle percentage increase, decrease, change, difference, average, fraction-to-percent, decimal-to-percent, and percentage-of-a-percentage — each with worked examples and formula explanations.</p>
+      </div>
+
+      <h2 id="tools">All math tools</h2>
+      <p>Every tool is free, runs entirely in your browser, and produces results as you type. No button press, no registration, no data sent to any server.</p>
+
+      <h2 id="which-tool">Which tool to use</h2>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Your goal</th><th>Tool</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Find X% of a number, or work out increase/decrease/what %</td><td><a href="/math/percentage-calculator">Percentage Calculator</a></td></tr>
+          <tr><td>Calculate how much a value has grown</td><td><a href="/math/percentage-calculator/increase">Percentage Increase</a></td></tr>
+          <tr><td>Calculate how much a value has fallen</td><td><a href="/math/percentage-calculator/decrease">Percentage Decrease</a></td></tr>
+          <tr><td>Signed change with direction (increase or decrease)</td><td><a href="/math/percentage-calculator/change">Percentage Change</a></td></tr>
+          <tr><td>Compare two independent values, no fixed starting point</td><td><a href="/math/percentage-calculator/difference">Percentage Difference</a></td></tr>
+          <tr><td>Average of multiple percentages</td><td><a href="/math/percentage-calculator/average">Average Percentage</a></td></tr>
+          <tr><td>Convert a fraction to a percentage</td><td><a href="/math/percentage-calculator/fraction-to-percent">Fraction to Percent</a></td></tr>
+          <tr><td>Convert a decimal to a percentage</td><td><a href="/math/percentage-calculator/decimal-to-percent">Decimal to Percent</a></td></tr>
+          <tr><td>P% of Q% — stacked or successive percentages</td><td><a href="/math/percentage-calculator/percentage-of-percentage">Percentage of a Percentage</a></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="faq">FAQs</h2>
+
+      <h3>Are these math calculators free?</h3>
+      <p>Yes, completely free. No registration, no usage limits, no premium tier. Every tool runs entirely in your browser.</p>
+
+      <h3>Do the calculators work on mobile?</h3>
+      <p>Yes. Every tool is fully responsive and works on any phone, tablet, or desktop without an app.</p>
+
+      <h3>What is the difference between percentage change and percentage difference?</h3>
+      <p>Percentage change has a direction and a known starting point — the original value is always the denominator. Percentage difference is symmetric — it uses the average of the two values as the base and produces an unsigned result. Use percentage change for before-and-after comparisons; use percentage difference when comparing two independent figures with no defined reference point.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style>
+  .cv-container { max-width: 100% !important; }
+  .cv-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .cv-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  }
+  .cv-card:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.25);
+    transform: translateX(3px);
+  }
+  .cv-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+    width: 2.5rem;
+    text-align: center;
+    margin-top: 0.1rem;
+  }
+  .cv-body { flex: 1; min-width: 0; }
+  .cv-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.1rem;
+  }
+  .cv-short {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+  .cv-desc {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.4;
+  }
+  .cv-arrow {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    align-self: center;
+    transition: color 0.2s, transform 0.15s;
+  }
+  .cv-card:hover .cv-arrow {
+    color: rgba(255,255,255,0.7);
+    transform: translateX(3px);
+  }
+</style>

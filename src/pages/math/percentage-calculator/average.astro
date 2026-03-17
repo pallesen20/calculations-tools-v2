@@ -1,0 +1,240 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  simple:    "$$\\bar{P} = \\frac{P_1 + P_2 + \\cdots + P_n}{n}$$",
+  simpleEx:  "$$\\bar{P} = \\frac{85 + 90 + 78}{3} = \\frac{253}{3} \\approx 84.33\\%$$",
+  weighted:  "$$\\bar{P}_w = \\frac{P_1 W_1 + P_2 W_2 + \\cdots + P_n W_n}{W_1 + W_2 + \\cdots + W_n}$$",
+  weightedEx: "$$\\bar{P}_w = \\frac{60\\% \\times 200 + 80\\% \\times 50}{200 + 50} = \\frac{120 + 40}{250} = \\frac{160}{250} = 64\\%$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use' },
+  { id: 'formula',         label: 'Formula' },
+  { id: 'examples',        label: 'Worked examples' },
+  { id: 'when-valid',      label: 'When simple averaging is valid' },
+  { id: 'weighted',        label: 'Weighted average percentage' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Average Percentage Calculator",
+    "url": "https://calculations.tools/math/percentage-calculator/average",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate the average of multiple percentages instantly. Covers the arithmetic mean, weighted average, and when each method gives the correct result.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate the average of multiple percentages",
+    "description": "Calculate the arithmetic mean of multiple percentage values in two steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Sum the percentages", "text": "Add all the percentage values together." },
+      { "@type": "HowToStep", "position": 2, "name": "Divide by the count", "text": "Divide the sum by the number of values. The result is the average percentage." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the formula for the average of multiple percentages?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Average percentage = (P1 + P2 + … + Pn) ÷ n. Add all the percentages together and divide by how many there are. Example: the average of 85%, 90%, and 78% is (85 + 90 + 78) ÷ 3 = 253 ÷ 3 ≈ 84.33%." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you always average percentages with the arithmetic mean?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Only when all the percentages share the same base (denominator). If the percentages come from groups of different sizes — for example, a 60% pass rate from 200 students and an 80% pass rate from 50 students — the arithmetic mean (70%) is incorrect. You must use a weighted average, which accounts for the different group sizes and gives 64% in this example." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a weighted average percentage?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A weighted average percentage accounts for the fact that different percentages may apply to groups of different sizes. The formula is (P1×W1 + P2×W2 + … + Pn×Wn) ÷ (W1 + W2 + … + Wn), where W represents the weight (e.g. sample size, hours, or any common denominator) for each percentage." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the average of 50% and 100% equal to 75%?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Only if both percentages come from the same base. If 50% applies to 100 items and 100% applies to 1 item, the true combined rate is 51 out of 101 ≈ 50.5%, not 75%. Arithmetic averaging of percentages is only valid when their underlying bases are equal." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you average grades that are percentages?",
+        "acceptedAnswer": { "@type": "Answer", "text": "If each grade is worth the same (e.g. equal-weight assignments), add the percentages and divide by the number of grades. If different assignments are worth different amounts, use a weighted average: multiply each grade by its weight (e.g. 40% of the course), sum those products, and divide by the total weight." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Simpson's Paradox in the context of percentages?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Simpson's Paradox occurs when a trend that appears in separate groups reverses or disappears when the groups are combined. It is a classic symptom of incorrectly averaging rates or percentages without accounting for group size. The fix is to use a weighted average that incorporates the denominator of each percentage." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Average Percentage Calculator"
+  metaTitle="Average Percentage Calculator | Formula & Examples ᐅ"
+  description="Calculate the average of multiple percentages instantly. Enter two or more values to get the arithmetic mean, total sum, and step-by-step breakdown."
+  canonical="https://calculations.tools/math/percentage-calculator/average"
+  tocItems={tocItems}
+  schema={schema}
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Average Percentage</h2>
+          <p>Enter two or more percentage values</p>
+        </div>
+
+        <div id="pav-rows" class="pav-rows"></div>
+        <button type="button" id="pav-add" class="pav-add-btn">+ Add value</button>
+
+        <div id="pav-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="pav-avg">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Average Percentage</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pav-count">—</div>
+              <div class="lbm-card-lbl">Values entered</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pav-sum">—</div>
+              <div class="lbm-card-lbl">Sum</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">How it was calculated</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1 — Sum</span>
+              <span id="pav-step1" class="pi-step-val">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2 — Divide by count</span>
+              <span id="pav-step2" class="pi-step-val">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/average-percentage-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Formula</p>
+        <p>Average percentage = <strong>(P1 + P2 + … + Pn) ÷ n</strong>. Add all percentages and divide by how many there are. This gives the correct answer only when all percentages share the same base — see the weighted average section if they do not.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter at least two percentage values. Use the "+ Add value" button to include more. The calculator shows the arithmetic mean, the sum, and a step-by-step breakdown. The result updates instantly as you type.</p>
+      <p>This calculator computes the simple arithmetic mean. If your percentages come from groups of different sizes, read the <a href="#weighted">weighted average section</a> below — the arithmetic mean will give an incorrect result in that case.</p>
+
+      <h2 id="formula">Formula</h2>
+      <p>The arithmetic mean of n percentage values is:</p>
+
+      <Formula expr={f.simple} />
+
+      <p>Each value P is treated as a plain number. The "%" sign is just a unit — it does not affect the arithmetic. Averaging 80% and 60% is the same operation as averaging 80 and 60, then appending the % symbol to the result.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: averaging exam scores</h3>
+      <p>A student scores 85%, 90%, and 78% on three equal-weight exams. What is the average score?</p>
+      <Formula expr={f.simpleEx} />
+      <p>The average exam score is approximately <strong>84.33%</strong>. Because each exam is worth the same, the arithmetic mean is correct here.</p>
+
+      <h3>Example 2: averaging pass rates from different-sized groups</h3>
+      <p>A training programme has a 60% pass rate in Group A (200 participants) and 80% in Group B (50 participants). The simple average would be (60 + 80) ÷ 2 = <strong>70%</strong>. But this is wrong because the groups are different sizes. The weighted average is:</p>
+      <Formula expr={f.weightedEx} />
+      <p>The true combined pass rate is <strong>64%</strong>, not 70%. Group A's larger size pulls the combined rate closer to its 60% result.</p>
+
+      <h2 id="when-valid">When simple averaging is valid</h2>
+      <p>The arithmetic mean of percentages gives the correct combined result when <strong>all percentages share the same base</strong> — that is, each percentage was calculated from an equal number of items, people, or observations. Common valid cases:</p>
+      <ul>
+        <li>Averaging quiz or exam grades where each assessment has the same total marks</li>
+        <li>Averaging conversion rates measured from equal sample sizes</li>
+        <li>Averaging percentage allocations that must sum to a fixed total</li>
+        <li>Averaging growth rates where the period length is equal</li>
+      </ul>
+      <p>If there is any doubt about whether the bases are equal, use a weighted average.</p>
+
+      <h2 id="weighted">Weighted average percentage</h2>
+      <p>When percentages come from groups or items of different sizes, each percentage must be weighted by its denominator before averaging:</p>
+
+      <Formula expr={f.weighted} />
+
+      <p>Here W is the weight for each percentage — typically the sample size, number of items, total marks, or hours. The formula is equivalent to calculating the combined rate directly from the raw counts, which is always the most reliable approach.</p>
+
+      <p><strong>When to use weighted average:</strong></p>
+      <ul>
+        <li>Pass rates or success rates from groups of different sizes</li>
+        <li>Grades from assignments worth different percentages of the course total</li>
+        <li>Click-through rates from campaigns with different impression counts</li>
+        <li>Any percentage that was itself derived from a denominator you know</li>
+      </ul>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Averaging rates from unequal groups</h3>
+      <p>The most common error is applying the arithmetic mean to percentages that come from different-sized populations. A 90% pass rate from 10 students and a 50% pass rate from 1,000 students do not average to 70% — the true combined rate is approximately 50.4%. The size of the groups dominates the outcome.</p>
+
+      <h3>Averaging percentages that share no common base</h3>
+      <p>Two percentages can only be meaningfully averaged if they measure the same quantity in the same units. Averaging a 10% profit margin with a 10% employee satisfaction score produces a number (10%) that has no real-world meaning.</p>
+
+      <h3>Simpson's Paradox</h3>
+      <p>When incorrectly averaged, percentages can reverse direction entirely when groups are combined. A hospital might have a higher success rate than a competitor in every individual procedure category yet appear worse overall — because it handles more complex cases (a larger denominator for difficult procedures). This is Simpson's Paradox, and it arises from ignoring the denominators when combining percentages.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is the formula for the average of multiple percentages?</h3>
+      <p>Average percentage = (P1 + P2 + … + Pn) ÷ n. Sum all the values and divide by the count. This is the arithmetic mean and is valid only when all percentages share the same base.</p>
+
+      <h3>Can you always average percentages with the arithmetic mean?</h3>
+      <p>No. The arithmetic mean is only correct when all percentages share the same denominator. If they come from groups of different sizes, use a weighted average that accounts for those sizes. Arithmetic averaging of unequal-weight percentages produces a misleading result.</p>
+
+      <h3>What is a weighted average percentage?</h3>
+      <p>A weighted average multiplies each percentage by its weight (sample size, marks, hours, etc.), sums the products, and divides by the total weight. It gives the same result as calculating the combined rate directly from raw counts.</p>
+
+      <h3>Is the average of 50% and 100% equal to 75%?</h3>
+      <p>Only if both percentages come from equal-sized bases. If 50% applies to 100 items and 100% to just 1 item, the true combined rate is 51 out of 101 ≈ 50.5%, not 75%.</p>
+
+      <h3>How do you average grades that are percentages?</h3>
+      <p>If all assignments are worth the same amount, use the arithmetic mean. If they are worth different amounts, multiply each grade by its weight (e.g. the percentage of the final mark it represents), sum those products, and divide by 100 (the total weight). That gives the weighted course average.</p>
+
+      <h3>What is Simpson's Paradox?</h3>
+      <p>Simpson's Paradox occurs when a trend visible within each group reverses when groups are combined — because the groups have very different sizes. It is a direct consequence of incorrectly averaging rates or percentages without accounting for their denominators. The solution is always a weighted average.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/percentage-calculator',            blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator/change',     blurb: 'Percentage change calculator — signed result for before-and-after comparisons.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/increase',   blurb: 'Dedicated percentage increase calculator with step-by-step workings and a reference table.' },
+        { path: '/math/percentage-calculator/decrease',          blurb: 'Dedicated percentage decrease calculator — useful for discounts and price drops.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

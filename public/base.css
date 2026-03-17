@@ -1425,3 +1425,19 @@ th {
 .hi-short { font-size: 0.71rem; color: rgba(255,255,255,0.38); margin-top: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hi-arrow { font-size: 0.95rem; color: rgba(255,255,255,0.25); flex-shrink: 0; align-self: center; transition: color 0.18s; }
 .hi-card:hover .hi-arrow { color: rgba(255,255,255,0.6); }
+
+.pi-steps { margin-top: 1.25rem; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem 1.25rem; border: 1px solid rgba(255,255,255,0.08); }
+.pi-steps-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.35); margin-bottom: 0.7rem; }
+.pi-step { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.35rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.875rem; }
+.pi-step:last-child { border-bottom: none; }
+.pi-step-label { color: rgba(255,255,255,0.45); font-size: 0.78rem; flex-shrink: 0; }
+.pi-step-val { font-family: monospace; color: rgba(255,255,255,0.85); text-align: right; }
+
+.pav-rows { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.5rem; }
+.pav-row { display: flex; align-items: center; gap: 0.5rem; }
+.pav-row .bmi-input-wrap { flex: 1; margin-bottom: 0; }
+.pav-remove { background: none; border: none; color: rgba(255,255,255,0.35); font-size: 1.3rem; line-height: 1; cursor: pointer; padding: 0 0.3rem; flex-shrink: 0; }
+.pav-remove:hover:not(:disabled) { color: rgba(255,255,255,0.75); }
+.pav-remove:disabled { opacity: 0.18; cursor: default; }
+.pav-add-btn { background: none; border: 1px dashed rgba(255,255,255,0.2); border-radius: 7px; color: rgba(255,255,255,0.45); font-size: 0.8rem; padding: 0.35rem 0.75rem; cursor: pointer; width: 100%; margin-top: 0.25rem; transition: border-color 0.15s, color 0.15s; }
+.pav-add-btn:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.8); }

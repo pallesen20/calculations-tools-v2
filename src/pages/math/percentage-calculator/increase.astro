@@ -1,0 +1,280 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  main:    "$$\\% \\text{ Increase} = \\frac{\\text{New} - \\text{Old}}{\\text{Old}} \\times 100$$",
+  mainEx:  "$$\\frac{58{,}000 - 50{,}000}{50{,}000} \\times 100 = \\frac{8{,}000}{50{,}000} \\times 100 = 16\\%$$",
+  reverse: "$$\\text{New Value} = \\text{Old} \\times \\left(1 + \\frac{\\%\\text{ Increase}}{100}\\right)$$",
+  revEx:   "$$\\text{New} = 50{,}000 \\times \\left(1 + \\frac{16}{100}\\right) = 50{,}000 \\times 1.16 = 58{,}000$$",
+  priceEx: "$$\\frac{13.99 - 11.99}{11.99} \\times 100 = \\frac{2.00}{11.99} \\times 100 \\approx 16.68\\%$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use' },
+  { id: 'formula',         label: 'Percentage increase formula' },
+  { id: 'examples',        label: 'Worked examples' },
+  { id: 'reverse',         label: 'Reverse: finding the new value' },
+  { id: 'vs-change',       label: 'vs. percentage change' },
+  { id: 'reference-table', label: 'Reference table' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Percentage Increase Calculator",
+    "url": "https://calculations.tools/math/percentage-calculator/increase",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate the percentage increase between two values instantly. Shows the formula, absolute change, and step-by-step calculation.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate percentage increase",
+    "description": "Calculate the percentage increase between an original value and a new value in three steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Subtract", "text": "Subtract the original (old) value from the new value to find the absolute change." },
+      { "@type": "HowToStep", "position": 2, "name": "Divide", "text": "Divide the absolute change by the original value." },
+      { "@type": "HowToStep", "position": 3, "name": "Multiply by 100", "text": "Multiply by 100 to convert the ratio to a percentage." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the formula for percentage increase?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Percentage increase = ((New Value − Original Value) ÷ Original Value) × 100. The original (old) value is always the denominator. Example: a salary that rises from 50,000 to 58,000 has increased by ((58,000 − 50,000) ÷ 50,000) × 100 = 16%." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you find the new value after a percentage increase?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the original value by (1 + percentage ÷ 100). Example: a 16% increase on 50,000 gives 50,000 × 1.16 = 58,000." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can percentage increase be more than 100%?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. A 100% increase means the new value is double the original. A 200% increase means the new value is triple the original. There is no upper limit on percentage increase." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between percentage increase and percentage points?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A percentage increase is a relative change — it measures growth relative to the original value. A percentage point is an absolute difference between two percentages. If an interest rate rises from 2% to 3%, that is a 1 percentage point increase but a 50% increase relative to the original rate." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is percentage increase the same as percentage change?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change is the broader term that covers both increases (positive result) and decreases (negative result). The formula is identical. 'Percentage increase' specifically refers to cases where the new value is greater than the original." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does a 50% increase followed by a 50% decrease return to the original?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. A 50% increase on 100 gives 150. A 50% decrease on 150 gives 75. The base shifts between operations, so the two percentages act on different numbers and are not symmetrical." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Percentage Increase Calculator"
+  metaTitle="Percentage Increase Calculator | Formula & Examples ᐅ"
+  description="Calculate the percentage increase between two values instantly. Enter an original and new value to get the percentage change, absolute difference, and step-by-step workings."
+  canonical="https://calculations.tools/math/percentage-calculator/increase"
+  tocItems={tocItems}
+  schema={schema}
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Percentage Increase</h2>
+          <p>Enter the original value and the new value</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pi-original">Original Value</label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="pi-original" class="bmi-input" step="any" placeholder="e.g. 50000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pi-new">New Value</label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="pi-new" class="bmi-input" step="any" placeholder="e.g. 58000" />
+          </div>
+        </div>
+
+        <div id="pi-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="pi-pct">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Percentage Increase</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pi-abs">—</div>
+              <div class="lbm-card-lbl">Absolute change</div>
+              <div class="lbm-card-badge" id="pi-badge">—</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">How it was calculated</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1 — Subtract</span>
+              <span id="pi-step1" class="pi-step-val">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2 — Divide</span>
+              <span id="pi-step2" class="pi-step-val">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 3 — Multiply by 100</span>
+              <span id="pi-step3" class="pi-step-val">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/percentage-increase-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Formula</p>
+        <p>Percentage increase = <strong>((New − Old) ÷ Old) × 100</strong>. The original value is always the denominator. A result above zero is an increase; below zero is a decrease.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the original (old) value and the new value. The percentage increase appears instantly, along with the absolute change and a three-step breakdown of the calculation. If the new value is smaller than the original, the result will be negative — indicating a decrease.</p>
+
+      <h2 id="formula">Percentage increase formula</h2>
+      <p>The percentage increase formula measures how much a value has grown relative to its starting point:</p>
+
+      <Formula expr={f.main} />
+
+      <p>The original value is always the denominator. Dividing by the new value is the single most common error in percentage increase calculations.</p>
+
+      <p>The formula produces a signed result: positive means an increase, negative means a decrease. The word "increase" describes a direction — if the result is negative, the quantity has decreased rather than increased.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: salary increase</h3>
+      <p>A salary rises from 50,000 to 58,000. What is the percentage increase?</p>
+      <Formula expr={f.mainEx} />
+      <p>The salary increased by <strong>16%</strong>.</p>
+
+      <h3>Example 2: product price change</h3>
+      <p>A product was priced at 11.99 and is now 13.99. By how much has it increased?</p>
+      <Formula expr={f.priceEx} />
+      <p>The price increased by approximately <strong>16.68%</strong>. Note that despite the same absolute change (2.00), the percentage is different because the base (original price) is different.</p>
+
+      <h2 id="reverse">Reverse: finding the new value after a known percentage increase</h2>
+      <p>If you know the original value and the percentage increase and want to find the new value, rearrange the formula:</p>
+
+      <Formula expr={f.reverse} />
+
+      <p><strong>Example:</strong> What is 50,000 after a 16% increase?</p>
+      <Formula expr={f.revEx} />
+
+      <p>The multiplier (1 + %/100) is the key: a 10% increase multiplies by 1.10, a 25% increase by 1.25, and a 100% increase by 2.00 (doubling the value).</p>
+
+      <h2 id="vs-change">Percentage increase vs. percentage change</h2>
+      <p>Percentage change is the general term; percentage increase is a specific case where the result is positive. The formula is identical for both:</p>
+      <ul>
+        <li><strong>Positive result</strong> → percentage increase (the value grew)</li>
+        <li><strong>Negative result</strong> → percentage decrease (the value fell)</li>
+        <li><strong>Zero result</strong> → no change</li>
+      </ul>
+      <p>Percentage change should not be confused with <strong>percentage points</strong>. If an approval rating rises from 40% to 50%, it has risen 10 percentage points but increased by 25% relative to the original rating (10 ÷ 40 × 100 = 25%).</p>
+
+      <h2 id="reference-table">Percentage increase reference table</h2>
+      <p>The multiplier for each percentage increase is the number you multiply the original value by to get the new value. This is useful for mental estimates.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>% Increase</th>
+              <th>Multiplier</th>
+              <th>Starting at 100</th>
+              <th>Starting at 1,000</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1%</td><td>× 1.01</td><td>101</td><td>1,010</td></tr>
+            <tr><td>5%</td><td>× 1.05</td><td>105</td><td>1,050</td></tr>
+            <tr><td>10%</td><td>× 1.10</td><td>110</td><td>1,100</td></tr>
+            <tr><td>20%</td><td>× 1.20</td><td>120</td><td>1,200</td></tr>
+            <tr><td>25%</td><td>× 1.25</td><td>125</td><td>1,250</td></tr>
+            <tr><td>50%</td><td>× 1.50</td><td>150</td><td>1,500</td></tr>
+            <tr><td>75%</td><td>× 1.75</td><td>175</td><td>1,750</td></tr>
+            <tr><td>100%</td><td>× 2.00</td><td>200</td><td>2,000</td></tr>
+            <tr><td>200%</td><td>× 3.00</td><td>300</td><td>3,000</td></tr>
+            <tr><td>1000%</td><td>× 11.00</td><td>1,100</td><td>11,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Using the new value as the denominator</h3>
+      <p>The formula divides by the <em>original</em> value, not the new one. Dividing by the new value gives a smaller, incorrect result. In the salary example: (8,000 ÷ 58,000) × 100 = 13.8%, which understates the increase. The correct answer using the original value as the base is 16%.</p>
+
+      <h3>Confusing percentage increase with percentage points</h3>
+      <p>If a tax rate rises from 20% to 25%, it has increased by 5 percentage points. But the percentage increase in the tax rate itself is (5 ÷ 20) × 100 = 25%. These are different quantities. Percentage points measure an absolute gap between two percentages; percentage increase measures relative growth.</p>
+
+      <h3>Treating sequential increases as additive</h3>
+      <p>A 10% increase followed by another 10% increase is not a 20% increase overall. After the first 10%, the base is higher, so the second 10% acts on a larger number. Starting at 100: 100 × 1.10 = 110, then 110 × 1.10 = 121. The total increase is 21%, not 20%.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is the formula for percentage increase?</h3>
+      <p>Percentage increase = ((New Value − Original Value) ÷ Original Value) × 100. The original (old) value is always the denominator.</p>
+
+      <h3>How do you find the new value after a percentage increase?</h3>
+      <p>Multiply the original value by (1 + percentage ÷ 100). A 16% increase on 50,000 gives 50,000 × 1.16 = 58,000.</p>
+
+      <h3>Can percentage increase be more than 100%?</h3>
+      <p>Yes. A 100% increase doubles the original value. A 200% increase triples it. There is no mathematical upper limit on percentage increase.</p>
+
+      <h3>What is the difference between percentage increase and percentage points?</h3>
+      <p>A percentage increase is relative — it measures growth relative to the original value. A percentage point is an absolute difference between two percentages. If an interest rate rises from 2% to 3%, that is a 1 percentage point rise but a 50% increase relative to the original rate.</p>
+
+      <h3>Is percentage increase the same as percentage change?</h3>
+      <p>Percentage change is the broader term that covers both increases (positive) and decreases (negative). The formula is identical. "Percentage increase" refers specifically to cases where the new value exceeds the original.</p>
+
+      <h3>Does a 50% increase followed by a 50% decrease return to the original?</h3>
+      <p>No. A 50% increase on 100 gives 150. A 50% decrease on 150 gives 75, not 100. Because the base changes between operations, increases and decreases of the same percentage are not symmetrical.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator/decrease', blurb: 'Dedicated percentage decrease calculator with step-by-step workings and a reference table.' },
+        { path: '/math/percentage-calculator/change',      blurb: 'Percentage change calculator — covers both increases and decreases with a signed result.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
+        { path: '/date-calculator',                           blurb: 'Calculate the number of days or months between two dates — useful when the percentage increase spans a time period.' },
+        { path: '/conversion/currency-converter',  blurb: 'Convert between 150+ currencies with live rates — useful when the values in your percentage calculation are in different currencies.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>
