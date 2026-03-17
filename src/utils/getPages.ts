@@ -152,7 +152,7 @@ const entries: Entry[] = [
     description: 'Calculate what P% of Q% equals. Covers the formula, successive discounts, commission tiers, and why stacking percentages is not the same as adding them.',
     changefreq: 'weekly',
     priority: 1.0,
-    icon: '%%',
+    icon: '٪',
     short: 'P% of Q% = P×Q÷100',
   },
   {
@@ -408,17 +408,24 @@ export function getConversionTools(): CardMeta[] {
     }));
 }
 
-export function getMathTools(): CardMeta[] {
+const MATH_GROUPS: Record<string, string> = {
+  'percentage-calculator': 'Percentage Calculators',
+};
+
+export function getMathTools(): HealthToolMeta[] {
   return entries
     .filter(e => e.path.startsWith('/math/') && e.path !== '/math')
-    .map(e => ({
-      slug: e.path.replace('/math/', ''),
-      title: e.title.split(' — ')[0],
-      short: e.short ?? '',
-      description: e.description,
-      icon: e.icon ?? '',
-      units: e.units,
-    }));
+    .map(e => {
+      const seg = e.path.replace('/math/', '').split('/')[0];
+      return {
+        path:        e.path,
+        title:       e.title.split(' — ')[0],
+        short:       e.short ?? '',
+        description: e.description,
+        icon:        e.icon ?? '',
+        group:       MATH_GROUPS[seg] ?? 'Other',
+      };
+    });
 }
 
 const HEALTH_GROUPS: Record<string, string> = {
