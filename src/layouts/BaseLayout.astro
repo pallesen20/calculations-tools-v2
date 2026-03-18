@@ -11,6 +11,7 @@ interface Props {
   canonical?: string;
   ogImage?: string;
   schema?: object | object[];
+  noindex?: boolean;
 }
 
 const {
@@ -20,6 +21,7 @@ const {
   canonical = Astro.url.href,
   ogImage = 'https://calculations.tools/open-graph.webp',
   schema,
+  noindex,
 } = Astro.props;
 
 const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
@@ -31,6 +33,7 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
 
     <!-- Open Graph -->

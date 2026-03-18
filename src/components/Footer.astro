@@ -1,9 +1,47 @@
 ---
-const year = new Date().getFullYear();
+const socials = [
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/calculations.tools',
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  },
+];
 ---
 <footer class="footer">
   <div class="container">
-    <p>&copy; <span id="footer-year"></span> calculations.tools. All rights reserved. | <a href="/privacy-policy">Privacy Policy</a></p>
-    <i>Built to help by <a href="https://www.linkedin.com/in/jesperpallesen20/" target="_blank">Jesper Pallesen</a> and <a href="https://gamesevenmarketing.com/" target="_blank">Game Seven Marketing</a></i>
+    <div class="footer-inner">
+      <p>&copy; <span id="footer-year"></span> calculations.tools. All rights reserved. | <a href="/privacy-policy">Privacy Policy</a></p>
+      <i>Built to help by <a href="https://www.linkedin.com/in/jesperpallesen20/" target="_blank">Jesper Pallesen</a> and <a href="https://gamesevenmarketing.com/" target="_blank">Game Seven Marketing</a></i>
+      {socials.length > 0 && (
+        <div class="footer-socials">
+          {socials.map(s => (
+            <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} class="footer-social-link" set:html={s.svg} />
+          ))}
+        </div>
+      )}
+    </div>
   </div>
 </footer>
+
+<style>
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .footer-socials {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .footer-social-link {
+    color: rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+  }
+  .footer-social-link:hover {
+    color: rgba(255,255,255,0.7);
+  }
+</style>
