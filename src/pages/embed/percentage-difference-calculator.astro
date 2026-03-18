@@ -1,0 +1,61 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Percentage Difference Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Calculate Percentage Difference</h2>
+        <p>Enter any two values to compare</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pdi-v1">First Value</label>
+        <div class="bmi-input-wrap">
+          <input type="number" id="pdi-v1" class="bmi-input" step="any" placeholder="e.g. 90" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pdi-v2">Second Value</label>
+        <div class="bmi-input-wrap">
+          <input type="number" id="pdi-v2" class="bmi-input" step="any" placeholder="e.g. 110" />
+        </div>
+      </div>
+
+      <div id="pdi-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="pdi-pct">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Percentage Difference</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="pdi-abs">—</div>
+            <div class="lbm-card-lbl">Absolute difference</div>
+            <div class="lbm-card-badge" id="pdi-badge">—</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">How it was calculated</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — Absolute difference</span>
+            <span id="pdi-step1" class="pi-step-val">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — Average</span>
+            <span id="pdi-step2" class="pi-step-val">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 3 — Divide × 100</span>
+            <span id="pdi-step3" class="pi-step-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/percentage-difference-calculator.js" is:inline></script>
+</EmbedLayout>

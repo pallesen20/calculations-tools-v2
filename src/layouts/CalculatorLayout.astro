@@ -127,6 +127,13 @@ const iframeSnippet = embedUrl
     await navigator.clipboard.writeText(embedCode.value);
     copyEmbedBtn.textContent = 'Copied!';
     setTimeout(() => copyEmbedBtn.textContent = 'Copy code', 2000);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'embed_code_copied', method: 'button' });
+  });
+
+  embedCode?.addEventListener('copy', () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'embed_code_copied', method: 'keyboard' });
   });
 </script>
 <style>

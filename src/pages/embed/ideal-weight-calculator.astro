@@ -1,0 +1,111 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Ideal Weight Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Ideal Body Weight by Height</h2>
+        <p>Devine, Robinson, Miller & Hamwi — plus healthy BMI range</p>
+      </div>
+
+      <div class="bmi-unit-toggle">
+        <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
+        <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
+      </div>
+
+      <div class="bmi-shared-fields">
+        <div class="bmi-field">
+          <label class="bmi-label">Sex</label>
+          <div class="bmi-sex-toggle">
+            <button class="bmi-sex-btn active" data-sex="male">Male</button>
+            <button class="bmi-sex-btn" data-sex="female">Female</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="bmi-metric" class="bmi-inputs active">
+        <div class="bmi-field">
+          <label class="bmi-label" for="bmi-height-cm">Height</label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="bmi-height-cm" class="bmi-input" min="100" max="250" step="1" placeholder="170" />
+            <span class="bmi-unit-tag">cm</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="iw-weight-kg">Current weight <span class="bmi-optional">(optional)</span></label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="iw-weight-kg" class="bmi-input" min="1" max="500" step="0.1" placeholder="75" />
+            <span class="bmi-unit-tag">kg</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="bmi-imperial" class="bmi-inputs">
+        <div class="bmi-field">
+          <label class="bmi-label">Height</label>
+          <div class="bmi-ftin">
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-height-ft" class="bmi-input" min="3" max="8" step="1" placeholder="5" />
+              <span class="bmi-unit-tag">ft</span>
+            </div>
+            <div class="bmi-input-wrap">
+              <input type="number" id="bmi-height-in" class="bmi-input" min="0" max="11" step="1" placeholder="7" />
+              <span class="bmi-unit-tag">in</span>
+            </div>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="iw-weight-lb">Current weight <span class="bmi-optional">(optional)</span></label>
+          <div class="bmi-input-wrap">
+            <input type="number" id="iw-weight-lb" class="bmi-input" min="1" max="1100" step="0.5" placeholder="165" />
+            <span class="bmi-unit-tag">lbs</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="iw-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="iw-devine">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Ideal Body Weight (Devine)</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="iw-bmi-min">—</div>
+            <div class="lbm-card-lbl">Healthy min (BMI 18.5)</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="iw-bmi-max">—</div>
+            <div class="lbm-card-lbl">Healthy max (BMI 24.9)</div>
+          </div>
+          <div class="lbm-card hidden" id="iw-diff-card">
+            <div class="lbm-card-val" id="iw-diff">—</div>
+            <div class="lbm-card-lbl">Difference from ideal</div>
+            <div class="lbm-card-badge" id="iw-diff-badge">—</div>
+          </div>
+        </div>
+
+        <div class="iw-compare">
+          <div class="iw-compare-title">Other formula estimates</div>
+          <div class="iw-frow">
+            <span class="iw-fname">Robinson (1983)</span>
+            <span id="iw-robinson">—</span>
+          </div>
+          <div class="iw-frow">
+            <span class="iw-fname">Miller (1983)</span>
+            <span id="iw-miller">—</span>
+          </div>
+          <div class="iw-frow">
+            <span class="iw-fname">Hamwi (1964)</span>
+            <span id="iw-hamwi">—</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="/js/ideal-weight-calculator.js" is:inline></script>
+</EmbedLayout>

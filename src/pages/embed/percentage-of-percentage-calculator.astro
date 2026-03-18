@@ -1,0 +1,58 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Percentage of a Percentage Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Calculate Percentage of a Percentage</h2>
+        <p>What is P% of Q%?</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pop-p1">First percentage (P)</label>
+        <div class="bmi-input-wrap">
+          <input type="number" id="pop-p1" class="bmi-input" step="any" placeholder="e.g. 20" />
+          <span class="bmi-unit-tag">%</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pop-p2">Second percentage (Q)</label>
+        <div class="bmi-input-wrap">
+          <input type="number" id="pop-p2" class="bmi-input" step="any" placeholder="e.g. 50" />
+          <span class="bmi-unit-tag">%</span>
+        </div>
+      </div>
+
+      <div id="pop-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="pop-pct">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Result</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="pop-eq" style="font-size:0.8rem">—</div>
+            <div class="lbm-card-lbl">Full equation</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">How it was calculated</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — Convert to decimal</span>
+            <span id="pop-step1" class="pi-step-val">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — Multiply</span>
+            <span id="pop-step2" class="pi-step-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/percentage-of-percentage-calculator.js" is:inline></script>
+</EmbedLayout>

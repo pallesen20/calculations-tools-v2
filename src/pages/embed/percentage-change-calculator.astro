@@ -1,0 +1,61 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Percentage Change Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Calculate Percentage Change</h2>
+        <p>Enter the original value and the new value</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pc-original">Original Value</label>
+        <div class="bmi-input-wrap">
+          <input type="number" id="pc-original" class="bmi-input" step="any" placeholder="e.g. 200" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pc-new">New Value</label>
+        <div class="bmi-input-wrap">
+          <input type="number" id="pc-new" class="bmi-input" step="any" placeholder="e.g. 150" />
+        </div>
+      </div>
+
+      <div id="pc-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="pc-pct">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Percentage Change</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="pc-abs">—</div>
+            <div class="lbm-card-lbl">Absolute change</div>
+            <div class="lbm-card-badge" id="pc-badge">—</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">How it was calculated</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — Subtract</span>
+            <span id="pc-step1" class="pi-step-val">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — Divide</span>
+            <span id="pc-step2" class="pi-step-val">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 3 — Multiply by 100</span>
+            <span id="pc-step3" class="pi-step-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/percentage-change-calculator.js" is:inline></script>
+</EmbedLayout>

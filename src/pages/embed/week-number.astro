@@ -1,0 +1,47 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Week Number — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container wn-container">
+
+      <div class="wn-hero">
+        <div class="wn-hero-bg"></div>
+        <div class="wn-label">Current Week Number</div>
+        <div class="wn-number" id="wn-number">--</div>
+        <div class="wn-range" id="wn-range">Loading…</div>
+        <div class="wn-live">
+          <span class="wn-dot"></span>
+          <span>Updates automatically every week</span>
+        </div>
+        <div class="wn-bar-wrap">
+          <div class="wn-bar-fill" id="wn-progress" style="width:0%"></div>
+        </div>
+        <div class="wn-bar-label" id="wn-progress-label">Year progress</div>
+      </div>
+
+      <div class="wn-cards">
+        <div class="wn-card">
+          <div class="wn-card-val" id="wn-day">--</div>
+          <div class="wn-card-lbl">Day of Year</div>
+        </div>
+        <div class="wn-card">
+          <div class="wn-card-val" id="wn-remaining">--</div>
+          <div class="wn-card-lbl">Days Remaining</div>
+        </div>
+        <div class="wn-card">
+          <div class="wn-card-val" id="wn-quarter">--</div>
+          <div class="wn-card-lbl">Quarter</div>
+        </div>
+        <div class="wn-card">
+          <div class="wn-card-val" id="wn-leap">--</div>
+          <div class="wn-card-lbl">Leap Year</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="/js/week-number.js" is:inline></script>
+</EmbedLayout>

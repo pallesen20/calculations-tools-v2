@@ -1,0 +1,46 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Decimal to Percent Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Convert Decimal to Percent</h2>
+        <p>Enter any decimal value</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="dtp-input">Decimal</label>
+        <div class="bmi-input-wrap">
+          <input type="number" id="dtp-input" class="bmi-input" step="any" placeholder="e.g. 0.75" />
+        </div>
+      </div>
+
+      <div id="dtp-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="dtp-pct">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Percentage</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="dtp-rev">—</div>
+            <div class="lbm-card-lbl">Decimal (input)</div>
+            <div class="lbm-card-badge" id="dtp-badge">—</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">How it was calculated</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Multiply by 100</span>
+            <span id="dtp-step1" class="pi-step-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/decimal-to-percent-calculator.js" is:inline></script>
+</EmbedLayout>
