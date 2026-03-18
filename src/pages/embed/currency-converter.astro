@@ -42,6 +42,16 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
           <div class="result-label">Exchange Rate</div>
           <div class="lc-result" id="cc-rate">—</div>
         </div>
+        <div class="wise-banner">
+            <svg class="wise-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="wise-body">
+              <p class="wise-msg" id="cc-wise-msg">Sending USD to EUR? You could save money with Wise.</p>
+              <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener noreferrer" class="wise-btn no-underline" id="cc-wise-btn">See your saved amount (free)</a>
+            </div>
+          </div>
       </div>
 
       <!-- hidden elements needed by JS -->
@@ -63,7 +73,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   .cc-row input, .cc-row select { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:white; padding:0.65rem 0.875rem; font-size:1rem; font-weight:600; }
   .cc-row select { min-width:110px; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 0.5rem center; background-size:0.875rem; padding-right:1.75rem; cursor:pointer; }
   .cc-row input:focus, .cc-row select:focus { outline:none; border-color:rgba(255,255,255,0.4); }
-  .cc-swap-wrap { display:flex; justify-content:center; margin:-0.4rem 0; position:relative; z-index:1; }
+  .cc-swap-wrap { display:flex; justify-content:center; margin:0.4rem 0; position:relative; z-index:1; }
   .cc-swap { width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.2s,transform 0.3s; }
   .cc-swap:hover { background:rgba(255,255,255,0.2); transform:rotate(180deg); }
 </style>
