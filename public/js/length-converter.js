@@ -66,7 +66,7 @@ function renderCommon(value, fromKey) {
 }
 
 function update() {
-  const value    = parseFloat(document.getElementById('lc-value').value) || 0;
+  const value    = parseFloat(document.getElementById('lc-value').value.replace(",",".")) || 0;
   const fromKey  = document.getElementById('lc-from').value;
   const toKey    = document.getElementById('lc-to').value;
   const result   = convert(value, fromKey, toKey);

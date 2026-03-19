@@ -76,7 +76,7 @@ function renderInputs() {
     group.className = 'input-group';
     group.innerHTML = `
       <label for="${field}">${label}</label>
-      <input type="number" id="${field}" name="${field}"
+      <input type="text" inputmode="decimal" id="${field}" name="${field}"
         placeholder="${placeholder}" value="${values[field] || ''}" autocomplete="off" />
     `;
     group.querySelector('input').addEventListener('input', (e) => {

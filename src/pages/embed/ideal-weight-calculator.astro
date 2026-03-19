@@ -29,14 +29,14 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
         <div class="bmi-field">
           <label class="bmi-label" for="bmi-height-cm">Height</label>
           <div class="bmi-input-wrap">
-            <input type="number" id="bmi-height-cm" class="bmi-input" min="100" max="250" step="1" placeholder="170" />
+            <input type="text" inputmode="decimal" id="bmi-height-cm" class="bmi-input" min="100" max="250" step="1" placeholder="170" />
             <span class="bmi-unit-tag">cm</span>
           </div>
         </div>
         <div class="bmi-field">
           <label class="bmi-label" for="iw-weight-kg">Current weight <span class="bmi-optional">(optional)</span></label>
           <div class="bmi-input-wrap">
-            <input type="number" id="iw-weight-kg" class="bmi-input" min="1" max="500" step="0.1" placeholder="75" />
+            <input type="text" inputmode="decimal" id="iw-weight-kg" class="bmi-input" min="1" max="500" step="0.1" placeholder="75" />
             <span class="bmi-unit-tag">kg</span>
           </div>
         </div>
@@ -47,11 +47,11 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
           <label class="bmi-label">Height</label>
           <div class="bmi-ftin">
             <div class="bmi-input-wrap">
-              <input type="number" id="bmi-height-ft" class="bmi-input" min="3" max="8" step="1" placeholder="5" />
+              <input type="text" inputmode="decimal" id="bmi-height-ft" class="bmi-input" min="3" max="8" step="1" placeholder="5" />
               <span class="bmi-unit-tag">ft</span>
             </div>
             <div class="bmi-input-wrap">
-              <input type="number" id="bmi-height-in" class="bmi-input" min="0" max="11" step="1" placeholder="7" />
+              <input type="text" inputmode="decimal" id="bmi-height-in" class="bmi-input" min="0" max="11" step="1" placeholder="7" />
               <span class="bmi-unit-tag">in</span>
             </div>
           </div>
@@ -59,7 +59,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
         <div class="bmi-field">
           <label class="bmi-label" for="iw-weight-lb">Current weight <span class="bmi-optional">(optional)</span></label>
           <div class="bmi-input-wrap">
-            <input type="number" id="iw-weight-lb" class="bmi-input" min="1" max="1100" step="0.5" placeholder="165" />
+            <input type="text" inputmode="decimal" id="iw-weight-lb" class="bmi-input" min="1" max="1100" step="0.5" placeholder="165" />
             <span class="bmi-unit-tag">lbs</span>
           </div>
         </div>

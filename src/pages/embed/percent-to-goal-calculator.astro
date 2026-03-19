@@ -1,0 +1,56 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Percent to Goal Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Percent to Goal Calculator</h2>
+        <p>Enter your current value and goal to track progress</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ptg-current">Current Value</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ptg-current" class="bmi-input" placeholder="e.g. 750" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ptg-goal">Goal</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ptg-goal" class="bmi-input" placeholder="e.g. 1000" />
+        </div>
+      </div>
+
+      <div id="ptg-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="ptg-pct">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Percent to Goal</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ptg-remaining">—</div>
+            <div class="lbm-card-lbl">Progress status</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">How it was calculated</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — Divide</span>
+            <span id="ptg-step1" class="pi-step-val">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — Multiply by 100</span>
+            <span id="ptg-step2" class="pi-step-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/percent-to-goal-calculator.js" is:inline></script>
+</EmbedLayout>

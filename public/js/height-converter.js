@@ -96,8 +96,8 @@ function update() {
   const resultEl = document.getElementById('hc-result');
   const descEl   = document.getElementById('hc-result-desc');
 
-  const value   = parseFloat(valueEl.value) || 0;
-  const inPart  = parseFloat(inPartEl.value) || 0;
+  const value   = parseFloat(valueEl.value.replace(",",".")) || 0;
+  const inPart  = parseFloat(inPartEl.value.replace(",",".")) || 0;
   const fromKey = fromEl.value;
   const toKey   = toEl.value;
 

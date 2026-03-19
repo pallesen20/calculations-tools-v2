@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   [v1El, v2El].forEach(el => el.addEventListener('input', calculate));
 
   function calculate() {
-    const v1 = parseFloat(v1El.value);
-    const v2 = parseFloat(v2El.value);
+    const v1 = parseFloat(v1El.value.replace(",","."));
+    const v2 = parseFloat(v2El.value.replace(",","."));
 
     if (isNaN(v1) || isNaN(v2)) {
       document.getElementById('pdi-result').classList.add('hidden');

@@ -1,0 +1,299 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  general:  "$$\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + c \\times b}{b \\times d}$$",
+  lcd:      "$$\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times \\frac{\\text{LCD}}{b} + c \\times \\frac{\\text{LCD}}{d}}{\\text{LCD}}, \\quad \\text{LCD} = \\text{LCM}(b, d)$$",
+  ex1:      "$$\\frac{1}{4} + \\frac{2}{4} = \\frac{1 + 2}{4} = \\frac{3}{4}$$",
+  ex2:      "$$\\frac{3}{4} + \\frac{1}{6}: \\quad \\text{LCD}(4, 6) = 12 \\implies \\frac{9}{12} + \\frac{2}{12} = \\frac{11}{12}$$",
+  ex3:      "$$\\frac{2}{5} + \\frac{3}{10}: \\quad \\text{LCD}(5, 10) = 10 \\implies \\frac{4}{10} + \\frac{3}{10} = \\frac{7}{10}$$",
+  neg:      "$$\\frac{-1}{3} + \\frac{2}{3} = \\frac{-1 + 2}{3} = \\frac{1}{3}$$",
+  mixed:    "$$2\\frac{1}{3} + 1\\frac{3}{4} = \\frac{7}{3} + \\frac{7}{4} = \\frac{28}{12} + \\frac{21}{12} = \\frac{49}{12} = 4\\frac{1}{12}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',       label: 'How to use' },
+  { id: 'formula',          label: 'Adding fractions formula' },
+  { id: 'same-denominator', label: 'Same denominator' },
+  { id: 'different-denominators', label: 'Different denominators (LCD method)' },
+  { id: 'examples',         label: 'Worked examples' },
+  { id: 'negative',         label: 'Adding negative fractions' },
+  { id: 'mixed-numbers',    label: 'Adding mixed numbers' },
+  { id: 'common-mistakes',  label: 'Common mistakes' },
+  { id: 'faq',              label: 'FAQs' },
+  { id: 'related-tools',    label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Add Fractions Calculator",
+    "url": "https://calculations.tools/math/fraction-calculator/add",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Add any two fractions instantly. Finds the LCD automatically, shows step-by-step workings, and simplifies the result.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to add fractions",
+    "description": "Add two fractions step by step using the LCD (lowest common denominator) method.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Find the LCD", "text": "Find the Lowest Common Denominator (LCD) of the two denominators. The LCD is the LCM (Lowest Common Multiple) of both denominators." },
+      { "@type": "HowToStep", "position": 2, "name": "Convert both fractions", "text": "Multiply each fraction's numerator and denominator so both fractions share the LCD as their denominator." },
+      { "@type": "HowToStep", "position": 3, "name": "Add the numerators", "text": "Add the two numerators together. The denominator stays the same (the LCD)." },
+      { "@type": "HowToStep", "position": 4, "name": "Simplify", "text": "Divide both the numerator and denominator by their GCD (Greatest Common Divisor) to reduce the fraction to its simplest form." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you add fractions with different denominators?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Find the Lowest Common Denominator (LCD) of both fractions. Convert each fraction so both have the LCD as their denominator by multiplying numerator and denominator by the same factor. Then add the numerators and keep the LCD as the denominator. Finally, simplify by dividing both parts by their GCD." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you add fractions with the same denominator directly?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. When denominators are the same, simply add the numerators and keep the denominator unchanged. For example, 1/4 + 2/4 = 3/4. No LCD step is needed." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can't you just add the denominators?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Adding denominators produces a wrong answer because fractions represent parts of a whole. The denominator defines the size of each part. 1/4 + 1/4 = 2/4, not 2/8. You must keep the denominator the same so each fraction still refers to the same part size." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you add mixed numbers?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Convert each mixed number to an improper fraction first. Multiply the whole number by the denominator and add the numerator: 2⅓ = (2×3 + 1)/3 = 7/3. Then add the improper fractions using the standard LCD method, and convert the result back to a mixed number if needed." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the LCD and why is it used?",
+        "acceptedAnswer": { "@type": "Answer", "text": "LCD stands for Lowest Common Denominator — it is the smallest number that both denominators divide into evenly. Using the LCD instead of the product of the denominators keeps the numbers smaller and makes simplification easier, though both approaches give the same final answer." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does adding two fractions always give a fraction less than 1?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Adding fractions can produce a result greater than 1 (an improper fraction or a mixed number). For example, 3/4 + 3/4 = 6/4 = 3/2 = 1½. Whether the result is less than, equal to, or greater than 1 depends entirely on the values being added." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Add Fractions Calculator"
+  metaTitle="Add Fractions Calculator | Step-by-Step with LCD"
+  description="Add any two fractions instantly. Enter the numerators and denominators to get the simplified result, mixed number, decimal, and step-by-step LCD workings."
+  canonical="https://calculations.tools/math/fraction-calculator/add"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="fraction-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Add Fractions</h2>
+          <p>Enter two fractions to add them together</p>
+        </div>
+
+        <div class="fc-ops">
+          <button class="fc-op-btn active" data-op="add">+ Add</button>
+          <button class="fc-op-btn" data-op="subtract">− Subtract</button>
+          <button class="fc-op-btn" data-op="multiply">× Multiply</button>
+          <button class="fc-op-btn" data-op="divide">÷ Divide</button>
+          <button class="fc-op-btn" data-op="simplify">Simplify</button>
+        </div>
+
+        <div class="fc-inputs">
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="fc-n1" class="fc-frac-input" placeholder="3" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="fc-d1" class="fc-frac-input" placeholder="4" />
+          </div>
+          <div class="fc-op-symbol" id="fc-op-symbol">+</div>
+          <div class="fc-fraction" id="fc-fraction2">
+            <input type="text" inputmode="decimal" id="fc-n2" class="fc-frac-input" placeholder="1" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="fc-d2" class="fc-frac-input" placeholder="2" />
+          </div>
+        </div>
+
+        <div id="fc-result" class="lbm-result hidden">
+          <div class="fc-result-fraction">
+            <span id="fc-res-n" class="fc-res-num">—</span>
+            <div class="fc-res-bar" id="fc-res-bar"></div>
+            <span id="fc-res-d" class="fc-res-den">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Result (simplified)</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card hidden" id="fc-mixed-card">
+              <div class="lbm-card-val" id="fc-mixed">—</div>
+              <div class="lbm-card-lbl">Mixed number</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fc-decimal">—</div>
+              <div class="lbm-card-lbl">Decimal</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fc-percent">—</div>
+              <div class="lbm-card-lbl">Percentage</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step hidden" id="fc-step1-row">
+              <span class="pi-step-label" id="fc-step1-lbl">Step 1</span>
+              <span class="pi-step-val" id="fc-step1-val">—</span>
+            </div>
+            <div class="pi-step hidden" id="fc-step2-row">
+              <span class="pi-step-label" id="fc-step2-lbl">Step 2</span>
+              <span class="pi-step-val" id="fc-step2-val">—</span>
+            </div>
+            <div class="pi-step hidden" id="fc-step3-row">
+              <span class="pi-step-label" id="fc-step3-lbl">Step 3</span>
+              <span class="pi-step-val" id="fc-step3-val">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/fraction-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Formula</p>
+        <p>To add fractions: find the <strong>LCD</strong> of the denominators, convert both fractions to that denominator, then <strong>add the numerators</strong> and simplify. When denominators are already equal, add numerators directly.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the numerator and denominator of each fraction. The calculator adds them instantly, showing the result as a simplified fraction, mixed number (where applicable), decimal, and percentage — along with a three-step breakdown using the LCD method.</p>
+
+      <h2 id="formula">Adding fractions formula</h2>
+      <p>The general formula for adding two fractions multiplies each numerator by the other fraction's denominator:</p>
+      <Formula expr={f.general} />
+      <p>This always works, but often produces larger numbers than necessary. The preferred approach uses the <strong>LCD (Lowest Common Denominator)</strong>, which keeps numbers smaller and simplification easier:</p>
+      <Formula expr={f.lcd} />
+      <p>Both methods give the same final answer after simplification.</p>
+
+      <h2 id="same-denominator">Same denominator: the simple case</h2>
+      <p>When both fractions share the same denominator, no conversion is needed. Add the numerators directly and keep the denominator unchanged:</p>
+      <Formula expr={f.ex1} />
+      <p>This works because the denominator defines the size of each part. If two fractions already use the same part size, you can count them together directly.</p>
+
+      <h2 id="different-denominators">Different denominators: the LCD method</h2>
+      <p>When denominators differ, you must first convert both fractions to a common denominator before the numerators can be added. The steps are:</p>
+      <ol>
+        <li><strong>Find the LCD.</strong> The LCD is the LCM (Lowest Common Multiple) of the two denominators. Use prime factorisation or the formula LCM(a, b) = (a × b) ÷ GCD(a, b).</li>
+        <li><strong>Convert both fractions.</strong> Multiply each fraction's numerator and denominator by (LCD ÷ its denominator) so both share the LCD.</li>
+        <li><strong>Add numerators.</strong> The denominator stays as the LCD.</li>
+        <li><strong>Simplify.</strong> Divide numerator and denominator by their GCD.</li>
+      </ol>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: one denominator is a multiple of the other</h3>
+      <p>Add 2/5 and 3/10. Since 10 is a multiple of 5, the LCD is simply 10:</p>
+      <Formula expr={f.ex3} />
+      <p>2/5 becomes 4/10, then 4/10 + 3/10 = 7/10. No simplification needed.</p>
+
+      <h3>Example 2: unrelated denominators</h3>
+      <p>Add 3/4 and 1/6. The denominators share no obvious relationship, so find LCM(4, 6):</p>
+      <Formula expr={f.ex2} />
+      <p>GCD(4, 6) = 2, so LCM = (4 × 6) ÷ 2 = 12. Convert: 3/4 → 9/12 and 1/6 → 2/12. Sum: 11/12, which is already in simplest form.</p>
+
+      <h3>Example 3: result greater than 1</h3>
+      <p>Add 3/4 and 3/4. Same denominator, so add directly: 3/4 + 3/4 = 6/4. Simplify with GCD(6, 4) = 2: 6/4 = 3/2. As a mixed number: 1½.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Problem</th><th>LCD</th><th>After converting</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1/2 + 1/3</td><td>6</td><td>3/6 + 2/6</td><td>5/6</td></tr>
+            <tr><td>1/4 + 1/4</td><td>4</td><td>1/4 + 1/4</td><td>2/4 = 1/2</td></tr>
+            <tr><td>2/3 + 1/6</td><td>6</td><td>4/6 + 1/6</td><td>5/6</td></tr>
+            <tr><td>3/5 + 2/5</td><td>5</td><td>3/5 + 2/5</td><td>5/5 = 1</td></tr>
+            <tr><td>5/6 + 3/4</td><td>12</td><td>10/12 + 9/12</td><td>19/12 = 1 7/12</td></tr>
+            <tr><td>7/8 + 5/12</td><td>24</td><td>21/24 + 10/24</td><td>31/24 = 1 7/24</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="negative">Adding negative fractions</h2>
+      <p>A negative fraction has its numerator treated as negative. The LCD method applies identically — the sign is carried through the numerator arithmetic:</p>
+      <Formula expr={f.neg} />
+      <p>If both fractions are negative, the sum is negative: −1/3 + (−1/3) = −2/3. If the signs differ, the result depends on the magnitudes — exactly like integer addition.</p>
+
+      <h2 id="mixed-numbers">Adding mixed numbers</h2>
+      <p>A mixed number (e.g. 2⅓) combines a whole number and a proper fraction. Convert to an improper fraction before adding:</p>
+      <Formula expr={f.mixed} />
+      <p>Steps: 2⅓ = 7/3, 1¾ = 7/4. LCD(3, 4) = 12. Convert: 28/12 + 21/12 = 49/12. As a mixed number: 4 1/12.</p>
+      <p>Alternatively, add the whole-number parts separately and add the fractional parts separately, then combine — though converting to improper fractions first is generally safer and avoids carrying errors.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Adding the denominators</h3>
+      <p>The most frequent error: 1/4 + 1/4 ≠ 2/8. The denominator defines part size and does not change when parts of the same size are counted together. Only the numerators are added.</p>
+
+      <h3>Using the product instead of the LCD</h3>
+      <p>Using b × d as the common denominator always works but produces unnecessarily large numbers. For 3/4 + 1/6, using 24 instead of 12 gives 18/24 + 4/24 = 22/24, which then needs simplifying to 11/12. Starting with the LCD skips this extra step.</p>
+
+      <h3>Forgetting to simplify</h3>
+      <p>The answer is not complete until the fraction is in its simplest form (numerator and denominator share no common factor other than 1). Always divide by the GCD after adding.</p>
+
+      <h3>Not converting mixed numbers first</h3>
+      <p>Adding 1½ + 2⅔ by adding the whole parts (3) and fraction parts (1/2 + 2/3 = 7/6) separately works, but when the fraction sum exceeds 1, an extra carry step is required. Converting to improper fractions first (3/2 + 8/3 = 25/6 = 4⅙) is more reliable.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you add fractions with different denominators?</h3>
+      <p>Find the LCD of both denominators, convert each fraction to that denominator, add the numerators, and simplify the result by dividing by the GCD.</p>
+
+      <h3>Can you add fractions with the same denominator directly?</h3>
+      <p>Yes — add the numerators and keep the denominator unchanged. 1/4 + 2/4 = 3/4. No LCD step is needed when denominators are equal.</p>
+
+      <h3>Why can't you just add the denominators?</h3>
+      <p>The denominator specifies the size of each part. Adding denominators changes the part size, producing a wrong answer. Only numerators — the count of parts — change when fractions are added.</p>
+
+      <h3>How do you add mixed numbers?</h3>
+      <p>Convert each mixed number to an improper fraction (whole × denominator + numerator, over the denominator), then add using the standard LCD method.</p>
+
+      <h3>What is the LCD and why is it used?</h3>
+      <p>The LCD (Lowest Common Denominator) is the smallest integer that both denominators divide evenly. Using it keeps numbers smaller than the product method, which reduces simplification work.</p>
+
+      <h3>Does adding two fractions always give a result less than 1?</h3>
+      <p>No. The result can be any value. 3/4 + 3/4 = 6/4 = 3/2 = 1½, which is greater than 1. The result depends entirely on the values being added.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/fraction-calculator',            blurb: 'The main fraction calculator — add, subtract, multiply, divide, and simplify all in one tool.' },
+        { path: '/math/fraction-calculator/subtract',   blurb: 'Subtract fractions step by step — LCD method with simplified result, decimal, and percentage.' },
+        { path: '/math/fraction-calculator/multiply',   blurb: 'Multiply fractions — straight numerator × numerator with step-by-step simplification.' },
+        { path: '/math/fraction-calculator/divide',     blurb: 'Divide fractions using the reciprocal method with step-by-step workings.' },
+        { path: '/math/fraction-calculator/simplify',   blurb: 'Simplify any fraction to its lowest terms using the GCD method.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal and step-by-step workings.' },
+        { path: '/math/percentage-calculator',          blurb: 'Percentage calculator — percentage of a number, percentage change, and more.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

@@ -1,0 +1,310 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  general:  "$$\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c} = \\frac{a \\times d}{b \\times c}$$",
+  reciprocal: "$$\\text{Reciprocal of } \\frac{c}{d} = \\frac{d}{c}$$",
+  ex1:      "$$\\frac{3}{4} \\div \\frac{2}{5} = \\frac{3}{4} \\times \\frac{5}{2} = \\frac{15}{8} = 1\\frac{7}{8}$$",
+  ex2:      "$$\\frac{2}{3} \\div \\frac{4}{6} = \\frac{2}{3} \\times \\frac{6}{4} = \\frac{12}{12} = 1$$",
+  ex3:      "$$\\frac{5}{6} \\div \\frac{5}{6} = \\frac{5}{6} \\times \\frac{6}{5} = \\frac{30}{30} = 1$$",
+  whole:    "$$\\frac{3}{4} \\div 3 = \\frac{3}{4} \\div \\frac{3}{1} = \\frac{3}{4} \\times \\frac{1}{3} = \\frac{3}{12} = \\frac{1}{4}$$",
+  byFrac:   "$$3 \\div \\frac{3}{4} = \\frac{3}{1} \\div \\frac{3}{4} = \\frac{3}{1} \\times \\frac{4}{3} = \\frac{12}{3} = 4$$",
+  mixed:    "$$2\\frac{1}{2} \\div 1\\frac{1}{4} = \\frac{5}{2} \\div \\frac{5}{4} = \\frac{5}{2} \\times \\frac{4}{5} = \\frac{20}{10} = 2$$",
+  neg:      "$$\\frac{-3}{4} \\div \\frac{1}{2} = \\frac{-3}{4} \\times \\frac{2}{1} = \\frac{-6}{4} = \\frac{-3}{2}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'formula',       label: 'Dividing fractions formula' },
+  { id: 'reciprocal',    label: 'What is a reciprocal?' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'whole-numbers', label: 'Dividing by a whole number' },
+  { id: 'mixed-numbers', label: 'Dividing mixed numbers' },
+  { id: 'negative',      label: 'Negative fractions' },
+  { id: 'reference',     label: 'Reference table' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Divide Fractions Calculator",
+    "url": "https://calculations.tools/math/fraction-calculator/divide",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Divide any two fractions instantly using the keep-change-flip method. Shows the reciprocal step, multiplies across, and simplifies the result with full step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to divide fractions",
+    "description": "Divide two fractions in three steps using the keep-change-flip (KCF) method.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Keep the first fraction", "text": "Write the first fraction exactly as it is." },
+      { "@type": "HowToStep", "position": 2, "name": "Change division to multiplication", "text": "Replace the ÷ sign with a × sign." },
+      { "@type": "HowToStep", "position": 3, "name": "Flip the second fraction", "text": "Write the reciprocal of the second fraction (swap numerator and denominator), then multiply across and simplify." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you divide fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use the keep-change-flip method: keep the first fraction, change ÷ to ×, flip the second fraction (take its reciprocal), then multiply across and simplify." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the reciprocal of a fraction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The reciprocal of a fraction a/b is b/a — numerator and denominator are swapped. A fraction multiplied by its reciprocal always equals 1. For example, the reciprocal of 3/4 is 4/3, and 3/4 × 4/3 = 12/12 = 1." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you need a common denominator to divide fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Fraction division is converted to multiplication via the reciprocal, and multiplication requires no common denominator. You multiply straight across after flipping the second fraction." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you divide a fraction by a whole number?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Write the whole number as a fraction over 1, then apply keep-change-flip. For example, 3/4 ÷ 3 = 3/4 ÷ 3/1 = 3/4 × 1/3 = 3/12 = 1/4." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you divide mixed numbers?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Convert each mixed number to an improper fraction first, then divide using keep-change-flip. For example, 2½ ÷ 1¼ = 5/2 ÷ 5/4 = 5/2 × 4/5 = 20/10 = 2." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you divide a fraction by itself?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, and the result is always 1. Any non-zero number divided by itself equals 1, and fractions are no exception. For example, 5/6 ÷ 5/6 = 5/6 × 6/5 = 30/30 = 1." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Divide Fractions Calculator"
+  metaTitle="Divide Fractions Calculator | Keep-Change-Flip"
+  description="Divide any two fractions instantly. Uses the keep-change-flip method — finds the reciprocal, multiplies across, simplifies — with step-by-step workings and mixed number output."
+  canonical="https://calculations.tools/math/fraction-calculator/divide"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="fraction-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Divide Fractions</h2>
+          <p>Enter two fractions to divide the first by the second</p>
+        </div>
+
+        <div class="fc-ops">
+          <button class="fc-op-btn" data-op="add">+ Add</button>
+          <button class="fc-op-btn" data-op="subtract">− Subtract</button>
+          <button class="fc-op-btn" data-op="multiply">× Multiply</button>
+          <button class="fc-op-btn active" data-op="divide">÷ Divide</button>
+          <button class="fc-op-btn" data-op="simplify">Simplify</button>
+        </div>
+
+        <div class="fc-inputs">
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="fc-n1" class="fc-frac-input" placeholder="3" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="fc-d1" class="fc-frac-input" placeholder="4" />
+          </div>
+          <div class="fc-op-symbol" id="fc-op-symbol">÷</div>
+          <div class="fc-fraction" id="fc-fraction2">
+            <input type="text" inputmode="decimal" id="fc-n2" class="fc-frac-input" placeholder="2" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="fc-d2" class="fc-frac-input" placeholder="5" />
+          </div>
+        </div>
+
+        <div id="fc-result" class="lbm-result hidden">
+          <div class="fc-result-fraction">
+            <span id="fc-res-n" class="fc-res-num">—</span>
+            <div class="fc-res-bar" id="fc-res-bar"></div>
+            <span id="fc-res-d" class="fc-res-den">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Result (simplified)</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card hidden" id="fc-mixed-card">
+              <div class="lbm-card-val" id="fc-mixed">—</div>
+              <div class="lbm-card-lbl">Mixed number</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fc-decimal">—</div>
+              <div class="lbm-card-lbl">Decimal</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fc-percent">—</div>
+              <div class="lbm-card-lbl">Percentage</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step hidden" id="fc-step1-row">
+              <span class="pi-step-label" id="fc-step1-lbl">Step 1</span>
+              <span class="pi-step-val" id="fc-step1-val">—</span>
+            </div>
+            <div class="pi-step hidden" id="fc-step2-row">
+              <span class="pi-step-label" id="fc-step2-lbl">Step 2</span>
+              <span class="pi-step-val" id="fc-step2-val">—</span>
+            </div>
+            <div class="pi-step hidden" id="fc-step3-row">
+              <span class="pi-step-label" id="fc-step3-lbl">Step 3</span>
+              <span class="pi-step-val" id="fc-step3-val">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/fraction-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Formula</p>
+        <p>To divide fractions: <strong>keep</strong> the first fraction, <strong>change</strong> ÷ to ×, <strong>flip</strong> the second fraction (take its reciprocal), then multiply across and simplify.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the numerator and denominator of each fraction. The calculator divides the first by the second, showing the reciprocal step, simplified result, mixed number (where applicable), decimal, and percentage.</p>
+
+      <h2 id="formula">Dividing fractions formula</h2>
+      <p>Dividing by a fraction is identical to multiplying by its reciprocal:</p>
+      <Formula expr={f.general} />
+      <p>This works because division and multiplication are inverse operations. Multiplying by d/c "undoes" the division by c/d. The result is then simplified by dividing both parts by their GCD.</p>
+
+      <h2 id="reciprocal">What is a reciprocal?</h2>
+      <p>The reciprocal of a fraction is formed by swapping its numerator and denominator:</p>
+      <Formula expr={f.reciprocal} />
+      <p>A fraction and its reciprocal always multiply to 1: (a/b) × (b/a) = ab/ab = 1. This is why replacing division with multiplication by the reciprocal preserves the correct answer. The reciprocal is sometimes called the <em>multiplicative inverse</em>.</p>
+      <p>Special cases:</p>
+      <ul>
+        <li>Reciprocal of a whole number n is 1/n (e.g. reciprocal of 4 is 1/4)</li>
+        <li>Reciprocal of 1 is 1</li>
+        <li>Zero has no reciprocal — division by zero is undefined</li>
+      </ul>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: standard division</h3>
+      <p>Divide 3/4 by 2/5. Flip 2/5 to get 5/2, then multiply:</p>
+      <Formula expr={f.ex1} />
+      <p>Numerators: 3 × 5 = 15. Denominators: 4 × 2 = 8. GCD(15, 8) = 1, already simplified. As a mixed number: 1 7/8.</p>
+
+      <h3>Example 2: result simplifies to a whole number</h3>
+      <p>Divide 2/3 by 4/6. Flip 4/6 to get 6/4, then multiply:</p>
+      <Formula expr={f.ex2} />
+      <p>The result 12/12 simplifies to 1. This makes sense: 2/3 and 4/6 are equivalent fractions, so their quotient is 1.</p>
+
+      <h3>Example 3: dividing a fraction by itself</h3>
+      <p>Any non-zero fraction divided by itself equals 1:</p>
+      <Formula expr={f.ex3} />
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Problem</th><th>Reciprocal used</th><th>Raw product</th><th>Simplified</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1/2 ÷ 1/4</td><td>4/1</td><td>4/2</td><td>2</td></tr>
+            <tr><td>2/3 ÷ 1/2</td><td>2/1</td><td>4/3</td><td>1 1/3</td></tr>
+            <tr><td>3/4 ÷ 3/8</td><td>8/3</td><td>24/12</td><td>2</td></tr>
+            <tr><td>5/6 ÷ 2/3</td><td>3/2</td><td>15/12</td><td>5/4 = 1 1/4</td></tr>
+            <tr><td>7/8 ÷ 7/4</td><td>4/7</td><td>28/56</td><td>1/2</td></tr>
+            <tr><td>4/5 ÷ 8/15</td><td>15/8</td><td>60/40</td><td>3/2 = 1 1/2</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="whole-numbers">Dividing by a whole number (and dividing a whole number by a fraction)</h2>
+      <p>Write the whole number as a fraction over 1, then apply keep-change-flip:</p>
+      <Formula expr={f.whole} />
+      <p>Dividing a fraction by n is the same as multiplying the denominator by n. This halves, thirds, or further reduces the fraction depending on n.</p>
+      <p>Dividing a whole number <em>by</em> a fraction inverts the relationship — the result is often larger than the original:</p>
+      <Formula expr={f.byFrac} />
+      <p>"How many ¾ fit into 3?" — four times. Dividing by a fraction less than 1 always produces a result greater than the dividend.</p>
+
+      <h2 id="mixed-numbers">Dividing mixed numbers</h2>
+      <p>Convert each mixed number to an improper fraction before applying keep-change-flip:</p>
+      <Formula expr={f.mixed} />
+      <p>2½ → 5/2 (2 × 2 + 1 = 5). 1¼ → 5/4 (1 × 4 + 1 = 5). Flip 5/4 to get 4/5. Multiply: 5/2 × 4/5 = 20/10 = 2.</p>
+
+      <h2 id="negative">Negative fractions</h2>
+      <p>The sign rules for dividing fractions are identical to those for multiplication:</p>
+      <ul>
+        <li>Positive ÷ positive = <strong>positive</strong></li>
+        <li>Negative ÷ negative = <strong>positive</strong></li>
+        <li>Positive ÷ negative = <strong>negative</strong></li>
+        <li>Negative ÷ positive = <strong>negative</strong></li>
+      </ul>
+      <Formula expr={f.neg} />
+      <p>The sign is determined before or after flipping — it makes no difference, since flipping the reciprocal preserves the sign of the second fraction's numerator and denominator independently.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Flipping the first fraction instead of the second</h3>
+      <p>Only the second fraction (the divisor) is flipped. 3/4 ÷ 2/5 becomes 3/4 × 5/2 = 15/8, not 4/3 × 2/5 = 8/15. The first fraction stays as written.</p>
+
+      <h3>Flipping both fractions</h3>
+      <p>Flipping both fractions changes the meaning of the calculation entirely. Only the divisor is inverted.</p>
+
+      <h3>Finding a common denominator first</h3>
+      <p>A common denominator is not needed for division. It is only required for addition and subtraction. Introducing a common denominator step here adds unnecessary work and creates opportunities for error.</p>
+
+      <h3>Not converting mixed numbers first</h3>
+      <p>Applying keep-change-flip to a mixed number without converting it to an improper fraction first produces a wrong answer. Always convert: 2½ = 5/2, not "2 and ½."</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you divide fractions?</h3>
+      <p>Keep the first fraction, change ÷ to ×, flip the second fraction (take its reciprocal), multiply across, and simplify.</p>
+
+      <h3>What is the reciprocal of a fraction?</h3>
+      <p>The reciprocal of a/b is b/a — numerator and denominator are swapped. A fraction times its reciprocal always equals 1.</p>
+
+      <h3>Do you need a common denominator to divide fractions?</h3>
+      <p>No. Fraction division converts to multiplication via the reciprocal, and multiplication needs no common denominator.</p>
+
+      <h3>How do you divide a fraction by a whole number?</h3>
+      <p>Write the whole number as n/1 and apply keep-change-flip: a/b ÷ n = a/b × 1/n = a/(b×n).</p>
+
+      <h3>How do you divide mixed numbers?</h3>
+      <p>Convert each mixed number to an improper fraction, then apply keep-change-flip to the two improper fractions.</p>
+
+      <h3>Can you divide a fraction by itself?</h3>
+      <p>Yes — the result is always 1. Any non-zero number divided by itself equals 1.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — add, subtract, multiply, divide, and simplify all in one tool.' },
+        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions step by step — LCD method with simplified result, decimal, and percentage.' },
+        { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions step by step — LCD method with step-by-step workings.' },
+        { path: '/math/fraction-calculator/multiply',  blurb: 'Multiply fractions — straight numerator × numerator with step-by-step simplification.' },
+        { path: '/math/fraction-calculator/simplify',  blurb: 'Simplify any fraction to its lowest terms using the GCD method.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal and step-by-step workings.' },
+        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, percentage change, and more.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

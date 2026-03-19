@@ -38,16 +38,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let heightCm, weightKg;
 
     if (unit === 'metric') {
-      heightCm = parseFloat(document.getElementById('bmi-height-cm').value);
-      const w  = parseFloat(document.getElementById('iw-weight-kg').value);
+      heightCm = parseFloat(document.getElementById('bmi-height-cm').value.replace(",","."));
+      const w  = parseFloat(document.getElementById('iw-weight-kg').value.replace(",","."));
       weightKg = w > 0 ? w : null;
     } else {
-      const ft     = parseFloat(document.getElementById('bmi-height-ft').value) || 0;
-      const inp    = parseFloat(document.getElementById('bmi-height-in').value) || 0;
+      const ft     = parseFloat(document.getElementById('bmi-height-ft').value.replace(",",".")) || 0;
+      const inp    = parseFloat(document.getElementById('bmi-height-in').value.replace(",",".")) || 0;
       const totalIn = ft * 12 + inp;
       if (totalIn <= 0) return hide();
       heightCm = totalIn * 2.54;
-      const wLb = parseFloat(document.getElementById('iw-weight-lb').value);
+      const wLb = parseFloat(document.getElementById('iw-weight-lb').value.replace(",","."));
       weightKg  = wLb > 0 ? wLb * 0.453592 : null;
     }
 

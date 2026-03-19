@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   [p1El, p2El].forEach(el => el.addEventListener('input', calculate));
 
   function calculate() {
-    const p1 = parseFloat(p1El.value);
-    const p2 = parseFloat(p2El.value);
+    const p1 = parseFloat(p1El.value.replace(",","."));
+    const p2 = parseFloat(p2El.value.replace(",","."));
 
     if (isNaN(p1) || isNaN(p2)) {
       document.getElementById('pop-result').classList.add('hidden');

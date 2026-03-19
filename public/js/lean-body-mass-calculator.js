@@ -85,13 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let weightKg, heightCm;
 
     if (unit === 'metric') {
-      weightKg = parseFloat(document.getElementById('bmi-weight-kg').value);
-      heightCm = parseFloat(document.getElementById('bmi-height-cm').value);
+      weightKg = parseFloat(document.getElementById('bmi-weight-kg').value.replace(",","."));
+      heightCm = parseFloat(document.getElementById('bmi-height-cm').value.replace(",","."));
       if (!weightKg || !heightCm || weightKg <= 0 || heightCm <= 0) return hide();
     } else {
-      const weightLb = parseFloat(document.getElementById('bmi-weight-lb').value);
-      const ft       = parseFloat(document.getElementById('bmi-height-ft').value) || 0;
-      const inp      = parseFloat(document.getElementById('bmi-height-in').value) || 0;
+      const weightLb = parseFloat(document.getElementById('bmi-weight-lb').value.replace(",","."));
+      const ft       = parseFloat(document.getElementById('bmi-height-ft').value.replace(",",".")) || 0;
+      const inp      = parseFloat(document.getElementById('bmi-height-in').value.replace(",",".")) || 0;
       const totalIn  = ft * 12 + inp;
       if (!weightLb || weightLb <= 0 || totalIn <= 0) return hide();
       weightKg = weightLb * 0.453592;

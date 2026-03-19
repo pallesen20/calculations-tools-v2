@@ -1,0 +1,297 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  general:    "$$\\frac{a}{b} \\times \\frac{c}{d} = \\frac{a \\times c}{b \\times d}$$",
+  ex1:        "$$\\frac{2}{3} \\times \\frac{3}{5} = \\frac{2 \\times 3}{3 \\times 5} = \\frac{6}{15} = \\frac{2}{5}$$",
+  ex2:        "$$\\frac{3}{4} \\times \\frac{8}{9} = \\frac{3 \\times 8}{4 \\times 9} = \\frac{24}{36} = \\frac{2}{3}$$",
+  crossCancel:"$$\\frac{3}{4} \\times \\frac{8}{9}: \\quad \\frac{\\cancel{3}^{1}}{\\cancel{4}_{1}} \\times \\frac{\\cancel{8}^{2}}{\\cancel{9}_{3}} = \\frac{1 \\times 2}{1 \\times 3} = \\frac{2}{3}$$",
+  whole:      "$$5 \\times \\frac{2}{3} = \\frac{5}{1} \\times \\frac{2}{3} = \\frac{10}{3} = 3\\frac{1}{3}$$",
+  mixed:      "$$1\\frac{1}{2} \\times 2\\frac{2}{3} = \\frac{3}{2} \\times \\frac{8}{3} = \\frac{3 \\times 8}{2 \\times 3} = \\frac{24}{6} = 4$$",
+  neg:        "$$\\frac{-2}{3} \\times \\frac{3}{4} = \\frac{-2 \\times 3}{3 \\times 4} = \\frac{-6}{12} = \\frac{-1}{2}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'formula',       label: 'Multiplying fractions formula' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'cross-cancel',  label: 'Cross-cancellation shortcut' },
+  { id: 'whole-numbers', label: 'Multiplying by a whole number' },
+  { id: 'mixed-numbers', label: 'Multiplying mixed numbers' },
+  { id: 'negative',      label: 'Negative fractions' },
+  { id: 'reference',     label: 'Reference table' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Multiply Fractions Calculator",
+    "url": "https://calculations.tools/math/fraction-calculator/multiply",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Multiply any two fractions instantly. Multiplies numerators and denominators, simplifies the result, and shows step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to multiply fractions",
+    "description": "Multiply two fractions in three steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Multiply the numerators", "text": "Multiply the two numerators together to get the new numerator." },
+      { "@type": "HowToStep", "position": 2, "name": "Multiply the denominators", "text": "Multiply the two denominators together to get the new denominator." },
+      { "@type": "HowToStep", "position": 3, "name": "Simplify", "text": "Divide both the numerator and denominator by their GCD to reduce the fraction to its simplest form." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you multiply fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the numerators together to get the new numerator, multiply the denominators together to get the new denominator, then simplify by dividing both parts by their GCD. No common denominator is needed." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you need a common denominator to multiply fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Unlike addition and subtraction, multiplication does not require a common denominator. You simply multiply across: numerator × numerator and denominator × denominator." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is cross-cancellation?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Cross-cancellation is a shortcut that simplifies before multiplying by dividing a numerator and a diagonal denominator by a shared factor. For example, in 3/4 × 8/9, the 3 and 9 share a factor of 3, and the 4 and 8 share a factor of 4. Cancelling first gives 1/1 × 2/3 = 2/3, avoiding large intermediate numbers." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you multiply a fraction by a whole number?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Write the whole number as a fraction with denominator 1, then multiply normally. For example, 5 × 2/3 = 5/1 × 2/3 = 10/3 = 3⅓." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you multiply mixed numbers?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Convert each mixed number to an improper fraction first, then multiply normally. For example, 1½ × 2⅔ = 3/2 × 8/3 = 24/6 = 4." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the sign rule for multiplying fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Positive × positive = positive. Negative × negative = positive. Positive × negative (or negative × positive) = negative. The sign of the result is determined by counting the negative signs: an even number of negatives gives a positive result; an odd number gives a negative result." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Multiply Fractions Calculator"
+  metaTitle="Multiply Fractions Calculator | Step-by-Step"
+  description="Multiply any two fractions instantly. Multiplies numerators and denominators, simplifies the result, and shows step-by-step workings with mixed number and decimal output."
+  canonical="https://calculations.tools/math/fraction-calculator/multiply"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="fraction-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Multiply Fractions</h2>
+          <p>Enter two fractions to multiply them together</p>
+        </div>
+
+        <div class="fc-ops">
+          <button class="fc-op-btn" data-op="add">+ Add</button>
+          <button class="fc-op-btn" data-op="subtract">− Subtract</button>
+          <button class="fc-op-btn active" data-op="multiply">× Multiply</button>
+          <button class="fc-op-btn" data-op="divide">÷ Divide</button>
+          <button class="fc-op-btn" data-op="simplify">Simplify</button>
+        </div>
+
+        <div class="fc-inputs">
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="fc-n1" class="fc-frac-input" placeholder="2" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="fc-d1" class="fc-frac-input" placeholder="3" />
+          </div>
+          <div class="fc-op-symbol" id="fc-op-symbol">×</div>
+          <div class="fc-fraction" id="fc-fraction2">
+            <input type="text" inputmode="decimal" id="fc-n2" class="fc-frac-input" placeholder="3" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="fc-d2" class="fc-frac-input" placeholder="5" />
+          </div>
+        </div>
+
+        <div id="fc-result" class="lbm-result hidden">
+          <div class="fc-result-fraction">
+            <span id="fc-res-n" class="fc-res-num">—</span>
+            <div class="fc-res-bar" id="fc-res-bar"></div>
+            <span id="fc-res-d" class="fc-res-den">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Result (simplified)</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card hidden" id="fc-mixed-card">
+              <div class="lbm-card-val" id="fc-mixed">—</div>
+              <div class="lbm-card-lbl">Mixed number</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fc-decimal">—</div>
+              <div class="lbm-card-lbl">Decimal</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fc-percent">—</div>
+              <div class="lbm-card-lbl">Percentage</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step hidden" id="fc-step1-row">
+              <span class="pi-step-label" id="fc-step1-lbl">Step 1</span>
+              <span class="pi-step-val" id="fc-step1-val">—</span>
+            </div>
+            <div class="pi-step hidden" id="fc-step2-row">
+              <span class="pi-step-label" id="fc-step2-lbl">Step 2</span>
+              <span class="pi-step-val" id="fc-step2-val">—</span>
+            </div>
+            <div class="pi-step hidden" id="fc-step3-row">
+              <span class="pi-step-label" id="fc-step3-lbl">Step 3</span>
+              <span class="pi-step-val" id="fc-step3-val">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/fraction-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Formula</p>
+        <p>To multiply fractions: <strong>multiply numerator × numerator</strong> and <strong>denominator × denominator</strong>, then simplify. No common denominator is needed — multiplication is the simplest of the four fraction operations.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the numerator and denominator of each fraction. The calculator multiplies them instantly, showing the simplified result, mixed number (where applicable), decimal, and percentage — along with a three-step breakdown of the multiplication and simplification.</p>
+
+      <h2 id="formula">Multiplying fractions formula</h2>
+      <p>Multiply numerators together and denominators together:</p>
+      <Formula expr={f.general} />
+      <p>Unlike addition and subtraction, multiplication requires no common denominator. The fraction is computed directly and then simplified by dividing both parts by their GCD.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: result simplifies</h3>
+      <p>Multiply 2/3 by 3/5:</p>
+      <Formula expr={f.ex1} />
+      <p>Numerators: 2 × 3 = 6. Denominators: 3 × 5 = 15. GCD(6, 15) = 3. Simplified: 2/5.</p>
+
+      <h3>Example 2: larger numbers</h3>
+      <p>Multiply 3/4 by 8/9:</p>
+      <Formula expr={f.ex2} />
+      <p>Numerators: 3 × 8 = 24. Denominators: 4 × 9 = 36. GCD(24, 36) = 12. Simplified: 2/3.</p>
+
+      <h2 id="cross-cancel">Cross-cancellation shortcut</h2>
+      <p>Cross-cancellation simplifies <em>before</em> multiplying by dividing a numerator and a diagonal denominator by a shared factor. This keeps intermediate numbers small:</p>
+      <Formula expr={f.crossCancel} />
+      <p>In 3/4 × 8/9: the 3 (first numerator) and 9 (second denominator) share a factor of 3 → divide both by 3. The 4 (first denominator) and 8 (second numerator) share a factor of 4 → divide both by 4. The remaining product is 1/1 × 2/3 = 2/3, with no further simplification needed.</p>
+      <p>Cross-cancellation is optional — it produces the same answer as multiplying then simplifying, but avoids large intermediate values that are harder to work with by hand.</p>
+
+      <h2 id="whole-numbers">Multiplying a fraction by a whole number</h2>
+      <p>Write the whole number as a fraction with denominator 1, then apply the standard formula:</p>
+      <Formula expr={f.whole} />
+      <p>This is equivalent to adding the fraction to itself that many times: 5 × 2/3 = 2/3 + 2/3 + 2/3 + 2/3 + 2/3 = 10/3.</p>
+
+      <h2 id="mixed-numbers">Multiplying mixed numbers</h2>
+      <p>Convert each mixed number to an improper fraction before multiplying:</p>
+      <Formula expr={f.mixed} />
+      <p>1½ → 3/2 (1 × 2 + 1 = 3, over 2). 2⅔ → 8/3 (2 × 3 + 2 = 8, over 3). Multiply: 3/2 × 8/3. Cross-cancel: 3s cancel and the 2 and 8 simplify to 1 and 4. Result: 4/1 = 4.</p>
+
+      <h2 id="negative">Negative fractions</h2>
+      <p>The sign rules for multiplying fractions follow standard integer rules:</p>
+      <ul>
+        <li>Positive × positive = <strong>positive</strong></li>
+        <li>Negative × negative = <strong>positive</strong></li>
+        <li>Positive × negative = <strong>negative</strong></li>
+        <li>Negative × positive = <strong>negative</strong></li>
+      </ul>
+      <Formula expr={f.neg} />
+      <p>Count the negative signs: one negative among the two fractions → negative result. Two negatives → positive result.</p>
+
+      <h2 id="reference">Reference table</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Problem</th><th>Raw product</th><th>GCD</th><th>Simplified</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1/2 × 1/3</td><td>1/6</td><td>1</td><td>1/6</td></tr>
+            <tr><td>2/3 × 3/4</td><td>6/12</td><td>6</td><td>1/2</td></tr>
+            <tr><td>3/5 × 5/6</td><td>15/30</td><td>15</td><td>1/2</td></tr>
+            <tr><td>4/7 × 7/8</td><td>28/56</td><td>28</td><td>1/2</td></tr>
+            <tr><td>5/6 × 3/10</td><td>15/60</td><td>15</td><td>1/4</td></tr>
+            <tr><td>7/8 × 4/5</td><td>28/40</td><td>4</td><td>7/10</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Finding a common denominator first</h3>
+      <p>A common denominator is needed for addition and subtraction — not multiplication. Adding a common denominator step to a multiplication problem introduces unnecessary work and often produces errors. Multiply straight across.</p>
+
+      <h3>Multiplying only the numerators</h3>
+      <p>Both numerator and denominator must be multiplied. 2/3 × 3/5 ≠ 6/3 and ≠ 2/5 (before simplification). The denominator product is 3 × 5 = 15, giving 6/15 = 2/5 after simplification.</p>
+
+      <h3>Not converting mixed numbers to improper fractions</h3>
+      <p>Multiplying 1½ × 2⅔ by treating whole parts and fractions separately (1 × 2 + ½ × ⅔ = 2 + 1/3) gives a wrong answer. The whole and fractional parts of each number are not independent factors. Convert to improper fractions first.</p>
+
+      <h3>Forgetting to simplify</h3>
+      <p>The raw product is often not in its simplest form. Always check whether numerator and denominator share a common factor. Use cross-cancellation beforehand to avoid large numbers that are harder to simplify after.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you multiply fractions?</h3>
+      <p>Multiply numerator × numerator to get the new numerator, multiply denominator × denominator to get the new denominator, then simplify by dividing both parts by their GCD.</p>
+
+      <h3>Do you need a common denominator to multiply fractions?</h3>
+      <p>No. A common denominator is only needed for addition and subtraction. Multiplication works by multiplying straight across.</p>
+
+      <h3>What is cross-cancellation?</h3>
+      <p>A simplification shortcut that divides a numerator and a diagonal denominator by a shared factor before multiplying. It gives the same final answer but avoids large intermediate numbers.</p>
+
+      <h3>How do you multiply a fraction by a whole number?</h3>
+      <p>Write the whole number as a fraction over 1, then multiply as normal. 5 × 2/3 = 5/1 × 2/3 = 10/3 = 3⅓.</p>
+
+      <h3>How do you multiply mixed numbers?</h3>
+      <p>Convert each mixed number to an improper fraction first, then multiply normally.</p>
+
+      <h3>What is the sign rule for multiplying fractions?</h3>
+      <p>Same signs (both positive or both negative) give a positive result. Different signs give a negative result. Count the negatives: even number → positive; odd number → negative.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — add, subtract, multiply, divide, and simplify all in one tool.' },
+        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions step by step — LCD method with simplified result, decimal, and percentage.' },
+        { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions step by step — LCD method with step-by-step workings.' },
+        { path: '/math/fraction-calculator/divide',    blurb: 'Divide fractions using the reciprocal method with step-by-step workings.' },
+        { path: '/math/fraction-calculator/simplify',  blurb: 'Simplify any fraction to its lowest terms using the GCD method.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal and step-by-step workings.' },
+        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, percentage change, and more.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

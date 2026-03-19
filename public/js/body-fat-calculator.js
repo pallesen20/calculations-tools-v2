@@ -67,22 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let weightKg, heightCm, waistCm, neckCm, hipCm;
 
     if (unit === 'metric') {
-      weightKg = parseFloat(document.getElementById('bmi-weight-kg').value);
-      heightCm = parseFloat(document.getElementById('bmi-height-cm').value);
-      waistCm  = parseFloat(document.getElementById('bf-waist-cm').value);
-      neckCm   = parseFloat(document.getElementById('bf-neck-cm').value);
-      hipCm    = sex === 'female' ? parseFloat(document.getElementById('bf-hip-cm').value) : 0;
+      weightKg = parseFloat(document.getElementById('bmi-weight-kg').value.replace(",","."));
+      heightCm = parseFloat(document.getElementById('bmi-height-cm').value.replace(",","."));
+      waistCm  = parseFloat(document.getElementById('bf-waist-cm').value.replace(",","."));
+      neckCm   = parseFloat(document.getElementById('bf-neck-cm').value.replace(",","."));
+      hipCm    = sex === 'female' ? parseFloat(document.getElementById('bf-hip-cm').value.replace(",",".")) : 0;
     } else {
-      const weightLb = parseFloat(document.getElementById('bmi-weight-lb').value);
-      const ft       = parseFloat(document.getElementById('bmi-height-ft').value) || 0;
-      const inp      = parseFloat(document.getElementById('bmi-height-in').value) || 0;
+      const weightLb = parseFloat(document.getElementById('bmi-weight-lb').value.replace(",","."));
+      const ft       = parseFloat(document.getElementById('bmi-height-ft').value.replace(",",".")) || 0;
+      const inp      = parseFloat(document.getElementById('bmi-height-in').value.replace(",",".")) || 0;
       const totalIn  = ft * 12 + inp;
       if (!weightLb || weightLb <= 0 || totalIn <= 0) return hide();
       weightKg = weightLb * 0.453592;
       heightCm = totalIn * 2.54;
-      waistCm  = (parseFloat(document.getElementById('bf-waist-in').value) || 0) * 2.54;
-      neckCm   = (parseFloat(document.getElementById('bf-neck-in').value)  || 0) * 2.54;
-      hipCm    = sex === 'female' ? (parseFloat(document.getElementById('bf-hip-in').value) || 0) * 2.54 : 0;
+      waistCm  = (parseFloat(document.getElementById('bf-waist-in').value.replace(",",".")) || 0) * 2.54;
+      neckCm   = (parseFloat(document.getElementById('bf-neck-in').value.replace(",","."))  || 0) * 2.54;
+      hipCm    = sex === 'female' ? (parseFloat(document.getElementById('bf-hip-in').value.replace(",",".")) || 0) * 2.54 : 0;
     }
 
     if (!weightKg || !heightCm || weightKg <= 0 || heightCm <= 0) return hide();
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     badge.textContent = cat.label;
     badge.className   = `lbm-card-badge ${cat.cls}`;
 
-    const age  = parseFloat(document.getElementById('bf-age').value);
+    const age  = parseFloat(document.getElementById('bf-age').value.replace(",","."));
     const deEl = document.getElementById('bf-deurenberg-row');
     if (age >= 18 && age <= 100) {
       const sexFactor = sex === 'male' ? 1 : 0;

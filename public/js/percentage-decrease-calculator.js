@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   [origEl, newEl].forEach(el => el.addEventListener('input', calculate));
 
   function calculate() {
-    const orig = parseFloat(origEl.value);
-    const newV = parseFloat(newEl.value);
+    const orig = parseFloat(origEl.value.replace(",","."));
+    const newV = parseFloat(newEl.value.replace(",","."));
 
     if (isNaN(orig) || isNaN(newV) || orig === 0) {
       document.getElementById('pd-result').classList.add('hidden');

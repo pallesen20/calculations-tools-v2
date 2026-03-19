@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   inputEl.addEventListener('input', calculate);
 
   function calculate() {
-    const val = parseFloat(inputEl.value);
+    const val = parseFloat(inputEl.value.replace(",","."));
 
     if (isNaN(val)) {
       document.getElementById('dtp-result').classList.add('hidden');

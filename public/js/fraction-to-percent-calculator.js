@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   [numEl, denEl].forEach(el => el.addEventListener('input', calculate));
 
   function calculate() {
-    const num = parseFloat(numEl.value);
-    const den = parseFloat(denEl.value);
+    const num = parseFloat(numEl.value.replace(",","."));
+    const den = parseFloat(denEl.value.replace(",","."));
 
     if (isNaN(num) || isNaN(den) || den === 0) {
       document.getElementById('ftp-result').classList.add('hidden');

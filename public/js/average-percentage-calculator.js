@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function calculate() {
     const vals = Array.from(rowsEl.querySelectorAll('.pav-input'))
-      .map(i => parseFloat(i.value))
+      .map(i => parseFloat(i.value.replace(",",".")))
       .filter(v => !isNaN(v));
 
     if (vals.length < 2) {

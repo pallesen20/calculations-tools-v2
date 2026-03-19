@@ -43,7 +43,7 @@ function renderQuick() {
 }
 
 function renderCommon(fromKey) {
-  const value = parseFloat(document.getElementById('wt-value').value) || 1; // ← was hardcoded 1
+  const value = parseFloat(document.getElementById('wt-value').value.replace(",",".")) || 1; // ← was hardcoded 1
   const rows = Object.entries(UNITS)
     .filter(([k]) => k !== fromKey)
     .slice(0, 8)
@@ -61,7 +61,7 @@ function renderCommon(fromKey) {
 }
 
 function update() {
-  const value   = parseFloat(document.getElementById('wt-value').value) || 0;
+  const value   = parseFloat(document.getElementById('wt-value').value.replace(",",".")) || 0;
   const fromKey = document.getElementById('wt-from').value;
   const toKey   = document.getElementById('wt-to').value;
   const result  = convert(value, fromKey, toKey);

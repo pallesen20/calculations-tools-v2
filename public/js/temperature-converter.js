@@ -90,7 +90,7 @@ function renderCommon(fromKey) {
 }
 
 function update() {
-  const value   = parseFloat(document.getElementById('tc-value').value) || 0;
+  const value   = parseFloat(document.getElementById('tc-value').value.replace(",",".")) || 0;
   const fromKey = document.getElementById('tc-from').value;
   const toKey   = document.getElementById('tc-to').value;
   const result  = convert(value, fromKey, toKey);

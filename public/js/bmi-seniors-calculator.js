@@ -74,15 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let bmi, weightKg, heightCm;
 
     if (unit === 'metric') {
-      weightKg = parseFloat(document.getElementById('bmi-weight-kg').value);
-      heightCm = parseFloat(document.getElementById('bmi-height-cm').value);
+      weightKg = parseFloat(document.getElementById('bmi-weight-kg').value.replace(",","."));
+      heightCm = parseFloat(document.getElementById('bmi-height-cm').value.replace(",","."));
       if (!weightKg || !heightCm || weightKg <= 0 || heightCm <= 0) return hide();
       const h = heightCm / 100;
       bmi = weightKg / (h * h);
     } else {
-      const weightLb = parseFloat(document.getElementById('bmi-weight-lb').value);
-      const ft       = parseFloat(document.getElementById('bmi-height-ft').value) || 0;
-      const inp      = parseFloat(document.getElementById('bmi-height-in').value) || 0;
+      const weightLb = parseFloat(document.getElementById('bmi-weight-lb').value.replace(",","."));
+      const ft       = parseFloat(document.getElementById('bmi-height-ft').value.replace(",",".")) || 0;
+      const inp      = parseFloat(document.getElementById('bmi-height-in').value.replace(",",".")) || 0;
       const totalIn  = ft * 12 + inp;
       if (!weightLb || weightLb <= 0 || totalIn <= 0) return hide();
       bmi      = (703 * weightLb) / (totalIn * totalIn);
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (bmi < 5 || bmi > 150) return hide();
 
-    const age = ageEl ? parseInt(ageEl.value, 10) : null;
+    const age = ageEl ? parseInt(ageEl.value.replace(",","."), 10) : null;
 
     if (redirectEl && age && age > 0 && age < 65) {
       redirectEl.innerHTML = 'This calculator is for adults 65 and over. Use our <a href="/health/bmi-calculator">standard BMI Calculator</a> for adults aged 18\u201364.';

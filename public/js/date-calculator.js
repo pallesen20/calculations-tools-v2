@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateAdd() {
     if (!addDateIn.value) return;
-    const n = parseInt(addDaysIn.value, 10);
+    const n = parseInt(addDaysIn.value.replace(",","."), 10);
     if (isNaN(n) || n < 0) return;
 
     const base  = parseLocalDate(addDateIn.value);

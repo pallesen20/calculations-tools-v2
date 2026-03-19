@@ -224,8 +224,8 @@
     }
 
     function calculate() {
-      const ageYrs   = parseFloat(ageYrEl.value)  || 0;
-      const ageMos   = parseFloat(ageMoEl.value)  || 0;
+      const ageYrs   = parseFloat(ageYrEl.value.replace(",","."))  || 0;
+      const ageMos   = parseFloat(ageMoEl.value.replace(",","."))  || 0;
       const ageTotal = ageYrs + ageMos / 12;
 
       // Age too young for CDC charts
@@ -256,14 +256,14 @@
 
       let weightKg, heightM;
       if (unit === 'metric') {
-        weightKg = parseFloat(weightKgEl.value);
-        const hcm = parseFloat(heightCmEl.value);
+        weightKg = parseFloat(weightKgEl.value.replace(",","."));
+        const hcm = parseFloat(heightCmEl.value.replace(",","."));
         if (!weightKg || !hcm || weightKg <= 0 || hcm <= 0) return hideAll();
         heightM = hcm / 100;
       } else {
-        const lb  = parseFloat(weightLbEl.value);
-        const ft  = parseFloat(heightFtEl.value) || 0;
-        const inp = parseFloat(heightInEl.value) || 0;
+        const lb  = parseFloat(weightLbEl.value.replace(",","."));
+        const ft  = parseFloat(heightFtEl.value.replace(",",".")) || 0;
+        const inp = parseFloat(heightInEl.value.replace(",",".")) || 0;
         const totalIn = ft * 12 + inp;
         if (!lb || lb <= 0 || totalIn <= 0) return hideAll();
         weightKg = lb / 2.20462;

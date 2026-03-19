@@ -305,28 +305,3 @@ const schema = [
   </div>
 
 </CalculatorLayout>
-
-<style>
-  .cc-textarea { min-height: 180px; }
-  .cc-actions { margin-bottom: 1.25rem; }
-  .cc-btns {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-  }
-  @media (min-width: 640px) {
-    .cc-btns { grid-template-columns: repeat(4, 1fr); }
-  }
-  .cc-case-btn:hover:not(:disabled) { transform: translateY(-2px); }
-  .cc-case-btn:active:not(:disabled) { transform: translateY(0); }
-  .cc-case-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  .cc-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-  @media (min-width: 640px) {
-    .cc-stats { grid-template-columns: repeat(4, 1fr); }
-  }
-</style>

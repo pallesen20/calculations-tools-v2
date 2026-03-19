@@ -88,7 +88,7 @@ const schema = [
         <div class="lc-inputs">
           <div class="input-group">
             <label for="tc-value">Value</label>
-            <input id="tc-value" type="number" value="0" placeholder="Enter temperature" />
+            <input id="tc-value" type="text" inputmode="decimal" value="0" placeholder="Enter temperature" />
           </div>
           <div class="input-group">
             <label for="tc-from">From</label>
@@ -350,31 +350,3 @@ const schema = [
   </div>
 
 </CalculatorLayout>
-
-<style is:global>
-  .tc-common-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-  @media (min-width: 768px) {
-    .tc-common-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-  .tc-common-card {
-    background: rgba(255,255,255,0.05);
-    border-radius: 8px;
-    padding: 0.75rem;
-    text-align: center;
-    font-size: 0.875rem;
-    color: white;
-    transition: background 0.2s;
-  }
-  .tc-common-card:hover {
-    background: rgba(255,255,255,0.1);
-  }
-  .tc-common-from { font-weight: 500; }
-  .tc-common-eq   { color: #93c5fd; font-size: 0.75rem; margin: 0.2rem 0; }
-  .tc-common-to   { font-weight: 500; }
-</style>

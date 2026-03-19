@@ -1,0 +1,56 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Percentage Point Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Percentage Point Calculator</h2>
+        <p>Enter two percentages to find the pp difference</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pp-a">First Percentage (%)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="pp-a" class="bmi-input" placeholder="e.g. 8" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pp-b">Second Percentage (%)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="pp-b" class="bmi-input" placeholder="e.g. 5" />
+        </div>
+      </div>
+
+      <div id="pp-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="pp-diff">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Percentage Point Difference</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="pp-pct-change">—</div>
+            <div class="lbm-card-lbl">Equivalent % change</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">How it was calculated</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — Subtract</span>
+            <span id="pp-step1" class="pi-step-val">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — % change equivalent</span>
+            <span id="pp-step2" class="pi-step-val">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/percentage-point-calculator.js" is:inline></script>
+</EmbedLayout>

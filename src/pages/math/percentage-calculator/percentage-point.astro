@@ -1,0 +1,287 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  main:      "$$\\text{Percentage Point Difference} = A\\% - B\\%$$",
+  pctChange: "$$\\text{Equivalent Percent Change} = \\frac{A - B}{|B|} \\times 100$$",
+  ex1:       "$$8\\% - 5\\% = +3 \\text{ pp}$$",
+  ex1b:      "$$\\frac{8 - 5}{|5|} \\times 100 = +60\\%$$",
+  ex2:       "$$38\\% - 32\\% = +6 \\text{ pp}$$",
+  ex3:       "$$4.50\\% - 4.25\\% = +0.25 \\text{ pp} = 25 \\text{ basis points}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',        label: 'How to use' },
+  { id: 'formula',           label: 'Percentage point formula' },
+  { id: 'pp-vs-pct-change',  label: 'pp vs percent change' },
+  { id: 'examples',          label: 'Worked examples' },
+  { id: 'basis-points',      label: 'Basis points and pp' },
+  { id: 'when-to-use',       label: 'When to say "pp"' },
+  { id: 'common-mistakes',   label: 'Common mistakes' },
+  { id: 'faq',               label: 'FAQs' },
+  { id: 'related-tools',     label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Percentage Point Calculator",
+    "url": "https://calculations.tools/math/percentage-calculator/percentage-point",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate the percentage point difference between two percentages. Shows the arithmetic pp difference and the equivalent percent change.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate percentage point difference",
+    "description": "Calculate the percentage point difference between two percentages in two steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Subtract", "text": "Subtract the second percentage from the first: A% − B% = pp difference." },
+      { "@type": "HowToStep", "position": 2, "name": "Calculate percent change (optional)", "text": "To find the equivalent relative change, divide the pp difference by the absolute value of the second percentage and multiply by 100." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a percentage point?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A percentage point (pp) is the arithmetic difference between two percentages. If a rate rises from 5% to 8%, it has increased by 3 percentage points — not 3 percent. Percentage points measure absolute change between two percentage values." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between percentage points and percent change?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Percentage points measure the arithmetic difference: 8% − 5% = 3 pp. Percent change measures the relative change: (8 − 5) / 5 × 100 = 60%. The same move from 5% to 8% is both +3 pp and +60%. They answer different questions: pp asks 'by how many percentage units did it move?'; percent change asks 'by what proportion did it change?'." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a basis point?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A basis point (bp) is one-hundredth of a percentage point: 1 bp = 0.01 pp = 0.0001 in absolute terms. A 25 basis point rate increase is the same as a 0.25 percentage point increase. Basis points are used in finance to avoid ambiguity when discussing small changes in interest rates, yields, and spreads." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can percentage point difference be negative?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. If the first percentage is lower than the second, the pp difference is negative. For example, if unemployment falls from 8% to 5%, the change is −3 pp. The sign indicates the direction of change." }
+      },
+      {
+        "@type": "Question",
+        "name": "When should I say 'percentage points' instead of 'percent'?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use 'percentage points' when describing the arithmetic difference between two percentages. Use 'percent' when describing a relative or proportional change. Saying 'inflation rose 2%' when it went from 5% to 7% is ambiguous — does it mean the rate rose by 2 pp (absolute), or that the rate itself rose by 2% (relative, meaning 5.1%)? To be precise, say '2 percentage points' for the absolute difference." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Percentage Point Calculator"
+  metaTitle="Percentage Point Calculator | pp vs % Change"
+  description="Calculate the percentage point difference between two percentages. See the pp difference, equivalent percent change, and a step-by-step breakdown."
+  canonical="https://calculations.tools/math/percentage-calculator/percentage-point"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="percentage-point-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Percentage Point Difference</h2>
+          <p>Enter two percentages to find the pp difference</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pp-a">First Percentage (%)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="pp-a" class="bmi-input" placeholder="e.g. 8" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pp-b">Second Percentage (%)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="pp-b" class="bmi-input" placeholder="e.g. 5" />
+          </div>
+        </div>
+
+        <div id="pp-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="pp-diff">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Percentage Point Difference</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pp-pct-change">—</div>
+              <div class="lbm-card-lbl">Equivalent % change</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">How it was calculated</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1 — Subtract</span>
+              <span id="pp-step1" class="pi-step-val">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2 — % change equivalent</span>
+              <span id="pp-step2" class="pi-step-val">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/percentage-point-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Key distinction</p>
+        <p>If a rate moves from 5% to 8%, it has increased by <strong>3 percentage points</strong> — but by <strong>60 percent</strong>. These are both correct and refer to different things: pp measures the arithmetic gap; percent change measures the relative shift.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the first percentage (A) and the second percentage (B). The calculator returns the percentage point difference (A − B), the equivalent percent change, and a step-by-step breakdown.</p>
+      <p>The <strong>first percentage</strong> is the later or higher value (the result). The <strong>second percentage</strong> is the earlier or reference value (the starting point). If the order does not matter for your use case, the sign of the pp difference will tell you the direction.</p>
+
+      <h2 id="formula">Percentage point formula</h2>
+      <p>A percentage point difference is simply the arithmetic subtraction of two percentages:</p>
+      <Formula expr={f.main} />
+      <p>To also express the same change as a relative percent change:</p>
+      <Formula expr={f.pctChange} />
+      <p>The denominator uses the absolute value of B to handle cases where the reference value is negative (e.g. a country with negative inflation).</p>
+
+      <h2 id="pp-vs-pct-change">Percentage points vs percent change</h2>
+      <p>This distinction is one of the most commonly misrepresented statistics in financial and political reporting.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Concept</th><th>Formula</th><th>What it measures</th><th>Example (5% → 8%)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Percentage point difference</td><td>A − B</td><td>Arithmetic gap between two percentages</td><td>+3 pp</td></tr>
+            <tr><td>Percent change</td><td>(A − B) / |B| × 100</td><td>Relative change from B to A</td><td>+60%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Both statements are accurate for the same data. A central bank raising its rate from 5% to 8% has raised it by <em>3 percentage points</em> in absolute terms — and <em>60 percent</em> in relative terms (the rate itself increased by 60% of its original value). Context determines which framing is more meaningful.</p>
+      <p>In most policy and journalism contexts, <strong>percentage points</strong> is the appropriate unit for reporting changes in rates, shares, and proportions. Saying "the tax rate rose by 5%" when it moved from 20% to 25% is technically ambiguous — "5 percentage points" is precise and unambiguous.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: interest rate rise</h3>
+      <p>A central bank raises its benchmark rate from 5% to 8%.</p>
+      <Formula expr={f.ex1} />
+      <p>The rate rose by <strong>3 percentage points</strong>. In relative terms:</p>
+      <Formula expr={f.ex1b} />
+      <p>The rate increased by 60% of its original value. Both are valid — pp for the absolute shift, % for the proportional change.</p>
+
+      <h3>Example 2: opinion poll swing</h3>
+      <p>A party's vote share rises from 32% to 38% between two polls.</p>
+      <Formula expr={f.ex2} />
+      <p>The party gained <strong>6 percentage points</strong>. Saying "they gained 6%" would be ambiguous (it could mean their vote share became 32% × 1.06 = 33.9%, not 38%).</p>
+
+      <h3>Example 3: central bank fine-tuning</h3>
+      <p>The ECB raises rates from 4.25% to 4.50%.</p>
+      <Formula expr={f.ex3} />
+      <p>A 0.25 pp increase is the same as a <strong>25 basis point</strong> hike — the standard unit in bond markets and central banking.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>From (%)</th><th>To (%)</th><th>pp change</th><th>% change</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>5</td><td>8</td><td>+3 pp</td><td>+60%</td></tr>
+            <tr><td>32</td><td>38</td><td>+6 pp</td><td>+18.75%</td></tr>
+            <tr><td>20</td><td>25</td><td>+5 pp</td><td>+25%</td></tr>
+            <tr><td>4.25</td><td>4.50</td><td>+0.25 pp</td><td>+5.88%</td></tr>
+            <tr><td>10</td><td>7</td><td>−3 pp</td><td>−30%</td></tr>
+            <tr><td>50</td><td>45</td><td>−5 pp</td><td>−10%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="basis-points">Basis points and percentage points</h2>
+      <p>In fixed income, foreign exchange, and monetary policy, very small rate changes are expressed in <strong>basis points (bp)</strong> rather than percentage points to avoid writing many decimal places and to eliminate ambiguity:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Unit</th><th>In pp</th><th>In decimal</th><th>Common use</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 basis point (1 bp)</td><td>0.01 pp</td><td>0.0001</td><td>Interest rates, bond yields, spreads</td></tr>
+            <tr><td>25 bp</td><td>0.25 pp</td><td>0.0025</td><td>Typical central bank rate increment</td></tr>
+            <tr><td>50 bp</td><td>0.50 pp</td><td>0.0050</td><td>"Double hike" increment</td></tr>
+            <tr><td>100 bp</td><td>1.00 pp</td><td>0.0100</td><td>1 percentage point</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When a commentator says "the Fed hiked by 75 basis points," they mean the rate rose by 0.75 percentage points — from, say, 5.25% to 6.00%.</p>
+
+      <h2 id="when-to-use">When to say "percentage points"</h2>
+      <p>Use percentage points (pp) when:</p>
+      <ul>
+        <li>Both values are already percentages (rates, shares, proportions, yields)</li>
+        <li>You want to express the <em>absolute arithmetic gap</em> between them</li>
+        <li>Precision matters and "percent" would be ambiguous (political polling, medical statistics, financial rates)</li>
+      </ul>
+      <p>Use percent change when:</p>
+      <ul>
+        <li>You want to express how much one percentage grew or fell <em>relative to its prior value</em></li>
+        <li>Context is about proportional or multiplicative scaling</li>
+      </ul>
+      <p>In healthcare statistics, for instance: "the survival rate improved from 60% to 66%" is a <strong>6 pp improvement</strong>, but a <strong>10% increase</strong> in the survival rate. The pp framing is typically more informative and harder to misinterpret.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Saying "percent" when you mean "percentage points"</h3>
+      <p>The most frequent error: "unemployment fell 2%" when unemployment went from 7% to 5% — it fell 2 <em>percentage points</em>. Using "percent" here implies the rate fell from 7% to 7% × 0.98 = 6.86%, which is different. The word "percent" signals a relative change; "percentage points" signals an absolute one.</p>
+
+      <h3>Confusing basis points with percentage points</h3>
+      <p>1 basis point = 0.01 percentage points. A 50 bp cut and a 50 pp cut are vastly different: the former is a small 0.50 pp policy adjustment; the latter would be an extreme move that barely occurs in any real-world rate.</p>
+
+      <h3>Double-counting percentage stacks</h3>
+      <p>A 5 pp increase followed by a 3 pp decrease results in a net +2 pp change — not a +2% change in the additive sense. When combining successive percentage point changes, sum them arithmetically.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is a percentage point?</h3>
+      <p>A percentage point is the unit of arithmetic difference between two percentages. If a rate rises from 5% to 8%, it rose by 3 percentage points (not "3 percent").</p>
+
+      <h3>What is the difference between percentage points and percent change?</h3>
+      <p>Percentage points (pp) = A − B. Percent change = (A − B) / |B| × 100. The same move from 5% to 8% is both +3 pp and +60%. They measure different things: absolute gap vs. relative change.</p>
+
+      <h3>What is a basis point?</h3>
+      <p>1 basis point = 0.01 percentage points = 0.0001 in decimal. Central banks use basis points for interest rate adjustments (e.g. "25 bp hike" = 0.25 pp increase).</p>
+
+      <h3>Can percentage point difference be negative?</h3>
+      <p>Yes. If A is less than B, the pp difference is negative — indicating a decrease. For example, 5% − 8% = −3 pp.</p>
+
+      <h3>When should I say "percentage points" instead of "percent"?</h3>
+      <p>When both values are already percentages and you are describing their arithmetic difference. "Unemployment fell 2 percentage points" (from 7% to 5%) is precise. "Fell 2 percent" is ambiguous — it could mean a relative 2% fall from 7%, which would be 6.86%, not 5%.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/percentage-calculator',            blurb: 'The main percentage calculator — percentage of a number, increase, decrease, and more.' },
+        { path: '/math/percentage-calculator/change',     blurb: 'Percent change calculator — measures relative change from one value to another over time.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percent difference calculator — compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/increase',   blurb: 'Percent increase calculator — dedicated tool for positive percentage changes.' },
+        { path: '/math/percentage-calculator/decrease',   blurb: 'Percent decrease calculator — dedicated tool for negative percentage changes.' },
+        { path: '/math/percentage-calculator/percent-error', blurb: 'Percent error calculator — compare an experimental value to a known theoretical standard.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

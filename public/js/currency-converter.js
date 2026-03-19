@@ -109,7 +109,7 @@ function updateConversion() {
 
   document.getElementById('cc-result').value = fmt(amount * rate);
   document.getElementById('cc-rate').textContent = `1 ${from} = ${rate.toFixed(4)} ${to}`;
-  document.getElementById('cc-wise-msg').innerHTML = `Sending <strong>${from} to ${to}</strong>? You could save money with Wise!`;
+  document.getElementById('cc-wise-msg').innerHTML = `Sending <strong>${from} to ${to}</strong>? Your bank is likely charging more than it shows. But not Wise!`;
   setCookie('cc_from', from);
   setCookie('cc_to', to);
   setCookie('cc_amount', amount);
