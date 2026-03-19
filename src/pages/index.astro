@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getFrontPageGroups } from '../utils/getPages';
+import { getFrontPageGroups, siteToolCount } from '../utils/getPages';
 
 const groups      = getFrontPageGroups();
-const totalTools  = groups.reduce((n, g) => n + g.tools.length, 0);
 const totalGroups = groups.length;
 
 const features = [
@@ -44,7 +43,7 @@ const schema = [
       <section style="margin-bottom: 3rem;">
         <div class="hi-stats">
           <div class="hi-stat">
-            <div class="hi-stat-val">{totalTools}</div>
+            <div class="hi-stat-val">{siteToolCount}</div>
             <div class="hi-stat-lbl">Tools</div>
           </div>
           <div class="hi-stat">
@@ -63,7 +62,7 @@ const schema = [
               <span class="hi-group-label">{group.category}</span>
               {group.indexPath && (
                 <a href={group.indexPath} class="hi-group-link">
-                  See all {group.tools.length} →
+                  See all {group.totalCount} →
                 </a>
               )}
             </div>
@@ -98,7 +97,7 @@ const schema = [
 
       <div class="seo-container">
         <h2>Free Online Calculators for Health, Math & Conversions</h2>
-        <p>Calculations.tools is a free collection of {totalTools} calculators and converters across {totalGroups} categories. Every tool runs entirely in your browser — no registration, no data sent to any server, instant results as you type.</p>
+        <p>Calculations.tools is a free collection of {siteToolCount} calculators and converters across {totalGroups} categories. Every tool runs entirely in your browser — no registration, no data sent to any server, instant results as you type.</p>
 
         <h3>Health Calculators</h3>
         <p>The <a href="/health">health section</a> covers BMI, body composition, and fitness metrics. The <a href="/health/bmi-calculator">BMI Calculator</a> adds age and sex context, estimated body fat %, and a healthy weight range. Specialist variants cover <a href="/health/bmi-calculator/men">men</a>, <a href="/health/bmi-calculator/women">women</a>, <a href="/health/bmi-calculator/kids">children</a>, <a href="/health/bmi-calculator/teens">teenagers</a>, <a href="/health/bmi-calculator/seniors">seniors</a>, and <a href="/health/bmi-calculator/pregnancy">pregnancy</a>. Body composition tools include the <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a> (Boer, Hume, James formulas + FFMI), the <a href="/health/ffmi-calculator">FFMI Calculator</a>, the <a href="/health/body-fat-calculator">Body Fat Calculator</a> (US Navy tape method), and the <a href="/health/ideal-weight-calculator">Ideal Weight Calculator</a> (Devine, Robinson, Miller, Hamwi formulas).</p>

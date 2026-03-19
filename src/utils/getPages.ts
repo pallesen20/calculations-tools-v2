@@ -467,6 +467,8 @@ const entries: Entry[] = [
   },
 ];
 
+export const siteToolCount = entries.length;
+
 export function getPages(): PageMeta[] {
   return entries
     .map(({ path, icon, short, units, ...meta }) => ({
@@ -535,13 +537,13 @@ export function getHealthTools(): HealthToolMeta[] {
 }
 
 export interface FrontPageGroup {
-  category:  string;
-  indexPath: string | null;
-  tools:     HealthToolMeta[];
+  category:   string;
+  indexPath:  string | null;
+  tools:      HealthToolMeta[];
+  totalCount: number;
 }
 
 const FRONT_TOOL_CATEGORIES: Record<string, string> = {
-  '/math/percentage-calculator': 'Math',
   '/word-counter':               'Text & Writing',
   '/compare-text':               'Text & Writing',
   '/compare-text/compare-excel': 'Text & Writing',
@@ -557,14 +559,22 @@ const CATEGORY_INDEX: Record<string, string> = {
 
 const CATEGORY_ORDER = ['Health Calculators', 'Conversion Tools', 'Math', 'Text & Writing', 'Date & Time'];
 
+const CATEGORY_PREFIX: Record<string, string> = {
+  'Health Calculators': '/health/',
+  'Conversion Tools':   '/conversion/',
+  'Math':               '/math/',
+};
+
 export function getFrontPageGroups(): FrontPageGroup[] {
   const groupMap: Record<string, HealthToolMeta[]> = {};
   for (const e of entries) {
     let cat: string | null = null;
-    if (e.path.startsWith('/health/') && e.path !== '/health') {
+    if (e.path.startsWith('/health/') && e.path !== '/health' && !e.path.replace('/health/', '').includes('/')) {
       cat = 'Health Calculators';
-    } else if (e.path.startsWith('/conversion/')) {
+    } else if (e.path.startsWith('/conversion/') && e.path !== '/conversion' && !e.path.replace('/conversion/', '').includes('/')) {
       cat = 'Conversion Tools';
+    } else if (e.path.startsWith('/math/') && e.path !== '/math' && !e.path.replace('/math/', '').includes('/')) {
+      cat = 'Math';
     } else {
       cat = FRONT_TOOL_CATEGORIES[e.path] ?? null;
     }
@@ -580,11 +590,18 @@ export function getFrontPageGroups(): FrontPageGroup[] {
   }
   return CATEGORY_ORDER
     .filter(cat => groupMap[cat])
-    .map(cat => ({
-      category:  cat,
-      indexPath: CATEGORY_INDEX[cat] ?? null,
-      tools:     groupMap[cat],
-    }));
+    .map(cat => {
+      const prefix = CATEGORY_PREFIX[cat];
+      const totalCount = prefix
+        ? entries.filter(e => e.path.startsWith(prefix)).length
+        : groupMap[cat].length;
+      return {
+        category:   cat,
+        indexPath:  CATEGORY_INDEX[cat] ?? null,
+        tools:      groupMap[cat],
+        totalCount,
+      };
+    });
 }
 
 /** Returns icon, display title, and description for a given path — used by RelatedTools component. */
