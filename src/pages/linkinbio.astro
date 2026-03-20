@@ -27,7 +27,7 @@ function hubLabel(category: string): string {
       {groups.map(group => (
         <div class="lib-section">
           {group.indexPath ? (
-            <a href={group.indexPath} class="lib-card lib-card--hub no-underline">
+            <a href={group.indexPath} class="lib-card lib-card--hub">
               <span class="lib-icon">{group.tools[0]?.icon}</span>
               <span class="lib-label">{hubLabel(group.category)}</span>
               <span class="lib-arrow">→</span>
@@ -36,7 +36,7 @@ function hubLabel(category: string): string {
             <>
               <div class="lib-group-label">{group.category}</div>
               {group.tools.map(tool => (
-                <a href={tool.path} class="lib-card no-underline">
+                <a href={tool.path} class="lib-card">
                   <span class="lib-icon">{tool.icon}</span>
                   <span class="lib-label">{tool.title}</span>
                   <span class="lib-arrow">→</span>
