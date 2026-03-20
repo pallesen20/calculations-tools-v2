@@ -1,0 +1,223 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  def:      "$$\\varphi = \\frac{1 + \\sqrt{5}}{2} \\approx 1.6180339887\\ldots$$",
+  property: "$$\\frac{a+b}{a} = \\frac{a}{b} = \\varphi$$",
+  quadratic:"$$\\varphi^2 = \\varphi + 1$$",
+  reciprocal:"$$\\frac{1}{\\varphi} = \\varphi - 1 \\approx 0.6180\\ldots$$",
+  longer:   "$$b = \\frac{a}{\\varphi}, \\quad a + b = a \\times \\varphi$$",
+  fib:      "$$\\frac{F_{n+1}}{F_n} \\to \\varphi \\text{ as } n \\to \\infty$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'definition',   label: 'What is the golden ratio?' },
+  { id: 'formula',      label: 'Formula & properties' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'fibonacci',    label: 'Connection to Fibonacci' },
+  { id: 'applications', label: 'Applications in design & art' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Golden Ratio Calculator",
+    "url": "https://calculations.tools/math/ratio-calculator/golden-ratio",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate golden ratio dimensions from any input. Find the longer side, shorter side, or total length based on φ ≈ 1.618, with applications in design and architecture.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the golden ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The golden ratio φ (phi) ≈ 1.6180339887 is an irrational number with the property that (a+b)/a = a/b = φ. It appears in geometry, art, architecture, and nature. Derived from the quadratic equation φ² = φ + 1." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate golden ratio dimensions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "If you know the longer side (a): shorter side = a ÷ φ ≈ a ÷ 1.618. If you know the shorter side (b): longer side = b × φ. If you know the total (a+b): longer side = total ÷ φ." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the golden ratio in simple terms?",
+        "acceptedAnswer": { "@type": "Answer", "text": "If you split a line segment into two parts (a and b) so that the total length divided by the longer part equals the longer part divided by the shorter part, you have the golden ratio. The value of that ratio is φ ≈ 1.618." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Golden Ratio Calculator"
+  metaTitle="Golden Ratio Calculator | φ ≈ 1.618 Dimensions"
+  description="Calculate golden ratio dimensions from any input. Enter the longer side, shorter side, or total length to find all three values based on φ ≈ 1.618."
+  canonical="https://calculations.tools/math/ratio-calculator/golden-ratio"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="golden-ratio-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Golden Ratio Dimensions</h2>
+          <p>φ ≈ 1.618 — enter one dimension to find the others</p>
+        </div>
+
+        <div class="gr-modes">
+          <button class="gr-mode-btn active" data-mode="longer">I know the longer side</button>
+          <button class="gr-mode-btn" data-mode="shorter">I know the shorter side</button>
+          <button class="gr-mode-btn" data-mode="total">I know the total length</button>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="gr-input">Value</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="gr-input" class="bmi-input" placeholder="e.g. 100" />
+          </div>
+        </div>
+
+        <div id="gr-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="gr-longer">—</div>
+              <div class="lbm-card-lbl">Longer side (a)</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="gr-shorter">—</div>
+              <div class="lbm-card-lbl">Shorter side (b)</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="gr-total">—</div>
+              <div class="lbm-card-lbl">Total (a + b)</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="gr-ratio">—</div>
+              <div class="lbm-card-lbl">a/b (≈ 1.618)</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">φ value</span>
+              <span class="pi-step-val" id="gr-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Results</span>
+              <span class="pi-step-val" id="gr-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>
+      .gr-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
+      .gr-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
+      .gr-mode-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
+    </style>
+
+    <script src="/js/golden-ratio-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>The golden ratio φ ≈ <strong>1.6180339887…</strong> A line split in golden ratio: longer part ÷ shorter part = total ÷ longer part = φ. Given the longer side a: shorter side = a ÷ 1.618, total = a × 1.618.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Select whether you know the longer side, the shorter side, or the total length. Enter the value. The calculator returns all three dimensions (longer, shorter, total) and the actual ratio a/b to confirm it equals φ.</p>
+
+      <h2 id="definition">What is the golden ratio?</h2>
+      <p>The golden ratio φ (phi) is an irrational number approximately equal to 1.618. It is defined by the proportion:</p>
+      <Formula expr={f.property} />
+      <p>A line segment divided into two parts (a and b, where a > b) exhibits the golden ratio when the ratio of the total length to the longer part equals the ratio of the longer part to the shorter part.</p>
+
+      <h2 id="formula">Formula and properties</h2>
+      <p>The exact value is:</p>
+      <Formula expr={f.def} />
+      <p>Key property: φ² = φ + 1 (the only positive number whose square equals itself plus 1):</p>
+      <Formula expr={f.quadratic} />
+      <p>Its reciprocal: 1/φ = φ − 1 ≈ 0.618:</p>
+      <Formula expr={f.reciprocal} />
+      <p>Given the longer side a:</p>
+      <Formula expr={f.longer} />
+
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Known</th><th>Longer (a)</th><th>Shorter (b)</th><th>Total (a+b)</th></tr></thead>
+          <tbody>
+            <tr><td>Longer = 100</td><td>100</td><td>61.803</td><td>161.803</td></tr>
+            <tr><td>Shorter = 100</td><td>161.803</td><td>100</td><td>261.803</td></tr>
+            <tr><td>Total = 100</td><td>61.803</td><td>38.197</td><td>100</td></tr>
+            <tr><td>Longer = 1920 (HD width)</td><td>1920</td><td>1186.6</td><td>3106.6</td></tr>
+            <tr><td>Longer = 210 (A4 width mm)</td><td>210</td><td>129.8</td><td>339.8</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="fibonacci">Connection to Fibonacci numbers</h2>
+      <p>The Fibonacci sequence (1, 1, 2, 3, 5, 8, 13, 21, 34, 55…) converges to φ through its consecutive ratios:</p>
+      <Formula expr={f.fib} />
+      <p>5/3 = 1.667, 8/5 = 1.6, 13/8 = 1.625, 21/13 = 1.615, 55/34 = 1.6176. The ratios oscillate above and below φ, converging exponentially fast. This is why φ appears in sunflower seed spirals, nautilus shells, and plant leaf arrangements — all governed by Fibonacci-type growth.</p>
+
+      <h2 id="applications">Applications in design and art</h2>
+      <p>φ is used as a proportional guideline in visual design, architecture, and typography — not as a rigid rule, but as a ratio that many people perceive as naturally balanced.</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Domain</th><th>Application</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Logo design</td><td>Element proportions</td><td>Width:height = φ</td></tr>
+            <tr><td>Typography</td><td>Body text : heading</td><td>16 px body → 25.9 px heading</td></tr>
+            <tr><td>Photography</td><td>Rule of thirds variant</td><td>Horizon at 61.8% from edge</td></tr>
+            <tr><td>Architecture</td><td>Facade proportions</td><td>Height:width = φ</td></tr>
+            <tr><td>Web design</td><td>Sidebar:content ratio</td><td>38%:62% column split</td></tr>
+            <tr><td>UI spacing</td><td>Padding scale</td><td>8 px, 12.9 px, 20.9 px…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Note: the claim that the Parthenon, Mona Lisa, or pyramids were designed using φ is disputed by modern scholars — the ratios are approximate and may be coincidental. φ is a useful design guide but not a mystical law.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is the golden ratio?</h3>
+      <p>φ ≈ 1.6180339887. The unique ratio where (a+b)/a = a/b. Irrational, with φ² = φ + 1.</p>
+
+      <h3>How do you calculate golden ratio dimensions?</h3>
+      <p>Given longer side a: shorter = a ÷ φ, total = a × φ. Given shorter b: longer = b × φ. Given total: longer = total ÷ φ.</p>
+
+      <h3>What is the golden ratio in simple terms?</h3>
+      <p>Split a line so that the ratio of the whole to the longer part equals the ratio of the longer part to the shorter part. That ratio is φ ≈ 1.618.</p>
+
+      <h3>What is 1/φ?</h3>
+      <p>1/φ = φ − 1 ≈ 0.6180. This means the shorter part is ≈ 61.8% of the longer part.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/ratio-calculator',              blurb: 'Simplify and scale any ratio with step-by-step GCD workings.' },
+        { path: '/math/ratio-calculator/proportion',   blurb: 'Solve a:b = c:d for the missing value.' },
+        { path: '/math/ratio-calculator/unit-rate',    blurb: 'Calculate the rate per single unit.' },
+        { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions to determine which is larger.' },
+        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, increase, decrease.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

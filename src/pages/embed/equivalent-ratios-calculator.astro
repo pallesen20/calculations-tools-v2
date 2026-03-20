@@ -1,0 +1,77 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Equivalent Ratios Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Equivalent Ratios Calculator</h2>
+        <p>Simplify and generate equivalent ratios</p>
+      </div>
+
+      <div class="ratio-row">
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="er-a">First value (a)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="er-a" class="bmi-input" placeholder="e.g. 6" />
+          </div>
+        </div>
+        <div class="ratio-colon">:</div>
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="er-b">Second value (b)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="er-b" class="bmi-input" placeholder="e.g. 9" />
+          </div>
+        </div>
+      </div>
+
+      <div id="er-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="er-simplified">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Simplified ratio</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="er-gcd">—</div>
+            <div class="lbm-card-lbl">GCD</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="er-decimal">—</div>
+            <div class="lbm-card-lbl">Decimal (a÷b)</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">GCD</span>
+            <span class="pi-step-val" id="er-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Simplify</span>
+            <span class="pi-step-val" id="er-step2">—</span>
+          </div>
+        </div>
+
+        <div style="margin-top:1rem;">
+          <div class="pi-steps-title">Equivalent ratios table</div>
+          <div class="responsive-table">
+            <table>
+              <thead><tr><th>×</th><th>Ratio</th><th>A</th><th>B</th></tr></thead>
+              <tbody id="er-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .ratio-row   { display:flex; align-items:flex-end; gap:0.5rem; }
+    .ratio-colon { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); padding-bottom:0.75rem; }
+  </style>
+
+  <script src="/js/equivalent-ratios-calculator.js" is:inline></script>
+</EmbedLayout>

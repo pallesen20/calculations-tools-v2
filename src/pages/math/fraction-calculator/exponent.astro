@@ -1,0 +1,249 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  wholePos:  "$$\\left(\\frac{a}{b}\\right)^n = \\frac{a^n}{b^n}$$",
+  wholeNeg:  "$$\\left(\\frac{a}{b}\\right)^{-n} = \\left(\\frac{b}{a}\\right)^n = \\frac{b^n}{a^n}$$",
+  fracExp:   "$$\\left(\\frac{a}{b}\\right)^{p/q} = \\sqrt[q]{\\left(\\frac{a}{b}\\right)^p} = \\frac{\\sqrt[q]{a^p}}{\\sqrt[q]{b^p}}$$",
+  half:      "$$\\left(\\frac{a}{b}\\right)^{1/2} = \\sqrt{\\frac{a}{b}} = \\frac{\\sqrt{a}}{\\sqrt{b}}$$",
+  ex1:       "$$\\left(\\frac{3}{4}\\right)^2 = \\frac{3^2}{4^2} = \\frac{9}{16}$$",
+  ex2:       "$$\\left(\\frac{2}{3}\\right)^{-1} = \\frac{3}{2}$$",
+  ex3:       "$$\\left(\\frac{4}{9}\\right)^{1/2} = \\frac{\\sqrt{4}}{\\sqrt{9}} = \\frac{2}{3}$$",
+  ex4:       "$$\\left(\\frac{8}{27}\\right)^{2/3} = \\left(\\frac{\\sqrt[3]{8}}{\\sqrt[3]{27}}\\right)^2 = \\left(\\frac{2}{3}\\right)^2 = \\frac{4}{9}$$",
+  zero:      "$$\\left(\\frac{a}{b}\\right)^0 = 1 \\quad (a \\neq 0)$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'whole-pos',    label: 'Positive whole exponent' },
+  { id: 'whole-neg',    label: 'Negative exponent' },
+  { id: 'frac-exp',     label: 'Fractional exponent (roots)' },
+  { id: 'zero-exp',     label: 'Zero exponent' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fraction Exponent Calculator",
+    "url": "https://calculations.tools/math/fraction-calculator/exponent",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Raise any fraction to a whole number or fractional exponent. Shows step-by-step workings, the simplified fraction result, and decimal equivalent.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you raise a fraction to a power?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Raise both the numerator and denominator to that power separately. (a/b)^n = a^n / b^n. For example, (3/4)^2 = 9/16. Then simplify the result if possible." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does a fractional exponent mean?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A fractional exponent p/q means raise to the p power and take the q-th root. (a/b)^(p/q) = (q-th root of a^p) / (q-th root of b^p). For example, (4/9)^(1/2) = √4 / √9 = 2/3. The exponent 1/2 means square root, 1/3 means cube root." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is (2/3)^3?",
+        "acceptedAnswer": { "@type": "Answer", "text": "(2/3)^3 = 2^3 / 3^3 = 8/27. Raise each part of the fraction to the power separately." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a negative fraction exponent?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A negative exponent means take the reciprocal first. (a/b)^(-n) = (b/a)^n. For example, (3/4)^(-2) = (4/3)^2 = 16/9." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Fraction Exponent Calculator"
+  metaTitle="Fraction Exponent Calculator | (a/b)^n Step-by-Step"
+  description="Raise any fraction to a whole number or fractional exponent. See the simplified result, decimal equivalent, and step-by-step workings."
+  canonical="https://calculations.tools/math/fraction-calculator/exponent"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="fraction-exponent-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Fractional Exponent</h2>
+          <p>Raise a fraction to a whole or fractional exponent</p>
+        </div>
+
+        <div class="fe-layout">
+          <div class="fe-group">
+            <div class="bmi-label" style="text-align:center;margin-bottom:0.4rem;">Base</div>
+            <div class="fc-fraction">
+              <input type="text" inputmode="decimal" id="fe-base-n" class="fc-frac-input" placeholder="3" />
+              <div class="fc-bar"></div>
+              <input type="text" inputmode="decimal" id="fe-base-d" class="fc-frac-input" placeholder="4" />
+            </div>
+          </div>
+          <div class="fe-caret">^</div>
+          <div class="fe-group">
+            <div class="bmi-label" style="text-align:center;margin-bottom:0.4rem;">Exponent</div>
+            <div class="fc-fraction">
+              <input type="text" inputmode="decimal" id="fe-exp-n" class="fc-frac-input" placeholder="2" />
+              <div class="fc-bar"></div>
+              <input type="text" inputmode="decimal" id="fe-exp-d" class="fc-frac-input" placeholder="1" />
+            </div>
+          </div>
+        </div>
+
+        <div id="fe-result" class="lbm-result hidden">
+          <div class="fc-result-fraction">
+            <span id="fe-res-n" class="fc-res-num">—</span>
+            <div class="fc-res-bar" id="fe-res-bar"></div>
+            <span id="fe-res-d" class="fc-res-den"></span>
+          </div>
+          <div class="lbm-primary-lbl">Result</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fe-decimal">—</div>
+              <div class="lbm-card-lbl">Decimal</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1</span>
+              <span class="pi-step-val" id="fe-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2</span>
+              <span class="pi-step-val" id="fe-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>
+      .fe-layout { display:flex; align-items:center; gap:0.75rem; justify-content:center; margin:1rem 0; }
+      .fe-group  { display:flex; flex-direction:column; align-items:center; }
+      .fe-caret  { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); margin-top:1.2rem; }
+    </style>
+
+    <script src="/js/fraction-exponent-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>To raise a fraction to a power: <strong>apply the exponent to numerator and denominator separately</strong>. (a/b)ⁿ = aⁿ/bⁿ. For fractional exponents, p/q means the q-th root of the p-th power. Negative exponents flip the fraction first.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the base fraction (numerator and denominator) and the exponent as a fraction (for a whole exponent like 3, enter 3 and 1). The calculator returns the simplified result, the decimal value, and step-by-step workings.</p>
+
+      <h2 id="whole-pos">Positive whole exponent</h2>
+      <p>The rule: raise both numerator and denominator to the same power.</p>
+      <Formula expr={f.wholePos} />
+      <Formula expr={f.ex1} />
+      <p>This works because (a/b)^n means multiplying the fraction by itself n times: (a/b)×(a/b)×…×(a/b). The numerators multiply to give a^n and the denominators multiply to give b^n.</p>
+
+      <h2 id="whole-neg">Negative exponent</h2>
+      <p>A negative exponent means take the reciprocal, then apply the positive exponent:</p>
+      <Formula expr={f.wholeNeg} />
+      <Formula expr={f.ex2} />
+      <p>(2/3)^−1 = 3/2. (3/4)^−2 = (4/3)^2 = 16/9. The negative sign in the exponent always means "flip the fraction first."</p>
+
+      <h2 id="frac-exp">Fractional exponent (roots)</h2>
+      <p>A fractional exponent p/q combines a power (p) and a root (q):</p>
+      <Formula expr={f.fracExp} />
+      <p>The exponent 1/2 is the square root, 1/3 is the cube root, and so on:</p>
+      <Formula expr={f.half} />
+      <Formula expr={f.ex3} />
+      <p>For a combined power and root:</p>
+      <Formula expr={f.ex4} />
+      <p>(8/27)^(2/3): find the cube root of each part first (2/3), then square: 4/9.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Fractional exponent</th><th>Meaning</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>1/2</td><td>Square root</td><td>(4/9)^(1/2) = 2/3</td></tr>
+            <tr><td>1/3</td><td>Cube root</td><td>(8/27)^(1/3) = 2/3</td></tr>
+            <tr><td>1/n</td><td>n-th root</td><td>(a/b)^(1/n) = ⁿ√(a/b)</td></tr>
+            <tr><td>2/3</td><td>Cube root, then square</td><td>(8/27)^(2/3) = 4/9</td></tr>
+            <tr><td>3/2</td><td>Square root, then cube</td><td>(4/9)^(3/2) = 8/27</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="zero-exp">Zero exponent</h2>
+      <p>Any non-zero fraction raised to the power 0 equals 1:</p>
+      <Formula expr={f.zero} />
+      <p>This follows from the exponent rule: a^n / a^n = 1 = a^(n−n) = a^0.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: (2/5)^3</h3>
+      <p>Raise each part to the 3rd power: 2^3 = 8, 5^3 = 125. Result: 8/125. Decimal: 0.064.</p>
+
+      <h3>Example 2: (3/4)^−2</h3>
+      <p>Negative exponent → flip: (4/3)^2 = 16/9 = 1.777…</p>
+
+      <h3>Example 3: (1/4)^(1/2)</h3>
+      <p>Square root: √1/√4 = 1/2. Decimal: 0.5.</p>
+
+      <h3>Example 4: (27/8)^(2/3)</h3>
+      <p>Cube root first: ∛27/∛8 = 3/2. Then square: (3/2)^2 = 9/4 = 2.25.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Applying the exponent only to the numerator</h3>
+      <p>(3/4)^2 ≠ 9/4. The exponent applies to both parts: 3^2 = 9 and 4^2 = 16, so (3/4)^2 = 9/16.</p>
+
+      <h3>Misinterpreting a fractional exponent as a fraction</h3>
+      <p>(4/9)^(1/2) is NOT the same as (4/9) × (1/2) = 2/9. The exponent 1/2 means square root: √4/√9 = 2/3.</p>
+
+      <h3>Forgetting to simplify the result</h3>
+      <p>After raising to a power, always simplify the resulting fraction with the GCD. (6/10)^2 = 36/100 → GCD = 4 → 9/25.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you raise a fraction to a power?</h3>
+      <p>Apply the exponent to both numerator and denominator separately. (a/b)^n = a^n / b^n. Simplify the result.</p>
+
+      <h3>What does a fractional exponent mean?</h3>
+      <p>p/q means raise to the p-th power and take the q-th root. (a/b)^(1/2) = square root, (a/b)^(1/3) = cube root.</p>
+
+      <h3>What is (2/3)^3?</h3>
+      <p>2^3 / 3^3 = 8/27 ≈ 0.296.</p>
+
+      <h3>What is a negative fraction exponent?</h3>
+      <p>Take the reciprocal first: (a/b)^(−n) = (b/a)^n. Example: (3/4)^(−2) = (4/3)^2 = 16/9.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/fraction-calculator',                      blurb: 'Add, subtract, multiply, or divide any two fractions.' },
+        { path: '/math/fraction-calculator/simplify',             blurb: 'Reduce any fraction to its lowest terms.' },
+        { path: '/math/fraction-calculator/multiply',             blurb: 'Multiply two fractions with step-by-step workings.' },
+        { path: '/math/fraction-calculator/fraction-to-decimal',  blurb: 'Convert any fraction to its decimal form.' },
+        { path: '/math/fraction-calculator/improper-to-mixed',    blurb: 'Convert an improper fraction to a mixed number.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

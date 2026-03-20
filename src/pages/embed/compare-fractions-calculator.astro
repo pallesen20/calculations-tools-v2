@@ -1,0 +1,82 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Compare Fractions Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Compare Fractions</h2>
+        <p>Enter two fractions to see which is larger</p>
+      </div>
+
+      <div class="cf-inputs">
+        <div class="cf-side">
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="cf-n1" class="fc-frac-input" placeholder="3" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="cf-d1" class="fc-frac-input" placeholder="4" />
+          </div>
+        </div>
+        <div class="cf-vs">vs</div>
+        <div class="cf-side">
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="cf-n2" class="fc-frac-input" placeholder="2" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="cf-d2" class="fc-frac-input" placeholder="3" />
+          </div>
+        </div>
+      </div>
+
+      <div id="cf-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="cf-symbol">—</span>
+        </div>
+        <div class="lbm-primary-lbl" id="cf-label">—</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="cf-dec1">—</div>
+            <div class="lbm-card-lbl">First as decimal</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="cf-dec2">—</div>
+            <div class="lbm-card-lbl">Second as decimal</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Cross-multiplication (step-by-step)</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — First × second denom</span>
+            <span class="pi-step-val" id="cf-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — Second × first denom</span>
+            <span class="pi-step-val" id="cf-step2">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Common denominator (LCD)</span>
+            <span class="pi-step-val" id="cf-lcd">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">First fraction (LCD form)</span>
+            <span class="pi-step-val" id="cf-equiv1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Second fraction (LCD form)</span>
+            <span class="pi-step-val" id="cf-equiv2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .cf-inputs { display: flex; align-items: center; gap: 1rem; justify-content: center; margin: 1.25rem 0; }
+    .cf-side   { display: flex; align-items: center; justify-content: center; }
+    .cf-vs     { font-size: 1rem; font-weight: 600; color: rgba(255,255,255,0.5); }
+  </style>
+
+  <script src="/js/compare-fractions-calculator.js" is:inline></script>
+</EmbedLayout>

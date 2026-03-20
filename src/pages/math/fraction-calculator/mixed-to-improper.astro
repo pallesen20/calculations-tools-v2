@@ -1,0 +1,222 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  formula: "$$w\\frac{n}{d} = \\frac{w \\times d + n}{d}$$",
+  ex1:     "$$2\\frac{3}{4} = \\frac{2 \\times 4 + 3}{4} = \\frac{11}{4}$$",
+  ex2:     "$$3\\frac{1}{3} = \\frac{3 \\times 3 + 1}{3} = \\frac{10}{3}$$",
+  neg:     "$$-1\\frac{2}{5} = -\\frac{1 \\times 5 + 2}{5} = -\\frac{7}{5}$$",
+  why:     "$$2\\frac{3}{4} = 2 + \\frac{3}{4} = \\frac{8}{4} + \\frac{3}{4} = \\frac{11}{4}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'formula',      label: 'Conversion formula' },
+  { id: 'why',          label: 'Why the formula works' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'negative',     label: 'Negative mixed numbers' },
+  { id: 'reference',    label: 'Reference table' },
+  { id: 'when-needed',  label: 'When you need this conversion' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Mixed Number to Improper Fraction Calculator",
+    "url": "https://calculations.tools/math/fraction-calculator/mixed-to-improper",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Convert any mixed number to an improper fraction instantly. Multiplies the whole number by the denominator, adds the numerator, and shows the step-by-step conversion.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert a mixed number to an improper fraction",
+    "description": "Convert a mixed number to an improper fraction in two steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Multiply the whole number by the denominator", "text": "Multiply the whole number part by the fraction's denominator to find how many parts the whole number contains." },
+      { "@type": "HowToStep", "position": 2, "name": "Add the numerator", "text": "Add the original numerator to the result from step 1. This total becomes the new numerator. The denominator stays the same." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you convert a mixed number to an improper fraction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the whole number by the denominator, then add the numerator. The result is the new numerator; the denominator stays unchanged. For 2¾: (2 × 4) + 3 = 11, so 2¾ = 11/4." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 3½ as an improper fraction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "3½ = 7/2. Calculation: (3 × 2) + 1 = 7, denominator stays 2." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do you need to convert mixed numbers to improper fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Arithmetic with mixed numbers (adding, subtracting, multiplying, dividing) is easier and less error-prone when both numbers are in improper fraction form. You then apply the standard fraction operation and convert back to a mixed number if needed." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Mixed Number to Improper Fraction Calculator"
+  metaTitle="Mixed Number to Improper Fraction | Step-by-Step"
+  description="Convert any mixed number to an improper fraction instantly. Multiplies the whole number by the denominator, adds the numerator, and shows every step."
+  canonical="https://calculations.tools/math/fraction-calculator/mixed-to-improper"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="mixed-to-improper-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Mixed Number to Improper Fraction</h2>
+          <p>Enter a mixed number to convert it to an improper fraction</p>
+        </div>
+
+        <div class="mti-layout">
+          <div class="bmi-field" style="flex:0 0 80px;">
+            <label class="bmi-label" for="mti-w">Whole</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="mti-w" class="bmi-input" placeholder="2" />
+            </div>
+          </div>
+          <div style="padding-top:1.8rem; color:rgba(255,255,255,0.5); font-size:1.2rem;">+</div>
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" style="text-align:center;">Fraction</label>
+            <div class="fc-fraction">
+              <input type="text" inputmode="decimal" id="mti-n" class="fc-frac-input" placeholder="3" />
+              <div class="fc-bar"></div>
+              <input type="text" inputmode="decimal" id="mti-d" class="fc-frac-input" placeholder="4" />
+            </div>
+          </div>
+        </div>
+
+        <div id="mti-result" class="lbm-result hidden">
+          <div class="fc-result-fraction">
+            <span id="mti-res-n" class="fc-res-num">—</span>
+            <div class="fc-res-bar"></div>
+            <span id="mti-res-d" class="fc-res-den">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Improper fraction</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="mti-decimal">—</div>
+              <div class="lbm-card-lbl">Decimal</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1 — Multiply whole × denom</span>
+              <span class="pi-step-val" id="mti-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2 — Add numerator</span>
+              <span class="pi-step-val" id="mti-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>
+      .mti-layout { display:flex; align-items:flex-end; gap:0.75rem; margin:1rem 0; }
+    </style>
+
+    <script src="/js/mixed-to-improper-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>To convert a mixed number to an improper fraction: <strong>whole × denominator + numerator</strong>, over the same denominator. For 2¾: (2 × 4) + 3 = 11 → <strong>11/4</strong>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the whole number, numerator, and denominator of the mixed number. The calculator returns the improper fraction, decimal value, and step-by-step conversion.</p>
+
+      <h2 id="formula">Conversion formula</h2>
+      <Formula expr={f.formula} />
+      <p>The denominator is unchanged. The new numerator is the whole number multiplied by the denominator, plus the original numerator.</p>
+
+      <h2 id="why">Why the formula works</h2>
+      <p>A mixed number is a whole number plus a fraction. To write the whole part as a fraction with the same denominator, multiply the whole by d/d (which equals 1):</p>
+      <Formula expr={f.why} />
+      <p>2 = 8/4 (since 2 × 4/4 = 8/4). Add 3/4: 8/4 + 3/4 = 11/4. The formula shortcut skips the intermediate step.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: 2¾</h3>
+      <Formula expr={f.ex1} />
+      <p>(2 × 4) + 3 = 11. Improper fraction: 11/4. Decimal: 2.75.</p>
+
+      <h3>Example 2: 3⅓</h3>
+      <Formula expr={f.ex2} />
+      <p>(3 × 3) + 1 = 10. Improper fraction: 10/3. Decimal: 3.333…</p>
+
+      <h3>Example 3: 5 2/7</h3>
+      <p>(5 × 7) + 2 = 37. Improper fraction: 37/7. Decimal: 5.2857…</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Mixed number</th><th>Whole × denom</th><th>+ numerator</th><th>Improper fraction</th></tr></thead>
+          <tbody>
+            <tr><td>1½</td><td>1 × 2 = 2</td><td>2 + 1 = 3</td><td>3/2</td></tr>
+            <tr><td>2⅓</td><td>2 × 3 = 6</td><td>6 + 1 = 7</td><td>7/3</td></tr>
+            <tr><td>3¾</td><td>3 × 4 = 12</td><td>12 + 3 = 15</td><td>15/4</td></tr>
+            <tr><td>4 2/5</td><td>4 × 5 = 20</td><td>20 + 2 = 22</td><td>22/5</td></tr>
+            <tr><td>1 5/6</td><td>1 × 6 = 6</td><td>6 + 5 = 11</td><td>11/6</td></tr>
+            <tr><td>2 7/8</td><td>2 × 8 = 16</td><td>16 + 7 = 23</td><td>23/8</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="negative">Negative mixed numbers</h2>
+      <p>Apply the negative sign to the entire result after converting the absolute value:</p>
+      <Formula expr={f.neg} />
+      <p>−1 2/5: (1 × 5) + 2 = 7 → −7/5. The negative sign applies to the whole mixed number, not just the whole-number part.</p>
+
+      <h2 id="when-needed">When you need this conversion</h2>
+      <p>Converting to improper fractions is required before performing arithmetic on mixed numbers. To add 1½ + 2⅓, convert both to improper fractions (3/2 and 7/3), find the LCD (6), add (9/6 + 14/6 = 23/6), then convert back (3⅚). Operating directly on the mixed number parts is error-prone when the fractional sum exceeds 1.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you convert a mixed number to an improper fraction?</h3>
+      <p>Multiply the whole number by the denominator, then add the numerator. The result is the new numerator; the denominator stays the same.</p>
+
+      <h3>What is 3½ as an improper fraction?</h3>
+      <p>7/2. Calculation: (3 × 2) + 1 = 7. Denominator stays 2.</p>
+
+      <h3>Why convert mixed numbers to improper fractions?</h3>
+      <p>Arithmetic (add, subtract, multiply, divide) is more straightforward in improper fraction form. Convert first, operate, then convert the result back if a mixed number is preferred.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/fraction-calculator/improper-to-mixed',   blurb: 'Reverse: convert an improper fraction to a mixed number.' },
+        { path: '/math/fraction-calculator/mixed-number',        blurb: 'Add, subtract, multiply, or divide mixed numbers.' },
+        { path: '/math/fraction-calculator/add',                 blurb: 'Add two fractions step by step.' },
+        { path: '/math/fraction-calculator/simplify',            blurb: 'Reduce any fraction to lowest terms.' },
+        { path: '/math/fraction-calculator',                     blurb: 'The main fraction calculator — all four operations.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

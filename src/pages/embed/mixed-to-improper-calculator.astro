@@ -1,0 +1,66 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Mixed Number to Improper Fraction — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Mixed Number to Improper Fraction</h2>
+        <p>Enter a mixed number to convert it to an improper fraction</p>
+      </div>
+
+      <div class="mti-layout">
+        <div class="bmi-field" style="flex:0 0 80px;">
+          <label class="bmi-label" for="mti-w">Whole</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="mti-w" class="bmi-input" placeholder="2" />
+          </div>
+        </div>
+        <div style="padding-top:1.8rem; color:rgba(255,255,255,0.5); font-size:1.2rem;">+</div>
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" style="text-align:center;">Fraction</label>
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="mti-n" class="fc-frac-input" placeholder="3" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="mti-d" class="fc-frac-input" placeholder="4" />
+          </div>
+        </div>
+      </div>
+
+      <div id="mti-result" class="lbm-result hidden">
+        <div class="fc-result-fraction">
+          <span id="mti-res-n" class="fc-res-num">—</span>
+          <div class="fc-res-bar"></div>
+          <span id="mti-res-d" class="fc-res-den">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Improper fraction</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="mti-decimal">—</div>
+            <div class="lbm-card-lbl">Decimal</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — Multiply whole × denom</span>
+            <span class="pi-step-val" id="mti-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — Add numerator</span>
+            <span class="pi-step-val" id="mti-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .mti-layout { display:flex; align-items:flex-end; gap:0.75rem; margin:1rem 0; }
+  </style>
+
+  <script src="/js/mixed-to-improper-calculator.js" is:inline></script>
+</EmbedLayout>

@@ -1,0 +1,221 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  toImp:  "$$w\\frac{n}{d} = \\frac{w \\times d + n}{d}$$",
+  add:    "$$1\\frac{1}{3} + 2\\frac{1}{4}: \\quad \\frac{4}{3} + \\frac{9}{4} = \\frac{16}{12} + \\frac{27}{12} = \\frac{43}{12} = 3\\frac{7}{12}$$",
+  sub:    "$$3\\frac{1}{2} - 1\\frac{2}{3}: \\quad \\frac{7}{2} - \\frac{5}{3} = \\frac{21}{6} - \\frac{10}{6} = \\frac{11}{6} = 1\\frac{5}{6}$$",
+  mul:    "$$2\\frac{1}{2} \\times 1\\frac{1}{3}: \\quad \\frac{5}{2} \\times \\frac{4}{3} = \\frac{20}{6} = \\frac{10}{3} = 3\\frac{1}{3}$$",
+  div:    "$$2\\frac{1}{2} \\div 1\\frac{1}{4}: \\quad \\frac{5}{2} \\div \\frac{5}{4} = \\frac{5}{2} \\times \\frac{4}{5} = \\frac{20}{10} = 2$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'method',       label: 'The conversion method' },
+  { id: 'adding',       label: 'Adding mixed numbers' },
+  { id: 'subtracting',  label: 'Subtracting mixed numbers' },
+  { id: 'multiplying',  label: 'Multiplying mixed numbers' },
+  { id: 'dividing',     label: 'Dividing mixed numbers' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Mixed Number Calculator",
+    "url": "https://calculations.tools/math/fraction-calculator/mixed-number",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Add, subtract, multiply, or divide any two mixed numbers. Converts to improper fractions, performs the operation, simplifies, and shows step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you add mixed numbers?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Convert each mixed number to an improper fraction. Find the LCD of the denominators. Convert both fractions to the LCD, add the numerators, and simplify. Convert back to a mixed number. For example, 1⅓ + 2¼: convert to 4/3 and 9/4, find LCD 12, add 16/12 + 27/12 = 43/12 = 3 7/12." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you multiply mixed numbers?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Convert each mixed number to an improper fraction, then multiply numerator by numerator and denominator by denominator. Simplify and convert back. For example, 2½ × 1⅓ = 5/2 × 4/3 = 20/6 = 10/3 = 3⅓." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you add mixed numbers without converting to improper fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "You can add the whole parts and fractional parts separately, but if the fractional sum exceeds 1 you must carry over to the whole number. Converting to improper fractions first is generally more reliable and avoids carry errors." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Mixed Number Calculator"
+  metaTitle="Mixed Number Calculator | Add, Subtract, Multiply, Divide"
+  description="Add, subtract, multiply, or divide any two mixed numbers. Converts to improper fractions, shows the LCD method, and returns the simplified mixed number result."
+  canonical="https://calculations.tools/math/fraction-calculator/mixed-number"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="mixed-number-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Two Mixed Numbers</h2>
+          <p>Add, subtract, multiply, or divide mixed numbers</p>
+        </div>
+
+        <div class="fc-ops">
+          <button class="mn-op-btn active" data-op="add">+ Add</button>
+          <button class="mn-op-btn" data-op="subtract">− Subtract</button>
+          <button class="mn-op-btn" data-op="multiply">× Multiply</button>
+          <button class="mn-op-btn" data-op="divide">÷ Divide</button>
+        </div>
+
+        <div class="mn-row">
+          <div class="bmi-field" style="flex:0 0 70px;">
+            <label class="bmi-label" for="mn-w1">Whole</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="mn-w1" class="bmi-input" placeholder="2" />
+            </div>
+          </div>
+          <div class="fc-fraction" style="margin-top:1.4rem;">
+            <input type="text" inputmode="decimal" id="mn-n1" class="fc-frac-input" placeholder="1" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="mn-d1" class="fc-frac-input" placeholder="3" />
+          </div>
+          <div class="mn-op-lbl" id="mn-op-symbol">+</div>
+          <div class="bmi-field" style="flex:0 0 70px;">
+            <label class="bmi-label" for="mn-w2">Whole</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="mn-w2" class="bmi-input" placeholder="1" />
+            </div>
+          </div>
+          <div class="fc-fraction" style="margin-top:1.4rem;">
+            <input type="text" inputmode="decimal" id="mn-n2" class="fc-frac-input" placeholder="3" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="mn-d2" class="fc-frac-input" placeholder="4" />
+          </div>
+        </div>
+
+        <div id="mn-result" class="lbm-result hidden">
+          <div class="fc-result-fraction">
+            <span id="mn-res-n" class="fc-res-num">—</span>
+            <div class="fc-res-bar"></div>
+            <span id="mn-res-d" class="fc-res-den">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Result (improper fraction, simplified)</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="mn-mixed">—</div>
+              <div class="lbm-card-lbl">Mixed number</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="mn-decimal">—</div>
+              <div class="lbm-card-lbl">Decimal</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Convert to improper fractions</span>
+              <span class="pi-step-val" id="mn-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Operate & simplify</span>
+              <span class="pi-step-val" id="mn-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>
+      .mn-row    { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin:0.75rem 0; }
+      .mn-op-lbl { font-size:1.2rem; font-weight:700; color:rgba(255,255,255,0.6); margin-top:0.3rem; }
+      .mn-op-btn { padding:0.35rem 0.7rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.82rem; }
+      .mn-op-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
+    </style>
+
+    <script src="/js/mixed-number-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>To operate on mixed numbers: <strong>convert each to an improper fraction</strong> (whole × denom + numerator, over denom), perform the operation, simplify, and convert back. This avoids carry errors that occur when operating on the whole and fractional parts separately.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the whole number, numerator, and denominator for each mixed number. Select the operation (add, subtract, multiply, or divide). The calculator converts to improper fractions, performs the operation, simplifies the result, and displays it as both an improper fraction and a mixed number.</p>
+
+      <h2 id="method">The conversion method</h2>
+      <p>Every mixed number operation uses the same preparatory step: convert to improper fractions.</p>
+      <Formula expr={f.toImp} />
+      <p>This step is mandatory. Attempting to add or subtract by operating on whole parts and fractional parts independently works only when the fractional sum stays below 1. Converting first eliminates this conditional complication.</p>
+
+      <h2 id="adding">Adding mixed numbers</h2>
+      <Formula expr={f.add} />
+      <p>Steps: (1) convert both to improper fractions (4/3 and 9/4); (2) find LCD(3,4) = 12; (3) convert: 16/12 + 27/12; (4) add numerators: 43/12; (5) convert back: 3 7/12.</p>
+
+      <h2 id="subtracting">Subtracting mixed numbers</h2>
+      <Formula expr={f.sub} />
+      <p>Steps: (1) convert: 7/2 and 5/3; (2) LCD(2,3) = 6; (3) convert: 21/6 − 10/6 = 11/6; (4) mixed number: 1 5/6.</p>
+      <p>Without converting first, 3½ − 1⅔ might be attempted as (3−1) + (½−⅔) = 2 + (−1/6) = 1 5/6. This works but requires recognising that ½ < ⅔ and borrowing from the whole number — a common error source.</p>
+
+      <h2 id="multiplying">Multiplying mixed numbers</h2>
+      <Formula expr={f.mul} />
+      <p>Steps: (1) convert: 5/2 and 4/3; (2) multiply numerators: 5 × 4 = 20; multiply denominators: 2 × 3 = 6; (3) simplify: 20/6 = 10/3; (4) mixed number: 3⅓.</p>
+      <p>A common shortcut: cross-simplify before multiplying. 5/2 × 4/3 — GCD(4,2) = 2: cancel to 5/1 × 2/3 = 10/3. Fewer large numbers.</p>
+
+      <h2 id="dividing">Dividing mixed numbers</h2>
+      <Formula expr={f.div} />
+      <p>Steps: (1) convert: 5/2 and 5/4; (2) flip the second fraction: 5/2 × 4/5; (3) multiply: 20/10; (4) simplify: 2. The "keep-change-flip" rule applies identically to mixed numbers once they are in improper fraction form.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Multiplying whole parts and fraction parts independently</h3>
+      <p>2½ × 1⅓ ≠ (2×1) + (½×⅓) = 1 + 1/6 = 1⅙. The correct answer is 3⅓. Multiplication does not distribute this way across the mixed number format — always convert to improper fractions first.</p>
+
+      <h3>Forgetting to carry when subtracting</h3>
+      <p>Attempting 3⅓ − 1¾ by subtracting parts separately: (3−1) + (⅓−¾) = 2 + (−5/12) = 1 7/12. The borrowing step (2 − 5/12 = 1 7/12) is correct but easy to mishandle. Converting to improper fractions (10/3 − 7/4 = 40/12 − 21/12 = 19/12 = 1 7/12) is cleaner.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you add mixed numbers?</h3>
+      <p>Convert to improper fractions, find the LCD, add numerators, simplify, convert back to a mixed number.</p>
+
+      <h3>How do you multiply mixed numbers?</h3>
+      <p>Convert to improper fractions and multiply numerator × numerator over denominator × denominator. Simplify and convert back.</p>
+
+      <h3>Can you add mixed numbers without converting to improper fractions?</h3>
+      <p>Yes, but you need to handle carries manually when the fractional sum exceeds 1. Converting first is more reliable for all four operations.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/fraction-calculator/mixed-to-improper',   blurb: 'Convert a mixed number to an improper fraction.' },
+        { path: '/math/fraction-calculator/improper-to-mixed',   blurb: 'Convert an improper fraction back to a mixed number.' },
+        { path: '/math/fraction-calculator/add',                 blurb: 'Add two fractions step by step with LCD workings.' },
+        { path: '/math/fraction-calculator/subtract',            blurb: 'Subtract two fractions with full step-by-step.' },
+        { path: '/math/fraction-calculator',                     blurb: 'The main fraction calculator — all four operations.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

@@ -1,0 +1,215 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  def:    "$$\\frac{a}{b} = \\frac{a \\times k}{b \\times k} \\quad \\text{for any integer } k \\neq 0$$",
+  ex1:    "$$\\frac{3}{4} = \\frac{6}{8} = \\frac{9}{12} = \\frac{12}{16} = \\frac{15}{20} \\ldots$$",
+  verify: "$$\\frac{a}{b} = \\frac{c}{d} \\iff a \\times d = b \\times c$$",
+  lcd:    "$$\\frac{3}{4} \\text{ and } \\frac{5}{6}: \\quad \\text{LCD}(4,6)=12 \\implies \\frac{9}{12} = \\frac{10}{12}$$",
+  simplify: "$$\\frac{12}{16} \\div \\gcd(12,16) = \\frac{12 \\div 4}{16 \\div 4} = \\frac{3}{4}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'what-are',     label: 'What are equivalent fractions?' },
+  { id: 'how-to-find',  label: 'How to find equivalent fractions' },
+  { id: 'verify',       label: 'How to verify equivalence' },
+  { id: 'lcd-use',      label: 'Using equivalent fractions to add/subtract' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'simplify',     label: 'Reducing to simplest form' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Equivalent Fractions Calculator",
+    "url": "https://calculations.tools/math/fraction-calculator/equivalent",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Generate a table of equivalent fractions for any fraction. Shows the simplified form, GCD, and equivalent fractions multiplied by 1 through 12.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are equivalent fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Equivalent fractions are fractions that represent the same value despite having different numerators and denominators. They are produced by multiplying or dividing both the numerator and denominator by the same non-zero integer. For example, 1/2, 2/4, 3/6, and 4/8 are all equivalent." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you find equivalent fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply both the numerator and denominator by the same integer (k). For 3/4: multiply by 2 to get 6/8, by 3 to get 9/12, by 4 to get 12/16, and so on. All results are equivalent to 3/4." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you check if two fractions are equivalent?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Cross-multiply: if a/b = c/d, then a × d = b × c. For example, 3/4 and 9/12: 3 × 12 = 36 and 4 × 9 = 36. Equal products confirm the fractions are equivalent." }
+      },
+      {
+        "@type": "Question",
+        "name": "Are 2/3 and 4/6 equivalent fractions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. 4/6 = 2/3 because both the numerator and denominator of 4/6 were multiplied by 2 compared to 2/3. Cross-check: 2 × 6 = 12 and 3 × 4 = 12. Equal products confirm equivalence." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Equivalent Fractions Calculator"
+  metaTitle="Equivalent Fractions Calculator | Generate & Verify"
+  description="Generate equivalent fractions for any fraction instantly. See the simplified form and a table of equivalent fractions multiplied by 1 through 12."
+  canonical="https://calculations.tools/math/fraction-calculator/equivalent"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="equivalent-fractions-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Equivalent Fractions</h2>
+          <p>Enter a fraction to generate equivalent fractions</p>
+        </div>
+
+        <div class="fc-inputs" style="justify-content:center;">
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="ef-n" class="fc-frac-input" placeholder="3" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="ef-d" class="fc-frac-input" placeholder="4" />
+          </div>
+        </div>
+
+        <div id="ef-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val">
+              <span id="ef-lowest-n">—</span>/<span id="ef-lowest-d">—</span>
+            </span>
+          </div>
+          <div class="lbm-primary-lbl">Simplified form (GCD = <span id="ef-gcd">—</span>)</div>
+
+          <div class="pi-steps" style="margin-top:1rem;">
+            <div class="pi-steps-title">Equivalent fractions table (× multiplier)</div>
+          </div>
+          <div class="responsive-table" style="margin-top:0.5rem;">
+            <table>
+              <thead><tr><th>× multiplier</th><th>Scaled</th><th>From simplified</th></tr></thead>
+              <tbody id="ef-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/equivalent-fractions-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Equivalent fractions represent the <strong>same value</strong> with different numerators and denominators. To find one: multiply both numerator and denominator by the same integer k. To verify: cross-multiply — if a/b = c/d, then a × d = b × c.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter any fraction. The calculator simplifies it to lowest terms (showing the GCD), then generates a table of 12 equivalent fractions by multiplying the numerator and denominator by 1 through 12 — both from your original input and from the simplified form.</p>
+
+      <h2 id="what-are">What are equivalent fractions?</h2>
+      <p>Two fractions are equivalent when they represent the same point on the number line — the same proportion of a whole. The fundamental property is:</p>
+      <Formula expr={f.def} />
+      <p>Multiplying (or dividing) both numerator and denominator by the same non-zero integer k does not change the value of the fraction. It changes only how the fraction is written.</p>
+      <Formula expr={f.ex1} />
+      <p>All of these fractions equal 0.75. In lowest terms, they all reduce to 3/4.</p>
+
+      <h2 id="how-to-find">How to find equivalent fractions</h2>
+      <p>Choose any non-zero integer k and multiply both parts of the fraction by k. To generate 5 equivalent fractions for 2/5:</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>k</th><th>Numerator (2 × k)</th><th>Denominator (5 × k)</th><th>Fraction</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>4</td><td>10</td><td>4/10</td></tr>
+            <tr><td>3</td><td>6</td><td>15</td><td>6/15</td></tr>
+            <tr><td>4</td><td>8</td><td>20</td><td>8/20</td></tr>
+            <tr><td>5</td><td>10</td><td>25</td><td>10/25</td></tr>
+            <tr><td>10</td><td>20</td><td>50</td><td>20/50</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>All of these are equivalent to 2/5 = 0.4.</p>
+
+      <h2 id="verify">How to verify equivalence</h2>
+      <p>Use cross-multiplication to test whether two fractions are equivalent:</p>
+      <Formula expr={f.verify} />
+      <p>To check 3/4 = 9/12: 3 × 12 = 36 and 4 × 9 = 36. Equal products confirm they are equivalent. To check 2/3 vs 3/4: 2 × 4 = 8 and 3 × 3 = 9. Different products — not equivalent.</p>
+
+      <h2 id="lcd-use">Using equivalent fractions to add and subtract</h2>
+      <p>Equivalent fractions are essential when adding or subtracting fractions with unlike denominators. The goal is to express both fractions with the same denominator (LCD) so numerators can be compared or combined:</p>
+      <Formula expr={f.lcd} />
+      <p>3/4 and 5/6 share no common denominator. Find the LCD (12), then convert: 3/4 → 9/12 and 5/6 → 10/12. Now they can be added: 9/12 + 10/12 = 19/12.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: find three fractions equivalent to 1/3</h3>
+      <p>Multiply by 2, 3, 4: 2/6, 3/9, 4/12. Cross-check: 1 × 6 = 6 = 3 × 2 ✓, 1 × 9 = 9 = 3 × 3 ✓, 1 × 12 = 12 = 3 × 4 ✓.</p>
+
+      <h3>Example 2: are 5/8 and 15/24 equivalent?</h3>
+      <p>Cross-multiply: 5 × 24 = 120 and 8 × 15 = 120. Equal products — yes, they are equivalent. (15/24 = 5/8 with k = 3.)</p>
+
+      <h3>Example 3: find the fraction equivalent to 3/7 with denominator 35</h3>
+      <p>35 ÷ 7 = 5, so k = 5. Multiply numerator by 5: 3 × 5 = 15. The equivalent fraction is 15/35.</p>
+
+      <h2 id="simplify">Reducing to simplest form</h2>
+      <p>Dividing both numerator and denominator by their GCD is the reverse of generating equivalents. It produces the simplest (lowest-terms) fraction:</p>
+      <Formula expr={f.simplify} />
+      <p>12/16 — GCD(12,16) = 4. Divide both: 12 ÷ 4 = 3, 16 ÷ 4 = 4. Simplest form: 3/4.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Adding instead of multiplying</h3>
+      <p>3/4 → add 1 to both → 4/5. This is NOT equivalent to 3/4 (0.75 ≠ 0.8). Only multiplying (or dividing) both parts by the same factor preserves the value.</p>
+
+      <h3>Multiplying by zero</h3>
+      <p>k must be non-zero. Multiplying by 0 gives 0/0, which is undefined.</p>
+
+      <h3>Confusing "equivalent" with "equal"</h3>
+      <p>3/4 and 9/12 are the same number written differently. All equivalent fractions reduce to the same simplest form and have the same decimal value.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What are equivalent fractions?</h3>
+      <p>Fractions that represent the same value. Produced by multiplying or dividing both numerator and denominator by the same non-zero integer.</p>
+
+      <h3>How do you find equivalent fractions?</h3>
+      <p>Multiply both numerator and denominator by any integer k ≠ 0. The result is an equivalent fraction.</p>
+
+      <h3>How do you check if two fractions are equivalent?</h3>
+      <p>Cross-multiply. If a/b = c/d, then a × d = b × c. Equal products confirm equivalence.</p>
+
+      <h3>Are 2/3 and 4/6 equivalent?</h3>
+      <p>Yes. 2 × 6 = 12 and 3 × 4 = 12. They are equivalent — 4/6 is 2/3 multiplied by 2/2.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/fraction-calculator/simplify',             blurb: 'Reduce any fraction to lowest terms using the GCD method.' },
+        { path: '/math/fraction-calculator/compare',              blurb: 'Compare two fractions to see which is larger.' },
+        { path: '/math/fraction-calculator/lcd',                  blurb: 'Find the Least Common Denominator of two or more fractions.' },
+        { path: '/math/fraction-calculator/add',                  blurb: 'Add two fractions using the LCD method with step-by-step workings.' },
+        { path: '/math/fraction-calculator',                      blurb: 'The main fraction calculator — add, subtract, multiply, divide, and simplify.' },
+        { path: '/math/fraction-calculator/decimal-to-fraction',  blurb: 'Convert a decimal to a fraction in lowest terms.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

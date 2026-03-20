@@ -1,0 +1,77 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Scale Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Scale Calculator</h2>
+        <p>Convert between real-world and scaled sizes</p>
+      </div>
+
+      <div class="sc-scale-row">
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="sc-scale-n">Scale (numerator)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="sc-scale-n" class="bmi-input" placeholder="e.g. 1" />
+          </div>
+        </div>
+        <div class="sc-colon">:</div>
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="sc-scale-d">Scale (denominator)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="sc-scale-d" class="bmi-input" placeholder="e.g. 50" />
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-modes">
+        <button class="sc-mode-btn active" data-mode="to-scaled">Real → Scaled</button>
+        <button class="sc-mode-btn" data-mode="to-real">Scaled → Real</button>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" id="sc-lbl1" for="sc-real">Real-world size</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="sc-real" class="bmi-input" placeholder="e.g. 6" />
+        </div>
+      </div>
+      <div class="bmi-field">
+        <label class="bmi-label" id="sc-lbl2" for="sc-scaled">Scaled size (calculated)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="sc-scaled" class="bmi-input" placeholder="—" />
+        </div>
+      </div>
+
+      <div id="sc-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="sc-output">—</span>
+        </div>
+        <div class="lbm-primary-lbl" id="sc-output-lbl">Result</div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Scale factor</span>
+            <span class="pi-step-val" id="sc-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Calculation</span>
+            <span class="pi-step-val" id="sc-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .sc-scale-row { display:flex; align-items:flex-end; gap:0.5rem; margin-bottom:0.75rem; }
+    .sc-colon { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); padding-bottom:0.75rem; }
+    .sc-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
+    .sc-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
+    .sc-mode-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
+  </style>
+
+  <script src="/js/scale-calculator.js" is:inline></script>
+</EmbedLayout>

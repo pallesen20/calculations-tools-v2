@@ -1,0 +1,70 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="LCD Calculator — Least Common Denominator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>LCD Calculator</h2>
+        <p>Find the Least Common Denominator of 2–3 fractions</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="lcd-d1">First denominator</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="lcd-d1" class="bmi-input" placeholder="e.g. 4" />
+        </div>
+      </div>
+      <div class="bmi-field">
+        <label class="bmi-label" for="lcd-d2">Second denominator</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="lcd-d2" class="bmi-input" placeholder="e.g. 6" />
+        </div>
+      </div>
+      <div class="bmi-field">
+        <label class="bmi-label" for="lcd-d3">Third denominator (optional)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="lcd-d3" class="bmi-input" placeholder="optional" />
+        </div>
+      </div>
+
+      <div id="lcd-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="lcd-value">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Least Common Denominator (LCD)</div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Prime factorisation & equivalent fractions</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Denominator 1 factors</span>
+            <span class="pi-step-val" id="lcd-f1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Denominator 2 factors</span>
+            <span class="pi-step-val" id="lcd-f2">—</span>
+          </div>
+          <div class="pi-step hidden" id="lcd-third-row">
+            <span class="pi-step-label">Denominator 3 factors</span>
+            <span class="pi-step-val" id="lcd-f3">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Fraction 1 → LCD form</span>
+            <span class="pi-step-val" id="lcd-eq1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Fraction 2 → LCD form</span>
+            <span class="pi-step-val" id="lcd-eq2">—</span>
+          </div>
+          <div class="pi-step hidden" id="lcd-eq3-row">
+            <span class="pi-step-label">Fraction 3 → LCD form</span>
+            <span class="pi-step-val" id="lcd-eq3">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/lcd-calculator.js" is:inline></script>
+</EmbedLayout>

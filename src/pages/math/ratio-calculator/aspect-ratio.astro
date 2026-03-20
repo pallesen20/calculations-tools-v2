@@ -1,0 +1,266 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  ratio:   "$$\\text{Aspect Ratio} = \\frac{W}{\\gcd(W,H)} : \\frac{H}{\\gcd(W,H)}$$",
+  resize:  "$$H_{\\text{new}} = W_{\\text{new}} \\times \\frac{H}{W}$$",
+  decimal: "$$\\text{Decimal ratio} = \\frac{W}{H}$$",
+  common:  "$$16:9 \\approx 1.\\overline{7} \\quad 4:3 \\approx 1.\\overline{3} \\quad 21:9 \\approx 2.\\overline{3}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'what-is',       label: 'What is an aspect ratio?' },
+  { id: 'formula',       label: 'Formula & calculation' },
+  { id: 'common-ratios', label: 'Common aspect ratios' },
+  { id: 'resizing',      label: 'Resizing with aspect ratio' },
+  { id: 'applications',  label: 'Applications by domain' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Aspect Ratio Calculator",
+    "url": "https://calculations.tools/math/ratio-calculator/aspect-ratio",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate the aspect ratio of any width and height. Simplifies to the lowest whole-number ratio (e.g. 1920×1080 → 16:9) and resizes dimensions while preserving the ratio.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is an aspect ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "An aspect ratio is the proportional relationship between the width and height of a rectangle, expressed as W:H. For example, a 1920×1080 image has an aspect ratio of 16:9, meaning it is 16 units wide for every 9 units tall." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate an aspect ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide both the width and height by their greatest common divisor (GCD). For 1920×1080: GCD = 120, so 1920÷120 = 16 and 1080÷120 = 9, giving 16:9." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you resize an image while keeping the aspect ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the new width by H/W (or the new height by W/H). For a 16:9 image at 1280 wide: height = 1280 × (9/16) = 720 pixels." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Aspect Ratio Calculator"
+  metaTitle="Aspect Ratio Calculator | W:H Ratio from Dimensions"
+  description="Calculate the aspect ratio of any width and height. Simplifies to lowest whole-number ratio (1920×1080 → 16:9) and resizes dimensions while preserving the ratio."
+  canonical="https://calculations.tools/math/ratio-calculator/aspect-ratio"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="aspect-ratio-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Aspect Ratio Instantly</h2>
+          <p>Enter width and height to find the simplified ratio</p>
+        </div>
+
+        <div class="ar-dims">
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" for="ar-w">Width</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ar-w" class="bmi-input" placeholder="e.g. 1920" />
+            </div>
+          </div>
+          <div class="ar-x">×</div>
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" for="ar-h">Height</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ar-h" class="bmi-input" placeholder="e.g. 1080" />
+            </div>
+          </div>
+        </div>
+
+        <div id="ar-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="ar-ratio">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Aspect ratio</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ar-decimal">—</div>
+              <div class="lbm-card-lbl">Decimal (W÷H)</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ar-percent">—</div>
+              <div class="lbm-card-lbl">Height as % of width</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step">
+              <span class="pi-step-label">GCD</span>
+              <span class="pi-step-val" id="ar-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Simplify</span>
+              <span class="pi-step-val" id="ar-step2">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.25rem;">
+          <div class="ar-mode-label">Resize while preserving ratio</div>
+          <div class="ar-modes">
+            <button class="ar-mode-btn active" data-mode="find">I know the new width</button>
+            <button class="ar-mode-btn" data-mode="findw">I know the new height</button>
+          </div>
+          <div class="ar-dims">
+            <div class="bmi-field" style="flex:1;">
+              <label class="bmi-label" id="ar-target1-lbl" for="ar-target1">New width</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="ar-target1" class="bmi-input" placeholder="e.g. 1280" />
+              </div>
+            </div>
+            <div class="ar-x">→</div>
+            <div class="bmi-field" style="flex:1;">
+              <label class="bmi-label" id="ar-target2-lbl" for="ar-target2">New height (calculated)</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="ar-target2" class="bmi-input" placeholder="—" readonly />
+              </div>
+            </div>
+          </div>
+          <div class="pi-step hidden" id="ar-resize-row" style="background:rgba(139,92,246,0.1);border-radius:6px;padding:0.5rem 0.75rem;margin-top:0.5rem;">
+            <span class="pi-step-label">Resize calculation</span>
+            <span class="pi-step-val" id="ar-resize-val">—</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>
+      .ar-dims { display:flex; align-items:flex-end; gap:0.5rem; }
+      .ar-x { font-size:1.25rem; font-weight:700; color:rgba(255,255,255,0.5); padding-bottom:0.75rem; }
+      .ar-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem; margin-top:0.35rem; }
+      .ar-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
+      .ar-mode-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
+      .ar-mode-label { font-size:0.8rem; color:rgba(255,255,255,0.5); margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.05em; }
+    </style>
+
+    <script src="/js/aspect-ratio-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Divide both dimensions by their GCD to get the simplified ratio. 1920×1080: GCD = 120 → <strong>16:9</strong>. 2560×1440: GCD = 80 → <strong>16:9</strong>. To resize: multiply the known dimension by the opposite side's ratio component.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the width and height of any rectangle — a screen, image, video frame, canvas, or print size. The calculator returns the simplified aspect ratio, its decimal equivalent, and the height as a percentage of width. Use the resize section to find the corresponding dimension at any new size.</p>
+
+      <h2 id="what-is">What is an aspect ratio?</h2>
+      <p>An aspect ratio is the proportional relationship between the width and height of a rectangle, expressed as W:H. It describes the shape of the rectangle without specifying its size. Two rectangles with different dimensions but the same aspect ratio are geometrically similar — one is a scaled version of the other.</p>
+      <p>The ratio is always simplified to the smallest whole numbers by dividing both dimensions by their greatest common divisor (GCD). 1920:1080 simplifies to 16:9 because GCD(1920, 1080) = 120.</p>
+
+      <h2 id="formula">Formula and calculation</h2>
+      <p>The aspect ratio formula uses the GCD to reduce to lowest terms:</p>
+      <Formula expr={f.ratio} />
+      <p>The decimal ratio (W ÷ H) expresses how many units wide the rectangle is per unit of height:</p>
+      <Formula expr={f.decimal} />
+      <p>To resize while preserving the aspect ratio, scale the new dimension by the ratio of the sides:</p>
+      <Formula expr={f.resize} />
+
+      <h2 id="common-ratios">Common aspect ratios reference</h2>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Ratio</th><th>Decimal</th><th>Common use</th><th>Example resolution</th></tr></thead>
+          <tbody>
+            <tr><td>16:9</td><td>1.778</td><td>HD/4K TV, YouTube, most monitors</td><td>1920×1080, 3840×2160</td></tr>
+            <tr><td>16:10</td><td>1.600</td><td>Widescreen laptops, older monitors</td><td>1920×1200, 2560×1600</td></tr>
+            <tr><td>4:3</td><td>1.333</td><td>Traditional TV, iPad, older screens</td><td>1024×768, 2048×1536</td></tr>
+            <tr><td>1:1</td><td>1.000</td><td>Instagram square posts, profile photos</td><td>1080×1080</td></tr>
+            <tr><td>21:9</td><td>2.333</td><td>Ultrawide monitors, cinema</td><td>2560×1080, 3440×1440</td></tr>
+            <tr><td>3:2</td><td>1.500</td><td>DSLR/mirrorless cameras, prints</td><td>3000×2000, 6000×4000</td></tr>
+            <tr><td>5:4</td><td>1.250</td><td>Medium format, some monitors</td><td>1280×1024</td></tr>
+            <tr><td>9:16</td><td>0.563</td><td>Mobile video, TikTok, Instagram Reels</td><td>1080×1920</td></tr>
+            <tr><td>2:3</td><td>0.667</td><td>Portrait photography prints</td><td>4000×6000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="resizing">Resizing with aspect ratio</h2>
+      <p>When resizing an image or video frame, one dimension determines the other. Changing width while preserving a 16:9 ratio:</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>New width</th><th>Calculated height (16:9)</th><th>Common name</th></tr></thead>
+          <tbody>
+            <tr><td>3840</td><td>2160</td><td>4K UHD</td></tr>
+            <tr><td>2560</td><td>1440</td><td>QHD / 2K</td></tr>
+            <tr><td>1920</td><td>1080</td><td>Full HD</td></tr>
+            <tr><td>1280</td><td>720</td><td>HD</td></tr>
+            <tr><td>854</td><td>480</td><td>SD</td></tr>
+            <tr><td>640</td><td>360</td><td>360p</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The relationship is linear: double the width and the height doubles too. This means you can scale by any factor and the ratio remains constant.</p>
+
+      <h2 id="applications">Applications by domain</h2>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Domain</th><th>Typical ratio</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td>Web design</td><td>16:9</td><td>Hero images, video embeds, responsive layouts</td></tr>
+            <tr><td>Social media</td><td>1:1, 4:5, 9:16</td><td>Platform-specific crop requirements</td></tr>
+            <tr><td>Photography</td><td>3:2</td><td>Standard DSLR sensor format for prints</td></tr>
+            <tr><td>Film / cinema</td><td>2.39:1 (widescreen)</td><td>Anamorphic lens format</td></tr>
+            <tr><td>Print design</td><td>1:√2 (A4 paper)</td><td>ISO paper series — scales without distortion</td></tr>
+            <tr><td>UI/UX design</td><td>Custom</td><td>Modal dialogs, card components, thumbnails</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is an aspect ratio?</h3>
+      <p>The proportional width-to-height relationship of a rectangle, simplified to the lowest whole-number form using the GCD. Example: 1920:1080 = 16:9.</p>
+
+      <h3>How do you calculate an aspect ratio?</h3>
+      <p>Find GCD(width, height), then divide both by it. GCD(1920, 1080) = 120; 1920÷120 = 16, 1080÷120 = 9 → 16:9.</p>
+
+      <h3>How do you resize an image while keeping the aspect ratio?</h3>
+      <p>Multiply the new width by H/W (for height), or the new height by W/H (for width). For 16:9 at width 1280: height = 1280 × 9/16 = 720 px.</p>
+
+      <h3>What is a 16:9 aspect ratio in pixels?</h3>
+      <p>Any resolution where width ÷ height = 16 ÷ 9 ≈ 1.778. Common examples: 3840×2160, 2560×1440, 1920×1080, 1280×720.</p>
+
+      <h3>Is 4:3 or 16:9 better?</h3>
+      <p>Neither is inherently better — it depends on the use case. 16:9 matches modern screens and video; 4:3 suits older content, tablets, and certain print formats. The right ratio is the one that fits your output medium.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/ratio-calculator',             blurb: 'Simplify and scale any ratio with step-by-step GCD workings.' },
+        { path: '/math/ratio-calculator/scale',       blurb: 'Convert between real-world sizes and scaled drawing dimensions.' },
+        { path: '/math/ratio-calculator/proportion',  blurb: 'Solve a:b = c:d for the missing value.' },
+        { path: '/math/ratio-calculator/golden-ratio', blurb: 'Calculate golden ratio dimensions from any input.' },
+        { path: '/math/fraction-calculator/equivalent', blurb: 'Generate equivalent fractions for any fraction.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

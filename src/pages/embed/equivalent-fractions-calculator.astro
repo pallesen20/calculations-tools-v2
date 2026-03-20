@@ -1,0 +1,43 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Equivalent Fractions Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Equivalent Fractions</h2>
+        <p>Enter a fraction to generate equivalent fractions</p>
+      </div>
+
+      <div class="fc-inputs" style="justify-content:center;">
+        <div class="fc-fraction">
+          <input type="text" inputmode="decimal" id="ef-n" class="fc-frac-input" placeholder="3" />
+          <div class="fc-bar"></div>
+          <input type="text" inputmode="decimal" id="ef-d" class="fc-frac-input" placeholder="4" />
+        </div>
+      </div>
+
+      <div id="ef-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val">
+            <span id="ef-lowest-n">—</span>/<span id="ef-lowest-d">—</span>
+          </span>
+        </div>
+        <div class="lbm-primary-lbl">Simplified form (GCD = <span id="ef-gcd">—</span>)</div>
+
+        <div class="pi-steps" style="margin-top:1rem;">
+          <div class="pi-steps-title">Equivalent fractions table (× multiplier)</div>
+        </div>
+        <div class="responsive-table" style="margin-top:0.5rem;">
+          <table>
+            <thead><tr><th>× multiplier</th><th>Scaled</th><th>From simplified</th></tr></thead>
+            <tbody id="ef-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/equivalent-fractions-calculator.js" is:inline></script>
+</EmbedLayout>

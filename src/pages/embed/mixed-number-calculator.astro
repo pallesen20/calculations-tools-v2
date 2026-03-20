@@ -1,0 +1,88 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Mixed Number Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Mixed Number Calculator</h2>
+        <p>Add, subtract, multiply, or divide mixed numbers</p>
+      </div>
+
+      <div class="fc-ops">
+        <button class="mn-op-btn active" data-op="add">+ Add</button>
+        <button class="mn-op-btn" data-op="subtract">− Subtract</button>
+        <button class="mn-op-btn" data-op="multiply">× Multiply</button>
+        <button class="mn-op-btn" data-op="divide">÷ Divide</button>
+      </div>
+
+      <div class="mn-row">
+        <div class="bmi-field" style="flex:0 0 70px;">
+          <label class="bmi-label" for="mn-w1">Whole</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="mn-w1" class="bmi-input" placeholder="2" />
+          </div>
+        </div>
+        <div class="fc-fraction" style="margin-top:1.4rem;">
+          <input type="text" inputmode="decimal" id="mn-n1" class="fc-frac-input" placeholder="1" />
+          <div class="fc-bar"></div>
+          <input type="text" inputmode="decimal" id="mn-d1" class="fc-frac-input" placeholder="3" />
+        </div>
+        <div class="mn-op-lbl" id="mn-op-symbol">+</div>
+        <div class="bmi-field" style="flex:0 0 70px;">
+          <label class="bmi-label" for="mn-w2">Whole</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="mn-w2" class="bmi-input" placeholder="1" />
+          </div>
+        </div>
+        <div class="fc-fraction" style="margin-top:1.4rem;">
+          <input type="text" inputmode="decimal" id="mn-n2" class="fc-frac-input" placeholder="3" />
+          <div class="fc-bar"></div>
+          <input type="text" inputmode="decimal" id="mn-d2" class="fc-frac-input" placeholder="4" />
+        </div>
+      </div>
+
+      <div id="mn-result" class="lbm-result hidden">
+        <div class="fc-result-fraction">
+          <span id="mn-res-n" class="fc-res-num">—</span>
+          <div class="fc-res-bar"></div>
+          <span id="mn-res-d" class="fc-res-den">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Result (improper fraction, simplified)</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="mn-mixed">—</div>
+            <div class="lbm-card-lbl">Mixed number</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="mn-decimal">—</div>
+            <div class="lbm-card-lbl">Decimal</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Convert to improper fractions</span>
+            <span class="pi-step-val" id="mn-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Operate & simplify</span>
+            <span class="pi-step-val" id="mn-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .mn-row    { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin:0.75rem 0; }
+    .mn-op-lbl { font-size:1.2rem; font-weight:700; color:rgba(255,255,255,0.6); margin-top:0.3rem; }
+    .mn-op-btn { padding:0.35rem 0.7rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.82rem; }
+    .mn-op-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
+  </style>
+
+  <script src="/js/mixed-number-calculator.js" is:inline></script>
+</EmbedLayout>

@@ -1,0 +1,68 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Golden Ratio Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Golden Ratio Calculator</h2>
+        <p>φ ≈ 1.618 — enter one dimension to find the others</p>
+      </div>
+
+      <div class="gr-modes">
+        <button class="gr-mode-btn active" data-mode="longer">I know the longer side</button>
+        <button class="gr-mode-btn" data-mode="shorter">I know the shorter side</button>
+        <button class="gr-mode-btn" data-mode="total">I know the total length</button>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="gr-input">Value</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="gr-input" class="bmi-input" placeholder="e.g. 100" />
+        </div>
+      </div>
+
+      <div id="gr-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="gr-longer">—</div>
+            <div class="lbm-card-lbl">Longer side (a)</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="gr-shorter">—</div>
+            <div class="lbm-card-lbl">Shorter side (b)</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="gr-total">—</div>
+            <div class="lbm-card-lbl">Total (a + b)</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="gr-ratio">—</div>
+            <div class="lbm-card-lbl">a/b (≈ 1.618)</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">φ value</span>
+            <span class="pi-step-val" id="gr-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Results</span>
+            <span class="pi-step-val" id="gr-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .gr-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
+    .gr-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
+    .gr-mode-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
+  </style>
+
+  <script src="/js/golden-ratio-calculator.js" is:inline></script>
+</EmbedLayout>

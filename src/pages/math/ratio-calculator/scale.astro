@@ -1,0 +1,237 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  toScaled: "$$\\text{Scaled size} = \\text{Real size} \\times \\frac{\\text{Scale numerator}}{\\text{Scale denominator}}$$",
+  toReal:   "$$\\text{Real size} = \\text{Scaled size} \\div \\frac{\\text{Scale numerator}}{\\text{Scale denominator}}$$",
+  ex1:      "$$1{:}50 \\implies 6\\,\\text{m} \\times \\tfrac{1}{50} = 0.12\\,\\text{m} = 12\\,\\text{cm}$$",
+  ex2:      "$$1{:}25000 \\implies 4.5\\,\\text{cm} \\times 25000 = 112500\\,\\text{cm} = 1.125\\,\\text{km}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'what-is',       label: 'What is a scale?' },
+  { id: 'formula',       label: 'Formula & conversion' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'common-scales', label: 'Common scale ratios' },
+  { id: 'applications',  label: 'Applications by domain' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Scale Calculator",
+    "url": "https://calculations.tools/math/ratio-calculator/scale",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Convert between real-world sizes and scaled drawing dimensions. Enter a scale ratio (e.g. 1:50) and either the real or scaled size to find the other.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a scale ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A scale ratio (e.g. 1:50) expresses the relationship between a measurement on a drawing or model and the corresponding real-world measurement. 1:50 means 1 unit on the drawing equals 50 units in reality." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate the scaled size from a real measurement?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the real measurement by the scale factor. For a 1:50 scale, scaled size = real size × (1/50). A 6 m wall becomes 6 × (1/50) = 0.12 m = 12 cm on the drawing." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you find the real size from a scaled measurement?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide the scaled measurement by the scale factor. For 1:50, real size = scaled size ÷ (1/50) = scaled size × 50. A 5 cm measurement on a 1:50 plan represents 5 × 50 = 250 cm = 2.5 m." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Scale Calculator"
+  metaTitle="Scale Calculator | Real Size ↔ Scaled Drawing Size"
+  description="Convert between real-world sizes and scaled drawing dimensions. Enter a scale ratio (1:50, 1:100, 1:25000) and either the real or scaled size to find the other."
+  canonical="https://calculations.tools/math/ratio-calculator/scale"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="scale-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Scaled Size Instantly</h2>
+          <p>Convert between real-world and scaled drawing sizes</p>
+        </div>
+
+        <div class="sc-scale-row">
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" for="sc-scale-n">Scale (numerator)</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="sc-scale-n" class="bmi-input" placeholder="e.g. 1" />
+            </div>
+          </div>
+          <div class="sc-colon">:</div>
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" for="sc-scale-d">Scale (denominator)</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="sc-scale-d" class="bmi-input" placeholder="e.g. 50" />
+            </div>
+          </div>
+        </div>
+
+        <div class="sc-modes">
+          <button class="sc-mode-btn active" data-mode="to-scaled">Real → Scaled</button>
+          <button class="sc-mode-btn" data-mode="to-real">Scaled → Real</button>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" id="sc-lbl1" for="sc-real">Real-world size</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="sc-real" class="bmi-input" placeholder="e.g. 6 (any unit)" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" id="sc-lbl2" for="sc-scaled">Scaled size (calculated)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="sc-scaled" class="bmi-input" placeholder="—" />
+          </div>
+        </div>
+
+        <div id="sc-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="sc-output">—</span>
+          </div>
+          <div class="lbm-primary-lbl" id="sc-output-lbl">Result</div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Scale factor</span>
+              <span class="pi-step-val" id="sc-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Calculation</span>
+              <span class="pi-step-val" id="sc-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>
+      .sc-scale-row { display:flex; align-items:flex-end; gap:0.5rem; margin-bottom:0.75rem; }
+      .sc-colon { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); padding-bottom:0.75rem; }
+      .sc-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
+      .sc-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
+      .sc-mode-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
+    </style>
+
+    <script src="/js/scale-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>To find the scaled size: multiply the real size by the scale factor (n ÷ d). To find the real size: divide the scaled size by the scale factor. For a 1:50 scale, a 6 m wall is <strong>12 cm</strong> on the drawing; a 3 cm measurement on a 1:50 plan represents <strong>1.5 m</strong> in reality.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the scale ratio in the two fields (numerator and denominator). Select whether you are converting from real to scaled or scaled to real. Enter the known measurement and the calculator returns the other. Units are not specified — use consistent units throughout (if the real size is in metres, the scaled output is also in metres).</p>
+
+      <h2 id="what-is">What is a scale ratio?</h2>
+      <p>A scale ratio expresses the relationship between a measured distance on a drawing, map, or model and the corresponding real-world distance. A scale of 1:50 means every 1 unit on the drawing represents 50 units in reality — a 1 cm line on the plan equals 50 cm (0.5 m) in the building.</p>
+      <p>Scales smaller than 1:1 (e.g. 1:100) reduce large objects to fit on paper. Scales larger than 1:1 (e.g. 2:1) enlarge small objects for detailed technical drawings of components.</p>
+
+      <h2 id="formula">Formula and conversion</h2>
+      <p>To convert a real measurement to a scaled drawing size:</p>
+      <Formula expr={f.toScaled} />
+      <p>To convert a scaled drawing size back to a real measurement:</p>
+      <Formula expr={f.toReal} />
+      <p>Example — architectural floor plan at 1:50:</p>
+      <Formula expr={f.ex1} />
+      <p>Example — topographic map at 1:25,000:</p>
+      <Formula expr={f.ex2} />
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Scale</th><th>Real size</th><th>Scaled size</th><th>Use case</th></tr></thead>
+          <tbody>
+            <tr><td>1:1</td><td>25 mm</td><td>25 mm</td><td>Full-size technical drawing</td></tr>
+            <tr><td>2:1</td><td>5 mm</td><td>10 mm</td><td>Enlarged detail of small component</td></tr>
+            <tr><td>1:10</td><td>300 mm</td><td>30 mm</td><td>Mechanical part drawing</td></tr>
+            <tr><td>1:50</td><td>6 m</td><td>12 cm</td><td>Architectural floor plan</td></tr>
+            <tr><td>1:100</td><td>12 m</td><td>12 cm</td><td>Building elevations</td></tr>
+            <tr><td>1:200</td><td>40 m</td><td>20 cm</td><td>Site layout plan</td></tr>
+            <tr><td>1:1250</td><td>250 m</td><td>20 cm</td><td>Urban planning map</td></tr>
+            <tr><td>1:25000</td><td>2.5 km</td><td>10 cm</td><td>Ordnance survey / topographic map</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="common-scales">Common scale ratios by field</h2>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Field</th><th>Common scales</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Architecture</td><td>1:50, 1:100, 1:200</td><td>Floor plans, sections, elevations</td></tr>
+            <tr><td>Structural engineering</td><td>1:20, 1:50</td><td>Detailed connection drawings</td></tr>
+            <tr><td>Civil engineering</td><td>1:500, 1:1000, 1:2500</td><td>Site plans, road layouts</td></tr>
+            <tr><td>Mechanical engineering</td><td>1:1, 1:2, 1:5, 2:1</td><td>Component drawings; enlargement for small parts</td></tr>
+            <tr><td>Topographic maps</td><td>1:25000, 1:50000</td><td>Ordnance Survey, USGS</td></tr>
+            <tr><td>World maps</td><td>1:1,000,000+</td><td>Country / continental scale</td></tr>
+            <tr><td>Model kits</td><td>1:72, 1:48, 1:35</td><td>Aircraft, armour, ships</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="applications">Applications by domain</h2>
+      <p>Scale calculations appear across any field where physical objects or spaces must be represented at a reduced (or enlarged) size:</p>
+      <p><strong>Architecture and construction</strong> — every dimension on a floor plan must be converted to real-world measurements before ordering materials or setting out foundations. A line of 15 cm on a 1:50 plan represents a 7.5 m wall.</p>
+      <p><strong>Cartography and GIS</strong> — map distances are converted to ground distances using the map's stated scale. GPS software does this automatically, but understanding the underlying calculation is essential for manual map reading.</p>
+      <p><strong>Model making</strong> — scale model kits state their ratio explicitly. A 1:72 aircraft model of a plane with a 12 m wingspan will have a 16.7 cm wingspan.</p>
+      <p><strong>Product and industrial design</strong> — prototypes and technical drawings use standardised scales to communicate dimensions unambiguously between designers, engineers, and manufacturers.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is a scale ratio?</h3>
+      <p>A ratio like 1:50 meaning 1 unit on the drawing = 50 units in reality. The scale factor is 1÷50 = 0.02.</p>
+
+      <h3>How do you calculate the scaled size from a real measurement?</h3>
+      <p>Multiply the real size by the scale factor. At 1:50: scaled = real × (1/50). A 6 m wall → 6 × 0.02 = 0.12 m = 12 cm.</p>
+
+      <h3>How do you find the real size from a scaled measurement?</h3>
+      <p>Divide by the scale factor (or multiply by the reciprocal). At 1:50: real = scaled ÷ 0.02 = scaled × 50. A 3 cm drawing length → 3 × 50 = 150 cm = 1.5 m.</p>
+
+      <h3>What does a scale of 1:100 mean?</h3>
+      <p>1 unit on the drawing equals 100 units in reality. A 15 cm line on a 1:100 plan represents 15 × 100 = 1500 cm = 15 m.</p>
+
+      <h3>Can the scale be greater than 1:1?</h3>
+      <p>Yes. A 2:1 scale means the drawing is twice the actual size, used for enlarging small mechanical components or circuit board layouts for detail work.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/ratio-calculator',                  blurb: 'Simplify and scale any ratio with step-by-step GCD workings.' },
+        { path: '/math/ratio-calculator/aspect-ratio',     blurb: 'Calculate and simplify width:height ratios for screens and images.' },
+        { path: '/math/ratio-calculator/proportion',       blurb: 'Solve a:b = c:d for the missing value.' },
+        { path: '/math/ratio-calculator/unit-rate',        blurb: 'Calculate the rate per single unit.' },
+        { path: '/math/percentage-calculator',             blurb: 'Percentage calculator — percentage of a number, increase, decrease.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

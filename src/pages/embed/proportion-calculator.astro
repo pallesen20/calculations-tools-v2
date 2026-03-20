@@ -1,0 +1,83 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Proportion Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Proportion Calculator</h2>
+        <p>Solve a : b = c : d for the missing value</p>
+      </div>
+
+      <div class="prop-miss-row">
+        <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Solve for:</span>
+        <button class="prop-miss-btn" data-miss="a">A</button>
+        <button class="prop-miss-btn" data-miss="b">B</button>
+        <button class="prop-miss-btn" data-miss="c">C</button>
+        <button class="prop-miss-btn active" data-miss="d">D</button>
+      </div>
+
+      <div class="prop-grid">
+        <div class="prop-side">
+          <div class="bmi-field">
+            <label class="bmi-label" for="prop-a">A</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="prop-a" class="bmi-input" placeholder="3" />
+            </div>
+          </div>
+          <div class="prop-colon">:</div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="prop-b">B</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="prop-b" class="bmi-input" placeholder="4" />
+            </div>
+          </div>
+        </div>
+        <div class="prop-equals">=</div>
+        <div class="prop-side">
+          <div class="bmi-field">
+            <label class="bmi-label" for="prop-c">C</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="prop-c" class="bmi-input" placeholder="9" />
+            </div>
+          </div>
+          <div class="prop-colon">:</div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="prop-d">D</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="prop-d" class="bmi-input" placeholder="?" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="prop-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="prop-result-val">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Value of <span id="prop-missing-lbl">D</span></div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Cross-multiply</span>
+            <span class="pi-step-val" id="prop-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Solve</span>
+            <span class="pi-step-val" id="prop-step2">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Verify (a×d = b×c)</span>
+            <span class="pi-step-val" id="prop-verify">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>input:disabled { opacity:0.4; }</style>
+
+  <script src="/js/proportion-calculator.js" is:inline></script>
+</EmbedLayout>

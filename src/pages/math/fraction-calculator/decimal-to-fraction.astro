@@ -1,0 +1,276 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  terminating: "$$0.75 = \\frac{75}{100} = \\frac{3}{4}$$",
+  general:     "$$\\text{decimal} \\times 10^n = \\text{integer} \\implies \\frac{\\text{integer}}{10^n} \\xrightarrow{\\div \\gcd} \\text{simplified fraction}$$",
+  repeating:   "$$0.\\overline{3} = \\frac{3}{9} = \\frac{1}{3}$$",
+  repGeneral:  "$$x = 0.\\overline{d_1 d_2 \\ldots d_n} \\implies 10^n x - x = d_1 d_2 \\ldots d_n \\implies x = \\frac{d_1 d_2 \\ldots d_n}{10^n - 1}$$",
+  repMixed:    "$$0.41\\overline{6} = \\frac{416 - 41}{900} = \\frac{375}{900} = \\frac{5}{12}$$",
+  neg:         "$$-0.25 = -\\frac{25}{100} = -\\frac{1}{4}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',         label: 'How to use' },
+  { id: 'terminating',        label: 'Terminating decimals' },
+  { id: 'repeating',          label: 'Repeating decimals' },
+  { id: 'mixed-repeating',    label: 'Mixed repeating decimals' },
+  { id: 'examples',           label: 'Worked examples' },
+  { id: 'negative',           label: 'Negative decimals' },
+  { id: 'common-decimals',    label: 'Common decimal–fraction table' },
+  { id: 'common-mistakes',    label: 'Common mistakes' },
+  { id: 'faq',                label: 'FAQs' },
+  { id: 'related-tools',      label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Decimal to Fraction Calculator",
+    "url": "https://calculations.tools/math/fraction-calculator/decimal-to-fraction",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Convert any decimal to a fraction instantly. Handles terminating and repeating decimals, simplifies to lowest terms, and shows step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert a decimal to a fraction",
+    "description": "Convert a terminating decimal to a fraction in two steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Write the decimal over a power of 10", "text": "Count the decimal places (n). Write the decimal digits as the numerator and 10^n as the denominator. For example, 0.75 has 2 decimal places, so write 75/100." },
+      { "@type": "HowToStep", "position": 2, "name": "Simplify by the GCD", "text": "Find the Greatest Common Divisor (GCD) of the numerator and denominator, then divide both by it. GCD(75, 100) = 25, so 75/100 = 3/4." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you convert a decimal to a fraction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Write the decimal digits as the numerator and the appropriate power of 10 as the denominator (10 for one decimal place, 100 for two, etc.). Then simplify by dividing both numerator and denominator by their GCD. For example, 0.75 = 75/100 = 3/4." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert a repeating decimal to a fraction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Let x equal the decimal. Multiply both sides by 10^n where n is the length of the repeating block. Subtract the original equation from the multiplied equation to eliminate the repeating part. Solve for x. For example, 0.333… = 1/3: let x = 0.333…, then 10x = 3.333…, so 10x − x = 3, meaning 9x = 3 and x = 1/3." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 0.5 as a fraction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "0.5 = 5/10 = 1/2. One decimal place means the denominator is 10. GCD(5, 10) = 5, so 5/10 simplifies to 1/2." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 0.333… as a fraction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "0.333… = 1/3. The repeating block is 3, so use the formula: 10x − x = 3, giving 9x = 3 and x = 3/9 = 1/3." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can every decimal be written as a fraction?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Every terminating decimal and every repeating decimal can be expressed exactly as a fraction (rational number). Irrational numbers like π or √2 have infinite non-repeating decimal expansions and cannot be expressed as fractions." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Decimal to Fraction Calculator"
+  metaTitle="Decimal to Fraction Calculator | Step-by-Step"
+  description="Convert any decimal to a fraction instantly. Handles terminating and repeating decimals, simplifies to lowest terms, and shows step-by-step workings."
+  canonical="https://calculations.tools/math/fraction-calculator/decimal-to-fraction"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="decimal-to-fraction-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Decimal to Fraction Instantly</h2>
+          <p>Enter a decimal to convert it to a fraction</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="dtf-input">Decimal</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="dtf-input" class="bmi-input" placeholder="e.g. 0.75" />
+          </div>
+        </div>
+
+        <div id="dtf-result" class="lbm-result hidden">
+          <div class="fc-result-fraction">
+            <span id="dtf-num" class="fc-res-num">—</span>
+            <div class="fc-res-bar"></div>
+            <span id="dtf-den" class="fc-res-den">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Fraction (simplified)</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card hidden" id="dtf-mixed-card">
+              <div class="lbm-card-val" id="dtf-mixed">—</div>
+              <div class="lbm-card-lbl">Mixed number</div>
+            </div>
+          </div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">How it was calculated</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1 — Method</span>
+              <span class="pi-step-val" id="dtf-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2 — Simplify (GCD)</span>
+              <span class="pi-step-val" id="dtf-step2">—</span>
+            </div>
+            <div class="pi-step hidden" id="dtf-note-row">
+              <span class="pi-step-label">Note</span>
+              <span class="pi-step-val" id="dtf-note">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/decimal-to-fraction-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>To convert a decimal to a fraction: count the decimal places (n), write the digits as the numerator and 10<sup>n</sup> as the denominator, then simplify by the GCD. For 0.75: 75/100 ÷ GCD(75,100) = 75/100 ÷ 25 = <strong>3/4</strong>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter any decimal number — positive, negative, terminating, or repeating. The calculator returns the exact fraction in lowest terms, the mixed number (if applicable), and a step-by-step explanation of the conversion method used.</p>
+
+      <h2 id="terminating">Terminating decimals</h2>
+      <p>A terminating decimal has a finite number of digits after the decimal point. The conversion is direct:</p>
+      <Formula expr={f.general} />
+      <p>Count the decimal places (n). Write the decimal digits as the numerator. Use 10<sup>n</sup> as the denominator. Simplify using the GCD:</p>
+      <Formula expr={f.terminating} />
+      <p>0.75 has two decimal places, so the denominator is 100. 75/100, simplified with GCD(75,100) = 25, gives 3/4.</p>
+
+      <h2 id="repeating">Repeating decimals</h2>
+      <p>A repeating (recurring) decimal has a block of digits that repeats infinitely. The algebraic method:</p>
+      <Formula expr={f.repGeneral} />
+      <p>Let x = the decimal. Multiply by 10<sup>n</sup> (where n = length of the repeating block) to shift one full cycle. Subtract the original x to cancel the repeating part. Solve for x:</p>
+      <Formula expr={f.repeating} />
+      <p>0.333… → 10x = 3.333… → 10x − x = 3 → 9x = 3 → x = 3/9 = 1/3.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Repeating decimal</th><th>Repeating block</th><th>Formula</th><th>Fraction</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.1̄ = 0.111…</td><td>1</td><td>1/(10−1) = 1/9</td><td>1/9</td></tr>
+            <tr><td>0.3̄ = 0.333…</td><td>3</td><td>3/9</td><td>1/3</td></tr>
+            <tr><td>0.6̄ = 0.666…</td><td>6</td><td>6/9</td><td>2/3</td></tr>
+            <tr><td>0.9̄ = 0.999…</td><td>9</td><td>9/9</td><td>1</td></tr>
+            <tr><td>0.142857̄</td><td>142857</td><td>142857/999999</td><td>1/7</td></tr>
+            <tr><td>0.0̄9̄ = 0.0909…</td><td>09</td><td>9/99</td><td>1/11</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="mixed-repeating">Mixed repeating decimals</h2>
+      <p>When non-repeating digits precede the repeating block, use a two-step subtraction:</p>
+      <Formula expr={f.repMixed} />
+      <p>For 0.416̄6̄… (repeating 6): multiply by 1000 to get 416.666… and by 10 to get 4.166… Subtract: 1000x − 10x = 412, so 990x = 412 and x = 412/990 = 206/495. Alternatively: numerator = all digits − non-repeating part; denominator = 9s for the repeating digits followed by 0s for the non-repeating digits.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: 0.125</h3>
+      <p>Three decimal places → denominator 1000. 125/1000. GCD(125, 1000) = 125. Result: 1/8.</p>
+
+      <h3>Example 2: 1.6</h3>
+      <p>One decimal place → denominator 10. 16/10. GCD(16, 10) = 2. Result: 8/5. As a mixed number: 1 3/5.</p>
+
+      <h3>Example 3: 0.272727…</h3>
+      <p>Repeating block "27" (length 2). x = 0.272727…, 100x = 27.2727…, 99x = 27, x = 27/99 = 3/11.</p>
+
+      <h3>Example 4: 0.8333…</h3>
+      <p>Non-repeating part "8", repeating part "3". Numerator = 83 − 8 = 75. Denominator = 90 (one 9 for repeating digit, one 0 for non-repeating). 75/90 = 5/6.</p>
+
+      <h2 id="negative">Negative decimals</h2>
+      <p>Convert the absolute value to a fraction, then apply the negative sign:</p>
+      <Formula expr={f.neg} />
+      <p>−0.25 → 25/100 → GCD = 25 → 1/4 → −1/4.</p>
+
+      <h2 id="common-decimals">Common decimal–fraction reference table</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Decimal</th><th>Fraction</th><th>Percentage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.1</td><td>1/10</td><td>10%</td></tr>
+            <tr><td>0.125</td><td>1/8</td><td>12.5%</td></tr>
+            <tr><td>0.2</td><td>1/5</td><td>20%</td></tr>
+            <tr><td>0.25</td><td>1/4</td><td>25%</td></tr>
+            <tr><td>0.333…</td><td>1/3</td><td>33.33…%</td></tr>
+            <tr><td>0.375</td><td>3/8</td><td>37.5%</td></tr>
+            <tr><td>0.4</td><td>2/5</td><td>40%</td></tr>
+            <tr><td>0.5</td><td>1/2</td><td>50%</td></tr>
+            <tr><td>0.6</td><td>3/5</td><td>60%</td></tr>
+            <tr><td>0.625</td><td>5/8</td><td>62.5%</td></tr>
+            <tr><td>0.666…</td><td>2/3</td><td>66.67%</td></tr>
+            <tr><td>0.75</td><td>3/4</td><td>75%</td></tr>
+            <tr><td>0.8</td><td>4/5</td><td>80%</td></tr>
+            <tr><td>0.875</td><td>7/8</td><td>87.5%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Forgetting to simplify</h3>
+      <p>0.6 = 6/10, not the final answer — simplify with GCD(6,10) = 2 to get 3/5. Always divide by the GCD to reach the lowest terms.</p>
+
+      <h3>Treating 0.999… as less than 1</h3>
+      <p>0.999… is exactly equal to 1. Using the repeating formula: 9/9 = 1. This is a proven mathematical identity, not an approximation.</p>
+
+      <h3>Using the wrong power of 10 for repeating decimals</h3>
+      <p>For 0.121212…, the repeating block is "12" (length 2), so multiply by 10² = 100, not 10. 100x − x = 12, 99x = 12, x = 12/99 = 4/33.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you convert a decimal to a fraction?</h3>
+      <p>Count the decimal places (n). Write the digits as the numerator and 10<sup>n</sup> as the denominator. Simplify by dividing both by their GCD. Example: 0.75 → 75/100 ÷ 25 = 3/4.</p>
+
+      <h3>How do you convert a repeating decimal to a fraction?</h3>
+      <p>Let x equal the decimal. Multiply by 10<sup>n</sup> (n = repeating block length). Subtract x from the result to eliminate the repeating part. Solve for x and simplify.</p>
+
+      <h3>What is 0.5 as a fraction?</h3>
+      <p>0.5 = 5/10 = 1/2. One decimal place → denominator 10 → simplify with GCD(5,10) = 5.</p>
+
+      <h3>What is 0.333… as a fraction?</h3>
+      <p>0.333… = 1/3. The repeating block is "3": 9x = 3, x = 3/9 = 1/3.</p>
+
+      <h3>Can every decimal be written as a fraction?</h3>
+      <p>Every terminating and repeating decimal is a rational number expressible as a fraction. Irrational numbers (π, √2, e) have infinite non-repeating decimal expansions and cannot be expressed as exact fractions.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/fraction-calculator/fraction-to-decimal',           blurb: 'Reverse conversion — convert any fraction to its decimal form.' },
+        { path: '/math/fraction-calculator/simplify',                      blurb: 'Reduce any fraction to lowest terms using the GCD method.' },
+        { path: '/math/percentage-calculator/fraction-to-percent',         blurb: 'Convert any fraction to a percentage with step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',          blurb: 'Convert a decimal to a percentage — multiply by 100.' },
+        { path: '/math/fraction-calculator',                               blurb: 'The main fraction calculator — add, subtract, multiply, and divide fractions.' },
+        { path: '/math/fraction-calculator/equivalent',                    blurb: 'Generate equivalent fractions for any fraction.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

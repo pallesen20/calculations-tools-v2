@@ -1,0 +1,54 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Fraction to Decimal Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Fraction to Decimal</h2>
+        <p>Enter a fraction to convert it to a decimal</p>
+      </div>
+
+      <div class="fc-inputs" style="justify-content:center;">
+        <div class="fc-fraction">
+          <input type="text" inputmode="decimal" id="ftd-n" class="fc-frac-input" placeholder="1" />
+          <div class="fc-bar"></div>
+          <input type="text" inputmode="decimal" id="ftd-d" class="fc-frac-input" placeholder="3" />
+        </div>
+      </div>
+
+      <div id="ftd-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="ftd-decimal">—</span>
+        </div>
+        <div class="lbm-primary-lbl" id="ftd-type">—</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ftd-percent">—</div>
+            <div class="lbm-card-lbl">Percentage</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ftd-simplified">—</div>
+            <div class="lbm-card-lbl">Simplified fraction</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Division</span>
+            <span class="pi-step-val" id="ftd-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Result</span>
+            <span class="pi-step-val" id="ftd-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/fraction-to-decimal-calculator.js" is:inline></script>
+</EmbedLayout>

@@ -1,0 +1,53 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Improper Fraction to Mixed Number — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Improper Fraction to Mixed Number</h2>
+        <p>Enter an improper fraction (numerator ≥ denominator)</p>
+      </div>
+
+      <div class="fc-inputs" style="justify-content:center;">
+        <div class="fc-fraction">
+          <input type="text" inputmode="decimal" id="itm-n" class="fc-frac-input" placeholder="7" />
+          <div class="fc-bar"></div>
+          <input type="text" inputmode="decimal" id="itm-d" class="fc-frac-input" placeholder="4" />
+        </div>
+      </div>
+
+      <div id="itm-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val">
+            <span id="itm-whole">—</span>
+            <span id="itm-rem-row"> <span id="itm-rem-n">—</span>/<span id="itm-rem-d">—</span></span>
+          </span>
+        </div>
+        <div class="lbm-primary-lbl">Mixed number</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="itm-decimal">—</div>
+            <div class="lbm-card-lbl">Decimal</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — Divide</span>
+            <span class="pi-step-val" id="itm-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — Simplify remainder</span>
+            <span class="pi-step-val" id="itm-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/improper-to-mixed-calculator.js" is:inline></script>
+</EmbedLayout>

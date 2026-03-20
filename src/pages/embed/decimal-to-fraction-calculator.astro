@@ -1,0 +1,55 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Decimal to Fraction Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Decimal to Fraction</h2>
+        <p>Enter a decimal to convert it to a fraction</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="dtf-input">Decimal</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="dtf-input" class="bmi-input" placeholder="e.g. 0.75" />
+        </div>
+      </div>
+
+      <div id="dtf-result" class="lbm-result hidden">
+        <div class="fc-result-fraction">
+          <span id="dtf-num" class="fc-res-num">—</span>
+          <div class="fc-res-bar"></div>
+          <span id="dtf-den" class="fc-res-den">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Fraction (simplified)</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card hidden" id="dtf-mixed-card">
+            <div class="lbm-card-val" id="dtf-mixed">—</div>
+            <div class="lbm-card-lbl">Mixed number</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">How it was calculated</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 — Method</span>
+            <span class="pi-step-val" id="dtf-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 — Simplify (GCD)</span>
+            <span class="pi-step-val" id="dtf-step2">—</span>
+          </div>
+          <div class="pi-step hidden" id="dtf-note-row">
+            <span class="pi-step-label">Note</span>
+            <span class="pi-step-val" id="dtf-note">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/decimal-to-fraction-calculator.js" is:inline></script>
+</EmbedLayout>

@@ -1,0 +1,99 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="3-Part Ratio Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>3-Part Ratio Calculator</h2>
+        <p>Split a quantity in an a:b:c ratio</p>
+      </div>
+
+      <div class="tw-ratio-row">
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="tw-a">Part A</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="tw-a" class="bmi-input" placeholder="e.g. 2" />
+          </div>
+        </div>
+        <div class="tw-colon">:</div>
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="tw-b">Part B</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="tw-b" class="bmi-input" placeholder="e.g. 3" />
+          </div>
+        </div>
+        <div class="tw-colon">:</div>
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="tw-c">Part C</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="tw-c" class="bmi-input" placeholder="e.g. 5" />
+          </div>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="tw-total">Total to split (optional)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="tw-total" class="bmi-input" placeholder="e.g. 1000" />
+        </div>
+      </div>
+
+      <div id="tw-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="tw-pct-a">—</div>
+            <div class="lbm-card-lbl">Part A (%)</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="tw-pct-b">—</div>
+            <div class="lbm-card-lbl">Part B (%)</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="tw-pct-c">—</div>
+            <div class="lbm-card-lbl">Part C (%)</div>
+          </div>
+        </div>
+
+        <div id="tw-split-cards" class="lbm-cards hidden" style="margin-top:0.5rem;">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="tw-share-a">—</div>
+            <div class="lbm-card-lbl">A's share</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="tw-share-b">—</div>
+            <div class="lbm-card-lbl">B's share</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="tw-share-c">—</div>
+            <div class="lbm-card-lbl">C's share</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Total parts</span>
+            <span class="pi-step-val" id="tw-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Percentages</span>
+            <span class="pi-step-val" id="tw-step2">—</span>
+          </div>
+          <div class="pi-step hidden" id="tw-split-row">
+            <span class="pi-step-label">Shares</span>
+            <span class="pi-step-val" id="tw-step3">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .tw-ratio-row { display:flex; align-items:flex-end; gap:0.4rem; }
+    .tw-colon { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); padding-bottom:0.75rem; }
+  </style>
+
+  <script src="/js/three-way-ratio-calculator.js" is:inline></script>
+</EmbedLayout>

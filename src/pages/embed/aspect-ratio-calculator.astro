@@ -1,0 +1,98 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Aspect Ratio Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Aspect Ratio Calculator</h2>
+        <p>Simplify width &amp; height to a ratio</p>
+      </div>
+
+      <div class="ar-dims">
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="ar-w">Width</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ar-w" class="bmi-input" placeholder="e.g. 1920" />
+          </div>
+        </div>
+        <div class="ar-x">×</div>
+        <div class="bmi-field" style="flex:1;">
+          <label class="bmi-label" for="ar-h">Height</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ar-h" class="bmi-input" placeholder="e.g. 1080" />
+          </div>
+        </div>
+      </div>
+
+      <div id="ar-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="ar-ratio">—</span>
+        </div>
+        <div class="lbm-primary-lbl">Aspect ratio</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ar-decimal">—</div>
+            <div class="lbm-card-lbl">Decimal (W÷H)</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ar-percent">—</div>
+            <div class="lbm-card-lbl">Height as % of width</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">GCD</span>
+            <span class="pi-step-val" id="ar-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Simplify</span>
+            <span class="pi-step-val" id="ar-step2">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.25rem;">
+        <div class="ar-mode-label">Resize while preserving ratio</div>
+        <div class="ar-modes">
+          <button class="ar-mode-btn active" data-mode="find">I know the new width</button>
+          <button class="ar-mode-btn" data-mode="findw">I know the new height</button>
+        </div>
+        <div class="ar-dims">
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" id="ar-target1-lbl" for="ar-target1">New width</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ar-target1" class="bmi-input" placeholder="e.g. 1280" />
+            </div>
+          </div>
+          <div class="ar-x">→</div>
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" id="ar-target2-lbl" for="ar-target2">New height (calculated)</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ar-target2" class="bmi-input" placeholder="—" readonly />
+            </div>
+          </div>
+        </div>
+        <div class="pi-step hidden" id="ar-resize-row" style="background:rgba(139,92,246,0.1);border-radius:6px;padding:0.5rem 0.75rem;margin-top:0.5rem;">
+          <span class="pi-step-label">Resize calculation</span>
+          <span class="pi-step-val" id="ar-resize-val">—</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .ar-dims { display:flex; align-items:flex-end; gap:0.5rem; }
+    .ar-x { font-size:1.25rem; font-weight:700; color:rgba(255,255,255,0.5); padding-bottom:0.75rem; }
+    .ar-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem; margin-top:0.35rem; }
+    .ar-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
+    .ar-mode-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
+    .ar-mode-label { font-size:0.8rem; color:rgba(255,255,255,0.5); margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.05em; }
+  </style>
+
+  <script src="/js/aspect-ratio-calculator.js" is:inline></script>
+</EmbedLayout>

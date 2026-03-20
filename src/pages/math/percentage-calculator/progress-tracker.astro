@@ -1,0 +1,242 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  pct:     "$$\\text{Progress} = \\frac{\\text{Current}}{\\text{Goal}} \\times 100$$",
+  daily:   "$$\\text{Daily rate needed} = \\frac{\\text{Remaining}}{\\text{Days left}}$$",
+  weekly:  "$$\\text{Weekly rate needed} = \\text{Daily rate} \\times 7$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'what-is',      label: 'What is a progress tracker?' },
+  { id: 'formula',      label: 'Formula & calculation' },
+  { id: 'deadline',     label: 'Deadline & rate planning' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'applications', label: 'Common use cases' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Progress Tracker Calculator",
+    "url": "https://calculations.tools/math/percentage-calculator/progress-tracker",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Track progress toward any goal with a visual progress bar. Enter your current value, target, and optional deadline to see percentage complete, amount remaining, and required daily or weekly rate.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you calculate progress toward a goal?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide the current value by the goal and multiply by 100. Progress % = (Current ÷ Goal) × 100. If you have saved $3,000 toward a $10,000 goal, progress = 3000 ÷ 10000 × 100 = 30%." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate the daily rate needed to reach a goal by a deadline?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Subtract the current value from the goal to find the remaining amount. Divide by the number of days left. Daily rate = (Goal − Current) ÷ Days left. For a $7,000 remaining over 140 days, you need $50 per day." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens when progress exceeds 100%?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A result above 100% means you have exceeded your goal. The progress bar fills completely and turns green. This is valid and desirable — it shows over-achievement. No daily rate is needed once the goal is reached." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Progress Tracker Calculator"
+  metaTitle="Progress Tracker | Visualize Goal Progress with % Bar"
+  description="Track progress toward any goal with a visual progress bar. Enter your current value, goal, and optional deadline to see percentage complete and required daily rate."
+  canonical="https://calculations.tools/math/percentage-calculator/progress-tracker"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="progress-tracker"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Goal Progress Tracker</h2>
+          <p>Visualize how close you are to your target</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pt-current">Current value</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="pt-current" class="bmi-input" placeholder="e.g. 3000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pt-goal">Goal</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="pt-goal" class="bmi-input" placeholder="e.g. 10000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pt-deadline">Deadline (optional)</label>
+          <div class="bmi-input-wrap">
+            <input type="date" id="pt-deadline" class="bmi-input" />
+          </div>
+        </div>
+
+        <div id="pt-result" class="lbm-result hidden">
+          <div class="pt-bar-wrap">
+            <div class="pt-bar-track">
+              <div class="pt-bar-fill" id="pt-bar-fill" style="width:0%"></div>
+            </div>
+            <div class="pt-bar-pct" id="pt-pct-val">0%</div>
+          </div>
+
+          <div class="lbm-cards" style="margin-top:0.75rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pt-pct-val2" style="display:none">—</div>
+              <div class="lbm-card-val" id="pt-remaining">—</div>
+              <div class="lbm-card-lbl">Status</div>
+            </div>
+          </div>
+
+          <div id="pt-deadline-rows" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pt-days-left">—</div>
+              <div class="lbm-card-lbl">Days left</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pt-daily">—</div>
+              <div class="lbm-card-lbl">Required daily</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="pt-weekly">—</div>
+              <div class="lbm-card-lbl">Required weekly</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1 — Divide</span>
+              <span class="pi-step-val" id="pt-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2 — × 100</span>
+              <span class="pi-step-val" id="pt-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>
+      .pt-bar-wrap  { margin-top:0.5rem; }
+      .pt-bar-track { background:rgba(255,255,255,0.1); border-radius:99px; height:18px; overflow:hidden; position:relative; }
+      .pt-bar-fill  { height:100%; border-radius:99px; background:linear-gradient(90deg,#3b82f6,#8b5cf6); transition:width 0.4s ease, background 0.3s; min-width:0; }
+      .pt-bar-fill.pt-bar-exceeded { background:linear-gradient(90deg,#22c55e,#16a34a); }
+      .pt-bar-pct   { text-align:center; font-size:1.6rem; font-weight:700; color:white; margin-top:0.4rem; }
+      input[type="date"].bmi-input { color-scheme:dark; }
+    </style>
+
+    <script src="/js/progress-tracker.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Progress % = <strong>(Current ÷ Goal) × 100</strong>. For a deadline: daily rate needed = (Goal − Current) ÷ days left. Example: $3,000 saved toward a $10,000 goal = <strong>30% complete</strong>; with 140 days to deadline = <strong>$50/day</strong> needed.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter your current value and goal. The visual progress bar fills to show percentage complete and the remaining amount is displayed instantly. Optionally add a deadline date — the calculator then shows the number of days remaining and the daily and weekly rate required to reach the goal on time.</p>
+
+      <h2 id="what-is">What is a goal progress tracker?</h2>
+      <p>A goal progress tracker measures how far along you are toward a defined target, expressed as a percentage and shown visually. Unlike a simple percentage calculator, a progress tracker is goal-oriented: it answers not just "how much have I done?" but "how much is left, and how fast do I need to go?"</p>
+      <p>Progress tracking is used across fitness goals, savings targets, sales quotas, fundraising campaigns, project milestones, and learning objectives — any situation where you have a known starting position, a defined target, and a desire to know how close you are.</p>
+
+      <h2 id="formula">Formula and calculation</h2>
+      <p>Percentage complete is calculated from current value and goal:</p>
+      <Formula expr={f.pct} />
+      <p>The result can exceed 100% if you surpass the goal — this is valid and represents over-achievement. The progress bar turns green when you exceed 100%.</p>
+
+      <h2 id="deadline">Deadline and required rate</h2>
+      <p>When you add a deadline, the calculator computes the pace required to reach the goal on time:</p>
+      <Formula expr={f.daily} />
+      <Formula expr={f.weekly} />
+      <p>These rates assume consistent daily progress from today. If your progress is uneven (e.g. weekdays only, or sprint-based), adjust the days-remaining figure accordingly.</p>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Scenario</th><th>Current</th><th>Goal</th><th>Progress</th><th>Remaining</th></tr></thead>
+          <tbody>
+            <tr><td>Emergency fund savings</td><td>$3,000</td><td>$10,000</td><td>30%</td><td>$7,000</td></tr>
+            <tr><td>Annual sales quota</td><td>62,000</td><td>80,000</td><td>77.5%</td><td>18,000</td></tr>
+            <tr><td>Steps today</td><td>7,432</td><td>10,000</td><td>74.3%</td><td>2,568</td></tr>
+            <tr><td>Words written</td><td>45,000</td><td>80,000</td><td>56.25%</td><td>35,000</td></tr>
+            <tr><td>Fundraising campaign</td><td>$12,500</td><td>$15,000</td><td>83.3%</td><td>$2,500</td></tr>
+            <tr><td>Course completion</td><td>24</td><td>30</td><td>80%</td><td>6 lessons</td></tr>
+            <tr><td>Goal exceeded</td><td>1,050</td><td>1,000</td><td>105%</td><td>50 over goal</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="applications">Common use cases</h2>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Domain</th><th>Current value</th><th>Goal</th><th>What the rate tells you</th></tr></thead>
+          <tbody>
+            <tr><td>Personal savings</td><td>Amount saved</td><td>Savings target</td><td>How much to save per day/week</td></tr>
+            <tr><td>Fitness / steps</td><td>Steps today</td><td>Daily target</td><td>Pace needed to hit 10k by midnight</td></tr>
+            <tr><td>Weight loss</td><td>Weight lost (kg)</td><td>Target loss</td><td>Rate of loss needed by target date</td></tr>
+            <tr><td>Sales quota</td><td>Revenue closed</td><td>Quarter target</td><td>Daily bookings needed to hit quota</td></tr>
+            <tr><td>Fundraising</td><td>Donations received</td><td>Campaign goal</td><td>Daily donations needed by campaign end</td></tr>
+            <tr><td>Learning / reading</td><td>Pages / lessons done</td><td>Total pages / lessons</td><td>Daily pace to finish by deadline</td></tr>
+            <tr><td>Project milestones</td><td>Tasks completed</td><td>Total tasks</td><td>Tasks per day to hit delivery date</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you calculate progress toward a goal?</h3>
+      <p>Divide current by goal and multiply by 100: (Current ÷ Goal) × 100. A $3,000 balance against a $10,000 goal is 30% complete.</p>
+
+      <h3>How do you calculate the daily rate needed to reach a goal by a deadline?</h3>
+      <p>Subtract current from goal to get the remaining amount. Divide by days left. $7,000 remaining over 140 days = $50/day needed.</p>
+
+      <h3>What happens when progress exceeds 100%?</h3>
+      <p>The bar fills completely and turns green, indicating over-achievement. No required rate is shown — you have already reached your goal.</p>
+
+      <h3>What is the difference between this and the percent-to-goal calculator?</h3>
+      <p>The <a href="/math/percentage-calculator/percent-to-goal">percent to goal calculator</a> is a focused tool for the single formula (Current ÷ Goal × 100). This progress tracker adds a visual bar, deadline input, and required rate calculation — it's designed for ongoing tracking rather than a one-off calculation.</p>
+
+      <h3>Can I use this for weight loss or reduction goals?</h3>
+      <p>Yes — enter how much you have already reduced (not your current weight) as the current value, and the total amount you want to reduce as the goal. If you want to lose 10 kg and have lost 3 kg so far, enter current = 3 and goal = 10 to get 30% complete.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/percentage-calculator/percent-to-goal',  blurb: 'Simple percent-to-goal calculation — (Current ÷ Goal) × 100.' },
+        { path: '/math/percentage-calculator',                   blurb: 'The main percentage calculator — percentage of a number, increase, decrease.' },
+        { path: '/math/percentage-calculator/change',            blurb: 'Percent change calculator — measure growth from a starting value.' },
+        { path: '/math/percentage-calculator/average',           blurb: 'Average percentage calculator — mean and weighted average of percentages.' },
+        { path: '/math/ratio-calculator/unit-rate',              blurb: 'Calculate the rate per single unit.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

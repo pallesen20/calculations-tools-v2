@@ -1,0 +1,248 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+
+const f = {
+  def:      "$$a : b = \\frac{a}{b}$$",
+  simplify: "$$a : b = \\frac{a}{\\gcd(a,b)} : \\frac{b}{\\gcd(a,b)}$$",
+  ex1:      "$$12 : 8 = \\frac{12}{\\gcd(12,8)} : \\frac{8}{\\gcd(12,8)} = \\frac{12}{4} : \\frac{8}{4} = 3 : 2$$",
+  scale:    "$$a : b = (a \\times k) : (b \\times k) \\quad \\text{for any } k > 0$$",
+  equiv:    "$$a : b = c : d \\iff a \\times d = b \\times c$$",
+  part:     "$$\\text{Part} = \\frac{a}{a+b} \\times \\text{Total}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'what-is',      label: 'What is a ratio?' },
+  { id: 'simplify',     label: 'Simplifying ratios' },
+  { id: 'scaling',      label: 'Scaling ratios' },
+  { id: 'dividing',     label: 'Dividing a quantity in a ratio' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'tools',        label: 'Ratio tool suite' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Ratio Calculator",
+    "url": "https://calculations.tools/math/ratio-calculator",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Simplify ratios, find equivalent ratios, and scale ratios. Shows the simplified ratio, fraction form, decimal, and step-by-step GCD workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you simplify a ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide both terms of the ratio by their GCD (Greatest Common Divisor). For example, 12:8 — GCD(12,8) = 4, so 12:8 = 3:2." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A ratio compares two quantities by showing how many times one value contains or is contained in the other. Written as a:b or a/b, it expresses the relative sizes of the quantities. A ratio of 3:2 means for every 3 units of the first quantity, there are 2 units of the second." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you find an equivalent ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply both terms by the same non-zero number. For example, 3:2 scaled by 4 gives 12:8. Verify equivalence with cross-multiplication: a:b = c:d when a × d = b × c." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Ratio Calculator"
+  metaTitle="Ratio Calculator | Simplify, Scale & Compare Ratios"
+  description="Simplify ratios, find equivalent ratios, and scale ratios to any multiplier. Shows the GCD step, simplified ratio, fraction form, decimal, and scaled values."
+  canonical="https://calculations.tools/math/ratio-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="ratio-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Simplified Ratios</h2>
+          <p>Enter a ratio to simplify it and find scaled equivalents</p>
+        </div>
+
+        <div class="ratio-row">
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" for="rc-a">First value (a)</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="rc-a" class="bmi-input" placeholder="12" />
+            </div>
+          </div>
+          <div class="ratio-colon">:</div>
+          <div class="bmi-field" style="flex:1;">
+            <label class="bmi-label" for="rc-b">Second value (b)</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="rc-b" class="bmi-input" placeholder="8" />
+            </div>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="rc-scale">Scale multiplier (optional)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="rc-scale" class="bmi-input" placeholder="e.g. 5" />
+          </div>
+        </div>
+
+        <div id="rc-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="rc-simplified">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Simplified ratio</div>
+
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="rc-fraction">—</div>
+              <div class="lbm-card-lbl">As fraction (a/b)</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="rc-decimal">—</div>
+              <div class="lbm-card-lbl">Decimal</div>
+            </div>
+          </div>
+
+          <div class="pi-step hidden" id="rc-scale-row" style="background:rgba(139,92,246,0.1);border-radius:6px;padding:0.5rem 0.75rem;margin-top:0.5rem;">
+            <span class="pi-step-label">Scaled ratio (simplified × multiplier)</span>
+            <span class="pi-step-val"><span id="rc-scaled-a">—</span> : <span id="rc-scaled-b">—</span></span>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step">
+              <span class="pi-step-label">GCD</span>
+              <span class="pi-step-val" id="rc-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Divide both by GCD</span>
+              <span class="pi-step-val" id="rc-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>
+      .ratio-row   { display:flex; align-items:flex-end; gap:0.5rem; }
+      .ratio-colon { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); padding-bottom:0.75rem; }
+    </style>
+
+    <script src="/js/ratio-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>To simplify a ratio a:b, <strong>divide both terms by their GCD</strong>. 12:8 → GCD = 4 → <strong>3:2</strong>. Equivalent ratios are found by multiplying both terms by the same number.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the two terms of your ratio. Optionally enter a scale multiplier to generate a scaled equivalent. The calculator returns the simplified ratio, fraction form, decimal value, and step-by-step GCD workings.</p>
+
+      <h2 id="what-is">What is a ratio?</h2>
+      <p>A ratio compares two quantities and shows their relative sizes:</p>
+      <Formula expr={f.def} />
+      <p>A ratio of 3:2 means for every 3 units of the first quantity, there are 2 units of the second. Ratios can represent parts-to-parts (mixing ratios) or parts-to-whole (share ratios). They are dimensionless — 3:2 is the same whether counting apples, millilitres, or dollars.</p>
+
+      <h2 id="simplify">Simplifying ratios</h2>
+      <p>A ratio is in its simplest form when the two terms share no common factor other than 1. To simplify, divide both by their GCD:</p>
+      <Formula expr={f.simplify} />
+      <Formula expr={f.ex1} />
+      <p>GCD(12,8) = 4. 12 ÷ 4 = 3, 8 ÷ 4 = 2. Simplified ratio: 3:2.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Ratio</th><th>GCD</th><th>Simplified</th><th>As fraction</th></tr></thead>
+          <tbody>
+            <tr><td>4:6</td><td>2</td><td>2:3</td><td>2/3</td></tr>
+            <tr><td>15:10</td><td>5</td><td>3:2</td><td>3/2</td></tr>
+            <tr><td>18:24</td><td>6</td><td>3:4</td><td>3/4</td></tr>
+            <tr><td>100:75</td><td>25</td><td>4:3</td><td>4/3</td></tr>
+            <tr><td>7:14</td><td>7</td><td>1:2</td><td>1/2</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="scaling">Scaling ratios</h2>
+      <p>Multiplying both terms by the same number k gives an equivalent ratio:</p>
+      <Formula expr={f.scale} />
+      <p>To verify equivalence, cross-multiply:</p>
+      <Formula expr={f.equiv} />
+      <p>3:2 = 15:10? 3 × 10 = 30 and 2 × 15 = 30. Equal products — equivalent. ✓</p>
+      <p>Scaling up is used in cooking (scaling a recipe), engineering (scale drawings), and finance (scaling returns to a portfolio size).</p>
+
+      <h2 id="dividing">Dividing a quantity in a ratio</h2>
+      <p>To divide a total amount T between two parts in ratio a:b:</p>
+      <Formula expr={f.part} />
+      <p>Divide £500 in ratio 3:2: total parts = 5. Part A = (3/5) × 500 = £300. Part B = (2/5) × 500 = £200. Check: 300 + 200 = 500 ✓.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: simplify 36:48</h3>
+      <p>GCD(36, 48) = 12. 36 ÷ 12 = 3, 48 ÷ 12 = 4. Simplified: 3:4.</p>
+
+      <h3>Example 2: find a ratio equivalent to 5:3 with first term 20</h3>
+      <p>Scale factor: 20 ÷ 5 = 4. Second term: 3 × 4 = 12. Equivalent ratio: 20:12.</p>
+
+      <h3>Example 3: divide 90 kg in ratio 2:1</h3>
+      <p>Total parts = 3. Part 1 = (2/3) × 90 = 60 kg. Part 2 = (1/3) × 90 = 30 kg.</p>
+
+      <h2 id="tools">Ratio tool suite</h2>
+      <p>This hub covers ratio simplification and scaling. For more specific ratio calculations:</p>
+      <ul>
+        <li><a href="/math/ratio-calculator/proportion"><strong>Proportion Calculator</strong></a> — solve a:b = c:d for the missing value (cross-multiplication)</li>
+        <li><a href="/math/ratio-calculator/unit-rate"><strong>Unit Rate Calculator</strong></a> — find the rate per single unit (e.g. price per item)</li>
+        <li><a href="/math/ratio-calculator/golden-ratio"><strong>Golden Ratio Calculator</strong></a> — find dimensions based on φ ≈ 1.618</li>
+      </ul>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Adding instead of multiplying to scale</h3>
+      <p>3:2 + 4 ≠ 7:6. Adding 4 to both terms changes the ratio. To scale, multiply: 3:2 × 4 = 12:8.</p>
+
+      <h3>Confusing ratio with fraction</h3>
+      <p>A ratio 3:5 means 3 parts first and 5 parts second. As a fraction of the total, the first part is 3/(3+5) = 3/8 — not 3/5. The fraction a/b represents the ratio a:b, but the fraction of the whole is a/(a+b).</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you simplify a ratio?</h3>
+      <p>Divide both terms by their GCD. 12:8 → GCD = 4 → 3:2.</p>
+
+      <h3>What is a ratio?</h3>
+      <p>A comparison of two quantities showing their relative sizes. Written a:b or a/b. Dimensionless.</p>
+
+      <h3>How do you find an equivalent ratio?</h3>
+      <p>Multiply both terms by the same number k. Verify with cross-multiplication.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/ratio-calculator/proportion',   blurb: 'Solve a:b = c:d for the missing value with cross-multiplication.' },
+        { path: '/math/ratio-calculator/unit-rate',    blurb: 'Calculate the rate per single unit from any two quantities.' },
+        { path: '/math/ratio-calculator/golden-ratio', blurb: 'Find dimensions based on the golden ratio φ ≈ 1.618.' },
+        { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions directly to determine which is larger.' },
+        { path: '/math/fraction-calculator',           blurb: 'Fraction calculator — add, subtract, multiply, divide fractions.' },
+        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, increase, decrease.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

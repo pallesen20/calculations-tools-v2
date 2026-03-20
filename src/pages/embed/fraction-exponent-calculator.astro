@@ -1,0 +1,70 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Fraction Exponent Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Fraction Exponent Calculator</h2>
+        <p>Raise a fraction to a whole or fractional exponent</p>
+      </div>
+
+      <div class="fe-layout">
+        <div class="fe-group">
+          <div class="bmi-label" style="text-align:center;margin-bottom:0.4rem;">Base</div>
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="fe-base-n" class="fc-frac-input" placeholder="3" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="fe-base-d" class="fc-frac-input" placeholder="4" />
+          </div>
+        </div>
+        <div class="fe-caret">^</div>
+        <div class="fe-group">
+          <div class="bmi-label" style="text-align:center;margin-bottom:0.4rem;">Exponent</div>
+          <div class="fc-fraction">
+            <input type="text" inputmode="decimal" id="fe-exp-n" class="fc-frac-input" placeholder="2" />
+            <div class="fc-bar"></div>
+            <input type="text" inputmode="decimal" id="fe-exp-d" class="fc-frac-input" placeholder="1" />
+          </div>
+        </div>
+      </div>
+
+      <div id="fe-result" class="lbm-result hidden">
+        <div class="fc-result-fraction">
+          <span id="fe-res-n" class="fc-res-num">—</span>
+          <div class="fc-res-bar" id="fe-res-bar"></div>
+          <span id="fe-res-d" class="fc-res-den"></span>
+        </div>
+        <div class="lbm-primary-lbl">Result</div>
+
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="fe-decimal">—</div>
+            <div class="lbm-card-lbl">Decimal</div>
+          </div>
+        </div>
+
+        <div class="pi-steps">
+          <div class="pi-steps-title">Step-by-step</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1</span>
+            <span class="pi-step-val" id="fe-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2</span>
+            <span class="pi-step-val" id="fe-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style is:global>
+    .fe-layout { display:flex; align-items:center; gap:0.75rem; justify-content:center; margin:1rem 0; }
+    .fe-group  { display:flex; flex-direction:column; align-items:center; }
+    .fe-caret  { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); margin-top:1.2rem; }
+  </style>
+
+  <script src="/js/fraction-exponent-calculator.js" is:inline></script>
+</EmbedLayout>

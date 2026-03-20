@@ -1,0 +1,255 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+
+const f = {
+  def:     "$$\\frac{a}{b} = \\frac{c}{d} \\iff a \\times d = b \\times c$$",
+  solveD:  "$$d = \\frac{b \\times c}{a}$$",
+  solveA:  "$$a = \\frac{b \\times c}{d}$$",
+  ex1:     "$$\\frac{3}{4} = \\frac{9}{d}: \\quad d = \\frac{4 \\times 9}{3} = 12$$",
+  ex2:     "$$\\frac{5}{8} = \\frac{c}{24}: \\quad c = \\frac{5 \\times 24}{8} = 15$$",
+  direct:  "$$y = kx \\implies \\frac{y_1}{x_1} = \\frac{y_2}{x_2}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'definition',   label: 'What is a proportion?' },
+  { id: 'cross-mult',   label: 'Cross-multiplication method' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'direct',       label: 'Direct vs inverse proportion' },
+  { id: 'applications', label: 'Real-world applications' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Proportion Calculator",
+    "url": "https://calculations.tools/math/ratio-calculator/proportion",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Solve any proportion (a:b = c:d) for the missing value using cross-multiplication. Shows step-by-step workings and verifies the result.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you solve a proportion?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use cross-multiplication. In the proportion a/b = c/d, multiply across diagonals: a × d = b × c. To find the missing value, divide both sides by the coefficient of the unknown. For example, 3/4 = 9/d: 3d = 4 × 9 = 36, so d = 12." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a proportion?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A proportion states that two ratios are equal: a/b = c/d (or equivalently a:b = c:d). It describes a relationship where quantities scale together. Cross-multiplication (a × d = b × c) is used to verify or solve proportions." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between ratio and proportion?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A ratio (a:b) compares two quantities. A proportion is an equation stating that two ratios are equal (a:b = c:d). All proportions involve ratios, but not all ratios are part of a proportion." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Proportion Calculator"
+  metaTitle="Proportion Calculator | Solve a:b = c:d Step-by-Step"
+  description="Solve any proportion for the missing value. Enter three of four values (a, b, c, d) to find the fourth using cross-multiplication, with step-by-step verification."
+  canonical="https://calculations.tools/math/ratio-calculator/proportion"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="proportion-calculator"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Proportion to Find Missing Value</h2>
+          <p>Solve a : b = c : d for the missing value</p>
+        </div>
+
+        <div class="prop-miss-row">
+          <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Solve for:</span>
+          <button class="prop-miss-btn" data-miss="a">A</button>
+          <button class="prop-miss-btn" data-miss="b">B</button>
+          <button class="prop-miss-btn" data-miss="c">C</button>
+          <button class="prop-miss-btn active" data-miss="d">D</button>
+        </div>
+
+        <div class="prop-grid">
+          <div class="prop-side">
+            <div class="bmi-field">
+              <label class="bmi-label" for="prop-a">A</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="prop-a" class="bmi-input" placeholder="3" />
+              </div>
+            </div>
+            <div class="prop-colon">:</div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="prop-b">B</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="prop-b" class="bmi-input" placeholder="4" />
+              </div>
+            </div>
+          </div>
+          <div class="prop-equals">=</div>
+          <div class="prop-side">
+            <div class="bmi-field">
+              <label class="bmi-label" for="prop-c">C</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="prop-c" class="bmi-input" placeholder="9" />
+              </div>
+            </div>
+            <div class="prop-colon">:</div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="prop-d">D</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="prop-d" class="bmi-input" placeholder="?" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="prop-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="prop-result-val">—</span>
+          </div>
+          <div class="lbm-primary-lbl">Value of <span id="prop-missing-lbl">D</span></div>
+
+          <div class="pi-steps">
+            <div class="pi-steps-title">Step-by-step</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Cross-multiply</span>
+              <span class="pi-step-val" id="prop-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Solve</span>
+              <span class="pi-step-val" id="prop-step2">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Verify (a×d = b×c)</span>
+              <span class="pi-step-val" id="prop-verify">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style is:global>input:disabled { opacity:0.4; }</style>
+
+    <script src="/js/proportion-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>To solve a proportion a:b = c:d for the missing value, use <strong>cross-multiplication</strong>: a × d = b × c. Isolate the unknown by dividing both sides by its coefficient. Example: 3:4 = 9:d → 3d = 36 → <strong>d = 12</strong>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Select which variable you want to solve for (A, B, C, or D). Enter the three known values. The calculator solves for the missing value using cross-multiplication and verifies the result.</p>
+
+      <h2 id="definition">What is a proportion?</h2>
+      <p>A proportion is an equation stating that two ratios are equal:</p>
+      <Formula expr={f.def} />
+      <p>A proportion describes a scaling relationship: if a/b = c/d, then multiplying a and b by the same factor k gives c and d. Proportions appear wherever quantities scale together — recipes, maps, unit conversions, similar triangles, and financial ratios.</p>
+
+      <h2 id="cross-mult">Cross-multiplication method</h2>
+      <p>Given a/b = c/d, multiply both sides by b × d to eliminate the denominators:</p>
+      <p>a × d = b × c</p>
+      <p>To solve for each variable:</p>
+      <Formula expr={f.solveD} />
+      <Formula expr={f.solveA} />
+      <p>The other two: b = a×d/c and c = a×d/b. In every case, the missing variable equals the product of the two values on the opposite diagonal, divided by the remaining known value.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: find d given 3/4 = 9/d</h3>
+      <Formula expr={f.ex1} />
+      <p>Cross-multiply: 3d = 4 × 9 = 36. Divide by 3: d = 12. Verify: 3 × 12 = 36 = 4 × 9 ✓.</p>
+
+      <h3>Example 2: find c given 5/8 = c/24</h3>
+      <Formula expr={f.ex2} />
+      <p>Cross-multiply: 8c = 5 × 24 = 120. Divide by 8: c = 15. Verify: 5 × 24 = 120 = 8 × 15 ✓.</p>
+
+      <h3>Example 3: recipe scaling</h3>
+      <p>A recipe uses 250 g flour for 4 servings. For 10 servings: 250/4 = x/10 → 4x = 2500 → x = 625 g.</p>
+
+      <h3>Example 4: map scale</h3>
+      <p>1 cm on a map = 5 km in reality. Distance on map = 3.5 cm. Real distance: 1/5 = 3.5/d → d = 17.5 km.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Proportion</th><th>Missing</th><th>Calculation</th><th>Answer</th></tr></thead>
+          <tbody>
+            <tr><td>2:5 = 8:?</td><td>d</td><td>d = 5×8/2</td><td>20</td></tr>
+            <tr><td>?:3 = 10:15</td><td>a</td><td>a = 3×10/15</td><td>2</td></tr>
+            <tr><td>7:b = 14:6</td><td>b</td><td>b = 7×6/14</td><td>3</td></tr>
+            <tr><td>4:9 = c:27</td><td>c</td><td>c = 4×27/9</td><td>12</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="direct">Direct vs inverse proportion</h2>
+      <p>This calculator solves <strong>direct proportions</strong> where a/b = c/d — as one quantity increases, the other increases proportionally:</p>
+      <Formula expr={f.direct} />
+      <p><strong>Inverse proportion</strong> means as one quantity increases, the other decreases: a × b = c × d (constant product). For example, 4 workers take 6 days; 8 workers take 3 days. Inverse proportion is a different relationship and is not solved by this calculator.</p>
+
+      <h2 id="applications">Real-world applications</h2>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Domain</th><th>Example proportion</th></tr></thead>
+          <tbody>
+            <tr><td>Cooking</td><td>250 g : 4 servings = x g : 10 servings</td></tr>
+            <tr><td>Maps</td><td>1 cm : 5 km = 3.5 cm : d km</td></tr>
+            <tr><td>Finance</td><td>£3 interest : £100 = £x : £850</td></tr>
+            <tr><td>Speed</td><td>60 km : 1 hr = 450 km : h hr</td></tr>
+            <tr><td>Geometry</td><td>3 cm : 5 cm = 9 cm : x cm (similar triangles)</td></tr>
+            <tr><td>Chemistry</td><td>2 mol H₂ : 1 mol O₂ = x mol H₂ : 5 mol O₂</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Setting up the proportion backwards</h3>
+      <p>Proportion direction matters. For "3 workers take 4 days; how long for 6 workers?" the correct proportion is <em>not</em> 3/4 = 6/d (that's inverse proportion). Recognise whether the quantities scale in the same direction (direct) or opposite directions (inverse) before writing the proportion.</p>
+
+      <h3>Cross-multiplying the wrong pair</h3>
+      <p>In a/b = c/d, the cross-multiplication is a×d = b×c (diagonals). A common error is to multiply a×c or b×d instead.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do you solve a proportion?</h3>
+      <p>Cross-multiply: a × d = b × c. Isolate the unknown by dividing by its coefficient.</p>
+
+      <h3>What is a proportion?</h3>
+      <p>An equation stating two ratios are equal: a/b = c/d. Describes quantities that scale together.</p>
+
+      <h3>What is the difference between ratio and proportion?</h3>
+      <p>A ratio (a:b) compares two quantities. A proportion is an equation equating two ratios (a:b = c:d).</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/ratio-calculator',              blurb: 'Simplify ratios and find equivalent ratios.' },
+        { path: '/math/ratio-calculator/unit-rate',    blurb: 'Calculate the rate per single unit.' },
+        { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions using cross-multiplication.' },
+        { path: '/math/percentage-calculator/change',  blurb: 'Percentage change between two values.' },
+        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — all four operations.' },
+      ]} />
+
+    </div>
+  </div>
+
+</CalculatorLayout>
