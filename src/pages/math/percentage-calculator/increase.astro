@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 
 const f = {
   main:    "$$\\% \\text{ Increase} = \\frac{\\text{New} - \\text{Old}}{\\text{Old}} \\times 100$$",
@@ -93,6 +94,8 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="percentage-increase-calculator"
+  ogFormula="% Increase = ((New - Old) / Old) × 100"
+  ogExample="From 50 to 75: ((75 - 50) / 50) × 100 = 50%"
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -274,6 +277,8 @@ const schema = [
         { path: '/date-calculator',                           blurb: 'Calculate the number of days or months between two dates — useful when the percentage increase spans a time period.' },
         { path: '/conversion/currency-converter',  blurb: 'Convert between 150+ currencies with live rates — useful when the values in your percentage calculation are in different currencies.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/percentage-calculator/increase" />
 
     </div>
   </div>

@@ -1,0 +1,159 @@
+---
+import GlossaryLayout from '../../layouts/GlossaryLayout.astro';
+import { GLOSSARY_TERMS } from '../../data/glossary';
+
+const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const activeLetters = new Set(GLOSSARY_TERMS.map(t => t.letter.toUpperCase()));
+
+const byLetter: Record<string, typeof GLOSSARY_TERMS> = {};
+for (const t of GLOSSARY_TERMS) {
+  const l = t.letter.toUpperCase();
+  (byLetter[l] ??= []).push(t);
+}
+
+const siteCategories = [...new Set(GLOSSARY_TERMS.map(t => t.siteCategory))].sort();
+const termCount = GLOSSARY_TERMS.length;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "DefinedTermSet",
+    "name": "Finance, Math & Health Glossary",
+    "url": "https://calculations.tools/glossary",
+    "description": "Plain-English definitions for finance, math, and health terms used across our calculators.",
+    "hasDefinedTerm": GLOSSARY_TERMS.map(t => ({
+      "@type": "DefinedTerm",
+      "name": t.term,
+      "description": t.shortDef,
+      "url": `https://calculations.tools/glossary/${t.slug}`,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Finance, Math & Health Glossary — Key Terms Explained",
+    "url": "https://calculations.tools/glossary",
+    "description": "Plain-English definitions for finance, math, and health terms used across our calculators.",
+  },
+];
+---
+
+<GlossaryLayout
+  title="Finance, Math & Health Glossary"
+  metaTitle="Finance, Math & Health Glossary — Key Terms"
+  description="Plain-English definitions for finance, math, and health terms used across our calculators. Each entry includes a formula, worked examples, and links to related tools."
+  canonical="https://calculations.tools/glossary"
+  schema={schema}
+>
+  <h1 class="gl-index-title">Finance, Math &amp; Health Glossary</h1>
+  <p class="gl-index-desc">Plain-English definitions for every term used across our calculators - including formulas, worked examples, and links to the relevant tool.</p>
+
+  <div class="gl-search-row">
+    <input
+      type="text"
+      id="glossary-search"
+      class="glossary-search-input"
+      placeholder=`Search ${termCount} terms…`
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <div class="glossary-filter-nav">
+      <button class="glossary-filter-btn active" data-filter="all">All</button>
+      {siteCategories.map(cat => (
+        <button class="glossary-filter-btn" data-filter={cat}>{cat}</button>
+      ))}
+    </div>
+  </div>
+
+  <div class="glossary-alpha-nav">
+    {allLetters.map(letter => (
+      <button
+        class={`glossary-alpha-btn${activeLetters.has(letter) ? '' : ' empty'}`}
+        data-letter={letter}
+      >{letter}</button>
+    ))}
+  </div>
+
+  <div class="gl-terms">
+    {Object.keys(byLetter).sort().map(letter => (
+      <section class="glossary-letter-section" id={`letter-${letter}`}>
+        <h2>{letter}</h2>
+        {byLetter[letter].map(t => (
+          <div
+            class="gl-term-block"
+            data-term={t.term.toLowerCase()}
+            data-category={t.siteCategory}
+            data-letter={letter}
+          >
+            <h3 class="gl-term-heading">
+              <a href={`/glossary/${t.slug}`}>{t.term}</a>
+            </h3>
+            <p class="gl-term-short">{t.shortDef}</p>
+          </div>
+        ))}
+      </section>
+    ))}
+  </div>
+
+  <script src="/js/glossary-search.js" is:inline></script>
+</GlossaryLayout>
+
+<style is:global>
+  .gl-index-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  .gl-index-desc {
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .gl-search-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 0.875rem;
+  }
+  .gl-search-row .glossary-search-input {
+    flex: 1;
+    min-width: 200px;
+  }
+  .gl-terms { margin-top: 1rem; }
+  .glossary-letter-section h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid rgba(99,102,241,0.4);
+  }
+  .gl-term-block {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .gl-term-block:last-child { border-bottom: none; }
+  .gl-term-heading {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .gl-term-heading a:hover {
+    border-bottom: 2px solid var(--brand-from);
+  }
+  .gl-term-short {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .gl-term-block.hidden { display: none; }
+</style>

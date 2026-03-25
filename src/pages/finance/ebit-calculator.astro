@@ -1,0 +1,232 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  ebt:    "$$\\text{EBT} = \\text{Net Income} + \\text{Tax Expense}$$",
+  ebit:   "$$\\text{EBIT} = \\text{EBT} + \\text{Interest Expense}$$",
+  oneLine:"$$\\text{EBIT} = \\text{Net Income} + \\text{Interest Expense} + \\text{Tax Expense}$$",
+  margin: "$$\\text{EBIT Margin} = \\frac{\\text{EBIT}}{\\text{Revenue}} \\times 100$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'what-is-ebit',  label: 'What is EBIT?' },
+  { id: 'formula',       label: 'EBIT formula' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'ebit-vs',       label: 'EBIT vs EBITDA vs EBT' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EBIT Calculator",
+    "url": "https://calculations.tools/finance/ebit-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate EBIT (Earnings Before Interest and Tax) from Net Income, Interest Expense, and Tax Expense. Shows EBT and EBIT with step-by-step workings and optional EBIT Margin.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is EBIT?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBIT stands for Earnings Before Interest and Taxes. It equals operating income — profit from core business operations before the cost of debt financing and income taxes. EBIT is calculated as Net Income + Interest Expense + Tax Expense, or equivalently as Revenue minus all operating expenses including depreciation and amortization." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the EBIT formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBIT = Net Income + Interest Expense + Tax Expense. Step by step: first add Tax Expense to Net Income to get EBT (Earnings Before Tax), then add Interest Expense to EBT to get EBIT. Alternatively, EBIT = Revenue - COGS - Operating Expenses (including D&A)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between EBIT and EBITDA?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBIT includes depreciation and amortization as operating expenses. EBITDA adds those non-cash charges back. EBITDA is therefore always higher than or equal to EBIT. EBIT is closer to accounting operating profit; EBITDA is closer to operating cash flow. The gap between them is largest in capital-intensive industries with heavy D&A." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is EBIT Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBIT Margin = EBIT / Revenue x 100. It expresses operating profitability as a percentage of revenue, making it comparable across companies of different sizes. A higher EBIT Margin means a company retains more profit from each dollar of revenue after paying all operating costs." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="EBIT Calculator"
+  metaTitle="EBIT Calculator | Earnings Before Interest & Tax"
+  description="Calculate EBIT (Operating Income) from Net Income, Interest Expense, and Tax Expense. Shows EBT and EBIT with step-by-step workings and optional EBIT Margin."
+  canonical="https://calculations.tools/finance/ebit-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="ebit-calculator"
+  ogFormula="EBIT = Net Income + Interest + Tax"
+  ogExample="$3M + $400K + $900K = EBIT $4.3M"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate EBIT Instantly</h2>
+          <p>Add back Interest and Tax to Net Income</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ebit-net-income">Net Income</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ebit-net-income" class="bmi-input" placeholder="e.g. 3000000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ebit-tax">+ Tax Expense</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ebit-tax" class="bmi-input" placeholder="e.g. 900000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ebit-interest">+ Interest Expense</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ebit-interest" class="bmi-input" placeholder="e.g. 400000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ebit-revenue">Revenue (optional — for EBIT Margin)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ebit-revenue" class="bmi-input" placeholder="e.g. 15000000" />
+          </div>
+        </div>
+
+        <div id="ebit-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ebit-ebt-val">—</div>
+              <div class="lbm-card-lbl">EBT</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ebit-ebit-val">—</div>
+              <div class="lbm-card-lbl">EBIT</div>
+            </div>
+          </div>
+
+          <div id="ebit-margin-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ebit-margin-val">—</div>
+              <div class="lbm-card-lbl">EBIT Margin</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Net Income + Tax = EBT</span>
+              <span class="pi-step-val" id="ebit-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">EBT + Interest = EBIT</span>
+              <span class="pi-step-val" id="ebit-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/ebit-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>EBIT = <strong>Net Income + Interest Expense + Tax Expense</strong>. Step by step: Net Income + Tax = EBT, then EBT + Interest = EBIT. Example: $3M + $900K + $400K = <strong>EBIT $4.3M</strong>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter Net Income, Tax Expense, and Interest Expense from the income statement. The calculator shows EBT (the intermediate step) and EBIT (the result), with a step-by-step breakdown. Enter Revenue to also see EBIT Margin as a percentage.</p>
+      <p>Use any consistent currency unit — thousands, millions, or full figures. The displayed cards abbreviate large numbers automatically.</p>
+
+      <h2 id="what-is-ebit">What is EBIT (Operating Income)?</h2>
+      <p>EBIT stands for <strong>Earnings Before Interest and Taxes</strong>. It equals operating income: the profit a company generates from its core business before accounting for how the business is financed (interest) or what it pays to the government (taxes).</p>
+      <p>EBIT appears on the income statement between Gross Profit and Net Income. It is the standard measure of operating profitability and the starting point for several financial ratios used by analysts, lenders, and acquirers.</p>
+      <p>Because it excludes interest, EBIT allows fair comparison between companies with very different debt levels. A highly leveraged company and a debt-free company may have the same operating efficiency but very different Net Income figures.</p>
+
+      <h2 id="formula">EBIT formula</h2>
+      <p>Starting from the bottom of the income statement (bottom-up method):</p>
+      <Formula expr={f.ebt} />
+      <Formula expr={f.ebit} />
+      <p>Or in one expression:</p>
+      <Formula expr={f.oneLine} />
+      <p>EBIT Margin expresses EBIT as a percentage of revenue:</p>
+      <Formula expr={f.margin} />
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Company</th><th>Net Income</th><th>Tax</th><th>Interest</th><th>EBT</th><th>EBIT</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Small retailer</td><td>$700,000</td><td>$210,000</td><td>$90,000</td><td>$910,000</td><td>$1,000,000</td></tr>
+            <tr><td>Mid-size manufacturer</td><td>$5,000,000</td><td>$1,500,000</td><td>$500,000</td><td>$6,500,000</td><td>$7,000,000</td></tr>
+            <tr><td>Highly leveraged co</td><td>$1,000,000</td><td>$400,000</td><td>$3,600,000</td><td>$1,400,000</td><td>$5,000,000</td></tr>
+            <tr><td>Pre-tax loss entity</td><td>-$500,000</td><td>$0</td><td>$200,000</td><td>-$500,000</td><td>-$300,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The highly leveraged company example shows why EBIT matters: Net Income is $1M, but EBIT is $5M — the large interest bill obscures strong operational performance.</p>
+
+      <h2 id="ebit-vs">EBIT vs EBITDA vs EBT</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Formula</th><th>Excludes</th><th>Best used for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>EBT</td><td>Net Income + Tax</td><td>Tax</td><td>Cross-country profitability comparison</td></tr>
+            <tr><td>EBIT</td><td>Net Income + Tax + Interest</td><td>Tax + Interest</td><td>Operating efficiency, debt-independent comparison</td></tr>
+            <tr><td>EBITDA</td><td>EBIT + D&amp;A</td><td>Tax + Interest + D&amp;A</td><td>Valuation, M&amp;A, cash flow proxy</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Use EBIT when you want to assess pure operating efficiency without the distortion of capital structure. Use EBITDA when comparing businesses with materially different D&amp;A profiles or when using EV/EBITDA for valuation. Use EBT when comparing companies across different tax jurisdictions.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is EBIT?</h3>
+      <p>EBIT (Earnings Before Interest and Taxes) is operating income — the profit from core operations before financing costs and taxes. It equals Net Income + Interest Expense + Tax Expense.</p>
+
+      <h3>Is EBIT the same as operating income?</h3>
+      <p>In most cases, yes. Both measure profitability before interest and taxes. A small difference can arise if a company has non-operating income (e.g., investment income) that is included in EBIT but excluded from operating income as reported on the income statement. For most businesses, the two are identical.</p>
+
+      <h3>What is a good EBIT Margin?</h3>
+      <p>EBIT Margin above 15% is generally considered healthy, but it varies widely. Technology and software companies often exceed 20–30%. Retail and grocery typically run 3–8%. Always benchmark against industry peers.</p>
+
+      <h3>Can EBIT be negative?</h3>
+      <p>Yes. Negative EBIT means operating costs exceed operating revenue — the company is losing money from its core business before any financing charges. This is common in early-stage or distressed companies.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/ebitda-calculator',        blurb: 'Calculate EBITDA by also adding back Depreciation & Amortization.' },
+        { path: '/finance/ebt-calculator',           blurb: 'Calculate EBT — Net Income + Tax Expense.' },
+        { path: '/finance/ebitda-margin-calculator', blurb: 'EBITDA Margin = EBITDA / Revenue × 100.' },
+        { path: '/math/percentage-calculator',       blurb: 'General percentage calculator for financial ratios.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/ebit-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

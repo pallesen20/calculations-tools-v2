@@ -1,61 +1,97 @@
 ---
-const navItems = [
-  { label: 'Math Calculators', href: '/math' },
-  {
-    label: 'Conversion', href: '/conversion', dropdown: [
-      { label: 'Length Converter', href: '/conversion/length-converter' },
-      { label: 'Weight Converter', href: '/conversion/weight-converter' },
-      { label: 'Height Converter', href: '/conversion/height-converter' },
-      { label: 'Temperature Converter', href: '/conversion/temperature-converter' },
-      { label: 'Case Converter', href: '/conversion/case-converter' },
-      { label: 'Currency Converter', href: '/conversion/currency-converter' },
-    ]
-  },
-  { label: 'Health Calculators', href: '/health' },
-  { label: 'Word Counter', href: '/word-counter' },
-  {
-    label: 'Compare Text', dropdown: [
-      { label: 'Compare Text & Code', href: '/compare-text' },
-      { label: 'Compare Excel Files', href: '/compare-text/compare-excel' },
-    ]
-  },
-  { label: 'Week Number', href: '/week-number' },
-  { label: 'About', href: '/about-us' },
+const path = Astro.url.pathname;
+
+const catLinks = [
+  { label: 'Finance',    href: '/finance' },
+  { label: 'Math',       href: '/math' },
+  { label: 'Health',     href: '/health' },
+  { label: 'Conversion', href: '/conversion' },
+  { label: 'Week Number',     href: '/week-number' },
+  { label: 'Glossary',   href: '/glossary' },
+  { label: 'About',           href: '/about-us' },
+];
+
+const mobileLinks = [
+  { label: 'Finance',         href: '/finance' },
+  { label: 'Math',            href: '/math' },
+  { label: 'Health',          href: '/health' },
+  { label: 'Conversion',      href: '/conversion' },
+  { label: 'Glossary',        href: '/glossary' },
+  { label: 'Word Counter',    href: '/word-counter' },
+  { label: 'Compare Text',    href: '/compare-text' },
+  { label: 'Date Calculator', href: '/date-calculator' },
+  { label: 'Week Number',     href: '/week-number' },
+  { label: 'About',           href: '/about-us' },
 ];
 ---
 
 <header class="header-glass">
-  <div class="header-container">
-    <a href="/" class="site-logo">
-      <img src="/favicon-512x512.png" width="32" height="32" alt="Calculations.tools" style="border-radius: 6px;" />
-    </a>
-    <nav class="nav-menu">
-      {navItems.map(item => (
-        item.dropdown ? (
-          <div class="nav-dropdown">
-            {item.href
-              ? <a href={item.href} class="nav-link dropdown-toggle">{item.label} <svg class="dropdown-arrow" viewBox="0 0 10 6"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"></path></svg></a>
-              : <span class="nav-link dropdown-toggle">{item.label} <svg class="dropdown-arrow" viewBox="0 0 10 6"><path fill="currentColor" fill-rule="evenodd" d="M9.354.646a.5.5 0 0 0-.708 0L5 4.293 1.354.646a.5.5 0 0 0-.708.708l4 4a.5.5 0 0 0 .708 0l4-4a.5.5 0 0 0 0-.708" clip-rule="evenodd"></path></svg></span>
-            }
-            <div class="dropdown-content">
-              {item.dropdown.map(sub => (
-                <a href={sub.href} class="dropdown-link">{sub.label}</a>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <a href={item.href} class="nav-link">{item.label}</a>
-        )
-      ))}
-    </nav>
-    <div class="mobile-menu-btn" id="mobileMenuBtn">
-      <span></span><span></span><span></span>
+  <div class="header-top">
+    <div class="header-container">
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <a href="/" class="site-logo">
+        <img src="/favicon-512x512.png" width="32" height="32" alt="Calculations.tools" style="border-radius:6px;" />
+      </a>
+
+      <div class="header-search-wrap" id="headerSearchWrap">
+        <button class="search-back-btn" id="searchBackBtn" aria-label="Close search">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M11.5 3L6 9l5.5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="header-search-box">
+          <svg class="header-search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <input
+            type="search"
+            id="headerSearchInput"
+            class="header-search-input"
+            placeholder="Search calculators and terms..."
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Search"
+          />
+        </div>
+        <div class="header-search-results" id="headerSearchResults" hidden></div>
+      </div>
+
+      <button class="mobile-search-btn" id="mobileSearchBtn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.75"/>
+          <path d="M12 12L16 16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
+  </div>
+
+  <nav class="header-cat-nav" aria-label="Categories">
+    <div class="header-container">
+      {catLinks.map(link => (
+        <a
+          href={link.href}
+          class:list={['cat-nav-link', { 'cat-nav-link--active': path.startsWith(link.href) }]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+
+  <div class="mobile-nav-panel" id="mobileNavPanel" aria-label="Navigation">
+    {mobileLinks.map(link => (
+      <a
+        href={link.href}
+        class:list={['mobile-nav-link', { 'mobile-nav-link--active': path.startsWith(link.href) }]}
+      >
+        {link.label}
+      </a>
+    ))}
   </div>
 </header>
 
-<script>
-  const btn = document.getElementById('mobileMenuBtn');
-  const nav = document.querySelector('.nav-menu');
-  btn?.addEventListener('click', () => nav?.classList.toggle('active'));
-</script>
+<script src="/js/header-search.js" is:inline></script>

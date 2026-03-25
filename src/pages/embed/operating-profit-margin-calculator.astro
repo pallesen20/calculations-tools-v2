@@ -1,0 +1,55 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Operating Profit Margin Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Operating Profit Margin Calculator</h2>
+        <p>Divide Operating Profit (EBIT) by Revenue to get the margin</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="opm-ebit">Operating Profit (EBIT)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="opm-ebit" class="bmi-input" placeholder="e.g. 800000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="opm-revenue">Revenue</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="opm-revenue" class="bmi-input" placeholder="e.g. 5000000" />
+        </div>
+      </div>
+
+      <div id="opm-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="opm-margin-val">—</div>
+            <div class="lbm-card-lbl">Operating Profit Margin</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="opm-interp-val">—</div>
+            <div class="lbm-card-lbl">Interpretation</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Operating Profit / Revenue = ratio</span>
+            <span class="pi-step-val" id="opm-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">ratio × 100 = margin %</span>
+            <span class="pi-step-val" id="opm-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/operating-profit-margin-calculator.js" is:inline></script>
+</EmbedLayout>

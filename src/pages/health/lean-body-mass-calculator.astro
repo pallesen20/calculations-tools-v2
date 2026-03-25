@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
 
 const f = {
@@ -108,6 +109,8 @@ const schema = [
   schema={schema}
   sources={sources}
   embedSlug="lean-body-mass-calculator"
+  ogFormula="LBM (Boer, men) = 0.407 × weight + 0.267 × height - 19.2"
+  ogExample="80 kg, 175 cm: 0.407×80 + 0.267×175 - 19.2 = 59.9 kg LBM"
 >
 
   <div slot="calculator">
@@ -403,6 +406,8 @@ const schema = [
         { path: '/health/bmi-calculator/seniors' },
         { path: '/health/bmi-calculator/teens' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/health/lean-body-mass-calculator" />
 
     </div>
   </div>

@@ -1,0 +1,287 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  monthly:    "$$M = P \\cdot \\frac{r(1+r)^n}{(1+r)^n - 1}$$",
+  totalPaid:  "$$\\text{Total Paid} = M \\times n$$",
+  totalInt:   "$$\\text{Total Interest} = \\text{Total Paid} - P$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'formula',       label: 'Loan payment formula' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'rate-impact',   label: 'How interest rate affects payment' },
+  { id: 'term-impact',   label: 'Loan term vs. total interest' },
+  { id: 'types',         label: 'Types of loans' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Loan Payment Calculator",
+    "url": "https://calculations.tools/finance/loan-payment-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate monthly loan payments, total interest paid, and see a year-by-year amortisation schedule for any loan amount, interest rate, and term.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the loan payment formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The monthly payment formula for a fixed-rate amortising loan is: M = P × [r(1+r)^n] / [(1+r)^n − 1], where P is the loan principal, r is the monthly interest rate (annual rate ÷ 12), and n is the total number of monthly payments (years × 12). For example, a $200,000 loan at 6% for 30 years: monthly rate = 0.5%, n = 360, M = $1,199." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate my monthly mortgage payment?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use the formula M = P × [r(1+r)^n] / [(1+r)^n − 1]. Enter: P = loan amount (not home price — subtract your down payment), r = annual rate ÷ 12, n = loan term in years × 12. For a $300,000 mortgage at 7% for 30 years: r = 0.07/12 = 0.005833, n = 360, M = $1,996/month. Note: this covers principal and interest only — property tax, insurance, and PMI add to the total payment." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens to total interest if I pay extra each month?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Extra principal payments dramatically reduce total interest paid and shorten the loan term. On a $200,000 30-year mortgage at 6.5%, paying an extra $200/month saves approximately $73,000 in interest and pays off the loan 6 years early. Every dollar of extra principal reduces the outstanding balance on which future interest is calculated — the savings compound throughout the loan life." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is amortisation?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Amortisation is the process of paying off a loan through regular scheduled payments over time. Each payment has two components: interest (calculated on the remaining balance) and principal (which reduces the balance). Early in the loan, most of each payment is interest. Over time, as the balance decreases, the interest portion shrinks and the principal portion grows. By the final payment, almost all of it is principal." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the loan term affect total interest paid?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A longer loan term reduces the monthly payment but dramatically increases total interest paid. On a $200,000 loan at 6%: 15-year term = $1,688/month, total interest $103,788. 30-year term = $1,199/month, total interest $231,676. The 30-year loan costs $127,888 more in interest despite only a $489/month payment difference. A shorter term is nearly always cheaper if you can afford the higher payment." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Loan Payment Calculator"
+  metaTitle="Loan Payment Calculator — Monthly Payment & Total Interest"
+  description="Calculate monthly loan payments, total interest paid, and see a year-by-year amortisation schedule. Works for mortgages, car loans, personal loans, and any fixed-rate loan."
+  canonical="https://calculations.tools/finance/loan-payment-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="loan-payment-calculator"
+  ogFormula="M = P × r(1+r)^n / [(1+r)^n − 1]"
+  ogExample="$200K at 6% for 30 yrs = $1,199/month"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Loan Payment Calculator</h2>
+          <p>Monthly payment, total interest, and amortisation schedule</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="loan-amount">Loan Amount</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="loan-amount" class="bmi-input" placeholder="e.g. 200000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="loan-rate">Annual Interest Rate (%)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="loan-rate" class="bmi-input" placeholder="e.g. 6.5" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="loan-years">Loan Term (years)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="loan-years" class="bmi-input" placeholder="e.g. 30" />
+          </div>
+        </div>
+
+        <div id="loan-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="loan-monthly">—</div>
+              <div class="lbm-card-lbl">Monthly Payment</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="loan-total-paid">—</div>
+              <div class="lbm-card-lbl">Total Paid</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="loan-total-interest">—</div>
+              <div class="lbm-card-lbl">Total Interest</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Monthly rate</span>
+              <span class="pi-step-val" id="loan-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Number of payments</span>
+              <span class="pi-step-val" id="loan-step2">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Monthly payment (P&amp;I)</span>
+              <span class="pi-step-val" id="loan-step3">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Total paid</span>
+              <span class="pi-step-val" id="loan-step4">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Total interest</span>
+              <span class="pi-step-val" id="loan-step5">—</span>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem;">
+            <div class="pi-steps-title">Year-by-Year Amortisation</div>
+            <div class="responsive-table" style="margin-top:0.5rem;">
+              <table>
+                <thead>
+                  <tr><th>Year</th><th>Payment</th><th>Interest (last month)</th><th>Remaining Balance</th></tr>
+                </thead>
+                <tbody id="loan-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/loan-payment-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Monthly payment formula: <strong>M = P × r(1+r)^n / [(1+r)^n − 1]</strong>. Example: $200,000 loan at 6% for 30 years = <strong>$1,199/month</strong>, total interest paid = <strong>$231,676</strong>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the <strong>Loan Amount</strong> (principal borrowed, not including interest), the <strong>Annual Interest Rate</strong> as a percentage, and the <strong>Loan Term</strong> in years. The calculator shows your fixed monthly payment covering principal and interest, the total amount paid over the life of the loan, total interest paid, and a year-by-year amortisation table.</p>
+      <p>For a mortgage, the loan amount is the purchase price minus your down payment. The calculator covers principal and interest only — property taxes, homeowner's insurance, and PMI are not included.</p>
+
+      <h2 id="formula">Loan payment formula</h2>
+      <p>The standard formula for a fixed-rate amortising loan (used for mortgages, car loans, and personal loans) is:</p>
+      <Formula expr={f.monthly} />
+      <p>Where:</p>
+      <ul>
+        <li><strong>M</strong> = fixed monthly payment</li>
+        <li><strong>P</strong> = principal (loan amount)</li>
+        <li><strong>r</strong> = monthly interest rate = annual rate ÷ 12</li>
+        <li><strong>n</strong> = total number of payments = years × 12</li>
+      </ul>
+      <p>From the monthly payment, total paid and total interest are straightforward:</p>
+      <Formula expr={f.totalPaid} />
+      <Formula expr={f.totalInt} />
+      <p>If the interest rate is 0% (e.g., a 0% promotional loan), the payment simplifies to P ÷ n — just the principal divided by the number of months.</p>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Loan Type</th><th>Amount</th><th>Rate</th><th>Term</th><th>Monthly Payment</th><th>Total Interest</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>30-year mortgage</td><td>$300,000</td><td>7.0%</td><td>30 yr</td><td>$1,996</td><td>$418,527</td></tr>
+            <tr><td>15-year mortgage</td><td>$300,000</td><td>6.5%</td><td>15 yr</td><td>$2,613</td><td>$170,285</td></tr>
+            <tr><td>Car loan</td><td>$35,000</td><td>5.9%</td><td>5 yr</td><td>$674</td><td>$5,419</td></tr>
+            <tr><td>Personal loan</td><td>$20,000</td><td>12.0%</td><td>3 yr</td><td>$664</td><td>$3,921</td></tr>
+            <tr><td>Student loan</td><td>$50,000</td><td>6.5%</td><td>10 yr</td><td>$567</td><td>$18,007</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="rate-impact">How interest rate affects monthly payment</h2>
+      <p>Interest rate has a direct and significant impact on monthly payment. The table below shows how a $300,000 30-year mortgage changes with different rates:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Annual Rate</th><th>Monthly Payment</th><th>Total Interest</th><th>vs. 4% rate</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>4.0%</td><td>$1,432</td><td>$215,609</td><td>—</td></tr>
+            <tr><td>5.0%</td><td>$1,610</td><td>$279,767</td><td>+$64,158</td></tr>
+            <tr><td>6.0%</td><td>$1,799</td><td>$347,515</td><td>+$131,906</td></tr>
+            <tr><td>7.0%</td><td>$1,996</td><td>$418,527</td><td>+$202,918</td></tr>
+            <tr><td>8.0%</td><td>$2,201</td><td>$492,349</td><td>+$276,740</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Each 1% increase in rate adds roughly $150–$200/month on a $300,000 mortgage and over $60,000–$80,000 in total interest over 30 years.</p>
+
+      <h2 id="term-impact">Loan term vs. total interest</h2>
+      <p>A longer loan term reduces monthly payments but substantially increases total interest. On a $300,000 loan at 6.5%:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Loan Term</th><th>Monthly Payment</th><th>Total Interest</th><th>Total Paid</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>10 years</td><td>$3,406</td><td>$108,691</td><td>$408,691</td></tr>
+            <tr><td>15 years</td><td>$2,613</td><td>$170,285</td><td>$470,285</td></tr>
+            <tr><td>20 years</td><td>$2,237</td><td>$236,856</td><td>$536,856</td></tr>
+            <tr><td>25 years</td><td>$2,029</td><td>$308,702</td><td>$608,702</td></tr>
+            <tr><td>30 years</td><td>$1,896</td><td>$382,574</td><td>$682,574</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Choosing a 15-year over a 30-year mortgage saves $212,289 in interest — despite the higher monthly payment. If you can comfortably afford the higher payment, a shorter term is almost always the better financial decision.</p>
+
+      <h2 id="types">Types of loans this calculator covers</h2>
+      <p>This calculator works for any <strong>fixed-rate amortising loan</strong> — a loan where the interest rate stays constant and each payment reduces the balance until it reaches zero at term end:</p>
+      <ul>
+        <li><strong>Mortgages:</strong> 15-year and 30-year fixed-rate home loans are the most common application.</li>
+        <li><strong>Car loans:</strong> Typically 3–7 year terms at rates between 4% and 15% depending on credit score and vehicle age.</li>
+        <li><strong>Personal loans:</strong> Unsecured loans for debt consolidation, home improvement, or major purchases. Usually 2–7 years at higher rates than mortgages.</li>
+        <li><strong>Student loans:</strong> Federal student loans typically use standard 10-year repayment. Income-driven repayment plans use different terms.</li>
+        <li><strong>Business loans:</strong> Term loans from banks or SBA lenders with fixed rates.</li>
+      </ul>
+      <p>This calculator does <em>not</em> apply to variable-rate loans, interest-only loans, balloon loans, or revolving credit (credit cards).</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is the loan payment formula?</h3>
+      <p>M = P × [r(1+r)^n] / [(1+r)^n − 1], where P is principal, r is monthly rate (annual rate ÷ 12), and n is total months (years × 12). For $200,000 at 6% for 30 years: r = 0.005, n = 360, M = $1,199/month.</p>
+
+      <h3>How do I calculate my monthly mortgage payment?</h3>
+      <p>Enter the loan amount (purchase price minus down payment), the annual interest rate, and the term (usually 30 or 15 years). The result is your principal-and-interest payment. Add property taxes, insurance, and PMI separately to get your total monthly housing cost.</p>
+
+      <h3>What is amortisation?</h3>
+      <p>Amortisation is the process of paying off a loan through regular payments. Each payment covers interest on the remaining balance and reduces the principal. Early payments are mostly interest; later payments are mostly principal. By the last payment, the balance is exactly zero.</p>
+
+      <h3>How does the loan term affect total interest?</h3>
+      <p>A longer term means lower monthly payments but much more total interest. A $300,000 loan at 6.5% costs $170,285 in interest over 15 years versus $382,574 over 30 years — a difference of $212,289. The shorter term is nearly always cheaper if you can afford the higher payment.</p>
+
+      <h3>What happens if I pay extra each month?</h3>
+      <p>Extra principal payments directly reduce the outstanding balance, which reduces future interest charges and shortens the loan term. On a $200,000 30-year mortgage at 6.5%, an extra $200/month saves roughly $73,000 in interest and eliminates about 6 years of payments. Most fixed-rate loans allow prepayment without penalty — check your loan agreement.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/compound-interest-calculator', blurb: 'See how an investment grows with compound interest over time.' },
+        { path: '/finance/roi-calculator',               blurb: 'Calculate total ROI, multiple, and annualized return (CAGR).' },
+        { path: '/finance/break-even-calculator',        blurb: 'Break-even units and revenue from fixed costs and margin.' },
+        { path: '/math/percentage-calculator',           blurb: 'General percentage and percentage change calculator.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/loan-payment-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

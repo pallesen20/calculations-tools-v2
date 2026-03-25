@@ -1,0 +1,31 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  metaTitle?: string;
+  description: string;
+  canonical?: string;
+  schema?: object | object[];
+  ogImage?: string;
+}
+
+const { title, metaTitle, description, canonical, schema, ogImage } = Astro.props;
+---
+
+<BaseLayout {title} {metaTitle} {description} {canonical} {schema} {ogImage}>
+  <main class="gl-main">
+    <div class="gl-container seo-container">
+      <slot />
+    </div>
+  </main>
+</BaseLayout>
+<style>
+  .gl-main {
+    padding: 2rem 1.5rem 5rem;
+  }
+  .gl-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+</style>

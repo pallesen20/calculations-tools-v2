@@ -1,0 +1,295 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  cm:       "$$\\text{Contribution Margin} = \\text{Revenue} - \\text{Variable Costs}$$",
+  cmUnit:   "$$\\text{CM per Unit} = \\text{Selling Price} - \\text{Variable Cost per Unit}$$",
+  cmRatio:  "$$\\text{CM Ratio} = \\frac{\\text{Contribution Margin}}{\\text{Revenue}} \\times 100$$",
+  profit:   "$$\\text{Operating Profit} = \\text{Contribution Margin} - \\text{Fixed Costs}$$",
+  beUnits:  "$$\\text{Break-Even Units} = \\frac{\\text{Fixed Costs}}{\\text{CM per Unit}}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'formula',       label: 'Contribution margin formula' },
+  { id: 'cm-ratio',      label: 'CM ratio & benchmarks' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'vs-gross',      label: 'CM vs. gross profit' },
+  { id: 'product-mix',   label: 'Product mix decisions' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Contribution Margin Calculator",
+    "url": "https://calculations.tools/finance/contribution-margin-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate contribution margin and CM ratio from revenue and variable costs. Optionally add units sold and fixed costs to see per-unit CM and operating profit.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is contribution margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Contribution margin (CM) is revenue minus all variable costs. It represents how much each dollar of sales contributes to covering fixed costs and then generating profit. CM = Revenue − Variable Costs. For example, if a product sells for $100 and has $60 in variable costs, the contribution margin is $40 per unit — each sale contributes $40 toward fixed costs and profit." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the contribution margin formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Total: CM = Revenue − Variable Costs. Per unit: CM per Unit = Selling Price − Variable Cost per Unit. As a ratio: CM Ratio = CM / Revenue × 100. Operating profit = CM − Fixed Costs. For example: $500,000 revenue − $300,000 variable costs = $200,000 CM; CM ratio = 40%; if fixed costs are $120,000, operating profit = $80,000." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good contribution margin ratio?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A 'good' CM ratio depends heavily on the business model. SaaS and software: 70%–85% (very low variable costs). Consulting/services: 50%–70%. E-commerce/retail: 30%–50%. Manufacturing: 25%–45%. Restaurants: 60%–70% (food cost is variable; labour and rent are fixed). The CM ratio should be high enough that realistic sales volume covers fixed costs and delivers acceptable profit." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between contribution margin and gross profit?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Gross profit = Revenue − Cost of Goods Sold (COGS). COGS typically includes both variable costs (materials, direct labour) and some fixed manufacturing overhead (factory rent, equipment depreciation). Contribution margin = Revenue − Variable Costs only. CM excludes all fixed costs. For product pricing and break-even analysis, CM is more useful. For financial reporting and industry comparison, gross profit margin is standard." }
+      },
+      {
+        "@type": "Question",
+        "name": "How is contribution margin used in break-even analysis?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Break-even units = Fixed Costs / CM per Unit. If fixed costs are $50,000 and CM per unit is $40, break-even is 1,250 units. Each unit sold above 1,250 adds exactly $40 in profit. The CM ratio is used to calculate break-even in revenue: Break-even revenue = Fixed Costs / CM Ratio = $50,000 / 0.40 = $125,000." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Contribution Margin Calculator"
+  metaTitle="Contribution Margin Calculator — CM Ratio & Profit"
+  description="Calculate contribution margin and CM ratio from revenue and variable costs. Add units and fixed costs to see per-unit CM and operating profit. Includes benchmarks."
+  canonical="https://calculations.tools/finance/contribution-margin-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="contribution-margin-calculator"
+  ogFormula="CM = Revenue − Variable Costs; CM Ratio = CM / Revenue × 100"
+  ogExample="$500K revenue − $300K variable = $200K CM (40% ratio)"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Contribution Margin Calculator</h2>
+          <p>Revenue minus variable costs — what's left to cover fixed costs and generate profit</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="cm-revenue">Total Revenue</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="cm-revenue" class="bmi-input" placeholder="e.g. 500000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="cm-variable">Total Variable Costs</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="cm-variable" class="bmi-input" placeholder="e.g. 300000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="cm-units">Units Sold (optional — for CM per unit)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="cm-units" class="bmi-input" placeholder="e.g. 5000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="cm-fixed">Fixed Costs (optional — for operating profit)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="cm-fixed" class="bmi-input" placeholder="e.g. 120000" />
+          </div>
+        </div>
+
+        <div id="cm-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="cm-val">—</div>
+              <div class="lbm-card-lbl">Contribution Margin</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="cm-ratio-val">—</div>
+              <div class="lbm-card-lbl">CM Ratio</div>
+            </div>
+          </div>
+
+          <div id="cm-perunit-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="cm-perunit-val">—</div>
+              <div class="lbm-card-lbl">CM per Unit</div>
+            </div>
+          </div>
+
+          <div id="cm-profit-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="cm-profit-val">—</div>
+              <div class="lbm-card-lbl">Operating Profit</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="cm-profitpct-val">—</div>
+              <div class="lbm-card-lbl">Operating Margin</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Revenue − Variable = CM</span>
+              <span class="pi-step-val" id="cm-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">CM / Revenue × 100 = CM Ratio</span>
+              <span class="pi-step-val" id="cm-step2">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">CM − Fixed = Operating Profit</span>
+              <span class="pi-step-val" id="cm-step3">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">CM per unit</span>
+              <span class="pi-step-val" id="cm-step4">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/contribution-margin-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Contribution Margin = <strong>Revenue − Variable Costs</strong>. CM Ratio = <strong>CM / Revenue × 100</strong>. Example: $500,000 revenue − $300,000 variable costs = <strong>$200,000 CM</strong>, <strong>40% CM ratio</strong>. Subtract fixed costs to get operating profit: $200,000 − $120,000 = $80,000.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter <strong>Total Revenue</strong> and <strong>Total Variable Costs</strong> to see contribution margin and CM ratio. Optionally add <strong>Units Sold</strong> to see contribution margin per unit, and <strong>Fixed Costs</strong> to see operating profit and operating margin. All inputs should be for the same period (month, quarter, or year).</p>
+      <p>Variable costs include raw materials, direct labour paid per unit produced, packaging, shipping, and sales commissions. Do not include salaries, rent, or other fixed overheads in the variable cost field.</p>
+
+      <h2 id="formula">Contribution margin formula</h2>
+      <p>Contribution margin can be calculated in total, per unit, or as a ratio:</p>
+      <Formula expr={f.cm} />
+      <Formula expr={f.cmUnit} />
+      <Formula expr={f.cmRatio} />
+      <p>Operating profit is then derived by subtracting fixed costs:</p>
+      <Formula expr={f.profit} />
+      <p>And break-even units follow directly:</p>
+      <Formula expr={f.beUnits} />
+      <p>The CM ratio is the most versatile form — it tells you what percentage of every revenue dollar is available to cover fixed costs and profit, regardless of volume. It is constant as long as selling price and variable cost per unit remain unchanged.</p>
+
+      <h2 id="cm-ratio">CM ratio benchmarks by industry</h2>
+      <p>CM ratios vary widely by business model. Asset-light, software, and services businesses have high CM ratios; manufacturing and distribution have lower ratios due to material costs:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Industry / Business Type</th><th>Typical CM Ratio</th><th>Key Variable Cost Drivers</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS / Software</td><td>70% – 85%</td><td>Hosting, payment processing, support</td></tr>
+            <tr><td>Consulting / Professional Services</td><td>50% – 75%</td><td>Contractor / project-based labour</td></tr>
+            <tr><td>Restaurants</td><td>60% – 75%</td><td>Food and beverage cost (COGS)</td></tr>
+            <tr><td>E-commerce / Retail</td><td>30% – 55%</td><td>Product cost, shipping, returns</td></tr>
+            <tr><td>Manufacturing</td><td>25% – 45%</td><td>Raw materials, direct labour</td></tr>
+            <tr><td>Construction</td><td>20% – 35%</td><td>Subcontractors, materials</td></tr>
+            <tr><td>Distribution / Wholesale</td><td>15% – 30%</td><td>Product cost, freight</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Business</th><th>Revenue</th><th>Variable Costs</th><th>CM</th><th>CM Ratio</th><th>Fixed Costs</th><th>Operating Profit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS company</td><td>$800,000</td><td>$120,000</td><td>$680,000</td><td>85%</td><td>$500,000</td><td>$180,000</td></tr>
+            <tr><td>Restaurant</td><td>$400,000</td><td>$120,000</td><td>$280,000</td><td>70%</td><td>$220,000</td><td>$60,000</td></tr>
+            <tr><td>E-commerce store</td><td>$600,000</td><td>$330,000</td><td>$270,000</td><td>45%</td><td>$180,000</td><td>$90,000</td></tr>
+            <tr><td>Manufacturer</td><td>$2,000,000</td><td>$1,200,000</td><td>$800,000</td><td>40%</td><td>$650,000</td><td>$150,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="vs-gross">Contribution margin vs. gross profit</h2>
+      <p>These two metrics are related but answer different questions:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th></th><th>Contribution Margin</th><th>Gross Profit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Formula</td><td>Revenue − Variable Costs</td><td>Revenue − COGS</td></tr>
+            <tr><td>What's excluded</td><td>All fixed costs</td><td>SG&A, R&D (below gross profit line)</td></tr>
+            <tr><td>COGS treatment</td><td>Splits COGS into fixed/variable</td><td>Uses COGS as reported (includes fixed manufacturing overhead)</td></tr>
+            <tr><td>Best used for</td><td>Internal decisions, break-even, pricing</td><td>External reporting, industry comparison</td></tr>
+            <tr><td>Is it GAAP?</td><td>No — management accounting metric</td><td>Yes — appears on the income statement</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Gross profit is the standard reported metric. Contribution margin is more useful for internal decision-making because it cleanly separates the volume-driven variable costs from the fixed cost base.</p>
+
+      <h2 id="product-mix">Using CM to make product mix decisions</h2>
+      <p>When a business sells multiple products with a shared fixed cost base, CM per unit (or CM ratio) determines which products to prioritise. Always maximise total contribution margin — not revenue or gross margin.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Product</th><th>Price</th><th>Variable Cost</th><th>CM / Unit</th><th>CM Ratio</th><th>Should you prioritise?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Product A</td><td>$200</td><td>$80</td><td>$120</td><td>60%</td><td>Yes — high CM ratio</td></tr>
+            <tr><td>Product B</td><td>$500</td><td>$350</td><td>$150</td><td>30%</td><td>Only if volume is very high</td></tr>
+            <tr><td>Product C</td><td>$50</td><td>$15</td><td>$35</td><td>70%</td><td>Yes — highest CM ratio</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Product B has the highest CM per unit ($150) but the lowest CM ratio (30%). If production capacity is constrained, Product C generates more CM per dollar of revenue. If sales time is the constraint, focus on which product generates the most CM per sales hour.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is contribution margin?</h3>
+      <p>Contribution margin is the amount of revenue left after subtracting all variable costs. It is the pool of money available to cover fixed costs and generate profit. CM = Revenue − Variable Costs. A positive CM means each additional sale moves the business toward profitability; a negative CM means each sale deepens the loss.</p>
+
+      <h3>What is CM ratio and why does it matter?</h3>
+      <p>CM Ratio = Contribution Margin / Revenue × 100. It tells you what percentage of every revenue dollar flows through to cover fixed costs and profit. A 40% CM ratio means 40 cents of every dollar earned is available for fixed costs and profit. Higher CM ratios mean faster break-even and more profit per unit of revenue growth.</p>
+
+      <h3>What is the difference between contribution margin and gross profit?</h3>
+      <p>Gross profit uses COGS as reported, which often includes fixed manufacturing overhead. Contribution margin uses only variable costs. For a manufacturer with $2M in COGS — $1.4M variable, $600K fixed overhead — CM is $200K higher than gross profit. CM is more useful for break-even and pricing; gross profit is used for financial reporting.</p>
+
+      <h3>Can contribution margin be negative?</h3>
+      <p>Yes. A negative CM means variable costs exceed revenue per unit — every unit sold increases the loss. This is always unsustainable and indicates a fundamental pricing or cost problem. If CM is negative, increasing sales volume makes things worse, not better. The fix is either to raise prices or reduce variable costs.</p>
+
+      <h3>How is contribution margin used in pricing?</h3>
+      <p>Minimum viable price = Variable Cost per Unit + (Fixed Costs / Expected Units). Any price above variable cost contributes positively to fixed cost coverage. Target price should provide enough CM to cover fixed costs AND deliver the required profit margin. Use CM ratio sensitivity: if you discount price by 10%, how many more units must you sell to maintain the same total CM?</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/break-even-calculator',          blurb: 'Break-even units and revenue from fixed costs and contribution margin.' },
+        { path: '/finance/gross-profit-margin-calculator', blurb: 'Gross profit margin from revenue and cost of goods sold.' },
+        { path: '/finance/operating-profit-margin-calculator', blurb: 'Operating profit margin from operating profit and revenue.' },
+        { path: '/math/percentage-calculator',             blurb: 'General percentage and percentage change calculator.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/contribution-margin-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

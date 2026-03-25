@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 
 const f = {
   def:     "$$\\text{Unit rate} = \\frac{\\text{Quantity}}{\\text{Number of units}}$$",
@@ -67,6 +68,8 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="unit-rate-calculator"
+  ogFormula="Unit rate = Total value / Number of units"
+  ogExample="$45 for 3 items = $45 / 3 = $15 per item"
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -218,6 +221,8 @@ const schema = [
         { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions directly.' },
         { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, increase, decrease.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/ratio-calculator/unit-rate" />
 
     </div>
   </div>

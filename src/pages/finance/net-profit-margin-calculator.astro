@@ -1,0 +1,232 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  margin:    "$$\\text{Net Profit Margin} = \\frac{\\text{Net Income}}{\\text{Revenue}} \\times 100$$",
+  netIncome: "$$\\text{Net Income} = \\text{Revenue} - \\text{COGS} - \\text{OpEx} - \\text{Interest} - \\text{Tax}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'what-is-npm',         label: 'What is Net Profit Margin?' },
+  { id: 'formula',             label: 'Formula' },
+  { id: 'industry-benchmarks', label: 'Industry benchmarks' },
+  { id: 'examples',            label: 'Worked examples' },
+  { id: 'margin-comparison',   label: 'Comparing margin metrics' },
+  { id: 'faq',                 label: 'FAQs' },
+  { id: 'related-tools',       label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Net Profit Margin Calculator",
+    "url": "https://calculations.tools/finance/net-profit-margin-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate net profit margin from net income and revenue. Shows margin %, interpretation, and step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Net Profit Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Net Profit Margin = Net Income / Revenue x 100. It measures what percentage of revenue becomes net income (profit after all costs — COGS, operating expenses, interest, and tax). It is the most comprehensive measure of a company's profitability and shows what shareholders actually earn from each dollar of sales." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good Net Profit Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It varies significantly by industry. Software/SaaS: 15-30%. Financial services: 20-35%. Healthcare: 5-15%. Manufacturing: 5-15%. Retail: 2-8%. A net margin above 10% is generally considered healthy for most businesses, but always benchmark against direct sector peers." }
+      },
+      {
+        "@type": "Question",
+        "name": "How is Net Profit Margin different from EBITDA Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBITDA Margin strips out interest, tax, depreciation, and amortization to show operational efficiency. Net Profit Margin includes all of these, so it is always lower than EBITDA Margin for a profitable company. EBITDA Margin is preferred for M&A and valuation comparisons; Net Profit Margin reflects true shareholder earnings." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Net Profit Margin be negative?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. A negative net profit margin means the company is operating at a net loss — total expenses exceed total revenue. This is common in early-stage companies investing heavily in growth, or in distressed businesses. Sustained negative net margins require financing to continue operations." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Net Profit Margin Calculator"
+  metaTitle="Net Profit Margin Calculator | Formula & Benchmarks"
+  description="Calculate net profit margin from net income and revenue. See margin %, interpretation, and step-by-step workings. Compare against industry benchmarks by sector."
+  canonical="https://calculations.tools/finance/net-profit-margin-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="net-profit-margin-calculator"
+  ogFormula="Net Profit Margin = Net Income / Revenue x 100"
+  ogExample="$500K / $5M x 100 = 10% net profit margin"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Net Profit Margin Instantly</h2>
+          <p>Divide Net Income by Revenue to get the margin</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="npm-net-income">Net Income</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="npm-net-income" class="bmi-input" placeholder="e.g. 500000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="npm-revenue">Revenue</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="npm-revenue" class="bmi-input" placeholder="e.g. 5000000" />
+          </div>
+        </div>
+
+        <div id="npm-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="npm-margin-val">—</div>
+              <div class="lbm-card-lbl">Net Profit Margin</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="npm-interp-val">—</div>
+              <div class="lbm-card-lbl">Interpretation</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Net Income / Revenue = ratio</span>
+              <span class="pi-step-val" id="npm-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">ratio × 100 = margin %</span>
+              <span class="pi-step-val" id="npm-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/net-profit-margin-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Net Profit Margin = <strong>Net Income / Revenue × 100</strong>. Example: Net Income $500K on Revenue $5M = <strong>10% Net Profit Margin</strong>. A margin above 10% is generally healthy across most industries; retail and grocery often operate at 2–5%.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter Net Income (bottom-line profit after all costs, interest, and tax) and Revenue in the same currency unit and time period. The calculator returns the Net Profit Margin as a percentage with a general interpretation. Use the <a href="/finance/ebitda-calculator">EBITDA Calculator</a> or <a href="/finance/ebt-calculator">EBT Calculator</a> if you need to work through intermediate profit metrics first.</p>
+
+      <h2 id="what-is-npm">What is Net Profit Margin?</h2>
+      <p>Net Profit Margin is the most comprehensive profitability metric on an income statement. It measures what percentage of revenue becomes net income — profit remaining after deducting every cost: COGS, operating expenses, interest, and income tax.</p>
+      <p>Unlike Gross Profit Margin or EBITDA Margin, Net Profit Margin cannot be inflated by excluding financing or tax costs. It reflects the true economic return that accrues to shareholders from each dollar of sales.</p>
+      <p>Investors and analysts use Net Profit Margin to assess whether a business is sustainably profitable on a fully loaded basis. A strong net margin provides a buffer against cost shocks, recessions, and rising interest rates. A thin net margin means a business is highly sensitive to any cost increase or revenue shortfall.</p>
+
+      <h2 id="formula">Net Profit Margin formula</h2>
+      <Formula expr={f.margin} />
+      <p>Net Income is derived from the bottom of the income statement:</p>
+      <Formula expr={f.netIncome} />
+      <p>Net Income can be positive (profit) or negative (loss). A negative net income produces a negative margin.</p>
+
+      <h2 id="industry-benchmarks">Industry benchmarks</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Industry</th><th>Typical Net Margin</th><th>Key driver</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS / Cloud Software</td><td>15% – 30%</td><td>High gross margins; scalable model</td></tr>
+            <tr><td>Pharmaceuticals</td><td>15% – 25%</td><td>IP pricing power after R&amp;D write-offs</td></tr>
+            <tr><td>Financial Services</td><td>20% – 35%</td><td>Fee and interest income with low COGS</td></tr>
+            <tr><td>Media &amp; Entertainment</td><td>10% – 20%</td><td>Variable content costs; subscription revenues</td></tr>
+            <tr><td>Healthcare Services</td><td>5% – 15%</td><td>Labour-intensive; regulated pricing</td></tr>
+            <tr><td>Manufacturing</td><td>5% – 15%</td><td>Material, labour, and D&amp;A compress net margin</td></tr>
+            <tr><td>Retail (specialty)</td><td>4% – 10%</td><td>Overhead and competition thin margins</td></tr>
+            <tr><td>Restaurants / Food Service</td><td>3% – 9%</td><td>Food cost and labour-intensive model</td></tr>
+            <tr><td>Retail (grocery)</td><td>1% – 4%</td><td>Very high volume; razor-thin mark-up</td></tr>
+            <tr><td>Construction</td><td>2% – 7%</td><td>Project risk and subcontractor costs</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Company type</th><th>Net Income</th><th>Revenue</th><th>Net Profit Margin</th><th>Assessment</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS company</td><td>$3,000,000</td><td>$15,000,000</td><td>20.0%</td><td>Strong for SaaS</td></tr>
+            <tr><td>Consumer goods brand</td><td>$1,500,000</td><td>$20,000,000</td><td>7.5%</td><td>Average for consumer goods</td></tr>
+            <tr><td>Grocery chain</td><td>$1,000,000</td><td>$50,000,000</td><td>2.0%</td><td>Average for grocery</td></tr>
+            <tr><td>Manufacturer</td><td>$2,400,000</td><td>$30,000,000</td><td>8.0%</td><td>Good for manufacturing</td></tr>
+            <tr><td>Loss-making startup</td><td>−$2,000,000</td><td>$8,000,000</td><td>−25.0%</td><td>Pre-profitability growth phase</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="margin-comparison">Comparing margin metrics</h2>
+      <p>Net Profit Margin is the lowest of the three main profitability margins because it deducts the most costs. Understanding where the gap between gross and net margin comes from is central to understanding a business's cost structure.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Margin metric</th><th>Deducts</th><th>Excludes</th><th>Typical gap vs Gross Margin</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Gross Profit Margin</td><td>COGS</td><td>OpEx, Interest, Tax</td><td>—</td></tr>
+            <tr><td>Operating Profit Margin</td><td>COGS + OpEx</td><td>Interest, Tax</td><td>5–25 pp below Gross Margin</td></tr>
+            <tr><td>EBITDA Margin</td><td>COGS + Cash OpEx</td><td>D&amp;A, Interest, Tax</td><td>Often close to Operating Margin</td></tr>
+            <tr><td>Net Profit Margin</td><td>All costs</td><td>Nothing</td><td>10–40 pp below Gross Margin</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A wide gap between Gross Margin and Net Margin can indicate heavy R&amp;D or marketing spend (common in growth companies), high financial leverage (interest cost), or a high effective tax rate. Narrowing this gap — either by reducing overhead or by growing revenue faster than fixed costs — is a key value creation lever.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is Net Profit Margin?</h3>
+      <p>Net Profit Margin = Net Income / Revenue × 100. It shows what percentage of revenue becomes bottom-line profit after all costs — COGS, SG&amp;A, R&amp;D, interest, and tax — have been deducted. It is the most complete measure of profitability.</p>
+
+      <h3>What is a good Net Profit Margin?</h3>
+      <p>Above 10% is generally healthy across most industries. Software companies often achieve 15–30%; retail operates at 2–8%; grocery at 1–4%. Always compare against direct industry peers rather than a universal benchmark.</p>
+
+      <h3>How is Net Profit Margin different from Gross Profit Margin?</h3>
+      <p>Gross Profit Margin only deducts COGS. Net Profit Margin deducts COGS plus all other costs — operating expenses, interest, and tax. Net Profit Margin is always lower than or equal to Gross Profit Margin.</p>
+
+      <h3>Can Net Profit Margin be negative?</h3>
+      <p>Yes. A negative net margin means the company is operating at a net loss. This is normal in early-stage businesses investing heavily in growth. It becomes a concern when it persists without a credible path to profitability.</p>
+
+      <h3>Why do high-revenue companies sometimes have thin net margins?</h3>
+      <p>Revenue and profitability are not the same. Businesses like grocery retailers generate enormous revenue but operate with structural 1–3% net margins because of thin mark-ups, high labour costs, and intense competition. High revenue alone does not indicate a profitable or valuable business.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/gross-profit-margin-calculator',     blurb: 'Calculate gross profit margin from Revenue and COGS.' },
+        { path: '/finance/operating-profit-margin-calculator', blurb: 'Calculate operating profit margin from EBIT and Revenue.' },
+        { path: '/finance/ebitda-margin-calculator',           blurb: 'Calculate EBITDA Margin against industry benchmarks.' },
+        { path: '/finance/ebt-calculator',                     blurb: 'Calculate EBT and effective tax rate from Net Income.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/net-profit-margin-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

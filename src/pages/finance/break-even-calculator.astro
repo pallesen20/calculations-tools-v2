@@ -1,0 +1,258 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  cm:         "$$\\text{Contribution Margin} = \\text{Selling Price} - \\text{Variable Cost per Unit}$$",
+  cmRatio:    "$$\\text{CM Ratio} = \\frac{\\text{Contribution Margin}}{\\text{Selling Price}} \\times 100$$",
+  beUnits:    "$$\\text{Break-Even Units} = \\frac{\\text{Fixed Costs}}{\\text{Contribution Margin per Unit}}$$",
+  beRevenue:  "$$\\text{Break-Even Revenue} = \\frac{\\text{Fixed Costs}}{\\text{CM Ratio}}$$",
+  mos:        "$$\\text{Margin of Safety} = \\frac{\\text{Actual Revenue} - \\text{Break-Even Revenue}}{\\text{Actual Revenue}} \\times 100$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'formula',       label: 'Break-even formula' },
+  { id: 'cm',            label: 'Contribution margin' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'margin-safety', label: 'Margin of safety' },
+  { id: 'applications',  label: 'Business applications' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Break-Even Calculator",
+    "url": "https://calculations.tools/finance/break-even-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate break-even point in units and revenue from fixed costs, selling price, and variable cost per unit. Shows contribution margin and CM ratio.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a break-even point?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The break-even point is the level of sales at which total revenue exactly equals total costs — neither profit nor loss is made. Below the break-even point, the business loses money; above it, the business makes a profit. Break-even can be expressed in units (how many products must be sold) or revenue (how much total sales are needed)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the break-even formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Break-Even Units = Fixed Costs / Contribution Margin per Unit. Break-Even Revenue = Fixed Costs / CM Ratio. Contribution Margin = Selling Price − Variable Cost per Unit. CM Ratio = Contribution Margin / Selling Price. For example: Fixed costs $50,000, selling price $100, variable cost $60 → CM = $40, CM ratio = 40%, Break-even = 1,250 units or $125,000 revenue." }
+      },
+      {
+        "@type": "Question",
+        "name": "What are fixed costs and variable costs?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Fixed costs stay constant regardless of production volume — rent, salaries, insurance, software subscriptions, loan payments. Variable costs change directly with production or sales volume — raw materials, packaging, direct labour paid per unit, sales commissions, shipping. The distinction is critical: fixed costs create the 'floor' you must cover before making a profit; variable costs determine how much margin each additional unit contributes." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is contribution margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Contribution margin (CM) is the amount each unit sold contributes to covering fixed costs and generating profit. CM = Selling Price − Variable Cost per Unit. If you sell a product for $100 and variable costs are $60, CM = $40. Every unit sold after break-even adds $40 in pure profit. The CM ratio (CM / Selling Price × 100) expresses this as a percentage of revenue — useful for comparing products with different price points." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does the break-even point help in business planning?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Break-even analysis answers the most fundamental business question: how many units do I need to sell to stop losing money? It helps with: pricing decisions (if variable costs rise, what price increase is needed to maintain break-even?), cost structure decisions (should I hire employees at fixed salary or use contractors at variable cost?), investment decisions (if I add a new production line, how much extra sales volume is needed to justify it?), and risk assessment (how far can sales drop before we lose money — the margin of safety)." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Break-Even Calculator"
+  metaTitle="Break-Even Calculator — Units, Revenue & Margin of Safety"
+  description="Calculate break-even point in units and revenue from fixed costs, selling price, and variable cost. Shows contribution margin, CM ratio, and margin of safety."
+  canonical="https://calculations.tools/finance/break-even-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="break-even-calculator"
+  ogFormula="Break-Even Units = Fixed Costs / Contribution Margin"
+  ogExample="$50K fixed ÷ $40 CM = 1,250 units / $125K revenue"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Break-Even Calculator</h2>
+          <p>How many units do you need to sell to cover all costs?</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="be-fixed">Total Fixed Costs</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="be-fixed" class="bmi-input" placeholder="e.g. 50000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="be-price">Selling Price per Unit</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="be-price" class="bmi-input" placeholder="e.g. 100" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="be-variable">Variable Cost per Unit</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="be-variable" class="bmi-input" placeholder="e.g. 60" />
+          </div>
+        </div>
+
+        <div id="be-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="be-units">—</div>
+              <div class="lbm-card-lbl">Break-Even Units</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="be-revenue">—</div>
+              <div class="lbm-card-lbl">Break-Even Revenue</div>
+            </div>
+          </div>
+
+          <div class="lbm-cards" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="be-cm">—</div>
+              <div class="lbm-card-lbl">Contribution Margin / Unit</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="be-cm-ratio">—</div>
+              <div class="lbm-card-lbl">CM Ratio</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Price − Variable = CM per unit</span>
+              <span class="pi-step-val" id="be-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">CM ratio</span>
+              <span class="pi-step-val" id="be-step2">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Fixed / CM = Break-even units</span>
+              <span class="pi-step-val" id="be-step3">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Fixed / CM ratio = Break-even revenue</span>
+              <span class="pi-step-val" id="be-step4">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/break-even-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Break-Even Units = <strong>Fixed Costs ÷ Contribution Margin per Unit</strong>. Example: $50,000 fixed costs, $100 selling price, $60 variable cost → CM = $40, break-even = <strong>1,250 units</strong> or <strong>$125,000 revenue</strong>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter your <strong>Total Fixed Costs</strong> (costs that don't change with volume: rent, salaries, insurance), the <strong>Selling Price per Unit</strong>, and the <strong>Variable Cost per Unit</strong> (costs that scale with production: materials, direct labour, packaging). The calculator instantly shows break-even in units and revenue, plus contribution margin and CM ratio.</p>
+      <p>Use the same currency for all inputs. If you sell multiple products, use a weighted average selling price and variable cost based on your expected sales mix.</p>
+
+      <h2 id="formula">Break-even formula</h2>
+      <p>The break-even calculation starts with contribution margin — the amount each unit contributes to covering fixed costs:</p>
+      <Formula expr={f.cm} />
+      <Formula expr={f.cmRatio} />
+      <p>Break-even in units and revenue:</p>
+      <Formula expr={f.beUnits} />
+      <Formula expr={f.beRevenue} />
+      <p>Both formulas give the same answer expressed differently. Use units when you produce a single product. Use revenue when you sell multiple products or services at varying prices — the CM ratio method averages across your product mix automatically.</p>
+
+      <h2 id="cm">Contribution margin explained</h2>
+      <p>The contribution margin is the profit engine of a business. Every unit sold contributes its CM to: (1) paying down fixed costs, and (2) generating profit after fixed costs are covered.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Units Sold</th><th>Revenue</th><th>Variable Costs</th><th>Contribution Margin</th><th>Fixed Costs</th><th>Profit / (Loss)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0</td><td>$0</td><td>$0</td><td>$0</td><td>$50,000</td><td>($50,000)</td></tr>
+            <tr><td>500</td><td>$50,000</td><td>$30,000</td><td>$20,000</td><td>$50,000</td><td>($30,000)</td></tr>
+            <tr><td>1,000</td><td>$100,000</td><td>$60,000</td><td>$40,000</td><td>$50,000</td><td>($10,000)</td></tr>
+            <tr><td><strong>1,250</strong></td><td><strong>$125,000</strong></td><td><strong>$75,000</strong></td><td><strong>$50,000</strong></td><td><strong>$50,000</strong></td><td><strong>$0</strong></td></tr>
+            <tr><td>1,500</td><td>$150,000</td><td>$90,000</td><td>$60,000</td><td>$50,000</td><td>$10,000</td></tr>
+            <tr><td>2,000</td><td>$200,000</td><td>$120,000</td><td>$80,000</td><td>$50,000</td><td>$30,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Business</th><th>Fixed Costs</th><th>Price</th><th>Variable Cost</th><th>CM</th><th>CM Ratio</th><th>Break-Even Units</th><th>Break-Even Revenue</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Coffee shop</td><td>$8,000/mo</td><td>$5.00</td><td>$1.50</td><td>$3.50</td><td>70%</td><td>2,286</td><td>$11,429</td></tr>
+            <tr><td>SaaS product</td><td>$50,000/mo</td><td>$99</td><td>$5</td><td>$94</td><td>95%</td><td>532</td><td>$52,632</td></tr>
+            <tr><td>E-commerce</td><td>$20,000/mo</td><td>$75</td><td>$40</td><td>$35</td><td>47%</td><td>572</td><td>$42,857</td></tr>
+            <tr><td>Manufacturer</td><td>$200,000/mo</td><td>$500</td><td>$300</td><td>$200</td><td>40%</td><td>1,000</td><td>$500,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="margin-safety">Margin of safety</h2>
+      <p>The margin of safety measures how much sales can fall before the business hits break-even — it quantifies the buffer between current performance and the loss threshold:</p>
+      <Formula expr={f.mos} />
+      <p>If your current revenue is $200,000 and break-even revenue is $125,000, your margin of safety is ($200,000 − $125,000) / $200,000 × 100 = <strong>37.5%</strong>. This means sales could drop 37.5% before you start losing money. A margin of safety above 20% is generally considered healthy; below 10% indicates vulnerability to demand fluctuations.</p>
+
+      <h2 id="applications">Business applications</h2>
+      <ul>
+        <li><strong>Pricing decisions:</strong> If raw material costs rise, break-even analysis instantly shows what price increase is needed to maintain the same break-even point. It makes the trade-off between margin and volume explicit.</li>
+        <li><strong>Capacity planning:</strong> Before adding a new production shift or hiring additional staff, calculate how much break-even increases and what extra sales volume is needed to justify the investment.</li>
+        <li><strong>Fixed vs. variable cost trade-offs:</strong> Outsourcing converts fixed costs (employee salaries) to variable costs (contractor fees), lowering break-even but also capping the upside once volume exceeds the fixed-cost model's efficiency.</li>
+        <li><strong>New product launches:</strong> Before launching a product, use break-even to set a realistic sales target. If the break-even is 10,000 units/month in a market where 5,000 units is realistic, the economics don't work at the current cost structure.</li>
+        <li><strong>Investor presentations:</strong> Break-even analysis is a standard element of business plans and pitch decks — investors want to know when the business will stop burning cash.</li>
+      </ul>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is a break-even point?</h3>
+      <p>The break-even point is the level of sales at which total revenue equals total costs — zero profit, zero loss. It can be expressed in units (how many products must be sold) or in revenue (how much total sales are needed). Below break-even, the business loses money; above it, every additional unit contributes pure profit equal to the contribution margin per unit.</p>
+
+      <h3>What is the break-even formula?</h3>
+      <p>Break-Even Units = Fixed Costs / Contribution Margin per Unit. Contribution Margin = Selling Price − Variable Cost per Unit. For $50,000 fixed costs, $100 price, $60 variable cost: CM = $40, break-even = 1,250 units. Break-Even Revenue = Fixed Costs / CM Ratio = $50,000 / 0.40 = $125,000.</p>
+
+      <h3>What counts as a fixed cost vs. a variable cost?</h3>
+      <p>Fixed costs are constant regardless of production volume: rent, salaried employees, insurance, subscriptions, loan repayments. Variable costs scale with sales: raw materials, packaging, direct hourly labour, shipping, sales commissions. Some costs are "semi-variable" (e.g., a utility bill with a fixed base charge plus per-unit usage) — split these into their fixed and variable components.</p>
+
+      <h3>What is contribution margin ratio?</h3>
+      <p>CM Ratio = Contribution Margin / Selling Price × 100. A CM ratio of 40% means 40 cents of every dollar of revenue contributes to covering fixed costs and generating profit. Higher CM ratios mean you reach break-even faster and keep more of each incremental dollar of revenue as profit.</p>
+
+      <h3>How is break-even different from profit?</h3>
+      <p>Break-even is not profitability — it's the zero-profit threshold. Profit = (Units Sold − Break-Even Units) × Contribution Margin per Unit. If you sell 1,500 units when break-even is 1,250, profit = 250 × $40 = $10,000. Every unit above break-even adds exactly one contribution margin in profit.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/contribution-margin-calculator', blurb: 'Contribution margin, CM ratio, and profit at any sales volume.' },
+        { path: '/finance/roi-calculator',                 blurb: 'Calculate ROI, multiple, and annualized return on any investment.' },
+        { path: '/finance/gross-profit-margin-calculator', blurb: 'Gross profit margin from revenue and cost of goods sold.' },
+        { path: '/math/percentage-calculator',             blurb: 'General percentage and percentage change calculator.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/break-even-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

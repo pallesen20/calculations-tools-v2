@@ -1,0 +1,7 @@
+---
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+<a href={`/glossary/${slug}`} class="glossary-inline-link"><slot /></a>

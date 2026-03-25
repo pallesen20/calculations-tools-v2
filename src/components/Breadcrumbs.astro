@@ -1,7 +1,12 @@
 ---
+import { GLOSSARY_TERMS } from '../data/glossary';
+
 const { pathname } = Astro.url;
 
+const GLOSSARY_NAME_MAP = Object.fromEntries(GLOSSARY_TERMS.map(t => [t.slug, t.term]));
+
 const NAME_MAP: Record<string, string> = {
+  ...GLOSSARY_NAME_MAP,
   'percentage-calculator': 'Percentage Calculator',
   'compare-text': 'Compare Text',
   'compare-excel': 'Compare Excel',
@@ -47,6 +52,15 @@ const NAME_MAP: Record<string, string> = {
   'ratio-to-percentage': 'Ratio to Percentage',
   'three-way': '3-Part Ratio Calculator',
   'progress-tracker': 'Progress Tracker',
+  'finance': 'Finance',
+  'ebitda-calculator': 'EBITDA Calculator',
+  'ebit-calculator': 'EBIT Calculator',
+  'ebt-calculator': 'EBT Calculator',
+  'ebitda-margin-calculator': 'EBITDA Margin Calculator',
+  'gross-profit-margin-calculator': 'Gross Profit Margin Calculator',
+  'net-profit-margin-calculator': 'Net Profit Margin Calculator',
+  'operating-profit-margin-calculator': 'Operating Profit Margin Calculator',
+  'glossary': 'Glossary',
 };
 
 function slugToName(slug: string) {

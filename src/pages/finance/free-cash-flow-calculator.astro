@@ -1,0 +1,261 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  fcf:        "$$\\text{FCF} = \\text{Operating Cash Flow} - \\text{Capital Expenditures}$$",
+  fcfAlt:     "$$\\text{FCF} = \\text{Net Income} + \\text{D\\&A} - \\Delta\\text{Working Capital} - \\text{CapEx}$$",
+  fcfYield:   "$$\\text{FCF Yield} = \\frac{\\text{FCF}}{\\text{Market Cap}} \\times 100$$",
+  fcfMargin:  "$$\\text{FCF Margin} = \\frac{\\text{FCF}}{\\text{Revenue}} \\times 100$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'formula',       label: 'FCF formula' },
+  { id: 'vs-ebitda',     label: 'FCF vs. EBITDA vs. net income' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'fcf-yield',     label: 'FCF yield & benchmarks' },
+  { id: 'negative-fcf',  label: 'Negative FCF' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free Cash Flow Calculator",
+    "url": "https://calculations.tools/finance/free-cash-flow-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate Free Cash Flow (FCF) from Operating Cash Flow and CapEx. Optionally calculate FCF Yield from market capitalisation.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Free Cash Flow (FCF)?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Free Cash Flow (FCF) is the cash a company generates from its operations after spending on capital expenditures (CapEx) required to maintain or expand its asset base. It represents the cash available to pay dividends, buy back shares, repay debt, or make acquisitions. FCF = Operating Cash Flow − Capital Expenditures." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Free Cash Flow formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The simplest formula is: FCF = Operating Cash Flow − Capital Expenditures. Both figures come from the cash flow statement. An alternative formula starting from the income statement: FCF = Net Income + Depreciation & Amortisation − Changes in Working Capital − Capital Expenditures." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good Free Cash Flow?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Positive FCF means a company generates more cash from operations than it spends on CapEx — a sign of financial health and self-funding capacity. FCF yield (FCF / Market Cap) above 5% is generally considered attractive. FCF margin (FCF / Revenue) above 10% is strong. Compare against industry peers, as capital-intensive industries (manufacturing, telecoms) naturally have lower FCF margins than asset-light businesses (software, services)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between FCF and EBITDA?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBITDA adds back D&A to operating profit — it excludes all cash investments. FCF starts from operating cash flow (which includes working capital changes) and subtracts CapEx — it reflects actual cash generation after maintaining and growing the business. EBITDA ignores CapEx; FCF includes it. For capital-intensive businesses, FCF is significantly lower than EBITDA. For asset-light businesses, they converge." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Free Cash Flow be negative?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Negative FCF occurs when CapEx exceeds operating cash flow. This is common in capital-intensive industries during expansion phases (building factories, laying fibre), in fast-growing companies investing heavily for future revenue, or in distressed businesses burning cash. Persistent negative FCF requiring external funding is a warning sign; temporary negative FCF during a defined investment cycle can be healthy if returns on invested capital are high." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Free Cash Flow Calculator"
+  metaTitle="Free Cash Flow Calculator — FCF Formula & FCF Yield"
+  description="Calculate Free Cash Flow (FCF) from Operating Cash Flow and CapEx. Optionally calculate FCF Yield. Includes FCF vs. EBITDA comparison and industry benchmarks."
+  canonical="https://calculations.tools/finance/free-cash-flow-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="free-cash-flow-calculator"
+  ogFormula="FCF = Operating Cash Flow − Capital Expenditures"
+  ogExample="OCF $12M − CapEx $3M = FCF $9M (FCF Yield 4.5%)"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Free Cash Flow Calculator</h2>
+          <p>Cash generated after capital investment</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="fcf-ocf">Operating Cash Flow</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="fcf-ocf" class="bmi-input" placeholder="e.g. 12000000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="fcf-capex">Capital Expenditures (CapEx)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="fcf-capex" class="bmi-input" placeholder="e.g. 3000000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="fcf-market-cap">Market Capitalisation (optional — for FCF Yield)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="fcf-market-cap" class="bmi-input" placeholder="e.g. 200000000" />
+          </div>
+        </div>
+
+        <div id="fcf-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fcf-val">—</div>
+              <div class="lbm-card-lbl">Free Cash Flow</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fcf-ocf-out">—</div>
+              <div class="lbm-card-lbl">Operating Cash Flow</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fcf-capex-out">—</div>
+              <div class="lbm-card-lbl">CapEx</div>
+            </div>
+          </div>
+
+          <div id="fcf-yield-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="fcf-yield-val">—</div>
+              <div class="lbm-card-lbl">FCF Yield</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">OCF − CapEx = FCF</span>
+              <span class="pi-step-val" id="fcf-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">FCF / Market Cap × 100 = FCF Yield</span>
+              <span class="pi-step-val" id="fcf-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/free-cash-flow-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Free Cash Flow = <strong>Operating Cash Flow − Capital Expenditures</strong>. Example: OCF $12M − CapEx $3M = <strong>FCF $9M</strong>. FCF represents the cash left after maintaining and growing the business — available for dividends, buybacks, debt repayment, or acquisitions.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter <strong>Operating Cash Flow</strong> from the cash flow statement (cash from operations section) and <strong>Capital Expenditures</strong> (also from the cash flow statement, listed as "purchase of property, plant &amp; equipment" or similar). The calculator shows FCF immediately. Optionally enter <strong>Market Capitalisation</strong> to see FCF Yield — a valuation metric comparable to earnings yield.</p>
+      <p>Use consistent units. All figures should be from the same period — typically the last twelve months (LTM) for a valuation context, or a single fiscal year for reporting.</p>
+
+      <h2 id="formula">Free Cash Flow formula</h2>
+      <p>The standard FCF formula uses cash flow statement line items directly:</p>
+      <Formula expr={f.fcf} />
+      <p>An alternative derivation starts from the income statement and adjusts for non-cash items and working capital:</p>
+      <Formula expr={f.fcfAlt} />
+      <p>Both formulas yield the same result if the inputs are consistent. The operating cash flow method is simpler and less prone to manipulation. The income statement method is useful when the cash flow statement is unavailable or when building a financial model.</p>
+      <p>Two related metrics:</p>
+      <Formula expr={f.fcfYield} />
+      <Formula expr={f.fcfMargin} />
+
+      <h2 id="vs-ebitda">FCF vs. EBITDA vs. net income</h2>
+      <p>Each profitability metric answers a different question about the business:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>What it measures</th><th>Includes CapEx</th><th>Includes D&amp;A</th><th>Includes Working Capital</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Net Income</td><td>Accounting profit (GAAP)</td><td>No</td><td>Yes (as expense)</td><td>No</td></tr>
+            <tr><td>EBITDA</td><td>Operating profit before D&amp;A</td><td>No</td><td>Added back</td><td>No</td></tr>
+            <tr><td>Operating Cash Flow</td><td>Cash from core operations</td><td>No</td><td>Added back</td><td>Yes</td></tr>
+            <tr><td>Free Cash Flow</td><td>Cash after capital investment</td><td>Yes (subtracted)</td><td>Added back</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Warren Buffett has consistently argued that FCF is the most honest measure of business earnings because it accounts for the capital investment required to sustain the business. EBITDA can be manipulated by changing D&amp;A accounting; FCF is harder to engineer because it tracks actual cash movement.</p>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Company Type</th><th>OCF</th><th>CapEx</th><th>FCF</th><th>FCF Margin (vs. Revenue)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS company ($50M revenue)</td><td>$12M</td><td>$1M</td><td>$11M</td><td>22%</td></tr>
+            <tr><td>Manufacturer ($200M revenue)</td><td>$30M</td><td>$22M</td><td>$8M</td><td>4%</td></tr>
+            <tr><td>Telecom ($1B revenue)</td><td>$250M</td><td>$180M</td><td>$70M</td><td>7%</td></tr>
+            <tr><td>High-growth startup ($30M revenue)</td><td>-$5M</td><td>$3M</td><td>-$8M</td><td>Negative</td></tr>
+            <tr><td>Retail chain ($500M revenue)</td><td>$40M</td><td>$25M</td><td>$15M</td><td>3%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="fcf-yield">FCF yield and benchmarks</h2>
+      <p>FCF Yield = FCF / Market Cap × 100. It is the inverse of the Price-to-FCF multiple and measures how much free cash flow investors receive per dollar of market value — analogous to earnings yield for P/E ratios.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>FCF Yield</th><th>Interpretation</th><th>Price-to-FCF multiple</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>&lt; 2%</td><td>Very expensive — typical of high-growth stocks</td><td>&gt; 50x</td></tr>
+            <tr><td>2% – 4%</td><td>Premium valuation</td><td>25x – 50x</td></tr>
+            <tr><td>4% – 6%</td><td>Fair value range for quality businesses</td><td>17x – 25x</td></tr>
+            <tr><td>6% – 10%</td><td>Attractively priced</td><td>10x – 17x</td></tr>
+            <tr><td>&gt; 10%</td><td>Deep value or distress signal</td><td>&lt; 10x</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="negative-fcf">What negative FCF means</h2>
+      <p>Negative FCF means CapEx exceeds operating cash flow. Context determines whether this is a warning sign or a healthy investment phase:</p>
+      <ul>
+        <li><strong>Healthy negative FCF:</strong> A company in a defined expansion phase — building a factory, rolling out infrastructure, entering a new market — intentionally investing above its current operating cash flow to drive future returns. Amazon ran negative FCF for years while building its fulfilment network and AWS.</li>
+        <li><strong>Concerning negative FCF:</strong> A mature company consistently spending more on maintenance CapEx than it generates from operations, requiring repeated equity raises or debt financing to fund the gap. This destroys shareholder value over time.</li>
+        <li><strong>Structural negative FCF:</strong> Some capital-intensive industries (airlines, oil &amp; gas, telecom) routinely run near-zero or negative FCF due to the continuous investment demands of their asset base. Evaluate relative to the industry, not in absolute terms.</li>
+      </ul>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is Free Cash Flow?</h3>
+      <p>FCF is the cash generated by a business from its operations after paying for capital expenditures. It represents cash available for dividends, share buybacks, debt repayment, or acquisitions. FCF = Operating Cash Flow − CapEx.</p>
+
+      <h3>Where do I find operating cash flow and CapEx?</h3>
+      <p>Both are on the cash flow statement. Operating Cash Flow is the subtotal of the "Cash from Operating Activities" section. CapEx appears in the "Cash from Investing Activities" section — often labelled "purchase of property, plant and equipment" or "capital expenditures." CapEx is typically a negative number on the cash flow statement; enter the absolute value.</p>
+
+      <h3>What is the difference between FCF and EBITDA?</h3>
+      <p>EBITDA adds back D&A to operating profit — it does not deduct CapEx. FCF starts from operating cash flow (which includes working capital movements) and subtracts CapEx. For a capital-intensive manufacturer spending $50M on CapEx, EBITDA might be $80M while FCF is only $30M. EBITDA overstates cash generation for heavy CapEx businesses; FCF does not.</p>
+
+      <h3>What is FCF yield and what is a good level?</h3>
+      <p>FCF Yield = FCF / Market Cap × 100. It shows how much free cash flow an investor receives per dollar invested. A yield above 5% is generally considered attractive for a quality business. Compare against 10-year Treasury yields as the risk-free benchmark — FCF yield should exceed risk-free rates by a sufficient margin to compensate for equity risk.</p>
+
+      <h3>Can FCF differ significantly from net income?</h3>
+      <p>Yes — sometimes dramatically. A profitable company with poor working capital management (rising receivables, slow collections) can have low or negative FCF despite high net income. Conversely, a loss-making startup can have positive FCF if it collects cash upfront (subscriptions) and defers costs. Always check FCF alongside net income for a complete picture.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/ebitda-calculator',              blurb: 'EBITDA from Net Income, Interest, Tax, and D&A — compare with FCF.' },
+        { path: '/finance/working-capital-calculator',     blurb: 'Working Capital and Current Ratio from current assets and liabilities.' },
+        { path: '/finance/roi-calculator',                 blurb: 'Calculate ROI, investment multiple, and annualized return.' },
+        { path: '/finance/enterprise-value-calculator',    blurb: 'Enterprise Value from market cap, debt, and cash.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/free-cash-flow-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

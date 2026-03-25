@@ -1,0 +1,83 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Return on Equity Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Return on Equity Calculator</h2>
+        <p>How efficiently does the business use shareholders' capital?</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="roe-net-income">Net Income</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="roe-net-income" class="bmi-input" placeholder="e.g. 10000000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="roe-equity">Shareholders' Equity</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="roe-equity" class="bmi-input" placeholder="e.g. 50000000" />
+        </div>
+      </div>
+
+      <div class="calculator-header" style="margin-top:1rem;">
+        <p style="font-size:0.85rem;opacity:0.7;">DuPont decomposition (optional)</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="roe-net-margin">Net Profit Margin (%)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="roe-net-margin" class="bmi-input" placeholder="e.g. 12.5" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="roe-asset-turnover">Asset Turnover (Revenue / Total Assets)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="roe-asset-turnover" class="bmi-input" placeholder="e.g. 0.8" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="roe-equity-multiplier">Equity Multiplier (Total Assets / Equity)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="roe-equity-multiplier" class="bmi-input" placeholder="e.g. 2.0" />
+        </div>
+      </div>
+
+      <div id="roe-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="roe-val">—</div>
+            <div class="lbm-card-lbl">Return on Equity</div>
+          </div>
+        </div>
+
+        <div id="roe-dupont-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="roe-dupont-val">—</div>
+            <div class="lbm-card-lbl">ROE (DuPont)</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Net Income / Equity × 100 = ROE</span>
+            <span class="pi-step-val" id="roe-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Margin × Turnover × Multiplier = ROE</span>
+            <span class="pi-step-val" id="roe-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/roe-calculator.js" is:inline></script>
+</EmbedLayout>

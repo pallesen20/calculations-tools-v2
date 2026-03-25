@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../../components/Sources.astro';
 
 const f = {
@@ -120,6 +121,8 @@ const schema = [
   schema={schema}
   embedSlug="bmi-calculator"
   sources={sources}
+  ogFormula="BMI = weight (kg) / height² (m²)"
+  ogExample="70 kg at 1.75 m: 70 / 1.75² = 22.9 (Normal weight)"
 >
 
   <div slot="calculator">
@@ -427,6 +430,8 @@ const schema = [
         { path: '/health/bmi-calculator/weight-loss' },
         { path: '/health/lean-body-mass-calculator' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/health/bmi-calculator" />
 
     </div>
   </div>

@@ -18,12 +18,28 @@ interface Props {
   tocItems?: TocItem[];
   embedSlug?: string;
   sources?: Source[];
+  ogFormula?: string;
+  ogExample?: string;
 }
 
-const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources } = Astro.props;
+const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample } = Astro.props;
 
 const _pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/index';
 const _filePath = `src/pages${_pathname}.astro`;
+const _category = _pathname.startsWith('/math') ? 'Math'
+  : _pathname.startsWith('/health') ? 'Health'
+  : _pathname.startsWith('/conversion') ? 'Conversion'
+  : _pathname.startsWith('/finance') ? 'Finance'
+  : 'Tools';
+const ogImage = (ogFormula && ogExample)
+  ? `https://calculations-image-generator.vercel.app/api/og-web?category=${encodeURIComponent(_category)}&calculator=${encodeURIComponent(title)}&formula=${encodeURIComponent(ogFormula)}&example=${encodeURIComponent(ogExample)}`
+  : undefined;
+
+const augmentedSchema = (ogImage && schema)
+  ? (Array.isArray(schema) ? schema : [schema]).map((s: any) =>
+      s['@type'] === 'WebApplication' && !s.image ? { ...s, image: ogImage } : s
+    )
+  : schema;
 
 let lastUpdated = '';
 try {
@@ -44,7 +60,7 @@ const iframeSnippet = embedUrl
   : null;
 ---
 
-<BaseLayout {title} {metaTitle} {description} {canonical} {schema}>
+<BaseLayout {title} {metaTitle} {description} {canonical} schema={augmentedSchema} {ogImage}>
   <main class="main-content" style="margin-top: 1rem;">
     <div class="container">
       <div class="calculator-page-container">

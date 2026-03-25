@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 
 const f = {
   main:      "$$\\text{Percentage Point Difference} = A\\% - B\\%$$",
@@ -88,6 +89,8 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="percentage-point-calculator"
+  ogFormula="pp difference = Second % - First %"
+  ogExample="From 45% to 52%: 52 - 45 = 7 percentage points"
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -280,6 +283,8 @@ const schema = [
         { path: '/math/percentage-calculator/decrease',   blurb: 'Percent decrease calculator — dedicated tool for negative percentage changes.' },
         { path: '/math/percentage-calculator/percent-error', blurb: 'Percent error calculator — compare an experimental value to a known theoretical standard.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/percentage-calculator/percentage-point" />
 
     </div>
   </div>

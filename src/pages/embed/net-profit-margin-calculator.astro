@@ -1,0 +1,55 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Net Profit Margin Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Net Profit Margin Calculator</h2>
+        <p>Divide Net Income by Revenue to get the margin</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="npm-net-income">Net Income</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="npm-net-income" class="bmi-input" placeholder="e.g. 500000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="npm-revenue">Revenue</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="npm-revenue" class="bmi-input" placeholder="e.g. 5000000" />
+        </div>
+      </div>
+
+      <div id="npm-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="npm-margin-val">—</div>
+            <div class="lbm-card-lbl">Net Profit Margin</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="npm-interp-val">—</div>
+            <div class="lbm-card-lbl">Interpretation</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Net Income / Revenue = ratio</span>
+            <span class="pi-step-val" id="npm-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">ratio × 100 = margin %</span>
+            <span class="pi-step-val" id="npm-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/net-profit-margin-calculator.js" is:inline></script>
+</EmbedLayout>

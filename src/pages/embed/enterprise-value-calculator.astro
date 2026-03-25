@@ -1,0 +1,102 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Enterprise Value Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Enterprise Value Calculator</h2>
+        <p>Total acquisition cost — equity plus net debt</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ev-market-cap">Market Capitalisation</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ev-market-cap" class="bmi-input" placeholder="e.g. 500000000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ev-debt">+ Total Debt (short-term + long-term)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ev-debt" class="bmi-input" placeholder="e.g. 100000000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ev-cash">− Cash &amp; Equivalents</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ev-cash" class="bmi-input" placeholder="e.g. 50000000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ev-ebitda">EBITDA (optional — for EV/EBITDA)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ev-ebitda" class="bmi-input" placeholder="e.g. 40000000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ev-revenue">Revenue (optional — for EV/Revenue)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ev-revenue" class="bmi-input" placeholder="e.g. 200000000" />
+        </div>
+      </div>
+
+      <div id="ev-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ev-val">—</div>
+            <div class="lbm-card-lbl">Enterprise Value</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ev-mktcap-out">—</div>
+            <div class="lbm-card-lbl">Market Cap</div>
+          </div>
+        </div>
+
+        <div class="lbm-cards" style="margin-top:0.5rem;">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ev-debt-out">—</div>
+            <div class="lbm-card-lbl">Total Debt</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ev-cash-out">—</div>
+            <div class="lbm-card-lbl">Cash</div>
+          </div>
+        </div>
+
+        <div id="ev-multiples-row" class="lbm-cards" style="margin-top:0.5rem;">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ev-ebitda-multiple">—</div>
+            <div class="lbm-card-lbl">EV/EBITDA</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ev-rev-multiple">—</div>
+            <div class="lbm-card-lbl">EV/Revenue</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Market Cap + Debt − Cash = EV</span>
+            <span class="pi-step-val" id="ev-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">EV / EBITDA</span>
+            <span class="pi-step-val" id="ev-step2">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">EV / Revenue</span>
+            <span class="pi-step-val" id="ev-step3">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/enterprise-value-calculator.js" is:inline></script>
+</EmbedLayout>

@@ -87,6 +87,8 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="percent-to-goal-calculator"
+  ogFormula="% to Goal = (Current / Goal) × 100"
+  ogExample="$3,000 of $10,000 goal = 30% complete"
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -267,11 +269,11 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
+        { path: '/math/percentage-calculator/progress-tracker', },
         { path: '/math/percentage-calculator',                    blurb: 'The main percentage calculator — percentage of a number, increase, decrease, and more.' },
         { path: '/math/percentage-calculator/change',             blurb: 'Percent change calculator — measures relative change from a starting value over time.' },
         { path: '/math/percentage-calculator/increase',           blurb: 'Percent increase calculator — dedicated tool for positive percentage changes.' },
         { path: '/math/percentage-calculator/percentage-point',   blurb: 'Percentage point calculator — find the pp difference between two percentage values.' },
-        { path: '/math/percentage-calculator/percent-error',      blurb: 'Percent error calculator — compare a measured value to a known theoretical standard.' },
         { path: '/math/percentage-calculator/average',            blurb: 'Average percentage calculator — arithmetic mean and weighted average of percentages.' },
       ]} />
 

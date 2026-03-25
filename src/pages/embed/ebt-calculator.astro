@@ -1,0 +1,72 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="EBT Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>EBT Calculator</h2>
+        <p>Add Tax Expense back to Net Income</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ebt-net-income">Net Income</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ebt-net-income" class="bmi-input" placeholder="e.g. 700000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ebt-tax">+ Tax Expense</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ebt-tax" class="bmi-input" placeholder="e.g. 210000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ebt-revenue">Revenue (optional — for Pre-Tax Margin)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ebt-revenue" class="bmi-input" placeholder="e.g. 5000000" />
+        </div>
+      </div>
+
+      <div id="ebt-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ebt-ebt-val">—</div>
+            <div class="lbm-card-lbl">EBT</div>
+          </div>
+        </div>
+
+        <div id="ebt-taxrate-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ebt-taxrate-val">—</div>
+            <div class="lbm-card-lbl">Effective Tax Rate</div>
+          </div>
+        </div>
+
+        <div id="ebt-margin-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ebt-margin-val">—</div>
+            <div class="lbm-card-lbl">Pre-Tax Margin</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Net Income + Tax = EBT</span>
+            <span class="pi-step-val" id="ebt-step1">—</span>
+          </div>
+          <div class="pi-step" id="ebt-step2-row">
+            <span class="pi-step-label">Tax / EBT × 100 = Effective Rate</span>
+            <span class="pi-step-val" id="ebt-step2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/ebt-calculator.js" is:inline></script>
+</EmbedLayout>

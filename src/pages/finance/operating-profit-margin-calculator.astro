@@ -1,0 +1,231 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  margin: "$$\\text{Operating Profit Margin} = \\frac{\\text{Operating Profit (EBIT)}}{\\text{Revenue}} \\times 100$$",
+  ebit:   "$$\\text{Operating Profit} = \\text{Revenue} - \\text{COGS} - \\text{Operating Expenses}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'what-is-opm',         label: 'What is Operating Profit Margin?' },
+  { id: 'formula',             label: 'Formula' },
+  { id: 'industry-benchmarks', label: 'Industry benchmarks' },
+  { id: 'examples',            label: 'Worked examples' },
+  { id: 'opm-vs-ebitda',       label: 'Operating Margin vs EBITDA Margin' },
+  { id: 'faq',                 label: 'FAQs' },
+  { id: 'related-tools',       label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Operating Profit Margin Calculator",
+    "url": "https://calculations.tools/finance/operating-profit-margin-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate operating profit margin (EBIT margin) from operating profit and revenue. Shows margin %, interpretation, and step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Operating Profit Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Operating Profit Margin = Operating Profit (EBIT) / Revenue x 100. It measures what percentage of revenue remains as operating profit after deducting COGS and all operating expenses (SG&A, R&D, depreciation), but before interest and tax. It isolates the profitability of core business operations, independent of how the business is financed or taxed." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good Operating Profit Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It varies by industry. Software/SaaS: 20-35%. Financial services: 30-45%. Healthcare: 10-20%. Manufacturing: 8-15%. Retail: 4-10%. A margin above 15% signals strong operational efficiency for most businesses. Always compare against sector peers." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between Operating Profit Margin and EBITDA Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Operating Profit Margin (EBIT Margin) includes depreciation and amortization as expenses. EBITDA Margin adds D&A back, so it is always higher than or equal to Operating Profit Margin. The gap between them reflects the company's capital intensity — asset-heavy businesses (manufacturing, telecom) have a larger D&A add-back, so a larger gap between EBIT and EBITDA Margin." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Operating Profit Margin the same as EBIT Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Operating Profit Margin and EBIT Margin are the same metric calculated the same way: Operating Profit (EBIT) / Revenue x 100. The terms are used interchangeably. EBIT = Earnings Before Interest and Tax = Operating Profit." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Operating Profit Margin Calculator"
+  metaTitle="Operating Profit Margin Calculator | Formula & Benchmarks"
+  description="Calculate operating profit margin (EBIT margin) from operating profit and revenue. See margin %, interpretation, and step-by-step workings. Compare against benchmarks."
+  canonical="https://calculations.tools/finance/operating-profit-margin-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="operating-profit-margin-calculator"
+  ogFormula="Operating Profit Margin = Operating Profit / Revenue x 100"
+  ogExample="$800K / $5M x 100 = 16% operating margin"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate EBIT Margin Instantly</h2>
+          <p>Divide Operating Profit (EBIT) by Revenue to get the margin</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="opm-ebit">Operating Profit (EBIT)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="opm-ebit" class="bmi-input" placeholder="e.g. 800000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="opm-revenue">Revenue</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="opm-revenue" class="bmi-input" placeholder="e.g. 5000000" />
+          </div>
+        </div>
+
+        <div id="opm-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="opm-margin-val">—</div>
+              <div class="lbm-card-lbl">Operating Profit Margin</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="opm-interp-val">—</div>
+              <div class="lbm-card-lbl">Interpretation</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Operating Profit / Revenue = ratio</span>
+              <span class="pi-step-val" id="opm-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">ratio × 100 = margin %</span>
+              <span class="pi-step-val" id="opm-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/operating-profit-margin-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Operating Profit Margin = <strong>Operating Profit (EBIT) / Revenue × 100</strong>. Example: EBIT $800K on Revenue $5M = <strong>16% Operating Profit Margin</strong>. A margin above 15% is generally considered strong operational efficiency across most sectors.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter Operating Profit (also called EBIT — Earnings Before Interest and Tax) and Revenue in the same currency unit and time period. If you only have Net Income, use the <a href="/finance/ebit-calculator">EBIT Calculator</a> first to derive EBIT by adding back interest and tax expenses. Operating Profit Margin and EBIT Margin are the same metric — the terms are interchangeable.</p>
+
+      <h2 id="what-is-opm">What is Operating Profit Margin?</h2>
+      <p>Operating Profit Margin measures how much of every dollar of revenue becomes operating profit — profit from core business operations after deducting COGS and all operating expenses (SG&amp;A, R&amp;D, depreciation, amortization), but before the effects of how the business is financed (interest) or taxed.</p>
+      <p>This makes it an ideal metric for comparing operational efficiency across companies with different capital structures or tax jurisdictions. A highly leveraged company and a debt-free company with identical operations will show the same Operating Profit Margin but very different Net Profit Margins.</p>
+      <p>Private equity firms, investment analysts, and management teams track Operating Profit Margin closely because it reflects what management actually controls. Interest rates and tax rates are often outside management's direct influence; COGS and operating expense ratios are not.</p>
+
+      <h2 id="formula">Operating Profit Margin formula</h2>
+      <Formula expr={f.margin} />
+      <p>Operating Profit (EBIT) is derived from the income statement:</p>
+      <Formula expr={f.ebit} />
+      <p>Operating Expenses include SG&amp;A (selling, general and administrative), R&amp;D, and depreciation/amortization of operating assets. They exclude interest expense and income tax, which appear below the operating profit line.</p>
+
+      <h2 id="industry-benchmarks">Industry benchmarks</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Industry</th><th>Typical Operating Margin</th><th>Key driver</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS / Cloud Software</td><td>20% – 35%</td><td>Scalable cost base; high gross margins</td></tr>
+            <tr><td>Financial Services</td><td>30% – 45%</td><td>Low COGS; fee and interest income</td></tr>
+            <tr><td>Pharmaceuticals</td><td>20% – 30%</td><td>IP pricing power after R&amp;D expense</td></tr>
+            <tr><td>Healthcare Services</td><td>10% – 20%</td><td>Labour-intensive; regulated revenue</td></tr>
+            <tr><td>Media &amp; Entertainment</td><td>15% – 25%</td><td>Content cost variability</td></tr>
+            <tr><td>Manufacturing</td><td>8% – 15%</td><td>Material, labour, and D&amp;A compress margin</td></tr>
+            <tr><td>Telecom</td><td>10% – 20%</td><td>High D&amp;A on network assets reduces EBIT vs EBITDA</td></tr>
+            <tr><td>Retail (specialty)</td><td>5% – 12%</td><td>Overhead costs (rent, staff) after gross margin</td></tr>
+            <tr><td>Restaurants / Food Service</td><td>5% – 15%</td><td>Labour and food cost management</td></tr>
+            <tr><td>Construction</td><td>4% – 10%</td><td>Project risk and variable subcontractor cost</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Company type</th><th>Operating Profit (EBIT)</th><th>Revenue</th><th>Operating Margin</th><th>Assessment</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS company</td><td>$3,500,000</td><td>$14,000,000</td><td>25.0%</td><td>Strong for SaaS</td></tr>
+            <tr><td>Manufacturer</td><td>$3,000,000</td><td>$30,000,000</td><td>10.0%</td><td>Average for manufacturing</td></tr>
+            <tr><td>Retailer</td><td>$400,000</td><td>$8,000,000</td><td>5.0%</td><td>Average for retail</td></tr>
+            <tr><td>Pharma company</td><td>$50,000,000</td><td>$200,000,000</td><td>25.0%</td><td>Good for pharma</td></tr>
+            <tr><td>Restaurant chain</td><td>$1,200,000</td><td>$12,000,000</td><td>10.0%</td><td>Above average for restaurants</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="opm-vs-ebitda">Operating Margin vs EBITDA Margin</h2>
+      <p>Operating Profit Margin and EBITDA Margin are closely related — the only difference is whether depreciation and amortization (D&amp;A) are deducted.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Includes D&amp;A?</th><th>Best used for</th><th>Typical gap</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Operating Profit Margin (EBIT Margin)</td><td>Yes — D&amp;A deducted</td><td>Comparing capital intensity between companies</td><td>—</td></tr>
+            <tr><td>EBITDA Margin</td><td>No — D&amp;A added back</td><td>M&amp;A valuation; proxy for cash generation</td><td>2–15 pp above EBIT Margin</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The gap between EBITDA Margin and EBIT Margin equals D&amp;A as a percentage of revenue. Asset-heavy businesses (telecom, manufacturing, oil &amp; gas) have large D&amp;A charges and therefore a large gap. Asset-light businesses (SaaS, financial services) have minimal D&amp;A and nearly identical EBIT and EBITDA Margins.</p>
+      <p>When comparing a capital-intensive company against an asset-light one, EBITDA Margin is often preferred for valuation because it removes the distortion of different depreciation policies. When comparing two companies with similar asset bases, EBIT Margin is more meaningful because it reflects the true cost of using those assets.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is Operating Profit Margin?</h3>
+      <p>Operating Profit Margin = Operating Profit (EBIT) / Revenue × 100. It measures what percentage of revenue becomes operating profit after COGS and all operating expenses — but before interest and tax. It is also called EBIT Margin.</p>
+
+      <h3>Is Operating Profit Margin the same as EBIT Margin?</h3>
+      <p>Yes. Operating Profit = EBIT (Earnings Before Interest and Tax). The terms Operating Profit Margin and EBIT Margin are used interchangeably and produce identical results.</p>
+
+      <h3>What is a good Operating Profit Margin?</h3>
+      <p>Above 15% is generally strong for most sectors. Software companies often reach 20–35%; retail operates at 5–12%; manufacturing at 8–15%. Always benchmark against direct industry peers rather than a universal target.</p>
+
+      <h3>How is Operating Margin different from EBITDA Margin?</h3>
+      <p>Operating Margin deducts depreciation and amortization; EBITDA Margin adds D&amp;A back. EBITDA Margin is always higher. The gap between them reflects capital intensity — the more assets a business depreciates, the wider the gap.</p>
+
+      <h3>Can Operating Profit Margin be negative?</h3>
+      <p>Yes. A negative operating margin means the core business operations generate a loss before accounting for interest and tax. This is a more serious warning sign than a negative net margin caused solely by interest costs — it indicates the business model itself is not yet economically viable.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/ebit-calculator',                    blurb: 'Derive EBIT from Net Income, Interest, and Tax.' },
+        { path: '/finance/gross-profit-margin-calculator',     blurb: 'Calculate gross profit margin from Revenue and COGS.' },
+        { path: '/finance/net-profit-margin-calculator',       blurb: 'Calculate net profit margin from Net Income and Revenue.' },
+        { path: '/finance/ebitda-margin-calculator',           blurb: 'Calculate EBITDA Margin against industry benchmarks.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/operating-profit-margin-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

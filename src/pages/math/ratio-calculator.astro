@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 
 const f = {
   def:      "$$a : b = \\frac{a}{b}$$",
@@ -241,6 +242,8 @@ const schema = [
         { path: '/math/fraction-calculator',           blurb: 'Fraction calculator — add, subtract, multiply, divide fractions.' },
         { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, increase, decrease.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/ratio-calculator" />
 
     </div>
   </div>

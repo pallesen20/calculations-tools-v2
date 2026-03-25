@@ -1,0 +1,200 @@
+---
+import GlossaryLayout from '../../layouts/GlossaryLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import { GLOSSARY_TERMS } from '../../data/glossary';
+import { GLOSSARY_CONTENT } from '../../data/glossary-content';
+
+export function getStaticPaths() {
+  return GLOSSARY_TERMS.map(t => ({ params: { slug: t.slug } }));
+}
+
+const { slug } = Astro.params;
+const term = GLOSSARY_TERMS.find(t => t.slug === slug)!;
+const content = GLOSSARY_CONTENT[slug];
+
+const idx = GLOSSARY_TERMS.findIndex(t => t.slug === slug);
+const prev = idx > 0 ? GLOSSARY_TERMS[idx - 1] : null;
+const next = idx < GLOSSARY_TERMS.length - 1 ? GLOSSARY_TERMS[idx + 1] : null;
+
+const relatedTermObjects = (term.relatedTerms ?? [])
+  .map(s => GLOSSARY_TERMS.find(t => t.slug === s))
+  .filter(Boolean) as typeof GLOSSARY_TERMS;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": term.term,
+    "description": term.shortDef,
+    "url": `https://calculations.tools/glossary/${slug}`,
+    "inDefinedTermSet": {
+      "@type": "DefinedTermSet",
+      "name": "Finance & Math Glossary",
+      "url": "https://calculations.tools/glossary",
+    },
+  },
+  ...(content?.faqs?.length ? [{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": content.faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": { "@type": "Answer", "text": faq.a },
+    })),
+  }] : []),
+];
+---
+
+<GlossaryLayout
+  title={term.term}
+  metaTitle={`${term.term} — Definition, Formula & Examples`}
+  description={term.shortDef}
+  canonical={`https://calculations.tools/glossary/${slug}`}
+  schema={schema}
+>
+  <div class="gl-term-page">
+
+    <div class="gl-term-meta">
+      <a href="/glossary" class="gl-back-link">← Glossary</a>
+      <span class="glossary-category-badge">{term.siteCategory} · {term.category}</span>
+    </div>
+
+    <h1 class="gl-term-h1">{term.term}</h1>
+
+    {term.formula && (
+      <div class="gl-formula-box">
+        <Formula expr={term.formula} />
+      </div>
+    )}
+
+    {(term.relatedTools ?? []).length > 0 && (
+      <a href={(term.relatedTools ?? [])[0]} class="glossary-tool-cta">
+        → Use the {term.term} Calculator
+      </a>
+    )}
+
+    <h2 class="gl-what-is">What is {term.term}?</h2>
+    {content?.definition.map(para => <p>{para}</p>)}
+
+    {content?.whenToUse && (
+      <>
+        <h2>When to use {term.term}</h2>
+        <p>{content.whenToUse}</p>
+      </>
+    )}
+
+    {content?.examples && (
+      <>
+        <h2>Worked examples</h2>
+        <div class="responsive-table">
+          <table>
+            <thead>
+              <tr>{content.examples.headers.map(h => <th>{h}</th>)}</tr>
+            </thead>
+            <tbody>
+              {content.examples.rows.map(row => (
+                <tr>{row.map(cell => <td>{cell}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    )}
+
+    {content?.pitfalls && (
+      <>
+        <h2>Common pitfalls</h2>
+        <p>{content.pitfalls}</p>
+      </>
+    )}
+
+    {content?.faqs?.length > 0 && (
+      <>
+        <h2>Frequently asked questions</h2>
+        {content.faqs.map(faq => (
+          <>
+            <h3>{faq.q}</h3>
+            <p>{faq.a}</p>
+          </>
+        ))}
+      </>
+    )}
+
+    {relatedTermObjects.length > 0 && (
+      <>
+        <h2>Related terms</h2>
+        <div class="glossary-related-terms">
+          {relatedTermObjects.map(rt => (
+            <a href={`/glossary/${rt.slug}`} class="glossary-related-term-link">{rt.term}</a>
+          ))}
+        </div>
+      </>
+    )}
+
+    {(term.relatedTools ?? []).length > 0 && (
+      <>
+        <h2>Related calculators</h2>
+        <RelatedTools tools={(term.relatedTools ?? []).map(p => ({ path: p }))} />
+      </>
+    )}
+
+    <nav class="gl-prev-next">
+      {prev
+        ? <a href={`/glossary/${prev.slug}`} class="glossary-nav-prev">← {prev.term}</a>
+        : <span></span>
+      }
+      {next
+        ? <a href={`/glossary/${next.slug}`} class="glossary-nav-next">{next.term} →</a>
+        : <span></span>
+      }
+    </nav>
+
+  </div>
+</GlossaryLayout>
+
+<style is:global>
+  .gl-term-page {
+    max-width: 720px;
+  }
+  .gl-term-meta {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .gl-back-link {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .gl-back-link:hover { color: white; }
+  .gl-term-h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+  .gl-formula-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid rgba(139,92,246,0.7);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    overflow-x: auto;
+  }
+  .gl-what-is {
+    margin-top: 2rem;
+  }
+  .gl-prev-next {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+</style>

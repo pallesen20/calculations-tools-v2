@@ -1,0 +1,252 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  grossProfit: "$$\\text{Gross Profit} = \\text{Revenue} - \\text{COGS}$$",
+  margin:      "$$\\text{Gross Profit Margin} = \\frac{\\text{Gross Profit}}{\\text{Revenue}} \\times 100$$",
+  combined:    "$$\\text{Gross Profit Margin} = \\frac{\\text{Revenue} - \\text{COGS}}{\\text{Revenue}} \\times 100$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'what-is-gpm',         label: 'What is Gross Profit Margin?' },
+  { id: 'formula',             label: 'Formula' },
+  { id: 'industry-benchmarks', label: 'Industry benchmarks' },
+  { id: 'examples',            label: 'Worked examples' },
+  { id: 'gpm-vs-npm',          label: 'Gross vs Net Profit Margin' },
+  { id: 'faq',                 label: 'FAQs' },
+  { id: 'related-tools',       label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Gross Profit Margin Calculator",
+    "url": "https://calculations.tools/finance/gross-profit-margin-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate gross profit margin from revenue and cost of goods sold. Shows gross profit, margin %, and step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Gross Profit Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Gross Profit Margin = (Revenue - COGS) / Revenue x 100. It measures what percentage of revenue remains after subtracting the direct costs of producing goods or services (Cost of Goods Sold). A higher gross margin means more money is available to cover operating expenses and generate profit." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good Gross Profit Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It depends heavily on the industry. Software and SaaS companies typically achieve 60-80%. Retail runs 25-50%. Grocery and food retail is 20-30%. Manufacturing is 20-40%. There is no universal 'good' threshold — always benchmark against direct sector peers." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is included in COGS?",
+        "acceptedAnswer": { "@type": "Answer", "text": "COGS (Cost of Goods Sold) includes direct costs of production: raw materials, direct labour, manufacturing overhead, and inbound freight. It does NOT include selling, general and administrative expenses (SG&A), marketing, R&D, or interest. What counts as COGS varies slightly by industry and accounting policy." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Cost of Goods Sold (COGS)?",
+        "acceptedAnswer": { "@type": "Answer", "text": "COGS (Cost of Goods Sold) is the total of all direct costs required to produce or deliver the goods and services a company sells. It typically includes raw materials, direct labour, and manufacturing overhead. COGS does not include indirect costs such as SG&A (selling, general and administrative expenses), marketing, R&D, or interest. On the income statement, COGS is the first deduction from Revenue to arrive at Gross Profit." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between Gross Profit Margin and Net Profit Margin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Gross Profit Margin only subtracts COGS from Revenue. Net Profit Margin subtracts all expenses — COGS, operating expenses, interest, and tax. Gross margin shows pricing power and production efficiency; net margin shows overall bottom-line profitability. Gross margin is always higher than or equal to net margin." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Gross Profit Margin Calculator"
+  metaTitle="Gross Profit Margin Calculator | Formula & Benchmarks"
+  description="Calculate gross profit margin from revenue and COGS. See gross profit, margin %, interpretation, and step-by-step workings. Compare against industry benchmarks."
+  canonical="https://calculations.tools/finance/gross-profit-margin-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="gross-profit-margin-calculator"
+  ogFormula="Gross Profit Margin = (Revenue - COGS) / Revenue x 100"
+  ogExample="($5M - $3M) / $5M x 100 = 40% gross margin"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Gross Profit Margin Instantly</h2>
+          <p>Subtract COGS from Revenue, then divide by Revenue</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="gpm-revenue">Revenue</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="gpm-revenue" class="bmi-input" placeholder="e.g. 5000000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="gpm-cogs">Cost of Goods Sold (COGS)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="gpm-cogs" class="bmi-input" placeholder="e.g. 3000000" />
+          </div>
+        </div>
+
+        <div id="gpm-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="gpm-gross-profit-val">—</div>
+              <div class="lbm-card-lbl">Gross Profit</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="gpm-margin-val">—</div>
+              <div class="lbm-card-lbl">Gross Profit Margin</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="gpm-interp-val">—</div>
+              <div class="lbm-card-lbl">Interpretation</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Revenue − COGS = Gross Profit</span>
+              <span class="pi-step-val" id="gpm-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Gross Profit / Revenue = ratio</span>
+              <span class="pi-step-val" id="gpm-step2">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">ratio × 100 = margin %</span>
+              <span class="pi-step-val" id="gpm-step3">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/gross-profit-margin-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Gross Profit Margin = <strong>(Revenue − COGS) / Revenue × 100</strong>. Example: Revenue $5M, COGS $3M → Gross Profit $2M → <strong>40% Gross Profit Margin</strong>. A margin above 30% is healthy for most product businesses; software typically achieves 60–80%.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter Revenue and Cost of Goods Sold (COGS) in the same currency unit. The calculator returns Gross Profit in absolute terms and Gross Profit Margin as a percentage. Use the same period for both figures — quarterly or annual income statement values work best.</p>
+
+      <h2 id="what-is-gpm">What is Gross Profit Margin?</h2>
+      <p>Gross Profit Margin measures how much of every dollar of revenue remains after paying the direct costs of producing goods or delivering services. It is the first profitability check on an income statement, sitting above all operating expenses, interest, and tax.</p>
+      <p>A high gross margin signals strong pricing power or low production costs. It means the company has significant resources to invest in growth, sales, and R&amp;D without operating at a loss. A thin gross margin leaves little room to absorb overhead — even small cost increases can flip a business into a net loss.</p>
+      <p>Gross Profit Margin is particularly useful for comparing companies within the same industry. Because it strips out financing and tax differences, it isolates whether one business produces goods more efficiently than another.</p>
+
+      <h2 id="formula">Gross Profit Margin formula</h2>
+      <p>Two equivalent forms:</p>
+      <Formula expr={f.grossProfit} />
+      <Formula expr={f.margin} />
+      <p>Combined into one step:</p>
+      <Formula expr={f.combined} />
+      <p>COGS includes direct material costs, direct labour, and manufacturing overhead. It excludes SG&amp;A, R&amp;D, depreciation on non-production assets, interest, and tax.</p>
+
+      <h2 id="industry-benchmarks">Industry benchmarks</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Industry</th><th>Typical Gross Margin</th><th>Key driver</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS / Cloud Software</td><td>65% – 80%</td><td>Near-zero marginal cost of software delivery</td></tr>
+            <tr><td>Pharmaceuticals</td><td>60% – 75%</td><td>IP pricing power; low incremental manufacturing cost</td></tr>
+            <tr><td>Financial Services</td><td>50% – 70%</td><td>Revenue = fees / interest; few direct production costs</td></tr>
+            <tr><td>Medical Devices</td><td>50% – 65%</td><td>Premium pricing on regulated products</td></tr>
+            <tr><td>Consumer Electronics</td><td>30% – 45%</td><td>Component and assembly costs moderate margins</td></tr>
+            <tr><td>Manufacturing</td><td>20% – 40%</td><td>Raw materials and direct labour-intensive</td></tr>
+            <tr><td>Retail (specialty)</td><td>35% – 55%</td><td>Mark-up on branded or niche products</td></tr>
+            <tr><td>Retail (grocery)</td><td>20% – 30%</td><td>High volume, low mark-up commodity goods</td></tr>
+            <tr><td>Restaurants</td><td>25% – 40%</td><td>Food and beverage cost as % of sales</td></tr>
+            <tr><td>Construction</td><td>15% – 25%</td><td>Material and subcontractor costs dominate</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>These ranges are indicative. Individual companies within each sector vary based on product mix, brand strength, and supply chain efficiency. Always compare against direct peers rather than broad industry averages.</p>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Company type</th><th>Revenue</th><th>COGS</th><th>Gross Profit</th><th>Gross Margin</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS startup</td><td>$4,000,000</td><td>$800,000</td><td>$3,200,000</td><td>80.0%</td></tr>
+            <tr><td>Consumer goods brand</td><td>$20,000,000</td><td>$12,000,000</td><td>$8,000,000</td><td>40.0%</td></tr>
+            <tr><td>Grocery retailer</td><td>$50,000,000</td><td>$37,500,000</td><td>$12,500,000</td><td>25.0%</td></tr>
+            <tr><td>Contract manufacturer</td><td>$30,000,000</td><td>$24,000,000</td><td>$6,000,000</td><td>20.0%</td></tr>
+            <tr><td>Restaurant group</td><td>$8,000,000</td><td>$5,200,000</td><td>$2,800,000</td><td>35.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="gpm-vs-npm">Gross Profit Margin vs Net Profit Margin</h2>
+      <p>Gross Profit Margin and Net Profit Margin both measure profitability as a percentage of revenue, but they sit at different levels of the income statement.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>What it deducts</th><th>Best used for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Gross Profit Margin</td><td>COGS only</td><td>Pricing power, production efficiency</td></tr>
+            <tr><td>Operating Profit Margin</td><td>COGS + Operating Expenses</td><td>Operational efficiency (pre-financing)</td></tr>
+            <tr><td>Net Profit Margin</td><td>COGS + OpEx + Interest + Tax</td><td>Bottom-line shareholder return</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A business can have an excellent gross margin but a poor net margin if overhead (SG&amp;A, R&amp;D) is disproportionately high. Conversely, a thin gross margin business can still be a viable investment if it operates at extremely high volume with tight cost discipline.</p>
+      <p>Use gross margin to assess the core product economics. Use net margin to assess whether the full business model — including overhead and financing — is sustainable.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is Gross Profit Margin?</h3>
+      <p>Gross Profit Margin = (Revenue − COGS) / Revenue × 100. It measures what percentage of revenue remains after deducting the direct costs of goods or services. It is the first profitability line on an income statement.</p>
+
+      <h3>What is a good Gross Profit Margin?</h3>
+      <p>It is highly industry-dependent. Software: 65–80%. Pharma: 60–75%. Retail: 25–50%. Grocery: 20–30%. Manufacturing: 20–40%. A margin well below the sector average usually signals a pricing or cost disadvantage.</p>
+
+      <h3>What is Cost of Goods Sold (COGS)?</h3>
+      <p>COGS is the total of all direct costs required to produce or deliver the goods and services a company sells. It typically includes raw materials, direct labour, and manufacturing overhead directly tied to production. It does not include indirect costs such as SG&amp;A, marketing, R&amp;D, depreciation on non-production assets, or interest. On the income statement, COGS is the first deduction from Revenue to arrive at Gross Profit.</p>
+
+      <h3>What costs are included in COGS?</h3>
+      <p>COGS includes direct material, direct labour, and manufacturing overhead directly tied to production. It excludes SG&amp;A, marketing, R&amp;D, depreciation on non-production assets, and financing costs.</p>
+
+      <h3>Can Gross Profit Margin be negative?</h3>
+      <p>Yes, if COGS exceeds revenue. This means the company sells goods for less than they cost to produce — a critical warning sign that often indicates either aggressive discounting, distress inventory clearance, or a fundamentally broken pricing model.</p>
+
+      <h3>How is Gross Profit Margin different from Gross Profit?</h3>
+      <p>Gross Profit is an absolute dollar figure (Revenue − COGS). Gross Profit Margin is that figure expressed as a percentage of revenue. The margin is scale-independent: a $2M gross profit on $5M revenue (40%) is more comparable across companies of different sizes than the absolute dollar figure alone.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/net-profit-margin-calculator',       blurb: 'Calculate net profit margin from Net Income and Revenue.' },
+        { path: '/finance/operating-profit-margin-calculator', blurb: 'Calculate operating profit margin from EBIT and Revenue.' },
+        { path: '/finance/ebitda-margin-calculator',           blurb: 'Calculate EBITDA Margin against industry benchmarks.' },
+        { path: '/finance/ebitda-calculator',                  blurb: 'Build up EBITDA from Net Income step by step.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/gross-profit-margin-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

@@ -1,3 +1,5 @@
+import { GLOSSARY_TERMS } from '../data/glossary';
+
 export const SITE = 'https://calculations.tools';
 
 export interface PageMeta {
@@ -636,7 +638,188 @@ const entries: Entry[] = [
     icon: '📊',
     short: 'Cell-by-cell Excel & CSV comparison',
   },
+  {
+    path: '/finance',
+    title: 'Finance Calculators — Free Online Financial Tools',
+    description: 'Free finance calculators: EBITDA, EBIT, EBT, EBITDA Margin, and more. Fast, accurate, no registration needed.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '💰',
+  },
+  {
+    path: '/finance/ebitda-calculator',
+    title: 'EBITDA Calculator — Formula, Examples & Step-by-Step',
+    description: 'Calculate EBITDA from Net Income, Interest, Tax, and D&A. Shows EBT, EBIT, and EBITDA with step-by-step workings. Optionally calculates EBITDA Margin.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📊',
+    short: 'Net Income + Interest + Tax + D&A',
+  },
+  {
+    path: '/finance/ebit-calculator',
+    title: 'EBIT Calculator — Earnings Before Interest & Tax',
+    description: 'Calculate EBIT (Operating Income) from Net Income, Interest Expense, and Tax Expense. Shows EBT and EBIT with step-by-step workings and optional EBIT Margin.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📈',
+    short: 'Net Income + Interest + Tax',
+  },
+  {
+    path: '/finance/ebt-calculator',
+    title: 'EBT Calculator — Earnings Before Tax',
+    description: 'Calculate EBT (Earnings Before Tax) from Net Income and Tax Expense. Shows EBT, effective tax rate, and step-by-step workings.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '💹',
+    short: 'Net Income + Tax Expense',
+  },
+  {
+    path: '/finance/ebitda-margin-calculator',
+    title: 'EBITDA Margin Calculator — Formula & Industry Benchmarks',
+    description: 'Calculate EBITDA Margin as a percentage of revenue. Shows the margin, interpretation, and step-by-step workings. Compare against industry benchmarks.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '%',
+    short: 'EBITDA / Revenue × 100',
+  },
+  {
+    path: '/finance/gross-profit-margin-calculator',
+    title: 'Gross Profit Margin Calculator — Formula & Benchmarks',
+    description: 'Calculate gross profit margin from revenue and cost of goods sold. Shows gross profit, margin %, and step-by-step workings. Compare against industry benchmarks.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📊',
+    short: '(Revenue − COGS) / Revenue × 100',
+  },
+  {
+    path: '/finance/net-profit-margin-calculator',
+    title: 'Net Profit Margin Calculator — Formula & Benchmarks',
+    description: 'Calculate net profit margin from net income and revenue. Shows margin %, interpretation, and step-by-step workings. Compare against industry benchmarks.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '💵',
+    short: 'Net Income / Revenue × 100',
+  },
+  {
+    path: '/finance/operating-profit-margin-calculator',
+    title: 'Operating Profit Margin Calculator — Formula & Benchmarks',
+    description: 'Calculate operating profit margin (EBIT margin) from operating profit and revenue. Shows margin %, interpretation, and step-by-step workings.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '⚙️',
+    short: 'Operating Profit / Revenue × 100',
+  },
+  {
+    path: '/finance/roi-calculator',
+    title: 'ROI Calculator — Return on Investment Formula',
+    description: 'Calculate ROI (Return on Investment) from initial investment and final value. Shows net return, ROI %, investment multiple, and annualized ROI (CAGR).',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📈',
+    short: '(Final Value − Initial) / Initial × 100',
+  },
+  {
+    path: '/finance/compound-interest-calculator',
+    title: 'Compound Interest Calculator — Formula & Growth Table',
+    description: 'Calculate compound interest for any principal, rate, compounding frequency, and time. Shows future value, total interest earned, and a year-by-year growth table.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📊',
+    short: 'A = P(1 + r/n)^(nt)',
+  },
+  {
+    path: '/finance/loan-payment-calculator',
+    title: 'Loan Payment Calculator — Monthly Payment & Interest',
+    description: 'Calculate monthly loan payments, total interest paid, and see a year-by-year amortisation schedule for any loan amount, rate, and term.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '🏦',
+    short: 'M = P × r(1+r)^n / [(1+r)^n − 1]',
+  },
+  {
+    path: '/finance/free-cash-flow-calculator',
+    title: 'Free Cash Flow Calculator — FCF Formula & FCF Yield',
+    description: 'Calculate Free Cash Flow (FCF) from Operating Cash Flow and CapEx. Optionally calculate FCF Yield. Includes FCF vs. EBITDA comparison and benchmarks.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '💵',
+    short: 'FCF = Operating Cash Flow − CapEx',
+  },
+  {
+    path: '/finance/working-capital-calculator',
+    title: 'Working Capital Calculator — Current Ratio & Analysis',
+    description: 'Calculate Working Capital and Current Ratio from current assets and liabilities. Includes liquidity interpretation, industry benchmarks, and quick ratio explanation.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '⚖️',
+    short: 'Current Assets − Current Liabilities',
+  },
+  {
+    path: '/finance/enterprise-value-calculator',
+    title: 'Enterprise Value Calculator — EV/EBITDA & EV/Revenue',
+    description: 'Calculate Enterprise Value (EV) from market cap, total debt, and cash. Instantly see EV/EBITDA and EV/Revenue multiples with industry benchmarks.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '🏢',
+    short: 'Market Cap + Debt − Cash',
+  },
+  {
+    path: '/finance/break-even-calculator',
+    title: 'Break-Even Calculator — Units, Revenue & Margin of Safety',
+    description: 'Calculate break-even point in units and revenue from fixed costs, selling price, and variable cost. Shows contribution margin, CM ratio, and worked examples.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '⚖️',
+    short: 'Fixed Costs / Contribution Margin',
+  },
+  {
+    path: '/finance/contribution-margin-calculator',
+    title: 'Contribution Margin Calculator — CM Ratio & Profit',
+    description: 'Calculate contribution margin and CM ratio from revenue and variable costs. Add units and fixed costs to see per-unit CM and operating profit.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📊',
+    short: 'Revenue − Variable Costs',
+  },
+  {
+    path: '/finance/pe-ratio-calculator',
+    title: 'P/E Ratio Calculator — Earnings Yield & Fair Value',
+    description: 'Calculate P/E ratio from stock price and EPS. See trailing and forward P/E, earnings yield, and implied fair value at any target multiple.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📉',
+    short: 'Stock Price / Earnings Per Share',
+  },
+  {
+    path: '/finance/roe-calculator',
+    title: 'ROE Calculator — Return on Equity & DuPont Analysis',
+    description: 'Calculate Return on Equity (ROE) from net income and shareholders\' equity. Includes DuPont decomposition, industry benchmarks, and ROE vs. ROA comparison.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '💰',
+    short: 'Net Income / Shareholders\' Equity × 100',
+  },
 ];
+
+GLOSSARY_TERMS.forEach(t => {
+  entries.push({
+    path: `/glossary/${t.slug}`,
+    title: `${t.term} — Glossary`,
+    description: t.shortDef,
+    changefreq: 'monthly' as const,
+    priority: 0.8,
+    icon: '📖',
+  });
+});
+
+entries.push({
+  path: '/glossary',
+  title: 'Finance & Math Glossary — Key Terms Explained',
+  description: 'Plain-English definitions for finance, math, and health terms used across our calculators. Each term includes a formula, examples, and links to related tools.',
+  changefreq: 'weekly' as const,
+  priority: 1.0,
+  icon: '📖',
+});
 
 export const siteToolCount = entries.length;
 
@@ -684,6 +867,32 @@ export function getMathTools(): HealthToolMeta[] {
     });
 }
 
+const FINANCE_GROUPS: Record<string, string> = {
+  'ebitda-calculator':               'Earnings Metrics',
+  'ebit-calculator':                 'Earnings Metrics',
+  'ebt-calculator':                  'Earnings Metrics',
+  'ebitda-margin-calculator':        'Margin & Profitability',
+  'gross-profit-margin-calculator':  'Margin & Profitability',
+  'net-profit-margin-calculator':    'Margin & Profitability',
+  'operating-profit-margin-calculator': 'Margin & Profitability',
+};
+
+export function getFinanceTools(): HealthToolMeta[] {
+  return entries
+    .filter(e => e.path.startsWith('/finance/') && e.path !== '/finance')
+    .map(e => {
+      const seg = e.path.replace('/finance/', '').split('/')[0];
+      return {
+        path:        e.path,
+        title:       e.title.split(' — ')[0],
+        short:       e.short ?? '',
+        description: e.description,
+        icon:        e.icon ?? '',
+        group:       FINANCE_GROUPS[seg] ?? 'Finance',
+      };
+    });
+}
+
 const HEALTH_GROUPS: Record<string, string> = {
   'bmi-calculator':            'BMI Calculators',
   'lean-body-mass-calculator': 'Body Composition',
@@ -724,17 +933,19 @@ const FRONT_TOOL_CATEGORIES: Record<string, string> = {
 };
 
 const CATEGORY_INDEX: Record<string, string> = {
-  'Health Calculators': '/health',
-  'Conversion Tools':   '/conversion',
-  'Math':               '/math',
+  'Health Calculators':  '/health',
+  'Finance Calculators': '/finance',
+  'Conversion Tools':    '/conversion',
+  'Math':                '/math',
 };
 
-const CATEGORY_ORDER = ['Health Calculators', 'Conversion Tools', 'Math', 'Text & Writing', 'Date & Time'];
+const CATEGORY_ORDER = ['Health Calculators', 'Finance Calculators', 'Conversion Tools', 'Math', 'Text & Writing', 'Date & Time'];
 
 const CATEGORY_PREFIX: Record<string, string> = {
-  'Health Calculators': '/health/',
-  'Conversion Tools':   '/conversion/',
-  'Math':               '/math/',
+  'Health Calculators':  '/health/',
+  'Finance Calculators': '/finance/',
+  'Conversion Tools':    '/conversion/',
+  'Math':                '/math/',
 };
 
 export function getFrontPageGroups(): FrontPageGroup[] {
@@ -743,6 +954,8 @@ export function getFrontPageGroups(): FrontPageGroup[] {
     let cat: string | null = null;
     if (e.path.startsWith('/health/') && e.path !== '/health' && !e.path.replace('/health/', '').includes('/')) {
       cat = 'Health Calculators';
+    } else if (e.path.startsWith('/finance/') && e.path !== '/finance' && !e.path.replace('/finance/', '').includes('/')) {
+      cat = 'Finance Calculators';
     } else if (e.path.startsWith('/conversion/') && e.path !== '/conversion' && !e.path.replace('/conversion/', '').includes('/')) {
       cat = 'Conversion Tools';
     } else if (e.path.startsWith('/math/') && e.path !== '/math' && !e.path.replace('/math/', '').includes('/')) {
@@ -776,6 +989,10 @@ export function getFrontPageGroups(): FrontPageGroup[] {
     });
 }
 
+export function glossaryTermsForPage(toolPath: string) {
+  return GLOSSARY_TERMS.filter(t => t.relatedTools?.includes(toolPath));
+}
+
 /** Returns icon, display title, and description for a given path — used by RelatedTools component. */
 export function getRelatedTool(path: string): RelatedToolMeta {
   const entry = entries.find(e => e.path === path);
@@ -785,4 +1002,53 @@ export function getRelatedTool(path: string): RelatedToolMeta {
     title: entry?.title.split(' — ')[0] ?? path,
     description: entry?.description ?? '',
   };
+}
+
+export interface SearchEntry {
+  t: string;
+  p: string;
+  k: string;
+  c: string;
+  i: string;
+  y: 'tool' | 'term';
+}
+
+function _catLabel(path: string): string {
+  if (path.startsWith('/finance')) return 'Finance';
+  if (path.startsWith('/health')) return 'Health';
+  if (path.startsWith('/math')) return 'Math';
+  if (path.startsWith('/conversion')) return 'Conversion';
+  if (path.startsWith('/glossary')) return 'Glossary';
+  return 'Tools';
+}
+
+export function getSearchIndex(): SearchEntry[] {
+  const EXCLUDED = new Set(['/', '/about-us', '/privacy-policy']);
+  const toolEntries = entries
+    .filter(e =>
+      !EXCLUDED.has(e.path) &&
+      !e.path.startsWith('/embed/') &&
+      !e.path.startsWith('/glossary/') &&
+      !e.path.includes('sitemap') &&
+      !e.path.includes('llms')
+    )
+    .map(e => ({
+      t: e.title.split(' — ')[0].split(' | ')[0].trim(),
+      p: e.path,
+      k: e.short || e.description.slice(0, 120),
+      c: _catLabel(e.path),
+      i: e.icon || '',
+      y: 'tool' as const,
+    }));
+
+  const glossaryEntries = GLOSSARY_TERMS.map(t => ({
+    t: t.term,
+    p: `/glossary/${t.slug}`,
+    k: t.shortDef.slice(0, 120),
+    c: t.siteCategory,
+    i: '📖',
+    y: 'term' as const,
+  }));
+
+  return [...toolEntries, ...glossaryEntries];
 }

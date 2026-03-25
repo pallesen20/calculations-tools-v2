@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
 
 const f = {
@@ -102,6 +103,8 @@ const schema = [
   schema={schema}
   sources={sources}
   embedSlug="body-fat-calculator"
+  ogFormula="Body fat % (Navy) = 495 / (1.0324 - 0.19077×log(waist-neck) + 0.15456×log(height)) - 450"
+  ogExample="Waist 85 cm, neck 38 cm, height 178 cm -> ~18% body fat"
 >
 
   <div slot="calculator">
@@ -401,6 +404,8 @@ const schema = [
         { path: '/conversion/weight-converter' },
         { path: '/conversion/height-converter' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/health/body-fat-calculator" />
 
     </div>
   </div>

@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 
 const f = {
   def:     "$$\\frac{a}{b} = \\frac{c}{d} \\iff a \\times d = b \\times c$$",
@@ -68,6 +69,8 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="proportion-calculator"
+  ogFormula="Solve a:b = c:d — unknown = (b × known) / opposite"
+  ogExample="3:4 = 9:? -> d = (4 × 9) / 3 = 12"
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -248,6 +251,8 @@ const schema = [
         { path: '/math/percentage-calculator/change',  blurb: 'Percentage change between two values.' },
         { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — all four operations.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/ratio-calculator/proportion" />
 
     </div>
   </div>

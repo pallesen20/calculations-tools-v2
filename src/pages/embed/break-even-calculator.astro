@@ -1,0 +1,81 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Break-Even Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Break-Even Calculator</h2>
+        <p>How many units do you need to sell to cover all costs?</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="be-fixed">Total Fixed Costs</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="be-fixed" class="bmi-input" placeholder="e.g. 50000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="be-price">Selling Price per Unit</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="be-price" class="bmi-input" placeholder="e.g. 100" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="be-variable">Variable Cost per Unit</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="be-variable" class="bmi-input" placeholder="e.g. 60" />
+        </div>
+      </div>
+
+      <div id="be-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="be-units">—</div>
+            <div class="lbm-card-lbl">Break-Even Units</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="be-revenue">—</div>
+            <div class="lbm-card-lbl">Break-Even Revenue</div>
+          </div>
+        </div>
+
+        <div class="lbm-cards" style="margin-top:0.5rem;">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="be-cm">—</div>
+            <div class="lbm-card-lbl">Contribution Margin / Unit</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="be-cm-ratio">—</div>
+            <div class="lbm-card-lbl">CM Ratio</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Price − Variable = CM per unit</span>
+            <span class="pi-step-val" id="be-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">CM ratio</span>
+            <span class="pi-step-val" id="be-step2">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Fixed / CM = Break-even units</span>
+            <span class="pi-step-val" id="be-step3">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Fixed / CM ratio = Break-even revenue</span>
+            <span class="pi-step-val" id="be-step4">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/break-even-calculator.js" is:inline></script>
+</EmbedLayout>

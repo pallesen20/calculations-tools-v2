@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 
 const f = {
   main:     "$$\\% \\text{ Change} = \\frac{\\text{New} - \\text{Old}}{|\\text{Old}|} \\times 100$$",
@@ -93,6 +94,8 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="percentage-change-calculator"
+  ogFormula="% Change = ((New - Old) / Old) × 100"
+  ogExample="From 80 to 100: ((100 - 80) / 80) × 100 = 25%"
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -269,6 +272,8 @@ const schema = [
         { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
         { path: '/date-calculator',                           blurb: 'Calculate days between dates — useful when a percentage change spans a defined time period.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/percentage-calculator/change" />
 
     </div>
   </div>

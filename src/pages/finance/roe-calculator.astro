@@ -1,0 +1,282 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  roe:       "$$\\text{ROE} = \\frac{\\text{Net Income}}{\\text{Shareholders' Equity}} \\times 100$$",
+  dupont:    "$$\\text{ROE} = \\underbrace{\\frac{\\text{Net Income}}{\\text{Revenue}}}_{\\text{Net Profit Margin}} \\times \\underbrace{\\frac{\\text{Revenue}}{\\text{Total Assets}}}_{\\text{Asset Turnover}} \\times \\underbrace{\\frac{\\text{Total Assets}}{\\text{Equity}}}_{\\text{Equity Multiplier}}$$",
+  roa:       "$$\\text{ROA} = \\frac{\\text{Net Income}}{\\text{Total Assets}} \\times 100$$",
+  roce:      "$$\\text{ROCE} = \\frac{\\text{EBIT}}{\\text{Capital Employed}} \\times 100$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'formula',       label: 'ROE formula' },
+  { id: 'dupont',        label: 'DuPont analysis' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'benchmarks',    label: 'ROE benchmarks' },
+  { id: 'vs-roa',        label: 'ROE vs. ROA vs. ROCE' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Return on Equity Calculator",
+    "url": "https://calculations.tools/finance/roe-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate Return on Equity (ROE) from net income and shareholders' equity. Optionally use the DuPont decomposition to identify what drives ROE.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Return on Equity (ROE)?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Return on Equity (ROE) measures how efficiently a company uses shareholders' equity to generate profit. ROE = Net Income / Shareholders' Equity × 100. A ROE of 20% means the company generates $0.20 of net income for every $1 of equity capital. It is one of the most important metrics for evaluating management effectiveness and capital allocation quality." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the ROE formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROE = Net Income / Shareholders' Equity × 100. Net income comes from the bottom of the income statement. Shareholders' equity is on the balance sheet: total assets minus total liabilities. For accuracy, use average equity (beginning + ending equity / 2) to account for equity changes during the period." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good ROE?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROE above 15% is generally considered good for most industries. Warren Buffett looks for companies consistently generating ROE above 15% without excessive debt. The S&P 500 average ROE is approximately 14–17%. Capital-intensive industries (utilities, manufacturing) naturally have lower ROEs; asset-light businesses (software, consumer brands) can sustain ROEs of 30–50%+." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the DuPont analysis of ROE?",
+        "acceptedAnswer": { "@type": "Answer", "text": "DuPont analysis breaks ROE into three components: ROE = Net Profit Margin × Asset Turnover × Equity Multiplier. Net Profit Margin measures profitability per dollar of revenue. Asset Turnover measures how efficiently assets generate revenue. Equity Multiplier (= Total Assets / Equity) measures financial leverage. This decomposition reveals whether high ROE comes from strong operations (good) or from high debt (risky)." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can ROE be too high?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Extremely high ROE can result from excessive financial leverage (high debt), share buybacks that reduce equity base, or one-time income events — not from genuine operational excellence. For example, a company that buys back so many shares that equity becomes very small will show astronomical ROE with no improvement in business quality. Always check the equity multiplier in DuPont analysis to see how much of ROE is driven by leverage." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Return on Equity Calculator"
+  metaTitle="ROE Calculator — Return on Equity & DuPont Analysis"
+  description="Calculate Return on Equity (ROE) from net income and shareholders' equity. Includes DuPont decomposition, industry benchmarks, and ROE vs. ROA vs. ROCE comparison."
+  canonical="https://calculations.tools/finance/roe-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="roe-calculator"
+  ogFormula="ROE = Net Income / Shareholders' Equity × 100"
+  ogExample="$10M net income ÷ $50M equity = 20% ROE"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Return on Equity Calculator</h2>
+          <p>How efficiently does the business use shareholders' capital?</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="roe-net-income">Net Income</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roe-net-income" class="bmi-input" placeholder="e.g. 10000000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="roe-equity">Shareholders' Equity</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roe-equity" class="bmi-input" placeholder="e.g. 50000000" />
+          </div>
+        </div>
+
+        <div class="calculator-header" style="margin-top:1rem;">
+          <p style="font-size:0.85rem;opacity:0.7;">DuPont decomposition (optional)</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="roe-net-margin">Net Profit Margin (%)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roe-net-margin" class="bmi-input" placeholder="e.g. 12.5" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="roe-asset-turnover">Asset Turnover (Revenue / Total Assets)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roe-asset-turnover" class="bmi-input" placeholder="e.g. 0.8" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="roe-equity-multiplier">Equity Multiplier (Total Assets / Equity)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roe-equity-multiplier" class="bmi-input" placeholder="e.g. 2.0" />
+          </div>
+        </div>
+
+        <div id="roe-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="roe-val">—</div>
+              <div class="lbm-card-lbl">Return on Equity</div>
+            </div>
+          </div>
+
+          <div id="roe-dupont-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="roe-dupont-val">—</div>
+              <div class="lbm-card-lbl">ROE (DuPont)</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Net Income / Equity × 100 = ROE</span>
+              <span class="pi-step-val" id="roe-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Margin × Turnover × Multiplier = ROE</span>
+              <span class="pi-step-val" id="roe-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/roe-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>ROE = <strong>Net Income / Shareholders' Equity × 100</strong>. Example: $10M net income ÷ $50M equity = <strong>20% ROE</strong>. An ROE above 15% is generally considered strong; the S&amp;P 500 average is ~14–17%.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter <strong>Net Income</strong> (from the income statement — the bottom line after all expenses and taxes) and <strong>Shareholders' Equity</strong> (from the balance sheet: total assets minus total liabilities). For greater accuracy, use the <em>average</em> equity for the period: (beginning equity + ending equity) / 2. The calculator shows ROE as a percentage.</p>
+      <p>Optionally complete the <strong>DuPont decomposition</strong> by entering Net Profit Margin (%), Asset Turnover, and Equity Multiplier to understand the three drivers of ROE.</p>
+
+      <h2 id="formula">Return on Equity formula</h2>
+      <p>ROE measures the profitability generated on each dollar of equity capital:</p>
+      <Formula expr={f.roe} />
+      <p>Where:</p>
+      <ul>
+        <li><strong>Net Income</strong> = profit after interest, taxes, and all expenses</li>
+        <li><strong>Shareholders' Equity</strong> = total assets − total liabilities (book value of equity)</li>
+      </ul>
+      <p>Best practice is to use the average shareholders' equity for the period to account for equity changes (new shares issued, dividends paid, buybacks executed) during the year: Average Equity = (Beginning Equity + Ending Equity) / 2.</p>
+
+      <h2 id="dupont">DuPont analysis — decomposing ROE</h2>
+      <p>The DuPont framework breaks ROE into three components, each measuring a different dimension of performance:</p>
+      <Formula expr={f.dupont} />
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Component</th><th>Formula</th><th>What it measures</th><th>Improved by</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Net Profit Margin</td><td>Net Income / Revenue</td><td>Profitability per dollar of revenue</td><td>Pricing power, cost reduction</td></tr>
+            <tr><td>Asset Turnover</td><td>Revenue / Total Assets</td><td>Efficiency of asset use</td><td>Higher revenue with same assets; leaner asset base</td></tr>
+            <tr><td>Equity Multiplier</td><td>Total Assets / Equity</td><td>Financial leverage</td><td>Taking on more debt (increases ROE but also risk)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>DuPont analysis reveals whether high ROE is driven by genuine operational excellence (high margins, efficient assets) or financial engineering (high leverage). Two companies with 20% ROE can be very different businesses: one with 10% margin, 1.0x turnover, 2.0x leverage vs. another with 5% margin, 0.8x turnover, 5.0x leverage — the second is far riskier.</p>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Company</th><th>Net Income</th><th>Equity</th><th>ROE</th><th>Net Margin</th><th>Asset Turnover</th><th>Equity Multiplier</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>SaaS company</td><td>$20M</td><td>$80M</td><td>25%</td><td>20%</td><td>1.25x</td><td>1.0x</td></tr>
+            <tr><td>Consumer brand</td><td>$500M</td><td>$2,000M</td><td>25%</td><td>15%</td><td>1.2x</td><td>1.4x</td></tr>
+            <tr><td>Bank</td><td>$1,000M</td><td>$8,000M</td><td>12.5%</td><td>25%</td><td>0.05x</td><td>10x</td></tr>
+            <tr><td>Retailer</td><td>$150M</td><td>$600M</td><td>25%</td><td>3%</td><td>2.5x</td><td>3.3x</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>All four companies show 25% or similar ROE, but the DuPont drivers are completely different. The SaaS company achieves it with margins and no leverage; the bank uses extreme leverage; the retailer uses high asset turnover and moderate leverage.</p>
+
+      <h2 id="benchmarks">ROE benchmarks by industry</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Industry</th><th>Typical ROE</th><th>Primary ROE driver</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Software / SaaS</td><td>20% – 50%+</td><td>High net profit margins</td></tr>
+            <tr><td>Consumer Brands</td><td>20% – 40%</td><td>Margins + moderate leverage</td></tr>
+            <tr><td>Healthcare / Pharma</td><td>15% – 30%</td><td>Margins + IP pricing power</td></tr>
+            <tr><td>Financial Services</td><td>10% – 18%</td><td>Financial leverage (high multiplier)</td></tr>
+            <tr><td>Industrials</td><td>10% – 18%</td><td>Asset turnover + moderate margins</td></tr>
+            <tr><td>Utilities</td><td>8% – 14%</td><td>Leverage (regulated, stable)</td></tr>
+            <tr><td>Retail</td><td>12% – 22%</td><td>Asset turnover + leverage</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="vs-roa">ROE vs. ROA vs. ROCE</h2>
+      <p>These three return metrics each measure capital efficiency from a different angle:</p>
+      <Formula expr={f.roa} />
+      <Formula expr={f.roce} />
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Denominator</th><th>Affected by leverage</th><th>Best used for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ROE</td><td>Shareholders' equity</td><td>Yes — leverage amplifies ROE</td><td>Equity investors; management effectiveness</td></tr>
+            <tr><td>ROA</td><td>Total assets</td><td>No — uses total assets (debt + equity)</td><td>Comparing asset efficiency across companies</td></tr>
+            <tr><td>ROCE</td><td>Capital employed (equity + long-term debt)</td><td>Partially</td><td>Capital-intensive businesses; long-term allocation</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A large gap between ROE and ROA indicates heavy use of financial leverage — the equity multiplier is inflating ROE. For companies with comparable leverage, ROE differences reflect genuine operational quality. When comparing highly leveraged companies (banks, utilities) use ROA or ROCE for a fairer comparison.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is Return on Equity?</h3>
+      <p>ROE measures how much profit a company generates per dollar of shareholders' equity: ROE = Net Income / Shareholders' Equity × 100. It is one of the core profitability metrics used by investors to assess management's ability to allocate capital effectively.</p>
+
+      <h3>What is a good ROE?</h3>
+      <p>ROE above 15% is generally strong. Warren Buffett consistently highlights ROE above 15% as a hallmark of a quality business. The S&P 500 long-run average is ~14–17%. Asset-light businesses (software, brands) can sustain 30–50%+ ROE; capital-intensive industries naturally run lower. Always compare within the same industry.</p>
+
+      <h3>What is DuPont analysis?</h3>
+      <p>DuPont breaks ROE into three components: ROE = Net Profit Margin × Asset Turnover × Equity Multiplier. It shows whether ROE comes from profitability (margin), efficiency (asset turnover), or leverage (equity multiplier). High ROE from margins and turnover is sustainable; high ROE from leverage is riskier and cyclically vulnerable.</p>
+
+      <h3>Can ROE be too high?</h3>
+      <p>Yes. Very high ROE can result from excessive debt (inflated equity multiplier), heavy share buybacks (reduced equity base), or one-time income events — none of which represent sustainable operational quality. Check DuPont components: if equity multiplier is above 3–4x, the high ROE is largely leverage-driven.</p>
+
+      <h3>What is the difference between ROE and ROA?</h3>
+      <p>ROE uses equity as the denominator; ROA uses total assets. Because assets = equity + debt, ROA is not affected by how the company is financed. ROE rises when leverage increases; ROA stays the same. The difference between a company's ROE and ROA reflects the impact of financial leverage. ROA is better for comparing companies with different debt levels.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/net-profit-margin-calculator',   blurb: 'Net profit margin — the "Net Margin" component of DuPont ROE.' },
+        { path: '/finance/roi-calculator',                 blurb: 'Calculate ROI, investment multiple, and annualized return.' },
+        { path: '/finance/pe-ratio-calculator',            blurb: 'P/E ratio and earnings yield from stock price and EPS.' },
+        { path: '/finance/ebitda-calculator',              blurb: 'EBITDA from Net Income, Interest, Tax, and D&A.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/roe-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

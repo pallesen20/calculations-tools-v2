@@ -1,0 +1,302 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  ci:       "$$A = P\\left(1 + \\frac{r}{n}\\right)^{nt}$$",
+  simple:   "$$A_{\\text{simple}} = P(1 + rt)$$",
+  cont:     "$$A = Pe^{rt}$$",
+  doubling: "$$t = \\frac{\\ln 2}{n \\cdot \\ln\\!\\left(1 + \\frac{r}{n}\\right)} \\approx \\frac{72}{r\\%}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use' },
+  { id: 'formula',       label: 'Compound interest formula' },
+  { id: 'vs-simple',     label: 'Compound vs. simple interest' },
+  { id: 'frequency',     label: 'Compounding frequency' },
+  { id: 'examples',      label: 'Worked examples' },
+  { id: 'rule-of-72',    label: 'Rule of 72' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Compound Interest Calculator",
+    "url": "https://calculations.tools/finance/compound-interest-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate compound interest for any principal, rate, compounding frequency, and time period. Shows future value, total interest earned, and a year-by-year growth table.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is compound interest?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Compound interest is interest calculated on both the initial principal and the accumulated interest from previous periods. Unlike simple interest (which only applies to the original principal), compound interest causes growth to accelerate over time because each period's interest becomes part of the base for the next period. This is the mechanism behind exponential financial growth." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the compound interest formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A = P(1 + r/n)^(nt), where A is the future value, P is the principal, r is the annual interest rate as a decimal, n is the number of compounding periods per year, and t is the number of years. For example: $10,000 at 8% compounded monthly for 10 years = $10,000 × (1 + 0.08/12)^(12×10) = $22,196." }
+      },
+      {
+        "@type": "Question",
+        "name": "How does compounding frequency affect growth?",
+        "acceptedAnswer": { "@type": "Answer", "text": "More frequent compounding produces slightly more interest. At 10% annual rate on $10,000 for 1 year: annually = $11,000 (10% gain); monthly = $11,047 (10.47%); daily = $11,052 (10.52%). The difference between monthly and daily compounding is minimal, but the difference between annual and continuous compounding is significant at higher rates and longer timeframes." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Rule of 72?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The Rule of 72 is a mental shortcut to estimate how long it takes for an investment to double: divide 72 by the annual interest rate. At 6% per year, your money doubles in roughly 72/6 = 12 years. At 9%, it doubles in 8 years. The rule is an approximation — the exact formula uses logarithms — but it is accurate to within 10% for rates between 1% and 25%." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between compound interest and simple interest?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Simple interest: A = P(1 + rt) — interest is earned only on the original principal. Compound interest: A = P(1 + r/n)^(nt) — interest is earned on principal plus accumulated interest. Over time, the difference compounds dramatically. $10,000 at 8% for 30 years: simple interest = $34,000; compound (annual) = $100,627; compound (monthly) = $109,882." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Compound Interest Calculator"
+  metaTitle="Compound Interest Calculator — Formula & Growth Table"
+  description="Calculate compound interest for any principal, rate, compounding frequency, and time. Shows future value, total interest earned, and a year-by-year growth table."
+  canonical="https://calculations.tools/finance/compound-interest-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="compound-interest-calculator"
+  ogFormula="A = P(1 + r/n)^(nt)"
+  ogExample="$10,000 at 8% monthly for 10 yrs = $22,196"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Compound Interest Calculator</h2>
+          <p>See how your money grows with the power of compounding</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ci-principal">Principal (starting amount)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ci-principal" class="bmi-input" placeholder="e.g. 10000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ci-rate">Annual Interest Rate (%)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ci-rate" class="bmi-input" placeholder="e.g. 8" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ci-years">Time Period (years)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ci-years" class="bmi-input" placeholder="e.g. 10" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ci-n">Compounding Frequency (times per year)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ci-n" class="bmi-input" placeholder="12 = monthly (default)" />
+          </div>
+        </div>
+
+        <div id="ci-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ci-future-val">—</div>
+              <div class="lbm-card-lbl">Future Value</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ci-interest">—</div>
+              <div class="lbm-card-lbl">Interest Earned</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ci-principal-out">—</div>
+              <div class="lbm-card-lbl">Principal</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">A = P × (1 + r/n)^(n×t)</span>
+              <span class="pi-step-val" id="ci-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Future Value</span>
+              <span class="pi-step-val" id="ci-step2">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Interest Earned</span>
+              <span class="pi-step-val" id="ci-step3">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Compounding Bonus</span>
+              <span class="pi-step-val" id="ci-step4">—</span>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem;">
+            <div class="pi-steps-title">Year-by-Year Growth</div>
+            <div class="responsive-table" style="margin-top:0.5rem;">
+              <table>
+                <thead>
+                  <tr><th>Year</th><th>Balance</th><th>Interest Earned</th></tr>
+                </thead>
+                <tbody id="ci-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/compound-interest-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Compound interest formula: <strong>A = P(1 + r/n)^(nt)</strong>. Example: $10,000 at 8% compounded monthly for 10 years = <strong>$22,196</strong> — earning $12,196 in interest, more than doubling the original principal.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter your <strong>Principal</strong> (starting amount), <strong>Annual Interest Rate</strong> as a percentage, and <strong>Time Period</strong> in years. The <strong>Compounding Frequency</strong> defaults to 12 (monthly) — change it to 1 for annual, 4 for quarterly, 365 for daily, or any other value. The calculator shows future value, total interest earned, and a year-by-year growth table (up to 20 years).</p>
+
+      <h2 id="formula">Compound interest formula</h2>
+      <p>The compound interest formula calculates the future value of a lump-sum investment growing at a constant rate:</p>
+      <Formula expr={f.ci} />
+      <p>Where:</p>
+      <ul>
+        <li><strong>A</strong> = future value (the end balance)</li>
+        <li><strong>P</strong> = principal (the starting amount)</li>
+        <li><strong>r</strong> = annual interest rate as a decimal (e.g., 8% = 0.08)</li>
+        <li><strong>n</strong> = number of compounding periods per year (12 = monthly, 365 = daily)</li>
+        <li><strong>t</strong> = time in years</li>
+      </ul>
+      <p>For <strong>continuously compounding</strong> interest — where n approaches infinity — the formula simplifies to:</p>
+      <Formula expr={f.cont} />
+      <p>Where <em>e</em> ≈ 2.71828 is Euler's number. Continuous compounding is used in theoretical finance and derivatives pricing; it produces slightly more interest than daily compounding.</p>
+
+      <h2 id="vs-simple">Compound vs. simple interest</h2>
+      <p>Simple interest applies only to the original principal. Compound interest applies to the principal <em>plus</em> all previously accumulated interest — creating exponential growth instead of linear growth.</p>
+      <Formula expr={f.simple} />
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>$10,000 at 8%</th><th>5 Years</th><th>10 Years</th><th>20 Years</th><th>30 Years</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Simple interest</td><td>$14,000</td><td>$18,000</td><td>$26,000</td><td>$34,000</td></tr>
+            <tr><td>Compound (annual)</td><td>$14,693</td><td>$21,589</td><td>$46,610</td><td>$100,627</td></tr>
+            <tr><td>Compound (monthly)</td><td>$14,898</td><td>$22,196</td><td>$49,268</td><td>$109,882</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The gap between simple and compound interest widens dramatically over long time horizons. At 30 years, monthly compounding produces more than three times the balance of simple interest on the same principal and rate.</p>
+
+      <h2 id="frequency">Compounding frequency</h2>
+      <p>More frequent compounding produces a slightly higher effective annual rate (EAR), also called the Annual Equivalent Rate (AER). The effective annual rate at a 10% nominal rate:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Frequency</th><th>n (periods/year)</th><th>Effective Annual Rate</th><th>$10,000 after 1 year</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Annually</td><td>1</td><td>10.000%</td><td>$11,000</td></tr>
+            <tr><td>Semi-annually</td><td>2</td><td>10.250%</td><td>$11,025</td></tr>
+            <tr><td>Quarterly</td><td>4</td><td>10.381%</td><td>$11,038</td></tr>
+            <tr><td>Monthly</td><td>12</td><td>10.471%</td><td>$11,047</td></tr>
+            <tr><td>Weekly</td><td>52</td><td>10.506%</td><td>$11,051</td></tr>
+            <tr><td>Daily</td><td>365</td><td>10.516%</td><td>$11,052</td></tr>
+            <tr><td>Continuously</td><td>∞</td><td>10.517%</td><td>$11,052</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The difference between monthly and daily compounding is less than $5 on $10,000 per year. The meaningful decision is between annual compounding (e.g., some bonds) and more frequent compounding (savings accounts, most mortgages).</p>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Scenario</th><th>Principal</th><th>Rate</th><th>Frequency</th><th>Years</th><th>Future Value</th><th>Interest Earned</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Retirement savings</td><td>$50,000</td><td>7%</td><td>Monthly</td><td>30</td><td>$380,613</td><td>$330,613</td></tr>
+            <tr><td>College fund</td><td>$20,000</td><td>6%</td><td>Quarterly</td><td>18</td><td>$58,045</td><td>$38,045</td></tr>
+            <tr><td>High-yield savings</td><td>$5,000</td><td>4.5%</td><td>Daily</td><td>5</td><td>$6,252</td><td>$1,252</td></tr>
+            <tr><td>Business investment</td><td>$100,000</td><td>10%</td><td>Annual</td><td>10</td><td>$259,374</td><td>$159,374</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="rule-of-72">Rule of 72 — quick doubling estimate</h2>
+      <p>The Rule of 72 estimates how many years it takes to double an investment at a given annual rate: divide 72 by the interest rate percentage.</p>
+      <Formula expr={f.doubling} />
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Annual Rate</th><th>Rule of 72 estimate</th><th>Exact doubling time</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2%</td><td>36 years</td><td>35.0 years</td></tr>
+            <tr><td>4%</td><td>18 years</td><td>17.7 years</td></tr>
+            <tr><td>6%</td><td>12 years</td><td>11.9 years</td></tr>
+            <tr><td>8%</td><td>9 years</td><td>9.0 years</td></tr>
+            <tr><td>10%</td><td>7.2 years</td><td>7.3 years</td></tr>
+            <tr><td>12%</td><td>6 years</td><td>6.1 years</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The rule also works in reverse: if prices double every 9 years, implied inflation is roughly 72 / 9 = 8% per year. It is a mental math shortcut accurate to within 1–2% for rates between 3% and 15%.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is compound interest?</h3>
+      <p>Compound interest is interest calculated on both the original principal and all previously earned interest. Because interest earns interest, balances grow exponentially rather than linearly — this is the core mechanism behind long-term wealth accumulation.</p>
+
+      <h3>What is the compound interest formula?</h3>
+      <p>A = P(1 + r/n)^(nt), where A is the future value, P is the principal, r is the annual rate as a decimal, n is compounding periods per year, and t is years. For monthly compounding at 8% on $10,000 for 10 years: A = 10,000 × (1 + 0.08/12)^(120) = $22,196.</p>
+
+      <h3>How does compounding frequency affect interest?</h3>
+      <p>More frequent compounding yields slightly more interest. At 10% on $10,000 for one year: annual compounding = $11,000; monthly = $11,047; daily = $11,052. The difference between monthly and daily is negligible. The more important factor is starting early — time has a much larger effect than compounding frequency.</p>
+
+      <h3>What is the Rule of 72?</h3>
+      <p>Divide 72 by your annual interest rate to estimate the years needed to double your money. At 6%: 72 / 6 = 12 years. At 9%: 72 / 9 = 8 years. This is an approximation; the exact time is ln(2) / [n × ln(1 + r/n)].</p>
+
+      <h3>What is the difference between compound and simple interest?</h3>
+      <p>Simple interest applies only to the original principal: A = P(1 + rt). Compound interest applies to principal plus accumulated interest. On $10,000 at 8% for 30 years: simple interest = $34,000 total; compound monthly = $109,882 — more than 3× as much.</p>
+
+      <h3>What does compounding monthly vs. annually mean?</h3>
+      <p>Monthly compounding (n=12) means interest is calculated and added to the balance 12 times per year, at 1/12 of the annual rate each time. Annual compounding (n=1) adds interest once per year at the full annual rate. Monthly compounding produces a higher effective annual rate and a larger balance over time.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/roi-calculator',                blurb: 'Calculate total ROI, investment multiple, and annualized return (CAGR).' },
+        { path: '/finance/loan-payment-calculator',       blurb: 'Monthly payment, total interest, and amortisation schedule for any loan.' },
+        { path: '/math/percentage-calculator',            blurb: 'General percentage and percentage change calculator.' },
+        { path: '/finance/net-profit-margin-calculator',  blurb: 'Net profit margin from net income and revenue.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/compound-interest-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

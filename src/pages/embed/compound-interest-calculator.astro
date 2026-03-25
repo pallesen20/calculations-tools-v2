@@ -1,0 +1,93 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Compound Interest Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Compound Interest Calculator</h2>
+        <p>See how your money grows with compounding</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ci-principal">Principal (starting amount)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ci-principal" class="bmi-input" placeholder="e.g. 10000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ci-rate">Annual Interest Rate (%)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ci-rate" class="bmi-input" placeholder="e.g. 8" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ci-years">Time Period (years)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ci-years" class="bmi-input" placeholder="e.g. 10" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ci-n">Compounding Frequency (times per year)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ci-n" class="bmi-input" placeholder="12 = monthly (default)" />
+        </div>
+      </div>
+
+      <div id="ci-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ci-future-val">—</div>
+            <div class="lbm-card-lbl">Future Value</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ci-interest">—</div>
+            <div class="lbm-card-lbl">Interest Earned</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="ci-principal-out">—</div>
+            <div class="lbm-card-lbl">Principal</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">A = P × (1 + r/n)^(n×t)</span>
+            <span class="pi-step-val" id="ci-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Future Value</span>
+            <span class="pi-step-val" id="ci-step2">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Interest Earned</span>
+            <span class="pi-step-val" id="ci-step3">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Compounding Bonus</span>
+            <span class="pi-step-val" id="ci-step4">—</span>
+          </div>
+        </div>
+
+        <div style="margin-top:1rem;">
+          <div class="pi-steps-title">Year-by-Year Growth</div>
+          <div class="responsive-table" style="margin-top:0.5rem;">
+            <table>
+              <thead>
+                <tr><th>Year</th><th>Balance</th><th>Interest Earned</th></tr>
+              </thead>
+              <tbody id="ci-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/compound-interest-calculator.js" is:inline></script>
+</EmbedLayout>

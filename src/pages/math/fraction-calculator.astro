@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 
 const f = {
   add:        "$$\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + c \\times b}{b \\times d}$$",
@@ -336,6 +337,8 @@ const schema = [
         { path: '/math/percentage-calculator/change',               blurb: 'Percentage change calculator — covers both increases and decreases.' },
         { path: '/date-calculator',                                 blurb: 'Calculate the number of days or months between two dates.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/fraction-calculator" />
 
     </div>
   </div>

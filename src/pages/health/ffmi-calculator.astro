@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
 
 const f = {
@@ -93,6 +94,8 @@ const schema = [
   schema={schema}
   sources={sources}
   embedSlug="ffmi-calculator"
+  ogFormula="FFMI = Lean body mass (kg) / height² (m²)"
+  ogExample="LBM 70 kg at 1.80 m: 70 / 3.24 = 21.6 FFMI"
 >
 
   <div slot="calculator">
@@ -351,6 +354,8 @@ const schema = [
         { path: '/conversion/weight-converter' },
         { path: '/conversion/height-converter' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/health/ffmi-calculator" />
 
     </div>
   </div>

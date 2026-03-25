@@ -1,0 +1,282 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  roi:        "$$\\text{ROI} = \\frac{\\text{Final Value} - \\text{Initial Investment}}{\\text{Initial Investment}} \\times 100$$",
+  netReturn:  "$$\\text{Net Return} = \\text{Final Value} - \\text{Initial Investment}$$",
+  multiple:   "$$\\text{Multiple} = \\frac{\\text{Final Value}}{\\text{Initial Investment}}$$",
+  annualized: "$$\\text{Annualized ROI} = \\left(\\frac{\\text{Final Value}}{\\text{Initial Investment}}\\right)^{\\frac{1}{n}} - 1$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'formula',      label: 'ROI formula' },
+  { id: 'annualized',   label: 'Annualized ROI' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'benchmarks',   label: 'ROI benchmarks' },
+  { id: 'vs-other',     label: 'ROI vs. IRR vs. NPV' },
+  { id: 'mistakes',     label: 'Common mistakes' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ROI Calculator",
+    "url": "https://calculations.tools/finance/roi-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate Return on Investment (ROI) from initial investment and final value. Shows net return, ROI %, investment multiple, and optional annualized ROI.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is ROI?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROI (Return on Investment) is a performance metric that measures the gain or loss from an investment relative to its cost. It is expressed as a percentage: ROI = (Net Return / Initial Investment) × 100. A positive ROI means the investment generated profit; a negative ROI means a loss." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the ROI formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROI = (Final Value − Initial Investment) / Initial Investment × 100. For example, investing $10,000 that grows to $13,500 gives a Net Return of $3,500 and an ROI of 35%. The investment multiple is Final Value / Initial Investment = 1.35x." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good ROI?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A 'good' ROI depends heavily on asset class and time horizon. The S&P 500 has historically returned roughly 10% per year. Real estate investors typically target 8–12% annually. Venture capital aims for 3x–10x total returns over 7–10 years. Any ROI above a risk-free rate (e.g., US Treasury yields) represents genuine value creation after accounting for risk." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is annualized ROI and why does it matter?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Annualized ROI (also called CAGR — Compound Annual Growth Rate) converts a total ROI into an equivalent annual return, allowing fair comparison of investments held for different durations. The formula is: Annualized ROI = (Final Value / Initial Investment)^(1/n) − 1, where n is the number of years. A 100% total ROI over 10 years is only a 7.2% annualized ROI, while 100% over 2 years is a 41.4% annualized ROI." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between ROI and IRR?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROI measures total return as a simple percentage of cost. IRR (Internal Rate of Return) is the discount rate that makes the Net Present Value of all cash flows equal to zero — it accounts for the timing of each cash flow throughout the investment period. For a single lump-sum investment with no intermediate cash flows, annualized ROI and IRR are equivalent. IRR is more appropriate for investments with multiple cash flows (e.g., real estate with rental income, private equity with capital calls)." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can ROI be negative?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. A negative ROI means the final value is less than the initial investment — the investment lost money. For example, investing $10,000 and ending with $7,000 gives a Net Return of -$3,000 and an ROI of -30%. Negative ROI is common in venture capital (most startups fail), volatile assets, and businesses that underperform." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="ROI Calculator"
+  metaTitle="ROI Calculator — Return on Investment Formula"
+  description="Calculate ROI (Return on Investment) from initial investment and final value. Shows net return, ROI %, investment multiple, and annualized ROI (CAGR)."
+  canonical="https://calculations.tools/finance/roi-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="roi-calculator"
+  ogFormula="ROI = (Final Value − Initial Investment) / Initial Investment × 100"
+  ogExample="$10,000 → $13,500 = 35% ROI, 1.35x multiple"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate ROI Instantly</h2>
+          <p>Enter your initial investment and final value to see return, multiple, and annualized ROI</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="roi-initial">Initial Investment</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roi-initial" class="bmi-input" placeholder="e.g. 10000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="roi-final">Final Value</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roi-final" class="bmi-input" placeholder="e.g. 13500" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="roi-years">Holding Period in Years (optional — for annualized ROI)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roi-years" class="bmi-input" placeholder="e.g. 3" />
+          </div>
+        </div>
+
+        <div id="roi-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="roi-net-return">—</div>
+              <div class="lbm-card-lbl">Net Return</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="roi-pct">—</div>
+              <div class="lbm-card-lbl">ROI</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="roi-multiple">—</div>
+              <div class="lbm-card-lbl">Multiple</div>
+            </div>
+          </div>
+
+          <div id="roi-ann-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="roi-ann-val">—</div>
+              <div class="lbm-card-lbl">Annualized ROI (CAGR)</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Final − Initial = Net Return</span>
+              <span class="pi-step-val" id="roi-step1">—</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Net Return / Initial × 100 = ROI</span>
+              <span class="pi-step-val" id="roi-step2">—</span>
+            </div>
+            <div class="pi-step" id="roi-step3-row">
+              <span class="pi-step-label">Annualized ROI (CAGR)</span>
+              <span class="pi-step-val" id="roi-step3">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/roi-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>ROI = <strong>(Final Value − Initial Investment) / Initial Investment × 100</strong>. Example: invest $10,000, receive $13,500 → Net Return $3,500, ROI = <strong>35%</strong>, Multiple = <strong>1.35x</strong>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter your <strong>Initial Investment</strong> (the amount you put in) and your <strong>Final Value</strong> (the amount you got back, including the original principal). The calculator instantly shows net return in currency, ROI as a percentage, and the investment multiple. Optionally enter the <strong>Holding Period in Years</strong> to see your annualized ROI (CAGR).</p>
+      <p>Use consistent units — if your investment is in dollars, enter all values in dollars. The calculator handles any currency or denomination as long as both inputs use the same unit.</p>
+
+      <h2 id="formula">Return on Investment formula</h2>
+      <p>ROI measures how much profit you earned relative to what you invested. The standard formula is:</p>
+      <Formula expr={f.roi} />
+      <p>Where Net Return is the gain (or loss) from the investment:</p>
+      <Formula expr={f.netReturn} />
+      <p>The investment multiple expresses the same information as a ratio rather than a percentage — useful for comparing large returns:</p>
+      <Formula expr={f.multiple} />
+      <p>A 100% ROI equals a 2.0x multiple. A 200% ROI equals a 3.0x multiple. Venture capital investors typically express targets as multiples (e.g., "we need at least 3x") rather than percentages.</p>
+
+      <h2 id="annualized">Annualized ROI (CAGR)</h2>
+      <p>Total ROI does not account for how long the investment was held. A 50% ROI over 10 years is far less impressive than 50% ROI over 1 year. <strong>Annualized ROI</strong> — also called CAGR (Compound Annual Growth Rate) — solves this by converting total return into a consistent annual rate:</p>
+      <Formula expr={f.annualized} />
+      <p>Where <em>n</em> is the number of years. This is the same as the geometric mean annual return. Use annualized ROI whenever comparing investments held for different lengths of time.</p>
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Scenario</th><th>Initial</th><th>Final Value</th><th>Net Return</th><th>ROI</th><th>Years</th><th>Annualized ROI</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Stock investment</td><td>$10,000</td><td>$13,500</td><td>$3,500</td><td>35%</td><td>3</td><td>10.6%</td></tr>
+            <tr><td>Real estate flip</td><td>$250,000</td><td>$340,000</td><td>$90,000</td><td>36%</td><td>2</td><td>16.6%</td></tr>
+            <tr><td>Marketing campaign</td><td>$5,000</td><td>$18,000</td><td>$13,000</td><td>260%</td><td>1</td><td>260%</td></tr>
+            <tr><td>Startup investment</td><td>$50,000</td><td>$250,000</td><td>$200,000</td><td>400%</td><td>7</td><td>25.8%</td></tr>
+            <tr><td>Failed investment</td><td>$20,000</td><td>$12,000</td><td>-$8,000</td><td>-40%</td><td>2</td><td>-22.5%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="benchmarks">ROI benchmarks by asset class</h2>
+      <p>What counts as a good ROI depends on the asset class, risk level, and time horizon. These historical benchmarks provide context:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Asset Class</th><th>Typical Annual ROI</th><th>Risk Level</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>US Savings Account</td><td>0.5% – 5%</td><td>Very Low</td><td>Varies with interest rate environment</td></tr>
+            <tr><td>US Treasury Bonds</td><td>2% – 5%</td><td>Very Low</td><td>Risk-free benchmark rate</td></tr>
+            <tr><td>Investment Grade Bonds</td><td>3% – 6%</td><td>Low</td><td>Higher yield than Treasuries</td></tr>
+            <tr><td>S&amp;P 500 (equities)</td><td>~10%</td><td>Medium</td><td>Long-run historical average</td></tr>
+            <tr><td>Real Estate (rental)</td><td>6% – 12%</td><td>Medium</td><td>Includes rental income + appreciation</td></tr>
+            <tr><td>Private Equity</td><td>15% – 25%</td><td>High</td><td>Illiquid; 7–10 year horizon</td></tr>
+            <tr><td>Venture Capital</td><td>Highly variable</td><td>Very High</td><td>Most investments fail; few return 10x+</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="vs-other">ROI vs. IRR vs. NPV</h2>
+      <p>ROI is the simplest return metric, but it is not always the right one. Understanding when to use each metric is essential for sound investment analysis.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>What it measures</th><th>Accounts for timing</th><th>Best used for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ROI</td><td>Total % return on cost</td><td>No (unless annualized)</td><td>Simple, single-period investments</td></tr>
+            <tr><td>Annualized ROI / CAGR</td><td>Equivalent annual return</td><td>Partially (duration only)</td><td>Comparing investments held different lengths</td></tr>
+            <tr><td>IRR</td><td>Discount rate at NPV = 0</td><td>Yes (each cash flow)</td><td>Investments with multiple cash flows</td></tr>
+            <tr><td>NPV</td><td>Present value of all cash flows</td><td>Yes</td><td>Capital budgeting; absolute value comparison</td></tr>
+            <tr><td>MOIC</td><td>Total value / invested capital</td><td>No</td><td>Private equity; same as "multiple"</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>For a simple investment with a single cash outflow and one cash inflow, ROI and annualized ROI (CAGR) are the appropriate metrics. When cash flows occur at irregular intervals — rent, dividends, capital calls — use IRR.</p>
+
+      <h2 id="mistakes">Common ROI mistakes</h2>
+      <ul>
+        <li><strong>Comparing unadjusted totals across different holding periods:</strong> A 200% ROI over 20 years (5.6% annualized) is worse than a 100% ROI over 5 years (14.9% annualized). Always annualize before comparing.</li>
+        <li><strong>Ignoring costs and fees:</strong> Transaction costs, management fees, taxes, and maintenance all reduce net return. Your actual ROI is always lower than gross ROI. Use net-of-fee figures for realistic comparisons.</li>
+        <li><strong>Excluding inflation:</strong> A 7% nominal ROI in a 4% inflation environment yields only ~3% real return. For long-term investments, always consider inflation-adjusted (real) ROI.</li>
+        <li><strong>Omitting risk from the comparison:</strong> A 15% ROI from a speculative asset is not "better" than a 10% ROI from a diversified index fund without accounting for volatility and downside risk. Risk-adjusted metrics like the Sharpe ratio provide a fuller picture.</li>
+        <li><strong>Using non-comparable denominators:</strong> For business investments, the denominator should be the fully-loaded cost (including opportunity cost, staff time, overhead allocation) — not just the cash outlay.</li>
+      </ul>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is ROI?</h3>
+      <p>Return on Investment (ROI) measures the gain or loss generated by an investment relative to its cost. Expressed as a percentage, it answers: "for every dollar I put in, how many cents of profit did I earn?" ROI = (Final Value − Initial Investment) / Initial Investment × 100.</p>
+
+      <h3>What is the ROI formula?</h3>
+      <p>ROI = (Final Value − Initial Investment) / Initial Investment × 100. The numerator is the net return (profit or loss); the denominator is what you paid. Multiply by 100 to express as a percentage.</p>
+
+      <h3>What is a good ROI?</h3>
+      <p>It depends on asset class, risk, and time horizon. The S&amp;P 500 has historically returned ~10% per year. Real estate targets 8–12%. Venture capital aims for 3x–10x over a fund's life. Any ROI that exceeds the risk-free rate plus an appropriate risk premium can be considered good.</p>
+
+      <h3>What is annualized ROI and why does it matter?</h3>
+      <p>Annualized ROI (CAGR) converts total return into an equivalent annual rate: (Final / Initial)^(1/n) − 1. It matters because a 100% total ROI over 10 years (7.2% per year) is very different from 100% over 2 years (41.4% per year). Annualizing allows fair comparison across investments held for different lengths of time.</p>
+
+      <h3>What is the difference between ROI and IRR?</h3>
+      <p>ROI is a simple percentage of initial cost. IRR is the discount rate at which NPV = 0 — it accounts for the timing of every individual cash flow. For a single lump-sum investment with no interim cash flows, annualized ROI and IRR are equivalent. For investments with multiple cash flows (rental income, dividends, capital calls), IRR is more accurate.</p>
+
+      <h3>Can ROI be negative?</h3>
+      <p>Yes. Negative ROI means the final value is less than the initial investment. For example, $10,000 invested and $7,000 returned gives ROI = (7,000 − 10,000) / 10,000 × 100 = −30%. Negative ROI is common in failed startups, poorly timed trades, and distressed assets.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/compound-interest-calculator', blurb: 'Calculate how an investment grows with compounding over time.' },
+        { path: '/finance/net-profit-margin-calculator',  blurb: 'Net profit margin as a percentage of revenue.' },
+        { path: '/finance/ebitda-calculator',             blurb: 'EBITDA from Net Income, Interest, Tax, and D&A.' },
+        { path: '/math/percentage-calculator',            blurb: 'General percentage and percentage change calculator.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/roi-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

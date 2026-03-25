@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
 
 const f = {
@@ -106,6 +107,8 @@ const schema = [
   schema={schema}
   sources={sources}
   embedSlug="ideal-weight-calculator"
+  ogFormula="IBW (Devine, men) = 50 + 2.3 × (height in inches - 60)"
+  ogExample="180 cm (71 in): 50 + 2.3 × 11 = 75.3 kg ideal weight"
 >
 
   <div slot="calculator">
@@ -330,6 +333,8 @@ const schema = [
         { path: '/health/ffmi-calculator', blurb: 'Calculate Fat-Free Mass Index from weight, height, and body fat % — see how you compare to the natural muscular limit.' },
         { path: '/health/bmi-calculator/men', blurb: 'Men-specific BMI guide covering FFMI context, waist thresholds, and the testosterone-obesity connection.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/health/ideal-weight-calculator" />
 
     </div>
   </div>

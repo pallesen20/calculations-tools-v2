@@ -1,0 +1,234 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  ebt:     "$$\\text{EBT} = \\text{Net Income} + \\text{Tax Expense}$$",
+  taxRate: "$$\\text{Effective Tax Rate} = \\frac{\\text{Tax Expense}}{\\text{EBT}} \\times 100$$",
+  margin:  "$$\\text{Pre-Tax Margin} = \\frac{\\text{EBT}}{\\text{Revenue}} \\times 100$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use' },
+  { id: 'what-is-ebt',  label: 'What is EBT?' },
+  { id: 'formula',      label: 'EBT formula' },
+  { id: 'examples',     label: 'Worked examples' },
+  { id: 'tax-rate',     label: 'Effective tax rate' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "EBT Calculator",
+    "url": "https://calculations.tools/finance/ebt-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate EBT (Earnings Before Tax) from Net Income and Tax Expense. Shows EBT, effective tax rate, and pre-tax margin with step-by-step workings.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is EBT?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBT stands for Earnings Before Tax (also called Pre-Tax Income or Pre-Tax Profit). It equals Net Income plus Tax Expense and represents the profit a company generates before paying income taxes. EBT is used to compare profitability across companies in different tax jurisdictions and to calculate the effective tax rate." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate EBT?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBT = Net Income + Tax Expense. If Net Income is $700,000 and Tax Expense is $210,000, then EBT = $910,000. EBT is the line item on the income statement directly above Net Income, before the income tax provision is deducted." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the effective tax rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The effective tax rate = Tax Expense / EBT x 100. It is the actual percentage of pre-tax income paid in taxes, as opposed to the statutory marginal rate. A company with $1M EBT paying $230K tax has a 23% effective tax rate. The effective rate differs from the statutory rate due to tax credits, deductions, deferred taxes, and international structures." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between EBT and EBIT?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EBT adds back only Tax Expense, keeping Interest Expense as a deduction. EBIT adds back both Tax Expense and Interest Expense. EBT is useful when comparing companies in different tax environments; EBIT is useful when comparing companies with different capital structures (debt levels)." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="EBT Calculator"
+  metaTitle="EBT Calculator | Earnings Before Tax Formula"
+  description="Calculate EBT (Earnings Before Tax) from Net Income and Tax Expense. Shows EBT, effective tax rate, and pre-tax margin with step-by-step workings."
+  canonical="https://calculations.tools/finance/ebt-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="ebt-calculator"
+  ogFormula="EBT = Net Income + Tax Expense"
+  ogExample="$700K + $210K = EBT $910K (23.1% effective tax rate)"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate EBT Instantly</h2>
+          <p>Add Tax Expense back to Net Income</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ebt-net-income">Net Income</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ebt-net-income" class="bmi-input" placeholder="e.g. 700000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ebt-tax">+ Tax Expense</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ebt-tax" class="bmi-input" placeholder="e.g. 210000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ebt-revenue">Revenue (optional — for Pre-Tax Margin)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ebt-revenue" class="bmi-input" placeholder="e.g. 5000000" />
+          </div>
+        </div>
+
+        <div id="ebt-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ebt-ebt-val">—</div>
+              <div class="lbm-card-lbl">EBT</div>
+            </div>
+          </div>
+
+          <div id="ebt-taxrate-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ebt-taxrate-val">—</div>
+              <div class="lbm-card-lbl">Effective Tax Rate</div>
+            </div>
+          </div>
+
+          <div id="ebt-margin-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ebt-margin-val">—</div>
+              <div class="lbm-card-lbl">Pre-Tax Margin</div>
+            </div>
+          </div>
+
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Net Income + Tax = EBT</span>
+              <span class="pi-step-val" id="ebt-step1">—</span>
+            </div>
+            <div class="pi-step" id="ebt-step2-row">
+              <span class="pi-step-label">Tax / EBT × 100 = Effective Rate</span>
+              <span class="pi-step-val" id="ebt-step2">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/ebt-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>EBT = <strong>Net Income + Tax Expense</strong>. Example: Net Income $700K + Tax $210K = <strong>EBT $910K</strong>. Effective tax rate = Tax / EBT × 100 = <strong>23.1%</strong>.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter Net Income and Tax Expense from the income statement. The calculator returns EBT and the effective tax rate (Tax / EBT × 100). Optionally enter Revenue to see Pre-Tax Margin as a percentage.</p>
+      <p>Tax Expense should be the income tax provision from the income statement — not total taxes paid (which includes payroll taxes, VAT, etc.).</p>
+
+      <h2 id="what-is-ebt">What is EBT (Earnings Before Tax)?</h2>
+      <p>EBT stands for <strong>Earnings Before Tax</strong>, also called Pre-Tax Income or Pre-Tax Profit. It is the line item on the income statement directly above Net Income, before the income tax provision is deducted.</p>
+      <p>EBT = EBIT minus Interest Expense. It represents profit after all operating and financing costs but before the tax bill. It is primarily used to:</p>
+      <ul>
+        <li>Compare profitability across companies in different tax jurisdictions (different countries or tax regimes)</li>
+        <li>Calculate the <strong>effective tax rate</strong> — the actual percentage of pre-tax earnings paid in tax</li>
+        <li>Isolate whether differences in Net Income are driven by operations, financing, or tax efficiency</li>
+      </ul>
+
+      <h2 id="formula">EBT formula</h2>
+      <Formula expr={f.ebt} />
+      <p>You can also derive EBT from EBIT: EBT = EBIT minus Interest Expense. Both give the same result.</p>
+      <p>Effective tax rate:</p>
+      <Formula expr={f.taxRate} />
+      <p>Pre-Tax Margin (when revenue is available):</p>
+      <Formula expr={f.margin} />
+
+      <h2 id="examples">Worked examples</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Company</th><th>Net Income</th><th>Tax Expense</th><th>EBT</th><th>Effective Tax Rate</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Standard US corp</td><td>$770,000</td><td>$230,000</td><td>$1,000,000</td><td>23.0%</td></tr>
+            <tr><td>Low-tax jurisdiction</td><td>$900,000</td><td>$100,000</td><td>$1,000,000</td><td>10.0%</td></tr>
+            <tr><td>Tax credit beneficiary</td><td>$850,000</td><td>$150,000</td><td>$1,000,000</td><td>15.0%</td></tr>
+            <tr><td>High-tax environment</td><td>$680,000</td><td>$320,000</td><td>$1,000,000</td><td>32.0%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>All four companies have the same EBT ($1M) but different Net Incomes due to varying effective tax rates. Comparing Net Income across these companies would be misleading; comparing EBT gives a level playing field.</p>
+
+      <h2 id="tax-rate">Effective tax rate vs statutory tax rate</h2>
+      <p>The <strong>statutory tax rate</strong> is the published legal rate (e.g., 21% US federal corporate rate). The <strong>effective tax rate</strong> is the actual rate paid, calculated from Tax Expense / EBT.</p>
+      <p>They differ because of:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Factor</th><th>Effect on effective rate</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>R&amp;D tax credits</td><td>Reduces effective rate below statutory</td></tr>
+            <tr><td>International income in low-tax jurisdictions</td><td>Reduces effective rate</td></tr>
+            <tr><td>Non-deductible expenses</td><td>Raises effective rate above statutory</td></tr>
+            <tr><td>Deferred tax movements</td><td>Can raise or lower current-period effective rate</td></tr>
+            <tr><td>Valuation allowances on deferred tax assets</td><td>Raises effective rate</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A company with a much lower effective rate than its peers may be benefiting from tax credits, offshore structures, or timing differences. A higher effective rate may indicate non-deductible charges or one-time tax adjustments.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is EBT?</h3>
+      <p>Earnings Before Tax — the profit a company earns before income tax is deducted. EBT = Net Income + Tax Expense. It is used to compare pre-tax profitability across companies in different tax environments.</p>
+
+      <h3>What is the difference between EBT and Net Income?</h3>
+      <p>Net Income = EBT minus Tax Expense. EBT is always higher than or equal to Net Income (a negative tax expense, meaning a tax refund or benefit, is unusual but possible).</p>
+
+      <h3>What is the difference between EBT and EBIT?</h3>
+      <p>EBIT = EBT + Interest Expense. EBIT removes both tax and financing costs; EBT removes only tax. EBIT is used when comparing companies with different debt levels; EBT is used when comparing companies in different tax regimes.</p>
+
+      <h3>Can EBT be negative?</h3>
+      <p>Yes. A company with pre-tax losses has negative EBT. In most jurisdictions, a loss generates a tax benefit (deferred tax asset), so Net Income may be less negative than EBT, or sometimes a small positive number despite a pre-tax loss.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/ebitda-calculator', blurb: 'Calculate EBITDA — adds back Interest, Tax, and D&A.' },
+        { path: '/finance/ebit-calculator',   blurb: 'Calculate EBIT — Net Income + Interest + Tax.' },
+        { path: '/finance/ebitda-margin-calculator', blurb: 'EBITDA Margin = EBITDA / Revenue × 100.' },
+        { path: '/math/percentage-calculator', blurb: 'General percentage calculator for financial ratios.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/finance/ebt-calculator" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

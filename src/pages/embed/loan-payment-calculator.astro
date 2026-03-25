@@ -1,0 +1,90 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Loan Payment Calculator — calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Loan Payment Calculator</h2>
+        <p>Monthly payment, total interest, and amortisation schedule</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="loan-amount">Loan Amount</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="loan-amount" class="bmi-input" placeholder="e.g. 200000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="loan-rate">Annual Interest Rate (%)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="loan-rate" class="bmi-input" placeholder="e.g. 6.5" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="loan-years">Loan Term (years)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="loan-years" class="bmi-input" placeholder="e.g. 30" />
+        </div>
+      </div>
+
+      <div id="loan-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="loan-monthly">—</div>
+            <div class="lbm-card-lbl">Monthly Payment</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="loan-total-paid">—</div>
+            <div class="lbm-card-lbl">Total Paid</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="loan-total-interest">—</div>
+            <div class="lbm-card-lbl">Total Interest</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Monthly rate</span>
+            <span class="pi-step-val" id="loan-step1">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Number of payments</span>
+            <span class="pi-step-val" id="loan-step2">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Monthly payment (P&amp;I)</span>
+            <span class="pi-step-val" id="loan-step3">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Total paid</span>
+            <span class="pi-step-val" id="loan-step4">—</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Total interest</span>
+            <span class="pi-step-val" id="loan-step5">—</span>
+          </div>
+        </div>
+
+        <div style="margin-top:1rem;">
+          <div class="pi-steps-title">Year-by-Year Amortisation</div>
+          <div class="responsive-table" style="margin-top:0.5rem;">
+            <table>
+              <thead>
+                <tr><th>Year</th><th>Payment</th><th>Interest (last month)</th><th>Remaining Balance</th></tr>
+              </thead>
+              <tbody id="loan-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/loan-payment-calculator.js" is:inline></script>
+</EmbedLayout>

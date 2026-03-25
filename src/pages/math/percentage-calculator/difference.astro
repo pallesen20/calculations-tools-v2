@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 
 const f = {
   main:    "$$\\% \\text{ Difference} = \\frac{|V_1 - V_2|}{\\dfrac{V_1 + V_2}{2}} \\times 100$$",
@@ -90,6 +91,8 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="percentage-difference-calculator"
+  ogFormula="% Difference = |A - B| / ((A + B) / 2) × 100"
+  ogExample="|40 - 60| / 50 × 100 = 40%"
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -245,6 +248,8 @@ const schema = [
         { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
         { path: '/date-calculator',                           blurb: 'Calculate days between dates — useful when the values you are comparing span a time period.' },
       ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/percentage-calculator/difference" />
 
     </div>
   </div>

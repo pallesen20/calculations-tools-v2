@@ -1,0 +1,19 @@
+---
+import { glossaryTermsForPage } from '../utils/getPages';
+
+interface Props {
+  toolPath: string;
+}
+const { toolPath } = Astro.props;
+const terms = glossaryTermsForPage(toolPath);
+if (terms.length === 0) return;
+---
+
+<h2>Key terms</h2>
+<div class="glossary-related-terms">
+  {terms.map(t => (
+    <a href={`/glossary/${t.slug}`} class="glossary-related-term-link">
+      {t.term}
+    </a>
+  ))}
+</div>
