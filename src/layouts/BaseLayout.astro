@@ -62,6 +62,22 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
     </script>
 
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+    <script type="speculationrules" is:inline>
+    {
+      "prefetch": [{
+        "where": {
+          "and": [
+            { "href_matches": "/*" },
+            { "not": { "href_matches": "/embed/*" } },
+            { "not": { "href_matches": "/search-index.json" } },
+            { "not": { "href_matches": "/sitemap.xml" } },
+            { "not": { "href_matches": "/llms.txt" } }
+          ]
+        },
+        "eagerness": "moderate"
+      }]
+    }
+    </script>
   </head>
   <body>
     <!-- GTM noscript -->
