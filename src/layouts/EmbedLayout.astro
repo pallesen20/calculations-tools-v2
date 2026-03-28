@@ -16,6 +16,20 @@ const { title } = Astro.props;
     </style>
   </head>
   <body>
+    <script is:inline>
+    (function(){
+      document.addEventListener('input', function(e){
+        var el = e.target;
+        if (el.tagName !== 'INPUT') return;
+        var im = (el.inputMode || el.getAttribute('inputmode') || '').toLowerCase();
+        if (im !== 'decimal' && im !== 'numeric') return;
+        if (el.value.indexOf(',') === -1) return;
+        var pos = el.selectionStart;
+        el.value = el.value.replace(/,/g, '.');
+        try { el.setSelectionRange(pos, pos); } catch(x) {}
+      }, true);
+    })();
+    </script>
     <slot />
     <p style="text-align:center;font-size:0.75rem;margin-top:1rem;opacity:0.5;">
       Powered by <a href="https://calculations.tools" target="_blank" style="color:inherit;">calculations.tools</a>

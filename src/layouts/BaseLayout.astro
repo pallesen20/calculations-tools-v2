@@ -37,9 +37,12 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Calculations.tools" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonical} />
     <meta name="twitter:title" content={fullTitle} />
@@ -47,8 +50,8 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
     <meta name="twitter:image" content={ogImage} />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-512x512.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-512x512.png" />
+    <link rel="icon" type="image/webp" sizes="32x32" href="/favicon-512x512.webp" />
+    <link rel="icon" type="image/webp" sizes="16x16" href="/favicon-512x512.webp" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/base.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
@@ -91,6 +94,20 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
     <slot />
     <Footer />
 
+    <script is:inline>
+    (function(){
+      document.addEventListener('input', function(e){
+        var el = e.target;
+        if (el.tagName !== 'INPUT') return;
+        var im = (el.inputMode || el.getAttribute('inputmode') || '').toLowerCase();
+        if (im !== 'decimal' && im !== 'numeric') return;
+        if (el.value.indexOf(',') === -1) return;
+        var pos = el.selectionStart;
+        el.value = el.value.replace(/,/g, '.');
+        try { el.setSelectionRange(pos, pos); } catch(x) {}
+      }, true);
+    })();
+    </script>
     <!-- KaTeX JS — loads only on pages that contain .formula elements -->
     <script is:inline>
       (function () {
