@@ -102,27 +102,27 @@ const schema = [
             <div class="dc-dir-label" id="dc-diff-dir"></div>
             <div class="dc-stats-grid">
               <div class="dc-stat dc-stat-primary">
-                <div class="dc-stat-val" id="dc-stat-days">—</div>
+                <div class="dc-stat-val" id="dc-stat-days">-</div>
                 <div class="dc-stat-lbl">Total days</div>
               </div>
               <div class="dc-stat">
-                <div class="dc-stat-val" id="dc-stat-weeks">—</div>
+                <div class="dc-stat-val" id="dc-stat-weeks">-</div>
                 <div class="dc-stat-lbl">Weeks</div>
               </div>
               <div class="dc-stat">
-                <div class="dc-stat-val" id="dc-stat-workdays">—</div>
+                <div class="dc-stat-val" id="dc-stat-workdays">-</div>
                 <div class="dc-stat-lbl">Workdays (Mon-Fri)</div>
               </div>
               <div class="dc-stat">
-                <div class="dc-stat-val" id="dc-stat-ymd">—</div>
+                <div class="dc-stat-val" id="dc-stat-ymd">-</div>
                 <div class="dc-stat-lbl">Years, months &amp; days</div>
               </div>
               <div class="dc-stat">
-                <div class="dc-stat-val" id="dc-stat-hours">—</div>
+                <div class="dc-stat-val" id="dc-stat-hours">-</div>
                 <div class="dc-stat-lbl">Hours</div>
               </div>
               <div class="dc-stat">
-                <div class="dc-stat-val" id="dc-stat-minutes">—</div>
+                <div class="dc-stat-val" id="dc-stat-minutes">-</div>
                 <div class="dc-stat-lbl">Minutes</div>
               </div>
             </div>
@@ -153,9 +153,9 @@ const schema = [
           </div>
 
           <div id="dc-add-result" class="dc-result dc-add-result-box hidden">
-            <div class="dc-add-result-date" id="dc-add-result-date">—</div>
-            <div class="dc-add-result-meta" id="dc-add-result-week">—</div>
-            <div class="dc-add-result-from-today" id="dc-add-result-from-today">—</div>
+            <div class="dc-add-result-date" id="dc-add-result-date">-</div>
+            <div class="dc-add-result-meta" id="dc-add-result-week">-</div>
+            <div class="dc-add-result-from-today" id="dc-add-result-from-today">-</div>
           </div>
         </div>
 
@@ -184,11 +184,11 @@ const schema = [
       <h2 id="days-between">Days between dates</h2>
       <p>The number of days between two dates is the count of calendar days from the earlier date to the later date, not counting the start date itself. This is called <strong>exclusive counting</strong> and is the standard mathematical convention:</p>
       <ul>
-        <li>January 1 to January 5 = <strong>4 days</strong> (Jan 2, 3, 4, 5 — not counting Jan 1)</li>
+        <li>January 1 to January 5 = <strong>4 days</strong> (Jan 2, 3, 4, 5 - not counting Jan 1)</li>
         <li>January 1 to February 1 = <strong>31 days</strong> (all of January)</li>
         <li>January 1 to December 31 in a non-leap year = <strong>364 days</strong></li>
       </ul>
-      <p>If you need <strong>inclusive counting</strong> (counting both the start and end date), add 1 to the result. This matters in contexts like "how many days is a 3-day event running from Thursday to Saturday?" — the answer is 3 inclusive (Thu, Fri, Sat), which is 2 by exclusive counting.</p>
+      <p>If you need <strong>inclusive counting</strong> (counting both the start and end date), add 1 to the result. This matters in contexts like "how many days is a 3-day event running from Thursday to Saturday?" - the answer is 3 inclusive (Thu, Fri, Sat), which is 2 by exclusive counting.</p>
 
       <h3>Leap years</h3>
       <p>February has 29 days in a leap year and 28 in a non-leap year. A year is a leap year if it is divisible by 4, except for century years (1900, 2100), which must also be divisible by 400 (2000 was a leap year; 1900 was not). Any date range that crosses February of a leap year will be 1 day longer than the same range in a non-leap year. This calculator handles leap years automatically.</p>
@@ -206,7 +206,7 @@ const schema = [
           <tr><td>Statutory notice periods</td><td>Calendar days (most jurisdictions)</td></tr>
           <tr><td>Delivery estimates from a carrier</td><td>Workdays (Mon-Fri, sometimes excluding holidays)</td></tr>
           <tr><td>Work effort estimation (sprints, tasks)</td><td>Workdays</td></tr>
-          <tr><td>Court filing deadlines</td><td>Usually calendar days — always verify the specific rule</td></tr>
+          <tr><td>Court filing deadlines</td><td>Usually calendar days - always verify the specific rule</td></tr>
           <tr><td>Bank processing times</td><td>Workdays (business days), often excluding public holidays</td></tr>
         </tbody>
       </table>
@@ -275,16 +275,16 @@ const schema = [
 
       <h3>Off by one: exclusive vs inclusive counting</h3>
       <p>The most common date calculation mistake is not knowing whether the start date or end date (or both) should be counted. This calculator uses <strong>exclusive</strong> counting: start is not counted, end is counted. So January 1 to January 5 = 4 days. If your context requires inclusive counting (both start and end), add 1 to the days result.</p>
-      <p>Legal and financial contexts often specify "within 30 days" or "30 days from" — always read the contract or statute carefully to determine whether the start date counts as day 0 or day 1.</p>
+      <p>Legal and financial contexts often specify "within 30 days" or "30 days from" - always read the contract or statute carefully to determine whether the start date counts as day 0 or day 1.</p>
 
       <h3>Treating all months as 30 days</h3>
-      <p>Dividing a day count by 30 to get "months" is an approximation. February has 28 or 29 days; most other months have 30 or 31. Twelve months is not always 360 days — it is 365 or 366 days. For precise month-based calculations, use the years-months-days breakdown from this calculator or the DATEDIF function in Excel rather than dividing the day count.</p>
+      <p>Dividing a day count by 30 to get "months" is an approximation. February has 28 or 29 days; most other months have 30 or 31. Twelve months is not always 360 days - it is 365 or 366 days. For precise month-based calculations, use the years-months-days breakdown from this calculator or the DATEDIF function in Excel rather than dividing the day count.</p>
 
       <h3>Ignoring time zones and Daylight Saving Time</h3>
       <p>Date calculations based on calendar days do not need to account for time zones or DST. However, if you are calculating a duration in hours or minutes and crossing a DST boundary, a day may be 23 or 25 hours rather than 24. The hours and minutes values in this calculator are derived from the day count multiplied by 24 and 1440, which assumes every day is exactly 24 hours. For high-precision time-of-day calculations, use a dedicated timestamp calculator.</p>
 
       <h3>Confusion between the two workday counting conventions</h3>
-      <p>Excel's NETWORKDAYS counts both the start and end date as workdays if they are weekdays (inclusive). This calculator counts Mon-Fri days in [start, end) — exclusive of the start, inclusive of the end. This matches the total days convention but differs from NETWORKDAYS by 1 when both dates are weekdays. Be consistent in whichever convention you use within a single calculation.</p>
+      <p>Excel's NETWORKDAYS counts both the start and end date as workdays if they are weekdays (inclusive). This calculator counts Mon-Fri days in [start, end) - exclusive of the start, inclusive of the end. This matches the total days convention but differs from NETWORKDAYS by 1 when both dates are weekdays. Be consistent in whichever convention you use within a single calculation.</p>
 
       <h2 id="faq">FAQs</h2>
 

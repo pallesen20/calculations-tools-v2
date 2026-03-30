@@ -94,17 +94,17 @@ const schema = [
 
         <div id="er-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="er-simplified">—</span>
+            <span class="lbm-primary-val" id="er-simplified">-</span>
           </div>
           <div class="lbm-primary-lbl">Simplified ratio</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="er-gcd">—</div>
+              <div class="lbm-card-val" id="er-gcd">-</div>
               <div class="lbm-card-lbl">GCD</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="er-decimal">—</div>
+              <div class="lbm-card-val" id="er-decimal">-</div>
               <div class="lbm-card-lbl">Decimal (a÷b)</div>
             </div>
           </div>
@@ -113,11 +113,11 @@ const schema = [
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
               <span class="pi-step-label">GCD</span>
-              <span class="pi-step-val" id="er-step1">—</span>
+              <span class="pi-step-val" id="er-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Simplify</span>
-              <span class="pi-step-val" id="er-step2">—</span>
+              <span class="pi-step-val" id="er-step2">-</span>
             </div>
           </div>
 
@@ -147,14 +147,14 @@ const schema = [
 
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>Multiply or divide both parts of a ratio by the same number to get an equivalent ratio. For 6:9 — GCD = 3, simplified = <strong>2:3</strong>. Equivalents: 4:6, 6:9, 8:12, 10:15… All express the same proportional relationship.</p>
+        <p>Multiply or divide both parts of a ratio by the same number to get an equivalent ratio. For 6:9 - GCD = 3, simplified = <strong>2:3</strong>. Equivalents: 4:6, 6:9, 8:12, 10:15… All express the same proportional relationship.</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
       <p>Enter any two positive values. The calculator simplifies the ratio to its lowest terms using the GCD, then generates a table of 12 equivalent ratios (the simplified form scaled by 1 through 12). Use this to find a ratio that uses convenient whole numbers for your context.</p>
 
       <h2 id="what-is">What are equivalent ratios?</h2>
-      <p>Equivalent ratios represent the same proportional relationship between two quantities. Just as 1/2 and 3/6 are equivalent fractions, 1:2 and 3:6 are equivalent ratios — both state that the first quantity is half the second.</p>
+      <p>Equivalent ratios represent the same proportional relationship between two quantities. Just as 1/2 and 3/6 are equivalent fractions, 1:2 and 3:6 are equivalent ratios - both state that the first quantity is half the second.</p>
       <p>Any ratio can be scaled up or down by multiplying or dividing both parts by the same non-zero number. The simplified (lowest-terms) form is the ratio with the smallest possible whole-number values.</p>
 
       <h2 id="formula">Formula and generation</h2>
@@ -162,14 +162,14 @@ const schema = [
       <Formula expr={f.equiv} />
       <p>To simplify a ratio to lowest terms, divide both parts by their GCD:</p>
       <Formula expr={f.simplify} />
-      <p>Example — generating equivalents of 3:4:</p>
+      <p>Example - generating equivalents of 3:4:</p>
       <Formula expr={f.ex1} />
 
       <h2 id="verify">Verifying that two ratios are equivalent</h2>
       <p>Use cross-multiplication: two ratios a:b and c:d are equivalent if and only if the cross-products are equal:</p>
       <Formula expr={f.verify} />
-      <p>For 3:4 and 9:12: 3 × 12 = 36 and 4 × 9 = 36. Equal — so they are equivalent.</p>
-      <p>For 3:4 and 9:13: 3 × 13 = 39 and 4 × 9 = 36. Not equal — so they are not equivalent.</p>
+      <p>For 3:4 and 9:12: 3 × 12 = 36 and 4 × 9 = 36. Equal - so they are equivalent.</p>
+      <p>For 3:4 and 9:13: 3 × 13 = 39 and 4 × 9 = 36. Not equal - so they are not equivalent.</p>
 
       <h2 id="examples">Worked examples</h2>
       <div class="responsive-table">
@@ -187,10 +187,10 @@ const schema = [
       </div>
 
       <h2 id="applications">When equivalent ratios matter</h2>
-      <p><strong>Recipe scaling</strong> — a recipe serving 4 in ratio 2:3:5 can be scaled to serve 12 by tripling all parts to 6:9:15. The ratio remains equivalent; only the total quantity changes.</p>
-      <p><strong>Unit conversion and rates</strong> — a car travelling 120 km in 2 hours has a speed ratio of 120:2 = 60:1 (60 km per hour). Finding the equivalent with denominator 1 gives the unit rate.</p>
-      <p><strong>Map and scale drawing</strong> — a scale of 1:50,000 is equivalent to 2:100,000 or 0.5:25,000. All represent the same relationship; the choice depends on the unit or context.</p>
-      <p><strong>Mixing and formulation</strong> — a paint colour mix of 4 parts red : 6 parts blue simplifies to 2:3. Knowing the simplified form makes it easy to scale up or down for any batch size.</p>
+      <p><strong>Recipe scaling</strong> - a recipe serving 4 in ratio 2:3:5 can be scaled to serve 12 by tripling all parts to 6:9:15. The ratio remains equivalent; only the total quantity changes.</p>
+      <p><strong>Unit conversion and rates</strong> - a car travelling 120 km in 2 hours has a speed ratio of 120:2 = 60:1 (60 km per hour). Finding the equivalent with denominator 1 gives the unit rate.</p>
+      <p><strong>Map and scale drawing</strong> - a scale of 1:50,000 is equivalent to 2:100,000 or 0.5:25,000. All represent the same relationship; the choice depends on the unit or context.</p>
+      <p><strong>Mixing and formulation</strong> - a paint colour mix of 4 parts red : 6 parts blue simplifies to 2:3. Knowing the simplified form makes it easy to scale up or down for any batch size.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 

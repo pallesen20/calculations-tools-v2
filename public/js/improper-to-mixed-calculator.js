@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('itm-rem-d').textContent   = sd;
     document.getElementById('itm-decimal').textContent = parseFloat(decimal.toFixed(6)).toString();
     document.getElementById('itm-step1').textContent   = `${absN} ÷ ${absD} = ${whole} remainder ${rem}`;
-    document.getElementById('itm-step2').textContent   = rem === 0 ? 'No remainder — result is a whole number' : `Remainder ${rem}/${absD} → simplify with GCD(${rem},${absD}) = ${g} → ${sn}/${sd}`;
+    document.getElementById('itm-step2').textContent   = rem === 0 ? 'No remainder - result is a whole number' : `Remainder ${rem}/${absD} → simplify with GCD(${rem},${absD}) = ${g} → ${sn}/${sd}`;
     document.getElementById('itm-rem-row').classList.toggle('hidden', rem === 0);
     document.getElementById('itm-result').classList.remove('hidden');
   }

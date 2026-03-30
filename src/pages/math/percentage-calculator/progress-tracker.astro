@@ -49,7 +49,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What happens when progress exceeds 100%?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A result above 100% means you have exceeded your goal. The progress bar fills completely and turns green. This is valid and desirable — it shows over-achievement. No daily rate is needed once the goal is reached." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A result above 100% means you have exceeded your goal. The progress bar fills completely and turns green. This is valid and desirable - it shows over-achievement. No daily rate is needed once the goal is reached." }
       }
     ]
   }
@@ -106,23 +106,23 @@ const schema = [
 
           <div class="lbm-cards" style="margin-top:0.75rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pt-pct-val2" style="display:none">—</div>
-              <div class="lbm-card-val" id="pt-remaining">—</div>
+              <div class="lbm-card-val" id="pt-pct-val2" style="display:none">-</div>
+              <div class="lbm-card-val" id="pt-remaining">-</div>
               <div class="lbm-card-lbl">Status</div>
             </div>
           </div>
 
           <div id="pt-deadline-rows" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pt-days-left">—</div>
+              <div class="lbm-card-val" id="pt-days-left">-</div>
               <div class="lbm-card-lbl">Days left</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pt-daily">—</div>
+              <div class="lbm-card-val" id="pt-daily">-</div>
               <div class="lbm-card-lbl">Required daily</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pt-weekly">—</div>
+              <div class="lbm-card-val" id="pt-weekly">-</div>
               <div class="lbm-card-lbl">Required weekly</div>
             </div>
           </div>
@@ -130,12 +130,12 @@ const schema = [
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Divide</span>
-              <span class="pi-step-val" id="pt-step1">—</span>
+              <span class="pi-step-label">Step 1 - Divide</span>
+              <span class="pi-step-val" id="pt-step1">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — × 100</span>
-              <span class="pi-step-val" id="pt-step2">—</span>
+              <span class="pi-step-label">Step 2 - × 100</span>
+              <span class="pi-step-val" id="pt-step2">-</span>
             </div>
           </div>
         </div>
@@ -163,16 +163,16 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter your current value and goal. The visual progress bar fills to show percentage complete and the remaining amount is displayed instantly. Optionally add a deadline date — the calculator then shows the number of days remaining and the daily and weekly rate required to reach the goal on time.</p>
+      <p>Enter your current value and goal. The visual progress bar fills to show percentage complete and the remaining amount is displayed instantly. Optionally add a deadline date - the calculator then shows the number of days remaining and the daily and weekly rate required to reach the goal on time.</p>
 
       <h2 id="what-is">What is a goal progress tracker?</h2>
       <p>A goal progress tracker measures how far along you are toward a defined target, expressed as a percentage and shown visually. Unlike a simple percentage calculator, a progress tracker is goal-oriented: it answers not just "how much have I done?" but "how much is left, and how fast do I need to go?"</p>
-      <p>Progress tracking is used across fitness goals, savings targets, sales quotas, fundraising campaigns, project milestones, and learning objectives — any situation where you have a known starting position, a defined target, and a desire to know how close you are.</p>
+      <p>Progress tracking is used across fitness goals, savings targets, sales quotas, fundraising campaigns, project milestones, and learning objectives - any situation where you have a known starting position, a defined target, and a desire to know how close you are.</p>
 
       <h2 id="formula">Formula and calculation</h2>
       <p>Percentage complete is calculated from current value and goal:</p>
       <Formula expr={f.pct} />
-      <p>The result can exceed 100% if you surpass the goal — this is valid and represents over-achievement. The progress bar turns green when you exceed 100%.</p>
+      <p>The result can exceed 100% if you surpass the goal - this is valid and represents over-achievement. The progress bar turns green when you exceed 100%.</p>
 
       <h2 id="deadline">Deadline and required rate</h2>
       <p>When you add a deadline, the calculator computes the pace required to reach the goal on time:</p>
@@ -221,20 +221,20 @@ const schema = [
       <p>Subtract current from goal to get the remaining amount. Divide by days left. $7,000 remaining over 140 days = $50/day needed.</p>
 
       <h3>What happens when progress exceeds 100%?</h3>
-      <p>The bar fills completely and turns green, indicating over-achievement. No required rate is shown — you have already reached your goal.</p>
+      <p>The bar fills completely and turns green, indicating over-achievement. No required rate is shown - you have already reached your goal.</p>
 
       <h3>What is the difference between this and the percent-to-goal calculator?</h3>
-      <p>The <a href="/math/percentage-calculator/percent-to-goal">percent to goal calculator</a> is a focused tool for the single formula (Current ÷ Goal × 100). This progress tracker adds a visual bar, deadline input, and required rate calculation — it's designed for ongoing tracking rather than a one-off calculation.</p>
+      <p>The <a href="/math/percentage-calculator/percent-to-goal">percent to goal calculator</a> is a focused tool for the single formula (Current ÷ Goal × 100). This progress tracker adds a visual bar, deadline input, and required rate calculation - it's designed for ongoing tracking rather than a one-off calculation.</p>
 
       <h3>Can I use this for weight loss or reduction goals?</h3>
-      <p>Yes — enter how much you have already reduced (not your current weight) as the current value, and the total amount you want to reduce as the goal. If you want to lose 10 kg and have lost 3 kg so far, enter current = 3 and goal = 10 to get 30% complete.</p>
+      <p>Yes - enter how much you have already reduced (not your current weight) as the current value, and the total amount you want to reduce as the goal. If you want to lose 10 kg and have lost 3 kg so far, enter current = 3 and goal = 10 to get 30% complete.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator/percent-to-goal',  blurb: 'Simple percent-to-goal calculation — (Current ÷ Goal) × 100.' },
-        { path: '/math/percentage-calculator',                   blurb: 'The main percentage calculator — percentage of a number, increase, decrease.' },
-        { path: '/math/percentage-calculator/change',            blurb: 'Percent change calculator — measure growth from a starting value.' },
-        { path: '/math/percentage-calculator/average',           blurb: 'Average percentage calculator — mean and weighted average of percentages.' },
+        { path: '/math/percentage-calculator/percent-to-goal',  blurb: 'Simple percent-to-goal calculation - (Current ÷ Goal) × 100.' },
+        { path: '/math/percentage-calculator',                   blurb: 'The main percentage calculator - percentage of a number, increase, decrease.' },
+        { path: '/math/percentage-calculator/change',            blurb: 'Percent change calculator - measure growth from a starting value.' },
+        { path: '/math/percentage-calculator/average',           blurb: 'Average percentage calculator - mean and weighted average of percentages.' },
         { path: '/math/ratio-calculator/unit-rate',              blurb: 'Calculate the rate per single unit.' },
       ]} />
 

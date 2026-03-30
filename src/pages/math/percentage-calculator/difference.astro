@@ -29,7 +29,7 @@ const schema = [
     "url": "https://calculations.tools/math/percentage-calculator/difference",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
-    "description": "Calculate the percentage difference between two values. Uses the average of both values as the base — ideal for comparing two independent measurements with no defined starting point.",
+    "description": "Calculate the percentage difference between two values. Uses the average of both values as the base - ideal for comparing two independent measurements with no defined starting point.",
     "isAccessibleForFree": true,
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   },
@@ -56,7 +56,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between percentage difference and percentage change?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change requires a defined starting point (the original value is the base) and produces a signed result (positive for an increase, negative for a decrease). Percentage difference has no defined starting point — it uses the average of the two values as the base and always returns a positive, unsigned result. Use percentage change for before-and-after comparisons; use percentage difference when comparing two independent measurements." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change requires a defined starting point (the original value is the base) and produces a signed result (positive for an increase, negative for a decrease). Percentage difference has no defined starting point - it uses the average of the two values as the base and always returns a positive, unsigned result. Use percentage change for before-and-after comparisons; use percentage difference when comparing two independent measurements." }
       },
       {
         "@type": "Question",
@@ -86,7 +86,7 @@ const schema = [
 <CalculatorLayout
   title="Percentage Difference Calculator"
   metaTitle="Percentage Difference Calculator | Formula & Examples ᐅ"
-  description="Calculate the percentage difference between two values. Uses the average as the base — for comparing two independent values where neither is the defined starting point."
+  description="Calculate the percentage difference between two values. Uses the average as the base - for comparing two independent values where neither is the defined starting point."
   canonical="https://calculations.tools/math/percentage-calculator/difference"
   tocItems={tocItems}
   schema={schema}
@@ -118,31 +118,31 @@ const schema = [
 
         <div id="pdi-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="pdi-pct">—</span>
+            <span class="lbm-primary-val" id="pdi-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage Difference</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pdi-abs">—</div>
+              <div class="lbm-card-val" id="pdi-abs">-</div>
               <div class="lbm-card-lbl">Absolute difference</div>
-              <div class="lbm-card-badge" id="pdi-badge">—</div>
+              <div class="lbm-card-badge" id="pdi-badge">-</div>
             </div>
           </div>
 
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Absolute difference</span>
-              <span id="pdi-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Absolute difference</span>
+              <span id="pdi-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Average</span>
-              <span id="pdi-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Average</span>
+              <span id="pdi-step2" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 3 — Divide × 100</span>
-              <span id="pdi-step3" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 3 - Divide × 100</span>
+              <span id="pdi-step3" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter any two values. The order does not matter — the result is the same either way. The calculator returns the percentage difference, the absolute difference, and a three-step breakdown. It is undefined when both values are zero (the average would be zero, making division impossible).</p>
+      <p>Enter any two values. The order does not matter - the result is the same either way. The calculator returns the percentage difference, the absolute difference, and a three-step breakdown. It is undefined when both values are zero (the average would be zero, making division impossible).</p>
 
       <h2 id="formula">Percentage difference formula</h2>
       <p>Percentage difference measures the relative gap between two values using their average as the reference point:</p>
@@ -170,7 +170,7 @@ const schema = [
 
       <p>The absolute value in the numerator ensures the result is always positive regardless of which value is larger. The average denominator ensures the result is <strong>symmetric</strong>: the percentage difference between 90 and 110 is identical to the percentage difference between 110 and 90.</p>
 
-      <p>This symmetry is what distinguishes percentage difference from percentage change. Percentage change has a defined direction (old → new), so swapping the inputs produces a different result. Percentage difference has no direction — it simply quantifies the gap between two values relative to their midpoint.</p>
+      <p>This symmetry is what distinguishes percentage difference from percentage change. Percentage change has a defined direction (old → new), so swapping the inputs produces a different result. Percentage difference has no direction - it simply quantifies the gap between two values relative to their midpoint.</p>
 
       <h2 id="examples">Worked examples</h2>
 
@@ -193,10 +193,10 @@ const schema = [
             <tr><th></th><th>Percentage difference</th><th>Percentage change</th></tr>
           </thead>
           <tbody>
-            <tr><td>Starting point</td><td>None — two independent values</td><td>Defined — old value is the base</td></tr>
+            <tr><td>Starting point</td><td>None - two independent values</td><td>Defined - old value is the base</td></tr>
             <tr><td>Denominator</td><td>Average of both values</td><td>The original (old) value</td></tr>
             <tr><td>Sign</td><td>Always positive (unsigned)</td><td>Signed (+ increase, − decrease)</td></tr>
-            <tr><td>Symmetric?</td><td>Yes — order does not matter</td><td>No — swapping inputs changes result</td></tr>
+            <tr><td>Symmetric?</td><td>Yes - order does not matter</td><td>No - swapping inputs changes result</td></tr>
             <tr><td>When to use</td><td>Comparing two independent values</td><td>Before-and-after comparisons</td></tr>
             <tr><td>Example</td><td>Price of product A vs. product B</td><td>Price this year vs. last year</td></tr>
           </tbody>
@@ -209,10 +209,10 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Using one value as the denominator instead of the average</h3>
-      <p>A common error is dividing by one of the two values rather than their average. If you divide by V1, you get a percentage change <em>from</em> V1 <em>to</em> V2 — a directional measure. Dividing by the average produces the symmetric, direction-neutral percentage difference.</p>
+      <p>A common error is dividing by one of the two values rather than their average. If you divide by V1, you get a percentage change <em>from</em> V1 <em>to</em> V2 - a directional measure. Dividing by the average produces the symmetric, direction-neutral percentage difference.</p>
 
       <h3>Using percentage difference when percentage change is appropriate</h3>
-      <p>If one value clearly precedes the other — revenue last quarter vs. this quarter, test score before vs. after training — use percentage change. Percentage difference should only be used when there is genuinely no reference direction.</p>
+      <p>If one value clearly precedes the other - revenue last quarter vs. this quarter, test score before vs. after training - use percentage change. Percentage difference should only be used when there is genuinely no reference direction.</p>
 
       <h3>Expecting percentage difference to match percentage change</h3>
       <p>For a move from 90 to 110: the percentage change is +22.2% (using 90 as base), while the percentage difference is 20% (using 100 as base). These are different answers to different questions, both correct in their own context.</p>
@@ -232,21 +232,21 @@ const schema = [
       <p>Yes. When one value is more than three times the other, the result exceeds 100%. For example, the percentage difference between 10 and 40 is (30 ÷ 25) × 100 = 120%. There is no upper limit.</p>
 
       <h3>When should I use percentage difference instead of percentage change?</h3>
-      <p>Use percentage difference when comparing two independent measurements where neither is the logical starting point — comparing prices of two products, scores from two groups, or readings from two instruments. Use percentage change when one value clearly precedes the other in time or sequence.</p>
+      <p>Use percentage difference when comparing two independent measurements where neither is the logical starting point - comparing prices of two products, scores from two groups, or readings from two instruments. Use percentage change when one value clearly precedes the other in time or sequence.</p>
 
       <h3>Is percentage difference the same as relative difference?</h3>
       <p>Not quite. Relative difference is calculated relative to one specific reference value, so it changes if you swap the inputs. Percentage difference uses the average as the reference, making it symmetric and independent of input order.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
-        { path: '/math/percentage-calculator/change',   blurb: 'Percentage change calculator — signed result for before-and-after comparisons.' },
+        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator/change',   blurb: 'Percentage change calculator - signed result for before-and-after comparisons.' },
         { path: '/math/percentage-calculator/increase', blurb: 'Dedicated percentage increase calculator with step-by-step workings and a reference table.' },
-        { path: '/math/percentage-calculator/decrease', blurb: 'Dedicated percentage decrease calculator — useful for discounts and price drops.' },
-        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
-        { path: '/date-calculator',                           blurb: 'Calculate days between dates — useful when the values you are comparing span a time period.' },
+        { path: '/math/percentage-calculator/decrease', blurb: 'Dedicated percentage decrease calculator - useful for discounts and price drops.' },
+        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator - arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage - multiply by 100, with a reference table for common decimals.' },
+        { path: '/date-calculator',                           blurb: 'Calculate days between dates - useful when the values you are comparing span a time period.' },
       ]} />
 
       <RelatedGlossaryTerms toolPath="/math/percentage-calculator/difference" />

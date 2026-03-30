@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function fmtCard(n) {
-    if (!isFinite(n)) return '—';
+    if (!isFinite(n)) return '-';
     const abs = Math.abs(n), sign = n < 0 ? '-' : '';
     if (abs >= 1e9) return sign + (abs / 1e9).toFixed(2) + 'B';
     if (abs >= 1e6) return sign + (abs / 1e6).toFixed(2) + 'M';
@@ -48,10 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
       statusEl.textContent = 'Strong liquidity';
       statusEl.className   = 'wc-status wc-status--good';
     } else if (wc > 0 && ratio >= 1) {
-      statusEl.textContent = 'Adequate — monitor closely';
+      statusEl.textContent = 'Adequate - monitor closely';
       statusEl.className   = 'wc-status wc-status--ok';
     } else {
-      statusEl.textContent = 'Negative — short-term risk';
+      statusEl.textContent = 'Negative - short-term risk';
       statusEl.className   = 'wc-status wc-status--bad';
     }
 

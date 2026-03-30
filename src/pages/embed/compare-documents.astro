@@ -1,0 +1,79 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Compare Word Documents - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container ce-container">
+
+      <div class="calculator-header">
+        <h2>Compare Word Documents</h2>
+        <p>Upload two .docx files to compare their text content</p>
+      </div>
+
+      <div class="ce-grid">
+
+        <div class="diff-panel">
+          <div class="diff-toolbar">
+            <h3>Original Document</h3>
+            <div class="diff-toolbar-btns">
+              <button class="diff-tbtn" onclick="triggerDocUpload('original')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+              <button class="diff-tbtn" onclick="clearDocFile('original')" title="Clear">✕</button>
+            </div>
+          </div>
+          <div class="ce-drop" id="cd-drop-original">
+            <div class="ce-drop-prompt">
+              <div class="ce-drop-label">Drop .docx file here or click to upload</div>
+              <div class="ce-drop-sub">.docx files only</div>
+            </div>
+            <div class="ce-file-info" id="cd-info-original"></div>
+          </div>
+        </div>
+
+        <div class="diff-panel">
+          <div class="diff-toolbar">
+            <h3>Changed Document</h3>
+            <div class="diff-toolbar-btns">
+              <button class="diff-tbtn" onclick="triggerDocUpload('changed')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+              <button class="diff-tbtn" onclick="clearDocFile('changed')" title="Clear">✕</button>
+            </div>
+          </div>
+          <div class="ce-drop" id="cd-drop-changed">
+            <div class="ce-drop-prompt">
+              <div class="ce-drop-label">Drop .docx file here or click to upload</div>
+              <div class="ce-drop-sub">.docx files only</div>
+            </div>
+            <div class="ce-file-info" id="cd-info-changed"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="diff-actions">
+        <button class="diff-btn-primary" id="cd-btn-compare" onclick="compareDocuments()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+      </div>
+
+      <div id="diff-output" class="diff-output">
+        <div class="diff-header">
+          <div class="diff-stats">
+            <span class="diff-added"     id="ct-stat-added">+0 added</span>
+            <span class="diff-removed"   id="ct-stat-removed">−0 removed</span>
+            <span class="diff-unchanged" id="ct-stat-unchanged">0 unchanged</span>
+          </div>
+        </div>
+        <div class="ct-diff-container" id="cd-diff-container"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <input type="file" id="cd-file-original" style="display:none" accept=".docx" />
+  <input type="file" id="cd-file-changed"  style="display:none" accept=".docx" />
+  <div class="diff-toast"></div>
+  <script src="/js/compare-documents.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .ce-container { max-width: 100% !important; }
+  .ct-diff-container { max-height: 360px; font-size: 0.78rem; }
+</style>

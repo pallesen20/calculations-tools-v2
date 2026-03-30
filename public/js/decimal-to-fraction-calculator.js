@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       den = Math.pow(10, decPlaces);
       num = Math.round(val * den);
-      method = decPlaces === 0 ? 'Whole number — denominator is 1.' : `${decPlaces} decimal place${decPlaces > 1 ? 's' : ''} → multiply by ${den}.`;
+      method = decPlaces === 0 ? 'Whole number - denominator is 1.' : `${decPlaces} decimal place${decPlaces > 1 ? 's' : ''} → multiply by ${den}.`;
     }
 
     const negative = num < 0;
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('dtf-num').textContent    = sNum;
     document.getElementById('dtf-den').textContent    = sDen;
-    document.getElementById('dtf-mixed').textContent  = mixed ?? '—';
+    document.getElementById('dtf-mixed').textContent  = mixed ?? '-';
     document.getElementById('dtf-mixed-card').classList.toggle('hidden', !mixed);
     document.getElementById('dtf-step1').textContent  = method;
     document.getElementById('dtf-step2').textContent  = `${negative ? '-' : ''}${num / g} / ${sDen} (GCD = ${g})`;

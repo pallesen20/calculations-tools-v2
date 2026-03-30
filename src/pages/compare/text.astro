@@ -19,7 +19,7 @@ const schema = [
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "Diff Checker",
-    "url": "https://calculations.tools/compare-text",
+    "url": "https://calculations.tools/compare/text",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
     "description": "Compare two texts or code files and find every addition, removal, and change instantly. Color-coded unified and side-by-side diff views. Free, private, no sign-up.",
@@ -48,7 +48,7 @@ const schema = [
       { "@type": "Question", "name": "Can I compare code files?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The tool works with any text-based file. Upload .js, .ts, .py, .html, .css, .json, .xml, .md, .sql, .yaml, .go, .java, .php, and many more using the upload button on each editor panel." } },
       { "@type": "Question", "name": "What does diff mean?", "acceptedAnswer": { "@type": "Answer", "text": "Diff is short for difference. It comes from the Unix diff command, first written in 1974, which compares two files line by line and outputs the differences. The term is now used broadly for any tool that identifies changes between two versions of text or code." } },
       { "@type": "Question", "name": "How do I compare two documents for differences?", "acceptedAnswer": { "@type": "Answer", "text": "Paste the original document text in the left panel and the revised version in the right panel, then click Find Differences. The tool highlights every addition in green and every removal in red, with line numbers for easy reference." } },
-      { "@type": "Question", "name": "Can I compare Excel or CSV files?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use the dedicated Excel and CSV comparison tool at calculations.tools/compare-text/compare-excel. It finds changed cells, added rows, and removed rows between two spreadsheet files." } },
+      { "@type": "Question", "name": "Can I compare Excel or CSV files?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Use the dedicated Excel and CSV comparison tool at calculations.tools/compare/excel. It finds changed cells, added rows, and removed rows between two spreadsheet files." } },
       { "@type": "Question", "name": "What is the LCS algorithm used for text comparison?", "acceptedAnswer": { "@type": "Answer", "text": "LCS stands for Longest Common Subsequence. The algorithm finds the longest sequence of lines that appear in both texts in the same order. Lines outside this common sequence are classified as added or removed. The result is the minimum set of changes needed to transform the original text into the changed text." } }
     ]
   }
@@ -57,11 +57,14 @@ const schema = [
 
 <CalculatorLayout
   title="Diff Checker"
-  metaTitle="Diff Checker | Compare Two Texts Online Free ᐅ"
+  metaTitle="Instant Diff Checker | Compare Two Texts Online Free ᐅ"
   description="Compare two texts or code files and instantly find every addition, removal, and change. Color-coded unified and side-by-side diff views. Free, private, no sign-up required."
-  canonical="https://calculations.tools/compare-text"
+  canonical="https://calculations.tools/compare/text"
   tocItems={tocItems}
   schema={schema}
+  embedSlug="compare-text"
+  ogFormula="LCS line diff"
+  ogExample="Find every addition, removal & change"
 >
 
   <div slot="calculator">
@@ -73,10 +76,8 @@ const schema = [
           <p>Paste or upload two texts to compare them line by line</p>
         </div>
 
-        <!-- Editors -->
         <div class="ct-editors">
 
-          <!-- Original -->
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Original Text</h3>
@@ -90,19 +91,7 @@ const schema = [
             <div class="ct-editor-wrap" id="ct-original-wrap">
               <div class="ct-gutter" id="ct-original-gutter"><div>1</div></div>
               <div class="ct-hl" id="ct-original-hl" style="top:0.75rem"></div>
-              <textarea
-                id="ct-original"
-                class="ct-textarea"
-                wrap="off"
-                placeholder="Paste your original text or code here..."
-                spellcheck="false"
-                oninput="updateEditor('ct-original')"
-                onfocus="document.getElementById('ct-original-wrap').classList.add('focused')"
-                onblur="document.getElementById('ct-original-wrap').classList.remove('focused')"
-                onkeyup="updateActiveLine('ct-original')"
-                onclick="updateActiveLine('ct-original')"
-                onscroll="syncScroll('ct-original')"
-              ></textarea>
+              <textarea id="ct-original" class="ct-textarea" wrap="off" placeholder="Paste your original text or code here..." spellcheck="false" oninput="updateEditor('ct-original')" onfocus="document.getElementById('ct-original-wrap').classList.add('focused')" onblur="document.getElementById('ct-original-wrap').classList.remove('focused')" onkeyup="updateActiveLine('ct-original')" onclick="updateActiveLine('ct-original')" onscroll="syncScroll('ct-original')"></textarea>
             </div>
             <div class="ct-stats">
               <span id="ct-original-lines">Lines: 0</span>
@@ -110,7 +99,6 @@ const schema = [
             </div>
           </div>
 
-          <!-- Changed -->
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Changed Text</h3>
@@ -124,19 +112,7 @@ const schema = [
             <div class="ct-editor-wrap" id="ct-changed-wrap">
               <div class="ct-gutter" id="ct-changed-gutter"><div>1</div></div>
               <div class="ct-hl" id="ct-changed-hl" style="top:0.75rem"></div>
-              <textarea
-                id="ct-changed"
-                class="ct-textarea"
-                wrap="off"
-                placeholder="Paste your changed text or code here..."
-                spellcheck="false"
-                oninput="updateEditor('ct-changed')"
-                onfocus="document.getElementById('ct-changed-wrap').classList.add('focused')"
-                onblur="document.getElementById('ct-changed-wrap').classList.remove('focused')"
-                onkeyup="updateActiveLine('ct-changed')"
-                onclick="updateActiveLine('ct-changed')"
-                onscroll="syncScroll('ct-changed')"
-              ></textarea>
+              <textarea id="ct-changed" class="ct-textarea" wrap="off" placeholder="Paste your changed text or code here..." spellcheck="false" oninput="updateEditor('ct-changed')" onfocus="document.getElementById('ct-changed-wrap').classList.add('focused')" onblur="document.getElementById('ct-changed-wrap').classList.remove('focused')" onkeyup="updateActiveLine('ct-changed')" onclick="updateActiveLine('ct-changed')" onscroll="syncScroll('ct-changed')"></textarea>
             </div>
             <div class="ct-stats">
               <span id="ct-changed-lines">Lines: 0</span>
@@ -146,14 +122,12 @@ const schema = [
 
         </div>
 
-        <!-- Actions -->
         <div class="diff-actions">
           <button class="diff-btn-primary" onclick="findDifferences()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
           <button class="diff-btn-secondary" onclick="swapTexts()">⇄ Swap</button>
           <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
         </div>
 
-        <!-- Diff output -->
         <div id="diff-output" class="diff-output">
           <div class="diff-header">
             <div class="diff-stats">
@@ -175,13 +149,9 @@ const schema = [
       </div>
     </section>
 
-    <!-- Hidden file input -->
     <input type="file" id="ct-file-input" style="display:none"
       accept=".txt,.js,.ts,.py,.html,.css,.json,.xml,.md,.csv,.jsx,.tsx,.php,.rb,.go,.java,.c,.cpp,.h,.sql,.yaml,.yml,.sh,.bat,.log,.cfg,.ini,.toml" />
-
-    <!-- Toast -->
     <div class="diff-toast"></div>
-
     <script src="/js/compare-text.js" is:inline></script>
   </div>
 
@@ -211,128 +181,79 @@ const schema = [
         <li><strong>Red lines (removals):</strong> Lines that exist in the original (left) text but not in the changed (right). These were deleted.</li>
         <li><strong>Unchanged lines:</strong> Lines that are identical in both texts. Shown without colour to keep the focus on what changed.</li>
       </ul>
-      <p>The summary bar above the diff shows the count of added lines, removed lines, and unchanged lines at a glance. Line numbers on the left of the output correspond to the original text (in unified view) so you can locate any change in its source document.</p>
 
       <h2 id="diff-views">Unified vs side-by-side view</h2>
-      <p>The tool offers two ways to display the same diff. Neither is better in all situations - the right choice depends on what you are reviewing.</p>
-
+      <p>The tool offers two ways to display the same diff.</p>
       <h3>Unified view</h3>
-      <p>All changes appear in a single column. Removed lines (red) are followed immediately by added lines (green), so you see the before-and-after for each change in sequence. Unchanged lines appear in between to provide context. This is the format used by Git, GitHub pull requests, and most version control systems. It is compact and works well when changes are scattered throughout a long file.</p>
-
+      <p>All changes appear in a single column. Removed lines (red) are followed immediately by added lines (green). This is the format used by Git, GitHub pull requests, and most version control systems. Compact and works well when changes are scattered throughout a long file.</p>
       <h3>Side-by-side view</h3>
-      <p>Both texts are displayed in parallel columns - original on the left, changed on the right - with corresponding lines aligned next to each other. Changed lines are highlighted in each column. This view is easier to read when comparing prose documents or when you want to read the full context of each version rather than just the delta. It is the standard view in tools like Microsoft Word's Track Changes and most graphical diff tools.</p>
+      <p>Both texts are displayed in parallel columns - original on the left, changed on the right - with corresponding lines aligned next to each other. Easier to read when comparing prose documents or when you want to read the full context of each version.</p>
       <div class="responsive-table">
       <table>
-        <thead>
-          <tr><th>Feature</th><th>Unified view</th><th>Side-by-side view</th></tr>
-        </thead>
+        <thead><tr><th>Feature</th><th>Unified view</th><th>Side-by-side view</th></tr></thead>
         <tbody>
           <tr><td>Layout</td><td>Single column</td><td>Two columns</td></tr>
           <tr><td>Best for</td><td>Code, long files, scattered changes</td><td>Prose, short files, dense changes</td></tr>
           <tr><td>Used by</td><td>Git, GitHub, terminal diff tools</td><td>Word Track Changes, graphical diff tools</td></tr>
-          <tr><td>Context</td><td>Interleaved with changes</td><td>Always visible on both sides</td></tr>
-          <tr><td>Mobile</td><td>Works well on narrow screens</td><td>Columns stack vertically on small screens</td></tr>
         </tbody>
       </table>
       </div>
 
       <h2 id="use-cases">Use cases</h2>
-
       <h3>Code review</h3>
-      <p>Compare your working copy against the original to catch bugs, unintended changes, or missing lines before merging. Paste two versions of a function, a configuration block, or an entire file. Works with any language - JavaScript, TypeScript, Python, HTML, CSS, SQL, Go, Java, PHP, and more. You can also upload files directly without copying their contents.</p>
-
+      <p>Compare your working copy against the original to catch bugs, unintended changes, or missing lines before merging. Works with any language - JavaScript, TypeScript, Python, HTML, CSS, SQL, Go, Java, PHP, and more. For language-specific tools see <a href="/compare/code">Compare Code</a>.</p>
       <h3>Document and essay proofreading</h3>
-      <p>Compare a draft against a revised version to see exactly what was added, deleted, or reworded - without reading both documents in full. Useful for academic editing, professional writing, and any multi-draft workflow where you need to verify that only the intended changes were made.</p>
-
+      <p>Compare a draft against a revised version to see exactly what was added, deleted, or reworded - without reading both documents in full. For Word documents use the <a href="/compare/documents">Compare Documents</a> tool.</p>
       <h3>Legal and contract review</h3>
-      <p>A single changed word in a contract can alter its meaning significantly. Pasting two versions of a contract or agreement into a diff checker immediately surfaces every change - including additions and removals that are easy to miss in a manual read-through. This is sometimes called redlining.</p>
-
+      <p>A single changed word in a contract can alter its meaning significantly. Pasting two versions of a contract into a diff checker immediately surfaces every change - including additions and removals that are easy to miss in a manual read-through.</p>
       <h3>Config file and infrastructure changes</h3>
-      <p>Paste two versions of a configuration file (nginx, Apache, Docker Compose, Kubernetes YAML, .env) to see every line that changed between environments or deployments. Much faster than scanning both files manually, especially for long config files with changes in the middle.</p>
-
-      <h3>Content versioning and CMS edits</h3>
-      <p>Track changes between article drafts, blog post revisions, or CMS content updates. Paste the old and new version of a page to confirm that only the intended edits were made and nothing was accidentally deleted or duplicated.</p>
-
-      <h3>Comparing translated or localized text</h3>
-      <p>When updating a localization file, paste the English source strings against a previous version to see which strings changed and need re-translation. The diff output immediately shows which lines are new or modified versus which are unchanged and can be kept.</p>
+      <p>Paste two versions of a configuration file (nginx, Docker Compose, Kubernetes YAML, .env) to see every line that changed between environments or deployments.</p>
 
       <h2 id="algorithm">How the diff algorithm works</h2>
-      <p>This tool uses a <strong>Longest Common Subsequence (LCS)</strong> algorithm. Here is how it works step by step:</p>
-      <ol>
-        <li>Both texts are split into individual lines.</li>
-        <li>The algorithm builds a matrix that tracks the longest sequence of lines that appear in both texts in the same order - the LCS.</li>
-        <li>Lines in the LCS are classified as <em>unchanged</em>.</li>
-        <li>Lines that appear in the original but not the LCS are classified as <em>removed</em>.</li>
-        <li>Lines that appear in the changed text but not the LCS are classified as <em>added</em>.</li>
-      </ol>
-      <p>The result is the minimum number of changes needed to transform the original text into the changed version. This is the same principle used by the Unix <code>diff</code> command and by version control systems like Git.</p>
-
-      <h3>Line-level vs word-level diff</h3>
-      <p>This tool performs a <strong>line-level diff</strong>: it compares texts line by line, so any change within a line - even a single character - marks the entire line as changed. This is the standard approach for code comparison because code is line-oriented and line-level diffs are easy to read.</p>
-      <p>Some tools offer word-level or character-level diffs, which highlight the specific word or character that changed within a line. This is more useful for prose editing but produces noisier output for code. For comparing spreadsheet data, use the <a href="/compare-text/compare-excel">Excel and CSV comparison tool</a>, which works cell by cell.</p>
+      <p>This tool uses a <strong>Longest Common Subsequence (LCS)</strong> algorithm. Both texts are split into lines. The algorithm builds a matrix that tracks the longest sequence of lines appearing in both texts in the same order. Lines in the LCS are unchanged; lines outside it are added or removed. This is the same principle used by the Unix <code>diff</code> command and Git.</p>
 
       <h2 id="privacy">Privacy</h2>
-      <p>All diff processing runs entirely in your browser using JavaScript. Your text is never sent to any server, never logged, never stored, and never shared with any third party. The moment you close the tab, the text is gone. This is especially important for sensitive material - legal documents, proprietary source code, internal communications - which should not be pasted into tools that send data to a server.</p>
-      <p>To verify: open your browser's network panel (F12 in most browsers, then Network tab), paste text and click Find Differences, and confirm that no network requests are made when the diff runs.</p>
+      <p>All diff processing runs entirely in your browser using JavaScript. Your text is never sent to any server, never logged, never stored, and never shared with any third party. The moment you close the tab, the text is gone. Open your browser's network panel (F12 → Network tab), paste text and click Find Differences, and confirm that no network requests are made when the diff runs.</p>
 
       <h2 id="common-mistakes">Common mistakes</h2>
-
       <h3>Pasting in the wrong order</h3>
-      <p>The left panel is "Original" and the right panel is "Changed." If you paste the newer version on the left and the older on the right, the diff will still work but the colours will be reversed - your additions will appear as removals and vice versa. If the output looks backwards, use the Swap button to fix it without repasting.</p>
-
+      <p>The left panel is "Original" and the right panel is "Changed." If you paste the newer version on the left, the colours will be reversed. Use the Swap button to fix it without repasting.</p>
       <h3>Trailing whitespace and line endings</h3>
-      <p>A line that looks identical may differ only in trailing spaces or in its line ending (Windows uses CRLF, Unix uses LF). This causes the diff to show that line as changed even when the visible content is the same. If you see many "changed" lines that look identical, your texts may have different line endings. Pasting plain text from a plain-text editor rather than a rich-text editor (Word, Google Docs) usually resolves this.</p>
-
-      <h3>Comparing rich text instead of plain text</h3>
-      <p>Copying from a PDF, Word document, or formatted web page often brings invisible formatting characters. The diff tool compares the raw characters, so hidden formatting can show spurious differences. Always paste as plain text - use "Paste and match style" (Ctrl+Shift+V on most systems) to strip formatting before pasting.</p>
+      <p>A line that looks identical may differ only in trailing spaces or line endings (Windows CRLF vs Unix LF). This causes the diff to show lines as changed when the visible content is the same. Use plain-text paste (Ctrl+Shift+V) to strip formatting.</p>
 
       <h2 id="faq">FAQs</h2>
-
       <h3>What is a diff checker?</h3>
-      <p>A diff checker compares two versions of text and highlights exactly what changed. Additions appear in green, removals in red. It uses a diff algorithm to identify which lines were added, removed, or unchanged, giving you a precise line-by-line view of every change without having to read both texts manually.</p>
-
-      <h3>What does "diff" mean?</h3>
-      <p>Diff is short for difference. It comes from the Unix <code>diff</code> command (1974) which compared two files line by line. Today the term is used broadly for any comparison of two versions of text or code.</p>
-
-      <h3>What is the difference between unified and side-by-side view?</h3>
-      <p>Unified shows all changes in a single column with added and removed lines interleaved - the format used by Git. Side-by-side shows both texts in parallel columns so you can read corresponding lines next to each other. Side-by-side is easier for prose; unified is better for code and long files.</p>
-
+      <p>A diff checker compares two versions of text and highlights exactly what changed. Additions appear in green, removals in red. It uses a diff algorithm to identify which lines were added, removed, or unchanged.</p>
       <h3>Is my text private?</h3>
-      <p>Yes. All processing happens in your browser. Nothing is sent to any server at any point. You can confirm this by watching the network tab in your browser's developer tools while running a diff.</p>
-
+      <p>Yes. All processing happens in your browser. Nothing is sent to any server at any point.</p>
       <h3>Can I compare code files?</h3>
-      <p>Yes. The tool handles any text-based file. Upload .js, .ts, .py, .html, .css, .json, .xml, .md, .sql, .yaml, .go, .java, .php, and more using the upload button on each panel.</p>
-
+      <p>Yes. The tool handles any text-based file. Upload .js, .ts, .py, .html, .css, .json, .xml, .md, .sql, .yaml, .go, .java, .php, and more. For language-specific tools see <a href="/compare/code">Compare Code</a>.</p>
       <h3>Can I compare Excel or CSV files?</h3>
-      <p>Yes, with the dedicated <a href="/compare-text/compare-excel">Excel and CSV comparison tool</a>. It compares spreadsheets cell by cell and finds changed values, added rows, and removed rows.</p>
-
-      <h3>Is there a file size limit?</h3>
-      <p>No hard limit. The tool runs entirely in your browser and handles any reasonable file size. Very large files (100,000+ lines) may take a moment to process depending on your device.</p>
-
+      <p>Yes, with the dedicated <a href="/compare/excel">Excel and CSV comparison tool</a>. It compares spreadsheets cell by cell and finds changed values, added rows, and removed rows.</p>
       <h3>How is this different from Git diff?</h3>
-      <p>Git diff compares tracked file versions within a repository. This tool compares any two texts you paste or upload, with no repository or version control setup required. The underlying algorithm (LCS) is similar. The output is the same line-level diff, displayed with a visual UI instead of terminal text.</p>
+      <p>Git diff compares tracked file versions within a repository. This tool compares any two texts you paste or upload, with no repository setup required. The underlying algorithm (LCS) is similar.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
           <span class="tool-icon">📊</span>
           <div>
-            <a href="/compare-text/compare-excel">Excel & CSV Comparison</a>
+            <a href="/compare/excel">Excel & CSV Comparison</a>
             <p>Compare two spreadsheets cell by cell and find changed values, added rows, and removed rows.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🧑‍💻</span>
+          <div>
+            <a href="/compare/code">Compare Code</a>
+            <p>Compare code files with a language selector for Python, JavaScript, CSS, and HTML.</p>
           </div>
         </li>
         <li>
           <span class="tool-icon">📝</span>
           <div>
-            <a href="/word-counter">Word Counter</a>
-            <p>Count words, characters, sentences, reading time, and keyword density instantly.</p>
-          </div>
-        </li>
-        <li>
-          <span class="tool-icon">Aa</span>
-          <div>
-            <a href="/conversion/case-converter">Case Converter</a>
-            <p>Convert text to sentence case, UPPER CASE, Title Case, camelCase, and more.</p>
+            <a href="/compare/documents">Compare Word Documents</a>
+            <p>Compare two .docx files and find every text difference line by line.</p>
           </div>
         </li>
       </ul>
@@ -344,145 +265,30 @@ const schema = [
 
 <style is:global>
   .ct-container { max-width: 100% !important; }
-  /* ── Editors grid ── */
-  .ct-editors {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 0.25rem;
-  }
-  @media (max-width: 640px) {
-    .ct-editors { grid-template-columns: 1fr; }
-  }
-  /* ── Editor wrap ── */
-  .ct-editor-wrap {
-    position: relative;
-    display: flex;
-    width: 100%;
-    min-height: 260px;
-    max-height: 460px;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .ct-editor-wrap.focused {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
-  }
-  /* ── Gutter ── */
-  .ct-gutter {
-    min-width: 2.75rem;
-    padding: 0.75rem 0.4rem 0.75rem 0;
-    text-align: right;
-    font-family: 'Courier New', monospace;
-    font-size: 0.8125rem;
-    line-height: 1.6;
-    color: #4a5568;
-    user-select: none;
-    overflow: hidden;
-    background: rgba(255,255,255,0.02);
-    border-right: 1px solid rgba(255,255,255,0.07);
-    flex-shrink: 0;
-  }
+  .ct-editors { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.25rem; }
+  @media (max-width: 640px) { .ct-editors { grid-template-columns: 1fr; } }
+  .ct-editor-wrap { position: relative; display: flex; width: 100%; min-height: 260px; max-height: 460px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+  .ct-editor-wrap.focused { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+  .ct-gutter { min-width: 2.75rem; padding: 0.75rem 0.4rem 0.75rem 0; text-align: right; font-family: 'Courier New', monospace; font-size: 0.8125rem; line-height: 1.6; color: #4a5568; user-select: none; overflow: hidden; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
   .ct-gutter div { padding: 0 0.2rem; }
   .ct-gutter div.active-ln { color: #94a3b8; }
-  /* ── Active line highlight ── */
-  .ct-hl {
-    position: absolute;
-    left: 0;
-    right: 0;
-    pointer-events: none;
-    background: rgba(255,255,255,0.035);
-    transition: top 0.05s;
-  }
-  /* ── Textarea ── */
-  .ct-textarea {
-    flex: 1;
-    min-height: 260px;
-    max-height: 460px;
-    background: transparent;
-    border: none;
-    color: #e2e8f0;
-    font-family: 'Courier New', monospace;
-    font-size: 0.8125rem;
-    padding: 0.75rem 0.75rem 0.75rem 0.5rem;
-    resize: none;
-    line-height: 1.6;
-    outline: none;
-    overflow-y: auto;
-    white-space: pre;
-    tab-size: 4;
-    -moz-tab-size: 4;
-    overflow-x: auto;
-  }
+  .ct-hl { position: absolute; left: 0; right: 0; pointer-events: none; background: rgba(255,255,255,0.035); transition: top 0.05s; }
+  .ct-textarea { flex: 1; min-height: 260px; max-height: 460px; background: transparent; border: none; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.8125rem; padding: 0.75rem 0.75rem 0.75rem 0.5rem; resize: none; line-height: 1.6; outline: none; overflow-y: auto; white-space: pre; tab-size: 4; -moz-tab-size: 4; overflow-x: auto; }
   .ct-textarea::placeholder { color: #94a3b8; }
-  /* ── Stats bar ── */
-  .ct-stats {
-    display: flex;
-    gap: 1rem;
-    margin-top: 0.35rem;
-    font-size: 0.72rem;
-    color: #94a3b8;
-  }
-  /* ── Diff controls ── */
+  .ct-stats { display: flex; gap: 1rem; margin-top: 0.35rem; font-size: 0.72rem; color: #94a3b8; }
   .ct-diff-controls { display: flex; align-items: center; gap: 0.5rem; }
-  .ct-view-toggle {
-    display: flex;
-    background: rgba(255,255,255,0.08);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .ct-view-toggle button {
-    background: none;
-    border: none;
-    color: #94a3b8;
-    padding: 0.35rem 0.8rem;
-    font-size: 0.78rem;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
+  .ct-view-toggle { display: flex; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; }
+  .ct-view-toggle button { background: none; border: none; color: #94a3b8; padding: 0.35rem 0.8rem; font-size: 0.78rem; cursor: pointer; transition: background 0.2s, color 0.2s; }
   .ct-view-toggle button.active { background: rgba(255,255,255,0.18); color: white; }
-  /* ── Diff lines ── */
-  .ct-diff-container {
-    background: rgba(0,0,0,0.28);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    overflow: auto;
-    max-height: 480px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.8rem;
-  }
-  .ct-diff-line {
-    display: flex;
-    line-height: 1.6;
-    min-height: 1.6em;
-  }
-  .ct-line-num {
-    min-width: 2.75rem;
-    text-align: right;
-    padding: 0 0.5rem;
-    color: #4a5568;
-    user-select: none;
-    flex-shrink: 0;
-  }
-  .ct-line-content {
-    padding: 0 0.75rem;
-    white-space: pre-wrap;
-    word-break: break-all;
-    flex: 1;
-    color: #94a3b8;
-  }
-  .ct-diff-line.added   { background: rgba(74,222,128,0.08); }
-  .ct-diff-line.added   .ct-line-content { color: #4ade80; }
+  .ct-diff-container { background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: auto; max-height: 480px; font-family: 'Courier New', monospace; font-size: 0.8rem; }
+  .ct-diff-line { display: flex; line-height: 1.6; min-height: 1.6em; }
+  .ct-line-num { min-width: 2.75rem; text-align: right; padding: 0 0.5rem; color: #4a5568; user-select: none; flex-shrink: 0; }
+  .ct-line-content { padding: 0 0.75rem; white-space: pre-wrap; word-break: break-all; flex: 1; color: #94a3b8; }
+  .ct-diff-line.added { background: rgba(74,222,128,0.08); }
+  .ct-diff-line.added .ct-line-content { color: #4ade80; }
   .ct-diff-line.removed { background: rgba(248,113,113,0.08); }
   .ct-diff-line.removed .ct-line-content { color: #f87171; }
-  /* ── Side-by-side ── */
   .ct-sbs { display: grid; grid-template-columns: 1fr 1fr; }
   .ct-sbs-panel + .ct-sbs-panel { border-left: 1px solid rgba(255,255,255,0.08); }
-  @media (max-width: 640px) {
-    .ct-sbs { grid-template-columns: 1fr; }
-    .ct-sbs-panel + .ct-sbs-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
-  }
+  @media (max-width: 640px) { .ct-sbs { grid-template-columns: 1fr; } .ct-sbs-panel + .ct-sbs-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); } }
 </style>

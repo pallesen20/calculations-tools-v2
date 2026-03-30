@@ -59,7 +59,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between percentage change and percentage difference?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change has a defined direction: you know which value is the starting point and which is the end point, and the original value is always the base. Percentage difference is used when there is no defined starting point — it uses the average of the two values as the base and returns an unsigned result. Use percentage change for before-and-after comparisons; use percentage difference when comparing two independent measurements." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change has a defined direction: you know which value is the starting point and which is the end point, and the original value is always the base. Percentage difference is used when there is no defined starting point - it uses the average of the two values as the base and returns an unsigned result. Use percentage change for before-and-after comparisons; use percentage difference when comparing two independent measurements." }
       },
       {
         "@type": "Question",
@@ -121,31 +121,31 @@ const schema = [
 
         <div id="pc-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="pc-pct">—</span>
+            <span class="lbm-primary-val" id="pc-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage Change</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pc-abs">—</div>
+              <div class="lbm-card-val" id="pc-abs">-</div>
               <div class="lbm-card-lbl">Absolute change</div>
-              <div class="lbm-card-badge" id="pc-badge">—</div>
+              <div class="lbm-card-badge" id="pc-badge">-</div>
             </div>
           </div>
 
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Subtract</span>
-              <span id="pc-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Subtract</span>
+              <span id="pc-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Divide</span>
-              <span id="pc-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Divide</span>
+              <span id="pc-step2" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 3 — Multiply by 100</span>
-              <span id="pc-step3" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 3 - Multiply by 100</span>
+              <span id="pc-step3" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@ const schema = [
       <Formula expr={f.diff} />
 
       <h2 id="vs-points">Percentage change vs. percentage points</h2>
-      <p>A <strong>percentage point</strong> is the arithmetic difference between two percentage values — it is an absolute measure. A <strong>percentage change</strong> is a relative measure.</p>
+      <p>A <strong>percentage point</strong> is the arithmetic difference between two percentage values - it is an absolute measure. A <strong>percentage change</strong> is a relative measure.</p>
       <p><strong>Example:</strong> An approval rating rises from 40% to 50%.</p>
       <ul>
         <li>Change in percentage points: 50 − 40 = <strong>10 percentage points</strong></li>
@@ -263,14 +263,14 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
         { path: '/math/percentage-calculator/increase', blurb: 'Dedicated percentage increase calculator with step-by-step workings.' },
-        { path: '/math/percentage-calculator/decrease',   blurb: 'Dedicated percentage decrease calculator — useful for discounts and price drops.' },
-        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
-        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
-        { path: '/date-calculator',                           blurb: 'Calculate days between dates — useful when a percentage change spans a defined time period.' },
+        { path: '/math/percentage-calculator/decrease',   blurb: 'Dedicated percentage decrease calculator - useful for discounts and price drops.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator - compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator - arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage - multiply by 100, with a reference table for common decimals.' },
+        { path: '/date-calculator',                           blurb: 'Calculate days between dates - useful when a percentage change spans a defined time period.' },
       ]} />
 
       <RelatedGlossaryTerms toolPath="/math/percentage-calculator/change" />

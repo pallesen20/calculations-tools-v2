@@ -37,7 +37,7 @@ export interface HealthToolMeta {
   group: string;
 }
 
-// ─── Add new pages here — sitemap.xml and llms.txt update automatically ───────
+// ─── Add new pages here - sitemap.xml and llms.txt update automatically ───────
 
 const registry: Omit<PageMeta, 'url'>[] = []; // populated below
 
@@ -46,7 +46,7 @@ type Entry = Omit<PageMeta, 'url'> & { path: string; icon?: string; short?: stri
 const entries: Entry[] = [
   {
     path: '/',
-    title: 'Calculations.tools — Free Online Calculators & Converters',
+    title: 'Calculations.tools - Free Online Calculators & Converters',
     description: 'Free online calculators and converters for percentages, unit conversion, text analysis, currency, and more. No registration, no ads, instant results.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -54,15 +54,15 @@ const entries: Entry[] = [
   },
   {
     path: '/about-us',
-    title: 'About Us — calculations.tools',
-    description: 'Learn about calculations.tools — free, accurate calculation tools for everyone, built by Jesper Pallesen.',
+    title: 'About Us - calculations.tools',
+    description: 'Learn about calculations.tools - free, accurate calculation tools for everyone, built by Jesper Pallesen.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: 'ℹ️',
   },
   {
     path: '/privacy-policy',
-    title: 'Privacy Policy — calculations.tools',
+    title: 'Privacy Policy - calculations.tools',
     description: 'Privacy policy explaining how calculations.tools collects, uses, and handles visitor data, including Google Analytics and advertising.',
     changefreq: 'yearly',
     priority: 0.3,
@@ -70,7 +70,7 @@ const entries: Entry[] = [
   },
   {
     path: '/math',
-    title: 'Math Calculators — Free Online Tools',
+    title: 'Math Calculators - Free Online Tools',
     description: 'Free online math calculators: percentage calculators, doubling time, and more. Fast, accurate, no registration needed.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -78,7 +78,7 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator',
-    title: 'Percentage Calculator — Free Online Tool',
+    title: 'Percentage Calculator - Free Online Tool',
     description: 'Calculate percentages, percentage increases, decreases, and differences instantly. Free online percentage calculator with multiple modes.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -87,7 +87,7 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator/increase',
-    title: 'Percentage Increase Calculator — Formula & Examples',
+    title: 'Percentage Increase Calculator - Formula & Examples',
     description: 'Calculate the percentage increase between two values instantly. See the formula, step-by-step workings, and a reference table for common percentage increases.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -96,7 +96,7 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator/decrease',
-    title: 'Percentage Decrease Calculator — Formula & Examples',
+    title: 'Percentage Decrease Calculator - Formula & Examples',
     description: 'Calculate the percentage decrease between two values instantly. See the formula, step-by-step workings, and a reference table for common percentage decreases.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -105,7 +105,7 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator/change',
-    title: 'Percentage Change Calculator — Formula & Examples',
+    title: 'Percentage Change Calculator - Formula & Examples',
     description: 'Calculate the percentage change between two values. Shows whether the result is an increase or decrease, the absolute difference, and step-by-step workings.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -114,8 +114,8 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator/difference',
-    title: 'Percentage Difference Calculator — Formula & Examples',
-    description: 'Calculate the percentage difference between two values. Uses the average of both as the base — ideal for comparing two independent values with no defined starting point.',
+    title: 'Percentage Difference Calculator - Formula & Examples',
+    description: 'Calculate the percentage difference between two values. Uses the average of both as the base - ideal for comparing two independent values with no defined starting point.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: '⇔',
@@ -123,7 +123,7 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator/average',
-    title: 'Average Percentage Calculator — Formula & Examples',
+    title: 'Average Percentage Calculator - Formula & Examples',
     description: 'Calculate the average of multiple percentages instantly. Covers the arithmetic mean, weighted average, and when each method gives the correct result.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -132,7 +132,7 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator/fraction-to-percent',
-    title: 'Fraction to Percent Calculator — Convert & Examples',
+    title: 'Fraction to Percent Calculator - Convert & Examples',
     description: 'Convert any fraction to a percentage instantly. Enter a numerator and denominator to get the percentage, decimal equivalent, and step-by-step workings.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -141,8 +141,8 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator/decimal-to-percent',
-    title: 'Decimal to Percent Calculator — Convert & Examples',
-    description: 'Convert any decimal to a percentage instantly. Multiply by 100 — see the step-by-step working, a reference table for common decimals, and the reverse conversion.',
+    title: 'Decimal to Percent Calculator - Convert & Examples',
+    description: 'Convert any decimal to a percentage instantly. Multiply by 100 - see the step-by-step working, a reference table for common decimals, and the reverse conversion.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: '0.x',
@@ -150,7 +150,7 @@ const entries: Entry[] = [
   },
   {
     path: '/math/percentage-calculator/percentage-of-percentage',
-    title: 'Percentage of a Percentage Calculator — Formula & Examples',
+    title: 'Percentage of a Percentage Calculator - Formula & Examples',
     description: 'Calculate what P% of Q% equals. Covers the formula, successive discounts, commission tiers, and why stacking percentages is not the same as adding them.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -205,7 +205,7 @@ const entries: Entry[] = [
   {
     path: '/math/fraction-calculator/add',
     title: 'Add Fractions Calculator',
-    description: 'Add any two fractions instantly. Finds the LCD automatically, converts both fractions, adds numerators, and simplifies — with full step-by-step workings.',
+    description: 'Add any two fractions instantly. Finds the LCD automatically, converts both fractions, adds numerators, and simplifies - with full step-by-step workings.',
     changefreq: 'weekly',
     priority: 0.9,
     icon: '½',
@@ -214,7 +214,7 @@ const entries: Entry[] = [
   {
     path: '/math/fraction-calculator/subtract',
     title: 'Subtract Fractions Calculator',
-    description: 'Subtract any two fractions instantly. Finds the LCD, converts both fractions, subtracts numerators, and simplifies — with step-by-step workings and mixed number output.',
+    description: 'Subtract any two fractions instantly. Finds the LCD, converts both fractions, subtracts numerators, and simplifies - with step-by-step workings and mixed number output.',
     changefreq: 'weekly',
     priority: 0.9,
     icon: '½',
@@ -411,7 +411,7 @@ const entries: Entry[] = [
   },
   {
     path: '/word-counter',
-    title: 'Word Counter — Free Online Word Count Tool',
+    title: 'Word Counter - Free Online Word Count Tool',
     description: 'Count words, characters, sentences, and paragraphs instantly. Free online word counter with reading time estimate.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -420,7 +420,7 @@ const entries: Entry[] = [
   },
   {
     path: '/week-number',
-    title: 'What Week Number Is It? — Current Week Number 2026',
+    title: 'What Week Number Is It? - Current Week Number 2026',
     description: 'Instantly see the current ISO 8601 week number. View all week numbers for the year with start and end dates. Plus code snippets for 20+ languages.',
     changefreq: 'daily',
     priority: 1.0,
@@ -429,7 +429,7 @@ const entries: Entry[] = [
   },
   {
     path: '/date-calculator',
-    title: 'Date Calculator — Days Between Dates & Add Subtract Days',
+    title: 'Date Calculator - Days Between Dates & Add Subtract Days',
     description: 'Calculate the number of days between two dates, or add and subtract days from any date. Shows total days, workdays, weeks, and years-months-days. Free date difference calculator.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -438,7 +438,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health',
-    title: 'Health Calculators — Free BMI & Body Composition Tools',
+    title: 'Health Calculators - Free BMI & Body Composition Tools',
     description: 'Free health calculators: BMI by age and sex, specialist BMI tools for men, women, kids, teens, seniors, and pregnancy, BMI weight loss planner, and lean body mass with FFMI for athletes.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -446,8 +446,8 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator',
-    title: 'BMI Calculator by Age & Sex — Body Fat Estimate & Chart',
-    description: 'Calculate BMI by age and sex. Get your BMI category, estimated body fat %, healthy weight range, and personalised age-specific interpretation — metric or imperial.',
+    title: 'BMI Calculator by Age & Sex - Body Fat Estimate & Chart',
+    description: 'Calculate BMI by age and sex. Get your BMI category, estimated body fat %, healthy weight range, and personalised age-specific interpretation - metric or imperial.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: '⚤',
@@ -455,7 +455,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator/men',
-    title: 'BMI Calculator for Men — Normal BMI Range by Age & Chart',
+    title: 'BMI Calculator for Men - Normal BMI Range by Age & Chart',
     description: 'Free BMI calculator for men. See the normal BMI range for men, BMI by age, waist circumference thresholds, the testosterone-obesity connection, and why BMI reads differently for muscular men.',
     changefreq: 'weekly',
     icon: '♂️',
@@ -464,7 +464,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator/women',
-    title: 'BMI Calculator for Women — Healthy BMI Range, Chart & Age Guide',
+    title: 'BMI Calculator for Women - Healthy BMI Range, Chart & Age Guide',
     description: 'Free BMI calculator for women. See the healthy BMI range, BMI chart by age, how menopause affects body composition, normal weight obesity, and the best complementary health metrics.',
     changefreq: 'weekly',
     icon: '♀️',
@@ -473,7 +473,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator/pregnancy',
-    title: 'BMI Calculator During Pregnancy — Gestational Weight Gain by BMI',
+    title: 'BMI Calculator During Pregnancy - Gestational Weight Gain by BMI',
     description: 'Calculate your pre-pregnancy BMI and get recommended gestational weight gain targets based on IOM 2009 guidelines. Covers weight gain by trimester, complications by BMI, and pre-conception guidance.',
     changefreq: 'weekly',
     icon: '🤰',
@@ -482,7 +482,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator/kids',
-    title: 'BMI Calculator for Kids — BMI-for-Age Percentile (Ages 2–12)',
+    title: 'BMI Calculator for Kids - BMI-for-Age Percentile (Ages 2–12)',
     description: 'Free BMI calculator for children aged 2–12. Uses CDC 2000 growth charts to show BMI-for-age percentile and weight category. Healthy weight is the 5th to 85th percentile for your child\'s age and sex.',
     changefreq: 'weekly',
     icon: '🧒',
@@ -491,7 +491,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator/seniors',
-    title: 'BMI Calculator for Seniors — Adjusted Thresholds & Frailty Risk',
+    title: 'BMI Calculator for Seniors - Adjusted Thresholds & Frailty Risk',
     description: 'BMI calculator for adults 65 and over. Shows the 23–27.5 senior optimal range, estimated body fat %, frailty risk, and sarcopenia guidance based on ESPEN and geriatric guidelines.',
     changefreq: 'weekly',
     icon: '👴',
@@ -500,7 +500,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator/teens',
-    title: 'BMI Calculator for Teens — BMI-for-Age Percentile (Ages 13–19)',
+    title: 'BMI Calculator for Teens - BMI-for-Age Percentile (Ages 13–19)',
     description: 'Free BMI calculator for teenagers aged 13–19. Uses CDC 2000 growth charts to show BMI-for-age percentile and weight category. Covers puberty\'s effect on BMI, athletic teens, and the transition to adult categories at 20.',
     changefreq: 'weekly',
     icon: '🧑',
@@ -509,7 +509,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator/weight-loss',
-    title: 'BMI Weight Loss Calculator — Target BMI & Weight to Lose',
+    title: 'BMI Weight Loss Calculator - Target BMI & Weight to Lose',
     description: 'Calculate how much weight you need to lose to reach your target BMI. Get your target weight, estimated time at your chosen weekly pace, and estimated body fat at current and goal weight.',
     changefreq: 'weekly',
     icon: '⚖️',
@@ -518,8 +518,8 @@ const entries: Entry[] = [
   },
   {
     path: '/health/lean-body-mass-calculator',
-    title: 'Lean Body Mass Calculator — LBM, FFMI & Body Fat %',
-    description: 'Calculate lean body mass using Boer, Hume, and James formulas. Get fat mass, body fat %, and FFMI (Fat-Free Mass Index) with category — for athletes and fitness tracking.',
+    title: 'Lean Body Mass Calculator - LBM, FFMI & Body Fat %',
+    description: 'Calculate lean body mass using Boer, Hume, and James formulas. Get fat mass, body fat %, and FFMI (Fat-Free Mass Index) with category - for athletes and fitness tracking.',
     changefreq: 'weekly',
     icon: '💪',
     priority: 1.0,
@@ -527,8 +527,8 @@ const entries: Entry[] = [
   },
   {
     path: '/health/ffmi-calculator',
-    title: 'FFMI Calculator — Fat-Free Mass Index & Natural Muscle Limit',
-    description: 'Calculate your FFMI (Fat-Free Mass Index) from weight, height, and body fat %. See your muscle category, normalised FFMI, and how you compare to the Kouri 1995 natural limit — for athletes and strength trainers.',
+    title: 'FFMI Calculator - Fat-Free Mass Index & Natural Muscle Limit',
+    description: 'Calculate your FFMI (Fat-Free Mass Index) from weight, height, and body fat %. See your muscle category, normalised FFMI, and how you compare to the Kouri 1995 natural limit - for athletes and strength trainers.',
     changefreq: 'weekly',
     icon: '🏋️',
     priority: 1.0,
@@ -536,7 +536,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/body-fat-calculator',
-    title: 'Body Fat Calculator — Navy Tape Method & BMI Estimate',
+    title: 'Body Fat Calculator - Navy Tape Method & BMI Estimate',
     description: 'Calculate body fat percentage using the US Navy tape method (waist, neck, hip measurements). Compares with the Deurenberg BMI-based estimate. Shows fat mass, lean body mass, and body fat category.',
     changefreq: 'weekly',
     icon: '📏',
@@ -545,8 +545,8 @@ const entries: Entry[] = [
   },
   {
     path: '/health/ideal-weight-calculator',
-    title: 'Ideal Weight Calculator — IBW by Height & Sex',
-    description: 'Calculate your ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO healthy BMI weight range for your height — metric or imperial.',
+    title: 'Ideal Weight Calculator - IBW by Height & Sex',
+    description: 'Calculate your ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO healthy BMI weight range for your height - metric or imperial.',
     changefreq: 'weekly',
     icon: '🎯',
     priority: 1.0,
@@ -554,7 +554,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion',
-    title: 'Online Conversion Tools — Free Unit Converters',
+    title: 'Online Conversion Tools - Free Unit Converters',
     description: 'Free online unit converters for length, weight, temperature, currency, text case, and more. Fast, accurate, no registration needed.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -562,7 +562,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/length-converter',
-    title: 'Length Converter — Convert km, miles, feet, inches & more',
+    title: 'Length Converter - Convert km, miles, feet, inches & more',
     description: 'Convert between metres, kilometres, miles, yards, feet, inches, nautical miles, and more.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -572,7 +572,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/weight-converter',
-    title: 'Weight Converter — Convert kg, lbs, oz, stone & more',
+    title: 'Weight Converter - Convert kg, lbs, oz, stone & more',
     description: 'Convert kilograms, grams, pounds, ounces, stone, tonnes, and other weight units instantly.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -582,7 +582,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/height-converter',
-    title: 'Height Converter — cm to Feet and Inches',
+    title: 'Height Converter - cm to Feet and Inches',
     description: 'Convert height between centimetres, feet and inches, metres, and inches. Instant results with a full reference table.',
     changefreq: 'weekly' as const,
     priority: 1.0,
@@ -592,7 +592,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/temperature-converter',
-    title: 'Temperature Converter — °C, °F, Kelvin & more',
+    title: 'Temperature Converter - °C, °F, Kelvin & more',
     description: 'Convert between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur with instant results.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -602,7 +602,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/currency-converter',
-    title: 'Currency Converter — Live Exchange Rates for 150+ Currencies',
+    title: 'Currency Converter - Live Exchange Rates for 150+ Currencies',
     description: 'Convert between 150+ currencies using live mid-market rates. Includes a multi-currency comparison table.',
     changefreq: 'daily',
     priority: 1.0,
@@ -612,7 +612,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/case-converter',
-    title: 'Case Converter — Convert Text to Any Case Online Free',
+    title: 'Case Converter - Convert Text to Any Case Online Free',
     description: 'Convert text between sentence case, UPPER CASE, lower case, Title Case, camelCase, and more.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -621,17 +621,34 @@ const entries: Entry[] = [
     units: 'Sentence, lower, UPPER, Title, camelCase, alternating',
   },
   {
-    path: '/compare-text',
-    title: 'Text & Code Difference Checker — Compare Text Online Free',
-    description: 'Compare two texts or code files side by side. Find additions, removals, and changes instantly with color-coded unified and side-by-side diff views.',
+    path: '/conversion/image-to-text',
+    title: 'Image to Text (OCR) - Extract Text from Images & PDFs',
+    description: 'Extract text from images and scanned PDFs online. Free browser-based OCR using Tesseract - supports PNG, JPG, WEBP, TIFF, and PDF. No upload to server.',
     changefreq: 'weekly',
     priority: 1.0,
-    icon: '📊',
+    icon: '🔍',
+    short: 'Extract text from any image or scanned PDF',
+  },
+  {
+    path: '/compare',
+    title: 'Compare Files & Text Online - Free Diff Tools',
+    description: 'Free online comparison tools: compare text, code, Excel, CSV, PDF, and Word documents. Find differences instantly, color-coded, private, no sign-up.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '⇄',
+  },
+  {
+    path: '/compare/text',
+    title: 'Text & Code Diff Checker - Compare Two Texts Online',
+    description: 'Compare two texts or code files and find every addition, removal, and change instantly. Color-coded unified and side-by-side diff views. Free, private, no sign-up.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '⇄',
     short: 'Side-by-side diff with color highlights',
   },
   {
-    path: '/compare-text/compare-excel',
-    title: 'Compare Excel Files Online Free — Spreadsheet Diff Checker',
+    path: '/compare/excel',
+    title: 'Compare Excel Files Online - Spreadsheet Diff Checker',
     description: 'Compare two Excel, CSV, or ODS files online. Find changed cells, added rows, and removed rows instantly. Free, private, no upload to server.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -639,8 +656,89 @@ const entries: Entry[] = [
     short: 'Cell-by-cell Excel & CSV comparison',
   },
   {
+    path: '/compare/csv',
+    title: 'Compare CSV Files Online - Free CSV Diff Tool',
+    description: 'Compare two CSV files online and find every changed cell, added row, and removed row. Lightweight CSV diff with no dependencies. Free, private, runs in browser.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📋',
+    short: 'Lightweight CSV comparison, no upload needed',
+  },
+  {
+    path: '/compare/google-sheets',
+    title: 'Compare Google Sheets - Export & Find Differences',
+    description: 'Compare two Google Sheets exports side by side. Upload CSV or Excel exports and find every changed cell, added row, and removed row instantly.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📊',
+    short: 'Compare Google Sheets CSV or Excel exports',
+  },
+  {
+    path: '/compare/pdf',
+    title: 'Compare PDF Files Online - PDF Text Diff Tool',
+    description: 'Compare two PDF files and find every text difference. Extracts text from both PDFs and shows additions, removals, and changes line by line. Free, private, runs in browser.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📄',
+    short: 'PDF text extraction and line-by-line diff',
+  },
+  {
+    path: '/compare/documents',
+    title: 'Compare Word Documents Online - DOCX Diff Tool',
+    description: 'Compare two Word documents (.docx) online and find every text difference. Extracts text and shows additions and removals line by line. Free, private, no upload to server.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '📝',
+    short: 'DOCX text extraction and diff',
+  },
+  {
+    path: '/compare/code',
+    title: 'Compare Code Online - Code Diff Checker',
+    description: 'Compare two code files online and find every difference line by line. Supports Python, JavaScript, CSS, HTML, and all text-based languages. Free, private, no sign-up.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '</>',
+    short: 'Code diff with language selector',
+  },
+  {
+    path: '/compare/python',
+    title: 'Compare Python Code Online - Python Diff Tool',
+    description: 'Compare two Python files online and find every addition, removal, and change. Color-coded diff for .py files. Free, private, runs entirely in your browser.',
+    changefreq: 'weekly',
+    priority: 0.9,
+    icon: '🐍',
+    short: 'Python .py file diff checker',
+  },
+  {
+    path: '/compare/javascript',
+    title: 'Compare JavaScript Code Online - JS Diff Tool',
+    description: 'Compare two JavaScript or TypeScript files online and find every difference. Color-coded line-by-line diff. Free, private, runs entirely in your browser.',
+    changefreq: 'weekly',
+    priority: 0.9,
+    icon: 'JS',
+    short: 'JavaScript & TypeScript diff checker',
+  },
+  {
+    path: '/compare/css',
+    title: 'Compare CSS Files Online - CSS Diff Checker',
+    description: 'Compare two CSS or SCSS files online and find every changed selector, property, and value. Line-by-line diff. Free, private, runs entirely in your browser.',
+    changefreq: 'weekly',
+    priority: 0.9,
+    icon: '🎨',
+    short: 'CSS & SCSS diff checker',
+  },
+  {
+    path: '/compare/html',
+    title: 'Compare HTML Files Online - HTML Diff Tool',
+    description: 'Compare two HTML files online and find every changed element, attribute, and text. Line-by-line color-coded diff. Free, private, runs entirely in your browser.',
+    changefreq: 'weekly',
+    priority: 0.9,
+    icon: '</>',
+    short: 'HTML file diff checker',
+  },
+  {
     path: '/finance',
-    title: 'Finance Calculators — Free Online Financial Tools',
+    title: 'Finance Calculators - Free Online Financial Tools',
     description: 'Free finance calculators: EBITDA, EBIT, EBT, EBITDA Margin, and more. Fast, accurate, no registration needed.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -648,7 +746,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/ebitda-calculator',
-    title: 'EBITDA Calculator — Formula, Examples & Step-by-Step',
+    title: 'EBITDA Calculator - Formula, Examples & Step-by-Step',
     description: 'Calculate EBITDA from Net Income, Interest, Tax, and D&A. Shows EBT, EBIT, and EBITDA with step-by-step workings. Optionally calculates EBITDA Margin.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -657,7 +755,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/ebit-calculator',
-    title: 'EBIT Calculator — Earnings Before Interest & Tax',
+    title: 'EBIT Calculator - Earnings Before Interest & Tax',
     description: 'Calculate EBIT (Operating Income) from Net Income, Interest Expense, and Tax Expense. Shows EBT and EBIT with step-by-step workings and optional EBIT Margin.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -666,7 +764,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/ebt-calculator',
-    title: 'EBT Calculator — Earnings Before Tax',
+    title: 'EBT Calculator - Earnings Before Tax',
     description: 'Calculate EBT (Earnings Before Tax) from Net Income and Tax Expense. Shows EBT, effective tax rate, and step-by-step workings.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -675,7 +773,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/ebitda-margin-calculator',
-    title: 'EBITDA Margin Calculator — Formula & Industry Benchmarks',
+    title: 'EBITDA Margin Calculator - Formula & Industry Benchmarks',
     description: 'Calculate EBITDA Margin as a percentage of revenue. Shows the margin, interpretation, and step-by-step workings. Compare against industry benchmarks.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -684,7 +782,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/gross-profit-margin-calculator',
-    title: 'Gross Profit Margin Calculator — Formula & Benchmarks',
+    title: 'Gross Profit Margin Calculator - Formula & Benchmarks',
     description: 'Calculate gross profit margin from revenue and cost of goods sold. Shows gross profit, margin %, and step-by-step workings. Compare against industry benchmarks.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -693,7 +791,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/net-profit-margin-calculator',
-    title: 'Net Profit Margin Calculator — Formula & Benchmarks',
+    title: 'Net Profit Margin Calculator - Formula & Benchmarks',
     description: 'Calculate net profit margin from net income and revenue. Shows margin %, interpretation, and step-by-step workings. Compare against industry benchmarks.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -702,7 +800,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/operating-profit-margin-calculator',
-    title: 'Operating Profit Margin Calculator — Formula & Benchmarks',
+    title: 'Operating Profit Margin Calculator - Formula & Benchmarks',
     description: 'Calculate operating profit margin (EBIT margin) from operating profit and revenue. Shows margin %, interpretation, and step-by-step workings.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -711,7 +809,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/roi-calculator',
-    title: 'ROI Calculator — Return on Investment Formula',
+    title: 'ROI Calculator - Return on Investment Formula',
     description: 'Calculate ROI (Return on Investment) from initial investment and final value. Shows net return, ROI %, investment multiple, and annualized ROI (CAGR).',
     changefreq: 'weekly',
     priority: 1.0,
@@ -720,7 +818,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/compound-interest-calculator',
-    title: 'Compound Interest Calculator — Formula & Growth Table',
+    title: 'Compound Interest Calculator - Formula & Growth Table',
     description: 'Calculate compound interest for any principal, rate, compounding frequency, and time. Shows future value, total interest earned, and a year-by-year growth table.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -729,7 +827,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/loan-payment-calculator',
-    title: 'Loan Payment Calculator — Monthly Payment & Interest',
+    title: 'Loan Payment Calculator - Monthly Payment & Interest',
     description: 'Calculate monthly loan payments, total interest paid, and see a year-by-year amortisation schedule for any loan amount, rate, and term.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -738,7 +836,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/free-cash-flow-calculator',
-    title: 'Free Cash Flow Calculator — FCF Formula & FCF Yield',
+    title: 'Free Cash Flow Calculator - FCF Formula & FCF Yield',
     description: 'Calculate Free Cash Flow (FCF) from Operating Cash Flow and CapEx. Optionally calculate FCF Yield. Includes FCF vs. EBITDA comparison and benchmarks.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -747,7 +845,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/working-capital-calculator',
-    title: 'Working Capital Calculator — Current Ratio & Analysis',
+    title: 'Working Capital Calculator - Current Ratio & Analysis',
     description: 'Calculate Working Capital and Current Ratio from current assets and liabilities. Includes liquidity interpretation, industry benchmarks, and quick ratio explanation.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -756,7 +854,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/enterprise-value-calculator',
-    title: 'Enterprise Value Calculator — EV/EBITDA & EV/Revenue',
+    title: 'Enterprise Value Calculator - EV/EBITDA & EV/Revenue',
     description: 'Calculate Enterprise Value (EV) from market cap, total debt, and cash. Instantly see EV/EBITDA and EV/Revenue multiples with industry benchmarks.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -765,7 +863,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/break-even-calculator',
-    title: 'Break-Even Calculator — Units, Revenue & Margin of Safety',
+    title: 'Break-Even Calculator - Units, Revenue & Margin of Safety',
     description: 'Calculate break-even point in units and revenue from fixed costs, selling price, and variable cost. Shows contribution margin, CM ratio, and worked examples.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -774,7 +872,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/contribution-margin-calculator',
-    title: 'Contribution Margin Calculator — CM Ratio & Profit',
+    title: 'Contribution Margin Calculator - CM Ratio & Profit',
     description: 'Calculate contribution margin and CM ratio from revenue and variable costs. Add units and fixed costs to see per-unit CM and operating profit.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -783,7 +881,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/pe-ratio-calculator',
-    title: 'P/E Ratio Calculator — Earnings Yield & Fair Value',
+    title: 'P/E Ratio Calculator - Earnings Yield & Fair Value',
     description: 'Calculate P/E ratio from stock price and EPS. See trailing and forward P/E, earnings yield, and implied fair value at any target multiple.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -792,7 +890,7 @@ const entries: Entry[] = [
   },
   {
     path: '/finance/roe-calculator',
-    title: 'ROE Calculator — Return on Equity & DuPont Analysis',
+    title: 'ROE Calculator - Return on Equity & DuPont Analysis',
     description: 'Calculate Return on Equity (ROE) from net income and shareholders\' equity. Includes DuPont decomposition, industry benchmarks, and ROE vs. ROA comparison.',
     changefreq: 'weekly',
     priority: 1.0,
@@ -804,7 +902,7 @@ const entries: Entry[] = [
 GLOSSARY_TERMS.forEach(t => {
   entries.push({
     path: `/glossary/${t.slug}`,
-    title: `${t.term} — Glossary`,
+    title: `${t.term} - Glossary`,
     description: t.shortDef,
     changefreq: 'monthly' as const,
     priority: 0.8,
@@ -814,7 +912,7 @@ GLOSSARY_TERMS.forEach(t => {
 
 entries.push({
   path: '/glossary',
-  title: 'Finance & Math Glossary — Key Terms Explained',
+  title: 'Finance & Math Glossary - Key Terms Explained',
   description: 'Plain-English definitions for finance, math, and health terms used across our calculators. Each term includes a formula, examples, and links to related tools.',
   changefreq: 'weekly' as const,
   priority: 1.0,
@@ -837,7 +935,7 @@ export function getConversionTools(): CardMeta[] {
     .filter(e => e.path.startsWith('/conversion/') && e.path !== '/conversion')
     .map(e => ({
       slug: e.path.replace('/conversion/', ''),
-      title: e.title.split(' — ')[0],
+      title: e.title.split(' - ')[0],
       short: e.short ?? '',
       description: e.description,
       icon: e.icon ?? '',
@@ -858,7 +956,7 @@ export function getMathTools(): HealthToolMeta[] {
       const seg = e.path.replace('/math/', '').split('/')[0];
       return {
         path:        e.path,
-        title:       e.title.split(' — ')[0],
+        title:       e.title.split(' - ')[0],
         short:       e.short ?? '',
         description: e.description,
         icon:        e.icon ?? '',
@@ -884,7 +982,7 @@ export function getFinanceTools(): HealthToolMeta[] {
       const seg = e.path.replace('/finance/', '').split('/')[0];
       return {
         path:        e.path,
-        title:       e.title.split(' — ')[0],
+        title:       e.title.split(' - ')[0],
         short:       e.short ?? '',
         description: e.description,
         icon:        e.icon ?? '',
@@ -908,11 +1006,41 @@ export function getHealthTools(): HealthToolMeta[] {
       const seg = e.path.replace('/health/', '').split('/')[0];
       return {
         path:        e.path,
-        title:       e.title.split(' — ')[0],
+        title:       e.title.split(' - ')[0],
         short:       e.short ?? '',
         description: e.description,
         icon:        e.icon ?? '',
         group:       HEALTH_GROUPS[seg] ?? 'Other',
+      };
+    });
+}
+
+const COMPARE_GROUPS: Record<string, string> = {
+  'text':          'Text & Code',
+  'code':          'Code Comparison',
+  'python':        'Code Comparison',
+  'javascript':    'Code Comparison',
+  'css':           'Code Comparison',
+  'html':          'Code Comparison',
+  'excel':         'File Comparison',
+  'csv':           'File Comparison',
+  'pdf':           'File Comparison',
+  'documents':     'File Comparison',
+  'google-sheets': 'File Comparison',
+};
+
+export function getCompareTools(): HealthToolMeta[] {
+  return entries
+    .filter(e => e.path.startsWith('/compare/') && e.path !== '/compare')
+    .map(e => {
+      const seg = e.path.replace('/compare/', '').split('/')[0];
+      return {
+        path:        e.path,
+        title:       e.title.split(' - ')[0].split(' | ')[0].trim(),
+        short:       e.short ?? '',
+        description: e.description,
+        icon:        e.icon ?? '',
+        group:       COMPARE_GROUPS[seg] ?? 'Other',
       };
     });
 }
@@ -925,11 +1053,12 @@ export interface FrontPageGroup {
 }
 
 const FRONT_TOOL_CATEGORIES: Record<string, string> = {
-  '/word-counter':               'Text & Writing',
-  '/compare-text':               'Text & Writing',
-  '/compare-text/compare-excel': 'Text & Writing',
-  '/week-number':                'Date & Time',
-  '/date-calculator':            'Date & Time',
+  '/word-counter':        'Text & Writing',
+  '/compare/text':        'Compare Tools',
+  '/compare/excel':       'Compare Tools',
+  '/compare/code':        'Compare Tools',
+  '/week-number':         'Date & Time',
+  '/date-calculator':     'Date & Time',
 };
 
 const CATEGORY_INDEX: Record<string, string> = {
@@ -937,15 +1066,17 @@ const CATEGORY_INDEX: Record<string, string> = {
   'Finance Calculators': '/finance',
   'Conversion Tools':    '/conversion',
   'Math':                '/math',
+  'Compare Tools':       '/compare',
 };
 
-const CATEGORY_ORDER = ['Health Calculators', 'Finance Calculators', 'Conversion Tools', 'Math', 'Text & Writing', 'Date & Time'];
+const CATEGORY_ORDER = ['Health Calculators', 'Finance Calculators', 'Conversion Tools', 'Math', 'Compare Tools', 'Text & Writing', 'Date & Time'];
 
 const CATEGORY_PREFIX: Record<string, string> = {
   'Health Calculators':  '/health/',
   'Finance Calculators': '/finance/',
   'Conversion Tools':    '/conversion/',
   'Math':                '/math/',
+  'Compare Tools':       '/compare/',
 };
 
 export function getFrontPageGroups(): FrontPageGroup[] {
@@ -966,7 +1097,7 @@ export function getFrontPageGroups(): FrontPageGroup[] {
     if (!cat) continue;
     (groupMap[cat] ??= []).push({
       path:        e.path,
-      title:       e.title.split(' — ')[0],
+      title:       e.title.split(' - ')[0],
       short:       e.short ?? '',
       description: e.description,
       icon:        e.icon ?? '',
@@ -993,13 +1124,13 @@ export function glossaryTermsForPage(toolPath: string) {
   return GLOSSARY_TERMS.filter(t => t.relatedTools?.includes(toolPath));
 }
 
-/** Returns icon, display title, and description for a given path — used by RelatedTools component. */
+/** Returns icon, display title, and description for a given path - used by RelatedTools component. */
 export function getRelatedTool(path: string): RelatedToolMeta {
   const entry = entries.find(e => e.path === path);
   return {
     path,
     icon: entry?.icon ?? '',
-    title: entry?.title.split(' — ')[0] ?? path,
+    title: entry?.title.split(' - ')[0] ?? path,
     description: entry?.description ?? '',
   };
 }
@@ -1018,6 +1149,7 @@ function _catLabel(path: string): string {
   if (path.startsWith('/health')) return 'Health';
   if (path.startsWith('/math')) return 'Math';
   if (path.startsWith('/conversion')) return 'Conversion';
+  if (path.startsWith('/compare')) return 'Compare';
   if (path.startsWith('/glossary')) return 'Glossary';
   return 'Tools';
 }
@@ -1033,7 +1165,7 @@ export function getSearchIndex(): SearchEntry[] {
       !e.path.includes('llms')
     )
     .map(e => ({
-      t: e.title.split(' — ')[0].split(' | ')[0].trim(),
+      t: e.title.split(' - ')[0].split(' | ')[0].trim(),
       p: e.path,
       k: e.short || e.description.slice(0, 120),
       c: _catLabel(e.path),

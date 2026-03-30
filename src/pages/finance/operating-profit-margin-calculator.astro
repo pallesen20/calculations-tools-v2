@@ -49,7 +49,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between Operating Profit Margin and EBITDA Margin?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Operating Profit Margin (EBIT Margin) includes depreciation and amortization as expenses. EBITDA Margin adds D&A back, so it is always higher than or equal to Operating Profit Margin. The gap between them reflects the company's capital intensity — asset-heavy businesses (manufacturing, telecom) have a larger D&A add-back, so a larger gap between EBIT and EBITDA Margin." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Operating Profit Margin (EBIT Margin) includes depreciation and amortization as expenses. EBITDA Margin adds D&A back, so it is always higher than or equal to Operating Profit Margin. The gap between them reflects the company's capital intensity - asset-heavy businesses (manufacturing, telecom) have a larger D&A add-back, so a larger gap between EBIT and EBITDA Margin." }
       },
       {
         "@type": "Question",
@@ -97,11 +97,11 @@ const schema = [
         <div id="opm-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="opm-margin-val">—</div>
+              <div class="lbm-card-val" id="opm-margin-val">-</div>
               <div class="lbm-card-lbl">Operating Profit Margin</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="opm-interp-val">—</div>
+              <div class="lbm-card-val" id="opm-interp-val">-</div>
               <div class="lbm-card-lbl">Interpretation</div>
             </div>
           </div>
@@ -110,11 +110,11 @@ const schema = [
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
               <span class="pi-step-label">Operating Profit / Revenue = ratio</span>
-              <span class="pi-step-val" id="opm-step1">—</span>
+              <span class="pi-step-val" id="opm-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">ratio × 100 = margin %</span>
-              <span class="pi-step-val" id="opm-step2">—</span>
+              <span class="pi-step-val" id="opm-step2">-</span>
             </div>
           </div>
         </div>
@@ -132,10 +132,10 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter Operating Profit (also called EBIT — Earnings Before Interest and Tax) and Revenue in the same currency unit and time period. If you only have Net Income, use the <a href="/finance/ebit-calculator">EBIT Calculator</a> first to derive EBIT by adding back interest and tax expenses. Operating Profit Margin and EBIT Margin are the same metric — the terms are interchangeable.</p>
+      <p>Enter Operating Profit (also called EBIT - Earnings Before Interest and Tax) and Revenue in the same currency unit and time period. If you only have Net Income, use the <a href="/finance/ebit-calculator">EBIT Calculator</a> first to derive EBIT by adding back interest and tax expenses. Operating Profit Margin and EBIT Margin are the same metric - the terms are interchangeable.</p>
 
       <h2 id="what-is-opm">What is Operating Profit Margin?</h2>
-      <p>Operating Profit Margin measures how much of every dollar of revenue becomes operating profit — profit from core business operations after deducting COGS and all operating expenses (SG&amp;A, R&amp;D, depreciation, amortization), but before the effects of how the business is financed (interest) or taxed.</p>
+      <p>Operating Profit Margin measures how much of every dollar of revenue becomes operating profit - profit from core business operations after deducting COGS and all operating expenses (SG&amp;A, R&amp;D, depreciation, amortization), but before the effects of how the business is financed (interest) or taxed.</p>
       <p>This makes it an ideal metric for comparing operational efficiency across companies with different capital structures or tax jurisdictions. A highly leveraged company and a debt-free company with identical operations will show the same Operating Profit Margin but very different Net Profit Margins.</p>
       <p>Private equity firms, investment analysts, and management teams track Operating Profit Margin closely because it reflects what management actually controls. Interest rates and tax rates are often outside management's direct influence; COGS and operating expense ratios are not.</p>
 
@@ -183,15 +183,15 @@ const schema = [
       </div>
 
       <h2 id="opm-vs-ebitda">Operating Margin vs EBITDA Margin</h2>
-      <p>Operating Profit Margin and EBITDA Margin are closely related — the only difference is whether depreciation and amortization (D&amp;A) are deducted.</p>
+      <p>Operating Profit Margin and EBITDA Margin are closely related - the only difference is whether depreciation and amortization (D&amp;A) are deducted.</p>
       <div class="responsive-table">
         <table>
           <thead>
             <tr><th>Metric</th><th>Includes D&amp;A?</th><th>Best used for</th><th>Typical gap</th></tr>
           </thead>
           <tbody>
-            <tr><td>Operating Profit Margin (EBIT Margin)</td><td>Yes — D&amp;A deducted</td><td>Comparing capital intensity between companies</td><td>—</td></tr>
-            <tr><td>EBITDA Margin</td><td>No — D&amp;A added back</td><td>M&amp;A valuation; proxy for cash generation</td><td>2–15 pp above EBIT Margin</td></tr>
+            <tr><td>Operating Profit Margin (EBIT Margin)</td><td>Yes - D&amp;A deducted</td><td>Comparing capital intensity between companies</td><td>-</td></tr>
+            <tr><td>EBITDA Margin</td><td>No - D&amp;A added back</td><td>M&amp;A valuation; proxy for cash generation</td><td>2–15 pp above EBIT Margin</td></tr>
           </tbody>
         </table>
       </div>
@@ -201,7 +201,7 @@ const schema = [
       <h2 id="faq">Frequently asked questions</h2>
 
       <h3>What is Operating Profit Margin?</h3>
-      <p>Operating Profit Margin = Operating Profit (EBIT) / Revenue × 100. It measures what percentage of revenue becomes operating profit after COGS and all operating expenses — but before interest and tax. It is also called EBIT Margin.</p>
+      <p>Operating Profit Margin = Operating Profit (EBIT) / Revenue × 100. It measures what percentage of revenue becomes operating profit after COGS and all operating expenses - but before interest and tax. It is also called EBIT Margin.</p>
 
       <h3>Is Operating Profit Margin the same as EBIT Margin?</h3>
       <p>Yes. Operating Profit = EBIT (Earnings Before Interest and Tax). The terms Operating Profit Margin and EBIT Margin are used interchangeably and produce identical results.</p>
@@ -210,10 +210,10 @@ const schema = [
       <p>Above 15% is generally strong for most sectors. Software companies often reach 20–35%; retail operates at 5–12%; manufacturing at 8–15%. Always benchmark against direct industry peers rather than a universal target.</p>
 
       <h3>How is Operating Margin different from EBITDA Margin?</h3>
-      <p>Operating Margin deducts depreciation and amortization; EBITDA Margin adds D&amp;A back. EBITDA Margin is always higher. The gap between them reflects capital intensity — the more assets a business depreciates, the wider the gap.</p>
+      <p>Operating Margin deducts depreciation and amortization; EBITDA Margin adds D&amp;A back. EBITDA Margin is always higher. The gap between them reflects capital intensity - the more assets a business depreciates, the wider the gap.</p>
 
       <h3>Can Operating Profit Margin be negative?</h3>
-      <p>Yes. A negative operating margin means the core business operations generate a loss before accounting for interest and tax. This is a more serious warning sign than a negative net margin caused solely by interest costs — it indicates the business model itself is not yet economically viable.</p>
+      <p>Yes. A negative operating margin means the core business operations generate a loss before accounting for interest and tax. This is a more serious warning sign than a negative net margin caused solely by interest costs - it indicates the business model itself is not yet economically viable.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[

@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function fmtCard(n, decimals) {
-    if (!isFinite(n)) return '—';
+    if (!isFinite(n)) return '-';
     const d = decimals !== undefined ? decimals : 2;
     return n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
   }

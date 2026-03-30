@@ -68,7 +68,7 @@ const schema = [
     "url": "https://calculations.tools/health/ideal-weight-calculator",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
-    "description": "Calculate ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO-recommended healthy BMI weight range — metric or imperial.",
+    "description": "Calculate ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO-recommended healthy BMI weight range - metric or imperial.",
     "isAccessibleForFree": true,
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   },
@@ -88,11 +88,11 @@ const schema = [
     "@type": "FAQPage",
     "mainEntity": [
       { "@type": "Question", "name": "What is ideal body weight (IBW)?", "acceptedAnswer": { "@type": "Answer", "text": "Ideal body weight (IBW) is an estimated weight considered optimal for a person of a given height and sex, originally developed for pharmacokinetic drug dosing rather than as a personal fitness target. The Devine formula (1974), the most widely used, gives IBW (kg) = 50.0 + 2.3 × (height in inches − 60) for men and 45.5 + 2.3 × (height in inches − 60) for women." } },
-      { "@type": "Question", "name": "Which ideal weight formula is most accurate?", "acceptedAnswer": { "@type": "Answer", "text": "No IBW formula is clinically 'accurate' in a biological sense — all are regression estimates from older, narrow populations. The Devine formula is the most medically cited because it underlies drug dosing protocols. For health and fitness purposes, the WHO healthy BMI range (18.5–24.9) is broader and better-validated than any single IBW formula." } },
+      { "@type": "Question", "name": "Which ideal weight formula is most accurate?", "acceptedAnswer": { "@type": "Answer", "text": "No IBW formula is clinically 'accurate' in a biological sense - all are regression estimates from older, narrow populations. The Devine formula is the most medically cited because it underlies drug dosing protocols. For health and fitness purposes, the WHO healthy BMI range (18.5–24.9) is broader and better-validated than any single IBW formula." } },
       { "@type": "Question", "name": "What is a healthy weight for my height?", "acceptedAnswer": { "@type": "Answer", "text": "The WHO defines a healthy weight as BMI between 18.5 and 24.9. For a 170 cm (5'7\") person, this is 53.5–72.1 kg (118–159 lb). The ideal weight calculator shows this range alongside the IBW formulas for direct comparison." } },
       { "@type": "Question", "name": "Do the IBW formulas work for heights under 5 feet (152 cm)?", "acceptedAnswer": { "@type": "Answer", "text": "The IBW formulas become less reliable below 5 feet (152.4 cm) because the 'inches over 5 feet' term turns negative, reducing the result by the coefficient per inch below 5 feet. All four formulas were derived from populations where most subjects were above 5 feet. For shorter individuals, the BMI healthy range (18.5–24.9) is a more defensible target." } },
       { "@type": "Question", "name": "Should I try to reach my ideal body weight?", "acceptedAnswer": { "@type": "Answer", "text": "IBW should be treated as a reference point, not a prescription. Athletes and muscular individuals may healthily exceed IBW because muscle weighs more than fat. Older adults benefit from a slightly higher BMI (23–27.5). If your weight is within the healthy BMI range (18.5–24.9), you are already in the evidence-based healthy zone regardless of what any IBW formula shows." } },
-      { "@type": "Question", "name": "Why do the four IBW formulas give different results?", "acceptedAnswer": { "@type": "Answer", "text": "Each formula was derived independently from different patient populations using different regression methods. Devine (1974) was based on clinical observations. Robinson (1983) and Miller (1983) re-analysed existing datasets. Hamwi (1964) used a simple frame-size rule. The differences are typically 2–5 kg — all formulas give broadly similar results." } },
+      { "@type": "Question", "name": "Why do the four IBW formulas give different results?", "acceptedAnswer": { "@type": "Answer", "text": "Each formula was derived independently from different patient populations using different regression methods. Devine (1974) was based on clinical observations. Robinson (1983) and Miller (1983) re-analysed existing datasets. Hamwi (1964) used a simple frame-size rule. The differences are typically 2–5 kg - all formulas give broadly similar results." } },
     ]
   }
 ];
@@ -101,7 +101,7 @@ const schema = [
 <CalculatorLayout
   title="Ideal Weight Calculator"
   metaTitle="Ideal Weight Calculator | IBW by Height & Sex ᐅ"
-  description="Calculate your ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO healthy BMI weight range — metric or imperial, instant results."
+  description="Calculate your ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO healthy BMI weight range - metric or imperial, instant results."
   canonical="https://calculations.tools/health/ideal-weight-calculator"
   tocItems={tocItems}
   schema={schema}
@@ -116,7 +116,7 @@ const schema = [
       <div class="calculator-container bmi-container">
         <div class="calculator-header">
           <h2>Ideal Body Weight by Height</h2>
-          <p>Devine, Robinson, Miller & Hamwi — plus healthy BMI range</p>
+          <p>Devine, Robinson, Miller & Hamwi - plus healthy BMI range</p>
         </div>
 
         <div class="bmi-unit-toggle">
@@ -176,23 +176,23 @@ const schema = [
 
         <div id="iw-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="iw-devine">—</span>
+            <span class="lbm-primary-val" id="iw-devine">-</span>
           </div>
           <div class="lbm-primary-lbl">Ideal Body Weight (Devine)</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="iw-bmi-min">—</div>
+              <div class="lbm-card-val" id="iw-bmi-min">-</div>
               <div class="lbm-card-lbl">Healthy min (BMI 18.5)</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="iw-bmi-max">—</div>
+              <div class="lbm-card-val" id="iw-bmi-max">-</div>
               <div class="lbm-card-lbl">Healthy max (BMI 24.9)</div>
             </div>
             <div class="lbm-card hidden" id="iw-diff-card">
-              <div class="lbm-card-val" id="iw-diff">—</div>
+              <div class="lbm-card-val" id="iw-diff">-</div>
               <div class="lbm-card-lbl">Difference from ideal</div>
-              <div class="lbm-card-badge" id="iw-diff-badge">—</div>
+              <div class="lbm-card-badge" id="iw-diff-badge">-</div>
             </div>
           </div>
 
@@ -200,15 +200,15 @@ const schema = [
             <div class="iw-compare-title">Other formula estimates</div>
             <div class="iw-frow">
               <span class="iw-fname">Robinson (1983)</span>
-              <span id="iw-robinson">—</span>
+              <span id="iw-robinson">-</span>
             </div>
             <div class="iw-frow">
               <span class="iw-fname">Miller (1983)</span>
-              <span id="iw-miller">—</span>
+              <span id="iw-miller">-</span>
             </div>
             <div class="iw-frow">
               <span class="iw-fname">Hamwi (1964)</span>
-              <span id="iw-hamwi">—</span>
+              <span id="iw-hamwi">-</span>
             </div>
           </div>
         </div>
@@ -223,16 +223,16 @@ const schema = [
 
       <div class="answer-box">
         <div class="answer-box-label">Ideal weight at a glance</div>
-        <p>The <strong>Devine formula</strong> — the most medically cited — gives an ideal body weight of <strong>67.7&nbsp;kg (149&nbsp;lb)</strong> for a 170&nbsp;cm (5'7") male and <strong>63.2&nbsp;kg (139&nbsp;lb)</strong> for a female. The WHO-recommended healthy BMI range (18.5–24.9) is broader: <strong>53.5–72.1&nbsp;kg (118–159&nbsp;lb)</strong> for 170&nbsp;cm. IBW formulas were designed for drug dosing — they are reference points, not prescriptions.</p>
+        <p>The <strong>Devine formula</strong> - the most medically cited - gives an ideal body weight of <strong>67.7&nbsp;kg (149&nbsp;lb)</strong> for a 170&nbsp;cm (5'7") male and <strong>63.2&nbsp;kg (139&nbsp;lb)</strong> for a female. The WHO-recommended healthy BMI range (18.5–24.9) is broader: <strong>53.5–72.1&nbsp;kg (118–159&nbsp;lb)</strong> for 170&nbsp;cm. IBW formulas were designed for drug dosing - they are reference points, not prescriptions.</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
       <p>Select your unit system and sex, then enter your height. The Devine ideal body weight, the healthy BMI range (18.5–24.9 kg/m²), and three comparison formula estimates appear instantly. Optionally enter your current weight to see how far above or below the Devine IBW you are.</p>
-      <p>Results update as you type — no button press needed. All calculations run in your browser; no data is sent to any server.</p>
+      <p>Results update as you type - no button press needed. All calculations run in your browser; no data is sent to any server.</p>
 
       <h2 id="what-is-ibw">What is ideal body weight?</h2>
-      <p>Ideal body weight (IBW) is a height- and sex-based weight estimate used primarily in clinical pharmacokinetics to calculate drug dosages. The concept was popularised by Benjamin Devine in 1974 to determine the correct dose of gentamicin — an antibiotic whose distribution in the body follows lean mass rather than total mass.</p>
-      <p>The term "ideal" is misleading in a fitness context. The Devine formula was not derived from population health data or body composition studies — it was a clinical approximation for medication dosing. Modern usage has expanded beyond its intended scope, but IBW remains a useful starting point for understanding healthy weight ranges.</p>
+      <p>Ideal body weight (IBW) is a height- and sex-based weight estimate used primarily in clinical pharmacokinetics to calculate drug dosages. The concept was popularised by Benjamin Devine in 1974 to determine the correct dose of gentamicin - an antibiotic whose distribution in the body follows lean mass rather than total mass.</p>
+      <p>The term "ideal" is misleading in a fitness context. The Devine formula was not derived from population health data or body composition studies - it was a clinical approximation for medication dosing. Modern usage has expanded beyond its intended scope, but IBW remains a useful starting point for understanding healthy weight ranges.</p>
       <p>For most adults, the <strong>WHO healthy BMI range of 18.5–24.9</strong> is a more evidence-based target than any single IBW formula, because it is derived from large-scale epidemiological data linking BMI to health outcomes.</p>
 
       <h2 id="ibw-formulas">IBW formulas compared</h2>
@@ -264,12 +264,12 @@ const schema = [
       <Formula expr={f.robinson} />
 
       <h3>Why the formulas differ</h3>
-      <p>Each formula was derived from a different patient sample using regression analysis. The 2–5 kg spread between formulas at typical adult heights reflects statistical variation between samples rather than a meaningful clinical difference. In practice, all four formulas give broadly similar guidance — the choice of formula rarely matters more than ±5% of body weight.</p>
+      <p>Each formula was derived from a different patient sample using regression analysis. The 2–5 kg spread between formulas at typical adult heights reflects statistical variation between samples rather than a meaningful clinical difference. In practice, all four formulas give broadly similar guidance - the choice of formula rarely matters more than ±5% of body weight.</p>
 
       <h2 id="healthy-range">Healthy weight range (BMI method)</h2>
       <p>The WHO defines a healthy adult weight as BMI between 18.5 and 24.9&nbsp;kg/m². Converting this to a weight range for a given height:</p>
       <Formula expr={f.bmiRange} />
-      <p>This gives a range rather than a single "ideal" point — a more realistic and better-validated target than any IBW formula.</p>
+      <p>This gives a range rather than a single "ideal" point - a more realistic and better-validated target than any IBW formula.</p>
 
       <div class="responsive-table">
       <table>
@@ -293,21 +293,21 @@ const schema = [
       <p>IBW formulas have four important limitations that make them poor personal health targets without additional context.</p>
 
       <h3>No distinction between muscle and fat</h3>
-      <p>A 180 cm male athlete with 85 kg body weight and 10% body fat has an FFMI of approximately 23 — well-muscled and healthy by any body composition measure. Yet the Devine formula says his "ideal weight" is 77.5 kg. The formula cannot distinguish muscle from fat, so muscular individuals will consistently appear "overweight" against their IBW.</p>
+      <p>A 180 cm male athlete with 85 kg body weight and 10% body fat has an FFMI of approximately 23 - well-muscled and healthy by any body composition measure. Yet the Devine formula says his "ideal weight" is 77.5 kg. The formula cannot distinguish muscle from fat, so muscular individuals will consistently appear "overweight" against their IBW.</p>
 
       <h3>Age is not considered</h3>
       <p>Evidence suggests adults over 65 benefit from a slightly higher BMI (23–27.5) than the standard healthy range, due to reduced sarcopenia risk and improved survival outcomes. IBW formulas do not adjust for age. For older adults, erring toward the higher end of the healthy BMI range is typically more appropriate than targeting a single IBW.</p>
 
       <h3>Ethnicity thresholds differ</h3>
-      <p>WHO Asian-specific BMI cut-offs recommend overweight from 23.0 and obesity from 27.5 — lower than the standard 25.0 and 30.0 thresholds. This affects what constitutes a healthy weight range for individuals of East and South Asian descent. IBW formulas do not incorporate ethnicity.</p>
+      <p>WHO Asian-specific BMI cut-offs recommend overweight from 23.0 and obesity from 27.5 - lower than the standard 25.0 and 30.0 thresholds. This affects what constitutes a healthy weight range for individuals of East and South Asian descent. IBW formulas do not incorporate ethnicity.</p>
 
       <h3>Frame size is not captured</h3>
-      <p>Hamwi's original formulation included small, medium, and large frame adjustments (±10% of the base). Most online calculators — including this one — use the medium-frame values only. Individuals with genuinely large or small bone structures may find the default IBW systematically high or low by several kilograms.</p>
+      <p>Hamwi's original formulation included small, medium, and large frame adjustments (±10% of the base). Most online calculators - including this one - use the medium-frame values only. Individuals with genuinely large or small bone structures may find the default IBW systematically high or low by several kilograms.</p>
 
       <h2 id="faq">FAQs</h2>
 
       <h3>What is the most accurate ideal weight formula?</h3>
-      <p>No IBW formula is more "accurate" in a biological sense — all are regression approximations from older clinical populations. The Devine formula is the most widely cited in medicine because drug dosing protocols reference it, not because it better predicts a healthy weight. For personal health decisions, the WHO BMI range (18.5–24.9) is the more evidence-based target.</p>
+      <p>No IBW formula is more "accurate" in a biological sense - all are regression approximations from older clinical populations. The Devine formula is the most widely cited in medicine because drug dosing protocols reference it, not because it better predicts a healthy weight. For personal health decisions, the WHO BMI range (18.5–24.9) is the more evidence-based target.</p>
 
       <h3>What is a healthy weight for my height?</h3>
       <p>Use the BMI range: multiply your height in metres squared by 18.5 (minimum) and 24.9 (maximum). For 170 cm: 1.70² = 2.89; 2.89 × 18.5 = 53.5 kg minimum, 2.89 × 24.9 = 72.0 kg maximum. This 18.5 kg range is your healthy weight band, within which any weight is considered clinically normal.</p>
@@ -322,15 +322,15 @@ const schema = [
       <p>All three were derived from the same underlying dataset (Metropolitan Life Insurance height-weight tables) but used different regression methods and made different adjustments. Robinson gives slightly lower values for tall people (1.9 kg/in vs 2.3 kg/in increment). Miller gives the highest base weights but the lowest per-inch increment. The 2–5 kg difference between formulas at typical adult heights is clinically negligible.</p>
 
       <h3>How does ideal weight relate to BMI?</h3>
-      <p>The Devine IBW corresponds to different BMIs at different heights. For a 170 cm male, Devine IBW of 67.7 kg gives BMI = 67.7 / 1.70² = 23.4 — squarely in the healthy range. For a 190 cm male, Devine IBW of 87.3 kg gives BMI = 87.3 / 1.90² = 24.2. The formulas are implicitly calibrated to keep IBW within the healthy BMI range for typical adult heights.</p>
+      <p>The Devine IBW corresponds to different BMIs at different heights. For a 170 cm male, Devine IBW of 67.7 kg gives BMI = 67.7 / 1.70² = 23.4 - squarely in the healthy range. For a 190 cm male, Devine IBW of 87.3 kg gives BMI = 87.3 / 1.90² = 24.2. The formulas are implicitly calibrated to keep IBW within the healthy BMI range for typical adult heights.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/health/bmi-calculator', blurb: 'Calculate your BMI by age and sex with estimated body fat % and healthy weight range for your height.' },
-        { path: '/health/lean-body-mass-calculator', blurb: 'Estimate lean body mass using Boer, Hume, and James formulas — and FFMI for athletes.' },
+        { path: '/health/lean-body-mass-calculator', blurb: 'Estimate lean body mass using Boer, Hume, and James formulas - and FFMI for athletes.' },
         { path: '/health/body-fat-calculator', blurb: 'Calculate body fat % using the US Navy tape method from waist, neck, and hip measurements.' },
         { path: '/health/bmi-calculator/weight-loss', blurb: 'Calculate how much weight to lose to reach a target BMI, with time estimate at your chosen weekly pace.' },
-        { path: '/health/ffmi-calculator', blurb: 'Calculate Fat-Free Mass Index from weight, height, and body fat % — see how you compare to the natural muscular limit.' },
+        { path: '/health/ffmi-calculator', blurb: 'Calculate Fat-Free Mass Index from weight, height, and body fat % - see how you compare to the natural muscular limit.' },
         { path: '/health/bmi-calculator/men', blurb: 'Men-specific BMI guide covering FFMI context, waist thresholds, and the testosterone-obesity connection.' },
       ]} />
 

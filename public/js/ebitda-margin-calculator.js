@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function interpret(margin) {
-    if (margin < 0)  return 'Negative — operating at a loss';
+    if (margin < 0)  return 'Negative - operating at a loss';
     if (margin < 5)  return 'Very low';
     if (margin < 10) return 'Below average';
     if (margin < 15) return 'Average';

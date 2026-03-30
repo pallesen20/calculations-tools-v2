@@ -5,5 +5,7 @@ export default defineConfig({
   site: 'https://calculations.tools',
   redirects: {
     '/percentage-calculator':                           '/math/percentage-calculator',
+    '/compare-text':                                    '/compare/text',
+    '/compare-text/compare-excel':                      '/compare/excel',
   },
 });

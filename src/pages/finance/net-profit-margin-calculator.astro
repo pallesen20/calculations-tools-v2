@@ -39,7 +39,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is Net Profit Margin?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Net Profit Margin = Net Income / Revenue x 100. It measures what percentage of revenue becomes net income (profit after all costs — COGS, operating expenses, interest, and tax). It is the most comprehensive measure of a company's profitability and shows what shareholders actually earn from each dollar of sales." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Net Profit Margin = Net Income / Revenue x 100. It measures what percentage of revenue becomes net income (profit after all costs - COGS, operating expenses, interest, and tax). It is the most comprehensive measure of a company's profitability and shows what shareholders actually earn from each dollar of sales." }
       },
       {
         "@type": "Question",
@@ -54,7 +54,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "Can Net Profit Margin be negative?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. A negative net profit margin means the company is operating at a net loss — total expenses exceed total revenue. This is common in early-stage companies investing heavily in growth, or in distressed businesses. Sustained negative net margins require financing to continue operations." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. A negative net profit margin means the company is operating at a net loss - total expenses exceed total revenue. This is common in early-stage companies investing heavily in growth, or in distressed businesses. Sustained negative net margins require financing to continue operations." }
       }
     ]
   }
@@ -97,11 +97,11 @@ const schema = [
         <div id="npm-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="npm-margin-val">—</div>
+              <div class="lbm-card-val" id="npm-margin-val">-</div>
               <div class="lbm-card-lbl">Net Profit Margin</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="npm-interp-val">—</div>
+              <div class="lbm-card-val" id="npm-interp-val">-</div>
               <div class="lbm-card-lbl">Interpretation</div>
             </div>
           </div>
@@ -110,11 +110,11 @@ const schema = [
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
               <span class="pi-step-label">Net Income / Revenue = ratio</span>
-              <span class="pi-step-val" id="npm-step1">—</span>
+              <span class="pi-step-val" id="npm-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">ratio × 100 = margin %</span>
-              <span class="pi-step-val" id="npm-step2">—</span>
+              <span class="pi-step-val" id="npm-step2">-</span>
             </div>
           </div>
         </div>
@@ -135,7 +135,7 @@ const schema = [
       <p>Enter Net Income (bottom-line profit after all costs, interest, and tax) and Revenue in the same currency unit and time period. The calculator returns the Net Profit Margin as a percentage with a general interpretation. Use the <a href="/finance/ebitda-calculator">EBITDA Calculator</a> or <a href="/finance/ebt-calculator">EBT Calculator</a> if you need to work through intermediate profit metrics first.</p>
 
       <h2 id="what-is-npm">What is Net Profit Margin?</h2>
-      <p>Net Profit Margin is the most comprehensive profitability metric on an income statement. It measures what percentage of revenue becomes net income — profit remaining after deducting every cost: COGS, operating expenses, interest, and income tax.</p>
+      <p>Net Profit Margin is the most comprehensive profitability metric on an income statement. It measures what percentage of revenue becomes net income - profit remaining after deducting every cost: COGS, operating expenses, interest, and income tax.</p>
       <p>Unlike Gross Profit Margin or EBITDA Margin, Net Profit Margin cannot be inflated by excluding financing or tax costs. It reflects the true economic return that accrues to shareholders from each dollar of sales.</p>
       <p>Investors and analysts use Net Profit Margin to assess whether a business is sustainably profitable on a fully loaded basis. A strong net margin provides a buffer against cost shocks, recessions, and rising interest rates. A thin net margin means a business is highly sensitive to any cost increase or revenue shortfall.</p>
 
@@ -190,25 +190,25 @@ const schema = [
             <tr><th>Margin metric</th><th>Deducts</th><th>Excludes</th><th>Typical gap vs Gross Margin</th></tr>
           </thead>
           <tbody>
-            <tr><td>Gross Profit Margin</td><td>COGS</td><td>OpEx, Interest, Tax</td><td>—</td></tr>
+            <tr><td>Gross Profit Margin</td><td>COGS</td><td>OpEx, Interest, Tax</td><td>-</td></tr>
             <tr><td>Operating Profit Margin</td><td>COGS + OpEx</td><td>Interest, Tax</td><td>5–25 pp below Gross Margin</td></tr>
             <tr><td>EBITDA Margin</td><td>COGS + Cash OpEx</td><td>D&amp;A, Interest, Tax</td><td>Often close to Operating Margin</td></tr>
             <tr><td>Net Profit Margin</td><td>All costs</td><td>Nothing</td><td>10–40 pp below Gross Margin</td></tr>
           </tbody>
         </table>
       </div>
-      <p>A wide gap between Gross Margin and Net Margin can indicate heavy R&amp;D or marketing spend (common in growth companies), high financial leverage (interest cost), or a high effective tax rate. Narrowing this gap — either by reducing overhead or by growing revenue faster than fixed costs — is a key value creation lever.</p>
+      <p>A wide gap between Gross Margin and Net Margin can indicate heavy R&amp;D or marketing spend (common in growth companies), high financial leverage (interest cost), or a high effective tax rate. Narrowing this gap - either by reducing overhead or by growing revenue faster than fixed costs - is a key value creation lever.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
       <h3>What is Net Profit Margin?</h3>
-      <p>Net Profit Margin = Net Income / Revenue × 100. It shows what percentage of revenue becomes bottom-line profit after all costs — COGS, SG&amp;A, R&amp;D, interest, and tax — have been deducted. It is the most complete measure of profitability.</p>
+      <p>Net Profit Margin = Net Income / Revenue × 100. It shows what percentage of revenue becomes bottom-line profit after all costs - COGS, SG&amp;A, R&amp;D, interest, and tax - have been deducted. It is the most complete measure of profitability.</p>
 
       <h3>What is a good Net Profit Margin?</h3>
       <p>Above 10% is generally healthy across most industries. Software companies often achieve 15–30%; retail operates at 2–8%; grocery at 1–4%. Always compare against direct industry peers rather than a universal benchmark.</p>
 
       <h3>How is Net Profit Margin different from Gross Profit Margin?</h3>
-      <p>Gross Profit Margin only deducts COGS. Net Profit Margin deducts COGS plus all other costs — operating expenses, interest, and tax. Net Profit Margin is always lower than or equal to Gross Profit Margin.</p>
+      <p>Gross Profit Margin only deducts COGS. Net Profit Margin deducts COGS plus all other costs - operating expenses, interest, and tax. Net Profit Margin is always lower than or equal to Gross Profit Margin.</p>
 
       <h3>Can Net Profit Margin be negative?</h3>
       <p>Yes. A negative net margin means the company is operating at a net loss. This is normal in early-stage businesses investing heavily in growth. It becomes a concern when it persists without a credible path to profitability.</p>

@@ -1,0 +1,292 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use this tool' },
+  { id: 'languages',     label: 'Supported languages' },
+  { id: 'use-cases',     label: 'Use cases' },
+  { id: 'algorithm',     label: 'How the diff algorithm works' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Code Diff Checker",
+    "url": "https://calculations.tools/compare/code",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "description": "Compare two code files online and find every difference line by line. Supports Python, JavaScript, TypeScript, CSS, HTML, and all text-based languages. Free, private, runs in your browser.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I compare two code files online?", "acceptedAnswer": { "@type": "Answer", "text": "Select the language from the dropdown, paste your original code in the left panel and the changed version in the right panel, then click Find Differences. Added lines appear in green, removed lines in red, with line numbers throughout." } },
+      { "@type": "Question", "name": "What programming languages does this tool support?", "acceptedAnswer": { "@type": "Answer", "text": "The tool compares any text-based code. The language selector filters the file upload dialog and loads language-specific sample code. It explicitly supports Python, JavaScript, TypeScript, CSS, HTML, JSON, XML, YAML, SQL, Go, Java, PHP, Ruby, and more." } },
+      { "@type": "Question", "name": "Is my code private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All processing runs in your browser using JavaScript. No code is ever sent to any server, stored, or shared." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Compare Code Online"
+  metaTitle="Compare Code Online Free | Code Diff Checker ᐅ"
+  description="Compare two code files online and find every difference line by line. Language selector for Python, JavaScript, CSS, HTML, and all text-based languages. Free, private, no sign-up."
+  canonical="https://calculations.tools/compare/code"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="compare-code"
+  ogFormula="LCS code diff"
+  ogExample="Find every addition, removal & change in code"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container ct-container">
+
+        <div class="calculator-header">
+          <h2>Compare Code Line by Line</h2>
+          <p>Paste or upload two code files to compare them line by line</p>
+          <div class="cc-lang-row">
+            <label for="cc-lang" class="cc-lang-label">Language</label>
+            <select id="cc-lang" class="cc-lang-select" onchange="updateLanguage()">
+              <option value="any">Any / All languages</option>
+              <option value="python">Python</option>
+              <option value="javascript">JavaScript / TypeScript</option>
+              <option value="css">CSS / SCSS</option>
+              <option value="html">HTML</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ct-editors">
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Original Code</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="uploadFile('ct-original')" title="Upload file"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+                <button class="diff-tbtn" onclick="downloadText('ct-original')" title="Download"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+                <button class="diff-tbtn" onclick="copyText('ct-original')" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="diff-tbtn" onclick="clearText('ct-original')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ct-editor-wrap" id="ct-original-wrap">
+              <div class="ct-gutter" id="ct-original-gutter"><div>1</div></div>
+              <div class="ct-hl" id="ct-original-hl" style="top:0.75rem"></div>
+              <textarea id="ct-original" class="ct-textarea" wrap="off" placeholder="Paste your original code here..." spellcheck="false" oninput="updateEditor('ct-original')" onfocus="document.getElementById('ct-original-wrap').classList.add('focused')" onblur="document.getElementById('ct-original-wrap').classList.remove('focused')" onkeyup="updateActiveLine('ct-original')" onclick="updateActiveLine('ct-original')" onscroll="syncScroll('ct-original')"></textarea>
+            </div>
+            <div class="ct-stats">
+              <span id="ct-original-lines">Lines: 0</span>
+              <span id="ct-original-chars">Characters: 0</span>
+            </div>
+          </div>
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Changed Code</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="uploadFile('ct-changed')" title="Upload file"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+                <button class="diff-tbtn" onclick="downloadText('ct-changed')" title="Download"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+                <button class="diff-tbtn" onclick="copyText('ct-changed')" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="diff-tbtn" onclick="clearText('ct-changed')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ct-editor-wrap" id="ct-changed-wrap">
+              <div class="ct-gutter" id="ct-changed-gutter"><div>1</div></div>
+              <div class="ct-hl" id="ct-changed-hl" style="top:0.75rem"></div>
+              <textarea id="ct-changed" class="ct-textarea" wrap="off" placeholder="Paste your changed code here..." spellcheck="false" oninput="updateEditor('ct-changed')" onfocus="document.getElementById('ct-changed-wrap').classList.add('focused')" onblur="document.getElementById('ct-changed-wrap').classList.remove('focused')" onkeyup="updateActiveLine('ct-changed')" onclick="updateActiveLine('ct-changed')" onscroll="syncScroll('ct-changed')"></textarea>
+            </div>
+            <div class="ct-stats">
+              <span id="ct-changed-lines">Lines: 0</span>
+              <span id="ct-changed-chars">Characters: 0</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="diff-actions">
+          <button class="diff-btn-primary" onclick="findDifferences()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+          <button class="diff-btn-secondary" onclick="swapTexts()">⇄ Swap</button>
+          <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
+        </div>
+
+        <div id="diff-output" class="diff-output">
+          <div class="diff-header">
+            <div class="diff-stats">
+              <span class="diff-added"   id="ct-stat-added">+0 added</span>
+              <span class="diff-removed" id="ct-stat-removed">−0 removed</span>
+              <span class="diff-unchanged" id="ct-stat-unchanged">0 unchanged</span>
+            </div>
+            <div class="ct-diff-controls">
+              <div class="ct-view-toggle">
+                <button id="ct-btn-unified" onclick="setView('unified')">Unified</button>
+                <button id="ct-btn-sbs"     onclick="setView('sbs')">Side-by-Side</button>
+              </div>
+              <button class="diff-tbtn" onclick="copyDiff()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
+            </div>
+          </div>
+          <div class="ct-diff-container" id="ct-diff-container"></div>
+        </div>
+
+        <div class="cc-lang-cards">
+          <div class="cc-lang-cards-label">Language-specific tools</div>
+          <div class="cc-lang-cards-grid">
+            <a href="/compare/python" class="cc-lang-card">
+              <span class="cc-lang-icon">🐍</span>
+              <span class="cc-lang-name">Python</span>
+            </a>
+            <a href="/compare/javascript" class="cc-lang-card">
+              <span class="cc-lang-icon">JS</span>
+              <span class="cc-lang-name">JavaScript</span>
+            </a>
+            <a href="/compare/css" class="cc-lang-card">
+              <span class="cc-lang-icon">🎨</span>
+              <span class="cc-lang-name">CSS</span>
+            </a>
+            <a href="/compare/html" class="cc-lang-card">
+              <span class="cc-lang-icon">&lt;/&gt;</span>
+              <span class="cc-lang-name">HTML</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <input type="file" id="ct-file-input" style="display:none"
+      accept=".txt,.js,.ts,.jsx,.tsx,.mjs,.cjs,.py,.pyw,.html,.htm,.css,.scss,.sass,.less,.json,.xml,.md,.php,.rb,.go,.java,.c,.cpp,.h,.sql,.yaml,.yml,.sh,.rs" />
+    <div class="diff-toast"></div>
+    <script src="/js/compare-code.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Select a language from the dropdown, paste your original code in the left panel and the changed version in the right panel, then click <strong>Find Differences</strong>. Added lines appear in green, removed in red, with line numbers. Upload files directly using the upload icon on each panel. Nothing is sent to a server.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Select the language from the dropdown at the top (this filters the file upload dialog and loads language-appropriate samples). Paste or upload your original code on the left and the changed version on the right. Click "Find Differences." The diff output shows every changed line color-coded with line numbers.</p>
+      <p>Toggle between Unified view (single column, same format as Git) and Side-by-Side view (two parallel columns). The Copy Diff button copies the full diff as plain text. The Sample button loads a language-specific example based on your selected language.</p>
+
+      <h2 id="languages">Supported languages</h2>
+      <p>The comparison engine works on any text-based language - it does not parse or interpret code syntax, so it handles any file that stores content as plain text. The language selector controls:</p>
+      <ul>
+        <li>The file upload filter (which file extensions are shown in the browser's file picker)</li>
+        <li>The sample code loaded when you click the Sample button</li>
+      </ul>
+      <div class="responsive-table">
+      <table>
+        <thead><tr><th>Language</th><th>File extensions</th><th>Specific tool</th></tr></thead>
+        <tbody>
+          <tr><td>Python</td><td>.py, .pyw, .pyx, .ipynb</td><td><a href="/compare/python">Compare Python</a></td></tr>
+          <tr><td>JavaScript / TypeScript</td><td>.js, .ts, .jsx, .tsx, .mjs, .cjs</td><td><a href="/compare/javascript">Compare JavaScript</a></td></tr>
+          <tr><td>CSS / SCSS</td><td>.css, .scss, .sass, .less</td><td><a href="/compare/css">Compare CSS</a></td></tr>
+          <tr><td>HTML</td><td>.html, .htm, .xhtml, .svg</td><td><a href="/compare/html">Compare HTML</a></td></tr>
+          <tr><td>Any language</td><td>.json, .xml, .yaml, .sql, .go, .java, .php, .rb, .rs, .c, .cpp, .sh, .md, and more</td><td>This page</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="use-cases">Use cases</h2>
+      <h3>Pre-merge code review</h3>
+      <p>Compare your working copy against the original to catch unintended changes, missing lines, or accidentally introduced bugs before submitting a pull request. Works without a repository - just paste or upload the two file versions.</p>
+      <h3>Reviewing AI-generated code</h3>
+      <p>When an AI assistant rewrites a function, paste the original and the AI output side by side to see exactly what changed. This is faster than reading both versions in full and more reliable than trusting the AI's change summary.</p>
+      <h3>Configuration file auditing</h3>
+      <p>Compare two versions of a configuration file (nginx, Docker Compose, Kubernetes YAML, GitHub Actions) to catch unintended changes between environments or deployments.</p>
+      <h3>Tracking incremental rewrites</h3>
+      <p>When refactoring a module incrementally, compare the before and after to confirm no logic was accidentally removed or altered during the structural changes.</p>
+
+      <h2 id="algorithm">How the diff algorithm works</h2>
+      <p>The comparison uses a <strong>Longest Common Subsequence (LCS)</strong> algorithm. Both code inputs are split into lines. The algorithm builds a matrix that tracks the longest sequence of lines that appear in both versions in the same order. Lines in this common sequence are "unchanged"; lines outside it are "added" or "removed." This is the same principle used by the Unix <code>diff</code> command and Git. The algorithm compares lines as strings - it does not understand language semantics, so a one-space indentation change will show as a changed line.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>Can I compare minified code?</h3>
+      <p>Yes, but minified files are a single very long line, so the diff will typically show the entire minified output as one changed line. For meaningful diffs, compare non-minified (development) versions of your files.</p>
+      <h3>Is indentation compared?</h3>
+      <p>Yes. The tool compares lines as exact strings. A line with two spaces of indentation and a line with four spaces will be shown as different even if the content is otherwise identical. For Python or YAML where indentation is significant, this is usually the correct behavior.</p>
+      <h3>Does this work with Jupyter notebooks?</h3>
+      <p>You can upload .ipynb files - they are JSON. The diff will compare the raw JSON structure, which includes cell content, metadata, and outputs. For a cleaner diff, export the notebook to .py first.</p>
+      <h3>Is my code private?</h3>
+      <p>Yes. All processing runs in your browser. No code is sent to any server at any point.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🐍</span>
+          <div>
+            <a href="/compare/python">Compare Python Code</a>
+            <p>Diff checker pre-configured for .py files with Python sample code.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">JS</span>
+          <div>
+            <a href="/compare/javascript">Compare JavaScript</a>
+            <p>Diff checker pre-configured for .js, .ts, .jsx, and .tsx files.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⇄</span>
+          <div>
+            <a href="/compare/text">Diff Checker</a>
+            <p>Compare any two plain texts with unified or side-by-side views.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .ct-container { max-width: 100% !important; }
+  .ct-editors { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.25rem; }
+  @media (max-width: 640px) { .ct-editors { grid-template-columns: 1fr; } }
+  .ct-editor-wrap { position: relative; display: flex; width: 100%; min-height: 260px; max-height: 460px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+  .ct-editor-wrap.focused { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+  .ct-gutter { min-width: 2.75rem; padding: 0.75rem 0.4rem 0.75rem 0; text-align: right; font-family: 'Courier New', monospace; font-size: 0.8125rem; line-height: 1.6; color: #4a5568; user-select: none; overflow: hidden; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
+  .ct-gutter div { padding: 0 0.2rem; }
+  .ct-gutter div.active-ln { color: #94a3b8; }
+  .ct-hl { position: absolute; left: 0; right: 0; pointer-events: none; background: rgba(255,255,255,0.035); transition: top 0.05s; }
+  .ct-textarea { flex: 1; min-height: 260px; max-height: 460px; background: transparent; border: none; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.8125rem; padding: 0.75rem 0.75rem 0.75rem 0.5rem; resize: none; line-height: 1.6; outline: none; overflow-y: auto; white-space: pre; tab-size: 4; -moz-tab-size: 4; overflow-x: auto; }
+  .ct-textarea::placeholder { color: #94a3b8; }
+  .ct-stats { display: flex; gap: 1rem; margin-top: 0.35rem; font-size: 0.72rem; color: #94a3b8; }
+  .ct-diff-controls { display: flex; align-items: center; gap: 0.5rem; }
+  .ct-view-toggle { display: flex; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; }
+  .ct-view-toggle button { background: none; border: none; color: #94a3b8; padding: 0.35rem 0.8rem; font-size: 0.78rem; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .ct-view-toggle button.active { background: rgba(255,255,255,0.18); color: white; }
+  .ct-diff-container { background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: auto; max-height: 480px; font-family: 'Courier New', monospace; font-size: 0.8rem; }
+  .ct-diff-line { display: flex; line-height: 1.6; min-height: 1.6em; }
+  .ct-line-num { min-width: 2.75rem; text-align: right; padding: 0 0.5rem; color: #4a5568; user-select: none; flex-shrink: 0; }
+  .ct-line-content { padding: 0 0.75rem; white-space: pre-wrap; word-break: break-all; flex: 1; color: #94a3b8; }
+  .ct-diff-line.added { background: rgba(74,222,128,0.08); }
+  .ct-diff-line.added .ct-line-content { color: #4ade80; }
+  .ct-diff-line.removed { background: rgba(248,113,113,0.08); }
+  .ct-diff-line.removed .ct-line-content { color: #f87171; }
+  .ct-sbs { display: grid; grid-template-columns: 1fr 1fr; }
+  .ct-sbs-panel + .ct-sbs-panel { border-left: 1px solid rgba(255,255,255,0.08); }
+  @media (max-width: 640px) { .ct-sbs { grid-template-columns: 1fr; } .ct-sbs-panel + .ct-sbs-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); } }
+  .cc-lang-row { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.75rem; }
+  .cc-lang-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); white-space: nowrap; }
+  .cc-lang-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #e2e8f0; font-size: 0.82rem; padding: 0.3rem 0.6rem; cursor: pointer; outline: none; }
+  .cc-lang-select:focus { border-color: #3b82f6; }
+  .cc-lang-cards { margin-top: 1.5rem; }
+  .cc-lang-cards-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.35); margin-bottom: 0.6rem; }
+  .cc-lang-cards-grid { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .cc-lang-card { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.5rem 0.9rem; text-decoration: none; color: #e2e8f0; font-size: 0.82rem; transition: background 0.2s, border-color 0.2s; }
+  .cc-lang-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); }
+  .cc-lang-icon { font-size: 1rem; font-weight: 700; }
+  .cc-lang-name { font-weight: 500; }
+</style>

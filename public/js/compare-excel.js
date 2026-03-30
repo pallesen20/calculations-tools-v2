@@ -68,7 +68,7 @@ function renderPreview(side) {
 
   const data = getSheetData(side);
   document.getElementById('ce-info-' + side).innerHTML =
-    '<strong>' + escapeHtml(state[side].fileName) + '</strong> — ' +
+    '<strong>' + escapeHtml(state[side].fileName) + '</strong> - ' +
     data.length + ' rows × ' + getMaxCols(data) + ' cols';
 
   // Sheet tabs
@@ -229,7 +229,7 @@ function compareFiles() {
 function renderDiffTable(diffRows, maxCols) {
   const container = document.getElementById('ce-diff-container');
   if (diffRows.every(d => d.type === 'unchanged')) {
-    container.innerHTML = '<div class="diff-no-diff">✓ Spreadsheets are identical — no differences found</div>';
+    container.innerHTML = '<div class="diff-no-diff">✓ Spreadsheets are identical - no differences found</div>';
     return;
   }
 
@@ -240,7 +240,7 @@ function renderDiffTable(diffRows, maxCols) {
   for (const d of diffRows) {
     const rn = d.row + 1;
     if (d.type === 'unchanged') {
-      html += `<tr><td class="ce-row-num">${rn}</td><td class="ce-status ce-status-unchanged">—</td>`;
+      html += `<tr><td class="ce-row-num">${rn}</td><td class="ce-status ce-status-unchanged">-</td>`;
       for (let c = 0; c < maxCols; c++)
         html += `<td>${escapeHtml(String(d.cells[c] ?? ''))}</td>`;
     } else if (d.type === 'added') {

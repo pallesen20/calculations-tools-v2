@@ -1,0 +1,241 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',    label: 'How to use this tool' },
+  { id: 'js-diff',       label: 'JavaScript diff considerations' },
+  { id: 'use-cases',     label: 'Use cases' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JavaScript Code Diff Checker",
+    "url": "https://calculations.tools/compare/javascript",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "description": "Compare two JavaScript or TypeScript files online and find every addition, removal, and change. Color-coded line-by-line diff for .js, .ts, .jsx, and .tsx files. Free, private, runs in your browser.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I compare two JavaScript files online?", "acceptedAnswer": { "@type": "Answer", "text": "Paste your original .js or .ts file in the left panel and the updated version in the right panel, then click Find Differences. Added lines appear in green, removed lines in red. You can also upload files directly." } },
+      { "@type": "Question", "name": "Can I compare TypeScript files?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. TypeScript .ts files are plain text. The tool compares them line by line exactly like JavaScript. The file upload dialog accepts .js, .ts, .jsx, .tsx, .mjs, and .cjs files." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Compare JavaScript Code"
+  metaTitle="Compare JavaScript & TypeScript | Free JS/TS Diff Checker ᐅ"
+  description="Compare two JavaScript or TypeScript files online and find every difference. Color-coded line-by-line diff for .js, .ts, .jsx, and .tsx. Free, private, runs in browser."
+  canonical="https://calculations.tools/compare/javascript"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="compare-javascript"
+  ogFormula="JS/TS LCS diff"
+  ogExample="Find every changed line in .js and .ts files"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container ct-container">
+
+        <div class="calculator-header">
+          <h2>Compare JavaScript & TypeScript Instantly</h2>
+          <p>Paste or upload two .js, .ts, .jsx, or .tsx files to compare them line by line</p>
+          <div class="cc-lang-row">
+            <label for="cc-lang" class="cc-lang-label">Language</label>
+            <select id="cc-lang" class="cc-lang-select" onchange="updateLanguage()">
+              <option value="any">Any / All languages</option>
+              <option value="python">Python</option>
+              <option value="javascript" selected>JavaScript / TypeScript</option>
+              <option value="css">CSS / SCSS</option>
+              <option value="html">HTML</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ct-editors">
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Original JavaScript</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="uploadFile('ct-original')" title="Upload file"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+                <button class="diff-tbtn" onclick="downloadText('ct-original')" title="Download"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+                <button class="diff-tbtn" onclick="copyText('ct-original')" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="diff-tbtn" onclick="clearText('ct-original')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ct-editor-wrap" id="ct-original-wrap">
+              <div class="ct-gutter" id="ct-original-gutter"><div>1</div></div>
+              <div class="ct-hl" id="ct-original-hl" style="top:0.75rem"></div>
+              <textarea id="ct-original" class="ct-textarea" wrap="off" placeholder="Paste your original JavaScript or TypeScript here..." spellcheck="false" oninput="updateEditor('ct-original')" onfocus="document.getElementById('ct-original-wrap').classList.add('focused')" onblur="document.getElementById('ct-original-wrap').classList.remove('focused')" onkeyup="updateActiveLine('ct-original')" onclick="updateActiveLine('ct-original')" onscroll="syncScroll('ct-original')"></textarea>
+            </div>
+            <div class="ct-stats">
+              <span id="ct-original-lines">Lines: 0</span>
+              <span id="ct-original-chars">Characters: 0</span>
+            </div>
+          </div>
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Changed JavaScript</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="uploadFile('ct-changed')" title="Upload file"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+                <button class="diff-tbtn" onclick="downloadText('ct-changed')" title="Download"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+                <button class="diff-tbtn" onclick="copyText('ct-changed')" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+                <button class="diff-tbtn" onclick="clearText('ct-changed')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ct-editor-wrap" id="ct-changed-wrap">
+              <div class="ct-gutter" id="ct-changed-gutter"><div>1</div></div>
+              <div class="ct-hl" id="ct-changed-hl" style="top:0.75rem"></div>
+              <textarea id="ct-changed" class="ct-textarea" wrap="off" placeholder="Paste your changed JavaScript or TypeScript here..." spellcheck="false" oninput="updateEditor('ct-changed')" onfocus="document.getElementById('ct-changed-wrap').classList.add('focused')" onblur="document.getElementById('ct-changed-wrap').classList.remove('focused')" onkeyup="updateActiveLine('ct-changed')" onclick="updateActiveLine('ct-changed')" onscroll="syncScroll('ct-changed')"></textarea>
+            </div>
+            <div class="ct-stats">
+              <span id="ct-changed-lines">Lines: 0</span>
+              <span id="ct-changed-chars">Characters: 0</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="diff-actions">
+          <button class="diff-btn-primary" onclick="findDifferences()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+          <button class="diff-btn-secondary" onclick="swapTexts()">⇄ Swap</button>
+          <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
+        </div>
+
+        <div id="diff-output" class="diff-output">
+          <div class="diff-header">
+            <div class="diff-stats">
+              <span class="diff-added"   id="ct-stat-added">+0 added</span>
+              <span class="diff-removed" id="ct-stat-removed">−0 removed</span>
+              <span class="diff-unchanged" id="ct-stat-unchanged">0 unchanged</span>
+            </div>
+            <div class="ct-diff-controls">
+              <div class="ct-view-toggle">
+                <button id="ct-btn-unified" onclick="setView('unified')">Unified</button>
+                <button id="ct-btn-sbs"     onclick="setView('sbs')">Side-by-Side</button>
+              </div>
+              <button class="diff-tbtn" onclick="copyDiff()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
+            </div>
+          </div>
+          <div class="ct-diff-container" id="ct-diff-container"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <input type="file" id="ct-file-input" style="display:none" accept=".js,.ts,.jsx,.tsx,.mjs,.cjs" />
+    <div class="diff-toast"></div>
+    <script src="/js/compare-code.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Paste your original JavaScript or TypeScript file in the left panel and the updated version in the right panel, then click <strong>Find Differences</strong>. Added lines appear in green, removed in red. Upload .js, .ts, .jsx, or .tsx files directly. Everything runs in your browser - no code is sent to a server.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Paste or upload your original JavaScript or TypeScript on the left and the changed version on the right. Click "Find Differences." The diff shows every added and removed line with line numbers. Toggle Unified or Side-by-Side view. The language is pre-selected as JavaScript, so uploads filter to .js, .ts, .jsx, .tsx, .mjs, and .cjs files.</p>
+
+      <h2 id="js-diff">JavaScript diff considerations</h2>
+      <h3>Semicolons and formatting</h3>
+      <p>Prettier or ESLint reformatting changes many lines at once - often semicolons, quotes (single vs double), or trailing commas. A formatter-only diff will show many changed lines with identical logic. If you are trying to find logical changes, format both files with the same formatter before diffing.</p>
+      <h3>Arrow functions vs function declarations</h3>
+      <p>Converting <code>function foo() {}</code> to <code>const foo = () => {}</code> changes multiple lines. The diff will show the function declaration as removed and the arrow function as added across the affected lines.</p>
+      <h3>TypeScript type annotations</h3>
+      <p>Adding TypeScript types to a JavaScript file shows each annotated line as changed. A migration from plain JS to TypeScript will therefore produce a large diff even if the runtime logic is unchanged.</p>
+
+      <h2 id="use-cases">Use cases</h2>
+      <h3>Bundle output comparison</h3>
+      <p>Compare two build outputs to verify that a dependency update, webpack config change, or code split adjustment changed only what was expected in the final bundle.</p>
+      <h3>API response shape changes</h3>
+      <p>When a JS object or JSON structure changes between versions, paste both to see exactly which keys were added, renamed, or removed.</p>
+      <h3>Framework migration</h3>
+      <p>During a migration (e.g., class components to hooks, CommonJS to ESM), compare before and after versions of each module to confirm the migration is complete and correct.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>Can I compare TypeScript files?</h3>
+      <p>Yes. TypeScript .ts files are plain text. The file upload accepts .js, .ts, .jsx, .tsx, .mjs, and .cjs.</p>
+      <h3>Will this compare minified JavaScript?</h3>
+      <p>Yes, but minified code is typically one line, so the entire minified output will appear as one changed line. For a useful diff, compare unminified source files.</p>
+      <h3>Is my code private?</h3>
+      <p>Yes. All processing runs in your browser. No code is sent to any server.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🐍</span>
+          <div>
+            <a href="/compare/python">Compare Python Code</a>
+            <p>Diff checker pre-configured for .py and .ipynb files.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🎨</span>
+          <div>
+            <a href="/compare/css">Compare CSS</a>
+            <p>Diff checker pre-configured for .css, .scss, .sass, and .less files.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon"></></span>
+          <div>
+            <a href="/compare/code">Compare Code</a>
+            <p>Code diff with language selector for all text-based languages.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .ct-container { max-width: 100% !important; }
+  .ct-editors { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.25rem; }
+  @media (max-width: 640px) { .ct-editors { grid-template-columns: 1fr; } }
+  .ct-editor-wrap { position: relative; display: flex; width: 100%; min-height: 260px; max-height: 460px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+  .ct-editor-wrap.focused { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+  .ct-gutter { min-width: 2.75rem; padding: 0.75rem 0.4rem 0.75rem 0; text-align: right; font-family: 'Courier New', monospace; font-size: 0.8125rem; line-height: 1.6; color: #4a5568; user-select: none; overflow: hidden; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
+  .ct-gutter div { padding: 0 0.2rem; }
+  .ct-gutter div.active-ln { color: #94a3b8; }
+  .ct-hl { position: absolute; left: 0; right: 0; pointer-events: none; background: rgba(255,255,255,0.035); transition: top 0.05s; }
+  .ct-textarea { flex: 1; min-height: 260px; max-height: 460px; background: transparent; border: none; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.8125rem; padding: 0.75rem 0.75rem 0.75rem 0.5rem; resize: none; line-height: 1.6; outline: none; overflow-y: auto; white-space: pre; tab-size: 4; -moz-tab-size: 4; overflow-x: auto; }
+  .ct-textarea::placeholder { color: #94a3b8; }
+  .ct-stats { display: flex; gap: 1rem; margin-top: 0.35rem; font-size: 0.72rem; color: #94a3b8; }
+  .ct-diff-controls { display: flex; align-items: center; gap: 0.5rem; }
+  .ct-view-toggle { display: flex; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; }
+  .ct-view-toggle button { background: none; border: none; color: #94a3b8; padding: 0.35rem 0.8rem; font-size: 0.78rem; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .ct-view-toggle button.active { background: rgba(255,255,255,0.18); color: white; }
+  .ct-diff-container { background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: auto; max-height: 480px; font-family: 'Courier New', monospace; font-size: 0.8rem; }
+  .ct-diff-line { display: flex; line-height: 1.6; min-height: 1.6em; }
+  .ct-line-num { min-width: 2.75rem; text-align: right; padding: 0 0.5rem; color: #4a5568; user-select: none; flex-shrink: 0; }
+  .ct-line-content { padding: 0 0.75rem; white-space: pre-wrap; word-break: break-all; flex: 1; color: #94a3b8; }
+  .ct-diff-line.added { background: rgba(74,222,128,0.08); }
+  .ct-diff-line.added .ct-line-content { color: #4ade80; }
+  .ct-diff-line.removed { background: rgba(248,113,113,0.08); }
+  .ct-diff-line.removed .ct-line-content { color: #f87171; }
+  .ct-sbs { display: grid; grid-template-columns: 1fr 1fr; }
+  .ct-sbs-panel + .ct-sbs-panel { border-left: 1px solid rgba(255,255,255,0.08); }
+  @media (max-width: 640px) { .ct-sbs { grid-template-columns: 1fr; } .ct-sbs-panel + .ct-sbs-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); } }
+  .cc-lang-row { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.75rem; }
+  .cc-lang-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); white-space: nowrap; }
+  .cc-lang-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #e2e8f0; font-size: 0.82rem; padding: 0.3rem 0.6rem; cursor: pointer; outline: none; }
+  .cc-lang-select:focus { border-color: #3b82f6; }
+</style>

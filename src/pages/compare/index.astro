@@ -1,0 +1,158 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { getCompareTools } from '../../utils/getPages';
+
+const tools = getCompareTools();
+
+const groupMap = tools.reduce((acc, t) => {
+  (acc[t.group] ??= []).push(t);
+  return acc;
+}, {} as Record<string, typeof tools>);
+
+const groups = Object.entries(groupMap);
+const totalTools = tools.length;
+
+const tocItems = [
+  { id: 'tools',         label: 'All comparison tools' },
+  { id: 'which-tool',    label: 'Which tool to use' },
+  { id: 'how-it-works',  label: 'How the diff algorithm works' },
+  { id: 'privacy',       label: 'Privacy' },
+  { id: 'faq',           label: 'FAQs' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Compare Files & Text Online",
+    "url": "https://calculations.tools/compare",
+    "description": "Free online comparison tools for text, code, Excel, CSV, PDF, and Word documents. Find differences instantly, color-coded, private, no sign-up.",
+    "hasPart": tools.map(t => ({
+      "@type": "WebApplication",
+      "name": t.title,
+      "url": `https://calculations.tools${t.path}`,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Are these comparison tools free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No registration, no usage limits, no premium tier. All tools run entirely in your browser - no files or text are ever sent to any server." } },
+      { "@type": "Question", "name": "Which comparison tool should I use?", "acceptedAnswer": { "@type": "Answer", "text": "Use the Diff Checker for any plain text or code. Use Compare Excel for .xlsx, .xls, and .ods spreadsheets. Use Compare CSV for .csv files with no external dependency. Use Compare PDF to extract and diff text from PDF files. Use Compare Documents for Word .docx files. Use Compare Code or the language-specific tools for Python, JavaScript, CSS, and HTML." } },
+      { "@type": "Question", "name": "Is my data private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool on this page runs entirely in your browser. No text, code, or file content is sent to any server at any point." } },
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Compare Files & Text"
+  metaTitle="Compare Files & Text | Free Online Diff Checker Tools ᐅ"
+  description="Free online comparison tools: compare text, code, Excel, CSV, PDF, and Word documents. Find differences instantly, color-coded, private, no sign-up required."
+  canonical="https://calculations.tools/compare"
+  tocItems={tocItems}
+  schema={schema}
+  ogFormula="Diff any file or text"
+  ogExample="Text · Code · Excel · CSV · PDF · DOCX"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container hi-container">
+
+        <div class="calculator-header">
+          <h2>Free Online Diff Checker Tools</h2>
+          <p>{totalTools} free comparison tools - text, code, spreadsheets, and documents</p>
+        </div>
+
+        <div class="hi-stats">
+          <div class="hi-stat">
+            <div class="hi-stat-val">{totalTools}</div>
+            <div class="hi-stat-lbl">Tools</div>
+          </div>
+          <div class="hi-stat">
+            <div class="hi-stat-val">{groups.length}</div>
+            <div class="hi-stat-lbl">Categories</div>
+          </div>
+          <div class="hi-stat hi-stat-wide">
+            <div class="hi-stat-val hi-stat-free">Free</div>
+            <div class="hi-stat-lbl">No login · runs in browser</div>
+          </div>
+        </div>
+
+        {groups.map(([groupName, groupTools]) => (
+          <div class="hi-group">
+            <div class="hi-group-header">
+              <span class="hi-group-label">{groupName}</span>
+            </div>
+            <div class="hi-grid">
+              {groupTools.map(tool => (
+                <a href={tool.path} class="hi-card">
+                  <div class="hi-icon">{tool.icon}</div>
+                  <div class="hi-body">
+                    <div class="hi-title">{tool.title}</div>
+                    {tool.short && <div class="hi-short">{tool.short}</div>}
+                  </div>
+                  <div class="hi-arrow">→</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+
+      </div>
+    </section>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This section has {totalTools} free comparison tools. <strong>Diff Checker</strong> compares any plain text or code. <strong>Compare Excel</strong> finds changed cells in spreadsheets. <strong>Compare CSV</strong> does the same for .csv files with no library load. <strong>Compare PDF</strong> and <strong>Compare Documents</strong> extract text from files and diff it. <strong>Compare Code</strong> and the language pages (Python, JavaScript, CSS, HTML) provide pre-configured code diffs. Everything runs in your browser - nothing is sent to any server.</p>
+      </div>
+
+      <h2 id="tools">All comparison tools</h2>
+      <p>Every tool is free, private, and runs entirely in your browser. No sign-up, no file size limits imposed by the server (browser memory is the only limit), no data retention.</p>
+
+      <h2 id="which-tool">Which tool to use</h2>
+      <div class="responsive-table">
+      <table>
+        <thead><tr><th>What you have</th><th>Tool to use</th></tr></thead>
+        <tbody>
+          <tr><td>Two plain text files or pastes</td><td><a href="/compare/text">Diff Checker</a></td></tr>
+          <tr><td>Two code files (any language)</td><td><a href="/compare/code">Compare Code</a></td></tr>
+          <tr><td>Two Python .py files</td><td><a href="/compare/python">Compare Python</a></td></tr>
+          <tr><td>Two JavaScript or TypeScript files</td><td><a href="/compare/javascript">Compare JavaScript</a></td></tr>
+          <tr><td>Two CSS or SCSS files</td><td><a href="/compare/css">Compare CSS</a></td></tr>
+          <tr><td>Two HTML files</td><td><a href="/compare/html">Compare HTML</a></td></tr>
+          <tr><td>Two .xlsx, .xls, or .ods files</td><td><a href="/compare/excel">Compare Excel</a></td></tr>
+          <tr><td>Two .csv or .txt files</td><td><a href="/compare/csv">Compare CSV</a> (faster, no CDN) or <a href="/compare/excel">Compare Excel</a></td></tr>
+          <tr><td>Two Google Sheets exports</td><td><a href="/compare/google-sheets">Compare Google Sheets</a></td></tr>
+          <tr><td>Two PDF files</td><td><a href="/compare/pdf">Compare PDF</a></td></tr>
+          <tr><td>Two Word .docx files</td><td><a href="/compare/documents">Compare Documents</a></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="how-it-works">How the diff algorithm works</h2>
+      <p>Text and code comparison tools use the <strong>Longest Common Subsequence (LCS)</strong> algorithm. This algorithm finds the longest sequence of lines that appear in both versions in the same order. Lines in that common sequence are "unchanged." Lines present only in the original are "removed" (shown in red). Lines present only in the changed version are "added" (shown in green). This is the same algorithm used by the Unix <code>diff</code> command and Git.</p>
+      <p>Spreadsheet tools (Excel, CSV, Google Sheets) compare row by row and cell by cell rather than line by line, making it easy to see which specific cell value changed rather than which text line changed.</p>
+      <p>File extraction tools (PDF, Documents) first convert file content to plain text, then apply the same LCS algorithm to the extracted text.</p>
+
+      <h2 id="privacy">Privacy</h2>
+      <p>Every tool in this section runs entirely in your browser. No text, code, or file content is transmitted to any server. The exception is external libraries loaded from CDNs (SheetJS for Excel comparison, PDF.js for PDF comparison, mammoth.js for Word documents) - only the library code is fetched from the CDN, not your files. Your data never leaves your device.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>Are all these tools free?</h3>
+      <p>Yes, completely free. No registration, no limits, no premium tier.</p>
+      <h3>What is the difference between Compare CSV and Compare Excel?</h3>
+      <p>Compare CSV uses a built-in parser with no external dependency, so it loads instantly and works offline. Compare Excel loads the SheetJS library (~1 MB) and supports .xlsx, .xls, .ods, and multi-sheet workbooks. For pure CSV files, Compare CSV is faster. For Excel files, Compare Excel is required.</p>
+      <h3>Can I compare scanned PDFs?</h3>
+      <p>No. The PDF tool extracts the embedded text layer. Scanned PDFs contain images of text, not actual text, and will produce empty output. Use an OCR tool to create a text-based PDF first.</p>
+      <h3>Does the Word document tool compare formatting?</h3>
+      <p>No. It extracts plain text only. For formatting comparison, use Word's built-in Compare Documents feature under the Review tab.</p>
+
+    </div>
+  </div>
+</CalculatorLayout>

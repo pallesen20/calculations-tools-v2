@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function fmtCard(n) {
-    if (!isFinite(n)) return '—';
+    if (!isFinite(n)) return '-';
     const abs = Math.abs(n), sign = n < 0 ? '-' : '';
     if (abs >= 1e9) return sign + (abs / 1e9).toFixed(2) + 'B';
     if (abs >= 1e6) return sign + (abs / 1e6).toFixed(2) + 'M';
@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('ev-step2').textContent = `EV/EBITDA = ${fmtFull(ev)} / ${fmtFull(ebitda)} = ${evEbitda.toFixed(1)}x`;
       showMultiples = true;
     } else {
-      document.getElementById('ev-ebitda-multiple').textContent = '—';
-      document.getElementById('ev-step2').textContent = '—';
+      document.getElementById('ev-ebitda-multiple').textContent = '-';
+      document.getElementById('ev-step2').textContent = '-';
     }
 
     if (!isNaN(revenue) && revenue > 0) {
@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('ev-step3').textContent = `EV/Revenue = ${fmtFull(ev)} / ${fmtFull(revenue)} = ${evRev.toFixed(1)}x`;
       showMultiples = true;
     } else {
-      document.getElementById('ev-rev-multiple').textContent = '—';
-      document.getElementById('ev-step3').textContent = '—';
+      document.getElementById('ev-rev-multiple').textContent = '-';
+      document.getElementById('ev-step3').textContent = '-';
     }
 
     multiplesRow.style.display = showMultiples ? '' : 'none';

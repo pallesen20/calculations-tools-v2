@@ -1,0 +1,213 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-export', label: 'How to export from Google Sheets' },
+  { id: 'how-to-use',    label: 'How to use this tool' },
+  { id: 'use-cases',     label: 'Use cases' },
+  { id: 'faq',           label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Google Sheets Comparison Tool",
+    "url": "https://calculations.tools/compare/google-sheets",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Compare two Google Sheets exports side by side. Upload CSV or Excel exports from Google Sheets and find every changed cell, added row, and removed row instantly.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to compare two Google Sheets",
+    "description": "Export both sheets as CSV or Excel, then upload the exports to find differences.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Export the original sheet", "text": "In Google Sheets, go to File → Download → Comma Separated Values (.csv) or Microsoft Excel (.xlsx). Save the file." },
+      { "@type": "HowToStep", "position": 2, "name": "Export the changed sheet", "text": "Open the second version of the spreadsheet and export it the same way." },
+      { "@type": "HowToStep", "position": 3, "name": "Upload both exports", "text": "Drop the original export into the left panel and the updated export into the right panel." },
+      { "@type": "HowToStep", "position": 4, "name": "Click Find Differences", "text": "Press Find Differences. Changed cells appear in yellow, added rows in green, removed rows in red." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I compare two Google Sheets?", "acceptedAnswer": { "@type": "Answer", "text": "Export both sheets as CSV or Excel via File → Download, then upload the exports here. The tool compares the two exported files cell by cell." } },
+      { "@type": "Question", "name": "Does this tool connect to Google Sheets directly?", "acceptedAnswer": { "@type": "Answer", "text": "No. The tool works with exported files only - no Google account or API connection is needed. This keeps your data private and avoids OAuth complexity." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Compare Google Sheets"
+  metaTitle="Compare Google Sheets to Excel | Sheets Diff Checker ᐅ"
+  description="Compare two Google Sheets exports side by side. Upload CSV or Excel exports and find every changed cell, added row, and removed row instantly."
+  canonical="https://calculations.tools/compare/google-sheets"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="compare-google-sheets"
+  ogFormula="Sheet export diff"
+  ogExample="Export & compare Google Sheets data"
+>
+
+  <div slot="calculator">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" is:inline></script>
+
+    <section class="calculator-interface">
+      <div class="calculator-container ce-container">
+
+        <div class="calculator-header">
+          <h2>Find Differences Between Spreadsheets</h2>
+          <p>Export both sheets as CSV or Excel, then upload the exports below</p>
+          <p class="ce-formats">Supported: .csv .xlsx .xls .ods .txt</p>
+        </div>
+
+        <div class="ce-grid">
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Original Sheet Export</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerUpload('original')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="clearFile('original')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="ce-drop-original" onclick="triggerUpload('original')">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+                <div class="ce-drop-label">Drop Google Sheets export here</div>
+                <div class="ce-drop-sub">File → Download → CSV or Excel</div>
+              </div>
+              <div class="ce-file-info" id="ce-info-original"></div>
+              <div class="ce-tabs" id="ce-tabs-original"></div>
+              <div class="ce-preview-wrap">
+                <table class="ce-preview-table" id="ce-table-original"></table>
+              </div>
+            </div>
+          </div>
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Changed Sheet Export</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerUpload('changed')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="clearFile('changed')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="ce-drop-changed" onclick="triggerUpload('changed')">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+                <div class="ce-drop-label">Drop Google Sheets export here</div>
+                <div class="ce-drop-sub">File → Download → CSV or Excel</div>
+              </div>
+              <div class="ce-file-info" id="ce-info-changed"></div>
+              <div class="ce-tabs" id="ce-tabs-changed"></div>
+              <div class="ce-preview-wrap">
+                <table class="ce-preview-table" id="ce-table-changed"></table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="diff-actions">
+          <button class="diff-btn-primary" onclick="compareFiles()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+          <button class="diff-btn-secondary" onclick="swapFiles()">⇄ Swap</button>
+          <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
+        </div>
+
+        <div id="diff-output" class="diff-output">
+          <div class="diff-header">
+            <div class="diff-stats">
+              <span class="diff-changed"   id="ce-stat-changed">0 changed</span>
+              <span class="diff-added"     id="ce-stat-added">+0 added</span>
+              <span class="diff-removed"   id="ce-stat-removed">-0 removed</span>
+              <span class="diff-unchanged" id="ce-stat-unchanged">0 unchanged</span>
+            </div>
+            <button class="diff-tbtn" onclick="copyDiffResult()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
+          </div>
+          <div class="ce-diff-table-wrap" id="ce-diff-container"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <input type="file" id="ce-file-original" style="display:none" accept=".csv,.xls,.xlsx,.xlsm,.xlsb,.txt,.dif,.ods" />
+    <input type="file" id="ce-file-changed"  style="display:none" accept=".csv,.xls,.xlsx,.xlsm,.xlsb,.txt,.dif,.ods" />
+    <div class="diff-toast"></div>
+    <script src="/js/compare-excel.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Go to <strong>File → Download</strong> in Google Sheets and save both versions as CSV or Excel. Then upload the original export on the left and the updated export on the right, and click <strong>Find Differences</strong>. Changed cells highlight in yellow, added rows in green, removed rows in red.</p>
+      </div>
+
+      <h2 id="how-to-export">How to export from Google Sheets</h2>
+      <p>Google Sheets does not provide direct browser-side access to sheet data, so this tool works with exported files. Exporting takes under 30 seconds:</p>
+      <ol>
+        <li>Open your Google Sheet.</li>
+        <li>Go to <strong>File → Download</strong>.</li>
+        <li>Choose <strong>Comma Separated Values (.csv)</strong> for the current sheet, or <strong>Microsoft Excel (.xlsx)</strong> to include all sheets.</li>
+        <li>Save the file to your computer.</li>
+        <li>Repeat for the second version of the sheet.</li>
+        <li>Upload both files here and click Find Differences.</li>
+      </ol>
+      <p>If you are comparing a specific sheet in a multi-sheet workbook exported as .xlsx, use the sheet tabs that appear below each panel to select the correct sheet on each side.</p>
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>This tool uses the same comparison engine as the <a href="/compare/excel">Excel & CSV comparison tool</a> - SheetJS runs entirely in your browser to parse the exported files, so nothing is uploaded to any server. Drop each exported file into its panel and click Find Differences.</p>
+      <p>Yellow cells changed, green rows were added, red rows were removed. The summary bar shows the total counts. Use Copy Diff to copy the full result as tab-separated text.</p>
+
+      <h2 id="use-cases">Use cases</h2>
+      <h3>Collaborative spreadsheet auditing</h3>
+      <p>When multiple people have access to a Google Sheet, comparing two snapshots (exported at different times) shows exactly what changed and when. This is useful for auditing data entry, catching accidental deletions, or reviewing changes made by collaborators.</p>
+      <h3>Budget and forecast tracking</h3>
+      <p>Export a budget spreadsheet at the start and end of a period to see every cell that changed - useful for identifying which line items were revised, which were added, and which were removed between planning rounds.</p>
+      <h3>Shared dataset reconciliation</h3>
+      <p>When two teams maintain separate copies of a shared dataset in Google Sheets, exporting both and comparing them reveals every discrepancy - missing rows, conflicting values, or formatting-driven differences that text comparison would miss.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>Does this connect to my Google account?</h3>
+      <p>No. The tool works with exported files only. No Google login, OAuth, or API access is required. Your sheet data never leaves your device.</p>
+      <h3>Can I compare sheets from the same workbook?</h3>
+      <p>Yes. Export the workbook as .xlsx, upload it on both sides, then use the sheet tabs below each preview to select different sheets for comparison.</p>
+      <h3>What if the sheets have different column orders?</h3>
+      <p>The tool compares columns positionally (column A vs column A). If your sheets have different column orders, sort or reorder the columns to match before exporting, or compare the CSV text directly using the <a href="/compare/text">Diff Checker</a>.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📊</span>
+          <div>
+            <a href="/compare/excel">Compare Excel & CSV</a>
+            <p>Full spreadsheet comparison supporting .xlsx, .xls, .ods, .csv with multi-sheet workbook support.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📋</span>
+          <div>
+            <a href="/compare/csv">Compare CSV Files</a>
+            <p>Lightweight CSV-only comparison with no external dependencies.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .ce-container { max-width: 100% !important; }
+  .ce-formats { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }
+</style>

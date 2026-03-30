@@ -48,7 +48,7 @@ const sources: Source[] = [
   },
   {
     author: 'Cederholm T, Jensen GL, Correia MITD, et al.',
-    title: 'GLIM criteria for the diagnosis of malnutrition — a consensus report from the global clinical nutrition community',
+    title: 'GLIM criteria for the diagnosis of malnutrition - a consensus report from the global clinical nutrition community',
     journal: 'Clinical Nutrition',
     year: 2019,
     url: 'https://doi.org/10.1016/j.clnu.2018.08.002',
@@ -90,10 +90,10 @@ const schema = [
     "@type": "FAQPage",
     "mainEntity": [
       { "@type": "Question", "name": "What is a healthy BMI for seniors over 65?", "acceptedAnswer": { "@type": "Answer", "text": "Most geriatric guidelines recommend a BMI of 23 to 27.5 as the optimal range for adults aged 65 and over. This is higher than the standard adult range of 18.5–24.9. A BMI below 23 in older adults is associated with increased frailty risk, malnutrition, and higher mortality. A BMI slightly above 25 does not carry the same risk in older adults as it does in younger adults." } },
-      { "@type": "Question", "name": "Why is the healthy BMI range different for older adults?", "acceptedAnswer": { "@type": "Answer", "text": "As people age, they lose muscle mass (sarcopenia) and gain fat mass, often without a change in BMI. This means a BMI that looks normal may hide a poor body composition in an older person. Additionally, low body weight in older adults is associated with immune suppression, poor wound healing, falls, and frailty — risks that are less prominent at younger ages. For these reasons, geriatric guidelines recommend maintaining a slightly higher BMI in older adults." } },
+      { "@type": "Question", "name": "Why is the healthy BMI range different for older adults?", "acceptedAnswer": { "@type": "Answer", "text": "As people age, they lose muscle mass (sarcopenia) and gain fat mass, often without a change in BMI. This means a BMI that looks normal may hide a poor body composition in an older person. Additionally, low body weight in older adults is associated with immune suppression, poor wound healing, falls, and frailty - risks that are less prominent at younger ages. For these reasons, geriatric guidelines recommend maintaining a slightly higher BMI in older adults." } },
       { "@type": "Question", "name": "What is sarcopenia?", "acceptedAnswer": { "@type": "Answer", "text": "Sarcopenia is the age-related loss of muscle mass, strength, and function. It typically begins after age 40 and accelerates after 65. Adults can lose 3–8% of muscle mass per decade; after 70, this rate increases. Sarcopenia increases the risk of falls, fractures, and functional decline. It can occur at any BMI, including normal weight, which is why BMI alone is insufficient for assessing health in older adults." } },
       { "@type": "Question", "name": "What BMI is considered underweight for a 70-year-old?", "acceptedAnswer": { "@type": "Answer", "text": "For adults aged 70 and over, ESPEN guidelines define a BMI below 22 as a risk factor for malnutrition. More broadly, a BMI below 23 in this age group is considered below the senior optimal range and is associated with frailty risk. Unintentional weight loss of 5% or more in 6 months is a red flag regardless of starting BMI." } },
-      { "@type": "Question", "name": "Is it dangerous to lose weight after 65?", "acceptedAnswer": { "@type": "Answer", "text": "Intentional, gradual weight loss in older adults with obesity is generally safe when combined with resistance exercise to preserve muscle. Unintentional weight loss — losing weight without trying — is a clinical warning sign associated with malignancy, depression, medication side effects, malabsorption, and accelerated frailty. Any unintentional weight loss of 5% or more in 6 months in an older adult warrants medical evaluation." } },
+      { "@type": "Question", "name": "Is it dangerous to lose weight after 65?", "acceptedAnswer": { "@type": "Answer", "text": "Intentional, gradual weight loss in older adults with obesity is generally safe when combined with resistance exercise to preserve muscle. Unintentional weight loss - losing weight without trying - is a clinical warning sign associated with malignancy, depression, medication side effects, malabsorption, and accelerated frailty. Any unintentional weight loss of 5% or more in 6 months in an older adult warrants medical evaluation." } },
       { "@type": "Question", "name": "Why does BMI become less accurate in older adults?", "acceptedAnswer": { "@type": "Answer", "text": "BMI becomes less accurate in older adults for several reasons: height decreases with age due to spinal compression (making BMI appear higher than it is), muscle is replaced by fat without changing weight (making BMI look normal when body composition is poor), and excess fluid from conditions like oedema can inflate weight. These factors make waist circumference and muscle strength tests better indicators of health risk in people over 65." } }
     ]
   }
@@ -187,8 +187,8 @@ const schema = [
 
         <div id="bmi-result" class="bmi-result hidden">
           <div class="bmi-value-row">
-            <div class="bmi-value" id="bmi-value">—</div>
-            <div class="bmi-category-badge" id="bmi-category-badge">—</div>
+            <div class="bmi-value" id="bmi-value">-</div>
+            <div class="bmi-category-badge" id="bmi-category-badge">-</div>
           </div>
           <div class="bmi-scale">
             <div class="bmi-scale-bar">
@@ -225,7 +225,7 @@ const schema = [
 
       <div class="answer-box">
         <div class="answer-box-label">Senior BMI at a glance</div>
-        <p>Most geriatric guidelines recommend a BMI of <strong>23–27.5</strong> as the optimal range for adults 65 and over — higher than the standard adult range of 18.5–24.9. A BMI below 23 in older adults is associated with frailty risk, malnutrition, and higher mortality. Slightly elevated BMI (25–27.5) does not carry the same health risk in older adults as it does at younger ages.</p>
+        <p>Most geriatric guidelines recommend a BMI of <strong>23–27.5</strong> as the optimal range for adults 65 and over - higher than the standard adult range of 18.5–24.9. A BMI below 23 in older adults is associated with frailty risk, malnutrition, and higher mortality. Slightly elevated BMI (25–27.5) does not carry the same health risk in older adults as it does at younger ages.</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
@@ -234,8 +234,8 @@ const schema = [
 
       <h2 id="why-different">Why BMI is different at 65+</h2>
       <p>The standard WHO BMI thresholds (Underweight &lt;18.5, Normal 18.5–24.9, Overweight 25–29.9) were developed from population studies that include all adults. However, the relationship between BMI and health risk changes substantially with age, and applying the same thresholds to older adults can be misleading in two directions.</p>
-      <p>First, low BMI in older adults is far more dangerous than in younger adults. Weight loss in older age often reflects muscle loss, chronic illness, poor nutrition, or immune decline — not improved metabolic health. A BMI of 18 in a 35-year-old is different from a BMI of 18 in a 75-year-old: the latter is associated with significantly increased mortality, hospitalisation, and fall risk.</p>
-      <p>Second, a BMI in the Overweight range (25–29.9) in older adults does not carry the same mortality risk as in younger adults. Large meta-analyses have found that older adults with BMI 25–30 often have equal or lower all-cause mortality compared to those in the Normal range — a finding sometimes called the "obesity paradox." The leading explanation is that higher weight in older adults provides a reserve of energy and protein in the event of acute illness or hospitalisation.</p>
+      <p>First, low BMI in older adults is far more dangerous than in younger adults. Weight loss in older age often reflects muscle loss, chronic illness, poor nutrition, or immune decline - not improved metabolic health. A BMI of 18 in a 35-year-old is different from a BMI of 18 in a 75-year-old: the latter is associated with significantly increased mortality, hospitalisation, and fall risk.</p>
+      <p>Second, a BMI in the Overweight range (25–29.9) in older adults does not carry the same mortality risk as in younger adults. Large meta-analyses have found that older adults with BMI 25–30 often have equal or lower all-cause mortality compared to those in the Normal range - a finding sometimes called the "obesity paradox." The leading explanation is that higher weight in older adults provides a reserve of energy and protein in the event of acute illness or hospitalisation.</p>
       <p>These two findings together support a higher optimal BMI range for older adults: approximately 23–27.5.</p>
 
       <h2 id="senior-range">The 23–27.5 senior optimal range</h2>
@@ -257,12 +257,12 @@ const schema = [
       <p>Note that these ranges are guidelines, not absolute thresholds. A 66-year-old active woman with BMI 24 and good muscle mass is in an excellent position. A 78-year-old sedentary man with BMI 26 who has lost 4 kg in the past six months may be at significant risk despite a BMI in the "optimal" range. Context matters more in geriatric assessment than in any other age group.</p>
 
       <h2 id="sarcopenia">Sarcopenia: muscle loss with age</h2>
-      <p>Sarcopenia is the progressive loss of muscle mass, strength, and physical performance that occurs with aging. It is the single biggest reason why BMI becomes less meaningful as a health indicator in older adults: you can lose substantial muscle and replace it with fat while your weight — and therefore your BMI — stays exactly the same.</p>
+      <p>Sarcopenia is the progressive loss of muscle mass, strength, and physical performance that occurs with aging. It is the single biggest reason why BMI becomes less meaningful as a health indicator in older adults: you can lose substantial muscle and replace it with fat while your weight - and therefore your BMI - stays exactly the same.</p>
       <p>Key facts about sarcopenia:</p>
       <ul>
         <li>Muscle mass loss begins around age 40 at approximately 3–8% per decade.</li>
         <li>After age 70, the rate accelerates. By age 80, many adults have lost 30–40% of their peak muscle mass.</li>
-        <li>Sarcopenia is associated with falls, fractures, disability, longer hospital stays, and higher mortality — independently of BMI.</li>
+        <li>Sarcopenia is associated with falls, fractures, disability, longer hospital stays, and higher mortality - independently of BMI.</li>
         <li>Grip strength is a simple, validated proxy: men below 27 kg and women below 16 kg are at risk (EWGSOP2 thresholds).</li>
         <li>Resistance exercise (strength training) 2–3 times per week is the most effective intervention, even in people over 80.</li>
         <li>Protein intake of 1.2–1.6 g/kg body weight per day (vs the general adult RDA of 0.8 g/kg) is recommended to support muscle maintenance in older adults (ESPEN).</li>
@@ -272,7 +272,7 @@ const schema = [
       <p>Frailty is a clinical syndrome of increased vulnerability to stressors, characterised by reduced physiological reserve across multiple organ systems. The Fried frailty phenotype (2001) defines frailty using five criteria: unintentional weight loss (&gt;4.5 kg in the past year), self-reported exhaustion, weakness (low grip strength), slow walking speed, and low physical activity. Meeting three or more criteria = frail; one or two = pre-frail.</p>
       <p>BMI and frailty have a U-shaped relationship:</p>
       <ul>
-        <li>Low BMI (&lt;22) is a strong risk factor for frailty — it often reflects the weight loss criterion directly, as well as the muscle loss and nutritional depletion that underlies frailty.</li>
+        <li>Low BMI (&lt;22) is a strong risk factor for frailty - it often reflects the weight loss criterion directly, as well as the muscle loss and nutritional depletion that underlies frailty.</li>
         <li>Very high BMI (&gt;35) is also associated with frailty through a different mechanism: obesity-related inflammation, mobility limitation, and metabolic disease impair physical function.</li>
         <li>The BMI range 23–27.5 corresponds to the lowest frailty risk in large population studies.</li>
       </ul>
@@ -295,34 +295,34 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>Unintentional weight loss — losing weight without trying — is a particularly important warning sign in older adults. Loss of 5% or more of body weight in 6 months, or 10% or more in 12 months, meets the GLIM criteria for a phenotypic criterion of malnutrition and warrants prompt medical evaluation.</p>
+      <p>Unintentional weight loss - losing weight without trying - is a particularly important warning sign in older adults. Loss of 5% or more of body weight in 6 months, or 10% or more in 12 months, meets the GLIM criteria for a phenotypic criterion of malnutrition and warrants prompt medical evaluation.</p>
 
       <h2 id="obesity-seniors">Obesity in older adults</h2>
       <p>Obesity in older adults is a genuine health risk, but its management requires more nuance than in younger adults. Aggressive caloric restriction that produces weight loss in older adults often leads to simultaneous muscle loss (sarcopenic obesity becoming worse), which can impair function more than the obesity itself.</p>
       <p>The approach recommended by ESPEN and most geriatric guidelines is:</p>
       <ul>
-        <li>Prioritise resistance exercise over caloric restriction — muscle maintenance is the primary goal.</li>
+        <li>Prioritise resistance exercise over caloric restriction - muscle maintenance is the primary goal.</li>
         <li>If weight loss is indicated, pursue gradual loss (&lt;0.5 kg/week) with adequate protein intake (≥1.2 g/kg/day) to minimise muscle loss.</li>
         <li>Weight loss in older adults with Class I obesity (BMI 30–34.9) and good functional status is appropriate when it improves mobility or metabolic control.</li>
-        <li>Weight loss is less clearly beneficial in very elderly patients (80+) or those with frailty — maintaining weight and muscle function is the priority.</li>
+        <li>Weight loss is less clearly beneficial in very elderly patients (80+) or those with frailty - maintaining weight and muscle function is the priority.</li>
       </ul>
       <p>Waist circumference remains an important complementary measure: above 88 cm (34.5 in) for women and 102 cm (40 in) for men signals elevated visceral fat regardless of BMI.</p>
 
       <h2 id="body-fat-estimate">Estimated body fat %</h2>
       <p>When you enter your age and sex, this calculator shows an estimated body fat percentage using the Deurenberg formula (1991):</p>
       <Formula expr={f.bfGeneral} />
-      <p>Where S = 1 for males, 0 for females. The formula requires age and sex in addition to BMI. In older adults, the estimate tends to slightly underestimate body fat because the formula was validated in a younger Dutch adult population and does not fully account for the accelerated muscle-to-fat replacement that occurs after age 70. Treat it as an order-of-magnitude estimate — useful for comparison and trend-tracking, not as a precise measurement.</p>
+      <p>Where S = 1 for males, 0 for females. The formula requires age and sex in addition to BMI. In older adults, the estimate tends to slightly underestimate body fat because the formula was validated in a younger Dutch adult population and does not fully account for the accelerated muscle-to-fat replacement that occurs after age 70. Treat it as an order-of-magnitude estimate - useful for comparison and trend-tracking, not as a precise measurement.</p>
 
       <h2 id="when-to-see-doctor">When to see your doctor</h2>
       <p>Contact a healthcare provider if any of the following apply:</p>
       <ul>
         <li>Unintentional weight loss of 5% or more in 6 months.</li>
-        <li>BMI below 22 — especially combined with reduced appetite, fatigue, or difficulty with daily activities.</li>
+        <li>BMI below 22 - especially combined with reduced appetite, fatigue, or difficulty with daily activities.</li>
         <li>Recent fall or unexplained weakness.</li>
         <li>BMI above 35 with joint pain, breathlessness, or high blood pressure.</li>
         <li>You are unsure whether your weight is appropriate for your health conditions or medications.</li>
       </ul>
-      <p>Many medications commonly prescribed to older adults affect weight — corticosteroids, antidepressants, antipsychotics, diabetes medications, and diuretics can all alter weight in ways that change how BMI should be interpreted.</p>
+      <p>Many medications commonly prescribed to older adults affect weight - corticosteroids, antidepressants, antipsychotics, diabetes medications, and diuretics can all alter weight in ways that change how BMI should be interpreted.</p>
 
       <h2 id="faq">FAQs</h2>
 
@@ -330,7 +330,7 @@ const schema = [
       <p>Most geriatric guidelines recommend a BMI of 23 to 27.5 as the optimal range for adults 65 and over. A BMI below 23 is associated with frailty and malnutrition risk in this age group. A BMI slightly above 25 does not carry the same health risk in older adults as it does in younger people.</p>
 
       <h3>Why is the healthy BMI range different for older adults?</h3>
-      <p>Two main reasons: low BMI in older adults is associated with muscle wasting, immune decline, falls, and higher mortality — risks that are less prominent at younger ages. And higher BMI (25–29.9) does not carry the same mortality increase in older adults as in younger adults, possibly because body weight provides a reserve during acute illness. These factors shift the optimal range upward.</p>
+      <p>Two main reasons: low BMI in older adults is associated with muscle wasting, immune decline, falls, and higher mortality - risks that are less prominent at younger ages. And higher BMI (25–29.9) does not carry the same mortality increase in older adults as in younger adults, possibly because body weight provides a reserve during acute illness. These factors shift the optimal range upward.</p>
 
       <h3>What is sarcopenia?</h3>
       <p>Sarcopenia is the age-related loss of muscle mass, strength, and function. It typically begins after age 40 and accelerates after 65. Adults can lose 3–8% of muscle mass per decade; after 70 this rate increases. Sarcopenia increases fall and fracture risk and can occur at any BMI, including normal weight.</p>
@@ -339,14 +339,14 @@ const schema = [
       <p>ESPEN guidelines define a BMI below 22 as a risk factor for malnutrition in adults over 70. More broadly, a BMI below 23 in this age group is below the senior optimal range and is associated with increased frailty risk. Unintentional weight loss of 5% or more in 6 months is a red flag at any BMI.</p>
 
       <h3>Is it dangerous to lose weight after 65?</h3>
-      <p>Intentional, gradual weight loss combined with resistance exercise is generally safe for older adults with obesity. Unintentional weight loss is a clinical warning sign associated with malignancy, depression, medication side effects, and accelerated frailty — any unintentional loss of 5% or more in 6 months warrants medical evaluation.</p>
+      <p>Intentional, gradual weight loss combined with resistance exercise is generally safe for older adults with obesity. Unintentional weight loss is a clinical warning sign associated with malignancy, depression, medication side effects, and accelerated frailty - any unintentional loss of 5% or more in 6 months warrants medical evaluation.</p>
 
       <h3>Why does BMI become less accurate in older adults?</h3>
       <p>Several factors reduce BMI accuracy in older adults: height decreases with age due to spinal compression (making BMI appear higher than it is), muscle is replaced by fat without changing weight (masking poor body composition), and fluid retention from conditions like oedema inflates weight. Waist circumference and grip strength tests are better health indicators than BMI alone in people over 65.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/health/bmi-calculator', blurb: 'Standard BMI calculator by age and sex with estimated body fat % — for adults aged 18–64.' },
+        { path: '/health/bmi-calculator', blurb: 'Standard BMI calculator by age and sex with estimated body fat % - for adults aged 18–64.' },
         { path: '/health/bmi-calculator/men', blurb: 'Men-specific BMI guide covering waist circumference, FFMI, and the testosterone-obesity connection.' },
         { path: '/health/bmi-calculator/women', blurb: 'Women-specific BMI guide covering menopause, normal weight obesity, and fat distribution.' },
         { path: '/health/bmi-calculator/teens' },

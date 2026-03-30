@@ -1,0 +1,54 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Image to Text (OCR) - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container ocr-container">
+
+      <div class="calculator-header">
+        <h2>Image to Text (OCR)</h2>
+        <p>Extract text from images and scanned PDFs - free, runs in your browser</p>
+      </div>
+
+      <div class="ce-drop" id="ocr-drop">
+        <div class="ce-drop-prompt">
+          <div class="ce-drop-label">Drop image or PDF here, or click to upload</div>
+          <div class="ce-drop-sub">PNG · JPG · WEBP · BMP · TIFF · PDF</div>
+        </div>
+        <div class="ce-file-info" id="ocr-file-info"></div>
+      </div>
+
+      <div id="ocr-progress-wrap" style="display:none" class="ocr-progress-wrap">
+        <div class="ocr-progress-track">
+          <div class="ocr-progress-fill" id="ocr-pb-bar"></div>
+        </div>
+        <div class="ocr-progress-label" id="ocr-pb-label">Loading...</div>
+      </div>
+
+      <div id="ocr-output" style="display:none">
+        <div class="diff-actions" style="margin-bottom:0.5rem">
+          <button class="diff-btn-secondary" onclick="copyOCRText()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy text</button>
+          <button class="diff-btn-secondary" onclick="downloadOCRText()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download .txt</button>
+        </div>
+        <textarea id="ocr-text" class="ocr-textarea" readonly spellcheck="false" placeholder="Extracted text will appear here..."></textarea>
+      </div>
+
+    </div>
+  </section>
+
+  <input type="file" id="ocr-file-input" style="display:none"
+    accept=".png,.jpg,.jpeg,.webp,.bmp,.tif,.tiff,.pdf" />
+  <div class="diff-toast"></div>
+  <script src="/js/image-to-text.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .ocr-container { max-width: 100% !important; }
+  .ocr-progress-wrap { padding: 0.75rem 0 0.25rem; }
+  .ocr-progress-track { background: rgba(255,255,255,0.08); border-radius: 999px; height: 6px; overflow: hidden; margin-bottom: 0.4rem; }
+  .ocr-progress-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px; width: 0%; transition: width 0.25s; }
+  .ocr-progress-label { font-size: 0.78rem; color: #94a3b8; text-align: center; }
+  .ocr-textarea { width: 100%; min-height: 240px; max-height: 400px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.78rem; padding: 0.75rem; resize: vertical; outline: none; line-height: 1.6; display: block; box-sizing: border-box; }
+  .ocr-textarea:focus { border-color: #3b82f6; }
+</style>

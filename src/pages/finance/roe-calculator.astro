@@ -61,7 +61,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "Can ROE be too high?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Extremely high ROE can result from excessive financial leverage (high debt), share buybacks that reduce equity base, or one-time income events — not from genuine operational excellence. For example, a company that buys back so many shares that equity becomes very small will show astronomical ROE with no improvement in business quality. Always check the equity multiplier in DuPont analysis to see how much of ROE is driven by leverage." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Extremely high ROE can result from excessive financial leverage (high debt), share buybacks that reduce equity base, or one-time income events - not from genuine operational excellence. For example, a company that buys back so many shares that equity becomes very small will show astronomical ROE with no improvement in business quality. Always check the equity multiplier in DuPont analysis to see how much of ROE is driven by leverage." }
       }
     ]
   }
@@ -70,7 +70,7 @@ const schema = [
 
 <CalculatorLayout
   title="Return on Equity Calculator"
-  metaTitle="ROE Calculator — Return on Equity & DuPont Analysis"
+  metaTitle="ROE Calculator - Return on Equity & DuPont Analysis"
   description="Calculate Return on Equity (ROE) from net income and shareholders' equity. Includes DuPont decomposition, industry benchmarks, and ROE vs. ROA vs. ROCE comparison."
   canonical="https://calculations.tools/finance/roe-calculator"
   tocItems={tocItems}
@@ -129,14 +129,14 @@ const schema = [
         <div id="roe-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="roe-val">—</div>
+              <div class="lbm-card-val" id="roe-val">-</div>
               <div class="lbm-card-lbl">Return on Equity</div>
             </div>
           </div>
 
           <div id="roe-dupont-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="roe-dupont-val">—</div>
+              <div class="lbm-card-val" id="roe-dupont-val">-</div>
               <div class="lbm-card-lbl">ROE (DuPont)</div>
             </div>
           </div>
@@ -145,11 +145,11 @@ const schema = [
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
               <span class="pi-step-label">Net Income / Equity × 100 = ROE</span>
-              <span class="pi-step-val" id="roe-step1">—</span>
+              <span class="pi-step-val" id="roe-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Margin × Turnover × Multiplier = ROE</span>
-              <span class="pi-step-val" id="roe-step2">—</span>
+              <span class="pi-step-val" id="roe-step2">-</span>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter <strong>Net Income</strong> (from the income statement — the bottom line after all expenses and taxes) and <strong>Shareholders' Equity</strong> (from the balance sheet: total assets minus total liabilities). For greater accuracy, use the <em>average</em> equity for the period: (beginning equity + ending equity) / 2. The calculator shows ROE as a percentage.</p>
+      <p>Enter <strong>Net Income</strong> (from the income statement - the bottom line after all expenses and taxes) and <strong>Shareholders' Equity</strong> (from the balance sheet: total assets minus total liabilities). For greater accuracy, use the <em>average</em> equity for the period: (beginning equity + ending equity) / 2. The calculator shows ROE as a percentage.</p>
       <p>Optionally complete the <strong>DuPont decomposition</strong> by entering Net Profit Margin (%), Asset Turnover, and Equity Multiplier to understand the three drivers of ROE.</p>
 
       <h2 id="formula">Return on Equity formula</h2>
@@ -180,7 +180,7 @@ const schema = [
       </ul>
       <p>Best practice is to use the average shareholders' equity for the period to account for equity changes (new shares issued, dividends paid, buybacks executed) during the year: Average Equity = (Beginning Equity + Ending Equity) / 2.</p>
 
-      <h2 id="dupont">DuPont analysis — decomposing ROE</h2>
+      <h2 id="dupont">DuPont analysis - decomposing ROE</h2>
       <p>The DuPont framework breaks ROE into three components, each measuring a different dimension of performance:</p>
       <Formula expr={f.dupont} />
       <div class="responsive-table">
@@ -195,7 +195,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>DuPont analysis reveals whether high ROE is driven by genuine operational excellence (high margins, efficient assets) or financial engineering (high leverage). Two companies with 20% ROE can be very different businesses: one with 10% margin, 1.0x turnover, 2.0x leverage vs. another with 5% margin, 0.8x turnover, 5.0x leverage — the second is far riskier.</p>
+      <p>DuPont analysis reveals whether high ROE is driven by genuine operational excellence (high margins, efficient assets) or financial engineering (high leverage). Two companies with 20% ROE can be very different businesses: one with 10% margin, 1.0x turnover, 2.0x leverage vs. another with 5% margin, 0.8x turnover, 5.0x leverage - the second is far riskier.</p>
 
       <h2 id="examples">Worked examples</h2>
       <div class="responsive-table">
@@ -241,13 +241,13 @@ const schema = [
             <tr><th>Metric</th><th>Denominator</th><th>Affected by leverage</th><th>Best used for</th></tr>
           </thead>
           <tbody>
-            <tr><td>ROE</td><td>Shareholders' equity</td><td>Yes — leverage amplifies ROE</td><td>Equity investors; management effectiveness</td></tr>
-            <tr><td>ROA</td><td>Total assets</td><td>No — uses total assets (debt + equity)</td><td>Comparing asset efficiency across companies</td></tr>
+            <tr><td>ROE</td><td>Shareholders' equity</td><td>Yes - leverage amplifies ROE</td><td>Equity investors; management effectiveness</td></tr>
+            <tr><td>ROA</td><td>Total assets</td><td>No - uses total assets (debt + equity)</td><td>Comparing asset efficiency across companies</td></tr>
             <tr><td>ROCE</td><td>Capital employed (equity + long-term debt)</td><td>Partially</td><td>Capital-intensive businesses; long-term allocation</td></tr>
           </tbody>
         </table>
       </div>
-      <p>A large gap between ROE and ROA indicates heavy use of financial leverage — the equity multiplier is inflating ROE. For companies with comparable leverage, ROE differences reflect genuine operational quality. When comparing highly leveraged companies (banks, utilities) use ROA or ROCE for a fairer comparison.</p>
+      <p>A large gap between ROE and ROA indicates heavy use of financial leverage - the equity multiplier is inflating ROE. For companies with comparable leverage, ROE differences reflect genuine operational quality. When comparing highly leveraged companies (banks, utilities) use ROA or ROCE for a fairer comparison.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
@@ -261,14 +261,14 @@ const schema = [
       <p>DuPont breaks ROE into three components: ROE = Net Profit Margin × Asset Turnover × Equity Multiplier. It shows whether ROE comes from profitability (margin), efficiency (asset turnover), or leverage (equity multiplier). High ROE from margins and turnover is sustainable; high ROE from leverage is riskier and cyclically vulnerable.</p>
 
       <h3>Can ROE be too high?</h3>
-      <p>Yes. Very high ROE can result from excessive debt (inflated equity multiplier), heavy share buybacks (reduced equity base), or one-time income events — none of which represent sustainable operational quality. Check DuPont components: if equity multiplier is above 3–4x, the high ROE is largely leverage-driven.</p>
+      <p>Yes. Very high ROE can result from excessive debt (inflated equity multiplier), heavy share buybacks (reduced equity base), or one-time income events - none of which represent sustainable operational quality. Check DuPont components: if equity multiplier is above 3–4x, the high ROE is largely leverage-driven.</p>
 
       <h3>What is the difference between ROE and ROA?</h3>
       <p>ROE uses equity as the denominator; ROA uses total assets. Because assets = equity + debt, ROA is not affected by how the company is financed. ROE rises when leverage increases; ROA stays the same. The difference between a company's ROE and ROA reflects the impact of financial leverage. ROA is better for comparing companies with different debt levels.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/finance/net-profit-margin-calculator',   blurb: 'Net profit margin — the "Net Margin" component of DuPont ROE.' },
+        { path: '/finance/net-profit-margin-calculator',   blurb: 'Net profit margin - the "Net Margin" component of DuPont ROE.' },
         { path: '/finance/roi-calculator',                 blurb: 'Calculate ROI, investment multiple, and annualized return.' },
         { path: '/finance/pe-ratio-calculator',            blurb: 'P/E ratio and earnings yield from stock price and EPS.' },
         { path: '/finance/ebitda-calculator',              blurb: 'EBITDA from Net Income, Interest, Tax, and D&A.' },

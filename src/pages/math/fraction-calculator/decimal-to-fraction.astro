@@ -109,15 +109,15 @@ const schema = [
 
         <div id="dtf-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
-            <span id="dtf-num" class="fc-res-num">—</span>
+            <span id="dtf-num" class="fc-res-num">-</span>
             <div class="fc-res-bar"></div>
-            <span id="dtf-den" class="fc-res-den">—</span>
+            <span id="dtf-den" class="fc-res-den">-</span>
           </div>
           <div class="lbm-primary-lbl">Fraction (simplified)</div>
 
           <div class="lbm-cards">
             <div class="lbm-card hidden" id="dtf-mixed-card">
-              <div class="lbm-card-val" id="dtf-mixed">—</div>
+              <div class="lbm-card-val" id="dtf-mixed">-</div>
               <div class="lbm-card-lbl">Mixed number</div>
             </div>
           </div>
@@ -125,16 +125,16 @@ const schema = [
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Method</span>
-              <span class="pi-step-val" id="dtf-step1">—</span>
+              <span class="pi-step-label">Step 1 - Method</span>
+              <span class="pi-step-val" id="dtf-step1">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Simplify (GCD)</span>
-              <span class="pi-step-val" id="dtf-step2">—</span>
+              <span class="pi-step-label">Step 2 - Simplify (GCD)</span>
+              <span class="pi-step-val" id="dtf-step2">-</span>
             </div>
             <div class="pi-step hidden" id="dtf-note-row">
               <span class="pi-step-label">Note</span>
-              <span class="pi-step-val" id="dtf-note">—</span>
+              <span class="pi-step-val" id="dtf-note">-</span>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter any decimal number — positive, negative, terminating, or repeating. The calculator returns the exact fraction in lowest terms, the mixed number (if applicable), and a step-by-step explanation of the conversion method used.</p>
+      <p>Enter any decimal number - positive, negative, terminating, or repeating. The calculator returns the exact fraction in lowest terms, the mixed number (if applicable), and a step-by-step explanation of the conversion method used.</p>
 
       <h2 id="terminating">Terminating decimals</h2>
       <p>A terminating decimal has a finite number of digits after the decimal point. The conversion is direct:</p>
@@ -237,7 +237,7 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Forgetting to simplify</h3>
-      <p>0.6 = 6/10, not the final answer — simplify with GCD(6,10) = 2 to get 3/5. Always divide by the GCD to reach the lowest terms.</p>
+      <p>0.6 = 6/10, not the final answer - simplify with GCD(6,10) = 2 to get 3/5. Always divide by the GCD to reach the lowest terms.</p>
 
       <h3>Treating 0.999… as less than 1</h3>
       <p>0.999… is exactly equal to 1. Using the repeating formula: 9/9 = 1. This is a proven mathematical identity, not an approximation.</p>
@@ -264,11 +264,11 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/fraction-calculator/fraction-to-decimal',           blurb: 'Reverse conversion — convert any fraction to its decimal form.' },
+        { path: '/math/fraction-calculator/fraction-to-decimal',           blurb: 'Reverse conversion - convert any fraction to its decimal form.' },
         { path: '/math/fraction-calculator/simplify',                      blurb: 'Reduce any fraction to lowest terms using the GCD method.' },
         { path: '/math/percentage-calculator/fraction-to-percent',         blurb: 'Convert any fraction to a percentage with step-by-step workings.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',          blurb: 'Convert a decimal to a percentage — multiply by 100.' },
-        { path: '/math/fraction-calculator',                               blurb: 'The main fraction calculator — add, subtract, multiply, and divide fractions.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',          blurb: 'Convert a decimal to a percentage - multiply by 100.' },
+        { path: '/math/fraction-calculator',                               blurb: 'The main fraction calculator - add, subtract, multiply, and divide fractions.' },
         { path: '/math/fraction-calculator/equivalent',                    blurb: 'Generate equivalent fractions for any fraction.' },
       ]} />
 

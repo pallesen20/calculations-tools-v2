@@ -1,0 +1,208 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',       label: 'How to use this tool' },
+  { id: 'supported-formats', label: 'Supported file formats' },
+  { id: 'how-it-works',     label: 'How browser-based OCR works' },
+  { id: 'accuracy-tips',    label: 'Getting accurate results' },
+  { id: 'use-cases',        label: 'Use cases' },
+  { id: 'faq',              label: 'FAQs' },
+  { id: 'related-tools',    label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Image to Text (OCR)",
+    "url": "https://calculations.tools/conversion/image-to-text",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Extract text from images and scanned PDFs online using browser-based OCR. Supports PNG, JPG, WEBP, BMP, TIFF, and PDF. Free, private, no upload to server.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What image formats does this OCR tool support?", "acceptedAnswer": { "@type": "Answer", "text": "The tool supports PNG, JPG, JPEG, WEBP, BMP, TIFF, and PDF files. For PDFs, each page is rendered as an image and OCR'd separately, then the text is combined." } },
+      { "@type": "Question", "name": "Is my image or PDF kept private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All processing happens entirely in your browser using Tesseract.js. Your file is never uploaded to any server at any point." } },
+      { "@type": "Question", "name": "What languages does this OCR tool support?", "acceptedAnswer": { "@type": "Answer", "text": "This tool recognises English text. Tesseract supports 100+ languages, but loading additional language packs would require significant download time per language. For non-English documents, dedicated OCR software with the appropriate language pack installed will give better results." } },
+      { "@type": "Question", "name": "How accurate is browser-based OCR?", "acceptedAnswer": { "@type": "Answer", "text": "Accuracy depends heavily on image quality. For high-resolution scans of printed text at 300 DPI or higher with good contrast, accuracy is typically 95–99%. Poor scan quality, low contrast, skewed pages, handwriting, or decorative fonts reduce accuracy significantly. Improving scan resolution and contrast before OCR will improve results." } },
+      { "@type": "Question", "name": "Can it read handwriting?", "acceptedAnswer": { "@type": "Answer", "text": "Not reliably. Tesseract is trained on printed text. It may recognise some clear block handwriting but should not be relied on for cursive or variable handwriting. Dedicated handwriting recognition models perform significantly better for that use case." } },
+      { "@type": "Question", "name": "Why is the extracted text jumbled or out of order?", "acceptedAnswer": { "@type": "Answer", "text": "OCR reads text in the order it appears in the image, which may not match visual reading order for multi-column layouts, tables, sidebars, or complex page designs. For single-column documents the order is usually correct. For complex layouts, minor manual reordering of the extracted text is expected." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Image to Text (OCR)"
+  metaTitle="Free Image to Text (OCR) | Convert Image & PDF to Text ᐅ"
+  description="Extract text from images and scanned PDFs online. Free browser-based OCR - supports PNG, JPG, WEBP, TIFF, and PDF. No upload to server. Powered by Tesseract.js."
+  canonical="https://calculations.tools/conversion/image-to-text"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="image-to-text"
+  ogFormula="OCR scan → text"
+  ogExample="Extract text from any image or scanned PDF"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container ocr-container">
+
+        <div class="calculator-header">
+          <h2>Convert Image & PDF to Text</h2>
+          <p>Extract text from images and scanned PDFs - free, private, runs in your browser</p>
+        </div>
+
+        <div class="ce-drop" id="ocr-drop">
+          <div class="ce-drop-prompt">
+            <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></div>
+            <div class="ce-drop-label">Drop image or PDF here, or click to upload</div>
+            <div class="ce-drop-sub">PNG · JPG · WEBP · BMP · TIFF · PDF</div>
+          </div>
+          <div class="ce-file-info" id="ocr-file-info"></div>
+        </div>
+
+        <div id="ocr-progress-wrap" style="display:none" class="ocr-progress-wrap">
+          <div class="ocr-progress-track">
+            <div class="ocr-progress-fill" id="ocr-pb-bar"></div>
+          </div>
+          <div class="ocr-progress-label" id="ocr-pb-label">Loading...</div>
+        </div>
+
+        <div id="ocr-output" style="display:none">
+          <div class="diff-actions" style="margin-bottom:0.5rem">
+            <button class="diff-btn-secondary" onclick="copyOCRText()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy text</button>
+            <button class="diff-btn-secondary" onclick="downloadOCRText()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download .txt</button>
+            <a class="diff-btn-secondary" href="/compare/text" target="_blank" rel="noopener">⇄ Open in Diff Checker</a>
+          </div>
+          <textarea id="ocr-text" class="ocr-textarea" readonly spellcheck="false" placeholder="Extracted text will appear here..."></textarea>
+        </div>
+
+      </div>
+    </section>
+
+    <input type="file" id="ocr-file-input" style="display:none"
+      accept=".png,.jpg,.jpeg,.webp,.bmp,.tif,.tiff,.pdf" />
+    <div class="diff-toast"></div>
+    <script src="/js/image-to-text.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Drop an image (PNG, JPG, WEBP, BMP, TIFF) or a scanned PDF into the box above, then wait for the progress bar to complete. The tool runs <strong>Tesseract.js</strong> entirely in your browser - your file is never uploaded to any server. Copy the result or download it as a .txt file, then open it in the <a href="/compare/text">Diff Checker</a> to compare two versions.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Drop a file into the upload zone or click it to browse. The tool detects whether the file is an image or a PDF automatically. For PDFs, each page is rendered to a canvas and OCR'd sequentially - a progress bar shows which page is being processed. For images, recognition starts immediately. When complete, the extracted text appears in the text box below. Use the Copy or Download buttons to save the result.</p>
+      <p>Tesseract.js (~25 MB including the English language model) loads from CDN the first time you use the tool. Subsequent uses in the same browser session skip this download.</p>
+
+      <h2 id="supported-formats">Supported file formats</h2>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Format</th><th>Extension</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>JPEG</td><td>.jpg, .jpeg</td><td>Most common for photos and scanned documents</td></tr>
+          <tr><td>PNG</td><td>.png</td><td>Best for screenshots and documents with text on white backgrounds</td></tr>
+          <tr><td>WebP</td><td>.webp</td><td>Modern image format used by many web apps and screenshots</td></tr>
+          <tr><td>BMP</td><td>.bmp</td><td>Uncompressed Windows bitmap; large files but lossless</td></tr>
+          <tr><td>TIFF</td><td>.tif, .tiff</td><td>Standard format for high-resolution document scans</td></tr>
+          <tr><td>PDF (scanned)</td><td>.pdf</td><td>Each page rendered to image then OCR'd. Text-based PDFs: use <a href="/compare/pdf">Compare PDF</a> instead</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>If you have a text-based (non-scanned) PDF, the <a href="/compare/pdf">Compare PDF</a> tool extracts the embedded text layer directly - much faster and more accurate than OCR.</p>
+
+      <h2 id="how-it-works">How browser-based OCR works</h2>
+      <p>This tool uses <a href="https://github.com/naptha/tesseract.js" rel="nofollow">Tesseract.js</a>, a WebAssembly port of Google's Tesseract OCR engine. Tesseract is one of the most widely used open-source OCR engines, originally developed at HP and maintained by Google since 2006.</p>
+      <p>The recognition pipeline has three stages:</p>
+      <ol>
+        <li><strong>Image preprocessing.</strong> The image is loaded into the browser's memory. For PDFs, PDF.js renders each page to a canvas element at 2× scale (approximately 144 DPI).</li>
+        <li><strong>Layout analysis.</strong> Tesseract segments the image into text blocks, lines, words, and characters using its LSTM neural network model.</li>
+        <li><strong>Character recognition.</strong> Each character is classified against the trained English model and assembled into words and lines.</li>
+      </ol>
+      <p>All of this happens inside your browser tab, using WebAssembly for near-native performance. No data leaves your device.</p>
+
+      <h2 id="accuracy-tips">Getting accurate results</h2>
+      <p>OCR accuracy depends almost entirely on input quality. The same engine can achieve 99% accuracy on a clean 300 DPI scan and under 70% on a blurry photo of a document. The most impactful things you can do:</p>
+      <ul>
+        <li><strong>Scan at 300 DPI or higher.</strong> Below 200 DPI, character edges become too blurry for reliable recognition. Most scanner apps default to 200–300 DPI; set it to at least 300.</li>
+        <li><strong>Maximise contrast.</strong> Black text on white paper is ideal. Coloured backgrounds, watermarks, and faint text all reduce accuracy. Convert to greyscale before scanning if possible.</li>
+        <li><strong>Keep the page flat and straight.</strong> Curved pages (from book scans), skewed pages, or folded corners introduce geometric distortion. Most scanner software includes a deskew option.</li>
+        <li><strong>Use a consistent font.</strong> Standard serif and sans-serif fonts (Times New Roman, Arial, Helvetica) are recognised with much higher accuracy than decorative, handwritten, or stylised typefaces.</li>
+        <li><strong>Avoid JPEG compression artefacts.</strong> JPEG compression at low quality settings introduces blocky artefacts around text edges. PNG or TIFF at 300 DPI produces cleaner input.</li>
+      </ul>
+
+      <h2 id="use-cases">Use cases</h2>
+      <h3>Digitising scanned contracts and legal documents</h3>
+      <p>Older contracts, agreements, and legal filings stored as scanned PDFs contain no embedded text. Extract the text layer with this tool, then compare two versions using the <a href="/compare/text">Diff Checker</a> or <a href="/compare/documents">Compare Documents</a> tool to identify changes between drafts.</p>
+      <h3>Extracting text from screenshots</h3>
+      <p>When text is locked inside a screenshot - a software error message, a social media post, a slide from a presentation - OCR converts it to editable text in seconds without manual retyping.</p>
+      <h3>Processing scanned academic papers</h3>
+      <p>Many older research papers, theses, and textbooks are only available as scanned images. OCR extracts the text so it can be searched, quoted, or summarised.</p>
+      <h3>Business card and invoice data extraction</h3>
+      <p>Photographs of business cards, receipts, or invoices contain structured text that OCR can extract. The result can then be cleaned up manually or fed into a spreadsheet.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>Is my file kept private?</h3>
+      <p>Yes. The entire OCR process runs inside your browser using WebAssembly. Your file never leaves your device and is never sent to any server.</p>
+      <h3>What languages are supported?</h3>
+      <p>This tool recognises English. Tesseract supports 100+ languages, but each language model is 10–20 MB. Loading multiple language packs in the browser would result in large downloads. For non-English documents, dedicated desktop OCR software (such as Adobe Acrobat, ABBYY FineReader, or Tesseract CLI with the appropriate language pack) will give better results.</p>
+      <h3>How accurate is it?</h3>
+      <p>For clean, high-resolution scans of printed English text (300 DPI, good contrast, standard fonts), accuracy is typically 95–99%. Blurry photos, low contrast, skewed pages, handwriting, or decorative fonts reduce accuracy. See <a href="#accuracy-tips">Getting accurate results</a> above.</p>
+      <h3>Can it read handwriting?</h3>
+      <p>Not reliably. Tesseract is trained primarily on printed typefaces. It may recognise some clear, printed-style handwriting but performs poorly on cursive script. For handwriting recognition, dedicated tools trained on handwritten text (such as Google Lens or Microsoft Azure AI Vision) are significantly more accurate.</p>
+      <h3>Why is the text in the wrong order?</h3>
+      <p>OCR reads text in the order Tesseract detects text blocks in the image, which may not match top-to-bottom reading order for multi-column layouts, tables, sidebars, or footnotes. Single-column documents usually come out in correct order. For complex layouts, manual reordering of sections in the extracted text is normal.</p>
+      <h3>My PDF has text but OCR gives garbage output</h3>
+      <p>If your PDF already has an embedded text layer (i.e. it is not a scanned image), do not use this tool. Use the <a href="/compare/pdf">Compare PDF</a> tool instead - it extracts the embedded text directly, which is faster and perfectly accurate. This OCR tool is specifically for scanned PDFs where no text layer exists.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⇄</span>
+          <div>
+            <a href="/compare/text">Diff Checker</a>
+            <p>Paste or upload any extracted text and compare two versions line by line with color-coded diff output.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📄</span>
+          <div>
+            <a href="/compare/pdf">Compare PDF Files</a>
+            <p>For text-based PDFs (not scanned), extract and compare text content directly without OCR.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📝</span>
+          <div>
+            <a href="/compare/documents">Compare Word Documents</a>
+            <p>Compare two .docx files and find every text difference line by line.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .ocr-container { max-width: 100% !important; }
+  .ocr-progress-wrap { padding: 0.75rem 0 0.25rem; }
+  .ocr-progress-track { background: rgba(255,255,255,0.08); border-radius: 999px; height: 6px; overflow: hidden; margin-bottom: 0.4rem; }
+  .ocr-progress-fill { height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); border-radius: 999px; width: 0%; transition: width 0.25s; }
+  .ocr-progress-label { font-size: 0.78rem; color: #94a3b8; text-align: center; }
+  .ocr-textarea { width: 100%; min-height: 260px; max-height: 520px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.8rem; padding: 0.75rem; resize: vertical; outline: none; line-height: 1.6; display: block; box-sizing: border-box; }
+  .ocr-textarea:focus { border-color: #3b82f6; }
+</style>

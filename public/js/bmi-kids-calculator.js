@@ -94,7 +94,7 @@
       tooLow:  'For children under 2, use a WHO infant growth chart. This calculator covers ages 2–12.',
     },
     teens: {
-      tooHigh: 'Age 20 or older? Switch to our <a href="/health/bmi-calculator">adult BMI Calculator</a> — adults use fixed category thresholds, not percentiles.',
+      tooHigh: 'Age 20 or older? Switch to our <a href="/health/bmi-calculator">adult BMI Calculator</a> - adults use fixed category thresholds, not percentiles.',
       tooLow:  'Age 2–12? Our <a href="/health/bmi-calculator/kids">BMI Calculator for Kids</a> gives more accurate results for younger children.',
     },
   };
@@ -115,7 +115,7 @@
     }
   }
 
-  // Standard normal CDF — Abramowitz & Stegun approximation
+  // Standard normal CDF - Abramowitz & Stegun approximation
   function normalCDF(z) {
     const t = 1 / (1 + 0.2316419 * Math.abs(z));
     const poly = t * (0.319381530 + t * (-0.356563782 + t * (1.781477937 + t * (-1.821255978 + t * 1.330274429))));
@@ -235,7 +235,7 @@
         return;
       }
 
-      // Age outside this page's mode range — show redirect
+      // Age outside this page's mode range - show redirect
       if (mode === 'kids' && ageTotal >= 13) {
         showRedirect(REDIRECT.kids.tooHigh);
         return;

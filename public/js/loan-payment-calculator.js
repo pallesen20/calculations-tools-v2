@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function fmtCard(n) {
-    if (!isFinite(n)) return '—';
+    if (!isFinite(n)) return '-';
     const abs = Math.abs(n), sign = n < 0 ? '-' : '';
     if (abs >= 1e9) return sign + '$' + (abs / 1e9).toFixed(2) + 'B';
     if (abs >= 1e6) return sign + '$' + (abs / 1e6).toFixed(2) + 'M';

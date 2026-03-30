@@ -57,7 +57,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "Can percent to goal exceed 100%?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. If the current value exceeds the goal, the result is above 100%, indicating over-achievement. For example, closing 1,200 deals against a target of 1,000 gives 120% of goal — a 20% over-attainment. Values above 100% are valid and desirable in sales and fundraising contexts." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. If the current value exceeds the goal, the result is above 100%, indicating over-achievement. For example, closing 1,200 deals against a target of 1,000 gives 120% of goal - a 20% over-attainment. Values above 100% are valid and desirable in sales and fundraising contexts." }
       },
       {
         "@type": "Question",
@@ -72,7 +72,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What if my goal is a reduction (e.g. reducing costs)?",
-        "acceptedAnswer": { "@type": "Answer", "text": "For reduction goals, reframe the current value as progress made: if you want to cut costs from $100,000 to $80,000 and you are currently at $88,000, the reduction achieved is $12,000 out of a $20,000 target — 60% of goal. Enter 12000 as current and 20000 as goal." }
+        "acceptedAnswer": { "@type": "Answer", "text": "For reduction goals, reframe the current value as progress made: if you want to cut costs from $100,000 to $80,000 and you are currently at $88,000, the reduction achieved is $12,000 out of a $20,000 target - 60% of goal. Enter 12000 as current and 20000 as goal." }
       }
     ]
   }
@@ -114,13 +114,13 @@ const schema = [
 
         <div id="ptg-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="ptg-pct">—</span>
+            <span class="lbm-primary-val" id="ptg-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percent to Goal</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ptg-remaining">—</div>
+              <div class="lbm-card-val" id="ptg-remaining">-</div>
               <div class="lbm-card-lbl">Progress status</div>
             </div>
           </div>
@@ -128,12 +128,12 @@ const schema = [
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Divide</span>
-              <span id="ptg-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Divide</span>
+              <span id="ptg-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Multiply by 100</span>
-              <span id="ptg-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Multiply by 100</span>
+              <span id="ptg-step2" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -152,13 +152,13 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter your <strong>current value</strong> — the progress achieved so far — and your <strong>goal</strong> — the target to reach. The calculator returns the percent to goal, the amount remaining (or over-attainment), and a two-step breakdown.</p>
+      <p>Enter your <strong>current value</strong> - the progress achieved so far - and your <strong>goal</strong> - the target to reach. The calculator returns the percent to goal, the amount remaining (or over-attainment), and a two-step breakdown.</p>
       <p>Use this calculator for any goal tracked as a number: sales quotas, fundraising targets, fitness goals, project milestones, or any scenario where you want to express progress as a percentage of a target. For a goal progress visualizer, see our <a href="/math/percentage-calculator/progress-tracker">progress tracker</a>.</p>
 
       <h2 id="formula">Percent to goal formula</h2>
       <p>The formula is a simple ratio expressed as a percentage:</p>
       <Formula expr={f.main} />
-      <p>The denominator is always the <em>goal</em> (the target), not the starting point. This is what distinguishes percent to goal from percent change — there is no "starting point" in this calculation, only a current value relative to a fixed target.</p>
+      <p>The denominator is always the <em>goal</em> (the target), not the starting point. This is what distinguishes percent to goal from percent change - there is no "starting point" in this calculation, only a current value relative to a fixed target.</p>
 
       <h2 id="examples">Worked examples</h2>
 
@@ -196,7 +196,7 @@ const schema = [
       <h2 id="over-100">When you exceed 100%</h2>
       <p>A result above 100% is valid and means you have <strong>exceeded your goal</strong>. If a rep closes 1,200 deals against a 1,000-unit target:</p>
       <Formula expr={f.over} />
-      <p>This represents <strong>120% attainment</strong> — 20% over the target. In sales compensation, over-attainment is often rewarded with accelerated commission rates. The formula handles any positive current value, including those above the goal.</p>
+      <p>This represents <strong>120% attainment</strong> - 20% over the target. In sales compensation, over-attainment is often rewarded with accelerated commission rates. The formula handles any positive current value, including those above the goal.</p>
       <p>Note: if your goal itself is zero or negative, the formula breaks down mathematically (division by zero or inverted sign). In those cases, reframe the goal as a positive number representing the magnitude of the desired change.</p>
 
       <h2 id="multiple-goals">Tracking multiple goals</h2>
@@ -215,7 +215,7 @@ const schema = [
           <tbody>
             <tr><td>Revenue</td><td>60%</td><td>80%</td><td>48%</td></tr>
             <tr><td>New customers</td><td>40%</td><td>50%</td><td>20%</td></tr>
-            <tr><td><strong>Weighted total</strong></td><td><strong>100%</strong></td><td>—</td><td><strong>68%</strong></td></tr>
+            <tr><td><strong>Weighted total</strong></td><td><strong>100%</strong></td><td>-</td><td><strong>68%</strong></td></tr>
           </tbody>
         </table>
       </div>
@@ -234,7 +234,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>Example: a sales rep started the quarter at 0 deals and reached 750 against a 1,000-unit goal. Percent to goal is 75%. Percent change from the previous quarter (when they had 500 deals) is (750 − 500) / 500 × 100 = +50%. Both are useful but answer different questions — progress toward a target vs. growth over time.</p>
+      <p>Example: a sales rep started the quarter at 0 deals and reached 750 against a 1,000-unit goal. Percent to goal is 75%. Percent change from the previous quarter (when they had 500 deals) is (750 − 500) / 500 × 100 = +50%. Both are useful but answer different questions - progress toward a target vs. growth over time.</p>
 
       <h2 id="common-mistakes">Common mistakes</h2>
 
@@ -245,7 +245,7 @@ const schema = [
       <p>The denominator is always the <em>goal</em>, not how much is left. 750 / 250 = 3.0 (300%), which is not meaningful here.</p>
 
       <h3>Confusing percent to goal with percent change</h3>
-      <p>If you started the year at $200,000 revenue and the goal is $400,000, a current value of $300,000 is <strong>75% to goal</strong> — not a 50% increase (which would be the growth from $200,000 to $300,000).</p>
+      <p>If you started the year at $200,000 revenue and the goal is $400,000, a current value of $300,000 is <strong>75% to goal</strong> - not a 50% increase (which would be the growth from $200,000 to $300,000).</p>
 
       <h3>Setting the goal to zero</h3>
       <p>Division by zero is undefined. A goal must be a non-zero number. If you are reducing something to zero (e.g. eliminating backlog), reframe: set the goal as the magnitude of the reduction you want to achieve, and the current value as how much of that reduction you have already made.</p>
@@ -256,7 +256,7 @@ const schema = [
       <p>It expresses how much of a target you have achieved as a percentage: (Current ÷ Goal) × 100. It is also called "goal attainment rate," "percent of target," or "percent of quota."</p>
 
       <h3>Can percent to goal exceed 100%?</h3>
-      <p>Yes. A value above 100% means over-achievement. Entering 1,200 against a goal of 1,000 gives 120% — 20% above the target.</p>
+      <p>Yes. A value above 100% means over-achievement. Entering 1,200 against a goal of 1,000 gives 120% - 20% above the target.</p>
 
       <h3>How do I track progress across multiple goals?</h3>
       <p>For equal goals, average the individual attainment percentages. For weighted goals, multiply each attainment by its weight and sum. This is the weighted average method used in OKR and sales compensation frameworks.</p>
@@ -265,16 +265,16 @@ const schema = [
       <p>Percent to goal divides by the target (goal). Percent change divides by the starting value (old value). They answer different questions: progress toward a fixed target vs. growth over a period.</p>
 
       <h3>What if my goal is a reduction (e.g. reducing defects)?</h3>
-      <p>Reframe the goal as a positive magnitude. If you want to cut defects from 500 to 300 (a 200-unit reduction) and you are currently at 380 defects, you have reduced by 120 units out of a 200-unit goal — enter 120 as current and 200 as goal to get 60% of goal.</p>
+      <p>Reframe the goal as a positive magnitude. If you want to cut defects from 500 to 300 (a 200-unit reduction) and you are currently at 380 defects, you have reduced by 120 units out of a 200-unit goal - enter 120 as current and 200 as goal to get 60% of goal.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator/progress-tracker', },
-        { path: '/math/percentage-calculator',                    blurb: 'The main percentage calculator — percentage of a number, increase, decrease, and more.' },
-        { path: '/math/percentage-calculator/change',             blurb: 'Percent change calculator — measures relative change from a starting value over time.' },
-        { path: '/math/percentage-calculator/increase',           blurb: 'Percent increase calculator — dedicated tool for positive percentage changes.' },
-        { path: '/math/percentage-calculator/percentage-point',   blurb: 'Percentage point calculator — find the pp difference between two percentage values.' },
-        { path: '/math/percentage-calculator/average',            blurb: 'Average percentage calculator — arithmetic mean and weighted average of percentages.' },
+        { path: '/math/percentage-calculator',                    blurb: 'The main percentage calculator - percentage of a number, increase, decrease, and more.' },
+        { path: '/math/percentage-calculator/change',             blurb: 'Percent change calculator - measures relative change from a starting value over time.' },
+        { path: '/math/percentage-calculator/increase',           blurb: 'Percent increase calculator - dedicated tool for positive percentage changes.' },
+        { path: '/math/percentage-calculator/percentage-point',   blurb: 'Percentage point calculator - find the pp difference between two percentage values.' },
+        { path: '/math/percentage-calculator/average',            blurb: 'Average percentage calculator - arithmetic mean and weighted average of percentages.' },
       ]} />
 
     </div>

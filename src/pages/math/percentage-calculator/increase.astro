@@ -69,7 +69,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between percentage increase and percentage points?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A percentage increase is a relative change — it measures growth relative to the original value. A percentage point is an absolute difference between two percentages. If an interest rate rises from 2% to 3%, that is a 1 percentage point increase but a 50% increase relative to the original rate." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A percentage increase is a relative change - it measures growth relative to the original value. A percentage point is an absolute difference between two percentages. If an interest rate rises from 2% to 3%, that is a 1 percentage point increase but a 50% increase relative to the original rate." }
       },
       {
         "@type": "Question",
@@ -121,31 +121,31 @@ const schema = [
 
         <div id="pi-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="pi-pct">—</span>
+            <span class="lbm-primary-val" id="pi-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage Increase</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pi-abs">—</div>
+              <div class="lbm-card-val" id="pi-abs">-</div>
               <div class="lbm-card-lbl">Absolute change</div>
-              <div class="lbm-card-badge" id="pi-badge">—</div>
+              <div class="lbm-card-badge" id="pi-badge">-</div>
             </div>
           </div>
 
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Subtract</span>
-              <span id="pi-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Subtract</span>
+              <span id="pi-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Divide</span>
-              <span id="pi-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Divide</span>
+              <span id="pi-step2" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 3 — Multiply by 100</span>
-              <span id="pi-step3" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 3 - Multiply by 100</span>
+              <span id="pi-step3" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -164,7 +164,7 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the original (old) value and the new value. The percentage increase appears instantly, along with the absolute change and a three-step breakdown of the calculation. If the new value is smaller than the original, the result will be negative — indicating a decrease.</p>
+      <p>Enter the original (old) value and the new value. The percentage increase appears instantly, along with the absolute change and a three-step breakdown of the calculation. If the new value is smaller than the original, the result will be negative - indicating a decrease.</p>
 
       <h2 id="formula">Percentage increase formula</h2>
       <p>The percentage increase formula measures how much a value has grown relative to its starting point:</p>
@@ -173,7 +173,7 @@ const schema = [
 
       <p>The original value is always the denominator. Dividing by the new value is the single most common error in percentage increase calculations.</p>
 
-      <p>The formula produces a signed result: positive means an increase, negative means a decrease. The word "increase" describes a direction — if the result is negative, the quantity has decreased rather than increased.</p>
+      <p>The formula produces a signed result: positive means an increase, negative means a decrease. The word "increase" describes a direction - if the result is negative, the quantity has decreased rather than increased.</p>
 
       <h2 id="examples">Worked examples</h2>
 
@@ -257,7 +257,7 @@ const schema = [
       <p>Yes. A 100% increase doubles the original value. A 200% increase triples it. There is no mathematical upper limit on percentage increase.</p>
 
       <h3>What is the difference between percentage increase and percentage points?</h3>
-      <p>A percentage increase is relative — it measures growth relative to the original value. A percentage point is an absolute difference between two percentages. If an interest rate rises from 2% to 3%, that is a 1 percentage point rise but a 50% increase relative to the original rate.</p>
+      <p>A percentage increase is relative - it measures growth relative to the original value. A percentage point is an absolute difference between two percentages. If an interest rate rises from 2% to 3%, that is a 1 percentage point rise but a 50% increase relative to the original rate.</p>
 
       <h3>Is percentage increase the same as percentage change?</h3>
       <p>Percentage change is the broader term that covers both increases (positive) and decreases (negative). The formula is identical. "Percentage increase" refers specifically to cases where the new value exceeds the original.</p>
@@ -267,15 +267,15 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
         { path: '/math/percentage-calculator/decrease', blurb: 'Dedicated percentage decrease calculator with step-by-step workings and a reference table.' },
-        { path: '/math/percentage-calculator/change',      blurb: 'Percentage change calculator — covers both increases and decreases with a signed result.' },
-        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
-        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
-        { path: '/date-calculator',                           blurb: 'Calculate the number of days or months between two dates — useful when the percentage increase spans a time period.' },
-        { path: '/conversion/currency-converter',  blurb: 'Convert between 150+ currencies with live rates — useful when the values in your percentage calculation are in different currencies.' },
+        { path: '/math/percentage-calculator/change',      blurb: 'Percentage change calculator - covers both increases and decreases with a signed result.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator - compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator - arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage - multiply by 100, with a reference table for common decimals.' },
+        { path: '/date-calculator',                           blurb: 'Calculate the number of days or months between two dates - useful when the percentage increase spans a time period.' },
+        { path: '/conversion/currency-converter',  blurb: 'Convert between 150+ currencies with live rates - useful when the values in your percentage calculation are in different currencies.' },
       ]} />
 
       <RelatedGlossaryTerms toolPath="/math/percentage-calculator/increase" />

@@ -62,7 +62,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What does it mean for a fraction to be in its simplest form?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A fraction is in its simplest form (or lowest terms) when its numerator and denominator share no common factor other than 1 — their GCD equals 1. For example, 3/4 is in simplest form, but 6/8 is not because GCD(6, 8) = 2." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A fraction is in its simplest form (or lowest terms) when its numerator and denominator share no common factor other than 1 - their GCD equals 1. For example, 3/4 is in simplest form, but 6/8 is not because GCD(6, 8) = 2." }
       },
       {
         "@type": "Question",
@@ -132,23 +132,23 @@ const schema = [
 
         <div id="fc-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
-            <span id="fc-res-n" class="fc-res-num">—</span>
+            <span id="fc-res-n" class="fc-res-num">-</span>
             <div class="fc-res-bar" id="fc-res-bar"></div>
-            <span id="fc-res-d" class="fc-res-den">—</span>
+            <span id="fc-res-d" class="fc-res-den">-</span>
           </div>
           <div class="lbm-primary-lbl">Simplified fraction</div>
 
           <div class="lbm-cards">
             <div class="lbm-card hidden" id="fc-mixed-card">
-              <div class="lbm-card-val" id="fc-mixed">—</div>
+              <div class="lbm-card-val" id="fc-mixed">-</div>
               <div class="lbm-card-lbl">Mixed number</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="fc-decimal">—</div>
+              <div class="lbm-card-val" id="fc-decimal">-</div>
               <div class="lbm-card-lbl">Decimal</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="fc-percent">—</div>
+              <div class="lbm-card-val" id="fc-percent">-</div>
               <div class="lbm-card-lbl">Percentage</div>
             </div>
           </div>
@@ -157,15 +157,15 @@ const schema = [
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step hidden" id="fc-step1-row">
               <span class="pi-step-label" id="fc-step1-lbl">Step 1</span>
-              <span class="pi-step-val" id="fc-step1-val">—</span>
+              <span class="pi-step-val" id="fc-step1-val">-</span>
             </div>
             <div class="pi-step hidden" id="fc-step2-row">
               <span class="pi-step-label" id="fc-step2-lbl">Step 2</span>
-              <span class="pi-step-val" id="fc-step2-val">—</span>
+              <span class="pi-step-val" id="fc-step2-val">-</span>
             </div>
             <div class="pi-step hidden" id="fc-step3-row">
               <span class="pi-step-label" id="fc-step3-lbl">Step 3</span>
-              <span class="pi-step-val" id="fc-step3-val">—</span>
+              <span class="pi-step-val" id="fc-step3-val">-</span>
             </div>
           </div>
         </div>
@@ -185,18 +185,18 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the numerator and denominator of any fraction. The calculator finds the GCD, divides both parts, and shows the simplified result as a fraction, mixed number (where applicable), decimal, and percentage — along with a three-step GCD breakdown.</p>
+      <p>Enter the numerator and denominator of any fraction. The calculator finds the GCD, divides both parts, and shows the simplified result as a fraction, mixed number (where applicable), decimal, and percentage - along with a three-step GCD breakdown.</p>
 
       <h2 id="formula">Simplifying fractions formula</h2>
       <p>A fraction is in its simplest form (lowest terms) when the numerator and denominator share no common factor other than 1. The reduction formula is:</p>
       <Formula expr={f.formula} />
-      <p>GCD (Greatest Common Divisor) is also written as GCF (Greatest Common Factor) or HCF (Highest Common Factor) — all refer to the same value: the largest integer that divides both numbers exactly.</p>
+      <p>GCD (Greatest Common Divisor) is also written as GCF (Greatest Common Factor) or HCF (Highest Common Factor) - all refer to the same value: the largest integer that divides both numbers exactly.</p>
 
       <h2 id="gcd">Finding the GCD</h2>
       <p>Three methods exist, each suited to different situations:</p>
 
       <h3>Method 1: Euclidean algorithm (fastest)</h3>
-      <p>Repeatedly divide the larger number by the smaller and take the remainder. Stop when the remainder is 0 — the last non-zero remainder is the GCD:</p>
+      <p>Repeatedly divide the larger number by the smaller and take the remainder. Stop when the remainder is 0 - the last non-zero remainder is the GCD:</p>
       <Formula expr={f.euclidean} />
       <p>This method works efficiently on any pair of integers, regardless of size.</p>
 
@@ -214,7 +214,7 @@ const schema = [
 
       <h3>Example 2: different path, same result</h3>
       <Formula expr={f.ex2} />
-      <p>GCD(36, 48) = 12. Both 18/24 and 36/48 simplify to 3/4 — they are equivalent fractions at different scales.</p>
+      <p>GCD(36, 48) = 12. Both 18/24 and 36/48 simplify to 3/4 - they are equivalent fractions at different scales.</p>
 
       <div class="responsive-table">
         <table>
@@ -235,7 +235,7 @@ const schema = [
       </div>
 
       <h2 id="already-simplified">Already in simplest form</h2>
-      <p>If the GCD of numerator and denominator equals 1, the fraction cannot be reduced further — it is already in its simplest form:</p>
+      <p>If the GCD of numerator and denominator equals 1, the fraction cannot be reduced further - it is already in its simplest form:</p>
       <Formula expr={f.ex3} />
       <p>7 and 13 are both prime and share no common factor. GCD = 1, so 7/13 is already simplified. Any fraction where both numerator and denominator are prime numbers (and unequal) is automatically in lowest terms.</p>
 
@@ -253,10 +253,10 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Dividing by a common factor that is not the GCD</h3>
-      <p>Any common factor reduces the fraction, but only dividing by the GCD reduces it in one step to its simplest form. Dividing 18/24 by 2 gives 9/12 — correct but not fully simplified. Dividing by GCD(18, 24) = 6 reaches 3/4 directly.</p>
+      <p>Any common factor reduces the fraction, but only dividing by the GCD reduces it in one step to its simplest form. Dividing 18/24 by 2 gives 9/12 - correct but not fully simplified. Dividing by GCD(18, 24) = 6 reaches 3/4 directly.</p>
 
       <h3>Thinking that simplification changes the value</h3>
-      <p>Simplifying a fraction does not change its value — it changes its representation. 18/24, 9/12, 6/8, 3/4 are all the same number (0.75). Simplest form is the most compact representation.</p>
+      <p>Simplifying a fraction does not change its value - it changes its representation. 18/24, 9/12, 6/8, 3/4 are all the same number (0.75). Simplest form is the most compact representation.</p>
 
       <h3>Stopping too early</h3>
       <p>A common error is to divide by a factor that is not the GCD, resulting in a fraction that can still be reduced. Always verify the result: if GCD(new numerator, new denominator) = 1, the simplification is complete.</p>
@@ -270,7 +270,7 @@ const schema = [
       <p>Find the GCD of the numerator and denominator, then divide both by it. The result is the fraction in its lowest terms.</p>
 
       <h3>What does simplest form mean?</h3>
-      <p>A fraction is in simplest form when its numerator and denominator share no common factor other than 1 — their GCD is 1.</p>
+      <p>A fraction is in simplest form when its numerator and denominator share no common factor other than 1 - their GCD is 1.</p>
 
       <h3>What is the GCD?</h3>
       <p>The Greatest Common Divisor is the largest integer that divides both numbers exactly. Dividing both parts of a fraction by their GCD reduces it to simplest form in one step.</p>
@@ -279,20 +279,20 @@ const schema = [
       <p>The Euclidean algorithm is the fastest method: divide the larger by the smaller, take the remainder, and repeat until the remainder is 0. The last non-zero remainder is the GCD.</p>
 
       <h3>Can an improper fraction be simplified?</h3>
-      <p>Yes — apply the same GCD method. The simplified result may remain improper, or it may convert to a whole number or mixed number.</p>
+      <p>Yes - apply the same GCD method. The simplified result may remain improper, or it may convert to a whole number or mixed number.</p>
 
       <h3>What if the GCD is 1?</h3>
       <p>The fraction is already in simplest form and cannot be reduced further. This applies to all fractions where numerator and denominator are coprime.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — add, subtract, multiply, divide, and simplify all in one tool.' },
-        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions step by step — LCD method with simplified result, decimal, and percentage.' },
-        { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions step by step — LCD method with step-by-step workings.' },
-        { path: '/math/fraction-calculator/multiply',  blurb: 'Multiply fractions — straight numerator × numerator with step-by-step simplification.' },
+        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator - add, subtract, multiply, divide, and simplify all in one tool.' },
+        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions step by step - LCD method with simplified result, decimal, and percentage.' },
+        { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions step by step - LCD method with step-by-step workings.' },
+        { path: '/math/fraction-calculator/multiply',  blurb: 'Multiply fractions - straight numerator × numerator with step-by-step simplification.' },
         { path: '/math/fraction-calculator/divide',    blurb: 'Divide fractions using the keep-change-flip method with step-by-step workings.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal and step-by-step workings.' },
-        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, percentage change, and more.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal and step-by-step workings.' },
+        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator - percentage of a number, percentage change, and more.' },
       ]} />
 
     </div>

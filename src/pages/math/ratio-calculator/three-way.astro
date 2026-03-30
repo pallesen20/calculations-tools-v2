@@ -108,30 +108,30 @@ const schema = [
         <div id="tw-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="tw-pct-a">—</div>
+              <div class="lbm-card-val" id="tw-pct-a">-</div>
               <div class="lbm-card-lbl">Part A (%)</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="tw-pct-b">—</div>
+              <div class="lbm-card-val" id="tw-pct-b">-</div>
               <div class="lbm-card-lbl">Part B (%)</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="tw-pct-c">—</div>
+              <div class="lbm-card-val" id="tw-pct-c">-</div>
               <div class="lbm-card-lbl">Part C (%)</div>
             </div>
           </div>
 
           <div id="tw-split-cards" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="tw-share-a">—</div>
+              <div class="lbm-card-val" id="tw-share-a">-</div>
               <div class="lbm-card-lbl">A's share</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="tw-share-b">—</div>
+              <div class="lbm-card-val" id="tw-share-b">-</div>
               <div class="lbm-card-lbl">B's share</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="tw-share-c">—</div>
+              <div class="lbm-card-val" id="tw-share-c">-</div>
               <div class="lbm-card-lbl">C's share</div>
             </div>
           </div>
@@ -140,15 +140,15 @@ const schema = [
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
               <span class="pi-step-label">Total parts</span>
-              <span class="pi-step-val" id="tw-step1">—</span>
+              <span class="pi-step-val" id="tw-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Percentages</span>
-              <span class="pi-step-val" id="tw-step2">—</span>
+              <span class="pi-step-val" id="tw-step2">-</span>
             </div>
             <div class="pi-step hidden" id="tw-split-row">
               <span class="pi-step-label">Shares</span>
-              <span class="pi-step-val" id="tw-step3">—</span>
+              <span class="pi-step-val" id="tw-step3">-</span>
             </div>
           </div>
         </div>
@@ -182,9 +182,9 @@ const schema = [
       <Formula expr={f.pct} />
       <p>To find each group's share of a total quantity:</p>
       <Formula expr={f.share} />
-      <p>Example — 2:3:5 as percentages:</p>
+      <p>Example - 2:3:5 as percentages:</p>
       <Formula expr={f.ex1} />
-      <p>Example — £1000 split in ratio 2:3:5:</p>
+      <p>Example - £1000 split in ratio 2:3:5:</p>
       <Formula expr={f.ex2} />
 
       <h2 id="examples">Worked examples</h2>
@@ -203,11 +203,11 @@ const schema = [
       </div>
 
       <h2 id="applications">Real-world applications</h2>
-      <p><strong>Business profit sharing</strong> — three partners in a 2:3:5 profit split on £80,000 annual profit receive £16,000, £24,000, and £40,000 respectively. The ratio reflects their investment, hours worked, or agreed contribution.</p>
-      <p><strong>Inheritance and estate division</strong> — estates divided among three beneficiaries in specified proportions. A ratio ensures a fair and legally clear allocation without ambiguity.</p>
-      <p><strong>Concrete and construction mixing</strong> — standard concrete mix ratios by volume: cement:sand:aggregate = 1:2:3 (general purpose) or 1:1.5:3 (structural). Converting to percentages helps when calculating bag quantities.</p>
-      <p><strong>Investment portfolio allocation</strong> — allocating capital across three asset classes (e.g. equities:bonds:cash = 6:3:1) means 60%, 30%, and 10% of the portfolio respectively.</p>
-      <p><strong>Cooking and chemistry</strong> — cocktail ratios, fertiliser NPK ratios, and chemical solution ratios all use three-part splits where precision matters.</p>
+      <p><strong>Business profit sharing</strong> - three partners in a 2:3:5 profit split on £80,000 annual profit receive £16,000, £24,000, and £40,000 respectively. The ratio reflects their investment, hours worked, or agreed contribution.</p>
+      <p><strong>Inheritance and estate division</strong> - estates divided among three beneficiaries in specified proportions. A ratio ensures a fair and legally clear allocation without ambiguity.</p>
+      <p><strong>Concrete and construction mixing</strong> - standard concrete mix ratios by volume: cement:sand:aggregate = 1:2:3 (general purpose) or 1:1.5:3 (structural). Converting to percentages helps when calculating bag quantities.</p>
+      <p><strong>Investment portfolio allocation</strong> - allocating capital across three asset classes (e.g. equities:bonds:cash = 6:3:1) means 60%, 30%, and 10% of the portfolio respectively.</p>
+      <p><strong>Cooking and chemistry</strong> - cocktail ratios, fertiliser NPK ratios, and chemical solution ratios all use three-part splits where precision matters.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
@@ -221,14 +221,14 @@ const schema = [
       <p>Total = 5. Unit share = 20. Shares: 20, 40, 40.</p>
 
       <h3>Do all three percentages add to 100%?</h3>
-      <p>Yes — by definition the three parts together form the whole (100%).</p>
+      <p>Yes - by definition the three parts together form the whole (100%).</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/ratio-calculator',                     blurb: 'Simplify and scale any ratio with step-by-step GCD workings.' },
         { path: '/math/ratio-calculator/ratio-to-percentage', blurb: 'Convert a two-part ratio to percentages.' },
         { path: '/math/ratio-calculator/proportion',          blurb: 'Solve a:b = c:d for the missing value.' },
-        { path: '/math/percentage-calculator',                blurb: 'Percentage calculator — percentage of a number, increase, decrease.' },
+        { path: '/math/percentage-calculator',                blurb: 'Percentage calculator - percentage of a number, increase, decrease.' },
         { path: '/math/ratio-calculator/unit-rate',           blurb: 'Calculate the rate per single unit.' },
       ]} />
 

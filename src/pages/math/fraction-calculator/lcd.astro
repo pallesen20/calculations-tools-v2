@@ -28,7 +28,7 @@ const schema = [
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "LCD Calculator — Least Common Denominator",
+    "name": "LCD Calculator - Least Common Denominator",
     "url": "https://calculations.tools/math/fraction-calculator/lcd",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
@@ -58,7 +58,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "Is the LCD the same as the LCM?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The LCD of a set of fractions is the LCM of their denominators. The terms are used interchangeably — LCD specifically applies to fractions, LCM to integers." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The LCD of a set of fractions is the LCM of their denominators. The terms are used interchangeably - LCD specifically applies to fractions, LCM to integers." }
       }
     ]
   }
@@ -105,7 +105,7 @@ const schema = [
 
         <div id="lcd-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="lcd-value">—</span>
+            <span class="lbm-primary-val" id="lcd-value">-</span>
           </div>
           <div class="lbm-primary-lbl">Least Common Denominator (LCD)</div>
 
@@ -113,27 +113,27 @@ const schema = [
             <div class="pi-steps-title">Prime factorisation & equivalent fractions</div>
             <div class="pi-step">
               <span class="pi-step-label">Denominator 1 factors</span>
-              <span class="pi-step-val" id="lcd-f1">—</span>
+              <span class="pi-step-val" id="lcd-f1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Denominator 2 factors</span>
-              <span class="pi-step-val" id="lcd-f2">—</span>
+              <span class="pi-step-val" id="lcd-f2">-</span>
             </div>
             <div class="pi-step hidden" id="lcd-third-row">
               <span class="pi-step-label">Denominator 3 factors</span>
-              <span class="pi-step-val" id="lcd-f3">—</span>
+              <span class="pi-step-val" id="lcd-f3">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Fraction 1 → LCD form</span>
-              <span class="pi-step-val" id="lcd-eq1">—</span>
+              <span class="pi-step-val" id="lcd-eq1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Fraction 2 → LCD form</span>
-              <span class="pi-step-val" id="lcd-eq2">—</span>
+              <span class="pi-step-val" id="lcd-eq2">-</span>
             </div>
             <div class="pi-step hidden" id="lcd-eq3-row">
               <span class="pi-step-label">Fraction 3 → LCD form</span>
-              <span class="pi-step-val" id="lcd-eq3">—</span>
+              <span class="pi-step-val" id="lcd-eq3">-</span>
             </div>
           </div>
         </div>
@@ -148,11 +148,11 @@ const schema = [
 
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>The LCD (Least Common Denominator) is the <strong>smallest number all denominators divide into evenly</strong> — the LCM of the denominators. For 1/4 and 1/6: LCD(4,6) = 12. Formula: LCD = (a × b) ÷ GCD(a, b).</p>
+        <p>The LCD (Least Common Denominator) is the <strong>smallest number all denominators divide into evenly</strong> - the LCM of the denominators. For 1/4 and 1/6: LCD(4,6) = 12. Formula: LCD = (a × b) ÷ GCD(a, b).</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the denominators of two or three fractions (the denominator values only — not the full fractions). The calculator returns the LCD, the prime factorisation of each denominator, and shows each denominator scaled to an equivalent fraction with the LCD.</p>
+      <p>Enter the denominators of two or three fractions (the denominator values only - not the full fractions). The calculator returns the LCD, the prime factorisation of each denominator, and shows each denominator scaled to an equivalent fraction with the LCD.</p>
 
       <h2 id="definition">What is the LCD?</h2>
       <p>The Least Common Denominator (LCD) is the smallest positive integer that each of the given denominators divides into without a remainder. It is identical to the LCM (Lowest Common Multiple) of those denominators. The LCD is used to convert fractions to a common denominator so they can be added, subtracted, or compared directly.</p>
@@ -184,19 +184,19 @@ const schema = [
             <tr><td>3, 5</td><td>1</td><td>15</td><td>2/3 → 10/15, 3/5 → 9/15</td></tr>
             <tr><td>8, 12</td><td>4</td><td>24</td><td>5/8 → 15/24, 7/12 → 14/24</td></tr>
             <tr><td>6, 9</td><td>3</td><td>18</td><td>5/6 → 15/18, 4/9 → 8/18</td></tr>
-            <tr><td>4, 5, 6</td><td>—</td><td>60</td><td>1/4→15/60, 1/5→12/60, 1/6→10/60</td></tr>
+            <tr><td>4, 5, 6</td><td>-</td><td>60</td><td>1/4→15/60, 1/5→12/60, 1/6→10/60</td></tr>
           </tbody>
         </table>
       </div>
 
       <h2 id="why-use">Why the LCD matters</h2>
-      <p>Adding 1/4 + 1/6 without a common denominator is impossible directly. Using the product (24) also works: 6/24 + 4/24 = 10/24 = 5/12. But using the LCD (12) keeps numbers smaller: 3/12 + 2/12 = 5/12 — no simplification needed. The LCD minimises the arithmetic involved and reduces the chance of error.</p>
+      <p>Adding 1/4 + 1/6 without a common denominator is impossible directly. Using the product (24) also works: 6/24 + 4/24 = 10/24 = 5/12. But using the LCD (12) keeps numbers smaller: 3/12 + 2/12 = 5/12 - no simplification needed. The LCD minimises the arithmetic involved and reduces the chance of error.</p>
       <p>The LCD is also the right denominator to use when <strong>comparing fractions</strong>: converting all fractions to the LCD makes comparison by numerator immediate.</p>
 
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Using the product instead of the LCD</h3>
-      <p>For 3/4 + 1/6, using 4 × 6 = 24 gives 18/24 + 4/24 = 22/24, which simplifies to 11/12. Correct, but more work. LCD = 12 gives 9/12 + 2/12 = 11/12 directly — no simplification needed.</p>
+      <p>For 3/4 + 1/6, using 4 × 6 = 24 gives 18/24 + 4/24 = 22/24, which simplifies to 11/12. Correct, but more work. LCD = 12 gives 9/12 + 2/12 = 11/12 directly - no simplification needed.</p>
 
       <h3>Confusing LCD with GCD</h3>
       <p>GCD is the largest number that divides both values. LCD is the smallest number that both values divide into. GCD × LCM = product of the two numbers. They are related but opposite concepts.</p>
@@ -217,12 +217,12 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions using the LCD method — calculated automatically.' },
+        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions using the LCD method - calculated automatically.' },
         { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions with full LCD workings.' },
-        { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions — uses LCD to convert to a common base.' },
+        { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions - uses LCD to convert to a common base.' },
         { path: '/math/fraction-calculator/equivalent', blurb: 'Generate equivalent fractions for any denominator.' },
         { path: '/math/fraction-calculator/simplify',  blurb: 'Reduce any fraction to lowest terms using the GCD.' },
-        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — add, subtract, multiply, divide.' },
+        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator - add, subtract, multiply, divide.' },
       ]} />
 
     </div>

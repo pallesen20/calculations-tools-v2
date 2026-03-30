@@ -1,0 +1,213 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use this tool' },
+  { id: 'vs-excel',     label: 'CSV vs Excel comparison' },
+  { id: 'use-cases',    label: 'Use cases' },
+  { id: 'how-it-works', label: 'How the comparison works' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CSV File Comparison Tool",
+    "url": "https://calculations.tools/compare/csv",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Compare two CSV files online and find every changed cell, added row, and removed row. Lightweight, no dependencies, runs entirely in your browser.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I compare two CSV files online?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your original CSV on the left and the updated CSV on the right, then click Find Differences. Changed cells highlight in yellow, added rows in green, removed rows in red. No file size limit, no server upload." } },
+      { "@type": "Question", "name": "What is the difference between this and the Excel comparison tool?", "acceptedAnswer": { "@type": "Answer", "text": "This CSV tool has no external dependencies - it uses a built-in parser so it loads instantly. The Excel tool uses SheetJS and supports .xlsx, .xls, .ods formats. For pure CSV comparison this tool is faster; for Excel files use the Excel comparison tool." } },
+      { "@type": "Question", "name": "Does this tool handle quoted CSV fields?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The parser handles quoted fields (including commas inside quotes) and escaped double quotes per the RFC 4180 CSV standard." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Compare CSV Files"
+  metaTitle="Compare CSV or TXT Files Online Free | CSV Diff Checker ᐅ"
+  description="Compare two CSV or TXT files online and find every changed cell, added row, and removed row. Lightweight CSV diff with no dependencies. Free, private, runs in browser."
+  canonical="https://calculations.tools/compare/csv"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="compare-csv"
+  ogFormula="CSV row diff"
+  ogExample="Find changed cells, added & removed rows"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container ce-container">
+
+        <div class="calculator-header">
+          <h2>Compare CSV or TXT Files Online</h2>
+          <p>Upload two CSV files to see every changed cell, added row, and removed row</p>
+          <p class="ce-formats">Supported: .csv .txt (tab-delimited)</p>
+        </div>
+
+        <div class="ce-grid">
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Original CSV</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerUpload('original')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="clearCSVFile('original')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="cc-drop-original">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+                <div class="ce-drop-label">Drop CSV file here or click to upload</div>
+                <div class="ce-drop-sub">.csv or .txt</div>
+              </div>
+              <div class="ce-file-info" id="cc-info-original"></div>
+              <div class="ce-preview-wrap">
+                <table class="ce-preview-table" id="cc-table-original"></table>
+              </div>
+            </div>
+          </div>
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Changed CSV</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerUpload('changed')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="clearCSVFile('changed')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="cc-drop-changed">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+                <div class="ce-drop-label">Drop CSV file here or click to upload</div>
+                <div class="ce-drop-sub">.csv or .txt</div>
+              </div>
+              <div class="ce-file-info" id="cc-info-changed"></div>
+              <div class="ce-preview-wrap">
+                <table class="ce-preview-table" id="cc-table-changed"></table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="diff-actions">
+          <button class="diff-btn-primary" onclick="compareCSVFiles()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+          <button class="diff-btn-secondary" onclick="swapCSVFiles()">⇄ Swap</button>
+          <button class="diff-btn-secondary" onclick="loadCSVSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
+        </div>
+
+        <div id="diff-output" class="diff-output">
+          <div class="diff-header">
+            <div class="diff-stats">
+              <span class="diff-changed"   id="ce-stat-changed">0 changed</span>
+              <span class="diff-added"     id="ce-stat-added">+0 added</span>
+              <span class="diff-removed"   id="ce-stat-removed">-0 removed</span>
+              <span class="diff-unchanged" id="ce-stat-unchanged">0 unchanged</span>
+            </div>
+            <button class="diff-tbtn" onclick="copyCSVDiff()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
+          </div>
+          <div class="ce-diff-table-wrap" id="cc-diff-container"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <input type="file" id="cc-file-original" style="display:none" accept=".csv,.txt" />
+    <input type="file" id="cc-file-changed"  style="display:none" accept=".csv,.txt" />
+    <div class="diff-toast"></div>
+    <script src="/js/compare-csv.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Upload your original CSV on the left and the updated version on the right, then click <strong>Find Differences</strong>. Changed cells highlight in yellow with the old value in parentheses. Added rows are green, removed rows are red. No external library needed - all processing runs in your browser instantly.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Drop your original CSV file into the left panel and the updated version into the right panel. Click "Find Differences." The diff table appears below showing every row classified as changed, added, removed, or unchanged.</p>
+      <p>Use the Sample button to load a small example dataset and see how the output looks before uploading your own files. The Swap button exchanges both files without re-uploading. Copy Diff copies the entire result as tab-separated text.</p>
+
+      <h2 id="vs-excel">CSV vs Excel comparison tool</h2>
+      <p>This site has two spreadsheet comparison tools. Here is when to use each:</p>
+      <div class="responsive-table">
+      <table>
+        <thead><tr><th>Scenario</th><th>Use this tool</th><th>Use Excel tool</th></tr></thead>
+        <tbody>
+          <tr><td>Pure .csv or .txt files</td><td>✓ Faster, no CDN load</td><td>Also works</td></tr>
+          <tr><td>.xlsx, .xls, .ods files</td><td>Not supported</td><td>✓ Required</td></tr>
+          <tr><td>Multi-sheet workbooks</td><td>Not applicable</td><td>✓ Sheet tabs</td></tr>
+          <tr><td>Low bandwidth / fast load</td><td>✓ No dependencies</td><td>Loads SheetJS (~1 MB)</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="use-cases">Use cases</h2>
+      <h3>Database and API export verification</h3>
+      <p>Most databases and web APIs can export data as CSV. Compare two exports taken at different times to see exactly which records were added, removed, or changed - without writing custom scripts or loading data into a spreadsheet application.</p>
+      <h3>ETL pipeline validation</h3>
+      <p>After running an extract-transform-load pipeline, compare the input CSV against the output CSV to verify that the transformation applied correctly. Any unexpected cell changes immediately surface in the diff.</p>
+      <h3>Configuration and seed data changes</h3>
+      <p>Many applications store seed data, reference tables, or feature flags in CSV files. Comparing two versions of a seed file before deploying confirms exactly which rows and values changed, giving you an auditable diff for the deployment record.</p>
+
+      <h2 id="how-it-works">How the comparison works</h2>
+      <p>The tool uses a built-in CSV parser - no external libraries are loaded. The parser handles quoted fields (including commas inside quoted strings) and escaped double-quotes per the RFC 4180 standard. Rows are matched positionally: row N in the original is compared to row N in the changed file. Within each row, cells are compared as strings after trimming whitespace.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>How do I compare two CSV files online?</h3>
+      <p>Upload your original CSV on the left and the updated CSV on the right, then click Find Differences. The diff table shows every changed cell in yellow, added rows in green, and removed rows in red.</p>
+      <h3>Does this handle quoted CSV fields?</h3>
+      <p>Yes. The parser handles quoted fields that contain commas, newlines, or double quotes per the RFC 4180 CSV standard.</p>
+      <h3>Is my data safe?</h3>
+      <p>Yes. No file is uploaded to any server. All parsing and comparison runs in your browser using JavaScript.</p>
+      <h3>Can I compare a CSV against an Excel file?</h3>
+      <p>Not with this tool - it only accepts .csv and .txt files. Use the <a href="/compare/excel">Excel & CSV comparison tool</a> to compare across formats.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📊</span>
+          <div>
+            <a href="/compare/excel">Compare Excel & CSV</a>
+            <p>Full-featured spreadsheet comparison supporting .xlsx, .xls, .ods, and CSV with multi-sheet support.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📊</span>
+          <div>
+            <a href="/compare/google-sheets">Compare Google Sheets</a>
+            <p>Export from Google Sheets as CSV and compare two exported versions.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⇄</span>
+          <div>
+            <a href="/compare/text">Diff Checker</a>
+            <p>Compare any two plain text files line by line with unified or side-by-side diff views.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .ce-container { max-width: 100% !important; }
+  .ce-formats { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }
+</style>

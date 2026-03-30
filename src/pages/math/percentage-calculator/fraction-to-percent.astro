@@ -51,7 +51,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "How do you convert a fraction to a percentage?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Divide the numerator by the denominator, then multiply by 100. Example: 3/4 = 3 ÷ 4 = 0.75 × 100 = 75%. This works for any fraction — proper, improper, or negative." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide the numerator by the denominator, then multiply by 100. Example: 3/4 = 3 ÷ 4 = 0.75 × 100 = 75%. This works for any fraction - proper, improper, or negative." }
       },
       {
         "@type": "Question",
@@ -76,7 +76,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between a fraction, a decimal, and a percentage?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A fraction (e.g. 3/4), a decimal (0.75), and a percentage (75%) are three ways of expressing the same value. A percentage is simply a decimal multiplied by 100 — it expresses the quantity 'per hundred'. They are interchangeable: multiply a decimal by 100 to get the percentage; divide a percentage by 100 to get the decimal; write the decimal as a ratio over 1 to start converting to a fraction." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A fraction (e.g. 3/4), a decimal (0.75), and a percentage (75%) are three ways of expressing the same value. A percentage is simply a decimal multiplied by 100 - it expresses the quantity 'per hundred'. They are interchangeable: multiply a decimal by 100 to get the percentage; divide a percentage by 100 to get the decimal; write the decimal as a ratio over 1 to start converting to a fraction." }
       }
     ]
   }
@@ -118,27 +118,27 @@ const schema = [
 
         <div id="ftp-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="ftp-pct">—</span>
+            <span class="lbm-primary-val" id="ftp-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ftp-dec">—</div>
+              <div class="lbm-card-val" id="ftp-dec">-</div>
               <div class="lbm-card-lbl">Decimal equivalent</div>
-              <div class="lbm-card-badge" id="ftp-badge">—</div>
+              <div class="lbm-card-badge" id="ftp-badge">-</div>
             </div>
           </div>
 
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Divide</span>
-              <span id="ftp-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Divide</span>
+              <span id="ftp-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Multiply by 100</span>
-              <span id="ftp-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Multiply by 100</span>
+              <span id="ftp-step2" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -168,15 +168,15 @@ const schema = [
 
       <h2 id="examples">Worked examples</h2>
 
-      <h3>Example 1: proper fraction — 3/4</h3>
+      <h3>Example 1: proper fraction - 3/4</h3>
       <Formula expr={f.ex1} />
       <p>3/4 is equal to <strong>75%</strong>.</p>
 
-      <h3>Example 2: proper fraction — 5/8</h3>
+      <h3>Example 2: proper fraction - 5/8</h3>
       <Formula expr={f.ex2} />
       <p>5/8 is equal to <strong>62.5%</strong>.</p>
 
-      <h3>Example 3: improper fraction — 7/3</h3>
+      <h3>Example 3: improper fraction - 7/3</h3>
       <p>When the numerator is larger than the denominator, the result exceeds 100%:</p>
       <Formula expr={f.ex3} />
       <p>7/3 is approximately <strong>233.33%</strong>.</p>
@@ -219,7 +219,7 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Dividing denominator by numerator instead of numerator by denominator</h3>
-      <p>The numerator always goes on top. 3/4 means 3 divided by 4 (= 0.75 = 75%), not 4 divided by 3. Reversing the division gives the reciprocal — a different value entirely.</p>
+      <p>The numerator always goes on top. 3/4 means 3 divided by 4 (= 0.75 = 75%), not 4 divided by 3. Reversing the division gives the reciprocal - a different value entirely.</p>
 
       <h3>Forgetting to multiply by 100</h3>
       <p>The division step gives the decimal equivalent (0.75), not the percentage. Multiplying by 100 is what converts it to a percentage (75%). Writing 0.75% is a 100× error.</p>
@@ -245,16 +245,16 @@ const schema = [
       <p>Convert to an improper fraction first: multiply the whole number by the denominator and add the numerator. Example: 2¼ → (2 × 4 + 1)/4 = 9/4 → 9 ÷ 4 × 100 = 225%.</p>
 
       <h3>What is the difference between a fraction, a decimal, and a percentage?</h3>
-      <p>All three represent the same value in different forms. A fraction (3/4), a decimal (0.75), and a percentage (75%) are interchangeable. A percentage is a decimal multiplied by 100 — it expresses the value "per hundred".</p>
+      <p>All three represent the same value in different forms. A fraction (3/4), a decimal (0.75), and a percentage (75%) are interchangeable. A percentage is a decimal multiplied by 100 - it expresses the value "per hundred".</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',            blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
-        { path: '/math/percentage-calculator/change',     blurb: 'Percentage change calculator — signed result for before-and-after comparisons.' },
-        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
-        { path: '/math/percentage-calculator/average',        blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',       blurb: 'Convert any decimal to a percentage — the natural companion to this tool.' },
-        { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% — covers successive discounts and why stacking percentages cannot simply be added.' },
+        { path: '/math/percentage-calculator',            blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator/change',     blurb: 'Percentage change calculator - signed result for before-and-after comparisons.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator - compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/average',        blurb: 'Average percentage calculator - arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',       blurb: 'Convert any decimal to a percentage - the natural companion to this tool.' },
+        { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% - covers successive discounts and why stacking percentages cannot simply be added.' },
       ]} />
 
     </div>

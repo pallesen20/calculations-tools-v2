@@ -95,7 +95,7 @@ const schema = [
         </div>
 
         <div class="bmi-field">
-          <label class="bmi-label" for="ebt-revenue">Revenue (optional — for Pre-Tax Margin)</label>
+          <label class="bmi-label" for="ebt-revenue">Revenue (optional - for Pre-Tax Margin)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ebt-revenue" class="bmi-input" placeholder="e.g. 5000000" />
           </div>
@@ -104,21 +104,21 @@ const schema = [
         <div id="ebt-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ebt-ebt-val">—</div>
+              <div class="lbm-card-val" id="ebt-ebt-val">-</div>
               <div class="lbm-card-lbl">EBT</div>
             </div>
           </div>
 
           <div id="ebt-taxrate-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ebt-taxrate-val">—</div>
+              <div class="lbm-card-val" id="ebt-taxrate-val">-</div>
               <div class="lbm-card-lbl">Effective Tax Rate</div>
             </div>
           </div>
 
           <div id="ebt-margin-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ebt-margin-val">—</div>
+              <div class="lbm-card-val" id="ebt-margin-val">-</div>
               <div class="lbm-card-lbl">Pre-Tax Margin</div>
             </div>
           </div>
@@ -127,11 +127,11 @@ const schema = [
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
               <span class="pi-step-label">Net Income + Tax = EBT</span>
-              <span class="pi-step-val" id="ebt-step1">—</span>
+              <span class="pi-step-val" id="ebt-step1">-</span>
             </div>
             <div class="pi-step" id="ebt-step2-row">
               <span class="pi-step-label">Tax / EBT × 100 = Effective Rate</span>
-              <span class="pi-step-val" id="ebt-step2">—</span>
+              <span class="pi-step-val" id="ebt-step2">-</span>
             </div>
           </div>
         </div>
@@ -150,14 +150,14 @@ const schema = [
 
       <h2 id="how-to-use">How to use this calculator</h2>
       <p>Enter Net Income and Tax Expense from the income statement. The calculator returns EBT and the effective tax rate (Tax / EBT × 100). Optionally enter Revenue to see Pre-Tax Margin as a percentage.</p>
-      <p>Tax Expense should be the income tax provision from the income statement — not total taxes paid (which includes payroll taxes, VAT, etc.).</p>
+      <p>Tax Expense should be the income tax provision from the income statement - not total taxes paid (which includes payroll taxes, VAT, etc.).</p>
 
       <h2 id="what-is-ebt">What is EBT (Earnings Before Tax)?</h2>
       <p>EBT stands for <strong>Earnings Before Tax</strong>, also called Pre-Tax Income or Pre-Tax Profit. It is the line item on the income statement directly above Net Income, before the income tax provision is deducted.</p>
       <p>EBT = EBIT minus Interest Expense. It represents profit after all operating and financing costs but before the tax bill. It is primarily used to:</p>
       <ul>
         <li>Compare profitability across companies in different tax jurisdictions (different countries or tax regimes)</li>
-        <li>Calculate the <strong>effective tax rate</strong> — the actual percentage of pre-tax earnings paid in tax</li>
+        <li>Calculate the <strong>effective tax rate</strong> - the actual percentage of pre-tax earnings paid in tax</li>
         <li>Isolate whether differences in Net Income are driven by operations, financing, or tax efficiency</li>
       </ul>
 
@@ -207,7 +207,7 @@ const schema = [
       <h2 id="faq">Frequently asked questions</h2>
 
       <h3>What is EBT?</h3>
-      <p>Earnings Before Tax — the profit a company earns before income tax is deducted. EBT = Net Income + Tax Expense. It is used to compare pre-tax profitability across companies in different tax environments.</p>
+      <p>Earnings Before Tax - the profit a company earns before income tax is deducted. EBT = Net Income + Tax Expense. It is used to compare pre-tax profitability across companies in different tax environments.</p>
 
       <h3>What is the difference between EBT and Net Income?</h3>
       <p>Net Income = EBT minus Tax Expense. EBT is always higher than or equal to Net Income (a negative tax expense, meaning a tax refund or benefit, is unusual but possible).</p>
@@ -220,8 +220,8 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/finance/ebitda-calculator', blurb: 'Calculate EBITDA — adds back Interest, Tax, and D&A.' },
-        { path: '/finance/ebit-calculator',   blurb: 'Calculate EBIT — Net Income + Interest + Tax.' },
+        { path: '/finance/ebitda-calculator', blurb: 'Calculate EBITDA - adds back Interest, Tax, and D&A.' },
+        { path: '/finance/ebit-calculator',   blurb: 'Calculate EBIT - Net Income + Interest + Tax.' },
         { path: '/finance/ebitda-margin-calculator', blurb: 'EBITDA Margin = EBITDA / Revenue × 100.' },
         { path: '/math/percentage-calculator', blurb: 'General percentage calculator for financial ratios.' },
       ]} />

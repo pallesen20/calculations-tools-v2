@@ -1,0 +1,106 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Compare JavaScript Code - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container ct-container">
+
+      <div class="calculator-header">
+        <h2>Compare JavaScript Files</h2>
+        <p>Paste or upload two .js or .ts files to compare them line by line</p>
+      </div>
+
+      <div class="ct-editors">
+
+        <div class="diff-panel">
+          <div class="diff-toolbar">
+            <h3>Original JavaScript</h3>
+            <div class="diff-toolbar-btns">
+              <button class="diff-tbtn" onclick="uploadFile('ct-original')" title="Upload"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+              <button class="diff-tbtn" onclick="clearText('ct-original')" title="Clear">✕</button>
+            </div>
+          </div>
+          <div class="ct-editor-wrap" id="ct-original-wrap">
+            <div class="ct-gutter" id="ct-original-gutter"><div>1</div></div>
+            <div class="ct-hl" id="ct-original-hl" style="top:0.75rem"></div>
+            <textarea id="ct-original" class="ct-textarea" wrap="off" placeholder="Paste original JavaScript or TypeScript..." spellcheck="false" oninput="updateEditor('ct-original')" onfocus="document.getElementById('ct-original-wrap').classList.add('focused')" onblur="document.getElementById('ct-original-wrap').classList.remove('focused')" onkeyup="updateActiveLine('ct-original')" onclick="updateActiveLine('ct-original')" onscroll="syncScroll('ct-original')"></textarea>
+          </div>
+        </div>
+
+        <div class="diff-panel">
+          <div class="diff-toolbar">
+            <h3>Changed JavaScript</h3>
+            <div class="diff-toolbar-btns">
+              <button class="diff-tbtn" onclick="uploadFile('ct-changed')" title="Upload"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></button>
+              <button class="diff-tbtn" onclick="clearText('ct-changed')" title="Clear">✕</button>
+            </div>
+          </div>
+          <div class="ct-editor-wrap" id="ct-changed-wrap">
+            <div class="ct-gutter" id="ct-changed-gutter"><div>1</div></div>
+            <div class="ct-hl" id="ct-changed-hl" style="top:0.75rem"></div>
+            <textarea id="ct-changed" class="ct-textarea" wrap="off" placeholder="Paste changed JavaScript or TypeScript..." spellcheck="false" oninput="updateEditor('ct-changed')" onfocus="document.getElementById('ct-changed-wrap').classList.add('focused')" onblur="document.getElementById('ct-changed-wrap').classList.remove('focused')" onkeyup="updateActiveLine('ct-changed')" onclick="updateActiveLine('ct-changed')" onscroll="syncScroll('ct-changed')"></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="diff-actions">
+        <button class="diff-btn-primary" onclick="findDifferences()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+        <button class="diff-btn-secondary" onclick="swapTexts()">⇄ Swap</button>
+      </div>
+
+      <div id="diff-output" class="diff-output">
+        <div class="diff-header">
+          <div class="diff-stats">
+            <span class="diff-added"   id="ct-stat-added">+0 added</span>
+            <span class="diff-removed" id="ct-stat-removed">−0 removed</span>
+            <span class="diff-unchanged" id="ct-stat-unchanged">0 unchanged</span>
+          </div>
+          <div class="ct-diff-controls">
+            <div class="ct-view-toggle">
+              <button id="ct-btn-unified" onclick="setView('unified')">Unified</button>
+              <button id="ct-btn-sbs"     onclick="setView('sbs')">Side-by-Side</button>
+            </div>
+          </div>
+        </div>
+        <div class="ct-diff-container" id="ct-diff-container"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <select id="cc-lang" style="display:none"><option value="javascript" selected>JavaScript</option></select>
+  <input type="file" id="ct-file-input" style="display:none" accept=".js,.ts,.jsx,.tsx,.mjs,.cjs" />
+  <div class="diff-toast"></div>
+  <script src="/js/compare-code.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .ct-container { max-width: 100% !important; }
+  .ct-editors { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.25rem; }
+  @media (max-width: 520px) { .ct-editors { grid-template-columns: 1fr; } }
+  .ct-editor-wrap { position: relative; display: flex; width: 100%; min-height: 180px; max-height: 300px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
+  .ct-editor-wrap.focused { border-color: #3b82f6; }
+  .ct-gutter { min-width: 2.5rem; padding: 0.75rem 0.3rem 0.75rem 0; text-align: right; font-family: 'Courier New', monospace; font-size: 0.75rem; line-height: 1.6; color: #4a5568; user-select: none; overflow: hidden; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.07); flex-shrink: 0; }
+  .ct-gutter div { padding: 0 0.2rem; }
+  .ct-gutter div.active-ln { color: #94a3b8; }
+  .ct-hl { position: absolute; left: 0; right: 0; pointer-events: none; background: rgba(255,255,255,0.035); transition: top 0.05s; }
+  .ct-textarea { flex: 1; min-height: 180px; max-height: 300px; background: transparent; border: none; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 0.75rem; padding: 0.75rem 0.5rem 0.75rem 0.4rem; resize: none; line-height: 1.6; outline: none; overflow-y: auto; white-space: pre; overflow-x: auto; }
+  .ct-textarea::placeholder { color: #94a3b8; }
+  .ct-diff-controls { display: flex; align-items: center; }
+  .ct-view-toggle { display: flex; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; }
+  .ct-view-toggle button { background: none; border: none; color: #94a3b8; padding: 0.3rem 0.6rem; font-size: 0.72rem; cursor: pointer; }
+  .ct-view-toggle button.active { background: rgba(255,255,255,0.18); color: white; }
+  .ct-diff-container { background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: auto; max-height: 360px; font-family: 'Courier New', monospace; font-size: 0.75rem; }
+  .ct-diff-line { display: flex; line-height: 1.6; min-height: 1.6em; }
+  .ct-line-num { min-width: 2.5rem; text-align: right; padding: 0 0.4rem; color: #4a5568; user-select: none; flex-shrink: 0; }
+  .ct-line-content { padding: 0 0.6rem; white-space: pre-wrap; word-break: break-all; flex: 1; color: #94a3b8; }
+  .ct-diff-line.added { background: rgba(74,222,128,0.08); }
+  .ct-diff-line.added .ct-line-content { color: #4ade80; }
+  .ct-diff-line.removed { background: rgba(248,113,113,0.08); }
+  .ct-diff-line.removed .ct-line-content { color: #f87171; }
+  .ct-sbs { display: grid; grid-template-columns: 1fr 1fr; }
+  .ct-sbs-panel + .ct-sbs-panel { border-left: 1px solid rgba(255,255,255,0.08); }
+  @media (max-width: 520px) { .ct-sbs { grid-template-columns: 1fr; } .ct-sbs-panel + .ct-sbs-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); } }
+</style>

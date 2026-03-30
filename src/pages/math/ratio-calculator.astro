@@ -45,7 +45,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "How do you simplify a ratio?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Divide both terms of the ratio by their GCD (Greatest Common Divisor). For example, 12:8 — GCD(12,8) = 4, so 12:8 = 3:2." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide both terms of the ratio by their GCD (Greatest Common Divisor). For example, 12:8 - GCD(12,8) = 4, so 12:8 = 3:2." }
       },
       {
         "@type": "Question",
@@ -104,35 +104,35 @@ const schema = [
 
         <div id="rc-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="rc-simplified">—</span>
+            <span class="lbm-primary-val" id="rc-simplified">-</span>
           </div>
           <div class="lbm-primary-lbl">Simplified ratio</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="rc-fraction">—</div>
+              <div class="lbm-card-val" id="rc-fraction">-</div>
               <div class="lbm-card-lbl">As fraction (a/b)</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="rc-decimal">—</div>
+              <div class="lbm-card-val" id="rc-decimal">-</div>
               <div class="lbm-card-lbl">Decimal</div>
             </div>
           </div>
 
           <div class="pi-step hidden" id="rc-scale-row" style="background:rgba(139,92,246,0.1);border-radius:6px;padding:0.5rem 0.75rem;margin-top:0.5rem;">
             <span class="pi-step-label">Scaled ratio (simplified × multiplier)</span>
-            <span class="pi-step-val"><span id="rc-scaled-a">—</span> : <span id="rc-scaled-b">—</span></span>
+            <span class="pi-step-val"><span id="rc-scaled-a">-</span> : <span id="rc-scaled-b">-</span></span>
           </div>
 
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
               <span class="pi-step-label">GCD</span>
-              <span class="pi-step-val" id="rc-step1">—</span>
+              <span class="pi-step-val" id="rc-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Divide both by GCD</span>
-              <span class="pi-step-val" id="rc-step2">—</span>
+              <span class="pi-step-val" id="rc-step2">-</span>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@ const schema = [
       <h2 id="what-is">What is a ratio?</h2>
       <p>A ratio compares two quantities and shows their relative sizes:</p>
       <Formula expr={f.def} />
-      <p>A ratio of 3:2 means for every 3 units of the first quantity, there are 2 units of the second. Ratios can represent parts-to-parts (mixing ratios) or parts-to-whole (share ratios). They are dimensionless — 3:2 is the same whether counting apples, millilitres, or dollars.</p>
+      <p>A ratio of 3:2 means for every 3 units of the first quantity, there are 2 units of the second. Ratios can represent parts-to-parts (mixing ratios) or parts-to-whole (share ratios). They are dimensionless - 3:2 is the same whether counting apples, millilitres, or dollars.</p>
 
       <h2 id="simplify">Simplifying ratios</h2>
       <p>A ratio is in its simplest form when the two terms share no common factor other than 1. To simplify, divide both by their GCD:</p>
@@ -187,7 +187,7 @@ const schema = [
       <Formula expr={f.scale} />
       <p>To verify equivalence, cross-multiply:</p>
       <Formula expr={f.equiv} />
-      <p>3:2 = 15:10? 3 × 10 = 30 and 2 × 15 = 30. Equal products — equivalent. ✓</p>
+      <p>3:2 = 15:10? 3 × 10 = 30 and 2 × 15 = 30. Equal products - equivalent. ✓</p>
       <p>Scaling up is used in cooking (scaling a recipe), engineering (scale drawings), and finance (scaling returns to a portfolio size).</p>
 
       <h2 id="dividing">Dividing a quantity in a ratio</h2>
@@ -209,9 +209,9 @@ const schema = [
       <h2 id="tools">Ratio tool suite</h2>
       <p>This hub covers ratio simplification and scaling. For more specific ratio calculations:</p>
       <ul>
-        <li><a href="/math/ratio-calculator/proportion"><strong>Proportion Calculator</strong></a> — solve a:b = c:d for the missing value (cross-multiplication)</li>
-        <li><a href="/math/ratio-calculator/unit-rate"><strong>Unit Rate Calculator</strong></a> — find the rate per single unit (e.g. price per item)</li>
-        <li><a href="/math/ratio-calculator/golden-ratio"><strong>Golden Ratio Calculator</strong></a> — find dimensions based on φ ≈ 1.618</li>
+        <li><a href="/math/ratio-calculator/proportion"><strong>Proportion Calculator</strong></a> - solve a:b = c:d for the missing value (cross-multiplication)</li>
+        <li><a href="/math/ratio-calculator/unit-rate"><strong>Unit Rate Calculator</strong></a> - find the rate per single unit (e.g. price per item)</li>
+        <li><a href="/math/ratio-calculator/golden-ratio"><strong>Golden Ratio Calculator</strong></a> - find dimensions based on φ ≈ 1.618</li>
       </ul>
 
       <h2 id="common-mistakes">Common mistakes</h2>
@@ -220,7 +220,7 @@ const schema = [
       <p>3:2 + 4 ≠ 7:6. Adding 4 to both terms changes the ratio. To scale, multiply: 3:2 × 4 = 12:8.</p>
 
       <h3>Confusing ratio with fraction</h3>
-      <p>A ratio 3:5 means 3 parts first and 5 parts second. As a fraction of the total, the first part is 3/(3+5) = 3/8 — not 3/5. The fraction a/b represents the ratio a:b, but the fraction of the whole is a/(a+b).</p>
+      <p>A ratio 3:5 means 3 parts first and 5 parts second. As a fraction of the total, the first part is 3/(3+5) = 3/8 - not 3/5. The fraction a/b represents the ratio a:b, but the fraction of the whole is a/(a+b).</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
@@ -239,8 +239,8 @@ const schema = [
         { path: '/math/ratio-calculator/unit-rate',    blurb: 'Calculate the rate per single unit from any two quantities.' },
         { path: '/math/ratio-calculator/golden-ratio', blurb: 'Find dimensions based on the golden ratio φ ≈ 1.618.' },
         { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions directly to determine which is larger.' },
-        { path: '/math/fraction-calculator',           blurb: 'Fraction calculator — add, subtract, multiply, divide fractions.' },
-        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, increase, decrease.' },
+        { path: '/math/fraction-calculator',           blurb: 'Fraction calculator - add, subtract, multiply, divide fractions.' },
+        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator - percentage of a number, increase, decrease.' },
       ]} />
 
       <RelatedGlossaryTerms toolPath="/math/ratio-calculator" />

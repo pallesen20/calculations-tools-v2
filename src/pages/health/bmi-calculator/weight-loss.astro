@@ -88,8 +88,8 @@ const schema = [
       { "@type": "Question", "name": "What is a safe rate of weight loss?", "acceptedAnswer": { "@type": "Answer", "text": "Clinical guidelines (AHA/ACC/TOS 2013) recommend a rate of 0.5–1 kg (1–2 lbs) per week as safe and sustainable. This corresponds to a daily caloric deficit of approximately 500–1000 kcal. Faster weight loss (above 1 kg/week) is associated with greater muscle loss and is difficult to maintain. Slower loss (0.25 kg/week) is also effective and produces less hunger and muscle loss." } },
       { "@type": "Question", "name": "How long will it take to reach a healthy BMI?", "acceptedAnswer": { "@type": "Answer", "text": "The time depends on how much weight you need to lose and your weekly pace. At 0.5 kg/week, losing 10 kg takes approximately 20 weeks (about 5 months). At 1 kg/week it takes 10 weeks. Use the calculator to get a personalised estimate based on your current BMI, target BMI, and chosen weekly pace." } },
       { "@type": "Question", "name": "Why does this calculator estimate body fat percentage?", "acceptedAnswer": { "@type": "Answer", "text": "BMI alone cannot tell you whether you are losing fat or muscle. The calculator estimates your current and target body fat percentage using the Deurenberg formula (1991): BF% = 1.20 × BMI + 0.23 × Age − 10.8 × Sex − 5.4. Seeing both BMI and estimated body fat at your goal weight gives a more complete picture of what your weight loss will actually achieve." } },
-      { "@type": "Question", "name": "Should I aim for BMI 18.5 or 24.9?", "acceptedAnswer": { "@type": "Answer", "text": "For most people, BMI 24.9 is a good target — it is the upper boundary of the Normal weight range and is associated with the lowest health risks. Aiming for 18.5 (the lower boundary) is rarely necessary and may be too restrictive. If you are very short, muscular, or have a specific clinical goal, your doctor may recommend a different target. The most important step is moving out of the Obese range." } },
-      { "@type": "Question", "name": "Does losing weight always lower BMI?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — if you lose weight without changing height, your BMI will always decrease. BMI = weight / height². Height stays fixed in adults, so BMI changes in direct proportion to weight change. However, BMI does not distinguish between fat and muscle, so rapid weight loss that includes significant muscle loss will lower BMI while leaving body composition worse than expected." } }
+      { "@type": "Question", "name": "Should I aim for BMI 18.5 or 24.9?", "acceptedAnswer": { "@type": "Answer", "text": "For most people, BMI 24.9 is a good target - it is the upper boundary of the Normal weight range and is associated with the lowest health risks. Aiming for 18.5 (the lower boundary) is rarely necessary and may be too restrictive. If you are very short, muscular, or have a specific clinical goal, your doctor may recommend a different target. The most important step is moving out of the Obese range." } },
+      { "@type": "Question", "name": "Does losing weight always lower BMI?", "acceptedAnswer": { "@type": "Answer", "text": "Yes - if you lose weight without changing height, your BMI will always decrease. BMI = weight / height². Height stays fixed in adults, so BMI changes in direct proportion to weight change. However, BMI does not distinguish between fat and muscle, so rapid weight loss that includes significant muscle loss will lower BMI while leaving body composition worse than expected." } }
     ]
   }
 ];
@@ -98,7 +98,7 @@ const schema = [
 <CalculatorLayout
   title="BMI Weight Loss Calculator"
   metaTitle="BMI Weight Loss Calculator | Current & Target BMI ᐅ"
-  description="Calculate how much weight you need to lose to reach your target BMI. Get your target weight, weight to lose, time estimate at your chosen pace, and estimated body fat — metric or imperial."
+  description="Calculate how much weight you need to lose to reach your target BMI. Get your target weight, weight to lose, time estimate at your chosen pace, and estimated body fat - metric or imperial."
   canonical="https://calculations.tools/health/bmi-calculator/weight-loss"
   tocItems={tocItems}
   schema={schema}
@@ -202,8 +202,8 @@ const schema = [
 
         <div id="bmi-result" class="bmi-result hidden">
           <div class="bmi-value-row">
-            <div class="bmi-value" id="bmi-value">—</div>
-            <div class="bmi-category-badge" id="bmi-category-badge">—</div>
+            <div class="bmi-value" id="bmi-value">-</div>
+            <div class="bmi-category-badge" id="bmi-category-badge">-</div>
           </div>
           <div class="bmi-scale">
             <div class="bmi-scale-bar">
@@ -240,12 +240,12 @@ const schema = [
     <div class="seo-container">
 
       <div class="answer-box">
-        <div class="answer-box-label">Weight to lose for target BMI — direct answer</div>
+        <div class="answer-box-label">Weight to lose for target BMI - direct answer</div>
         <p>Weight to lose = (current BMI − target BMI) × height (m)². At 1.75 m, each BMI unit equals <strong>3.1 kg (6.8 lbs)</strong>. To go from BMI 30 to 25 at that height, you need to lose 5 × 3.06 = <strong>15.3 kg (33.7 lbs)</strong>. Enter your numbers above to get an exact figure plus an estimated time at your chosen weekly pace.</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Select your unit system and sex, enter your age (optional but needed for body fat estimates), then enter your current weight and height. Set your target BMI in the Goal section — the default of 24.9 is the top of the Normal weight range. Choose a weekly pace and the calculator instantly shows the weight to lose, your target weight, estimated time, and estimated body fat percentage at both your current and goal weight.</p>
+      <p>Select your unit system and sex, enter your age (optional but needed for body fat estimates), then enter your current weight and height. Set your target BMI in the Goal section - the default of 24.9 is the top of the Normal weight range. Choose a weekly pace and the calculator instantly shows the weight to lose, your target weight, estimated time, and estimated body fat percentage at both your current and goal weight.</p>
       <p>Age and sex are optional. Without them, the calculator still shows weight to lose, target weight, and time estimate. Age and sex unlock the body fat estimates using the Deurenberg formula.</p>
 
       <h2 id="the-formula">The formula: weight loss for a target BMI</h2>
@@ -253,7 +253,7 @@ const schema = [
       <Formula expr={f.targetWeight} />
       <p>The weight you need to lose is simply the difference between your current weight and your target weight:</p>
       <Formula expr={f.weightLoss} />
-      <p>Example — a person who is 1.75 m tall, currently weighs 91.5 kg (BMI 30), and wants to reach BMI 24.9:</p>
+      <p>Example - a person who is 1.75 m tall, currently weighs 91.5 kg (BMI 30), and wants to reach BMI 24.9:</p>
       <p>Target weight = 24.9 × 1.75² = 24.9 × 3.0625 = <strong>76.3 kg</strong>. Weight to lose = 91.5 − 76.3 = <strong>15.2 kg (33.5 lbs)</strong>.</p>
       <p>The formula works identically in imperial units, with BMI = 703 × weight(lb) / height(in)². The calculator handles all unit conversion automatically.</p>
 
@@ -280,11 +280,11 @@ const schema = [
       <p>To find the weight to lose for a multi-unit BMI change: multiply the figure above by the number of BMI units. For example, to go from BMI 32 to 25 (7 units) at 175 cm: 7 × 3.1 = <strong>21.7 kg (47.8 lbs)</strong>.</p>
 
       <h2 id="target-bmi">Choosing a target BMI</h2>
-      <p>The most common weight loss target is <strong>BMI 24.9</strong> — the upper boundary of the Normal weight range. This is appropriate for most adults and is clinically associated with the lowest all-cause mortality risk in large population studies.</p>
+      <p>The most common weight loss target is <strong>BMI 24.9</strong> - the upper boundary of the Normal weight range. This is appropriate for most adults and is clinically associated with the lowest all-cause mortality risk in large population studies.</p>
       <p>Several other situations call for different targets:</p>
       <ul>
         <li><strong>Currently Obese Class II or III (BMI ≥ 35):</strong> Setting an intermediate target of BMI 30 or 27 is often more motivating and realistic than aiming directly for 24.9. Clinical guidelines note that even 5–10% body weight loss produces meaningful improvements in blood pressure, blood glucose, and lipids.</li>
-        <li><strong>Athletes and muscular individuals:</strong> A BMI of 25–27 may be physiologically optimal if you carry significant muscle mass. The body fat estimate in this calculator will show whether your Overweight BMI reflects fat or muscle — if your estimated body fat is Athletic or Fitness range, a BMI above 25 is not a health concern.</li>
+        <li><strong>Athletes and muscular individuals:</strong> A BMI of 25–27 may be physiologically optimal if you carry significant muscle mass. The body fat estimate in this calculator will show whether your Overweight BMI reflects fat or muscle - if your estimated body fat is Athletic or Fitness range, a BMI above 25 is not a health concern.</li>
         <li><strong>Adults over 65:</strong> Geriatric guidelines recommend a BMI of 23–27.5 for older adults, which is higher than the standard Normal range. Use the <a href="/health/bmi-calculator/seniors">BMI Calculator for Seniors</a> for age-adjusted interpretation.</li>
         <li><strong>Never target BMI below 18.5:</strong> This is the Underweight threshold and is associated with malnutrition, bone loss, immune suppression, and increased mortality risk.</li>
       </ul>
@@ -304,7 +304,7 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>The "3,500 kcal per pound" rule (and its metric equivalent of ~7,700 kcal per kg) is an approximation. Hall et al. (2011, Lancet) showed that the actual calorie-to-weight relationship changes dynamically as body weight decreases — lighter bodies require fewer calories and lose weight more slowly at the same deficit. This means real-world weight loss typically slows as you approach your goal, so the time estimates from this calculator should be treated as a starting approximation.</p>
+      <p>The "3,500 kcal per pound" rule (and its metric equivalent of ~7,700 kcal per kg) is an approximation. Hall et al. (2011, Lancet) showed that the actual calorie-to-weight relationship changes dynamically as body weight decreases - lighter bodies require fewer calories and lose weight more slowly at the same deficit. This means real-world weight loss typically slows as you approach your goal, so the time estimates from this calculator should be treated as a starting approximation.</p>
 
       <h2 id="bmi-vs-fat">BMI vs actual fat loss</h2>
       <p>BMI measures total weight relative to height. It cannot determine whether a kilogram of lost weight is fat, muscle, or water. Two people who reach BMI 24.9 via different methods will have very different body compositions:</p>
@@ -312,13 +312,13 @@ const schema = [
         <li><strong>Slow weight loss with resistance training:</strong> Most weight lost is fat. Muscle mass is preserved. Body fat percentage drops substantially. Metabolic rate stays higher.</li>
         <li><strong>Rapid weight loss by severe caloric restriction alone:</strong> A significant portion of weight lost (often 25–30%) may be muscle. Body fat percentage decreases less than expected. Metabolic rate drops, making maintenance harder.</li>
       </ul>
-      <p>This is why the calculator shows estimated body fat at both your current and target weight. If your goal body fat at target BMI is still in the Acceptable or High range (particularly for women above 32% or men above 25%), your actual health outcome will depend more on your body composition strategy — combining a caloric deficit with resistance training — than on the BMI number alone.</p>
+      <p>This is why the calculator shows estimated body fat at both your current and target weight. If your goal body fat at target BMI is still in the Acceptable or High range (particularly for women above 32% or men above 25%), your actual health outcome will depend more on your body composition strategy - combining a caloric deficit with resistance training - than on the BMI number alone.</p>
 
       <h2 id="body-fat-estimate">Body fat % estimate</h2>
       <p>When you enter your age and sex, the calculator shows an estimated body fat percentage at both your current and target weight. It uses the Deurenberg formula (1991):</p>
       <Formula expr={f.bfGeneral} />
       <p>Where S = 1 for males, 0 for females. The margin of error is approximately ±3–5 percentage points compared to DEXA scanning. The formula is most accurate for adults aged 20–80 with BMI in the 18–30 range. It will overestimate body fat in highly muscular individuals and underestimate in very elderly individuals with severe muscle wasting.</p>
-      <p>The goal body fat estimate assumes body composition changes only through the change in BMI — in other words, it models the Deurenberg relationship at your goal BMI and the same age and sex. It does not model the muscle-to-fat ratio of your weight loss, which depends on how you lose the weight. Use it as a directional indicator, not a precise forecast.</p>
+      <p>The goal body fat estimate assumes body composition changes only through the change in BMI - in other words, it models the Deurenberg relationship at your goal BMI and the same age and sex. It does not model the muscle-to-fat ratio of your weight loss, which depends on how you lose the weight. Use it as a directional indicator, not a precise forecast.</p>
 
       <h2 id="faq">FAQs</h2>
 
@@ -338,14 +338,14 @@ const schema = [
       <p>BMI alone cannot tell you whether you are losing fat or muscle. The Deurenberg body fat estimate (which requires age and sex) shows your approximate body fat at both current and goal weight, making the weight loss goal more meaningful than a single BMI number.</p>
 
       <h3>Should I aim for BMI 18.5 or 24.9?</h3>
-      <p>For most people, 24.9 is appropriate. Aiming for 18.5 is rarely necessary — it sits at the Underweight boundary. A BMI in the 21–24 range offers the lowest statistical risk for most adults, but 24.9 is a practical, achievable starting goal for anyone currently in the Overweight or Obese range.</p>
+      <p>For most people, 24.9 is appropriate. Aiming for 18.5 is rarely necessary - it sits at the Underweight boundary. A BMI in the 21–24 range offers the lowest statistical risk for most adults, but 24.9 is a practical, achievable starting goal for anyone currently in the Overweight or Obese range.</p>
 
       <h3>Does losing weight always lower BMI?</h3>
-      <p>Yes — since BMI = weight / height² and height is fixed in adults, any weight loss reduces BMI. However, losing muscle rather than fat will lower BMI while leaving body composition poor. Resistance training during a caloric deficit preserves muscle and ensures weight loss is predominantly fat.</p>
+      <p>Yes - since BMI = weight / height² and height is fixed in adults, any weight loss reduces BMI. However, losing muscle rather than fat will lower BMI while leaving body composition poor. Resistance training during a caloric deficit preserves muscle and ensures weight loss is predominantly fat.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/health/bmi-calculator', blurb: 'Standard BMI calculator by age and sex — get your current BMI, estimated body fat %, and personalised context.' },
+        { path: '/health/bmi-calculator', blurb: 'Standard BMI calculator by age and sex - get your current BMI, estimated body fat %, and personalised context.' },
         { path: '/health/bmi-calculator/seniors', blurb: 'BMI calculator for adults 65+ with the 23–27.5 senior optimal range and frailty risk guidance.' },
         { path: '/health/bmi-calculator/men', blurb: 'Men-specific BMI guide covering the testosterone-obesity connection, FFMI, and waist circumference thresholds.' },
         { path: '/health/bmi-calculator/women', blurb: 'Women-specific BMI guide covering menopause, normal weight obesity, and fat distribution.' },

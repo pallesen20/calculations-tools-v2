@@ -132,23 +132,23 @@ const schema = [
 
         <div id="fc-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
-            <span id="fc-res-n" class="fc-res-num">—</span>
+            <span id="fc-res-n" class="fc-res-num">-</span>
             <div class="fc-res-bar" id="fc-res-bar"></div>
-            <span id="fc-res-d" class="fc-res-den">—</span>
+            <span id="fc-res-d" class="fc-res-den">-</span>
           </div>
           <div class="lbm-primary-lbl">Result (simplified)</div>
 
           <div class="lbm-cards">
             <div class="lbm-card hidden" id="fc-mixed-card">
-              <div class="lbm-card-val" id="fc-mixed">—</div>
+              <div class="lbm-card-val" id="fc-mixed">-</div>
               <div class="lbm-card-lbl">Mixed number</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="fc-decimal">—</div>
+              <div class="lbm-card-val" id="fc-decimal">-</div>
               <div class="lbm-card-lbl">Decimal</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="fc-percent">—</div>
+              <div class="lbm-card-val" id="fc-percent">-</div>
               <div class="lbm-card-lbl">Percentage</div>
             </div>
           </div>
@@ -157,15 +157,15 @@ const schema = [
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step hidden" id="fc-step1-row">
               <span class="pi-step-label" id="fc-step1-lbl">Step 1</span>
-              <span class="pi-step-val" id="fc-step1-val">—</span>
+              <span class="pi-step-val" id="fc-step1-val">-</span>
             </div>
             <div class="pi-step hidden" id="fc-step2-row">
               <span class="pi-step-label" id="fc-step2-lbl">Step 2</span>
-              <span class="pi-step-val" id="fc-step2-val">—</span>
+              <span class="pi-step-val" id="fc-step2-val">-</span>
             </div>
             <div class="pi-step hidden" id="fc-step3-row">
               <span class="pi-step-label" id="fc-step3-lbl">Step 3</span>
-              <span class="pi-step-val" id="fc-step3-val">—</span>
+              <span class="pi-step-val" id="fc-step3-val">-</span>
             </div>
           </div>
         </div>
@@ -181,11 +181,11 @@ const schema = [
 
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
-        <p>To multiply fractions: <strong>multiply numerator × numerator</strong> and <strong>denominator × denominator</strong>, then simplify. No common denominator is needed — multiplication is the simplest of the four fraction operations.</p>
+        <p>To multiply fractions: <strong>multiply numerator × numerator</strong> and <strong>denominator × denominator</strong>, then simplify. No common denominator is needed - multiplication is the simplest of the four fraction operations.</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the numerator and denominator of each fraction. The calculator multiplies them instantly, showing the simplified result, mixed number (where applicable), decimal, and percentage — along with a three-step breakdown of the multiplication and simplification.</p>
+      <p>Enter the numerator and denominator of each fraction. The calculator multiplies them instantly, showing the simplified result, mixed number (where applicable), decimal, and percentage - along with a three-step breakdown of the multiplication and simplification.</p>
 
       <h2 id="formula">Multiplying fractions formula</h2>
       <p>Multiply numerators together and denominators together:</p>
@@ -208,7 +208,7 @@ const schema = [
       <p>Cross-cancellation simplifies <em>before</em> multiplying by dividing a numerator and a diagonal denominator by a shared factor. This keeps intermediate numbers small:</p>
       <Formula expr={f.crossCancel} />
       <p>In 3/4 × 8/9: the 3 (first numerator) and 9 (second denominator) share a factor of 3 → divide both by 3. The 4 (first denominator) and 8 (second numerator) share a factor of 4 → divide both by 4. The remaining product is 1/1 × 2/3 = 2/3, with no further simplification needed.</p>
-      <p>Cross-cancellation is optional — it produces the same answer as multiplying then simplifying, but avoids large intermediate values that are harder to work with by hand.</p>
+      <p>Cross-cancellation is optional - it produces the same answer as multiplying then simplifying, but avoids large intermediate values that are harder to work with by hand.</p>
 
       <h2 id="whole-numbers">Multiplying a fraction by a whole number</h2>
       <p>Write the whole number as a fraction with denominator 1, then apply the standard formula:</p>
@@ -251,7 +251,7 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Finding a common denominator first</h3>
-      <p>A common denominator is needed for addition and subtraction — not multiplication. Adding a common denominator step to a multiplication problem introduces unnecessary work and often produces errors. Multiply straight across.</p>
+      <p>A common denominator is needed for addition and subtraction - not multiplication. Adding a common denominator step to a multiplication problem introduces unnecessary work and often produces errors. Multiply straight across.</p>
 
       <h3>Multiplying only the numerators</h3>
       <p>Both numerator and denominator must be multiplied. 2/3 × 3/5 ≠ 6/3 and ≠ 2/5 (before simplification). The denominator product is 3 × 5 = 15, giving 6/15 = 2/5 after simplification.</p>
@@ -284,13 +284,13 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — add, subtract, multiply, divide, and simplify all in one tool.' },
-        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions step by step — LCD method with simplified result, decimal, and percentage.' },
-        { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions step by step — LCD method with step-by-step workings.' },
+        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator - add, subtract, multiply, divide, and simplify all in one tool.' },
+        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions step by step - LCD method with simplified result, decimal, and percentage.' },
+        { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions step by step - LCD method with step-by-step workings.' },
         { path: '/math/fraction-calculator/divide',    blurb: 'Divide fractions using the reciprocal method with step-by-step workings.' },
         { path: '/math/fraction-calculator/simplify',  blurb: 'Simplify any fraction to its lowest terms using the GCD method.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal and step-by-step workings.' },
-        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, percentage change, and more.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal and step-by-step workings.' },
+        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator - percentage of a number, percentage change, and more.' },
       ]} />
 
     </div>

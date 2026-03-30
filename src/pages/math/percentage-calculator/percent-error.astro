@@ -58,7 +58,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between percent error and percent difference?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Percent error compares an experimental measurement to a known theoretical value — the denominator is the theoretical value. Percent difference compares two independent values of equal status — the denominator is their average. Use percent error when one value is a known standard or accepted truth." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Percent error compares an experimental measurement to a known theoretical value - the denominator is the theoretical value. Percent difference compares two independent values of equal status - the denominator is their average. Use percent error when one value is a known standard or accepted truth." }
       },
       {
         "@type": "Question",
@@ -73,7 +73,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What does a percent error of 0% mean?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A percent error of 0% means the experimental value exactly equals the theoretical value — a perfect measurement with no deviation. In practice, this is rarely achieved due to instrument limitations and human factors." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A percent error of 0% means the experimental value exactly equals the theoretical value - a perfect measurement with no deviation. In practice, this is rarely achieved due to instrument limitations and human factors." }
       },
       {
         "@type": "Question",
@@ -120,17 +120,17 @@ const schema = [
 
         <div id="pe-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="pe-pct">—</span>
+            <span class="lbm-primary-val" id="pe-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percent Error</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pe-signed">—</div>
+              <div class="lbm-card-val" id="pe-signed">-</div>
               <div class="lbm-card-lbl">Signed error</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pe-abs">—</div>
+              <div class="lbm-card-val" id="pe-abs">-</div>
               <div class="lbm-card-lbl">Absolute difference</div>
             </div>
           </div>
@@ -138,16 +138,16 @@ const schema = [
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Subtract</span>
-              <span id="pe-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Subtract</span>
+              <span id="pe-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Divide</span>
-              <span id="pe-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Divide</span>
+              <span id="pe-step2" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 3 — Multiply by 100</span>
-              <span id="pe-step3" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 3 - Multiply by 100</span>
+              <span id="pe-step3" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ const schema = [
 
       <h2 id="how-to-use">How to use this calculator</h2>
       <p>Enter the value you measured or calculated (experimental) and the known accepted value (theoretical). The calculator returns the percent error, signed error, absolute difference, and a three-step breakdown of the calculation.</p>
-      <p>The <strong>experimental value</strong> is what you observed or measured. The <strong>theoretical value</strong> (also called the accepted or true value) is the known standard — from a textbook, datasheet, or established scientific constant.</p>
+      <p>The <strong>experimental value</strong> is what you observed or measured. The <strong>theoretical value</strong> (also called the accepted or true value) is the known standard - from a textbook, datasheet, or established scientific constant.</p>
 
       <h2 id="formula">Percent error formula</h2>
       <p>The standard percent error formula uses absolute values to ensure a non-negative result:</p>
@@ -192,15 +192,15 @@ const schema = [
 
       <h2 id="examples">Worked examples</h2>
 
-      <h3>Example 1: chemistry lab — density measurement</h3>
+      <h3>Example 1: chemistry lab - density measurement</h3>
       <p>A student measures the density of water as 9.6 g/mL. The accepted value is 10 g/mL.</p>
       <Formula expr={f.ex1} />
-      <p>The measurement has a <strong>4% error</strong>. The signed error is −4% (underestimate — the measured value was below the accepted value).</p>
+      <p>The measurement has a <strong>4% error</strong>. The signed error is −4% (underestimate - the measured value was below the accepted value).</p>
 
-      <h3>Example 2: physics — gravitational acceleration</h3>
+      <h3>Example 2: physics - gravitational acceleration</h3>
       <p>An experiment measures g = 9.81 m/s². The accepted value is 9.8 m/s².</p>
       <Formula expr={f.ex2} />
-      <p>The measurement has a <strong>≈0.102% error</strong> — a very precise result. The signed error is +0.102% (slight overestimate).</p>
+      <p>The measurement has a <strong>≈0.102% error</strong> - a very precise result. The signed error is +0.102% (slight overestimate).</p>
 
       <h3>Example 3: temperature measurement</h3>
       <p>A thermometer reads 23.5°C. The calibrated reference is 25°C.</p>
@@ -224,7 +224,7 @@ const schema = [
       </div>
 
       <h2 id="acceptable">What is an acceptable percent error?</h2>
-      <p>There is no universal threshold — acceptability is defined by the field, instrument precision, and purpose of the measurement:</p>
+      <p>There is no universal threshold - acceptability is defined by the field, instrument precision, and purpose of the measurement:</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -240,13 +240,13 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>A large percent error does not automatically mean the experiment failed — it may indicate a systematic error that can be corrected, instrument limitations, or an opportunity to refine the procedure.</p>
+      <p>A large percent error does not automatically mean the experiment failed - it may indicate a systematic error that can be corrected, instrument limitations, or an opportunity to refine the procedure.</p>
 
       <h2 id="vs-difference">Percent error vs percent difference</h2>
       <p>These two metrics are frequently confused. The distinction lies in whether one value is a known reference:</p>
       <ul>
-        <li><strong>Percent error</strong> — one value is the accepted truth (theoretical). The denominator is the theoretical value. Use when comparing a measurement to a standard.</li>
-        <li><strong>Percent difference</strong> — both values are measurements of equal standing. The denominator is their average. Use when neither value is a known standard.</li>
+        <li><strong>Percent error</strong> - one value is the accepted truth (theoretical). The denominator is the theoretical value. Use when comparing a measurement to a standard.</li>
+        <li><strong>Percent difference</strong> - both values are measurements of equal standing. The denominator is their average. Use when neither value is a known standard.</li>
       </ul>
       <p>Example: measuring the boiling point of water twice in the same experiment gives two measurements of equal status → percent difference. Comparing your measurement to the textbook value of 100°C → percent error, because 100°C is the accepted standard.</p>
 
@@ -259,7 +259,7 @@ const schema = [
       <p>Without the absolute value, a result where the experimental is below the theoretical produces a negative percent error. The standard formula uses absolute values so the error magnitude is always non-negative. Only report a negative value when explicitly using the signed version.</p>
 
       <h3>Confusing percent error with percent change</h3>
-      <p>Percent change measures how a value has changed over time — from an old value to a new value. Percent error measures how close a measured value is to a known standard. The formulas share the same structure but serve completely different purposes.</p>
+      <p>Percent change measures how a value has changed over time - from an old value to a new value. Percent error measures how close a measured value is to a known standard. The formulas share the same structure but serve completely different purposes.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
@@ -276,19 +276,19 @@ const schema = [
       <p>The standard absolute version is always non-negative. The signed version can be negative: negative means the experimental value was below the theoretical; positive means it was above.</p>
 
       <h3>What does a percent error of 0% mean?</h3>
-      <p>The experimental value exactly equals the theoretical — a perfect measurement. In practice this is rare due to instrument limits and measurement uncertainty.</p>
+      <p>The experimental value exactly equals the theoretical - a perfect measurement. In practice this is rare due to instrument limits and measurement uncertainty.</p>
 
       <h3>Why is the theoretical value in the denominator?</h3>
       <p>The theoretical value is the accepted reference. Dividing by it normalises the error relative to the expected magnitude, making errors comparable across experiments at different scales.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',            blurb: 'The main percentage calculator — percentage of a number, increase, decrease, and more.' },
-        { path: '/math/percentage-calculator/difference', blurb: 'Percent difference calculator — compares two independent values using their average as the base.' },
-        { path: '/math/percentage-calculator/change',     blurb: 'Percent change calculator — measures relative change from one value to another over time.' },
-        { path: '/math/percentage-calculator/increase',   blurb: 'Percent increase calculator — dedicated tool for positive percentage changes with step-by-step workings.' },
-        { path: '/math/percentage-calculator/decrease',   blurb: 'Percent decrease calculator — dedicated tool for negative percentage changes.' },
-        { path: '/math/fraction-calculator',              blurb: 'Fraction calculator — add, subtract, multiply, divide, and simplify fractions.' },
+        { path: '/math/percentage-calculator',            blurb: 'The main percentage calculator - percentage of a number, increase, decrease, and more.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percent difference calculator - compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/change',     blurb: 'Percent change calculator - measures relative change from one value to another over time.' },
+        { path: '/math/percentage-calculator/increase',   blurb: 'Percent increase calculator - dedicated tool for positive percentage changes with step-by-step workings.' },
+        { path: '/math/percentage-calculator/decrease',   blurb: 'Percent decrease calculator - dedicated tool for negative percentage changes.' },
+        { path: '/math/fraction-calculator',              blurb: 'Fraction calculator - add, subtract, multiply, divide, and simplify fractions.' },
       ]} />
 
     </div>

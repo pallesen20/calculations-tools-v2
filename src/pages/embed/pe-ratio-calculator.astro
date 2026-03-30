@@ -2,7 +2,7 @@
 import EmbedLayout from '../../layouts/EmbedLayout.astro';
 ---
 
-<EmbedLayout title="P/E Ratio Calculator — calculations.tools">
+<EmbedLayout title="P/E Ratio Calculator - calculations.tools">
   <section class="calculator-interface">
     <div class="calculator-container bmi-container">
       <div class="calculator-header">
@@ -18,7 +18,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       </div>
 
       <div class="bmi-field">
-        <label class="bmi-label" for="pe-eps">Earnings Per Share — EPS (trailing / LTM)</label>
+        <label class="bmi-label" for="pe-eps">Earnings Per Share - EPS (trailing / LTM)</label>
         <div class="bmi-input-wrap">
           <input type="text" inputmode="decimal" id="pe-eps" class="bmi-input" placeholder="e.g. 7.50" />
         </div>
@@ -41,29 +41,29 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       <div id="pe-result" class="lbm-result hidden">
         <div class="lbm-cards">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="pe-val">—</div>
+            <div class="lbm-card-val" id="pe-val">-</div>
             <div class="lbm-card-lbl">Trailing P/E</div>
           </div>
           <div class="lbm-card">
-            <div class="lbm-card-val" id="pe-earnings-yield">—</div>
+            <div class="lbm-card-val" id="pe-earnings-yield">-</div>
             <div class="lbm-card-lbl">Earnings Yield</div>
           </div>
         </div>
 
         <div id="pe-forward-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="pe-forward-val">—</div>
+            <div class="lbm-card-val" id="pe-forward-val">-</div>
             <div class="lbm-card-lbl">Forward P/E</div>
           </div>
         </div>
 
         <div id="pe-implied-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="pe-implied-price">—</div>
+            <div class="lbm-card-val" id="pe-implied-price">-</div>
             <div class="lbm-card-lbl">Implied Fair Value</div>
           </div>
           <div class="lbm-card">
-            <div class="lbm-card-val" id="pe-updownside">—</div>
+            <div class="lbm-card-val" id="pe-updownside">-</div>
             <div class="lbm-card-lbl">Upside / Downside</div>
           </div>
         </div>
@@ -72,19 +72,19 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
           <div class="pi-steps-title">Calculation</div>
           <div class="pi-step">
             <span class="pi-step-label">Price / EPS = Trailing P/E</span>
-            <span class="pi-step-val" id="pe-step1">—</span>
+            <span class="pi-step-val" id="pe-step1">-</span>
           </div>
           <div class="pi-step">
             <span class="pi-step-label">EPS / Price × 100 = Earnings Yield</span>
-            <span class="pi-step-val" id="pe-step2">—</span>
+            <span class="pi-step-val" id="pe-step2">-</span>
           </div>
           <div class="pi-step">
             <span class="pi-step-label">Price / Forward EPS = Forward P/E</span>
-            <span class="pi-step-val" id="pe-step3">—</span>
+            <span class="pi-step-val" id="pe-step3">-</span>
           </div>
           <div class="pi-step">
             <span class="pi-step-label">EPS × Target P/E = Implied Price</span>
-            <span class="pi-step-val" id="pe-step4">—</span>
+            <span class="pi-step-val" id="pe-step4">-</span>
           </div>
         </div>
       </div>

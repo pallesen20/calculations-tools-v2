@@ -2,7 +2,7 @@
 import EmbedLayout from '../../layouts/EmbedLayout.astro';
 ---
 
-<EmbedLayout title="Free Cash Flow Calculator — calculations.tools">
+<EmbedLayout title="Free Cash Flow Calculator - calculations.tools">
   <section class="calculator-interface">
     <div class="calculator-container bmi-container">
       <div class="calculator-header">
@@ -25,7 +25,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       </div>
 
       <div class="bmi-field">
-        <label class="bmi-label" for="fcf-market-cap">Market Capitalisation (optional — for FCF Yield)</label>
+        <label class="bmi-label" for="fcf-market-cap">Market Capitalisation (optional - for FCF Yield)</label>
         <div class="bmi-input-wrap">
           <input type="text" inputmode="decimal" id="fcf-market-cap" class="bmi-input" placeholder="e.g. 200000000" />
         </div>
@@ -34,22 +34,22 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       <div id="fcf-result" class="lbm-result hidden">
         <div class="lbm-cards">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="fcf-val">—</div>
+            <div class="lbm-card-val" id="fcf-val">-</div>
             <div class="lbm-card-lbl">Free Cash Flow</div>
           </div>
           <div class="lbm-card">
-            <div class="lbm-card-val" id="fcf-ocf-out">—</div>
+            <div class="lbm-card-val" id="fcf-ocf-out">-</div>
             <div class="lbm-card-lbl">Operating Cash Flow</div>
           </div>
           <div class="lbm-card">
-            <div class="lbm-card-val" id="fcf-capex-out">—</div>
+            <div class="lbm-card-val" id="fcf-capex-out">-</div>
             <div class="lbm-card-lbl">CapEx</div>
           </div>
         </div>
 
         <div id="fcf-yield-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="fcf-yield-val">—</div>
+            <div class="lbm-card-val" id="fcf-yield-val">-</div>
             <div class="lbm-card-lbl">FCF Yield</div>
           </div>
         </div>
@@ -58,11 +58,11 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
           <div class="pi-steps-title">Calculation</div>
           <div class="pi-step">
             <span class="pi-step-label">OCF − CapEx = FCF</span>
-            <span class="pi-step-val" id="fcf-step1">—</span>
+            <span class="pi-step-val" id="fcf-step1">-</span>
           </div>
           <div class="pi-step">
             <span class="pi-step-label">FCF / Market Cap × 100 = FCF Yield</span>
-            <span class="pi-step-val" id="fcf-step2">—</span>
+            <span class="pi-step-val" id="fcf-step2">-</span>
           </div>
         </div>
       </div>

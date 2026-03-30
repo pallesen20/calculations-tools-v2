@@ -4,7 +4,7 @@ import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 
-// LaTeX formulas — defined as JS strings so Astro doesn't misparse { } in
+// LaTeX formulas - defined as JS strings so Astro doesn't misparse { } in
 // the template as expression delimiters. Backslashes are double-escaped.
 const f = {
   basic:      "$$\\text{Result} = N \\times \\frac{P}{100}$$",
@@ -320,16 +320,16 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator/increase', blurb: 'Dedicated calculator for percentage increases — shows the formula, absolute change, and step-by-step workings.' },
-        { path: '/math/percentage-calculator/decrease', blurb: 'Dedicated calculator for percentage decreases and discounts — shows formula, absolute change, and step-by-step workings.' },
-        { path: '/math/percentage-calculator/change',      blurb: 'Percentage change calculator — single tool covering increases and decreases with signed result.' },
-        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
-        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on when to use weighted averaging.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',       blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
-        { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% — covers successive discounts and why stacking percentages cannot simply be added.' },
-        { path: '/date-calculator',                  blurb: 'Calculate days between dates — useful when the percentage change spans a defined time period.' },
-        { path: '/conversion/currency-converter',  blurb: 'Convert between 150+ currencies with live rates — useful for financial percentage calculations across markets.' },
+        { path: '/math/percentage-calculator/increase', blurb: 'Dedicated calculator for percentage increases - shows the formula, absolute change, and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decrease', blurb: 'Dedicated calculator for percentage decreases and discounts - shows formula, absolute change, and step-by-step workings.' },
+        { path: '/math/percentage-calculator/change',      blurb: 'Percentage change calculator - single tool covering increases and decreases with signed result.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator - compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator - arithmetic mean of multiple percentages, with a guide on when to use weighted averaging.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',       blurb: 'Convert any decimal to a percentage - multiply by 100, with a reference table for common decimals.' },
+        { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% - covers successive discounts and why stacking percentages cannot simply be added.' },
+        { path: '/date-calculator',                  blurb: 'Calculate days between dates - useful when the percentage change spans a defined time period.' },
+        { path: '/conversion/currency-converter',  blurb: 'Convert between 150+ currencies with live rates - useful for financial percentage calculations across markets.' },
       ]} />
 
       <RelatedGlossaryTerms toolPath="/math/percentage-calculator" />

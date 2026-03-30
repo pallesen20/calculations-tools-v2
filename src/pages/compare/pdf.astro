@@ -1,0 +1,188 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use this tool' },
+  { id: 'how-it-works', label: 'How PDF text extraction works' },
+  { id: 'limitations',  label: 'Limitations' },
+  { id: 'use-cases',    label: 'Use cases' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PDF Comparison Tool",
+    "url": "https://calculations.tools/compare/pdf",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Compare two PDF files online. Extracts text from both PDFs and shows every addition, removal, and change line by line. Free, private, runs entirely in your browser.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I compare two PDF files online?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your original PDF on the left and the updated PDF on the right, then click Find Differences. The tool extracts text from both files and shows every changed line in color-coded diff output." } },
+      { "@type": "Question", "name": "Is my PDF data private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. PDF files are processed entirely in your browser using PDF.js. Nothing is uploaded to any server." } },
+      { "@type": "Question", "name": "Can this tool compare scanned PDFs?", "acceptedAnswer": { "@type": "Answer", "text": "No. This tool extracts the embedded text layer from PDFs. Scanned PDFs contain images of text, not actual text, so they will produce empty or minimal output. Use an OCR tool such as the Image to Text tool at calculations.tools/conversion/image-to-text to extract text from scanned PDFs first, then paste the result here to compare." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Compare PDF Files"
+  metaTitle="Compare PDF Files Online Free | PDF File Diff Checker ᐅ"
+  description="Compare two PDF files and find every text difference. Extracts text from both PDFs and shows additions, removals, and changes line by line. Free, private, runs in browser."
+  canonical="https://calculations.tools/compare/pdf"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="compare-pdf"
+  ogFormula="PDF text diff"
+  ogExample="Extract & compare text from two PDFs"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container ce-container">
+
+        <div class="calculator-header">
+          <h2>PDF File Diff Checker</h2>
+          <p>Upload two PDFs to extract and compare their text content line by line</p>
+        </div>
+
+        <div class="ce-grid">
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Original PDF</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerPDFUpload('original')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="clearPDFFile('original')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="cp-drop-original">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></div>
+                <div class="ce-drop-label">Drop PDF here or click to upload</div>
+                <div class="ce-drop-sub">.pdf files only</div>
+              </div>
+              <div class="ce-file-info" id="cp-info-original"></div>
+            </div>
+          </div>
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Changed PDF</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerPDFUpload('changed')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="clearPDFFile('changed')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="cp-drop-changed">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg></div>
+                <div class="ce-drop-label">Drop PDF here or click to upload</div>
+                <div class="ce-drop-sub">.pdf files only</div>
+              </div>
+              <div class="ce-file-info" id="cp-info-changed"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="diff-actions">
+          <button class="diff-btn-primary" id="cp-btn-compare" onclick="comparePDFs()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+        </div>
+
+        <div id="diff-output" class="diff-output">
+          <div class="diff-header">
+            <div class="diff-stats">
+              <span class="diff-added"     id="ct-stat-added">+0 added</span>
+              <span class="diff-removed"   id="ct-stat-removed">−0 removed</span>
+              <span class="diff-unchanged" id="ct-stat-unchanged">0 unchanged</span>
+            </div>
+            <button class="diff-tbtn" onclick="copyPDFDiff()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
+          </div>
+          <div class="ct-diff-container" id="cp-diff-container"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <input type="file" id="cp-file-original" style="display:none" accept=".pdf" />
+    <input type="file" id="cp-file-changed"  style="display:none" accept=".pdf" />
+    <div class="diff-toast"></div>
+    <script src="/js/compare-pdf.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Upload your original PDF on the left and the updated PDF on the right, then click <strong>Find Differences</strong>. The tool extracts the text layer from both files using PDF.js and shows every changed line in color-coded diff output. Works only on text-based PDFs - not scanned images.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Drop each PDF file into its panel, or click to browse. Then click "Find Differences." The tool loads PDF.js on demand (no page-weight cost unless you use the tool), extracts the text layer from both files, and runs a line-by-line diff. Additions appear in green, removals in red.</p>
+      <p>For large PDFs the extraction step may take a few seconds. The button shows "Extracting text…" while processing. Everything runs in your browser - no files are uploaded to any server.</p>
+
+      <h2 id="how-it-works">How PDF text extraction works</h2>
+      <p>PDFs store content in one of two ways: as an embedded text layer (text-based PDFs) or as rasterized images of text (scanned PDFs). This tool uses <a href="https://mozilla.github.io/pdf.js/" rel="nofollow">PDF.js</a> - Mozilla's open-source PDF renderer - to extract the text layer. The extracted text from each page is concatenated and then compared line by line using an LCS (Longest Common Subsequence) diff algorithm, the same algorithm used by Git.</p>
+
+      <h2 id="limitations">Limitations</h2>
+      <p>PDF text comparison has inherent limitations you should understand:</p>
+      <ul>
+        <li><strong>Scanned PDFs produce no text.</strong> If your PDF is a scan (an image of a printed page), PDF.js cannot extract text from it. You will get empty or minimal output. Use the <a href="/conversion/image-to-text">Image to Text (OCR)</a> tool to extract text from the scan first.</li>
+        <li><strong>Text order may differ from visual layout.</strong> PDF.js extracts text in the internal order it is stored, which sometimes differs from left-to-right, top-to-bottom reading order - especially in multi-column layouts, tables, or footnotes.</li>
+        <li><strong>Formatting is not compared.</strong> Bold, italic, font size, and color are not part of the text extraction. Only the character content is compared.</li>
+      </ul>
+      <p>For comparing formatted Word documents, the <a href="/compare/documents">Compare Documents</a> tool supports .docx files directly.</p>
+
+      <h2 id="use-cases">Use cases</h2>
+      <h3>Contract and legal document redlines</h3>
+      <p>When a contract is revised and sent back as a new PDF, paste both versions into this tool to see every changed sentence, clause, or paragraph - without reading both documents in full. Even a single changed word will appear in the diff.</p>
+      <h3>Report and white paper versioning</h3>
+      <p>Compare two versions of a report to verify which sections changed between drafts, which figures were updated, and whether any text was accidentally removed during editing.</p>
+      <h3>Regulatory and compliance submissions</h3>
+      <p>Many regulatory filings, technical standards, and compliance documents are distributed as PDFs. Comparing the current version against the previous one produces a clear audit trail of what changed.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>Can this compare scanned PDFs?</h3>
+      <p>No. Scanned PDFs contain images of text, not actual text. PDF.js can only extract an embedded text layer. Use the <a href="/conversion/image-to-text">Image to Text (OCR)</a> tool to extract text from the scanned PDF first, then paste the result here to compare.</p>
+      <h3>Is my PDF private?</h3>
+      <p>Yes. All processing runs in your browser using PDF.js. Nothing is uploaded to any server at any point.</p>
+      <h3>What happens with multi-page PDFs?</h3>
+      <p>The tool extracts text from all pages and concatenates them before running the diff. Text from page 1 is compared to text from page 1 of the other document, then page 2, and so on, as a continuous text stream.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📝</span>
+          <div>
+            <a href="/compare/documents">Compare Word Documents</a>
+            <p>Compare two .docx files and extract and diff their text content.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⇄</span>
+          <div>
+            <a href="/compare/text">Diff Checker</a>
+            <p>Paste or upload any text and compare line by line with color-coded unified or side-by-side views.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .ce-container { max-width: 100% !important; }
+</style>

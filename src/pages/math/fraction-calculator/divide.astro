@@ -64,7 +64,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the reciprocal of a fraction?",
-        "acceptedAnswer": { "@type": "Answer", "text": "The reciprocal of a fraction a/b is b/a — numerator and denominator are swapped. A fraction multiplied by its reciprocal always equals 1. For example, the reciprocal of 3/4 is 4/3, and 3/4 × 4/3 = 12/12 = 1." }
+        "acceptedAnswer": { "@type": "Answer", "text": "The reciprocal of a fraction a/b is b/a - numerator and denominator are swapped. A fraction multiplied by its reciprocal always equals 1. For example, the reciprocal of 3/4 is 4/3, and 3/4 × 4/3 = 12/12 = 1." }
       },
       {
         "@type": "Question",
@@ -94,7 +94,7 @@ const schema = [
 <CalculatorLayout
   title="Divide Fractions Calculator"
   metaTitle="Divide Fractions Calculator | Keep-Change-Flip"
-  description="Divide any two fractions instantly. Uses the keep-change-flip method — finds the reciprocal, multiplies across, simplifies — with step-by-step workings and mixed number output."
+  description="Divide any two fractions instantly. Uses the keep-change-flip method - finds the reciprocal, multiplies across, simplifies - with step-by-step workings and mixed number output."
   canonical="https://calculations.tools/math/fraction-calculator/divide"
   tocItems={tocItems}
   schema={schema}
@@ -134,23 +134,23 @@ const schema = [
 
         <div id="fc-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
-            <span id="fc-res-n" class="fc-res-num">—</span>
+            <span id="fc-res-n" class="fc-res-num">-</span>
             <div class="fc-res-bar" id="fc-res-bar"></div>
-            <span id="fc-res-d" class="fc-res-den">—</span>
+            <span id="fc-res-d" class="fc-res-den">-</span>
           </div>
           <div class="lbm-primary-lbl">Result (simplified)</div>
 
           <div class="lbm-cards">
             <div class="lbm-card hidden" id="fc-mixed-card">
-              <div class="lbm-card-val" id="fc-mixed">—</div>
+              <div class="lbm-card-val" id="fc-mixed">-</div>
               <div class="lbm-card-lbl">Mixed number</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="fc-decimal">—</div>
+              <div class="lbm-card-val" id="fc-decimal">-</div>
               <div class="lbm-card-lbl">Decimal</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="fc-percent">—</div>
+              <div class="lbm-card-val" id="fc-percent">-</div>
               <div class="lbm-card-lbl">Percentage</div>
             </div>
           </div>
@@ -159,15 +159,15 @@ const schema = [
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step hidden" id="fc-step1-row">
               <span class="pi-step-label" id="fc-step1-lbl">Step 1</span>
-              <span class="pi-step-val" id="fc-step1-val">—</span>
+              <span class="pi-step-val" id="fc-step1-val">-</span>
             </div>
             <div class="pi-step hidden" id="fc-step2-row">
               <span class="pi-step-label" id="fc-step2-lbl">Step 2</span>
-              <span class="pi-step-val" id="fc-step2-val">—</span>
+              <span class="pi-step-val" id="fc-step2-val">-</span>
             </div>
             <div class="pi-step hidden" id="fc-step3-row">
               <span class="pi-step-label" id="fc-step3-lbl">Step 3</span>
-              <span class="pi-step-val" id="fc-step3-val">—</span>
+              <span class="pi-step-val" id="fc-step3-val">-</span>
             </div>
           </div>
         </div>
@@ -202,7 +202,7 @@ const schema = [
       <ul>
         <li>Reciprocal of a whole number n is 1/n (e.g. reciprocal of 4 is 1/4)</li>
         <li>Reciprocal of 1 is 1</li>
-        <li>Zero has no reciprocal — division by zero is undefined</li>
+        <li>Zero has no reciprocal - division by zero is undefined</li>
       </ul>
 
       <h2 id="examples">Worked examples</h2>
@@ -241,9 +241,9 @@ const schema = [
       <p>Write the whole number as a fraction over 1, then apply keep-change-flip:</p>
       <Formula expr={f.whole} />
       <p>Dividing a fraction by n is the same as multiplying the denominator by n. This halves, thirds, or further reduces the fraction depending on n.</p>
-      <p>Dividing a whole number <em>by</em> a fraction inverts the relationship — the result is often larger than the original:</p>
+      <p>Dividing a whole number <em>by</em> a fraction inverts the relationship - the result is often larger than the original:</p>
       <Formula expr={f.byFrac} />
-      <p>"How many ¾ fit into 3?" — four times. Dividing by a fraction less than 1 always produces a result greater than the dividend.</p>
+      <p>"How many ¾ fit into 3?" - four times. Dividing by a fraction less than 1 always produces a result greater than the dividend.</p>
 
       <h2 id="mixed-numbers">Dividing mixed numbers</h2>
       <p>Convert each mixed number to an improper fraction before applying keep-change-flip:</p>
@@ -259,7 +259,7 @@ const schema = [
         <li>Negative ÷ positive = <strong>negative</strong></li>
       </ul>
       <Formula expr={f.neg} />
-      <p>The sign is determined before or after flipping — it makes no difference, since flipping the reciprocal preserves the sign of the second fraction's numerator and denominator independently.</p>
+      <p>The sign is determined before or after flipping - it makes no difference, since flipping the reciprocal preserves the sign of the second fraction's numerator and denominator independently.</p>
 
       <h2 id="common-mistakes">Common mistakes</h2>
 
@@ -281,7 +281,7 @@ const schema = [
       <p>Keep the first fraction, change ÷ to ×, flip the second fraction (take its reciprocal), multiply across, and simplify.</p>
 
       <h3>What is the reciprocal of a fraction?</h3>
-      <p>The reciprocal of a/b is b/a — numerator and denominator are swapped. A fraction times its reciprocal always equals 1.</p>
+      <p>The reciprocal of a/b is b/a - numerator and denominator are swapped. A fraction times its reciprocal always equals 1.</p>
 
       <h3>Do you need a common denominator to divide fractions?</h3>
       <p>No. Fraction division converts to multiplication via the reciprocal, and multiplication needs no common denominator.</p>
@@ -293,17 +293,17 @@ const schema = [
       <p>Convert each mixed number to an improper fraction, then apply keep-change-flip to the two improper fractions.</p>
 
       <h3>Can you divide a fraction by itself?</h3>
-      <p>Yes — the result is always 1. Any non-zero number divided by itself equals 1.</p>
+      <p>Yes - the result is always 1. Any non-zero number divided by itself equals 1.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — add, subtract, multiply, divide, and simplify all in one tool.' },
-        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions step by step — LCD method with simplified result, decimal, and percentage.' },
-        { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions step by step — LCD method with step-by-step workings.' },
-        { path: '/math/fraction-calculator/multiply',  blurb: 'Multiply fractions — straight numerator × numerator with step-by-step simplification.' },
+        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator - add, subtract, multiply, divide, and simplify all in one tool.' },
+        { path: '/math/fraction-calculator/add',       blurb: 'Add fractions step by step - LCD method with simplified result, decimal, and percentage.' },
+        { path: '/math/fraction-calculator/subtract',  blurb: 'Subtract fractions step by step - LCD method with step-by-step workings.' },
+        { path: '/math/fraction-calculator/multiply',  blurb: 'Multiply fractions - straight numerator × numerator with step-by-step simplification.' },
         { path: '/math/fraction-calculator/simplify',  blurb: 'Simplify any fraction to its lowest terms using the GCD method.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal and step-by-step workings.' },
-        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator — percentage of a number, percentage change, and more.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal and step-by-step workings.' },
+        { path: '/math/percentage-calculator',         blurb: 'Percentage calculator - percentage of a number, percentage change, and more.' },
       ]} />
 
     </div>

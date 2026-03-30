@@ -31,7 +31,7 @@ const schema = [
     "url": "https://calculations.tools/math/percentage-calculator/decimal-to-percent",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
-    "description": "Convert any decimal to a percentage instantly. Multiply by 100 — see the step-by-step working, a reference table for common decimals, and the reverse conversion.",
+    "description": "Convert any decimal to a percentage instantly. Multiply by 100 - see the step-by-step working, a reference table for common decimals, and the reverse conversion.",
     "isAccessibleForFree": true,
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   },
@@ -76,7 +76,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between a decimal and a percentage?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A decimal and a percentage represent the same value in different forms. A percentage is simply a decimal multiplied by 100 — it expresses the quantity per hundred. For example, 0.75 and 75% are identical values written differently." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A decimal and a percentage represent the same value in different forms. A percentage is simply a decimal multiplied by 100 - it expresses the quantity per hundred. For example, 0.75 and 75% are identical values written differently." }
       }
     ]
   }
@@ -111,15 +111,15 @@ const schema = [
 
         <div id="dtp-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="dtp-pct">—</span>
+            <span class="lbm-primary-val" id="dtp-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="dtp-rev">—</div>
+              <div class="lbm-card-val" id="dtp-rev">-</div>
               <div class="lbm-card-lbl">Decimal (input)</div>
-              <div class="lbm-card-badge" id="dtp-badge">—</div>
+              <div class="lbm-card-badge" id="dtp-badge">-</div>
             </div>
           </div>
 
@@ -127,7 +127,7 @@ const schema = [
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
               <span class="pi-step-label">Multiply by 100</span>
-              <span id="dtp-step1" class="pi-step-val">—</span>
+              <span id="dtp-step1" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -158,19 +158,19 @@ const schema = [
 
       <h2 id="examples">Worked examples</h2>
 
-      <h3>Example 1: standard decimal — 0.75</h3>
+      <h3>Example 1: standard decimal - 0.75</h3>
       <Formula expr={f.ex1} />
       <p>0.75 is equal to <strong>75%</strong>.</p>
 
-      <h3>Example 2: repeating decimal — 1/3</h3>
+      <h3>Example 2: repeating decimal - 1/3</h3>
       <p>The decimal 0.333… (one-third) converts to a repeating percentage:</p>
       <Formula expr={f.ex2} />
-      <p>0.333… is equal to <strong>33.333…%</strong> — a non-terminating repeating percentage.</p>
+      <p>0.333… is equal to <strong>33.333…%</strong> - a non-terminating repeating percentage.</p>
 
       <h3>Example 3: decimal greater than 1</h3>
       <p>Any decimal above 1 gives a percentage above 100%:</p>
       <Formula expr={f.ex3} />
-      <p>1.5 is equal to <strong>150%</strong> — representing a value 50% more than a whole.</p>
+      <p>1.5 is equal to <strong>150%</strong> - representing a value 50% more than a whole.</p>
 
       <h2 id="reference-table">Decimal to percent reference table</h2>
 
@@ -211,7 +211,7 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Confusing the decimal with the percentage</h3>
-      <p>Writing 0.75% instead of 75% is a 100× error. 0.75% means "75 hundredths of one percent" — a very small quantity. This mistake is common when copying values from spreadsheets where cells may be formatted as percentages (showing 75%) but storing the decimal (0.75).</p>
+      <p>Writing 0.75% instead of 75% is a 100× error. 0.75% means "75 hundredths of one percent" - a very small quantity. This mistake is common when copying values from spreadsheets where cells may be formatted as percentages (showing 75%) but storing the decimal (0.75).</p>
 
       <h3>Not moving the decimal point far enough</h3>
       <p>Multiplying by 10 instead of 100 is a common slip. The conversion always requires two decimal places of movement: 0.45 × 100 = 45%, not 4.5%.</p>
@@ -237,16 +237,16 @@ const schema = [
       <p>Divide by 100 (or move the decimal point two places to the left). Example: 37.5% ÷ 100 = 0.375.</p>
 
       <h3>What is the difference between a decimal and a percentage?</h3>
-      <p>They represent the same value in different forms. A percentage is a decimal multiplied by 100, expressing the quantity per hundred. 0.75 and 75% are identical — just written differently.</p>
+      <p>They represent the same value in different forms. A percentage is a decimal multiplied by 100, expressing the quantity per hundred. 0.75 and 75% are identical - just written differently.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',                    blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction (numerator/denominator) to a percentage — the natural companion to this tool.' },
-        { path: '/math/percentage-calculator/change',             blurb: 'Percentage change calculator — signed result for before-and-after comparisons.' },
-        { path: '/math/percentage-calculator/average',                  blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
-        { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% — covers successive discounts and why stacking percentages cannot simply be added.' },
-        { path: '/conversion/currency-converter',                  blurb: 'Convert between 150+ currencies with live rates — useful when decimal values involve exchange rates.' },
+        { path: '/math/percentage-calculator',                    blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction (numerator/denominator) to a percentage - the natural companion to this tool.' },
+        { path: '/math/percentage-calculator/change',             blurb: 'Percentage change calculator - signed result for before-and-after comparisons.' },
+        { path: '/math/percentage-calculator/average',                  blurb: 'Average percentage calculator - arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
+        { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% - covers successive discounts and why stacking percentages cannot simply be added.' },
+        { path: '/conversion/currency-converter',                  blurb: 'Convert between 150+ currencies with live rates - useful when decimal values involve exchange rates.' },
       ]} />
 
     </div>

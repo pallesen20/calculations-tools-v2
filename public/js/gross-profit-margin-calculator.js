@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function interpret(margin) {
-    if (margin < 0)  return 'Negative — selling below cost';
+    if (margin < 0)  return 'Negative - selling below cost';
     if (margin < 10) return 'Very low';
     if (margin < 20) return 'Below average';
     if (margin < 35) return 'Average';

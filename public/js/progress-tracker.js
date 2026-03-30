@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         deadlineRow.classList.add('hidden');
       } else {
         document.getElementById('pt-days-left').textContent   = Math.abs(daysLeft) + ' day' + (Math.abs(daysLeft) !== 1 ? 's' : '') + ' overdue';
-        document.getElementById('pt-daily').textContent       = '—';
-        document.getElementById('pt-weekly').textContent      = '—';
+        document.getElementById('pt-daily').textContent       = '-';
+        document.getElementById('pt-weekly').textContent      = '-';
         deadlineRow.classList.remove('hidden');
       }
     } else {

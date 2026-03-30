@@ -1,0 +1,79 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Compare PDF Files - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container ce-container">
+
+      <div class="calculator-header">
+        <h2>Compare PDF Files</h2>
+        <p>Upload two PDFs to extract and compare their text content</p>
+      </div>
+
+      <div class="ce-grid">
+
+        <div class="diff-panel">
+          <div class="diff-toolbar">
+            <h3>Original PDF</h3>
+            <div class="diff-toolbar-btns">
+              <button class="diff-tbtn" onclick="triggerPDFUpload('original')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+              <button class="diff-tbtn" onclick="clearPDFFile('original')" title="Clear">✕</button>
+            </div>
+          </div>
+          <div class="ce-drop" id="cp-drop-original">
+            <div class="ce-drop-prompt">
+              <div class="ce-drop-label">Drop PDF here or click to upload</div>
+              <div class="ce-drop-sub">.pdf files only</div>
+            </div>
+            <div class="ce-file-info" id="cp-info-original"></div>
+          </div>
+        </div>
+
+        <div class="diff-panel">
+          <div class="diff-toolbar">
+            <h3>Changed PDF</h3>
+            <div class="diff-toolbar-btns">
+              <button class="diff-tbtn" onclick="triggerPDFUpload('changed')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+              <button class="diff-tbtn" onclick="clearPDFFile('changed')" title="Clear">✕</button>
+            </div>
+          </div>
+          <div class="ce-drop" id="cp-drop-changed">
+            <div class="ce-drop-prompt">
+              <div class="ce-drop-label">Drop PDF here or click to upload</div>
+              <div class="ce-drop-sub">.pdf files only</div>
+            </div>
+            <div class="ce-file-info" id="cp-info-changed"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="diff-actions">
+        <button class="diff-btn-primary" id="cp-btn-compare" onclick="comparePDFs()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+      </div>
+
+      <div id="diff-output" class="diff-output">
+        <div class="diff-header">
+          <div class="diff-stats">
+            <span class="diff-added"     id="ct-stat-added">+0 added</span>
+            <span class="diff-removed"   id="ct-stat-removed">−0 removed</span>
+            <span class="diff-unchanged" id="ct-stat-unchanged">0 unchanged</span>
+          </div>
+        </div>
+        <div class="ct-diff-container" id="cp-diff-container"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <input type="file" id="cp-file-original" style="display:none" accept=".pdf" />
+  <input type="file" id="cp-file-changed"  style="display:none" accept=".pdf" />
+  <div class="diff-toast"></div>
+  <script src="/js/compare-pdf.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .ce-container { max-width: 100% !important; }
+  .ct-diff-container { max-height: 360px; font-size: 0.78rem; }
+</style>

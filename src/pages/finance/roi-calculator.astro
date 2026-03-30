@@ -57,17 +57,17 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is annualized ROI and why does it matter?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Annualized ROI (also called CAGR — Compound Annual Growth Rate) converts a total ROI into an equivalent annual return, allowing fair comparison of investments held for different durations. The formula is: Annualized ROI = (Final Value / Initial Investment)^(1/n) − 1, where n is the number of years. A 100% total ROI over 10 years is only a 7.2% annualized ROI, while 100% over 2 years is a 41.4% annualized ROI." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Annualized ROI (also called CAGR - Compound Annual Growth Rate) converts a total ROI into an equivalent annual return, allowing fair comparison of investments held for different durations. The formula is: Annualized ROI = (Final Value / Initial Investment)^(1/n) − 1, where n is the number of years. A 100% total ROI over 10 years is only a 7.2% annualized ROI, while 100% over 2 years is a 41.4% annualized ROI." }
       },
       {
         "@type": "Question",
         "name": "What is the difference between ROI and IRR?",
-        "acceptedAnswer": { "@type": "Answer", "text": "ROI measures total return as a simple percentage of cost. IRR (Internal Rate of Return) is the discount rate that makes the Net Present Value of all cash flows equal to zero — it accounts for the timing of each cash flow throughout the investment period. For a single lump-sum investment with no intermediate cash flows, annualized ROI and IRR are equivalent. IRR is more appropriate for investments with multiple cash flows (e.g., real estate with rental income, private equity with capital calls)." }
+        "acceptedAnswer": { "@type": "Answer", "text": "ROI measures total return as a simple percentage of cost. IRR (Internal Rate of Return) is the discount rate that makes the Net Present Value of all cash flows equal to zero - it accounts for the timing of each cash flow throughout the investment period. For a single lump-sum investment with no intermediate cash flows, annualized ROI and IRR are equivalent. IRR is more appropriate for investments with multiple cash flows (e.g., real estate with rental income, private equity with capital calls)." }
       },
       {
         "@type": "Question",
         "name": "Can ROI be negative?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. A negative ROI means the final value is less than the initial investment — the investment lost money. For example, investing $10,000 and ending with $7,000 gives a Net Return of -$3,000 and an ROI of -30%. Negative ROI is common in venture capital (most startups fail), volatile assets, and businesses that underperform." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. A negative ROI means the final value is less than the initial investment - the investment lost money. For example, investing $10,000 and ending with $7,000 gives a Net Return of -$3,000 and an ROI of -30%. Negative ROI is common in venture capital (most startups fail), volatile assets, and businesses that underperform." }
       }
     ]
   }
@@ -76,7 +76,7 @@ const schema = [
 
 <CalculatorLayout
   title="ROI Calculator"
-  metaTitle="ROI Calculator — Return on Investment Formula"
+  metaTitle="ROI Calculator - Return on Investment Formula"
   description="Calculate ROI (Return on Investment) from initial investment and final value. Shows net return, ROI %, investment multiple, and annualized ROI (CAGR)."
   canonical="https://calculations.tools/finance/roi-calculator"
   tocItems={tocItems}
@@ -108,7 +108,7 @@ const schema = [
         </div>
 
         <div class="bmi-field">
-          <label class="bmi-label" for="roi-years">Holding Period in Years (optional — for annualized ROI)</label>
+          <label class="bmi-label" for="roi-years">Holding Period in Years (optional - for annualized ROI)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="roi-years" class="bmi-input" placeholder="e.g. 3" />
           </div>
@@ -117,22 +117,22 @@ const schema = [
         <div id="roi-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="roi-net-return">—</div>
+              <div class="lbm-card-val" id="roi-net-return">-</div>
               <div class="lbm-card-lbl">Net Return</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="roi-pct">—</div>
+              <div class="lbm-card-val" id="roi-pct">-</div>
               <div class="lbm-card-lbl">ROI</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="roi-multiple">—</div>
+              <div class="lbm-card-val" id="roi-multiple">-</div>
               <div class="lbm-card-lbl">Multiple</div>
             </div>
           </div>
 
           <div id="roi-ann-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="roi-ann-val">—</div>
+              <div class="lbm-card-val" id="roi-ann-val">-</div>
               <div class="lbm-card-lbl">Annualized ROI (CAGR)</div>
             </div>
           </div>
@@ -141,15 +141,15 @@ const schema = [
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
               <span class="pi-step-label">Final − Initial = Net Return</span>
-              <span class="pi-step-val" id="roi-step1">—</span>
+              <span class="pi-step-val" id="roi-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Net Return / Initial × 100 = ROI</span>
-              <span class="pi-step-val" id="roi-step2">—</span>
+              <span class="pi-step-val" id="roi-step2">-</span>
             </div>
             <div class="pi-step" id="roi-step3-row">
               <span class="pi-step-label">Annualized ROI (CAGR)</span>
-              <span class="pi-step-val" id="roi-step3">—</span>
+              <span class="pi-step-val" id="roi-step3">-</span>
             </div>
           </div>
         </div>
@@ -168,19 +168,19 @@ const schema = [
 
       <h2 id="how-to-use">How to use this calculator</h2>
       <p>Enter your <strong>Initial Investment</strong> (the amount you put in) and your <strong>Final Value</strong> (the amount you got back, including the original principal). The calculator instantly shows net return in currency, ROI as a percentage, and the investment multiple. Optionally enter the <strong>Holding Period in Years</strong> to see your annualized ROI (CAGR).</p>
-      <p>Use consistent units — if your investment is in dollars, enter all values in dollars. The calculator handles any currency or denomination as long as both inputs use the same unit.</p>
+      <p>Use consistent units - if your investment is in dollars, enter all values in dollars. The calculator handles any currency or denomination as long as both inputs use the same unit.</p>
 
       <h2 id="formula">Return on Investment formula</h2>
       <p>ROI measures how much profit you earned relative to what you invested. The standard formula is:</p>
       <Formula expr={f.roi} />
       <p>Where Net Return is the gain (or loss) from the investment:</p>
       <Formula expr={f.netReturn} />
-      <p>The investment multiple expresses the same information as a ratio rather than a percentage — useful for comparing large returns:</p>
+      <p>The investment multiple expresses the same information as a ratio rather than a percentage - useful for comparing large returns:</p>
       <Formula expr={f.multiple} />
       <p>A 100% ROI equals a 2.0x multiple. A 200% ROI equals a 3.0x multiple. Venture capital investors typically express targets as multiples (e.g., "we need at least 3x") rather than percentages.</p>
 
       <h2 id="annualized">Annualized ROI (CAGR)</h2>
-      <p>Total ROI does not account for how long the investment was held. A 50% ROI over 10 years is far less impressive than 50% ROI over 1 year. <strong>Annualized ROI</strong> — also called CAGR (Compound Annual Growth Rate) — solves this by converting total return into a consistent annual rate:</p>
+      <p>Total ROI does not account for how long the investment was held. A 50% ROI over 10 years is far less impressive than 50% ROI over 1 year. <strong>Annualized ROI</strong> - also called CAGR (Compound Annual Growth Rate) - solves this by converting total return into a consistent annual rate:</p>
       <Formula expr={f.annualized} />
       <p>Where <em>n</em> is the number of years. This is the same as the geometric mean annual return. Use annualized ROI whenever comparing investments held for different lengths of time.</p>
 
@@ -235,7 +235,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>For a simple investment with a single cash outflow and one cash inflow, ROI and annualized ROI (CAGR) are the appropriate metrics. When cash flows occur at irregular intervals — rent, dividends, capital calls — use IRR.</p>
+      <p>For a simple investment with a single cash outflow and one cash inflow, ROI and annualized ROI (CAGR) are the appropriate metrics. When cash flows occur at irregular intervals - rent, dividends, capital calls - use IRR.</p>
 
       <h2 id="mistakes">Common ROI mistakes</h2>
       <ul>
@@ -243,7 +243,7 @@ const schema = [
         <li><strong>Ignoring costs and fees:</strong> Transaction costs, management fees, taxes, and maintenance all reduce net return. Your actual ROI is always lower than gross ROI. Use net-of-fee figures for realistic comparisons.</li>
         <li><strong>Excluding inflation:</strong> A 7% nominal ROI in a 4% inflation environment yields only ~3% real return. For long-term investments, always consider inflation-adjusted (real) ROI.</li>
         <li><strong>Omitting risk from the comparison:</strong> A 15% ROI from a speculative asset is not "better" than a 10% ROI from a diversified index fund without accounting for volatility and downside risk. Risk-adjusted metrics like the Sharpe ratio provide a fuller picture.</li>
-        <li><strong>Using non-comparable denominators:</strong> For business investments, the denominator should be the fully-loaded cost (including opportunity cost, staff time, overhead allocation) — not just the cash outlay.</li>
+        <li><strong>Using non-comparable denominators:</strong> For business investments, the denominator should be the fully-loaded cost (including opportunity cost, staff time, overhead allocation) - not just the cash outlay.</li>
       </ul>
 
       <h2 id="faq">Frequently asked questions</h2>
@@ -261,7 +261,7 @@ const schema = [
       <p>Annualized ROI (CAGR) converts total return into an equivalent annual rate: (Final / Initial)^(1/n) − 1. It matters because a 100% total ROI over 10 years (7.2% per year) is very different from 100% over 2 years (41.4% per year). Annualizing allows fair comparison across investments held for different lengths of time.</p>
 
       <h3>What is the difference between ROI and IRR?</h3>
-      <p>ROI is a simple percentage of initial cost. IRR is the discount rate at which NPV = 0 — it accounts for the timing of every individual cash flow. For a single lump-sum investment with no interim cash flows, annualized ROI and IRR are equivalent. For investments with multiple cash flows (rental income, dividends, capital calls), IRR is more accurate.</p>
+      <p>ROI is a simple percentage of initial cost. IRR is the discount rate at which NPV = 0 - it accounts for the timing of every individual cash flow. For a single lump-sum investment with no interim cash flows, annualized ROI and IRR are equivalent. For investments with multiple cash flows (rental income, dividends, capital calls), IRR is more accurate.</p>
 
       <h3>Can ROI be negative?</h3>
       <p>Yes. Negative ROI means the final value is less than the initial investment. For example, $10,000 invested and $7,000 returned gives ROI = (7,000 − 10,000) / 10,000 × 100 = −30%. Negative ROI is common in failed startups, poorly timed trades, and distressed assets.</p>

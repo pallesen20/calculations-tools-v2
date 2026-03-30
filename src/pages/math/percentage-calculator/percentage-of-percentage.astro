@@ -61,7 +61,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "Is a 20% discount followed by a 25% discount the same as a 45% discount?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. The total discount is 20 + 25 − (20 × 25 ÷ 100) = 45 − 5 = 40%, not 45%. The 5% difference is exactly 20% of 25% — the overlap that gets counted twice when you add percentages. Stacked percentage discounts cannot simply be added." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The total discount is 20 + 25 − (20 × 25 ÷ 100) = 45 − 5 = 40%, not 45%. The 5% difference is exactly 20% of 25% - the overlap that gets counted twice when you add percentages. Stacked percentage discounts cannot simply be added." }
       },
       {
         "@type": "Question",
@@ -120,13 +120,13 @@ const schema = [
 
         <div id="pop-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="pop-pct">—</span>
+            <span class="lbm-primary-val" id="pop-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Result</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pop-eq" style="font-size:0.8rem">—</div>
+              <div class="lbm-card-val" id="pop-eq" style="font-size:0.8rem">-</div>
               <div class="lbm-card-lbl">Full equation</div>
             </div>
           </div>
@@ -134,12 +134,12 @@ const schema = [
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Convert to decimal</span>
-              <span id="pop-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Convert to decimal</span>
+              <span id="pop-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Multiply</span>
-              <span id="pop-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Multiply</span>
+              <span id="pop-step2" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -158,14 +158,14 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter two percentage values. The calculator returns P% of Q% — the result of applying the first percentage to the second. This is useful for successive discounts, commission calculations, probability, and any scenario where one percentage rate applies to another.</p>
+      <p>Enter two percentage values. The calculator returns P% of Q% - the result of applying the first percentage to the second. This is useful for successive discounts, commission calculations, probability, and any scenario where one percentage rate applies to another.</p>
 
       <h2 id="formula">Formula</h2>
       <p>To find what P% of Q% equals, convert P to its decimal form and multiply by Q%:</p>
 
       <Formula expr={f.main} />
 
-      <p>Equivalently: divide P by 100 to get its decimal, then multiply that decimal by Q. The result is a percentage. Note that the result is always smaller than both P and Q (for positive inputs between 0 and 100) — because a fraction of a fraction is smaller than either fraction alone.</p>
+      <p>Equivalently: divide P by 100 to get its decimal, then multiply that decimal by Q. The result is a percentage. Note that the result is always smaller than both P and Q (for positive inputs between 0 and 100) - because a fraction of a fraction is smaller than either fraction alone.</p>
 
       <h2 id="examples">Worked examples</h2>
 
@@ -184,28 +184,28 @@ const schema = [
       <p>If an item is discounted by A%, and then an additional B% is taken off the already-reduced price, the total discount is:</p>
       <Formula expr={f.successive} />
 
-      <p>The subtracted term — A×B/100 — is exactly "A% of B%". Without it, simply adding A and B overstates the combined effect.</p>
+      <p>The subtracted term - A×B/100 - is exactly "A% of B%". Without it, simply adding A and B overstates the combined effect.</p>
 
       <h3>Example: 20% off, then 25% off</h3>
       <Formula expr={f.succEx} />
-      <p>The total discount is <strong>40%</strong>, not 45%. The 5% difference is 20% of 25% — the amount that was "double-counted" by naive addition.</p>
+      <p>The total discount is <strong>40%</strong>, not 45%. The 5% difference is 20% of 25% - the amount that was "double-counted" by naive addition.</p>
 
       <p>To verify using the multiplier approach:</p>
       <Formula expr={f.multiplier} />
-      <p>For 20% and 25%: (1 − 0.20) × (1 − 0.25) = 0.80 × 0.75 = 0.60, meaning 60% of the original price remains — confirming a 40% total discount.</p>
+      <p>For 20% and 25%: (1 − 0.20) × (1 − 0.25) = 0.80 × 0.75 = 0.60, meaning 60% of the original price remains - confirming a 40% total discount.</p>
 
       <p><strong>Key rule:</strong> two successive percentage discounts of A% and B% always give a total discount that is less than A + B. The shortfall is exactly A% of B%.</p>
 
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Adding stacked percentages instead of compounding them</h3>
-      <p>The most common error is treating successive percentage rates as additive. A 10% discount and an additional 10% discount do not give a 20% total discount — they give a 19% total discount (10 + 10 − 1 = 19), because the second 10% acts on the already-reduced price.</p>
+      <p>The most common error is treating successive percentage rates as additive. A 10% discount and an additional 10% discount do not give a 20% total discount - they give a 19% total discount (10 + 10 − 1 = 19), because the second 10% acts on the already-reduced price.</p>
 
       <h3>Confusing "P% of Q%" with "P% of a value that is Q%"</h3>
-      <p>"20% of 50%" (this calculator) asks what percentage 20% of 50% represents — the answer is 10%. This is different from "20% of a value, where that value is 50% of something else." Both involve percentage of a percentage, but the framing matters for context.</p>
+      <p>"20% of 50%" (this calculator) asks what percentage 20% of 50% represents - the answer is 10%. This is different from "20% of a value, where that value is 50% of something else." Both involve percentage of a percentage, but the framing matters for context.</p>
 
       <h3>Treating the result as a percentage point reduction</h3>
-      <p>When a 30% tax rate is applied to a 15% commission, the result (4.5%) is an absolute percentage reduction on the base amount — not a percentage point reduction of the commission rate. Keeping track of what the "base" is at each step prevents errors.</p>
+      <p>When a 30% tax rate is applied to a 15% commission, the result (4.5%) is an absolute percentage reduction on the base amount - not a percentage point reduction of the commission rate. Keeping track of what the "base" is at each step prevents errors.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
@@ -216,7 +216,7 @@ const schema = [
       <p>10%. Calculation: (20 × 50) ÷ 100 = 10%.</p>
 
       <h3>Is a 20% discount followed by a 25% discount the same as 45% off?</h3>
-      <p>No — it is 40% off. The total discount = 20 + 25 − (20% of 25%) = 45 − 5 = 40%. Stacked discounts can never simply be added; the overlap is always P% of Q%.</p>
+      <p>No - it is 40% off. The total discount = 20 + 25 − (20% of 25%) = 45 − 5 = 40%. Stacked discounts can never simply be added; the overlap is always P% of Q%.</p>
 
       <h3>Why can't you add stacked percentages?</h3>
       <p>Each successive percentage acts on a smaller base. The second rate applies to the already-reduced value, not the original. Adding them ignores this shrinking base and overstates the combined effect by exactly P% of Q%.</p>
@@ -229,11 +229,11 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',                    blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
-        { path: '/math/percentage-calculator/decrease',           blurb: 'Percentage decrease calculator — useful when you need the result of a single discount rather than stacked discounts.' },
-        { path: '/math/percentage-calculator/change',             blurb: 'Percentage change calculator — signed result for before-and-after comparisons.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
+        { path: '/math/percentage-calculator',                    blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator/decrease',           blurb: 'Percentage decrease calculator - useful when you need the result of a single discount rather than stacked discounts.' },
+        { path: '/math/percentage-calculator/change',             blurb: 'Percentage change calculator - signed result for before-and-after comparisons.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage - multiply by 100, with a reference table for common decimals.' },
       ]} />
 
     </div>

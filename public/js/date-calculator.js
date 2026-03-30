@@ -24,7 +24,7 @@ function isoWeek(date) {
   return Math.ceil((((d - yearStart) / MS_PER_DAY) + 1) / 7);
 }
 
-// Count Mon-Fri days in [start, end) — end is exclusive.
+// Count Mon-Fri days in [start, end) - end is exclusive.
 // Jan 1 (Mon) to Jan 8 (Mon) = 5 workdays.
 function countWorkdays(start, end) {
   const totalDays = Math.round((end - start) / MS_PER_DAY);

@@ -95,10 +95,10 @@ const schema = [
         <div id="ef-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val">
-              <span id="ef-lowest-n">—</span>/<span id="ef-lowest-d">—</span>
+              <span id="ef-lowest-n">-</span>/<span id="ef-lowest-d">-</span>
             </span>
           </div>
-          <div class="lbm-primary-lbl">Simplified form (GCD = <span id="ef-gcd">—</span>)</div>
+          <div class="lbm-primary-lbl">Simplified form (GCD = <span id="ef-gcd">-</span>)</div>
 
           <div class="pi-steps" style="margin-top:1rem;">
             <div class="pi-steps-title">Equivalent fractions table (× multiplier)</div>
@@ -121,14 +121,14 @@ const schema = [
 
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>Equivalent fractions represent the <strong>same value</strong> with different numerators and denominators. To find one: multiply both numerator and denominator by the same integer k. To verify: cross-multiply — if a/b = c/d, then a × d = b × c.</p>
+        <p>Equivalent fractions represent the <strong>same value</strong> with different numerators and denominators. To find one: multiply both numerator and denominator by the same integer k. To verify: cross-multiply - if a/b = c/d, then a × d = b × c.</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter any fraction. The calculator simplifies it to lowest terms (showing the GCD), then generates a table of 12 equivalent fractions by multiplying the numerator and denominator by 1 through 12 — both from your original input and from the simplified form.</p>
+      <p>Enter any fraction. The calculator simplifies it to lowest terms (showing the GCD), then generates a table of 12 equivalent fractions by multiplying the numerator and denominator by 1 through 12 - both from your original input and from the simplified form.</p>
 
       <h2 id="what-are">What are equivalent fractions?</h2>
-      <p>Two fractions are equivalent when they represent the same point on the number line — the same proportion of a whole. The fundamental property is:</p>
+      <p>Two fractions are equivalent when they represent the same point on the number line - the same proportion of a whole. The fundamental property is:</p>
       <Formula expr={f.def} />
       <p>Multiplying (or dividing) both numerator and denominator by the same non-zero integer k does not change the value of the fraction. It changes only how the fraction is written.</p>
       <Formula expr={f.ex1} />
@@ -153,7 +153,7 @@ const schema = [
       <h2 id="verify">How to verify equivalence</h2>
       <p>Use cross-multiplication to test whether two fractions are equivalent:</p>
       <Formula expr={f.verify} />
-      <p>To check 3/4 = 9/12: 3 × 12 = 36 and 4 × 9 = 36. Equal products confirm they are equivalent. To check 2/3 vs 3/4: 2 × 4 = 8 and 3 × 3 = 9. Different products — not equivalent.</p>
+      <p>To check 3/4 = 9/12: 3 × 12 = 36 and 4 × 9 = 36. Equal products confirm they are equivalent. To check 2/3 vs 3/4: 2 × 4 = 8 and 3 × 3 = 9. Different products - not equivalent.</p>
 
       <h2 id="lcd-use">Using equivalent fractions to add and subtract</h2>
       <p>Equivalent fractions are essential when adding or subtracting fractions with unlike denominators. The goal is to express both fractions with the same denominator (LCD) so numerators can be compared or combined:</p>
@@ -166,7 +166,7 @@ const schema = [
       <p>Multiply by 2, 3, 4: 2/6, 3/9, 4/12. Cross-check: 1 × 6 = 6 = 3 × 2 ✓, 1 × 9 = 9 = 3 × 3 ✓, 1 × 12 = 12 = 3 × 4 ✓.</p>
 
       <h3>Example 2: are 5/8 and 15/24 equivalent?</h3>
-      <p>Cross-multiply: 5 × 24 = 120 and 8 × 15 = 120. Equal products — yes, they are equivalent. (15/24 = 5/8 with k = 3.)</p>
+      <p>Cross-multiply: 5 × 24 = 120 and 8 × 15 = 120. Equal products - yes, they are equivalent. (15/24 = 5/8 with k = 3.)</p>
 
       <h3>Example 3: find the fraction equivalent to 3/7 with denominator 35</h3>
       <p>35 ÷ 7 = 5, so k = 5. Multiply numerator by 5: 3 × 5 = 15. The equivalent fraction is 15/35.</p>
@@ -174,7 +174,7 @@ const schema = [
       <h2 id="simplify">Reducing to simplest form</h2>
       <p>Dividing both numerator and denominator by their GCD is the reverse of generating equivalents. It produces the simplest (lowest-terms) fraction:</p>
       <Formula expr={f.simplify} />
-      <p>12/16 — GCD(12,16) = 4. Divide both: 12 ÷ 4 = 3, 16 ÷ 4 = 4. Simplest form: 3/4.</p>
+      <p>12/16 - GCD(12,16) = 4. Divide both: 12 ÷ 4 = 3, 16 ÷ 4 = 4. Simplest form: 3/4.</p>
 
       <h2 id="common-mistakes">Common mistakes</h2>
 
@@ -199,7 +199,7 @@ const schema = [
       <p>Cross-multiply. If a/b = c/d, then a × d = b × c. Equal products confirm equivalence.</p>
 
       <h3>Are 2/3 and 4/6 equivalent?</h3>
-      <p>Yes. 2 × 6 = 12 and 3 × 4 = 12. They are equivalent — 4/6 is 2/3 multiplied by 2/2.</p>
+      <p>Yes. 2 × 6 = 12 and 3 × 4 = 12. They are equivalent - 4/6 is 2/3 multiplied by 2/2.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -207,7 +207,7 @@ const schema = [
         { path: '/math/fraction-calculator/compare',              blurb: 'Compare two fractions to see which is larger.' },
         { path: '/math/fraction-calculator/lcd',                  blurb: 'Find the Least Common Denominator of two or more fractions.' },
         { path: '/math/fraction-calculator/add',                  blurb: 'Add two fractions using the LCD method with step-by-step workings.' },
-        { path: '/math/fraction-calculator',                      blurb: 'The main fraction calculator — add, subtract, multiply, divide, and simplify.' },
+        { path: '/math/fraction-calculator',                      blurb: 'The main fraction calculator - add, subtract, multiply, divide, and simplify.' },
         { path: '/math/fraction-calculator/decimal-to-fraction',  blurb: 'Convert a decimal to a fraction in lowest terms.' },
       ]} />
 

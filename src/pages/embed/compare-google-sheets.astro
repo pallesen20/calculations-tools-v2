@@ -1,0 +1,87 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Compare Google Sheets - calculations.tools">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" is:inline></script>
+  <section class="calculator-interface">
+    <div class="calculator-container ce-container">
+
+      <div class="calculator-header">
+        <h2>Compare Google Sheets</h2>
+        <p>Export both sheets as CSV or Excel, then upload the exports below</p>
+        <p class="ce-formats">Supported: .csv .xlsx .xls .ods .txt</p>
+      </div>
+
+      <div class="ce-grid">
+
+        <div class="diff-panel">
+          <div class="diff-toolbar">
+            <h3>Original Sheet Export</h3>
+            <div class="diff-toolbar-btns">
+              <button class="diff-tbtn" onclick="triggerUpload('original')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+              <button class="diff-tbtn" onclick="clearFile('original')" title="Clear">✕</button>
+            </div>
+          </div>
+          <div class="ce-drop" id="ce-drop-original" onclick="triggerUpload('original')">
+            <div class="ce-drop-prompt">
+              <div class="ce-drop-label">Drop Google Sheets export here</div>
+              <div class="ce-drop-sub">File → Download → CSV or Excel</div>
+            </div>
+            <div class="ce-file-info" id="ce-info-original"></div>
+            <div class="ce-tabs" id="ce-tabs-original"></div>
+            <div class="ce-preview-wrap"><table class="ce-preview-table" id="ce-table-original"></table></div>
+          </div>
+        </div>
+
+        <div class="diff-panel">
+          <div class="diff-toolbar">
+            <h3>Changed Sheet Export</h3>
+            <div class="diff-toolbar-btns">
+              <button class="diff-tbtn" onclick="triggerUpload('changed')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+              <button class="diff-tbtn" onclick="clearFile('changed')" title="Clear">✕</button>
+            </div>
+          </div>
+          <div class="ce-drop" id="ce-drop-changed" onclick="triggerUpload('changed')">
+            <div class="ce-drop-prompt">
+              <div class="ce-drop-label">Drop Google Sheets export here</div>
+              <div class="ce-drop-sub">File → Download → CSV or Excel</div>
+            </div>
+            <div class="ce-file-info" id="ce-info-changed"></div>
+            <div class="ce-tabs" id="ce-tabs-changed"></div>
+            <div class="ce-preview-wrap"><table class="ce-preview-table" id="ce-table-changed"></table></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="diff-actions">
+        <button class="diff-btn-primary" onclick="compareFiles()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+        <button class="diff-btn-secondary" onclick="swapFiles()">⇄ Swap</button>
+      </div>
+
+      <div id="diff-output" class="diff-output">
+        <div class="diff-header">
+          <div class="diff-stats">
+            <span class="diff-changed"   id="ce-stat-changed">0 changed</span>
+            <span class="diff-added"     id="ce-stat-added">+0 added</span>
+            <span class="diff-removed"   id="ce-stat-removed">-0 removed</span>
+            <span class="diff-unchanged" id="ce-stat-unchanged">0 unchanged</span>
+          </div>
+        </div>
+        <div class="ce-diff-table-wrap" id="ce-diff-container"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <input type="file" id="ce-file-original" style="display:none" accept=".csv,.xls,.xlsx,.xlsm,.xlsb,.txt,.dif,.ods" />
+  <input type="file" id="ce-file-changed"  style="display:none" accept=".csv,.xls,.xlsx,.xlsm,.xlsb,.txt,.dif,.ods" />
+  <div class="diff-toast"></div>
+  <script src="/js/compare-excel.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .ce-container { max-width: 100% !important; }
+  .ce-formats { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }
+</style>

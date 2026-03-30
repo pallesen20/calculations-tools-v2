@@ -1,0 +1,185 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+
+const tocItems = [
+  { id: 'how-to-use',   label: 'How to use this tool' },
+  { id: 'how-it-works', label: 'How document text extraction works' },
+  { id: 'limitations',  label: 'Limitations' },
+  { id: 'use-cases',    label: 'Use cases' },
+  { id: 'faq',          label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Word Document Comparison Tool",
+    "url": "https://calculations.tools/compare/documents",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Compare two Word documents (.docx) online. Extracts text from both files and shows every addition, removal, and change line by line. Free, private, runs in your browser.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I compare two Word documents online?", "acceptedAnswer": { "@type": "Answer", "text": "Upload your original .docx file on the left and the updated version on the right, then click Find Differences. The tool extracts plain text from both documents and shows every changed paragraph in color-coded diff output." } },
+      { "@type": "Question", "name": "Does this compare formatting changes?", "acceptedAnswer": { "@type": "Answer", "text": "No. The tool extracts plain text only. Bold, italic, font size, colors, and other formatting are not compared - only the text content. For formatting comparison, use Word's built-in Track Changes or compare features." } },
+      { "@type": "Question", "name": "Is my document private?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Documents are processed entirely in your browser using mammoth.js. Nothing is uploaded to any server." } }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Compare Word Documents"
+  metaTitle="Compare Word Documents Online Free | .docx Diff Checker ᐅ"
+  description="Compare two Word documents (.docx) online and find every text difference. Extracts text and shows additions and removals line by line. Free, private, no upload to server."
+  canonical="https://calculations.tools/compare/documents"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="compare-documents"
+  ogFormula="DOCX text diff"
+  ogExample="Extract & compare text from Word files"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container ce-container">
+
+        <div class="calculator-header">
+          <h2>Instant .docx Files Comparison</h2>
+          <p>Upload two .docx files to compare their text content line by line</p>
+        </div>
+
+        <div class="ce-grid">
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Original Document</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerDocUpload('original')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="clearDocFile('original')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="cd-drop-original">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                <div class="ce-drop-label">Drop .docx file here or click to upload</div>
+                <div class="ce-drop-sub">.docx files only</div>
+              </div>
+              <div class="ce-file-info" id="cd-info-original"></div>
+            </div>
+          </div>
+
+          <div class="diff-panel">
+            <div class="diff-toolbar">
+              <h3>Changed Document</h3>
+              <div class="diff-toolbar-btns">
+                <button class="diff-tbtn" onclick="triggerDocUpload('changed')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload</button>
+                <button class="diff-tbtn" onclick="clearDocFile('changed')" title="Clear">✕</button>
+              </div>
+            </div>
+            <div class="ce-drop" id="cd-drop-changed">
+              <div class="ce-drop-prompt">
+                <div class="ce-drop-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                <div class="ce-drop-label">Drop .docx file here or click to upload</div>
+                <div class="ce-drop-sub">.docx files only</div>
+              </div>
+              <div class="ce-file-info" id="cd-info-changed"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="diff-actions">
+          <button class="diff-btn-primary" id="cd-btn-compare" onclick="compareDocuments()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
+        </div>
+
+        <div id="diff-output" class="diff-output">
+          <div class="diff-header">
+            <div class="diff-stats">
+              <span class="diff-added"     id="ct-stat-added">+0 added</span>
+              <span class="diff-removed"   id="ct-stat-removed">−0 removed</span>
+              <span class="diff-unchanged" id="ct-stat-unchanged">0 unchanged</span>
+            </div>
+            <button class="diff-tbtn" onclick="copyDocDiff()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
+          </div>
+          <div class="ct-diff-container" id="cd-diff-container"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <input type="file" id="cd-file-original" style="display:none" accept=".docx" />
+    <input type="file" id="cd-file-changed"  style="display:none" accept=".docx" />
+    <div class="diff-toast"></div>
+    <script src="/js/compare-documents.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Upload your original .docx file on the left and the updated version on the right, then click <strong>Find Differences</strong>. The tool uses mammoth.js to extract plain text from both documents and shows every changed paragraph in color-coded diff output. Formatting changes (bold, font size, color) are not compared - only text content.</p>
+      </div>
+
+      <h2 id="how-to-use">How to use this tool</h2>
+      <p>Drop each .docx file into its panel and click "Find Differences." The tool loads mammoth.js on demand, extracts the plain text from both documents, and runs a paragraph-level diff. Additions appear in green, removals in red. Empty paragraphs are filtered to keep the output readable.</p>
+
+      <h2 id="how-it-works">How document text extraction works</h2>
+      <p>This tool uses <a href="https://github.com/mwilliamson/mammoth.js" rel="nofollow">mammoth.js</a> to read .docx files. Mammoth converts the XML structure of a Word document into plain text, preserving the text content of each paragraph. The extracted text from both documents is then compared line by line using an LCS diff algorithm - the same algorithm used by Git's <code>diff</code> command.</p>
+
+      <h2 id="limitations">Limitations</h2>
+      <ul>
+        <li><strong>Only .docx format is supported.</strong> Older .doc (Word 97-2003) files are not supported. Convert them to .docx in Word or LibreOffice first.</li>
+        <li><strong>Formatting is not compared.</strong> Bold, italic, font changes, colors, and track changes are not part of the text extraction. For formatting comparison, use Word's built-in Compare Documents feature (Review → Compare).</li>
+        <li><strong>Tables and complex layouts.</strong> Text in tables is extracted but may not match its visual position in the document. The diff compares text content, not table structure.</li>
+      </ul>
+
+      <h2 id="use-cases">Use cases</h2>
+      <h3>Contract and agreement redlines</h3>
+      <p>When a Word document is revised and returned, upload both versions to see every paragraph that changed. A single sentence edit or added clause will show clearly in the diff, without having to read both documents word for word.</p>
+      <h3>Academic and editorial revisions</h3>
+      <p>Compare two drafts of an essay, report, or manuscript to confirm which sections changed between revisions. Useful for writers, editors, and academic supervisors reviewing annotated drafts.</p>
+      <h3>Policy and procedure document updates</h3>
+      <p>When an organization updates an internal policy or procedure document, comparing the old and new versions immediately shows which sections were added, removed, or reworded - producing a clear audit record of what changed.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>Does this compare .doc files?</h3>
+      <p>No. Only .docx (Office Open XML) is supported. Convert older .doc files to .docx in Microsoft Word (File → Save As → .docx) or LibreOffice Writer.</p>
+      <h3>Are formatting changes shown?</h3>
+      <p>No. Only plain text content is compared. For formatting and track changes, use Word's built-in Compare Documents feature under the Review tab.</p>
+      <h3>Is my document private?</h3>
+      <p>Yes. Everything runs in your browser using mammoth.js. No file content is sent to any server.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📄</span>
+          <div>
+            <a href="/compare/pdf">Compare PDF Files</a>
+            <p>Extract text from two PDFs and compare line by line.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⇄</span>
+          <div>
+            <a href="/compare/text">Diff Checker</a>
+            <p>Paste or upload any plain text and compare with unified or side-by-side diff views.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .ce-container { max-width: 100% !important; }
+</style>

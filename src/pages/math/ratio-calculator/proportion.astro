@@ -69,7 +69,7 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="proportion-calculator"
-  ogFormula="Solve a:b = c:d — unknown = (b × known) / opposite"
+  ogFormula="Solve a:b = c:d - unknown = (b × known) / opposite"
   ogExample="3:4 = 9:? -> d = (4 × 9) / 3 = 12"
 >
   <div slot="calculator">
@@ -124,7 +124,7 @@ const schema = [
 
         <div id="prop-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="prop-result-val">—</span>
+            <span class="lbm-primary-val" id="prop-result-val">-</span>
           </div>
           <div class="lbm-primary-lbl">Value of <span id="prop-missing-lbl">D</span></div>
 
@@ -132,15 +132,15 @@ const schema = [
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
               <span class="pi-step-label">Cross-multiply</span>
-              <span class="pi-step-val" id="prop-step1">—</span>
+              <span class="pi-step-val" id="prop-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Solve</span>
-              <span class="pi-step-val" id="prop-step2">—</span>
+              <span class="pi-step-val" id="prop-step2">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Verify (a×d = b×c)</span>
-              <span class="pi-step-val" id="prop-verify">—</span>
+              <span class="pi-step-val" id="prop-verify">-</span>
             </div>
           </div>
         </div>
@@ -166,7 +166,7 @@ const schema = [
       <h2 id="definition">What is a proportion?</h2>
       <p>A proportion is an equation stating that two ratios are equal:</p>
       <Formula expr={f.def} />
-      <p>A proportion describes a scaling relationship: if a/b = c/d, then multiplying a and b by the same factor k gives c and d. Proportions appear wherever quantities scale together — recipes, maps, unit conversions, similar triangles, and financial ratios.</p>
+      <p>A proportion describes a scaling relationship: if a/b = c/d, then multiplying a and b by the same factor k gives c and d. Proportions appear wherever quantities scale together - recipes, maps, unit conversions, similar triangles, and financial ratios.</p>
 
       <h2 id="cross-mult">Cross-multiplication method</h2>
       <p>Given a/b = c/d, multiply both sides by b × d to eliminate the denominators:</p>
@@ -205,7 +205,7 @@ const schema = [
       </div>
 
       <h2 id="direct">Direct vs inverse proportion</h2>
-      <p>This calculator solves <strong>direct proportions</strong> where a/b = c/d — as one quantity increases, the other increases proportionally:</p>
+      <p>This calculator solves <strong>direct proportions</strong> where a/b = c/d - as one quantity increases, the other increases proportionally:</p>
       <Formula expr={f.direct} />
       <p><strong>Inverse proportion</strong> means as one quantity increases, the other decreases: a × b = c × d (constant product). For example, 4 workers take 6 days; 8 workers take 3 days. Inverse proportion is a different relationship and is not solved by this calculator.</p>
 
@@ -249,7 +249,7 @@ const schema = [
         { path: '/math/ratio-calculator/unit-rate',    blurb: 'Calculate the rate per single unit.' },
         { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions using cross-multiplication.' },
         { path: '/math/percentage-calculator/change',  blurb: 'Percentage change between two values.' },
-        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator — all four operations.' },
+        { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator - all four operations.' },
       ]} />
 
       <RelatedGlossaryTerms toolPath="/math/ratio-calculator/proportion" />

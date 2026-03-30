@@ -94,17 +94,17 @@ const schema = [
 
         <div id="ar-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="ar-ratio">—</span>
+            <span class="lbm-primary-val" id="ar-ratio">-</span>
           </div>
           <div class="lbm-primary-lbl">Aspect ratio</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ar-decimal">—</div>
+              <div class="lbm-card-val" id="ar-decimal">-</div>
               <div class="lbm-card-lbl">Decimal (W÷H)</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ar-percent">—</div>
+              <div class="lbm-card-val" id="ar-percent">-</div>
               <div class="lbm-card-lbl">Height as % of width</div>
             </div>
           </div>
@@ -113,11 +113,11 @@ const schema = [
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
               <span class="pi-step-label">GCD</span>
-              <span class="pi-step-val" id="ar-step1">—</span>
+              <span class="pi-step-val" id="ar-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Simplify</span>
-              <span class="pi-step-val" id="ar-step2">—</span>
+              <span class="pi-step-val" id="ar-step2">-</span>
             </div>
           </div>
         </div>
@@ -139,13 +139,13 @@ const schema = [
             <div class="bmi-field" style="flex:1;">
               <label class="bmi-label" id="ar-target2-lbl" for="ar-target2">New height (calculated)</label>
               <div class="bmi-input-wrap">
-                <input type="text" inputmode="decimal" id="ar-target2" class="bmi-input" placeholder="—" readonly />
+                <input type="text" inputmode="decimal" id="ar-target2" class="bmi-input" placeholder="-" readonly />
               </div>
             </div>
           </div>
           <div class="pi-step hidden" id="ar-resize-row" style="background:rgba(139,92,246,0.1);border-radius:6px;padding:0.5rem 0.75rem;margin-top:0.5rem;">
             <span class="pi-step-label">Resize calculation</span>
-            <span class="pi-step-val" id="ar-resize-val">—</span>
+            <span class="pi-step-val" id="ar-resize-val">-</span>
           </div>
         </div>
       </div>
@@ -172,10 +172,10 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the width and height of any rectangle — a screen, image, video frame, canvas, or print size. The calculator returns the simplified aspect ratio, its decimal equivalent, and the height as a percentage of width. Use the resize section to find the corresponding dimension at any new size.</p>
+      <p>Enter the width and height of any rectangle - a screen, image, video frame, canvas, or print size. The calculator returns the simplified aspect ratio, its decimal equivalent, and the height as a percentage of width. Use the resize section to find the corresponding dimension at any new size.</p>
 
       <h2 id="what-is">What is an aspect ratio?</h2>
-      <p>An aspect ratio is the proportional relationship between the width and height of a rectangle, expressed as W:H. It describes the shape of the rectangle without specifying its size. Two rectangles with different dimensions but the same aspect ratio are geometrically similar — one is a scaled version of the other.</p>
+      <p>An aspect ratio is the proportional relationship between the width and height of a rectangle, expressed as W:H. It describes the shape of the rectangle without specifying its size. Two rectangles with different dimensions but the same aspect ratio are geometrically similar - one is a scaled version of the other.</p>
       <p>The ratio is always simplified to the smallest whole numbers by dividing both dimensions by their greatest common divisor (GCD). 1920:1080 simplifies to 16:9 because GCD(1920, 1080) = 120.</p>
 
       <h2 id="formula">Formula and calculation</h2>
@@ -230,7 +230,7 @@ const schema = [
             <tr><td>Social media</td><td>1:1, 4:5, 9:16</td><td>Platform-specific crop requirements</td></tr>
             <tr><td>Photography</td><td>3:2</td><td>Standard DSLR sensor format for prints</td></tr>
             <tr><td>Film / cinema</td><td>2.39:1 (widescreen)</td><td>Anamorphic lens format</td></tr>
-            <tr><td>Print design</td><td>1:√2 (A4 paper)</td><td>ISO paper series — scales without distortion</td></tr>
+            <tr><td>Print design</td><td>1:√2 (A4 paper)</td><td>ISO paper series - scales without distortion</td></tr>
             <tr><td>UI/UX design</td><td>Custom</td><td>Modal dialogs, card components, thumbnails</td></tr>
           </tbody>
         </table>
@@ -251,7 +251,7 @@ const schema = [
       <p>Any resolution where width ÷ height = 16 ÷ 9 ≈ 1.778. Common examples: 3840×2160, 2560×1440, 1920×1080, 1280×720.</p>
 
       <h3>Is 4:3 or 16:9 better?</h3>
-      <p>Neither is inherently better — it depends on the use case. 16:9 matches modern screens and video; 4:3 suits older content, tablets, and certain print formats. The right ratio is the one that fits your output medium.</p>
+      <p>Neither is inherently better - it depends on the use case. 16:9 matches modern screens and video; 4:3 suits older content, tablets, and certain print formats. The right ratio is the one that fits your output medium.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[

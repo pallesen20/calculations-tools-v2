@@ -171,7 +171,7 @@ function setView(view) {
 function renderDiff() {
   const container = document.getElementById('ct-diff-container');
   if (!lastDiff.length || lastDiff.every(d => d.type === 'unchanged')) {
-    container.innerHTML = '<div class="diff-no-diff">✓ Texts are identical — no differences found</div>';
+    container.innerHTML = '<div class="diff-no-diff">✓ Texts are identical - no differences found</div>';
     return;
   }
   currentView === 'unified' ? renderUnified(container) : renderSideBySide(container);

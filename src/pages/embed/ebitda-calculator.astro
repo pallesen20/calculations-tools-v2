@@ -2,7 +2,7 @@
 import EmbedLayout from '../../layouts/EmbedLayout.astro';
 ---
 
-<EmbedLayout title="EBITDA Calculator — calculations.tools">
+<EmbedLayout title="EBITDA Calculator - calculations.tools">
   <section class="calculator-interface">
     <div class="calculator-container bmi-container">
       <div class="calculator-header">
@@ -39,7 +39,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       </div>
 
       <div class="bmi-field">
-        <label class="bmi-label" for="ebitda-revenue">Revenue (optional — for EBITDA Margin)</label>
+        <label class="bmi-label" for="ebitda-revenue">Revenue (optional - for EBITDA Margin)</label>
         <div class="bmi-input-wrap">
           <input type="text" inputmode="decimal" id="ebitda-revenue" class="bmi-input" placeholder="e.g. 20000000" />
         </div>
@@ -48,22 +48,22 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       <div id="ebitda-result" class="lbm-result hidden">
         <div class="lbm-cards">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="ebitda-ebt-val">—</div>
+            <div class="lbm-card-val" id="ebitda-ebt-val">-</div>
             <div class="lbm-card-lbl">EBT</div>
           </div>
           <div class="lbm-card">
-            <div class="lbm-card-val" id="ebitda-ebit-val">—</div>
+            <div class="lbm-card-val" id="ebitda-ebit-val">-</div>
             <div class="lbm-card-lbl">EBIT</div>
           </div>
           <div class="lbm-card">
-            <div class="lbm-card-val" id="ebitda-ebitda-val">—</div>
+            <div class="lbm-card-val" id="ebitda-ebitda-val">-</div>
             <div class="lbm-card-lbl">EBITDA</div>
           </div>
         </div>
 
         <div id="ebitda-margin-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="ebitda-margin-val">—</div>
+            <div class="lbm-card-val" id="ebitda-margin-val">-</div>
             <div class="lbm-card-lbl">EBITDA Margin</div>
           </div>
         </div>
@@ -72,15 +72,15 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
           <div class="pi-steps-title">Calculation</div>
           <div class="pi-step">
             <span class="pi-step-label">Net Income + Tax = EBT</span>
-            <span class="pi-step-val" id="ebitda-step1">—</span>
+            <span class="pi-step-val" id="ebitda-step1">-</span>
           </div>
           <div class="pi-step">
             <span class="pi-step-label">EBT + Interest = EBIT</span>
-            <span class="pi-step-val" id="ebitda-step2">—</span>
+            <span class="pi-step-val" id="ebitda-step2">-</span>
           </div>
           <div class="pi-step">
             <span class="pi-step-label">EBIT + D&amp;A = EBITDA</span>
-            <span class="pi-step-val" id="ebitda-step3">—</span>
+            <span class="pi-step-val" id="ebitda-step3">-</span>
           </div>
         </div>
       </div>

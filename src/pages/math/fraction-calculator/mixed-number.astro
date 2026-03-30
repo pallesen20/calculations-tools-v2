@@ -113,19 +113,19 @@ const schema = [
 
         <div id="mn-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
-            <span id="mn-res-n" class="fc-res-num">—</span>
+            <span id="mn-res-n" class="fc-res-num">-</span>
             <div class="fc-res-bar"></div>
-            <span id="mn-res-d" class="fc-res-den">—</span>
+            <span id="mn-res-d" class="fc-res-den">-</span>
           </div>
           <div class="lbm-primary-lbl">Result (improper fraction, simplified)</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="mn-mixed">—</div>
+              <div class="lbm-card-val" id="mn-mixed">-</div>
               <div class="lbm-card-lbl">Mixed number</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="mn-decimal">—</div>
+              <div class="lbm-card-val" id="mn-decimal">-</div>
               <div class="lbm-card-lbl">Decimal</div>
             </div>
           </div>
@@ -134,11 +134,11 @@ const schema = [
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
               <span class="pi-step-label">Convert to improper fractions</span>
-              <span class="pi-step-val" id="mn-step1">—</span>
+              <span class="pi-step-val" id="mn-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">Operate & simplify</span>
-              <span class="pi-step-val" id="mn-step2">—</span>
+              <span class="pi-step-val" id="mn-step2">-</span>
             </div>
           </div>
         </div>
@@ -178,12 +178,12 @@ const schema = [
       <h2 id="subtracting">Subtracting mixed numbers</h2>
       <Formula expr={f.sub} />
       <p>Steps: (1) convert: 7/2 and 5/3; (2) LCD(2,3) = 6; (3) convert: 21/6 − 10/6 = 11/6; (4) mixed number: 1 5/6.</p>
-      <p>Without converting first, 3½ − 1⅔ might be attempted as (3−1) + (½−⅔) = 2 + (−1/6) = 1 5/6. This works but requires recognising that ½ < ⅔ and borrowing from the whole number — a common error source.</p>
+      <p>Without converting first, 3½ − 1⅔ might be attempted as (3−1) + (½−⅔) = 2 + (−1/6) = 1 5/6. This works but requires recognising that ½ < ⅔ and borrowing from the whole number - a common error source.</p>
 
       <h2 id="multiplying">Multiplying mixed numbers</h2>
       <Formula expr={f.mul} />
       <p>Steps: (1) convert: 5/2 and 4/3; (2) multiply numerators: 5 × 4 = 20; multiply denominators: 2 × 3 = 6; (3) simplify: 20/6 = 10/3; (4) mixed number: 3⅓.</p>
-      <p>A common shortcut: cross-simplify before multiplying. 5/2 × 4/3 — GCD(4,2) = 2: cancel to 5/1 × 2/3 = 10/3. Fewer large numbers.</p>
+      <p>A common shortcut: cross-simplify before multiplying. 5/2 × 4/3 - GCD(4,2) = 2: cancel to 5/1 × 2/3 = 10/3. Fewer large numbers.</p>
 
       <h2 id="dividing">Dividing mixed numbers</h2>
       <Formula expr={f.div} />
@@ -192,7 +192,7 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Multiplying whole parts and fraction parts independently</h3>
-      <p>2½ × 1⅓ ≠ (2×1) + (½×⅓) = 1 + 1/6 = 1⅙. The correct answer is 3⅓. Multiplication does not distribute this way across the mixed number format — always convert to improper fractions first.</p>
+      <p>2½ × 1⅓ ≠ (2×1) + (½×⅓) = 1 + 1/6 = 1⅙. The correct answer is 3⅓. Multiplication does not distribute this way across the mixed number format - always convert to improper fractions first.</p>
 
       <h3>Forgetting to carry when subtracting</h3>
       <p>Attempting 3⅓ − 1¾ by subtracting parts separately: (3−1) + (⅓−¾) = 2 + (−5/12) = 1 7/12. The borrowing step (2 − 5/12 = 1 7/12) is correct but easy to mishandle. Converting to improper fractions (10/3 − 7/4 = 40/12 − 21/12 = 19/12 = 1 7/12) is cleaner.</p>
@@ -214,7 +214,7 @@ const schema = [
         { path: '/math/fraction-calculator/improper-to-mixed',   blurb: 'Convert an improper fraction back to a mixed number.' },
         { path: '/math/fraction-calculator/add',                 blurb: 'Add two fractions step by step with LCD workings.' },
         { path: '/math/fraction-calculator/subtract',            blurb: 'Subtract two fractions with full step-by-step.' },
-        { path: '/math/fraction-calculator',                     blurb: 'The main fraction calculator — all four operations.' },
+        { path: '/math/fraction-calculator',                     blurb: 'The main fraction calculator - all four operations.' },
       ]} />
 
     </div>

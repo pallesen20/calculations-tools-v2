@@ -55,7 +55,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "Can you always average percentages with the arithmetic mean?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Only when all the percentages share the same base (denominator). If the percentages come from groups of different sizes — for example, a 60% pass rate from 200 students and an 80% pass rate from 50 students — the arithmetic mean (70%) is incorrect. You must use a weighted average, which accounts for the different group sizes and gives 64% in this example." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Only when all the percentages share the same base (denominator). If the percentages come from groups of different sizes - for example, a 60% pass rate from 200 students and an 80% pass rate from 50 students - the arithmetic mean (70%) is incorrect. You must use a weighted average, which accounts for the different group sizes and gives 64% in this example." }
       },
       {
         "@type": "Question",
@@ -106,17 +106,17 @@ const schema = [
 
         <div id="pav-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="pav-avg">—</span>
+            <span class="lbm-primary-val" id="pav-avg">-</span>
           </div>
           <div class="lbm-primary-lbl">Average Percentage</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pav-count">—</div>
+              <div class="lbm-card-val" id="pav-count">-</div>
               <div class="lbm-card-lbl">Values entered</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pav-sum">—</div>
+              <div class="lbm-card-val" id="pav-sum">-</div>
               <div class="lbm-card-lbl">Sum</div>
             </div>
           </div>
@@ -124,12 +124,12 @@ const schema = [
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Sum</span>
-              <span id="pav-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Sum</span>
+              <span id="pav-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Divide by count</span>
-              <span id="pav-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Divide by count</span>
+              <span id="pav-step2" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -144,19 +144,19 @@ const schema = [
 
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
-        <p>Average percentage = <strong>(P1 + P2 + … + Pn) ÷ n</strong>. Add all percentages and divide by how many there are. This gives the correct answer only when all percentages share the same base — see the weighted average section if they do not.</p>
+        <p>Average percentage = <strong>(P1 + P2 + … + Pn) ÷ n</strong>. Add all percentages and divide by how many there are. This gives the correct answer only when all percentages share the same base - see the weighted average section if they do not.</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
       <p>Enter at least two percentage values. Use the "+ Add value" button to include more. The calculator shows the arithmetic mean, the sum, and a step-by-step breakdown. The result updates instantly as you type.</p>
-      <p>This calculator computes the simple arithmetic mean. If your percentages come from groups of different sizes, read the <a href="#weighted">weighted average section</a> below — the arithmetic mean will give an incorrect result in that case.</p>
+      <p>This calculator computes the simple arithmetic mean. If your percentages come from groups of different sizes, read the <a href="#weighted">weighted average section</a> below - the arithmetic mean will give an incorrect result in that case.</p>
 
       <h2 id="formula">Formula</h2>
       <p>The arithmetic mean of n percentage values is:</p>
 
       <Formula expr={f.simple} />
 
-      <p>Each value P is treated as a plain number. The "%" sign is just a unit — it does not affect the arithmetic. Averaging 80% and 60% is the same operation as averaging 80 and 60, then appending the % symbol to the result.</p>
+      <p>Each value P is treated as a plain number. The "%" sign is just a unit - it does not affect the arithmetic. Averaging 80% and 60% is the same operation as averaging 80 and 60, then appending the % symbol to the result.</p>
 
       <h2 id="examples">Worked examples</h2>
 
@@ -171,7 +171,7 @@ const schema = [
       <p>The true combined pass rate is <strong>64%</strong>, not 70%. Group A's larger size pulls the combined rate closer to its 60% result.</p>
 
       <h2 id="when-valid">When simple averaging is valid</h2>
-      <p>The arithmetic mean of percentages gives the correct combined result when <strong>all percentages share the same base</strong> — that is, each percentage was calculated from an equal number of items, people, or observations. Common valid cases:</p>
+      <p>The arithmetic mean of percentages gives the correct combined result when <strong>all percentages share the same base</strong> - that is, each percentage was calculated from an equal number of items, people, or observations. Common valid cases:</p>
       <ul>
         <li>Averaging quiz or exam grades where each assessment has the same total marks</li>
         <li>Averaging conversion rates measured from equal sample sizes</li>
@@ -185,7 +185,7 @@ const schema = [
 
       <Formula expr={f.weighted} />
 
-      <p>Here W is the weight for each percentage — typically the sample size, number of items, total marks, or hours. The formula is equivalent to calculating the combined rate directly from the raw counts, which is always the most reliable approach.</p>
+      <p>Here W is the weight for each percentage - typically the sample size, number of items, total marks, or hours. The formula is equivalent to calculating the combined rate directly from the raw counts, which is always the most reliable approach.</p>
 
       <p><strong>When to use weighted average:</strong></p>
       <ul>
@@ -198,13 +198,13 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Averaging rates from unequal groups</h3>
-      <p>The most common error is applying the arithmetic mean to percentages that come from different-sized populations. A 90% pass rate from 10 students and a 50% pass rate from 1,000 students do not average to 70% — the true combined rate is approximately 50.4%. The size of the groups dominates the outcome.</p>
+      <p>The most common error is applying the arithmetic mean to percentages that come from different-sized populations. A 90% pass rate from 10 students and a 50% pass rate from 1,000 students do not average to 70% - the true combined rate is approximately 50.4%. The size of the groups dominates the outcome.</p>
 
       <h3>Averaging percentages that share no common base</h3>
       <p>Two percentages can only be meaningfully averaged if they measure the same quantity in the same units. Averaging a 10% profit margin with a 10% employee satisfaction score produces a number (10%) that has no real-world meaning.</p>
 
       <h3>Simpson's Paradox</h3>
-      <p>When incorrectly averaged, percentages can reverse direction entirely when groups are combined. A hospital might have a higher success rate than a competitor in every individual procedure category yet appear worse overall — because it handles more complex cases (a larger denominator for difficult procedures). This is Simpson's Paradox, and it arises from ignoring the denominators when combining percentages.</p>
+      <p>When incorrectly averaged, percentages can reverse direction entirely when groups are combined. A hospital might have a higher success rate than a competitor in every individual procedure category yet appear worse overall - because it handles more complex cases (a larger denominator for difficult procedures). This is Simpson's Paradox, and it arises from ignoring the denominators when combining percentages.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 
@@ -224,17 +224,17 @@ const schema = [
       <p>If all assignments are worth the same amount, use the arithmetic mean. If they are worth different amounts, multiply each grade by its weight (e.g. the percentage of the final mark it represents), sum those products, and divide by 100 (the total weight). That gives the weighted course average.</p>
 
       <h3>What is Simpson's Paradox?</h3>
-      <p>Simpson's Paradox occurs when a trend visible within each group reverses when groups are combined — because the groups have very different sizes. It is a direct consequence of incorrectly averaging rates or percentages without accounting for their denominators. The solution is always a weighted average.</p>
+      <p>Simpson's Paradox occurs when a trend visible within each group reverses when groups are combined - because the groups have very different sizes. It is a direct consequence of incorrectly averaging rates or percentages without accounting for their denominators. The solution is always a weighted average.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',            blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
-        { path: '/math/percentage-calculator/change',     blurb: 'Percentage change calculator — signed result for before-and-after comparisons.' },
-        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator',            blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator/change',     blurb: 'Percentage change calculator - signed result for before-and-after comparisons.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator - compares two independent values using their average as the base.' },
         { path: '/math/percentage-calculator/increase',   blurb: 'Dedicated percentage increase calculator with step-by-step workings and a reference table.' },
-        { path: '/math/percentage-calculator/decrease',          blurb: 'Dedicated percentage decrease calculator — useful for discounts and price drops.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
+        { path: '/math/percentage-calculator/decrease',          blurb: 'Dedicated percentage decrease calculator - useful for discounts and price drops.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage - multiply by 100, with a reference table for common decimals.' },
       ]} />
 
     </div>

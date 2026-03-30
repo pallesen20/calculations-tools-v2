@@ -74,7 +74,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between percentage decrease and percentage change?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change is the broader term covering both increases (positive results) and decreases (negative results). Percentage decrease specifically describes a fall in value and is expressed as a positive number. The underlying formula is the same; the difference is framing — percentage decrease uses (Old − New) in the numerator so the result is positive when the value falls." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Percentage change is the broader term covering both increases (positive results) and decreases (negative results). Percentage decrease specifically describes a fall in value and is expressed as a positive number. The underlying formula is the same; the difference is framing - percentage decrease uses (Old − New) in the numerator so the result is positive when the value falls." }
       },
       {
         "@type": "Question",
@@ -121,31 +121,31 @@ const schema = [
 
         <div id="pd-result" class="lbm-result hidden">
           <div class="lbm-primary">
-            <span class="lbm-primary-val" id="pd-pct">—</span>
+            <span class="lbm-primary-val" id="pd-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage Decrease</div>
 
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="pd-abs">—</div>
+              <div class="lbm-card-val" id="pd-abs">-</div>
               <div class="lbm-card-lbl">Absolute change</div>
-              <div class="lbm-card-badge" id="pd-badge">—</div>
+              <div class="lbm-card-badge" id="pd-badge">-</div>
             </div>
           </div>
 
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 1 — Subtract</span>
-              <span id="pd-step1" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 1 - Subtract</span>
+              <span id="pd-step1" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 2 — Divide</span>
-              <span id="pd-step2" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 2 - Divide</span>
+              <span id="pd-step2" class="pi-step-val">-</span>
             </div>
             <div class="pi-step">
-              <span class="pi-step-label">Step 3 — Multiply by 100</span>
-              <span id="pd-step3" class="pi-step-val">—</span>
+              <span class="pi-step-label">Step 3 - Multiply by 100</span>
+              <span id="pd-step3" class="pi-step-val">-</span>
             </div>
           </div>
         </div>
@@ -164,14 +164,14 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the original (old) value and the new value. The percentage decrease appears instantly, along with the absolute change and a three-step breakdown of the calculation. If the new value is larger than the original, the result will be negative — indicating the value increased rather than decreased.</p>
+      <p>Enter the original (old) value and the new value. The percentage decrease appears instantly, along with the absolute change and a three-step breakdown of the calculation. If the new value is larger than the original, the result will be negative - indicating the value increased rather than decreased.</p>
 
       <h2 id="formula">Percentage decrease formula</h2>
       <p>The percentage decrease formula measures how much a value has fallen relative to its original level:</p>
 
       <Formula expr={f.main} />
 
-      <p>The original value is always the denominator. The numerator is (Old − New), so when the new value is smaller, the result is positive — confirming a real decrease. This is the mirror of the percentage increase formula, which uses (New − Old) in the numerator.</p>
+      <p>The original value is always the denominator. The numerator is (Old − New), so when the new value is smaller, the result is positive - confirming a real decrease. This is the mirror of the percentage increase formula, which uses (New − Old) in the numerator.</p>
 
       <h2 id="examples">Worked examples</h2>
 
@@ -197,7 +197,7 @@ const schema = [
 
       <h2 id="vs-increase">Decrease and increase are not symmetrical</h2>
       <p>A common misconception is that a percentage decrease and a percentage increase of the same magnitude cancel each other out. They do not, because the base changes between operations.</p>
-      <p><strong>Example:</strong> Start at 100. A 20% decrease gives 80. A 20% increase on 80 gives 96, not 100. To return to the original after a 20% decrease, you need a 25% increase — because 80 × 1.25 = 100.</p>
+      <p><strong>Example:</strong> Start at 100. A 20% decrease gives 80. A 20% increase on 80 gives 96, not 100. To return to the original after a 20% decrease, you need a 25% increase - because 80 × 1.25 = 100.</p>
       <p>In general, to reverse a P% decrease you need an increase of P ÷ (100 − P) × 100 percent. For a 20% decrease: 20 ÷ 80 × 100 = 25%.</p>
 
       <h2 id="reference-table">Percentage decrease reference table</h2>
@@ -233,7 +233,7 @@ const schema = [
       <p>The formula divides by the <em>original</em> value. Using the new value produces a larger, incorrect result. In the price example: (50 ÷ 150) × 100 = 33.3%, which overstates the decrease. The correct answer is 25% (dividing by the original 200).</p>
 
       <h3>Assuming a percentage decrease can exceed 100%</h3>
-      <p>A percentage decrease is bounded at 100% — that is when the new value reaches zero. Values that go negative represent a different type of change (sign reversal) and are outside the normal domain of percentage decrease.</p>
+      <p>A percentage decrease is bounded at 100% - that is when the new value reaches zero. Values that go negative represent a different type of change (sign reversal) and are outside the normal domain of percentage decrease.</p>
 
       <h3>Confusing the decrease percentage with the remaining percentage</h3>
       <p>A 30% decrease leaves 70% of the original value. These two numbers (30 and 70) are complements that sum to 100. Confusing the decrease percentage with the remaining fraction is a common error in discount calculations.</p>
@@ -260,14 +260,14 @@ const schema = [
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub — basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
+        { path: '/math/percentage-calculator',          blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
         { path: '/math/percentage-calculator/increase', blurb: 'Dedicated percentage increase calculator with step-by-step workings and a reference table.' },
-        { path: '/math/percentage-calculator/change',      blurb: 'Percentage change calculator — covers both increases and decreases with a signed result.' },
-        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator — compares two independent values using their average as the base.' },
-        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator — arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
-        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage — shows the decimal equivalent and step-by-step workings.' },
-        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage — multiply by 100, with a reference table for common decimals.' },
-        { path: '/date-calculator',                           blurb: 'Calculate days between dates — useful when the percentage decrease spans a defined time period.' },
+        { path: '/math/percentage-calculator/change',      blurb: 'Percentage change calculator - covers both increases and decreases with a signed result.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator - compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/average',          blurb: 'Average percentage calculator - arithmetic mean of multiple percentages, with a guide on weighted averaging.' },
+        { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal equivalent and step-by-step workings.' },
+        { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage - multiply by 100, with a reference table for common decimals.' },
+        { path: '/date-calculator',                           blurb: 'Calculate days between dates - useful when the percentage decrease spans a defined time period.' },
       ]} />
 
       <RelatedGlossaryTerms toolPath="/math/percentage-calculator/decrease" />

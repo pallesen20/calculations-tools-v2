@@ -58,7 +58,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is the difference between EBITDA and EBIT?",
-        "acceptedAnswer": { "@type": "Answer", "text": "EBIT (Earnings Before Interest and Taxes) includes depreciation and amortization as expenses, while EBITDA adds those non-cash charges back. For capital-intensive businesses — manufacturing, telecom, mining — D&A can be very large, so EBITDA is significantly higher than EBIT. EBIT is closer to accounting profit; EBITDA is closer to operating cash flow." }
+        "acceptedAnswer": { "@type": "Answer", "text": "EBIT (Earnings Before Interest and Taxes) includes depreciation and amortization as expenses, while EBITDA adds those non-cash charges back. For capital-intensive businesses - manufacturing, telecom, mining - D&A can be very large, so EBITDA is significantly higher than EBIT. EBIT is closer to accounting profit; EBITDA is closer to operating cash flow." }
       },
       {
         "@type": "Question",
@@ -118,7 +118,7 @@ const schema = [
         </div>
 
         <div class="bmi-field">
-          <label class="bmi-label" for="ebitda-revenue">Revenue (optional — for EBITDA Margin)</label>
+          <label class="bmi-label" for="ebitda-revenue">Revenue (optional - for EBITDA Margin)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ebitda-revenue" class="bmi-input" placeholder="e.g. 20000000" />
           </div>
@@ -127,22 +127,22 @@ const schema = [
         <div id="ebitda-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ebitda-ebt-val">—</div>
+              <div class="lbm-card-val" id="ebitda-ebt-val">-</div>
               <div class="lbm-card-lbl">EBT</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ebitda-ebit-val">—</div>
+              <div class="lbm-card-val" id="ebitda-ebit-val">-</div>
               <div class="lbm-card-lbl">EBIT</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ebitda-ebitda-val">—</div>
+              <div class="lbm-card-val" id="ebitda-ebitda-val">-</div>
               <div class="lbm-card-lbl">EBITDA</div>
             </div>
           </div>
 
           <div id="ebitda-margin-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ebitda-margin-val">—</div>
+              <div class="lbm-card-val" id="ebitda-margin-val">-</div>
               <div class="lbm-card-lbl">EBITDA Margin</div>
             </div>
           </div>
@@ -151,15 +151,15 @@ const schema = [
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
               <span class="pi-step-label">Net Income + Tax = EBT</span>
-              <span class="pi-step-val" id="ebitda-step1">—</span>
+              <span class="pi-step-val" id="ebitda-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">EBT + Interest = EBIT</span>
-              <span class="pi-step-val" id="ebitda-step2">—</span>
+              <span class="pi-step-val" id="ebitda-step2">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">EBIT + D&amp;A = EBITDA</span>
-              <span class="pi-step-val" id="ebitda-step3">—</span>
+              <span class="pi-step-val" id="ebitda-step3">-</span>
             </div>
           </div>
         </div>
@@ -182,18 +182,18 @@ const schema = [
 
       <h2 id="what-is-ebitda">What is EBITDA?</h2>
       <p>EBITDA stands for <strong>Earnings Before Interest, Taxes, Depreciation, and Amortization</strong>. It measures how much profit a business generates from its core operations, before the effects of how it is financed (interest), where it is taxed (taxes), and how it accounts for capital investment (D&amp;A).</p>
-      <p>Because it strips out these financing and accounting variables, EBITDA allows you to compare the operational performance of two companies regardless of their capital structure or tax jurisdiction — a key requirement in M&amp;A analysis, private equity valuation, and bank lending.</p>
+      <p>Because it strips out these financing and accounting variables, EBITDA allows you to compare the operational performance of two companies regardless of their capital structure or tax jurisdiction - a key requirement in M&amp;A analysis, private equity valuation, and bank lending.</p>
       <p>EBITDA is not a GAAP metric. It does not appear on a standard income statement. You calculate it by starting from Net Income and adding back the four removed items.</p>
 
       <h2 id="formula">EBITDA formula</h2>
       <p>There are two equivalent methods:</p>
-      <p><strong>Bottom-up (most common)</strong> — starts from Net Income on the income statement:</p>
+      <p><strong>Bottom-up (most common)</strong> - starts from Net Income on the income statement:</p>
       <Formula expr={f.ebt} />
       <Formula expr={f.ebit} />
       <Formula expr={f.ebitda} />
       <p>Or in one line:</p>
       <Formula expr={f.bottomUp} />
-      <p><strong>Top-down</strong> — starts from Revenue and works down to operating profit before D&amp;A:</p>
+      <p><strong>Top-down</strong> - starts from Revenue and works down to operating profit before D&amp;A:</p>
       <Formula expr={f.topDown} />
       <p>Both methods yield the same EBITDA. The bottom-up method is preferred in practice because all inputs are clearly labelled line items on the income statement. The top-down method is useful when you want to verify operating cost structure.</p>
       <p>EBITDA Margin converts EBITDA into a comparable percentage:</p>
@@ -236,7 +236,7 @@ const schema = [
       <p><strong>Adjusted EBITDA</strong> adds back non-recurring items (restructuring charges, one-time legal settlements, stock-based compensation) to produce a "normalised" figure. In M&amp;A, sellers typically present Adjusted EBITDA; buyers scrutinise each add-back carefully.</p>
 
       <h2 id="limitations">Limitations of EBITDA</h2>
-      <p>EBITDA has well-known critics. Charlie Munger called it "bullshit earnings" because it excludes depreciation — a real economic cost that reflects capital consumption. Warren Buffett noted that EBITDA ignores the CapEx required to maintain and grow a business.</p>
+      <p>EBITDA has well-known critics. Charlie Munger called it "bullshit earnings" because it excludes depreciation - a real economic cost that reflects capital consumption. Warren Buffett noted that EBITDA ignores the CapEx required to maintain and grow a business.</p>
       <p>Key limitations to understand:</p>
       <ul>
         <li><strong>Ignores CapEx:</strong> A business with heavy capital expenditure requirements (e.g., airlines, railways) looks healthier on EBITDA than it truly is. Free Cash Flow (Operating Cash Flow minus CapEx) is a more conservative measure.</li>
@@ -257,18 +257,18 @@ const schema = [
       <p>It depends heavily on the industry. SaaS typically targets 20–30%, telecom 30–40%, manufacturing 10–20%, retail 5–10%. Compare against sector peers, not an absolute threshold.</p>
 
       <h3>What is the difference between EBITDA and EBIT?</h3>
-      <p>EBIT stops at operating income — it includes D&amp;A as expenses. EBITDA adds D&amp;A back, making it higher and closer to operating cash flow. The difference matters most in capital-intensive industries with large D&amp;A charges.</p>
+      <p>EBIT stops at operating income - it includes D&amp;A as expenses. EBITDA adds D&amp;A back, making it higher and closer to operating cash flow. The difference matters most in capital-intensive industries with large D&amp;A charges.</p>
 
       <h3>What is Adjusted EBITDA?</h3>
-      <p>Adjusted EBITDA further adds back non-recurring items: restructuring costs, M&amp;A expenses, one-time charges, or stock-based compensation. It aims to show "normal" operating profitability. Always scrutinise add-backs — some are genuinely one-time, others recur every year.</p>
+      <p>Adjusted EBITDA further adds back non-recurring items: restructuring costs, M&amp;A expenses, one-time charges, or stock-based compensation. It aims to show "normal" operating profitability. Always scrutinise add-backs - some are genuinely one-time, others recur every year.</p>
 
       <h3>Can EBITDA be negative?</h3>
       <p>Yes. A company running operating losses will have negative EBITDA. This is common in early-stage startups and distressed businesses. Negative EBITDA means the core business is not yet profitable even before non-cash charges.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/finance/ebit-calculator',          blurb: 'Calculate EBIT (Operating Income) — Net Income + Interest + Tax.' },
-        { path: '/finance/ebt-calculator',           blurb: 'Calculate EBT (Earnings Before Tax) — Net Income + Tax Expense.' },
+        { path: '/finance/ebit-calculator',          blurb: 'Calculate EBIT (Operating Income) - Net Income + Interest + Tax.' },
+        { path: '/finance/ebt-calculator',           blurb: 'Calculate EBT (Earnings Before Tax) - Net Income + Tax Expense.' },
         { path: '/finance/ebitda-margin-calculator', blurb: 'EBITDA Margin = EBITDA / Revenue × 100.' },
         { path: '/math/percentage-calculator',       blurb: 'General percentage calculator for financial ratios.' },
       ]} />

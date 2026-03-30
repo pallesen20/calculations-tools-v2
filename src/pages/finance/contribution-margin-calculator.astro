@@ -42,7 +42,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is contribution margin?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Contribution margin (CM) is revenue minus all variable costs. It represents how much each dollar of sales contributes to covering fixed costs and then generating profit. CM = Revenue − Variable Costs. For example, if a product sells for $100 and has $60 in variable costs, the contribution margin is $40 per unit — each sale contributes $40 toward fixed costs and profit." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Contribution margin (CM) is revenue minus all variable costs. It represents how much each dollar of sales contributes to covering fixed costs and then generating profit. CM = Revenue − Variable Costs. For example, if a product sells for $100 and has $60 in variable costs, the contribution margin is $40 per unit - each sale contributes $40 toward fixed costs and profit." }
       },
       {
         "@type": "Question",
@@ -71,7 +71,7 @@ const schema = [
 
 <CalculatorLayout
   title="Contribution Margin Calculator"
-  metaTitle="Contribution Margin Calculator — CM Ratio & Profit"
+  metaTitle="Contribution Margin Calculator - CM Ratio & Profit"
   description="Calculate contribution margin and CM ratio from revenue and variable costs. Add units and fixed costs to see per-unit CM and operating profit. Includes benchmarks."
   canonical="https://calculations.tools/finance/contribution-margin-calculator"
   tocItems={tocItems}
@@ -85,7 +85,7 @@ const schema = [
       <div class="calculator-container bmi-container">
         <div class="calculator-header">
           <h2>Calculate Contribution Margin and CM Ratio</h2>
-          <p>Revenue minus variable costs — what's left to cover fixed costs and generate profit</p>
+          <p>Revenue minus variable costs - what's left to cover fixed costs and generate profit</p>
         </div>
 
         <div class="bmi-field">
@@ -103,14 +103,14 @@ const schema = [
         </div>
 
         <div class="bmi-field">
-          <label class="bmi-label" for="cm-units">Units Sold (optional — for CM per unit)</label>
+          <label class="bmi-label" for="cm-units">Units Sold (optional - for CM per unit)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="cm-units" class="bmi-input" placeholder="e.g. 5000" />
           </div>
         </div>
 
         <div class="bmi-field">
-          <label class="bmi-label" for="cm-fixed">Fixed Costs (optional — for operating profit)</label>
+          <label class="bmi-label" for="cm-fixed">Fixed Costs (optional - for operating profit)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="cm-fixed" class="bmi-input" placeholder="e.g. 120000" />
           </div>
@@ -119,29 +119,29 @@ const schema = [
         <div id="cm-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="cm-val">—</div>
+              <div class="lbm-card-val" id="cm-val">-</div>
               <div class="lbm-card-lbl">Contribution Margin</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="cm-ratio-val">—</div>
+              <div class="lbm-card-val" id="cm-ratio-val">-</div>
               <div class="lbm-card-lbl">CM Ratio</div>
             </div>
           </div>
 
           <div id="cm-perunit-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="cm-perunit-val">—</div>
+              <div class="lbm-card-val" id="cm-perunit-val">-</div>
               <div class="lbm-card-lbl">CM per Unit</div>
             </div>
           </div>
 
           <div id="cm-profit-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
             <div class="lbm-card">
-              <div class="lbm-card-val" id="cm-profit-val">—</div>
+              <div class="lbm-card-val" id="cm-profit-val">-</div>
               <div class="lbm-card-lbl">Operating Profit</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="cm-profitpct-val">—</div>
+              <div class="lbm-card-val" id="cm-profitpct-val">-</div>
               <div class="lbm-card-lbl">Operating Margin</div>
             </div>
           </div>
@@ -150,19 +150,19 @@ const schema = [
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
               <span class="pi-step-label">Revenue − Variable = CM</span>
-              <span class="pi-step-val" id="cm-step1">—</span>
+              <span class="pi-step-val" id="cm-step1">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">CM / Revenue × 100 = CM Ratio</span>
-              <span class="pi-step-val" id="cm-step2">—</span>
+              <span class="pi-step-val" id="cm-step2">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">CM − Fixed = Operating Profit</span>
-              <span class="pi-step-val" id="cm-step3">—</span>
+              <span class="pi-step-val" id="cm-step3">-</span>
             </div>
             <div class="pi-step">
               <span class="pi-step-label">CM per unit</span>
-              <span class="pi-step-val" id="cm-step4">—</span>
+              <span class="pi-step-val" id="cm-step4">-</span>
             </div>
           </div>
         </div>
@@ -192,7 +192,7 @@ const schema = [
       <Formula expr={f.profit} />
       <p>And break-even units follow directly:</p>
       <Formula expr={f.beUnits} />
-      <p>The CM ratio is the most versatile form — it tells you what percentage of every revenue dollar is available to cover fixed costs and profit, regardless of volume. It is constant as long as selling price and variable cost per unit remain unchanged.</p>
+      <p>The CM ratio is the most versatile form - it tells you what percentage of every revenue dollar is available to cover fixed costs and profit, regardless of volume. It is constant as long as selling price and variable cost per unit remain unchanged.</p>
 
       <h2 id="cm-ratio">CM ratio benchmarks by industry</h2>
       <p>CM ratios vary widely by business model. Asset-light, software, and services businesses have high CM ratios; manufacturing and distribution have lower ratios due to material costs:</p>
@@ -240,23 +240,23 @@ const schema = [
             <tr><td>What's excluded</td><td>All fixed costs</td><td>SG&A, R&D (below gross profit line)</td></tr>
             <tr><td>COGS treatment</td><td>Splits COGS into fixed/variable</td><td>Uses COGS as reported (includes fixed manufacturing overhead)</td></tr>
             <tr><td>Best used for</td><td>Internal decisions, break-even, pricing</td><td>External reporting, industry comparison</td></tr>
-            <tr><td>Is it GAAP?</td><td>No — management accounting metric</td><td>Yes — appears on the income statement</td></tr>
+            <tr><td>Is it GAAP?</td><td>No - management accounting metric</td><td>Yes - appears on the income statement</td></tr>
           </tbody>
         </table>
       </div>
       <p>Gross profit is the standard reported metric. Contribution margin is more useful for internal decision-making because it cleanly separates the volume-driven variable costs from the fixed cost base.</p>
 
       <h2 id="product-mix">Using CM to make product mix decisions</h2>
-      <p>When a business sells multiple products with a shared fixed cost base, CM per unit (or CM ratio) determines which products to prioritise. Always maximise total contribution margin — not revenue or gross margin.</p>
+      <p>When a business sells multiple products with a shared fixed cost base, CM per unit (or CM ratio) determines which products to prioritise. Always maximise total contribution margin - not revenue or gross margin.</p>
       <div class="responsive-table">
         <table>
           <thead>
             <tr><th>Product</th><th>Price</th><th>Variable Cost</th><th>CM / Unit</th><th>CM Ratio</th><th>Should you prioritise?</th></tr>
           </thead>
           <tbody>
-            <tr><td>Product A</td><td>$200</td><td>$80</td><td>$120</td><td>60%</td><td>Yes — high CM ratio</td></tr>
+            <tr><td>Product A</td><td>$200</td><td>$80</td><td>$120</td><td>60%</td><td>Yes - high CM ratio</td></tr>
             <tr><td>Product B</td><td>$500</td><td>$350</td><td>$150</td><td>30%</td><td>Only if volume is very high</td></tr>
-            <tr><td>Product C</td><td>$50</td><td>$15</td><td>$35</td><td>70%</td><td>Yes — highest CM ratio</td></tr>
+            <tr><td>Product C</td><td>$50</td><td>$15</td><td>$35</td><td>70%</td><td>Yes - highest CM ratio</td></tr>
           </tbody>
         </table>
       </div>
@@ -271,10 +271,10 @@ const schema = [
       <p>CM Ratio = Contribution Margin / Revenue × 100. It tells you what percentage of every revenue dollar flows through to cover fixed costs and profit. A 40% CM ratio means 40 cents of every dollar earned is available for fixed costs and profit. Higher CM ratios mean faster break-even and more profit per unit of revenue growth.</p>
 
       <h3>What is the difference between contribution margin and gross profit?</h3>
-      <p>Gross profit uses COGS as reported, which often includes fixed manufacturing overhead. Contribution margin uses only variable costs. For a manufacturer with $2M in COGS — $1.4M variable, $600K fixed overhead — CM is $200K higher than gross profit. CM is more useful for break-even and pricing; gross profit is used for financial reporting.</p>
+      <p>Gross profit uses COGS as reported, which often includes fixed manufacturing overhead. Contribution margin uses only variable costs. For a manufacturer with $2M in COGS - $1.4M variable, $600K fixed overhead - CM is $200K higher than gross profit. CM is more useful for break-even and pricing; gross profit is used for financial reporting.</p>
 
       <h3>Can contribution margin be negative?</h3>
-      <p>Yes. A negative CM means variable costs exceed revenue per unit — every unit sold increases the loss. This is always unsustainable and indicates a fundamental pricing or cost problem. If CM is negative, increasing sales volume makes things worse, not better. The fix is either to raise prices or reduce variable costs.</p>
+      <p>Yes. A negative CM means variable costs exceed revenue per unit - every unit sold increases the loss. This is always unsustainable and indicates a fundamental pricing or cost problem. If CM is negative, increasing sales volume makes things worse, not better. The fix is either to raise prices or reduce variable costs.</p>
 
       <h3>How is contribution margin used in pricing?</h3>
       <p>Minimum viable price = Variable Cost per Unit + (Fixed Costs / Expected Units). Any price above variable cost contributes positively to fixed cost coverage. Target price should provide enough CM to cover fixed costs AND deliver the required profit margin. Use CM ratio sensitivity: if you discount price by 10%, how many more units must you sell to maintain the same total CM?</p>

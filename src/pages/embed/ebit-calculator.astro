@@ -2,7 +2,7 @@
 import EmbedLayout from '../../layouts/EmbedLayout.astro';
 ---
 
-<EmbedLayout title="EBIT Calculator — calculations.tools">
+<EmbedLayout title="EBIT Calculator - calculations.tools">
   <section class="calculator-interface">
     <div class="calculator-container bmi-container">
       <div class="calculator-header">
@@ -32,7 +32,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       </div>
 
       <div class="bmi-field">
-        <label class="bmi-label" for="ebit-revenue">Revenue (optional — for EBIT Margin)</label>
+        <label class="bmi-label" for="ebit-revenue">Revenue (optional - for EBIT Margin)</label>
         <div class="bmi-input-wrap">
           <input type="text" inputmode="decimal" id="ebit-revenue" class="bmi-input" placeholder="e.g. 15000000" />
         </div>
@@ -41,18 +41,18 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       <div id="ebit-result" class="lbm-result hidden">
         <div class="lbm-cards">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="ebit-ebt-val">—</div>
+            <div class="lbm-card-val" id="ebit-ebt-val">-</div>
             <div class="lbm-card-lbl">EBT</div>
           </div>
           <div class="lbm-card">
-            <div class="lbm-card-val" id="ebit-ebit-val">—</div>
+            <div class="lbm-card-val" id="ebit-ebit-val">-</div>
             <div class="lbm-card-lbl">EBIT</div>
           </div>
         </div>
 
         <div id="ebit-margin-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
           <div class="lbm-card">
-            <div class="lbm-card-val" id="ebit-margin-val">—</div>
+            <div class="lbm-card-val" id="ebit-margin-val">-</div>
             <div class="lbm-card-lbl">EBIT Margin</div>
           </div>
         </div>
@@ -61,11 +61,11 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
           <div class="pi-steps-title">Calculation</div>
           <div class="pi-step">
             <span class="pi-step-label">Net Income + Tax = EBT</span>
-            <span class="pi-step-val" id="ebit-step1">—</span>
+            <span class="pi-step-val" id="ebit-step1">-</span>
           </div>
           <div class="pi-step">
             <span class="pi-step-label">EBT + Interest = EBIT</span>
-            <span class="pi-step-val" id="ebit-step2">—</span>
+            <span class="pi-step-val" id="ebit-step2">-</span>
           </div>
         </div>
       </div>

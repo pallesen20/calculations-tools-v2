@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('pp-diff').textContent       = sign(ppDiff) + fmt(ppDiff) + ' pp';
     document.getElementById('pp-pct-change').textContent = pctChange !== null
       ? sign(pctChange) + fmt(pctChange) + '%'
-      : '—';
+      : '-';
     document.getElementById('pp-step1').textContent = `${fmt(a)}% − ${fmt(b)}% = ${sign(ppDiff)}${fmt(ppDiff)} pp`;
     document.getElementById('pp-step2').textContent = pctChange !== null
       ? `${sign(ppDiff)}${fmt(ppDiff)} ÷ |${fmt(b)}| × 100 = ${sign(pctChange)}${fmt(pctChange)}%`
-      : '—';
+      : '-';
 
     document.getElementById('pp-result').classList.remove('hidden');
   }

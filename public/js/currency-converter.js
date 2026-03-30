@@ -232,7 +232,7 @@ async function fetchRates() {
     ctRender();
     ctPopulateAdd();
   } catch(e) {
-    document.getElementById('cc-updated').textContent = 'Error loading rates — please refresh.';
+    document.getElementById('cc-updated').textContent = 'Error loading rates - please refresh.';
   }
 }
 
