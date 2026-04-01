@@ -1204,4 +1204,72 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+
+  'knot': {
+    definition: [
+      'A knot is a unit of speed equal to one nautical mile per hour. It is defined as exactly 1.852 km/h (approximately 1.15078 mph or 0.51444 m/s). Despite not being part of the SI metric system, the knot is the universally accepted speed unit in aviation and maritime navigation.',
+      'The word "knot" originates from a 17th-century navigation technique called the chip log. Sailors cast a knotted rope attached to a wooden float overboard and counted how many knots passed through their hands in a set time interval (typically 28 seconds). The count gave the ship\'s speed directly in nautical miles per hour.',
+    ],
+    whenToUse: 'Use knots when reading or reporting aviation airspeed, wind speeds in meteorological reports, ship speeds, and any speed displayed on nautical charts or flight instruments. All aviation weather (TAFs, METARs) and ATC communications worldwide use knots. For everyday driving contexts, convert to km/h or mph.',
+    examples: {
+      headers: ['Speed in knots', 'km/h', 'mph', 'Context'],
+      rows: [
+        ['1 kn', '1.852 km/h', '1.151 mph', 'Definition'],
+        ['15 kn', '27.8 km/h', '17.3 mph', 'Average cargo ship'],
+        ['150 kn', '277.8 km/h', '172.6 mph', 'Small aircraft approach'],
+        ['490 kn', '907.5 km/h', '564 mph', 'Commercial airliner cruise'],
+      ],
+    },
+    pitfalls: 'Do not confuse knots with km/h - they are off by nearly double (1 kn = 1.852 km/h). A wind report of "35 knots" means 64.8 km/h, not 35 km/h. Also note that "knots per hour" is incorrect - a knot already includes "per hour," so the unit is simply "knots," not "knots per hour."',
+    faqs: [
+      { q: 'Why do planes use knots instead of km/h or mph?', a: 'Aviation adopted knots because nautical miles are directly tied to Earth\'s latitude grid - one degree of latitude = 60 nautical miles. This makes navigation calculations, distance estimates on charts, and fuel planning simpler. The convention was established when the US dominated early commercial aviation and has remained the global standard ever since.' },
+      { q: 'Is 1 knot the same in all countries?', a: 'Yes. The International Hydrographic Organization defines the nautical mile as exactly 1,852 meters, making 1 knot exactly 1.852 km/h worldwide. There is no US or UK variant - unlike the statute mile, which differs from the nautical mile.' },
+    ],
+  },
+
+  'mach-number': {
+    definition: [
+      'A Mach number is the ratio of an object\'s speed to the local speed of sound in the surrounding medium. Mach 1 means the object is travelling at the speed of sound. Mach 0.5 is half the speed of sound; Mach 2 is twice the speed of sound.',
+      'The speed of sound varies with temperature and the medium it travels through. At sea level and 15°C in air, Mach 1 is approximately 340.3 m/s (1,225 km/h or 761 mph). At cruising altitude (~10,000 m), where temperatures reach around -50°C, Mach 1 drops to about 295 m/s (1,062 km/h). This is why airliner cruise speeds are quoted in Mach - the aircraft\'s aerodynamic behaviour depends on Mach number, not absolute speed.',
+    ],
+    whenToUse: 'Use Mach numbers when describing aircraft performance, particularly for jet aircraft, supersonic vehicles, and anything where compressibility effects in air matter (above approximately Mach 0.3). For subsonic vehicles like cars, trains, and ships, use km/h, mph, or knots instead.',
+    examples: {
+      headers: ['Mach', 'km/h (sea level, 15°C)', 'mph', 'Category'],
+      rows: [
+        ['Mach 0.5', '612.5 km/h', '380.5 mph', 'Subsonic'],
+        ['Mach 0.85', '1,041 km/h', '647 mph', 'Commercial airliner cruise'],
+        ['Mach 1', '1,225 km/h', '761 mph', 'Speed of sound'],
+        ['Mach 2', '2,450 km/h', '1,522 mph', 'Supersonic (Concorde cruise)'],
+        ['Mach 5', '6,125 km/h', '3,806 mph', 'Hypersonic (X-51A)'],
+      ],
+    },
+    pitfalls: 'Mach 1 is not a fixed speed - it changes with air temperature. At 10,000 m altitude, Mach 1 is about 295 m/s (1,062 km/h), significantly slower than the 340 m/s at sea level. Never convert a Mach number to km/h without specifying the altitude and temperature conditions.',
+    faqs: [
+      { q: 'What is the difference between subsonic, transonic, supersonic, and hypersonic?', a: 'Subsonic: Mach below 0.8. Transonic: Mach 0.8–1.2 (shock waves begin forming). Supersonic: Mach 1.2–5. Hypersonic: Mach 5 and above. The Concorde cruised at Mach 2; the Space Shuttle re-entered at around Mach 25.' },
+      { q: 'Who is Mach named after?', a: 'Ernst Mach, an Austrian physicist (1838–1916) who studied the shock waves formed by projectiles moving faster than sound. The unit was named in his honour by the aeronautical engineer Jakob Ackeret in 1929.' },
+    ],
+  },
+
+  'nautical-mile': {
+    definition: [
+      'A nautical mile is a unit of distance equal to exactly 1,852 meters (1.852 km or approximately 1.151 statute miles). It is defined as one arcminute (1/60 of a degree) of latitude along any meridian of Earth\'s surface. This geometric relationship to Earth\'s coordinate system is what makes it essential for navigation.',
+      'Because one degree of latitude = 60 nautical miles, navigators can read distances directly off the latitude scale on a chart using a compass or dividers - no conversion required. A ship travelling 1 nautical mile has moved exactly 1 arcminute of latitude toward the equator or poles.',
+    ],
+    whenToUse: 'Use nautical miles for any oceanic or aviation navigation - measuring distances on charts, filing flight plans, calculating fuel range, and setting waypoints. Combine with knots to express speed: a ship travelling at 20 knots covers 20 nautical miles per hour. For road or land distances, use kilometres or statute miles instead.',
+    examples: {
+      headers: ['Nautical miles', 'Kilometres', 'Statute miles', 'Context'],
+      rows: [
+        ['1 nmi', '1.852 km', '1.151 mi', 'Definition'],
+        ['60 nmi', '111.12 km', '69.05 mi', '1 degree of latitude'],
+        ['3,600 nmi', '6,667.2 km', '4,143 mi', 'Paris to New York (approx.)'],
+        ['21,600 nmi', '40,003.2 km', '24,860 mi', 'Earth\'s circumference (approx.)'],
+      ],
+    },
+    pitfalls: 'Do not confuse nautical miles with statute miles. A statute mile is 1,609.344 m; a nautical mile is 1,852 m - about 15% longer. A voyage of "100 miles" could mean very different distances depending on which unit is used. GPS devices typically allow switching between nmi and statute miles - always verify the setting before navigation.',
+    faqs: [
+      { q: 'Why is it called a "nautical" mile?', a: 'The term distinguishes it from the statute mile (used on land). "Nautical" simply means relating to the sea or navigation. Before GPS, sailors needed a distance unit directly readable from latitude lines on a chart - the nautical mile, defined as one arcminute of latitude, fulfilled this exactly.' },
+      { q: 'Is the nautical mile metric?', a: 'Not officially - it is not part of the SI system. However, its definition (1,852 m exactly) was fixed by international agreement in 1929, making it a precisely defined unit with an exact metric equivalent. The International System of Units allows its continued use alongside SI units for maritime and aviation purposes.' },
+    ],
+  },
+
 };

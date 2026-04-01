@@ -457,6 +457,39 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['ratio', 'proportion'],
   },
 
+  // ─── Math (Speed & Navigation) ───────────────────────────────────────────────
+  {
+    slug: 'knot',
+    term: 'Knot (kn)',
+    letter: 'K',
+    category: 'Speed & Navigation',
+    siteCategory: 'Math',
+    shortDef: 'A knot is a unit of speed equal to one nautical mile per hour - exactly 1.852 km/h or 1.151 mph. It is the international standard speed unit in aviation and maritime navigation.',
+    relatedTools: ['/conversion/speed-converter'],
+    relatedTerms: ['nautical-mile', 'unit-rate'],
+  },
+  {
+    slug: 'mach-number',
+    term: 'Mach Number',
+    letter: 'M',
+    category: 'Speed & Navigation',
+    siteCategory: 'Math',
+    shortDef: 'A Mach number is the ratio of an object\'s speed to the local speed of sound. Mach 1 is approximately 1,225 km/h (761 mph) at sea level and 15°C. Aircraft exceeding Mach 1 are supersonic.',
+    formula: '$$\\text{Mach} = \\frac{v}{c_s}$$',
+    relatedTools: ['/conversion/speed-converter'],
+    relatedTerms: ['knot', 'unit-rate'],
+  },
+  {
+    slug: 'nautical-mile',
+    term: 'Nautical Mile (nmi)',
+    letter: 'N',
+    category: 'Speed & Navigation',
+    siteCategory: 'Math',
+    shortDef: 'A nautical mile is exactly 1,852 meters - one arcminute of latitude on Earth\'s surface. This geometric link to latitude makes it the standard distance unit for aviation and maritime navigation worldwide.',
+    relatedTools: ['/conversion/speed-converter', '/conversion/length-converter'],
+    relatedTerms: ['knot', 'unit-rate'],
+  },
+
   // ─── Health ──────────────────────────────────────────────────────────────────
   {
     slug: 'bmi',

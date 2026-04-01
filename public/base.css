@@ -177,10 +177,10 @@
 .related-tools-list a {
     font-weight: 600;
     color: var(--brand-from);
-    text-decoration: none;
+    text-decoration: none !important;
 }
-.seo-container a {
-    text-decoration: underline !important;
+.seo-container:not(.no-underline) a {
+    text-decoration: underline;
 }
 .breadcrumb-nav {
     max-width: 1200px;

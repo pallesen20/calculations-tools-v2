@@ -1,0 +1,360 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+
+const tocItems = [
+  { id: 'how-to-use',        label: 'How to use this converter' },
+  { id: 'mph-to-kmh',        label: 'How to convert mph to km/h' },
+  { id: 'what-is-a-knot',    label: 'What is a knot?' },
+  { id: 'speed-units',       label: 'Which speed units are used globally?' },
+  { id: 'real-world-speeds', label: 'Real-world speed reference' },
+  { id: 'ms-to-kmh',         label: 'How to convert m/s to km/h' },
+  { id: 'common-mistakes',   label: 'Common conversion mistakes' },
+  { id: 'faq',               label: 'FAQs' },
+  { id: 'related-tools',     label: 'Related tools' },
+];
+
+const f = {
+  mphToKmh: "$$\\text{km/h} = \\text{mph} \\times 1.609344$$",
+  kmhToMph: "$$\\text{mph} = \\frac{\\text{km/h}}{1.609344}$$",
+  msToKmh:  "$$\\text{km/h} = \\text{m/s} \\times 3.6$$",
+  kmhToMs:  "$$\\text{m/s} = \\frac{\\text{km/h}}{3.6}$$",
+};
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Speed Converter",
+    "url": "https://calculations.tools/conversion/speed-converter",
+    "description": "Convert between mph, km/h, m/s, knots, ft/s, and 5 more speed units instantly. Free browser-based speed conversion calculator.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert speed units",
+    "description": "Step-by-step guide to converting between mph, km/h, m/s, knots, and other speed units.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter a value", "text": "Type the speed value you want to convert in the value field." },
+      { "@type": "HowToStep", "position": 2, "name": "Select the source unit", "text": "Choose the unit you are converting from in the From dropdown - for example km/h, mph, m/s, or knots." },
+      { "@type": "HowToStep", "position": 3, "name": "Select the target unit", "text": "Choose the unit you want to convert to in the To dropdown." },
+      { "@type": "HowToStep", "position": 4, "name": "Read the result", "text": "The converted speed appears instantly below the inputs. Use the swap button to reverse the conversion direction." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many km/h is 60 mph?",
+        "acceptedAnswer": { "@type": "Answer", "text": "60 miles per hour equals 96.56 km/h. To convert any mph value to km/h, multiply by 1.609344. This factor is exact because 1 mile = 1,609.344 meters by international definition since 1959. For a quick mental estimate, multiply by 1.6." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 100 km/h in mph?",
+        "acceptedAnswer": { "@type": "Answer", "text": "100 km/h equals 62.14 mph. Multiply any km/h value by 0.621371 to get mph. The European motorway speed of 100 km/h is about 62 mph, slightly below the UK's 70 mph motorway limit of 112.7 km/h." }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast is 1 knot in mph?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1 knot equals 1.15078 mph or 1.852 km/h. A knot is one nautical mile per hour. Ships typically cruise at 20-25 knots (23-29 mph). Commercial aircraft cruise at around 480-490 knots (552-564 mph) at altitude." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert m/s to km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply meters per second by 3.6 to get km/h. This comes from: 1 m/s × 3,600 seconds per hour ÷ 1,000 meters per kilometer = 3.6 km/h. So 10 m/s = 36 km/h, and 27.78 m/s = exactly 100 km/h." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the speed of light in mph?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The speed of light in a vacuum is exactly 299,792,458 m/s, which equals 670,616,629 mph or 1,079,252,848 km/h. It is the universal speed limit established by Einstein's 1905 theory of special relativity. Nothing with mass can reach this speed." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Speed Converter"
+  metaTitle="Speed Converter - mph, km/h, knots & m/s ᐅ"
+  description="Convert between mph, km/h, m/s, knots, and ft/s instantly. Free speed converter with quick-select conversions, a real-world speed reference table, and common formulas."
+  canonical="https://calculations.tools/conversion/speed-converter"
+  tocItems={tocItems}
+  embedSlug="speed-converter"
+  schema={schema}
+  ogFormula="1 mph = 1.60934 km/h; 1 knot = 1.852 km/h; 1 m/s = 3.6 km/h"
+  ogExample="60 mph = 60 × 1.60934 = 96.56 km/h"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface" id="spd-calculator">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Speed Conversion Calculator</h2>
+          <p>Enter a value and select units - result updates instantly</p>
+        </div>
+
+        <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
+        <div id="spd-quick" class="spd-quick"></div>
+
+        <div class="spd-inputs">
+          <div class="input-group">
+            <label for="spd-value">Value</label>
+            <input id="spd-value" type="text" inputmode="decimal" value="100" placeholder="Enter value" />
+          </div>
+          <div class="input-group">
+            <label for="spd-from">From</label>
+            <select id="spd-from"></select>
+          </div>
+          <div class="unit-swap-wrap">
+            <button class="unit-swap" id="spd-swap" title="Swap units" aria-label="Swap units">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
+          <div class="input-group">
+            <label for="spd-to">To</label>
+            <select id="spd-to"></select>
+          </div>
+        </div>
+
+        <div class="spd-result-box">
+          <div class="result-label">Result</div>
+          <div class="spd-result" id="spd-result">-</div>
+          <div class="spd-result-desc" id="spd-result-desc"></div>
+        </div>
+
+        <div class="spd-common-section">
+          <h3 id="spd-common-title" class="spd-common-title"></h3>
+          <div id="spd-common" class="spd-common-grid"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <script src="/js/speed-converter.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This speed converter handles all common units: km/h, mph, m/s, knots, ft/s, ft/min, m/min, km/s, mi/s, and the speed of light. Select any two units, enter a value, and the result appears instantly. Quick-select buttons jump to the most common pairs like mph to km/h and knots to mph.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>To convert mph to km/h, multiply by 1.609344 (exact, since 1959 international standard).</li>
+          <li>1 <a href="/glossary/knot">knot</a> = 1.852 km/h exactly - used in aviation and maritime navigation because it matches one arcminute of latitude.</li>
+          <li>To convert m/s to km/h, multiply by 3.6. Reverse: divide km/h by 3.6.</li>
+          <li>Only three countries use mph for road speeds: the US, the UK, and Liberia.</li>
+          <li>The speed of light (299,792,458 m/s) is the universal speed limit, established by Einstein's 1905 special relativity.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Speed Converter</h2>
+      <p>Type a value in the input field, choose your "From" unit, then select your "To" unit. The result updates instantly as you type. Use the quick-conversion buttons to jump straight to the most searched pairs - km/h to mph, knots to mph, m/s to km/h, and more. The swap button reverses the direction without re-entering the value.</p>
+      <p>The common conversions panel below the result shows your value in 8 other units simultaneously, so you can compare several scales at once without changing the dropdowns.</p>
+
+      <h2 id="mph-to-kmh">How Do You Convert mph to km/h?</h2>
+      <p>Multiply miles per hour by 1.609344. This factor is exact because one international mile = 1,609.344 meters, a definition locked in by the International Yard and Pound Agreement of 1959. The US, UK, and most speed-limited countries use this conversion daily for reading foreign road signs.</p>
+
+      <Formula expr={f.mphToKmh} />
+      <Formula expr={f.kmhToMph} />
+
+      <p>A simple mental shortcut: double the mph and subtract 20% to estimate km/h. So 60 mph → 120 → minus 12 ≈ 96 km/h (correct answer is 96.56 km/h). For the reverse, halve and add 25%: 100 km/h → 50 + 12.5 = 62.5 mph (correct is 62.14 mph).</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>mph</th><th>km/h</th><th>Common context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>20 mph</td><td>32.19 km/h</td><td>Residential speed limit (UK/US)</td></tr>
+            <tr><td>30 mph</td><td>48.28 km/h</td><td>Urban speed limit (UK)</td></tr>
+            <tr><td>50 mph</td><td>80.47 km/h</td><td>Rural road (UK)</td></tr>
+            <tr><td>60 mph</td><td>96.56 km/h</td><td>Dual carriageway (UK)</td></tr>
+            <tr><td>70 mph</td><td>112.65 km/h</td><td>Motorway limit (UK)</td></tr>
+            <tr><td>100 mph</td><td>160.93 km/h</td><td>Track day / unrestricted autobahn</td></tr>
+            <tr><td>186 mph</td><td>299.33 km/h</td><td>Bugatti Veyron top speed (approx.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="what-is-a-knot">What Is a Knot and Why Do Pilots Use It?</h2>
+      <p>A knot is one <a href="/glossary/nautical-mile">nautical mile</a> per hour, equal to exactly 1.852 km/h or 1.15078 mph. The International Hydrographic Organization defines the nautical mile as exactly 1,852 meters - corresponding to one arcminute of latitude on Earth's surface. This geometric link to latitude makes knots ideal for navigation: one degree of latitude is exactly 60 nautical miles.</p>
+      <p>The origin of the word "knot" goes back to 17th-century sailors who measured speed using a chip log - a piece of wood on a knotted rope cast overboard. They counted how many knots passed through their hands in 30 seconds to estimate speed. The unit has stuck in aviation and shipping ever since because navigation charts are still built around nautical miles.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Knots</th><th>mph</th><th>km/h</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 kn</td><td>1.15 mph</td><td>1.852 km/h</td><td>Definition</td></tr>
+            <tr><td>15 kn</td><td>17.3 mph</td><td>27.8 km/h</td><td>Average cargo ship</td></tr>
+            <tr><td>25 kn</td><td>28.8 mph</td><td>46.3 km/h</td><td>Fast container ship</td></tr>
+            <tr><td>150 kn</td><td>172.6 mph</td><td>277.8 km/h</td><td>Typical approach speed (airliner)</td></tr>
+            <tr><td>490 kn</td><td>564 mph</td><td>907.5 km/h</td><td>Typical cruise speed (airliner)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="speed-units">Which Speed Units Are Used Around the World?</h2>
+      <p>Only three countries still use miles per hour for road speed limits: the United States, the United Kingdom, and Liberia (NIST, 2023). Every other country uses km/h on road signs. Aviation worldwide uses knots, regardless of the country's road speed system, a legacy of the US dominating early commercial aviation.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Unit</th><th>Symbol</th><th>m/s equivalent</th><th>Where used</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Kilometer per hour</td><td>km/h</td><td>0.2778 m/s</td><td>Road speeds worldwide (except US/UK)</td></tr>
+            <tr><td>Mile per hour</td><td>mph</td><td>0.44704 m/s</td><td>Road speeds in US, UK, Liberia</td></tr>
+            <tr><td>Meter per second</td><td>m/s</td><td>1 m/s</td><td>Physics, SI standard, wind speeds</td></tr>
+            <tr><td>Knot</td><td>kn</td><td>0.5144 m/s</td><td>Aviation, maritime navigation</td></tr>
+            <tr><td>Foot per second</td><td>ft/s</td><td>0.3048 m/s</td><td>US engineering, ballistics</td></tr>
+            <tr><td>Kilometer per second</td><td>km/s</td><td>1,000 m/s</td><td>Orbital mechanics, rocketry</td></tr>
+            <tr><td>Speed of light</td><td>c</td><td>299,792,458 m/s</td><td>Particle physics, optics</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="real-world-speeds">What Are Common Real-World Speeds in km/h and mph?</h2>
+      <p>Context is the best way to build intuition for speed units. A human walking pace is about 5 km/h (3.1 mph), while a professional sprinter peaks near 45 km/h (28 mph). Commercial aircraft cruise at roughly 900 km/h (560 mph) at altitude, or about 490 knots. <a href="/glossary/mach-number">Mach 1</a> at sea level is approximately 1,225 km/h (761 mph), though the exact value varies with air temperature.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Speed reference</th><th>km/h</th><th>mph</th><th>m/s</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Human walking</td><td>5 km/h</td><td>3.1 mph</td><td>1.4 m/s</td></tr>
+            <tr><td>Cycling (leisure)</td><td>16 km/h</td><td>10 mph</td><td>4.4 m/s</td></tr>
+            <tr><td>100m world record (Bolt, 2009)</td><td>37.6 km/h</td><td>23.4 mph</td><td>10.44 m/s</td></tr>
+            <tr><td>City speed limit (most countries)</td><td>50 km/h</td><td>31 mph</td><td>13.9 m/s</td></tr>
+            <tr><td>Motorway speed limit (EU)</td><td>130 km/h</td><td>80.8 mph</td><td>36.1 m/s</td></tr>
+            <tr><td>High-speed train (TGV)</td><td>320 km/h</td><td>199 mph</td><td>88.9 m/s</td></tr>
+            <tr><td>Commercial aircraft (cruise)</td><td>900 km/h</td><td>560 mph</td><td>250 m/s</td></tr>
+            <tr><td>Mach 1 (sea level, 15°C)</td><td>1,225 km/h</td><td>761 mph</td><td>340.3 m/s</td></tr>
+            <tr><td>Earth's orbital speed</td><td>107,218 km/h</td><td>66,622 mph</td><td>29,783 m/s</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="ms-to-kmh">How Do You Convert m/s to km/h?</h2>
+      <p>Multiply meters per second by 3.6 to get km/h. The factor of 3.6 comes directly from unit definitions: there are 3,600 seconds in an hour and 1,000 meters in a kilometer, so 1 m/s × 3,600 s/h ÷ 1,000 m/km = 3.6 km/h. Physics and meteorology use m/s by default; road speeds always appear in km/h or mph.</p>
+
+      <Formula expr={f.msToKmh} />
+      <Formula expr={f.kmhToMs} />
+
+      <h3>When to use m/s vs km/h</h3>
+      <p>Scientists and engineers prefer m/s because it fits naturally into SI equations - kinetic energy (½mv²) and force (ma) both use m/s directly. Drivers and pilots work in km/h or knots because those match the numbers printed on speed signs and instrument dials.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>m/s</th><th>km/h</th><th>mph</th><th>Common context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.5 m/s</td><td>1.8 km/h</td><td>1.1 mph</td><td>Slow walking</td></tr>
+            <tr><td>10 m/s</td><td>36 km/h</td><td>22.4 mph</td><td>Fast cycling</td></tr>
+            <tr><td>27.78 m/s</td><td>100 km/h</td><td>62.1 mph</td><td>Motorway</td></tr>
+            <tr><td>340 m/s</td><td>1,224 km/h</td><td>760.7 mph</td><td>Speed of sound (approx.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="common-mistakes">What Are Common Speed Conversion Mistakes?</h2>
+
+      <h3>Reading European speed limits as mph</h3>
+      <p>A 130 km/h motorway sign in Germany is 80.8 mph, not 130 mph. Visitors from the US or UK occasionally mistake km/h limit signs for mph limits, which would mean driving well above the legal speed. Always check which unit a sign uses before setting cruise control.</p>
+
+      <h3>Using 1.6 instead of 1.609344</h3>
+      <p>The approximation 1 mph ≈ 1.6 km/h introduces a 0.58% error. At 60 mph that gives 96 km/h instead of the correct 96.56 km/h. For casual use this is fine, but for fuel calculations, pace targeting, or any engineering use, always use the full factor 1.609344.</p>
+
+      <h3>Confusing knots with km/h</h3>
+      <p>1 knot = 1.852 km/h, not 1 km/h. The two units are off by nearly double. A weather report citing "35-knot winds" means 64.8 km/h (40.3 mph), not 35 km/h. Mixing these is a common error when reading aviation weather or marine forecasts.</p>
+
+      <h3>Confusing statute miles and nautical miles</h3>
+      <p>A statute mile (used on roads) is 1,609.344 meters. A nautical mile is 1,852 meters - about 15% longer. This matters in navigation: 100 nautical miles is not the same distance as 100 statute miles. See the <a href="/conversion/length-converter">length converter</a> for conversions between the two.</p>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many km/h is 60 mph?</h3>
+      <p>60 mph = 96.56 km/h. Multiply any mph value by 1.609344 to get km/h. The factor is exact: 1 international mile = 1,609.344 meters by definition since 1959. For quick mental math, double the mph and subtract 20%: 60 × 2 = 120, minus 12 = 108 - wait, that gives 108. Correct shortcut: multiply by 1.6: 60 × 1.6 = 96.</p>
+
+      <h3>What is 100 km/h in mph?</h3>
+      <p>100 km/h = 62.14 mph. Divide km/h by 1.609344 (or multiply by 0.621371). The European motorway limit of 100 km/h is 62 mph - below the UK's 70 mph (112.65 km/h) limit. On the autobahn sections with no limit, cars typically travel at 130-160 km/h (81-99 mph).</p>
+
+      <h3>How fast is 1 knot in mph?</h3>
+      <p>1 knot = 1.15078 mph or 1.852 km/h. Container ships cruise at 20-25 knots (23-29 mph). Commercial airliners cruise at 480-490 knots (553-564 mph). The fastest warships reach about 60 knots (69 mph). Wind speeds in weather reports are often given in knots; 1 Beaufort Force 12 (hurricane) starts at 64 knots (74 mph).</p>
+
+      <h3>How do you convert m/s to km/h?</h3>
+      <p>Multiply by 3.6. This comes from: 1 m × 3,600 s/h ÷ 1,000 m/km = 3.6. Example: 10 m/s = 36 km/h, and 27.78 m/s = exactly 100 km/h. To go the other way, divide km/h by 3.6. Wind speeds in physics are always m/s and convert to km/h or mph instantly using this calculator.</p>
+
+      <h3>What is the speed of light in mph?</h3>
+      <p>The speed of light in a vacuum is exactly 299,792,458 m/s - defined as an exact constant since 1983. In other units: 670,616,629 mph or 1,079,252,848 km/h. Light takes about 8 minutes and 20 seconds to travel from the Sun to Earth (approximately 150 million km at light speed).</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter</a>
+            <p>Convert between meters, kilometers, miles, nautical miles, feet, and inches - the distances that speed × time calculations produce.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter</a>
+            <p>Convert between kilograms, pounds, ounces, stone, and more - a natural companion for any measurement conversion task.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter">Temperature Converter</a>
+            <p>Convert between Celsius, Fahrenheit, Kelvin, and Rankine - another unit pair that changes depending on country.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">∶</span>
+          <div>
+            <a href="/math/ratio-calculator/unit-rate">Unit Rate Calculator</a>
+            <p>Calculate speed as a unit rate (distance per unit time), or any other rate - useful when working from raw distance and time data.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .spd-quick { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .spd-quick-btn { padding: 0.35rem 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; color: rgba(255,255,255,0.85); font-size: 0.75rem; cursor: pointer; transition: background 0.15s; }
+  .spd-quick-btn:hover { background: rgba(255,255,255,0.15); }
+  .spd-inputs { display: grid; grid-template-columns: 1fr 1fr auto 1fr; gap: 0.75rem; margin-bottom: 1rem; }
+  .spd-inputs input, .spd-inputs select { width: 100%; padding: 0.5rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 0.875rem; box-sizing: border-box; }
+  .spd-result-box { background: linear-gradient(135deg, #2563eb, #7c3aed); border-radius: 10px; padding: 1rem; text-align: center; margin-bottom: 1rem; }
+  .spd-result { font-size: 1.75rem; font-weight: 700; color: white; }
+  .spd-result-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 0.25rem; }
+  .spd-common-title { font-size: 0.9rem; font-weight: 600; color: white; margin-bottom: 0.5rem; }
+  .spd-common-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
+  .spd-common-row { display: flex; justify-content: space-between; background: rgba(255,255,255,0.05); border-radius: 6px; padding: 0.5rem 0.6rem; font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+  .spd-common-val { color: #93c5fd; font-weight: 600; }
+  @media (max-width: 480px) { .spd-inputs { grid-template-columns: 1fr; } .spd-common-grid { grid-template-columns: 1fr; } }
+</style>

@@ -630,6 +630,17 @@ const entries: Entry[] = [
     short: 'Extract text from any image or scanned PDF',
   },
   {
+    path: '/conversion/speed-converter',
+    title: 'Speed Converter - mph, km/h, knots, m/s & more',
+    description: 'Convert between mph, km/h, m/s, knots, and ft/s instantly. Free speed converter with quick-select conversions and a full real-world reference table.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    lastmod: '2026-04-01',
+    icon: '⚡',
+    short: 'mph, km/h, knots, m/s & more',
+    units: 'km/h, mph, m/s, kn, ft/s, ft/min, m/min, km/s, mi/s, c',
+  },
+  {
     path: '/compare',
     title: 'Compare Files & Text Online - Free Diff Tools',
     description: 'Free online comparison tools: compare text, code, Excel, CSV, PDF, and Word documents. Find differences instantly, color-coded, private, no sign-up.',
