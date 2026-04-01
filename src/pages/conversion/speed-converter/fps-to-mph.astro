@@ -1,0 +1,251 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fpsToMph: "$$\\text{mph} = \\text{ft/s} \\times \\frac{3600}{5280} = \\text{ft/s} \\times \\frac{15}{22} \\approx \\text{ft/s} \\times 0.681818$$",
+  mphToFps: "$$\\text{ft/s} = \\text{mph} \\times \\frac{22}{15} \\approx \\text{mph} \\times 1.46667$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert ft/s to mph' },
+  { id: 'reverse',         label: 'How to convert mph to ft/s' },
+  { id: 'reference-table', label: 'ft/s to mph reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ft/s to mph Converter",
+    "url": "https://calculations.tools/conversion/speed-converter/fps-to-mph",
+    "description": "Convert feet per second to miles per hour and back. Formula: mph = ft/s × 15/22. Used in US engineering, ballistics, and athletics.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert ft/s to mph",
+    "description": "Convert feet per second to miles per hour using the exact 15/22 rational conversion factor.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter ft/s value", "text": "Type your feet per second value in the ft/s field. The mph result appears instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted mph value appears immediately. For 100 ft/s, the result is 68.18 mph." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the mph field to convert back to ft/s. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you convert ft/s to mph?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply feet per second by 15/22 (≈ 0.681818). The factor is exact: 1 mile = 5,280 feet and 1 hour = 3,600 seconds, so 1 ft/s = 3,600/5,280 = 15/22 mph. Example: 100 ft/s × 15/22 = 68.18 mph." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many ft/s is 60 mph?",
+        "acceptedAnswer": { "@type": "Answer", "text": "60 mph equals 88 ft/s exactly. Multiply mph by 22/15 to get ft/s. The value 88 ft/s is well-known in US engineering as the exact equivalent of 60 mph — it's an exact rational number because 60 × 22/15 = 60 × 22/15 = 1320/15 = 88." }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast is 1000 ft/s in mph?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1,000 ft/s equals 681.82 mph (1,097.3 km/h). This speed is relevant to high-velocity ballistics — many rifle rounds travel at 2,000-3,000 ft/s (1,363-2,045 mph) at the muzzle. The speed of sound at sea level is approximately 1,125 ft/s (767 mph)." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is ft/s used in ballistics?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The United States uses feet as its standard unit for distance in engineering and military specifications, so muzzle velocity and terminal velocity in US ballistics are reported in ft/s. The metric equivalent m/s is used internationally. SAAMI (Small Arms and Ammunition Manufacturers' Institute) standardises ft/s for US ammunition specifications." }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast is the speed of sound in ft/s?",
+        "acceptedAnswer": { "@type": "Answer", "text": "At sea level and 15°C (59°F), the speed of sound is approximately 1,125 ft/s (767 mph, 340.3 m/s). This varies with temperature — at 0°C (32°F) it's about 1,087 ft/s (741 mph). US aviation and ballistics references frequently cite 1,116-1,125 ft/s as the sea-level speed of sound range." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="ft/s to mph Converter"
+  metaTitle="ft/s to mph Converter — Feet Per Second to mph ᐅ"
+  description="Convert feet per second to miles per hour and back. Exact formula: mph = ft/s × 15/22. Reference table for ballistics, engineering, and athletics. Reverse included."
+  canonical="https://calculations.tools/conversion/speed-converter/fps-to-mph"
+  tocItems={tocItems}
+  embedSlug="fps-to-mph"
+  schema={schema}
+  ogFormula="mph = ft/s × (15/22) = ft/s × 0.681818"
+  ogExample="100 ft/s = 100 × 0.681818 = 68.18 mph"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>ft/s to mph Converter</h2>
+          <p>Type in either field — converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="fm-a">Feet per second (ft/s)</label>
+            <input id="fm-a" type="text" inputmode="decimal" placeholder="e.g. 100" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="fm-b">Miles per hour (mph)</label>
+            <input id="fm-b" type="text" inputmode="decimal" placeholder="e.g. 68.18" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 ft/s = 15/22 mph (≈ 0.681818) &nbsp;·&nbsp; 1 mph = 22/15 ft/s (≈ 1.46667)</div>
+
+      </div>
+    </section>
+
+    <script src="/js/fps-to-mph.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert ft/s to mph, multiply by <strong>15/22</strong> (≈ 0.681818). The factor is exact: 1 mile = 5,280 feet; 1 hour = 3,600 seconds. So 1 ft/s = 3,600 ÷ 5,280 = 15/22 mph. For the reverse, multiply mph by 22/15 (≈ 1.46667).</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact factor: 1 ft/s = 15/22 mph = 0.681818... mph (a repeating decimal, not a rounding).</li>
+          <li>Notable benchmark: 60 mph = 88 ft/s exactly — a well-known identity in US engineering.</li>
+          <li>Speed of sound at sea level (15°C) ≈ 1,125 ft/s = 767 mph.</li>
+          <li>ft/s is the standard unit for muzzle velocity in US ballistics specifications (SAAMI).</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Enter a value in the ft/s field and the mph equivalent appears immediately. You can also type in the mph field to reverse the conversion. There's no submit button — results update as you type. Both fields stay in sync at all times.</p>
+
+      <h2 id="formula">How Do You Convert ft/s to mph?</h2>
+      <p>Multiply feet per second by 15/22. Both the numerator and denominator come from exact unit definitions: one mile = 5,280 feet (by statute), one hour = 3,600 seconds. So 1 ft/s = 3,600 seconds/hour ÷ 5,280 feet/mile = 3600/5280 = 15/22 mph. This is a repeating decimal (0.681818…) but the fraction 15/22 is exact. The US National Institute of Standards and Technology (NIST) publishes this as an exact conversion.</p>
+
+      <Formula expr={f.fpsToMph} />
+
+      <p>Worked examples: 50 ft/s = 34.09 mph. 88 ft/s = 60 mph (exact). 1,125 ft/s = 767 mph (speed of sound at sea level).</p>
+
+      <h2 id="reverse">How Do You Convert mph to ft/s?</h2>
+      <p>Multiply mph by 22/15 (≈ 1.46667). This is the exact inverse of the 15/22 ratio. The result 22/15 is also a repeating decimal (1.46666…) but the fraction is exact. For a quick mental estimate: multiply mph by 1.5 (about 2.3% high) — for 60 mph that gives 90 ft/s vs the exact 88 ft/s. For the <a href="/conversion/speed-converter">full multi-unit converter</a> covering m/s, km/h, and knots, use the speed converter hub.</p>
+
+      <Formula expr={f.mphToFps} />
+
+      <p>Worked examples: 30 mph = 44 ft/s. 60 mph = 88 ft/s (exact). 100 mph = 146.67 ft/s.</p>
+
+      <h2 id="reference-table">ft/s to mph Reference Table</h2>
+      <p>Key speed values with exact ft/s to mph conversions and real-world contexts. The factor 15/22 is exact; displayed values are rounded to 2 decimal places for readability.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>ft/s</th><th>mph</th><th>m/s</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>5 ft/s</td><td>3.41 mph</td><td>1.52 m/s</td><td>Walking pace</td></tr>
+            <tr><td>10 ft/s</td><td>6.82 mph</td><td>3.05 m/s</td><td>Jogging</td></tr>
+            <tr><td>15 ft/s</td><td>10.23 mph</td><td>4.57 m/s</td><td>Fast cycling</td></tr>
+            <tr><td>40 ft/s</td><td>27.27 mph</td><td>12.19 m/s</td><td>Sprinting athlete</td></tr>
+            <tr><td>44 ft/s</td><td>30 mph</td><td>13.41 m/s</td><td>Urban speed limit (US)</td></tr>
+            <tr><td>66 ft/s</td><td>45 mph</td><td>20.12 m/s</td><td>Rural road (US)</td></tr>
+            <tr><td>88 ft/s</td><td>60 mph</td><td>26.82 m/s</td><td>Highway (US) — exact 88 ft/s</td></tr>
+            <tr><td>95.33 ft/s</td><td>65 mph</td><td>29.06 m/s</td><td>Interstate (many US states)</td></tr>
+            <tr><td>102.67 ft/s</td><td>70 mph</td><td>31.29 m/s</td><td>Highway / motorway</td></tr>
+            <tr><td>146.67 ft/s</td><td>100 mph</td><td>44.70 m/s</td><td>Performance driving</td></tr>
+            <tr><td>1,125 ft/s</td><td>767.0 mph</td><td>342.9 m/s</td><td>Speed of sound (approx., sea level)</td></tr>
+            <tr><td>2,800 ft/s</td><td>1,909 mph</td><td>853.4 m/s</td><td>Rifle muzzle velocity (typical)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert ft/s to mph?</h2>
+      <p>Feet per second is used in US engineering, ballistics, and athletics alongside miles per hour for road speeds. The two units coexist in American technical practice — a firearms specification might give muzzle velocity in ft/s while a related wind speed is reported in mph. According to NIST (2023), ft/s remains a common unit in US legal and engineering contexts where the foot is the standard length unit.</p>
+
+      <p>Common situations:</p>
+      <ul>
+        <li><strong>Ballistics</strong> — SAAMI and US ammunition manufacturers publish muzzle velocities in ft/s. Converting to mph gives context: a 2,900 ft/s rifle round travels at 1,977 mph (about 2.6× the speed of sound).</li>
+        <li><strong>Athletics and biomechanics</strong> — US sports science often uses ft/s for sprint speed and throwing velocity; coaches convert to mph for media reporting.</li>
+        <li><strong>Structural engineering</strong> — wind load calculations in US codes (ASCE 7) reference wind speed in mph; structural dynamic analysis uses ft/s.</li>
+        <li><strong>Aviation (US)</strong> — approach and stall speeds are in knots in modern aviation, but older US documents and some military specs use ft/s alongside mph.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How do you convert ft/s to mph?</h3>
+      <p>Multiply ft/s by 15/22 (≈ 0.681818). One mile = 5,280 feet; one hour = 3,600 seconds. So 1 ft/s = 3,600/5,280 = 15/22 mph. This fraction is exact. Example: 88 ft/s × 15/22 = 60 mph exactly.</p>
+
+      <h3>How many ft/s is 60 mph?</h3>
+      <p>60 mph = 88 ft/s exactly. Multiply mph by 22/15 = 1.4̄6̄ to get ft/s. The result 88 is exact because 60 × 22 = 1,320 and 1,320 ÷ 15 = 88. This is one of the best-known exact unit conversion benchmarks in US engineering.</p>
+
+      <h3>How fast is 1,000 ft/s in mph?</h3>
+      <p>1,000 ft/s = 681.82 mph (1,097.3 km/h, about Mach 0.89 at sea level). Subsonic jet aircraft at cruise typically fly around 490 knots (564 mph / 826 ft/s). A 1,000 ft/s wind would be a hypersonic event — significantly faster than any naturally occurring surface wind.</p>
+
+      <h3>Why is ft/s used in ballistics?</h3>
+      <p>US ballistics and ammunition standards (SAAMI) use feet as the primary length unit, so muzzle velocity in ft/s is the natural choice. Internationally, m/s is used. Many ballistic tables give both: a 9mm handgun cartridge might be rated at 1,150 ft/s (351 m/s). Converting between them uses the exact factor 0.3048 m per foot.</p>
+
+      <h3>How fast is the speed of sound in ft/s?</h3>
+      <p>At sea level and 15°C, the speed of sound is approximately 1,125 ft/s (767 mph, 340.3 m/s). US aviation and ballistics sources commonly cite 1,116 ft/s at standard sea-level conditions (ICAO standard atmosphere: 15°C, 101.325 kPa). The value decreases with altitude as air temperature drops.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter">Speed Converter (all units)</a>
+            <p>Convert between ft/s, mph, km/h, m/s, knots, and 5 more units simultaneously.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter/ms-to-mph">m/s to mph Converter</a>
+            <p>Convert meters per second to miles per hour — metric to imperial speed conversion.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter/mph-to-kmh">mph to km/h Converter</a>
+            <p>Convert between miles per hour and kilometers per hour — for road speed comparisons.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter</a>
+            <p>Convert between feet, meters, miles, kilometers, and more.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

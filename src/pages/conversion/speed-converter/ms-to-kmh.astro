@@ -1,0 +1,250 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  msToKmh: "$$\\text{km/h} = \\text{m/s} \\times 3.6$$",
+  kmhToMs: "$$\\text{m/s} = \\frac{\\text{km/h}}{3.6}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert m/s to km/h' },
+  { id: 'reverse',         label: 'How to convert km/h to m/s' },
+  { id: 'reference-table', label: 'm/s to km/h reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "m/s to km/h Converter",
+    "url": "https://calculations.tools/conversion/speed-converter/ms-to-kmh",
+    "description": "Convert meters per second to kilometers per hour and back. Formula: km/h = m/s × 3.6. Used in physics, meteorology, and sports science.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert m/s to km/h",
+    "description": "Convert meters per second to kilometers per hour using the exact SI unit relationship.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter m/s value", "text": "Type your meters per second value in the m/s field. The km/h result appears instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted km/h value appears immediately. For 10 m/s, the result is 36 km/h." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the km/h field to convert back to m/s. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you convert m/s to km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply meters per second by 3.6 to get km/h. The factor of 3.6 comes from unit definitions: there are 3,600 seconds in an hour and 1,000 meters in a kilometer. So 1 m/s × 3,600 s/h ÷ 1,000 m/km = 3.6 km/h. Example: 10 m/s = 36 km/h." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many m/s is 100 km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "100 km/h equals exactly 27.778 m/s (100 ÷ 3.6). This is the speed of a car at the common European motorway limit, or the typical cruising speed of a fast cyclist in a time trial. In physics equations, 27.778 m/s is the value to use for any 100 km/h scenario." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does physics use m/s instead of km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Meters per second is the SI base unit for speed. Using m/s keeps physics equations consistent: kinetic energy (½mv²), momentum (mv), and force (ma) all work cleanly with m/s without needing conversion factors. Switching to km/h would require multiplying or dividing by 3.6 in every equation involving both speed and other SI quantities." }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast is 10 m/s in km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "10 m/s = 36 km/h (22.4 mph). This is approximately the top speed of a fast recreational cyclist or a sprinting human. Usain Bolt's 100m world record of 9.58 seconds corresponds to an average speed of 10.44 m/s (37.6 km/h), with peak speed around 12.4 m/s (44.7 km/h)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is wind speed of 10 m/s in km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "10 m/s = 36 km/h (22.4 mph). Meteorologists and physicists always report wind speeds in m/s. On the Beaufort scale, 10 m/s is approximately Force 5 (fresh breeze), strong enough to cause small trees to sway. Beaufort Force 8 (gale) starts at about 17.2 m/s (61.9 km/h)." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="m/s to km/h Converter"
+  metaTitle="m/s to km/h Converter — Physics to Road Speed ᐅ"
+  description="Convert meters per second to kilometers per hour instantly. Formula: km/h = m/s × 3.6. Reverse km/h to m/s included. Reference table for physics and weather."
+  canonical="https://calculations.tools/conversion/speed-converter/ms-to-kmh"
+  tocItems={tocItems}
+  embedSlug="ms-to-kmh"
+  schema={schema}
+  ogFormula="km/h = m/s × 3.6"
+  ogExample="10 m/s = 10 × 3.6 = 36 km/h"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>m/s to km/h Converter</h2>
+          <p>Type in either field — converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="sk-a">Meters per second (m/s)</label>
+            <input id="sk-a" type="text" inputmode="decimal" placeholder="e.g. 10" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="sk-b">Kilometers per hour (km/h)</label>
+            <input id="sk-b" type="text" inputmode="decimal" placeholder="e.g. 36" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 m/s = 3.6 km/h &nbsp;·&nbsp; 1 km/h = 0.27778 m/s</div>
+
+      </div>
+    </section>
+
+    <script src="/js/ms-to-kmh.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert m/s to km/h, multiply by <strong>3.6</strong>. The factor comes from unit definitions: 3,600 seconds per hour ÷ 1,000 meters per kilometer = 3.6. So 10 m/s = 36 km/h. For the reverse, divide km/h by 3.6.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact factor: km/h = m/s × 3.6 (derived from SI definitions, no rounding).</li>
+          <li>100 km/h = 27.778 m/s — the value to use in physics calculations at motorway speed.</li>
+          <li>Physics uses m/s; road signs use km/h — this is the most common unit bridge in science education.</li>
+          <li>Wind speeds in meteorology and physics are always m/s; forecasts for the public use km/h or mph.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type a value in the m/s field and the km/h equivalent appears instantly. You can also type in the km/h field to convert back to m/s — the converter works in both directions. No button press needed; results update as you type.</p>
+
+      <h2 id="formula">How Do You Convert m/s to km/h?</h2>
+      <p>Multiply meters per second by 3.6. The factor is exact and derived directly from the SI unit system: 1 hour = 3,600 seconds; 1 kilometer = 1,000 meters. So 1 m/s means 1 meter travelled in 1 second. In one hour (3,600 seconds) that's 3,600 meters = 3.6 km. This is why the factor is always exactly 3.6, with no approximation. According to physics curricula in 180+ countries (UNESCO, 2022), m/s is the standard SI speed unit in science education.</p>
+
+      <Formula expr={f.msToKmh} />
+
+      <p>Worked examples: 5 m/s = 18 km/h. 27.78 m/s = 100 km/h (exactly). 340 m/s = 1,224 km/h (speed of sound at sea level, 15°C).</p>
+
+      <h2 id="reverse">How Do You Convert km/h to m/s?</h2>
+      <p>Divide km/h by 3.6. Equivalently, multiply by 0.27778 (the reciprocal of 3.6). This is the conversion used in every physics problem that starts with a road speed: a car travelling at 90 km/h is moving at 90 ÷ 3.6 = 25 m/s. For the <a href="/conversion/speed-converter">full multi-unit speed converter</a>, use the hub which handles m/s, km/h, mph, and knots together.</p>
+
+      <Formula expr={f.kmhToMs} />
+
+      <p>Worked examples: 36 km/h = 10 m/s. 72 km/h = 20 m/s. 120 km/h = 33.33 m/s.</p>
+
+      <h2 id="reference-table">m/s to km/h Reference Table</h2>
+      <p>Key speed values in m/s with exact km/h equivalents and real-world contexts. The km/h values are calculated using the exact factor 3.6.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>m/s</th><th>km/h</th><th>mph</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.5 m/s</td><td>1.8 km/h</td><td>1.1 mph</td><td>Slow walking</td></tr>
+            <tr><td>1.4 m/s</td><td>5 km/h</td><td>3.1 mph</td><td>Normal walking pace</td></tr>
+            <tr><td>3 m/s</td><td>10.8 km/h</td><td>6.7 mph</td><td>Jogging</td></tr>
+            <tr><td>5 m/s</td><td>18 km/h</td><td>11.2 mph</td><td>Fast cycling</td></tr>
+            <tr><td>10 m/s</td><td>36 km/h</td><td>22.4 mph</td><td>Sprinting / Beaufort Force 5 wind</td></tr>
+            <tr><td>12.4 m/s</td><td>44.6 km/h</td><td>27.7 mph</td><td>Usain Bolt peak speed (100m record)</td></tr>
+            <tr><td>17 m/s</td><td>61.2 km/h</td><td>38 mph</td><td>Beaufort Force 8 (gale)</td></tr>
+            <tr><td>27.78 m/s</td><td>100 km/h</td><td>62.1 mph</td><td>Motorway speed (EU limit)</td></tr>
+            <tr><td>33.33 m/s</td><td>120 km/h</td><td>74.6 mph</td><td>Common autobahn speed</td></tr>
+            <tr><td>83.33 m/s</td><td>300 km/h</td><td>186.4 mph</td><td>High-speed train (TGV Duplex)</td></tr>
+            <tr><td>340 m/s</td><td>1,224 km/h</td><td>760.7 mph</td><td>Speed of sound (sea level, 15°C)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert m/s to km/h?</h2>
+      <p>Physics and engineering always work in m/s because it's the SI base unit — every equation involving speed, force, energy, or momentum uses m/s directly. Road speeds, vehicle specs, and weather reports for the public use km/h (or mph in the US and UK). This gap creates constant conversion needs in education, sports science, and meteorology.</p>
+
+      <p>Common situations:</p>
+      <ul>
+        <li><strong>Physics homework</strong> — textbook problems give car speeds in km/h; kinetic energy and braking distance equations need m/s. Divide by 3.6 before calculating.</li>
+        <li><strong>Wind speed</strong> — meteorological data from weather stations comes in m/s; public forecasts use km/h. A 10 m/s wind = 36 km/h (fresh breeze).</li>
+        <li><strong>Sports science</strong> — GPS trackers and speed guns give athlete speeds in m/s; coaches and media report in km/h. Usain Bolt's peak 12.4 m/s = 44.6 km/h.</li>
+        <li><strong>Engineering</strong> — fluid dynamics and aerodynamics work in m/s; comparing to vehicle speed limits requires km/h.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How do you convert m/s to km/h?</h3>
+      <p>Multiply m/s by 3.6. This factor is exact: 3,600 seconds per hour ÷ 1,000 meters per kilometer = 3.6. No rounding is involved. Examples: 5 m/s = 18 km/h; 27.78 m/s = 100 km/h; 340 m/s (speed of sound) = 1,224 km/h.</p>
+
+      <h3>How many m/s is 100 km/h?</h3>
+      <p>100 km/h = 27.778 m/s (100 ÷ 3.6 = 27.7̄). This recurring decimal is exact: 27 and 7/9 m/s. In physics calculations involving a 100 km/h car, use 27.78 m/s for four significant figures or 250/9 m/s for exact arithmetic.</p>
+
+      <h3>Why does physics use m/s instead of km/h?</h3>
+      <p>m/s is the SI (International System) base unit. All other SI quantities — force in newtons, energy in joules, momentum in kg·m/s — are defined using meters and seconds. Using km/h in physics equations introduces a factor of 3.6 (or 1/3.6) into every calculation, which is error-prone and non-standard.</p>
+
+      <h3>How fast is 10 m/s in km/h?</h3>
+      <p>10 m/s = 36 km/h (22.4 mph). This is roughly the sprint speed of a fast human or a strong cyclist. Usain Bolt averaged 10.44 m/s over his 9.58-second 100m world record. Wind at 10 m/s is a fresh breeze (Beaufort Force 5) — enough to cause small trees to sway and raise whitecaps on lakes.</p>
+
+      <h3>What is wind speed of 10 m/s in km/h?</h3>
+      <p>10 m/s = 36 km/h (22.4 mph). Weather agencies report wind in m/s in scientific data and in km/h (or mph) in public forecasts. The World Meteorological Organisation uses m/s as the standard in technical reporting. Beaufort Force 8 (gale) starts at 17.2 m/s (61.9 km/h).</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter">Speed Converter (all units)</a>
+            <p>Convert between m/s, km/h, mph, knots, ft/s, and 5 more units simultaneously.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter/mph-to-kmh">mph to km/h Converter</a>
+            <p>Convert between miles per hour and kilometers per hour — for road speed comparisons.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter/ms-to-mph">m/s to mph Converter</a>
+            <p>Convert meters per second to miles per hour — bridges SI physics and imperial road speeds.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">∶</span>
+          <div>
+            <a href="/math/ratio-calculator/unit-rate">Unit Rate Calculator</a>
+            <p>Calculate speed as a unit rate from raw distance and time data.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>
