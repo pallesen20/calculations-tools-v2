@@ -41,7 +41,41 @@ export interface HealthToolMeta {
 
 const registry: Omit<PageMeta, 'url'>[] = []; // populated below
 
-type Entry = Omit<PageMeta, 'url'> & { path: string; icon?: string; short?: string; units?: string };
+type Entry = Omit<PageMeta, 'url'> & { path: string; icon?: string; short?: string; units?: string; featured?: boolean };
+
+export const TOP_CURRENCIES = ['USD','EUR','GBP','DKK','NOK','SEK','CHF','JPY','AUD','CAD','NZD','CNY','INR','HKD','SGD'];
+
+export const CURRENCY_NAMES: Record<string, string> = {
+  USD: 'US Dollar', EUR: 'Euro', GBP: 'British Pound', DKK: 'Danish Krone',
+  NOK: 'Norwegian Krone', SEK: 'Swedish Krona', CHF: 'Swiss Franc', JPY: 'Japanese Yen',
+  AUD: 'Australian Dollar', CAD: 'Canadian Dollar', NZD: 'New Zealand Dollar',
+  CNY: 'Chinese Yuan', INR: 'Indian Rupee', HKD: 'Hong Kong Dollar', SGD: 'Singapore Dollar',
+};
+
+export const CURRENCY_PLURALS: Record<string, string> = {
+  USD: 'US Dollars', EUR: 'Euros', GBP: 'British Pounds', DKK: 'Danish Kroner',
+  NOK: 'Norwegian Kroner', SEK: 'Swedish Kronor', CHF: 'Swiss Francs', JPY: 'Japanese Yen',
+  AUD: 'Australian Dollars', CAD: 'Canadian Dollars', NZD: 'New Zealand Dollars',
+  CNY: 'Chinese Yuan', INR: 'Indian Rupees', HKD: 'Hong Kong Dollars', SGD: 'Singapore Dollars',
+};
+
+export const TOP_PAIRINGS: Record<string, string[]> = {
+  USD: ['EUR','GBP','JPY','CAD','AUD','CHF','CNY','INR'],
+  EUR: ['USD','GBP','CHF','JPY','DKK','SEK','NOK','AUD'],
+  GBP: ['USD','EUR','CHF','JPY','AUD','CAD','DKK','SEK'],
+  DKK: ['EUR','USD','NOK','SEK','GBP','CHF','JPY','AUD'],
+  NOK: ['EUR','USD','DKK','SEK','GBP','CHF','JPY','AUD'],
+  SEK: ['EUR','USD','DKK','NOK','GBP','CHF','JPY','AUD'],
+  CHF: ['EUR','USD','GBP','JPY','SEK','DKK','NOK','AUD'],
+  JPY: ['USD','EUR','GBP','AUD','CHF','CAD','CNY','HKD'],
+  AUD: ['USD','EUR','GBP','JPY','CAD','NZD','CHF','SGD'],
+  CAD: ['USD','EUR','GBP','JPY','AUD','CHF','NZD','CNY'],
+  NZD: ['USD','AUD','EUR','GBP','JPY','CAD','CHF','SGD'],
+  CNY: ['USD','JPY','EUR','GBP','HKD','AUD','CAD','SGD'],
+  INR: ['USD','EUR','GBP','AED','SGD','JPY','AUD','CAD'],
+  HKD: ['USD','CNY','EUR','GBP','JPY','AUD','SGD','CAD'],
+  SGD: ['USD','MYR','EUR','GBP','JPY','AUD','HKD','CNY'],
+};
 
 const entries: Entry[] = [
   {
@@ -84,6 +118,7 @@ const entries: Entry[] = [
     priority: 1.0,
     icon: '%',
     short: 'Percentages, increases & differences',
+    featured: true,
   },
   {
     path: '/math/percentage-calculator/increase',
@@ -452,6 +487,7 @@ const entries: Entry[] = [
     priority: 1.0,
     icon: '⚤',
     short: 'Body Mass Index by age & sex',
+    featured: true,
   },
   {
     path: '/health/bmi-calculator/men',
@@ -551,6 +587,7 @@ const entries: Entry[] = [
     icon: '🎯',
     priority: 1.0,
     short: 'Devine, Robinson, Miller & Hamwi',
+    featured: true,
   },
   {
     path: '/conversion',
@@ -609,6 +646,7 @@ const entries: Entry[] = [
     icon: '💱',
     short: 'Live exchange rates',
     units: 'USD, EUR, GBP, DKK, NOK, SEK + 145 more',
+    featured: true,
   },
   {
     path: '/conversion/case-converter',
@@ -638,6 +676,7 @@ const entries: Entry[] = [
     lastmod: '2026-04-01',
     icon: '⚡',
     short: 'mph, km/h, knots, m/s & more',
+    featured: true,
     units: 'km/h, mph, m/s, kn, ft/s, ft/min, m/min, km/s, mi/s, c',
   },
   {
@@ -689,6 +728,16 @@ const entries: Entry[] = [
     lastmod: '2026-04-01',
     icon: '⚡',
     short: 'Feet per second to miles per hour',
+  },
+  {
+    path: '/conversion/speed-converter/knots-to-kmh',
+    title: 'Knots to km/h Converter',
+    description: 'Convert knots to kilometers per hour and km/h to knots instantly. 1 knot = 1.852 km/h exactly. Includes the full Beaufort wind scale in both units.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    lastmod: '2026-04-02',
+    icon: '⚡',
+    short: 'Knots to kilometers per hour',
   },
   {
     path: '/compare',
@@ -876,6 +925,7 @@ const entries: Entry[] = [
     priority: 1.0,
     icon: '📈',
     short: '(Final Value − Initial) / Initial × 100',
+    featured: true,
   },
   {
     path: '/finance/compound-interest-calculator',
@@ -885,6 +935,7 @@ const entries: Entry[] = [
     priority: 1.0,
     icon: '📊',
     short: 'A = P(1 + r/n)^(nt)',
+    featured: true,
   },
   {
     path: '/finance/loan-payment-calculator',
@@ -894,6 +945,7 @@ const entries: Entry[] = [
     priority: 1.0,
     icon: '🏦',
     short: 'M = P × r(1+r)^n / [(1+r)^n − 1]',
+    featured: true,
   },
   {
     path: '/finance/free-cash-flow-calculator',
@@ -980,28 +1032,59 @@ entries.push({
   icon: '📖',
 });
 
+TOP_CURRENCIES.forEach(from => {
+  TOP_CURRENCIES.filter(to => to !== from).forEach(to => {
+    entries.push({
+      path: `/conversion/currency-converter/${from.toLowerCase()}-to-${to.toLowerCase()}`,
+      title: `Convert ${from} to ${to} | ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
+      description: `Convert ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]} with live mid-market rates. Includes reference amounts and top ${from} currency pairings.`,
+      changefreq: 'daily' as const,
+      priority: 0.7,
+      icon: '💱',
+      short: `${from} to ${to} live rate`,
+    });
+  });
+});
+
 export const siteToolCount = entries.length;
 
 export function getPages(): PageMeta[] {
   return entries
-    .map(({ path, icon, short, units, ...meta }) => ({
+    .map(({ path, icon, short, units, featured, ...meta }) => ({
       ...meta,
       url: SITE + path,
     }))
     .sort((a, b) => b.priority - a.priority);
 }
 
-export function getConversionTools(): CardMeta[] {
+const CONVERSION_GROUPS: Record<string, string> = {
+  'length-converter':      'Unit Converters',
+  'weight-converter':      'Unit Converters',
+  'height-converter':      'Unit Converters',
+  'temperature-converter': 'Unit Converters',
+  'speed-converter':       'Speed Converters',
+  'currency-converter':    'Currency',
+  'case-converter':        'Text Tools',
+  'image-to-text':         'Text Tools',
+};
+
+export function getConversionTools(): HealthToolMeta[] {
   return entries
-    .filter(e => e.path.startsWith('/conversion/') && e.path !== '/conversion')
-    .map(e => ({
-      slug: e.path.replace('/conversion/', ''),
-      title: e.title.split(' - ')[0],
-      short: e.short ?? '',
-      description: e.description,
-      icon: e.icon ?? '',
-      units: e.units,
-    }));
+    .filter(e => {
+      if (!e.path.startsWith('/conversion/') || e.path === '/conversion') return false;
+      return e.path.replace('/conversion/', '').split('/').length === 1;
+    })
+    .map(e => {
+      const seg = e.path.replace('/conversion/', '').split('/')[0];
+      return {
+        path:        e.path,
+        title:       e.title.split(' - ')[0],
+        short:       e.short ?? '',
+        description: e.description,
+        icon:        e.icon ?? '',
+        group:       CONVERSION_GROUPS[seg] ?? 'Other',
+      };
+    });
 }
 
 const MATH_GROUPS: Record<string, string> = {
@@ -1027,13 +1110,23 @@ export function getMathTools(): HealthToolMeta[] {
 }
 
 const FINANCE_GROUPS: Record<string, string> = {
-  'ebitda-calculator':               'Earnings Metrics',
-  'ebit-calculator':                 'Earnings Metrics',
-  'ebt-calculator':                  'Earnings Metrics',
-  'ebitda-margin-calculator':        'Margin & Profitability',
-  'gross-profit-margin-calculator':  'Margin & Profitability',
-  'net-profit-margin-calculator':    'Margin & Profitability',
+  'ebitda-calculator':                  'Earnings Metrics',
+  'ebit-calculator':                    'Earnings Metrics',
+  'ebt-calculator':                     'Earnings Metrics',
+  'free-cash-flow-calculator':          'Earnings Metrics',
+  'ebitda-margin-calculator':           'Margin & Profitability',
+  'gross-profit-margin-calculator':     'Margin & Profitability',
+  'net-profit-margin-calculator':       'Margin & Profitability',
   'operating-profit-margin-calculator': 'Margin & Profitability',
+  'contribution-margin-calculator':     'Margin & Profitability',
+  'break-even-calculator':              'Margin & Profitability',
+  'roi-calculator':                     'Valuation & Returns',
+  'roe-calculator':                     'Valuation & Returns',
+  'pe-ratio-calculator':                'Valuation & Returns',
+  'enterprise-value-calculator':        'Valuation & Returns',
+  'compound-interest-calculator':       'Loans & Capital',
+  'loan-payment-calculator':            'Loans & Capital',
+  'working-capital-calculator':         'Loans & Capital',
 };
 
 export function getFinanceTools(): HealthToolMeta[] {
@@ -1179,6 +1272,45 @@ export function getFrontPageGroups(): FrontPageGroup[] {
         totalCount,
       };
     });
+}
+
+export interface CategoryCard {
+  name:       string;
+  icon:       string;
+  hubPath:    string;
+  toolCount:  number;
+}
+
+const CATEGORY_CARDS_DEF: Array<{ name: string; icon: string; hubPath: string; prefix?: string; paths?: string[] }> = [
+  { name: 'Health',         icon: '❤️',  hubPath: '/health',       prefix: '/health/'      },
+  { name: 'Finance',        icon: '💰',  hubPath: '/finance',      prefix: '/finance/'     },
+  { name: 'Conversion',     icon: '↔️',  hubPath: '/conversion',   prefix: '/conversion/'  },
+  { name: 'Math',           icon: '∑',   hubPath: '/math',         prefix: '/math/'        },
+  { name: 'Compare',        icon: '⚖️',  hubPath: '/compare',      prefix: '/compare/'     },
+  { name: 'Text & Writing', icon: '📝',  hubPath: '/word-counter', paths: ['/word-counter']                    },
+  { name: 'Date & Time',    icon: '📅',  hubPath: '/week-number',  paths: ['/week-number', '/date-calculator'] },
+];
+
+export function getCategoryCards(): CategoryCard[] {
+  return CATEGORY_CARDS_DEF.map(def => ({
+    name:      def.name,
+    icon:      def.icon,
+    hubPath:   def.hubPath,
+    toolCount: def.prefix ? entries.filter(e => e.path.startsWith(def.prefix!)).length : def.paths!.length,
+  }));
+}
+
+export function getFeaturedTools(): HealthToolMeta[] {
+  return entries
+    .filter(e => e.featured)
+    .map(e => ({
+      path:        e.path,
+      title:       e.title.split(' - ')[0],
+      short:       e.short ?? '',
+      description: e.description,
+      icon:        e.icon ?? '',
+      group:       '',
+    }));
 }
 
 export function glossaryTermsForPage(toolPath: string) {

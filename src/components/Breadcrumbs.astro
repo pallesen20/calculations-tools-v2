@@ -65,10 +65,15 @@ const NAME_MAP: Record<string, string> = {
   'css': 'CSS',
   'html': 'HTML',
   'javascript': 'JavaScript',
+  'mph-to-kmh': 'MPH to KMH'
 };
 
 function slugToName(slug: string) {
+  if (pathname.includes('/currency-converter/')) {
+  return NAME_MAP[slug] ?? slug.replace(/-/g, ' ').toUpperCase().replace(/\b\w/g, c => c.toUpperCase());
+  } else {
   return NAME_MAP[slug] ?? slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  }
 }
 
 const segments = pathname.replace(/\/$/, '').split('/').filter(Boolean);

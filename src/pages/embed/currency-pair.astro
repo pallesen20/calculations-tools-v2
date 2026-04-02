@@ -1,0 +1,62 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Currency Converter - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+
+      <div class="cc-card" id="cp-card">
+        <div class="cc-live">
+          <span class="cc-dot"></span>
+          <span>Mid-market exchange rate</span>
+        </div>
+
+        <div class="cc-field">
+          <label class="cc-label">Amount</label>
+          <div class="cc-row">
+            <input id="cp-amount" class="cc-input" type="text" inputmode="decimal" value="1000" placeholder="1,000" />
+            <select id="cp-from" class="cc-select"></select>
+          </div>
+        </div>
+
+        <div class="cc-swap-wrap">
+          <button id="cp-swap" class="cc-swap" title="Swap currencies">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="18" height="18">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="cc-field">
+          <label class="cc-label">Converted to</label>
+          <div class="cc-row">
+            <input id="cp-result" class="cc-input" type="text" readonly placeholder="0.00" />
+            <select id="cp-to" class="cc-select"></select>
+          </div>
+        </div>
+
+        <div class="cc-result-box">
+          <div class="cc-result-label">Exchange Rate</div>
+          <div class="cc-result-rate" id="cp-rate">-</div>
+          <div class="cc-result-rate" id="cp-rate-rev" style="font-size:0.8em;opacity:0.6;margin-top:0.2rem">-</div>
+          <div class="cc-result-updated" id="cp-updated">Loading rates…</div>
+        </div>
+
+        <div class="wise-banner">
+          <svg class="wise-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="wise-body">
+            <p class="wise-msg">Sending money internationally? Your bank is likely charging more than it shows. But not Wise!</p>
+            <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener noreferrer" class="wise-btn">Compare rates - takes 20 seconds</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="/js/currency-pair.js" is:inline></script>
+</EmbedLayout>

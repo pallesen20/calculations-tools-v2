@@ -1,0 +1,263 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  knotsToKmh: "$$\\text{km/h} = \\text{knots} \\times 1.852$$",
+  kmhToKnots: "$$\\text{knots} = \\frac{\\text{km/h}}{1.852} \\approx \\text{km/h} \\times 0.539957$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert knots to km/h' },
+  { id: 'reverse',         label: 'How to convert km/h to knots' },
+  { id: 'beaufort',        label: 'Beaufort scale in knots and km/h' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Knots to km/h Converter",
+    "url": "https://calculations.tools/conversion/speed-converter/knots-to-kmh",
+    "description": "Convert knots to kilometers per hour and km/h to knots instantly. 1 knot = 1.852 km/h exactly. Includes the full Beaufort wind scale in both units.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert knots to km/h",
+    "description": "Convert knots to kilometers per hour using the exact nautical mile definition.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter knots value", "text": "Type your knots value in the knots field. The km/h result updates instantly as you type." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted km/h value appears immediately. For 20 knots, the result is 37.04 km/h." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the km/h field to convert back to knots. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many km/h is 1 knot?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1 knot equals exactly 1.852 km/h. A knot is one nautical mile per hour, and one nautical mile is defined as exactly 1,852 metres. Dividing by 1,000 metres per kilometre gives 1.852 km/h - an exact value with no rounding involved." }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast is 20 knots in km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "20 knots equals exactly 37.04 km/h. This is a typical cruising speed for a fast container ship or large naval vessel. Recreational sailboats typically cruise at 6-10 knots (11.1-18.5 km/h) depending on wind strength and sail plan." }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast is 30 knots in km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "30 knots equals 55.56 km/h. This is the typical speed of a high-speed ferry or fast military patrol vessel. Most commercial container ships cruise at 18-25 knots (33-46 km/h) to balance speed and fuel consumption." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is maritime speed measured in knots instead of km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Navigation charts divide the Earth using latitude and longitude, where 1 nautical mile equals 1 arcminute of latitude. Using knots makes distance-time calculations direct on nautical charts. ICAO standardised knots globally for aviation in the 1940s, extending the maritime convention to the air." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 100 knots in km/h?",
+        "acceptedAnswer": { "@type": "Answer", "text": "100 knots equals 185.2 km/h exactly. This is a typical airspeed for a small general aviation aircraft on approach. Commercial airliners cruise at around 480-490 knots (889-907 km/h). Military fighter jets can exceed 1,000 knots (1,852 km/h) at low altitude." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Knots to km/h Converter"
+  metaTitle="Knots to km/h Converter - Wind & Maritime ᐅ"
+  description="Convert knots to km/h and back instantly. 1 knot = 1.852 km/h exactly. Full Beaufort wind scale table in both units. Used for aviation, sailing, and weather."
+  canonical="https://calculations.tools/conversion/speed-converter/knots-to-kmh"
+  tocItems={tocItems}
+  embedSlug="knots-to-kmh"
+  schema={schema}
+  ogFormula="km/h = knots × 1.852"
+  ogExample="20 knots = 20 × 1.852 = 37.04 km/h"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Knots to km/h Converter</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="kk-a">Knots (kn)</label>
+            <input id="kk-a" type="text" inputmode="decimal" placeholder="e.g. 20" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="kk-b">Kilometers per hour (km/h)</label>
+            <input id="kk-b" type="text" inputmode="decimal" placeholder="e.g. 37.04" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 knot = 1.852 km/h (exact) &nbsp;·&nbsp; 1 km/h = 0.539957 knots</div>
+
+      </div>
+    </section>
+
+    <script src="/js/knots-to-kmh.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>1 <a href="/glossary/knot">knot</a> = 1.852 km/h exactly. Multiply knots by 1.852 to get km/h. The factor is exact because 1 <a href="/glossary/nautical-mile">nautical mile</a> is defined as exactly 1,852 metres. Divide km/h by 1.852 to convert back to knots.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>1 knot = 1.852 km/h exactly - the nautical mile is defined as 1,852 metres (International Bureau of Weights and Measures, 1929).</li>
+          <li>Quick estimate: knots × 1.85 gives km/h accurate to 0.1%.</li>
+          <li>Beaufort Force 12 (hurricane) starts at 64 knots = 118.5 km/h.</li>
+          <li>All commercial aviation uses knots worldwide - ICAO standardised the unit in the 1940s.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Enter a knots value and the km/h equivalent appears instantly. You can also type in the km/h field to convert back to knots. The converter is fully bidirectional. There's no submit button - results update as you type.</p>
+      <p>The default shows 20 knots = 37.04 km/h. Change either value to recalculate. For the reverse (km/h to knots), just type your km/h value in the right field.</p>
+
+      <h2 id="formula">How Do You Convert Knots to km/h?</h2>
+      <p>Multiply knots by 1.852. This factor is exact, not approximate: one nautical mile equals exactly 1,852 metres by international definition (BIPM, 1929), so the conversion is 1,852 metres ÷ 1,000 metres per kilometre = 1.852 km per nautical mile, giving 1.852 km/h per knot.</p>
+
+      <Formula expr={f.knotsToKmh} />
+
+      <p>Worked examples: 10 knots = 18.52 km/h. 30 knots = 55.56 km/h. 490 knots = 907.5 km/h (typical commercial airliner cruise).</p>
+
+      <h2 id="reverse">How Do You Convert km/h to Knots?</h2>
+      <p>Divide km/h by 1.852. The reciprocal factor is 0.539957 - multiply km/h by this to get knots. European weather forecasts often give wind speeds in km/h, while aviation and marine instruments read in knots. This conversion is needed whenever you cross between the two systems.</p>
+
+      <Formula expr={f.kmhToKnots} />
+
+      <p>Worked examples: 100 km/h = 54.00 knots. 200 km/h = 107.99 knots. 900 km/h = 486.00 knots.</p>
+
+      <h2 id="beaufort">Beaufort Wind Scale in Knots and km/h</h2>
+      <p>The Beaufort scale is the universal standard for describing wind force at sea and in weather reports, defined by the World Meteorological Organization (WMO). Each force number maps to a knots range, with a km/h equivalent. European weather services routinely publish Beaufort force alongside km/h readings.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Force</th><th>Description</th><th>Knots</th><th>km/h</th><th>Sea state</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0</td><td>Calm</td><td>&lt;1 kn</td><td>&lt;1.9 km/h</td><td>Sea like a mirror</td></tr>
+            <tr><td>1</td><td>Light air</td><td>1-3 kn</td><td>1.9-5.6 km/h</td><td>Ripples, no crests</td></tr>
+            <tr><td>2</td><td>Light breeze</td><td>4-6 kn</td><td>7.4-11.1 km/h</td><td>Small wavelets</td></tr>
+            <tr><td>3</td><td>Gentle breeze</td><td>7-10 kn</td><td>13.0-18.5 km/h</td><td>Large wavelets</td></tr>
+            <tr><td>4</td><td>Moderate breeze</td><td>11-16 kn</td><td>20.4-29.6 km/h</td><td>Small waves, whitecaps</td></tr>
+            <tr><td>5</td><td>Fresh breeze</td><td>17-21 kn</td><td>31.5-38.9 km/h</td><td>Moderate waves</td></tr>
+            <tr><td>6</td><td>Strong breeze</td><td>22-27 kn</td><td>40.7-50.0 km/h</td><td>Large waves forming</td></tr>
+            <tr><td>7</td><td>Near gale</td><td>28-33 kn</td><td>51.9-61.1 km/h</td><td>Sea heaps up</td></tr>
+            <tr><td>8</td><td>Gale</td><td>34-40 kn</td><td>63.0-74.1 km/h</td><td>Moderately high waves</td></tr>
+            <tr><td>9</td><td>Severe gale</td><td>41-47 kn</td><td>75.9-87.0 km/h</td><td>High waves, spray</td></tr>
+            <tr><td>10</td><td>Storm</td><td>48-55 kn</td><td>88.9-101.9 km/h</td><td>Very high waves</td></tr>
+            <tr><td>11</td><td>Violent storm</td><td>56-63 kn</td><td>103.7-116.7 km/h</td><td>Exceptionally high waves</td></tr>
+            <tr><td>12</td><td>Hurricane force</td><td>64+ kn</td><td>118.5+ km/h</td><td>Air filled with spray</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>For reference beyond the Beaufort scale: 150 kn = 277.8 km/h (airliner approach speed), 490 kn = 907.5 km/h (commercial airliner cruise), 1,320 kn = 2,445 km/h (Concorde cruise, approximately <a href="/glossary/mach-number">Mach 2</a>).</p>
+
+      <h2 id="when-to-use">When Do You Need to Convert Knots to km/h?</h2>
+      <p>Knots are the standard unit in all commercial and military aviation globally, and in maritime navigation worldwide. The International Civil Aviation Organisation (ICAO) mandates knots for airspeed on all cockpit instruments. At the same time, most European countries and meteorological agencies publish wind speeds in km/h for general public communication. The conversion is needed whenever these two worlds meet.</p>
+
+      <p>Common situations where this conversion helps:</p>
+      <ul>
+        <li><strong>Reading weather forecasts</strong> - European weather services often publish wind in both Beaufort and km/h; aviation TAF and METAR reports always use knots. Converting helps sailors and pilots compare both sources.</li>
+        <li><strong>Marine navigation in Europe</strong> - Charts and AIS show speed in knots, while port authority speed limits are often posted in km/h.</li>
+        <li><strong>Sailing holiday planning</strong> - Charter companies in the Mediterranean quote boat speeds in knots; local weather apps show wind in km/h.</li>
+        <li><strong>Wind energy assessments</strong> - Offshore wind resource data from meteorological buoys comes in knots; turbine manufacturers specify cut-in and rated wind speeds in km/h.</li>
+        <li><strong>Aviation training</strong> - Student pilots from metric-system countries often need to relate knots to the km/h wind speeds they grew up with.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many km/h is 1 knot?</h3>
+      <p>1 knot = 1.852 km/h exactly. A nautical mile is defined as exactly 1,852 metres by the International Bureau of Weights and Measures, so dividing by 1,000 metres per kilometre gives 1.852 - no rounding involved.</p>
+
+      <h3>How fast is 20 knots in km/h?</h3>
+      <p>20 knots = 37.04 km/h exactly. This is a typical speed for large cargo vessels and coastal ferries. Recreational powerboats often cruise at 20-30 knots (37-55.6 km/h). A brisk walk is roughly 5 km/h, so 20 knots is about 7 times walking pace.</p>
+
+      <h3>How fast is 30 knots in km/h?</h3>
+      <p>30 knots = 55.56 km/h. This is comparable to a fast rural road speed limit. High-speed ferries operate around 30-35 knots (55.6-64.8 km/h). A strong Beaufort Force 8 gale starts at 34 knots (63.0 km/h), so 30 knots is just below a full gale.</p>
+
+      <h3>Why is speed at sea measured in knots instead of km/h?</h3>
+      <p>Nautical charts divide the Earth using latitude and longitude, where 1 nautical mile equals exactly 1 arcminute of latitude. Using knots makes it easy to calculate time at sea directly from chart distances. ICAO extended the convention to aviation in the 1940s, and both fields have used it globally ever since.</p>
+
+      <h3>What is 100 knots in km/h?</h3>
+      <p>100 knots = 185.2 km/h exactly. This is a typical approach speed for small to medium general aviation aircraft. Commercial airliners cruise at around 480-490 knots (889-907 km/h). The speed of sound at sea level is approximately 666 knots or 1,235 km/h.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter">Speed Converter (all units)</a>
+            <p>Convert between knots, km/h, mph, m/s, ft/s, and 5 more units at once.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter/knots-to-mph">Knots to mph Converter</a>
+            <p>Convert knots to miles per hour - for US-unit contexts including aviation weather.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter/mph-to-kmh">mph to km/h Converter</a>
+            <p>Convert between miles per hour and kilometers per hour - for road speed comparisons.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter/ms-to-kmh">m/s to km/h Converter</a>
+            <p>Convert meters per second to km/h - the other metric speed unit used in meteorology.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter</a>
+            <p>Convert nautical miles, statute miles, and kilometres - the distance units behind these speed conversions.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

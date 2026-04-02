@@ -10,10 +10,13 @@ const groupMap = tools.reduce((acc, t) => {
 }, {} as Record<string, typeof tools>);
 
 const groups = Object.entries(groupMap);
+const totalTools = tools.length;
+const totalCategories = groups.length;
 
 const tocItems = [
-  { id: 'tools', label: 'All finance tools' },
-  { id: 'faq',   label: 'FAQs' },
+  { id: 'tools',       label: 'All finance tools' },
+  { id: 'which-tool',  label: 'Which calculator to use' },
+  { id: 'faq',         label: 'FAQs' },
 ];
 
 const schema = [
@@ -22,7 +25,7 @@ const schema = [
     "@type": "CollectionPage",
     "name": "Finance Calculators",
     "url": "https://calculations.tools/finance",
-    "description": "Free finance calculators: EBITDA, EBIT, EBT, EBITDA Margin, and more. Fast, accurate, no registration needed.",
+    "description": "Free finance calculators for earnings metrics, profit margins, valuation, and loans. EBITDA, EBIT, ROI, compound interest, and more - all free, instant, no registration.",
     "hasPart": tools.map(t => ({
       "@type": "WebApplication",
       "name": t.title,
@@ -33,8 +36,8 @@ const schema = [
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "What is EBITDA?", "acceptedAnswer": { "@type": "Answer", "text": "EBITDA stands for Earnings Before Interest, Taxes, Depreciation, and Amortization. It measures core operating profitability by adding back four non-operating or non-cash items to Net Income. EBITDA is the most widely used metric in business valuation and M&A." } },
-      { "@type": "Question", "name": "What is the difference between EBITDA, EBIT, and EBT?", "acceptedAnswer": { "@type": "Answer", "text": "EBT = Net Income + Tax. EBIT = EBT + Interest. EBITDA = EBIT + Depreciation + Amortization. Each metric adds back one more layer, moving from bottom-line profit toward operating cash flow. Use EBT for cross-country comparisons, EBIT for capital structure comparisons, and EBITDA for valuation and M&A." } },
+      { "@type": "Question", "name": "What is EBITDA?", "acceptedAnswer": { "@type": "Answer", "text": "EBITDA stands for Earnings Before Interest, Taxes, Depreciation, and Amortization. It measures core operating profitability by adding back four non-operating or non-cash items to net income. EBITDA is the most widely used metric in business valuation and M&A transactions." } },
+      { "@type": "Question", "name": "What is the difference between EBITDA, EBIT, and EBT?", "acceptedAnswer": { "@type": "Answer", "text": "EBT = Net Income + Tax. EBIT = EBT + Interest. EBITDA = EBIT + Depreciation + Amortization. Each metric adds back one more layer. Use EBT for cross-country comparisons, EBIT for capital structure comparisons, and EBITDA for business valuation and M&A." } },
       { "@type": "Question", "name": "Are these finance calculators free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No registration, no usage limits. All calculations run in your browser - no data is sent to any server." } },
     ]
   }
@@ -43,87 +46,118 @@ const schema = [
 
 <CalculatorLayout
   title="Finance Calculators"
-  metaTitle="Finance Calculators | EBITDA, EBIT, EBT & More"
-  description="Free finance calculators: EBITDA, EBIT, EBT, EBITDA Margin, and more. Fast, accurate results with step-by-step workings. No registration needed."
+  metaTitle="Free Finance Calculators - EBITDA, ROI & More ᐅ"
+  description="Free finance calculators for earnings metrics, profit margins, valuation, and loans. EBITDA, EBIT, ROI, compound interest, and more. Instant results, no registration."
   canonical="https://calculations.tools/finance"
   tocItems={tocItems}
   schema={schema}
 >
+
   <div slot="calculator">
     <section class="calculator-interface">
-      <div class="calculator-container bmi-container">
+      <div class="calculator-container hi-container">
+
         <div class="calculator-header">
-          <h2>Instant Financial Tool Calculators</h2>
-          <p>Earnings metrics, margins, and profitability ratios</p>
+          <h2>Finance Calculators</h2>
+          <p>Earnings metrics, margins, valuation, and loan tools - free and instant</p>
         </div>
-        <div class="finance-tool-list">
-          {tools.map(t => (
-            <a href={t.path} class="finance-tool-card">
-              <span class="finance-tool-icon">{t.icon}</span>
-              <div class="finance-tool-info">
-                <span class="finance-tool-title">{t.title}</span>
-                <span class="finance-tool-short">{t.short}</span>
-              </div>
-            </a>
-          ))}
+
+        <div class="hi-stats">
+          <div class="hi-stat">
+            <div class="hi-stat-val">{totalTools}</div>
+            <div class="hi-stat-lbl">Tools</div>
+          </div>
+          <div class="hi-stat">
+            <div class="hi-stat-val">{totalCategories}</div>
+            <div class="hi-stat-lbl">Categories</div>
+          </div>
+          <div class="hi-stat hi-stat-wide">
+            <div class="hi-stat-val hi-stat-free">Free</div>
+            <div class="hi-stat-lbl">No login · runs in browser</div>
+          </div>
         </div>
+
+        {groups.map(([groupName, groupTools]) => (
+          <div class="hi-group">
+            <div class="hi-group-header">
+              <span class="hi-group-label">{groupName}</span>
+            </div>
+            <div class="hi-grid">
+              {groupTools.map(tool => (
+                <a href={tool.path} class="hi-card">
+                  <div class="hi-icon">{tool.icon}</div>
+                  <div class="hi-body">
+                    <div class="hi-title">{tool.title}</div>
+                    {tool.short && <div class="hi-short">{tool.short}</div>}
+                  </div>
+                  <div class="hi-arrow">→</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+
       </div>
     </section>
-
-    <style is:global>
-      .finance-tool-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
-      .finance-tool-card {
-        display: flex; align-items: center; gap: 0.75rem;
-        background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 10px; padding: 0.75rem 1rem; text-decoration: none;
-        transition: background 0.2s;
-      }
-      .finance-tool-card:hover { background: rgba(255,255,255,0.09); }
-      .finance-tool-icon { font-size: 1.25rem; min-width: 1.5rem; text-align: center; }
-      .finance-tool-info { display: flex; flex-direction: column; gap: 0.1rem; }
-      .finance-tool-title { font-size: 0.9rem; font-weight: 600; color: white; }
-      .finance-tool-short { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
-    </style>
   </div>
 
   <div slot="content">
     <div class="seo-container">
 
+      <div class="answer-box">
+        <div class="answer-box-label">What's in the finance section</div>
+        <p>This section contains {totalTools} free finance calculators across {totalCategories} categories. <strong>Earnings Metrics</strong> cover <a href="/finance/ebitda-calculator">EBITDA</a>, <a href="/finance/ebit-calculator">EBIT</a>, <a href="/finance/ebt-calculator">EBT</a>, and free cash flow. <strong>Margin &amp; Profitability</strong> tools handle gross, net, operating, and EBITDA margins. <strong>Valuation &amp; Returns</strong> includes ROI, ROE, P/E ratio, and enterprise value. <strong>Loans &amp; Capital</strong> covers compound interest, loan payments, and working capital.</p>
+      </div>
+
       <h2 id="tools">All finance tools</h2>
-      {groups.map(([group, groupTools]) => (
-        <div>
-          <h3>{group}</h3>
-          <div class="responsive-table">
-            <table>
-              <thead>
-                <tr><th>Calculator</th><th>Formula</th><th>Used for</th></tr>
-              </thead>
-              <tbody>
-                {groupTools.map(t => (
-                  <tr>
-                    <td><a href={t.path}>{t.title}</a></td>
-                    <td>{t.short}</td>
-                    <td>{t.description.split('.')[0]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ))}
+      <p>Every tool is free, runs entirely in your browser, and produces results as you type. No button press, no registration, no data sent to any server.</p>
+
+      <h2 id="which-tool">Which calculator to use</h2>
+      <p>Not sure which tool fits your task? Match your question to the right calculator.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Your goal</th><th>Tool</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Measure core operating profit, strip out interest, tax, and D&amp;A</td><td><a href="/finance/ebitda-calculator">EBITDA Calculator</a></td></tr>
+          <tr><td>Compare operating profit across different capital structures</td><td><a href="/finance/ebit-calculator">EBIT Calculator</a></td></tr>
+          <tr><td>Compare pre-tax profit across different tax jurisdictions</td><td><a href="/finance/ebt-calculator">EBT Calculator</a></td></tr>
+          <tr><td>Measure cash a business generates after capital investment</td><td><a href="/finance/free-cash-flow-calculator">Free Cash Flow Calculator</a></td></tr>
+          <tr><td>See what % of revenue is left after cost of goods sold</td><td><a href="/finance/gross-profit-margin-calculator">Gross Profit Margin</a></td></tr>
+          <tr><td>See what % of revenue becomes bottom-line profit</td><td><a href="/finance/net-profit-margin-calculator">Net Profit Margin</a></td></tr>
+          <tr><td>Measure profitability after operating costs, before interest and tax</td><td><a href="/finance/operating-profit-margin-calculator">Operating Profit Margin</a></td></tr>
+          <tr><td>Find the sales volume needed to cover all costs</td><td><a href="/finance/break-even-calculator">Break-Even Calculator</a></td></tr>
+          <tr><td>Calculate return on an investment or project</td><td><a href="/finance/roi-calculator">ROI Calculator</a></td></tr>
+          <tr><td>Measure how efficiently a company uses shareholder equity</td><td><a href="/finance/roe-calculator">ROE Calculator</a></td></tr>
+          <tr><td>Value a stock relative to its earnings</td><td><a href="/finance/pe-ratio-calculator">P/E Ratio Calculator</a></td></tr>
+          <tr><td>Estimate total company value including debt</td><td><a href="/finance/enterprise-value-calculator">Enterprise Value Calculator</a></td></tr>
+          <tr><td>Project savings or investment growth over time</td><td><a href="/finance/compound-interest-calculator">Compound Interest Calculator</a></td></tr>
+          <tr><td>Calculate monthly loan repayments and total interest paid</td><td><a href="/finance/loan-payment-calculator">Loan Payment Calculator</a></td></tr>
+          <tr><td>Check whether a business can cover short-term obligations</td><td><a href="/finance/working-capital-calculator">Working Capital Calculator</a></td></tr>
+        </tbody>
+      </table>
+      </div>
 
       <h2 id="faq">Frequently asked questions</h2>
 
       <h3>What is EBITDA?</h3>
-      <p>Earnings Before Interest, Taxes, Depreciation, and Amortization. It measures core operating profitability by adding back four non-operating or non-cash items to Net Income. EBITDA is the most widely used metric in business valuation and M&amp;A.</p>
+      <p>Earnings Before Interest, Taxes, Depreciation, and Amortization. It measures core operating profitability by adding back four non-operating or non-cash items to net income. EBITDA is the most widely used metric in business valuation and M&amp;A transactions.</p>
 
       <h3>What is the difference between EBITDA, EBIT, and EBT?</h3>
-      <p>EBT = Net Income + Tax. EBIT = EBT + Interest. EBITDA = EBIT + D&amp;A. Each metric removes one more layer, moving from bottom-line profit toward operating cash flow. Use EBT for cross-country comparisons, EBIT for capital structure comparisons, and EBITDA for valuation and M&amp;A.</p>
+      <p>EBT = Net Income + Tax. EBIT = EBT + Interest. EBITDA = EBIT + Depreciation + Amortization. Each metric removes one more layer, moving from bottom-line profit toward operating cash flow. Use EBT for cross-country tax comparisons, EBIT for capital structure comparisons, and EBITDA for valuation.</p>
 
-      <h3>Which metric should I use for comparing companies?</h3>
-      <p>Use EBITDA Margin when comparing companies across industries or capital structures - it neutralises financing, tax, and depreciation differences. Use EBIT when companies have similar D&amp;A profiles. Use Net Income when stakeholders care about reported earnings per share.</p>
+      <h3>Which metric should I use to compare companies?</h3>
+      <p>Use EBITDA Margin when comparing companies across industries or capital structures - it strips out financing, tax, and depreciation differences. Use EBIT when companies have similar depreciation profiles. Use net income when stakeholders care about reported earnings per share.</p>
+
+      <h3>Are these finance calculators free?</h3>
+      <p>Yes, completely free. No registration, no usage limits, no premium tiers. Every calculator runs entirely in your browser - nothing is sent to any server.</p>
 
     </div>
   </div>
 
 </CalculatorLayout>
+
+<style>
+  .hi-container { max-width: 100% !important; }
+</style>

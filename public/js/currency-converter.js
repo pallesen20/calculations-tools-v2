@@ -113,6 +113,18 @@ function updateConversion() {
   setCookie('cc_from', from);
   setCookie('cc_to', to);
   setCookie('cc_amount', amount);
+  const TOP = new Set(['USD','EUR','GBP','DKK','NOK','SEK','CHF','JPY','AUD','CAD','NZD','CNY','INR','HKD','SGD']);
+  const pairLink = document.getElementById('cc-pair-link');
+  const pairAnchor = document.getElementById('cc-pair-link-anchor');
+  if (pairLink && pairAnchor) {
+    if (TOP.has(from) && TOP.has(to) && from !== to) {
+      pairAnchor.href = `/conversion/currency-converter/${from.toLowerCase()}-to-${to.toLowerCase()}`;
+      pairAnchor.textContent = `See dedicated ${from} to ${to} converter →`;
+      pairLink.style.display = '';
+    } else {
+      pairLink.style.display = 'none';
+    }
+  }
 }
 
 function swapCurrencies() {

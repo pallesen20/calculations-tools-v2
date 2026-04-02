@@ -1,5 +1,12 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { CURRENCY_NAMES } from '../../utils/getPages';
+
+const POPULAR_PAIRS: [string, string][] = [
+  ['EUR','USD'],['GBP','USD'],['USD','JPY'],['AUD','USD'],
+  ['USD','CAD'],['USD','CHF'],['DKK','EUR'],['DKK','NOK'],
+  ['NOK','SEK'],['GBP','EUR'],['INR','USD'],['CHF','EUR'],
+];
 
 const tocItems = [
   { id: 'how-to-use',           label: 'How to use this converter' },
@@ -73,18 +80,22 @@ const schema = [
           <div class="cc-live">
             <span class="cc-dot"></span>
             <span>Mid-market exchange rate</span>
+            <span class="cc-info" tabindex="0" aria-label="What is the mid-market rate?">
+              <svg class="cc-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span class="cc-tooltip">The real exchange rate - midpoint between what banks buy and sell at. No markup added. Banks typically charge 2–12% above this when you exchange money.</span>
+            </span>
           </div>
 
           <div class="cc-field">
             <label class="cc-label">Amount</label>
             <div class="cc-row">
-              <input id="cc-amount" class="cc-input" type="text" inputmode="decimal" value="1000" placeholder="1,000" />
-              <select id="cc-from" class="cc-select"></select>
+              <input id="cp-amount" class="cc-input" type="text" inputmode="decimal" value="1000" placeholder="1,000" />
+              <select id="cp-from" class="cc-select"></select>
             </div>
           </div>
 
           <div class="cc-swap-wrap">
-            <button id="cc-swap" class="cc-swap" title="Swap currencies">
+            <button id="cp-swap" class="cc-swap" title="Swap currencies">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="18" height="18">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
               </svg>
@@ -94,15 +105,19 @@ const schema = [
           <div class="cc-field">
             <label class="cc-label">Converted to</label>
             <div class="cc-row">
-              <input id="cc-result" class="cc-input" type="text" readonly placeholder="0.00" />
-              <select id="cc-to" class="cc-select"></select>
+              <input id="cp-result" class="cc-input" type="text" readonly placeholder="0.00" />
+              <select id="cp-to" class="cc-select"></select>
             </div>
           </div>
 
           <div class="cc-result-box">
             <div class="cc-result-label">Exchange Rate</div>
-            <div class="cc-result-rate" id="cc-rate">-</div>
-            <div class="cc-result-updated" id="cc-updated">Loading rates…</div>
+            <div class="cc-result-rate" id="cp-rate">-</div>
+            <div class="cc-result-rate" id="cp-rate-rev" style="font-size:0.8em;opacity:0.6;margin-top:0.2rem">-</div>
+            <div class="cc-result-updated" id="cp-updated">Loading rates…</div>
+            <div id="cc-pair-link" class="cc-pair-link" style="display:none">
+              <a id="cc-pair-link-anchor" href="#" class="cc-pair-link-a"></a>
+            </div>
           </div>
 
           <div class="wise-banner">
@@ -111,18 +126,18 @@ const schema = [
               <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <div class="wise-body">
-              <p class="wise-msg" id="cc-wise-msg">Sending USD to EUR? Your bank is likely charging more than it shows. But not Wise!</p>
-              <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener noreferrer" class="wise-btn" id="cc-wise-btn">Compare rates - takes 20 seconds</a>
+              <p class="wise-msg" id="cp-wise-msg">Sending USD to EUR? Your bank is likely charging more than it shows. But not Wise!</p>
+              <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener noreferrer" class="wise-btn">Compare rates - takes 20 seconds</a>
             </div>
           </div>
         </div>
         <div class="cc-table-card">
-          <h3 class="cc-table-title">Currency Comparison Table</h3>
+          <h2 class="cc-table-title">Currency Comparison Table</h2>
           <p class="cc-table-sub">Click any row to edit the amount - all others update automatically</p>
 
-          <div id="cc-table-body" class="cc-table-body"></div>
+          <div id="cp-table-body" class="cc-table-body"></div>
 
-          <select id="cc-table-add" class="cc-table-add">
+          <select id="cp-table-add" class="cc-table-add">
             <option value="">Add a currency…</option>
           </select>
         </div>
@@ -130,7 +145,45 @@ const schema = [
       </div>
     </section>
 
-    <script src="/js/currency-converter.js" is:inline></script>
+    <script src="/js/currency-converter-v2.js" is:inline></script>
+
+    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank" rel="sponsored"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width:-webkit-fill-available;display:block;margin:1rem 0" alt="Send money internationally banner"/></a>
+
+    <section class="cc-chart-section" id="cp-chart-section" style="display:none">
+      <div class="cc-chart-header">
+        <h2 id="cp-chart-title">Exchange rate history</h2>
+        <div class="cc-chart-btns">
+          <button class="cc-chart-btn" data-days="7">1W</button>
+          <button class="cc-chart-btn active" data-days="30">1M</button>
+          <button class="cc-chart-btn" data-days="90">3M</button>
+          <button class="cc-chart-btn" data-days="180">6M</button>
+          <button class="cc-chart-btn" data-days="365">1Y</button>
+        </div>
+      </div>
+      <canvas id="cp-chart-canvas"></canvas>
+      <div class="cc-chart-footer" id="cp-chart-footer"></div>
+      <p class="cc-chart-note">A rising line means 1 unit of the first currency buys more of the second - it's getting stronger. A falling line means it buys less - it's weakening. Flat stretches are weekends or public holidays when markets are closed.</p>
+    </section>
+
+    <section class="cc-ref-section">
+      <h2 id="cp-ref-title">Exchange rates today</h2>
+      <div class="cc-ref-tables">
+        <div class="cc-ref-table" id="cp-ref-fwd"></div>
+        <div class="cc-ref-table" id="cp-ref-rev"></div>
+      </div>
+    </section>
+
+    <section class="cc-pairings-section">
+      <h3>Popular currency pairs</h3>
+      <div class="cc-pairings-grid">
+        {POPULAR_PAIRS.map(([from, to]) => (
+          <a href={`/conversion/currency-converter/${from.toLowerCase()}-to-${to.toLowerCase()}`} class="cc-pairing-card">
+            <span class="cc-pairing-code">{from} → {to}</span>
+            <span class="cc-pairing-name">{CURRENCY_NAMES[from]} → {CURRENCY_NAMES[to]}</span>
+          </a>
+        ))}
+      </div>
+    </section>
   </div>
 
   <div slot="content">

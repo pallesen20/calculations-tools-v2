@@ -1,16 +1,29 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
-import { getConversionTools } from '../../utils/getPages';
+import { getConversionTools, CURRENCY_NAMES } from '../../utils/getPages';
 
-const tocItems = [
-  { id: 'tools',              label: 'All conversion tools' },
-  { id: 'which-converter',   label: 'Which converter to use' },
-  { id: 'metric-vs-imperial', label: 'Metric vs imperial' },
-  { id: 'accuracy',          label: 'Accuracy & rounding' },
-  { id: 'faq',               label: 'FAQs' },
+const HUB_PAIRS: [string, string][] = [
+  ['EUR','USD'],['GBP','USD'],['USD','JPY'],['DKK','EUR'],['DKK','NOK'],['NOK','SEK'],
 ];
 
 const tools = getConversionTools();
+
+const groupMap = tools.reduce((acc, t) => {
+  (acc[t.group] ??= []).push(t);
+  return acc;
+}, {} as Record<string, typeof tools>);
+
+const groups = Object.entries(groupMap);
+const totalTools = tools.length;
+const totalCategories = groups.length;
+
+const tocItems = [
+  { id: 'tools',              label: 'All conversion tools' },
+  { id: 'which-converter',    label: 'Which converter to use' },
+  { id: 'metric-vs-imperial', label: 'Metric vs imperial' },
+  { id: 'accuracy',           label: 'Accuracy & rounding' },
+  { id: 'faq',                label: 'FAQs' },
+];
 
 const schema = [
   {
@@ -18,11 +31,11 @@ const schema = [
     "@type": "CollectionPage",
     "name": "Online Conversion Tools",
     "url": "https://calculations.tools/conversion",
-    "description": "Free online unit converters for length, weight, temperature, currency, height, and text case. All tools are free, instant, and require no registration.",
+    "description": "Free online unit converters for length, weight, temperature, speed, currency, height, and text case. All tools are free, instant, and require no registration.",
     "hasPart": tools.map(t => ({
       "@type": "WebApplication",
       "name": t.title,
-      "url": `https://calculations.tools/conversion/${t.slug}`,
+      "url": `https://calculations.tools${t.path}`,
     })),
   },
   {
@@ -43,7 +56,7 @@ const schema = [
 <CalculatorLayout
   title="Online Conversion Tools"
   metaTitle="Free Online Conversion Tools | Unit Converters ᐅ"
-  description="Free online unit converters for length, weight, temperature, currency, height, and text case. Instant results, no registration, no limits. All tools run in your browser."
+  description="Free online unit converters for length, weight, temperature, speed, currency, height, and text case. Instant results, no registration, no limits. All tools run in your browser."
   canonical="https://calculations.tools/conversion"
   tocItems={tocItems}
   schema={schema}
@@ -51,27 +64,58 @@ const schema = [
 
   <div slot="calculator">
     <section class="calculator-interface">
-      <div class="calculator-container cv-container">
+      <div class="calculator-container hi-container">
 
         <div class="calculator-header">
           <h2>Conversion Tools</h2>
-          <p>Pick a converter below to get started</p>
+          <p>Unit converters, speed converters, currency, and text tools - free and instant</p>
         </div>
 
-        <div class="cv-grid">
-          {getConversionTools().map(tool => (
-            <a href={`/conversion/${tool.slug}`} class="cv-card">
-              <div class="cv-icon">{tool.icon}</div>
-              <div class="cv-body">
-                <div class="cv-title">{tool.title}</div>
-                <div class="cv-short">{tool.short}</div>
-                <div class="cv-desc">{tool.description}</div>
-                {tool.units && <div class="cv-units">{tool.units}</div>}
-              </div>
-              <div class="cv-arrow">→</div>
-            </a>
-          ))}
+        <div class="hi-stats">
+          <div class="hi-stat">
+            <div class="hi-stat-val">{totalTools}</div>
+            <div class="hi-stat-lbl">Tools</div>
+          </div>
+          <div class="hi-stat">
+            <div class="hi-stat-val">{totalCategories}</div>
+            <div class="hi-stat-lbl">Categories</div>
+          </div>
+          <div class="hi-stat hi-stat-wide">
+            <div class="hi-stat-val hi-stat-free">Free</div>
+            <div class="hi-stat-lbl">No login · runs in browser</div>
+          </div>
         </div>
+
+        {groups.map(([groupName, groupTools]) => (
+          <div class="hi-group">
+            <div class="hi-group-header">
+              <span class="hi-group-label">{groupName}</span>
+            </div>
+            <div class="hi-grid">
+              {groupTools.map(tool => (
+                <a href={tool.path} class="hi-card">
+                  <div class="hi-icon">{tool.icon}</div>
+                  <div class="hi-body">
+                    <div class="hi-title">{tool.title}</div>
+                    {tool.short && <div class="hi-short">{tool.short}</div>}
+                  </div>
+                  <div class="hi-arrow">→</div>
+                </a>
+              ))}
+            </div>
+            {groupName === 'Currency' && (
+              <div class="hi-pair-links">
+                <span class="hi-pair-links-label">Popular pairs:</span>
+                {HUB_PAIRS.map(([from, to]) => (
+                  <a href={`/conversion/currency-converter/${from.toLowerCase()}-to-${to.toLowerCase()}`} class="hi-pair-link">
+                    {from}/{to}
+                  </a>
+                ))}
+                <a href="/conversion/currency-converter" class="hi-pair-link hi-pair-link-more">All pairs →</a>
+              </div>
+            )}
+          </div>
+        ))}
 
       </div>
     </section>
@@ -81,12 +125,12 @@ const schema = [
     <div class="seo-container">
 
       <div class="answer-box">
-        <div class="answer-box-label">Quick answer</div>
-        <p>This collection covers the most common unit conversions: <a href="/conversion/length-converter">length</a>, <a href="/conversion/weight-converter">weight</a>, <a href="/conversion/height-converter">height</a>, <a href="/conversion/temperature-converter">temperature</a>, <a href="/conversion/currency-converter">currency</a>, <a href="/conversion/case-converter">text case</a>, and <a href="/conversion/image-to-text">image to text (OCR)</a>. Every tool is free, works instantly in your browser, and requires no login. Type a value, choose your units, and the result appears immediately.</p>
+        <div class="answer-box-label">What's in the conversion section</div>
+        <p>This section contains {totalTools} free converters across {totalCategories} categories. <strong>Unit Converters</strong> handle <a href="/conversion/length-converter">length</a>, <a href="/conversion/weight-converter">weight</a>, <a href="/conversion/height-converter">height</a>, and <a href="/conversion/temperature-converter">temperature</a>. <strong>Speed Converters</strong> include the <a href="/conversion/speed-converter">full multi-unit speed hub</a> plus dedicated pair pages for mph to km/h, knots to mph, m/s to km/h, and more. <strong>Currency</strong> and <strong>Text Tools</strong> cover live exchange rates, text case, and OCR.</p>
       </div>
 
       <h2 id="tools">All conversion tools</h2>
-      <p>Each tool handles a distinct category of conversion. All run entirely in your browser - no data is sent to a server, and results appear as you type without any button press.</p>
+      <p>Every tool is free, runs entirely in your browser, and produces results as you type. No button press, no registration, no data sent to any server.</p>
 
       <h2 id="which-converter">Which converter to use</h2>
       <p>Not sure which tool you need? Use this table to match your conversion task to the right tool.</p>
@@ -115,6 +159,16 @@ const schema = [
             <td>Temperature</td>
             <td>°C to °F, Kelvin to Celsius, Fahrenheit to Kelvin</td>
             <td><a href="/conversion/temperature-converter">Temperature Converter</a></td>
+          </tr>
+          <tr>
+            <td>Speed - any units</td>
+            <td>mph to km/h, knots to mph, m/s to km/h, ft/s - all 10 units</td>
+            <td><a href="/conversion/speed-converter">Speed Converter</a></td>
+          </tr>
+          <tr>
+            <td>Speed - specific pair</td>
+            <td>mph ↔ km/h, knots ↔ mph, knots ↔ km/h, m/s ↔ km/h, m/s ↔ mph, ft/s ↔ mph</td>
+            <td><a href="/conversion/speed-converter/mph-to-kmh">mph to km/h</a>, <a href="/conversion/speed-converter/knots-to-mph">knots to mph</a>, <a href="/conversion/speed-converter/knots-to-kmh">knots to km/h</a>, and more</td>
           </tr>
           <tr>
             <td>Money and exchange rates</td>
@@ -154,6 +208,7 @@ const schema = [
           <tr><td>Length</td><td>metre (m)</td><td>foot (ft)</td><td>1 m = 3.28084 ft</td></tr>
           <tr><td>Distance</td><td>kilometre (km)</td><td>mile (mi)</td><td>1 km = 0.621371 mi</td></tr>
           <tr><td>Mass</td><td>kilogram (kg)</td><td>pound (lb)</td><td>1 kg = 2.20462 lb</td></tr>
+          <tr><td>Speed</td><td>km/h or m/s</td><td>mph</td><td>1 mph = 1.609344 km/h</td></tr>
           <tr><td>Temperature</td><td>Celsius (°C)</td><td>Fahrenheit (°F)</td><td>°F = °C × 9/5 + 32</td></tr>
           <tr><td>Volume (liquid)</td><td>litre (L)</td><td>US gallon (gal)</td><td>1 L = 0.264172 US gal</td></tr>
           <tr><td>Short distance</td><td>centimetre (cm)</td><td>inch (in)</td><td>1 in = 2.54 cm exactly</td></tr>
@@ -200,70 +255,5 @@ const schema = [
 </CalculatorLayout>
 
 <style>
-  .cv-container { max-width: 100% !important; }
-  .cv-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .cv-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.1rem;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
-    padding: 1.1rem 1.25rem;
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.2s, border-color 0.2s, transform 0.15s;
-  }
-  .cv-card:hover {
-    background: rgba(255,255,255,0.12);
-    border-color: rgba(255,255,255,0.25);
-    transform: translateX(3px);
-  }
-  .cv-icon {
-    font-size: 1.75rem;
-    flex-shrink: 0;
-    width: 2.5rem;
-    text-align: center;
-    margin-top: 0.1rem;
-  }
-  .cv-body { flex: 1; min-width: 0; }
-  .cv-title {
-    font-size: 1rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 0.1rem;
-  }
-  .cv-short {
-    font-size: 0.75rem;
-    color: rgba(255,255,255,0.45);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.35rem;
-  }
-  .cv-desc {
-    font-size: 0.875rem;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.4;
-  }
-  .cv-units {
-    margin-top: 0.4rem;
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.3);
-    font-family: 'Courier New', monospace;
-  }
-  .cv-arrow {
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.3);
-    flex-shrink: 0;
-    align-self: center;
-    transition: color 0.2s, transform 0.15s;
-  }
-  .cv-card:hover .cv-arrow {
-    color: rgba(255,255,255,0.7);
-    transform: translateX(3px);
-  }
+  .hi-container { max-width: 100% !important; }
 </style>

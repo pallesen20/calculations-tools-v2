@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getFrontPageGroups, siteToolCount } from '../utils/getPages';
+import { getCategoryCards, getFeaturedTools, siteToolCount } from '../utils/getPages';
 
-const groups      = getFrontPageGroups();
-const totalGroups = groups.length;
+const categoryCards  = getCategoryCards();
+const featuredTools  = getFeaturedTools();
+const totalCategories = categoryCards.length;
 
 const features = [
   { icon: '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>', title: 'Lightning Fast', description: 'All calculations happen instantly in your browser. No waiting, no delays.' },
@@ -41,13 +42,14 @@ const schema = [
     <div class="container">
 
       <section style="margin-bottom: 3rem;">
+
         <div class="hi-stats">
           <div class="hi-stat">
             <div class="hi-stat-val">{siteToolCount}</div>
             <div class="hi-stat-lbl">Tools</div>
           </div>
           <div class="hi-stat">
-            <div class="hi-stat-val">{totalGroups}</div>
+            <div class="hi-stat-val">{totalCategories}</div>
             <div class="hi-stat-lbl">Categories</div>
           </div>
           <div class="hi-stat hi-stat-wide">
@@ -56,30 +58,34 @@ const schema = [
           </div>
         </div>
 
-        {groups.map(group => (
-          <div class="hi-group">
-            <div class="hi-group-header">
-              <span class="hi-group-label">{group.category}</span>
-              {group.indexPath && (
-                <a href={group.indexPath} class="hi-group-link">
-                  See all {group.totalCount} →
-                </a>
-              )}
-            </div>
-            <div class="hi-grid hi-grid--3col">
-              {group.tools.map(tool => (
-                <a href={tool.path} class="hi-card">
-                  <div class="hi-icon">{tool.icon}</div>
-                  <div class="hi-body">
-                    <div class="hi-title">{tool.title}</div>
-                    {tool.short && <div class="hi-short">{tool.short}</div>}
-                  </div>
-                  <div class="hi-arrow">→</div>
-                </a>
-              ))}
-            </div>
+        <div class="ch-grid">
+          {categoryCards.map(cat => (
+            <a href={cat.hubPath} class="ch-card">
+              <div class="ch-icon">{cat.icon}</div>
+              <div class="ch-name">{cat.name}</div>
+              <div class="ch-count">{cat.toolCount} tools</div>
+            </a>
+          ))}
+        </div>
+
+        <div class="hi-group">
+          <div class="hi-group-header">
+            <span class="hi-group-label">Featured tools</span>
           </div>
-        ))}
+          <div class="hi-grid hi-grid--3col">
+            {featuredTools.map(tool => (
+              <a href={tool.path} class="hi-card">
+                <div class="hi-icon">{tool.icon}</div>
+                <div class="hi-body">
+                  <div class="hi-title">{tool.title}</div>
+                  {tool.short && <div class="hi-short">{tool.short}</div>}
+                </div>
+                <div class="hi-arrow">→</div>
+              </a>
+            ))}
+          </div>
+        </div>
+
       </section>
 
       <section class="features">
@@ -97,24 +103,27 @@ const schema = [
 
       <div class="seo-container">
         <h2>Free Online Calculators for Health, Math & Conversions</h2>
-        <p>Calculations.tools is a free collection of {siteToolCount} calculators and converters across {totalGroups} categories. Every tool runs entirely in your browser - no registration, no data sent to any server, instant results as you type.</p>
+        <p>Calculations.tools is a free collection of {siteToolCount} calculators and converters across {totalCategories} categories. Every tool runs entirely in your browser - no registration, no data sent to any server, instant results as you type.</p>
 
         <h3>Health Calculators</h3>
-        <p>The <a href="/health">health section</a> covers BMI, body composition, and fitness metrics. The <a href="/health/bmi-calculator">BMI Calculator</a> adds age and sex context, estimated body fat %, and a healthy weight range. Specialist variants cover <a href="/health/bmi-calculator/men">men</a>, <a href="/health/bmi-calculator/women">women</a>, <a href="/health/bmi-calculator/kids">children</a>, <a href="/health/bmi-calculator/teens">teenagers</a>, <a href="/health/bmi-calculator/seniors">seniors</a>, and <a href="/health/bmi-calculator/pregnancy">pregnancy</a>. Body composition tools include the <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a> (Boer, Hume, James formulas + FFMI), the <a href="/health/ffmi-calculator">FFMI Calculator</a>, the <a href="/health/body-fat-calculator">Body Fat Calculator</a> (US Navy tape method), and the <a href="/health/ideal-weight-calculator">Ideal Weight Calculator</a> (Devine, Robinson, Miller, Hamwi formulas).</p>
+        <p>The <a href="/health">health section</a> covers BMI, body composition, and fitness metrics. The <a href="/health/bmi-calculator">BMI Calculator</a> adds age and sex context, estimated body fat %, and a healthy weight range. Specialist variants cover <a href="/health/bmi-calculator/men">men</a>, <a href="/health/bmi-calculator/women">women</a>, <a href="/health/bmi-calculator/kids">children</a>, <a href="/health/bmi-calculator/teens">teenagers</a>, <a href="/health/bmi-calculator/seniors">seniors</a>, and <a href="/health/bmi-calculator/pregnancy">pregnancy</a>. Body composition tools include the <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a>, the <a href="/health/ffmi-calculator">FFMI Calculator</a>, the <a href="/health/body-fat-calculator">Body Fat Calculator</a>, and the <a href="/health/ideal-weight-calculator">Ideal Weight Calculator</a>.</p>
+
+        <h3>Finance Calculators</h3>
+        <p>The <a href="/finance">finance section</a> covers earnings metrics, profit margins, valuation, and loans. Tools include <a href="/finance/ebitda-calculator">EBITDA</a>, <a href="/finance/ebit-calculator">EBIT</a>, <a href="/finance/roi-calculator">ROI</a>, <a href="/finance/compound-interest-calculator">compound interest</a>, and <a href="/finance/loan-payment-calculator">loan payment</a> calculators. Every tool shows step-by-step workings and industry benchmarks.</p>
 
         <h3>Unit Converters</h3>
-        <p>The <a href="/conversion">conversion section</a> covers the most commonly needed unit types: <a href="/conversion/length-converter">length</a> (km, miles, feet, inches), <a href="/conversion/weight-converter">weight</a> (kg, lbs, stone, oz), <a href="/conversion/temperature-converter">temperature</a> (Celsius, Fahrenheit, Kelvin), <a href="/conversion/height-converter">height</a> (cm to feet and inches), and a <a href="/conversion/currency-converter">live currency converter</a> covering 150+ currencies with mid-market rates. All converters support bidirectional input and show the full conversion table.</p>
+        <p>The <a href="/conversion">conversion section</a> covers the most commonly needed unit types: <a href="/conversion/length-converter">length</a> (km, miles, feet, inches), <a href="/conversion/weight-converter">weight</a> (kg, lbs, stone, oz), <a href="/conversion/temperature-converter">temperature</a> (Celsius, Fahrenheit, Kelvin), <a href="/conversion/height-converter">height</a> (cm to feet and inches), a <a href="/conversion/speed-converter">speed converter</a> (mph, km/h, knots, m/s), and a <a href="/conversion/currency-converter">live currency converter</a> covering 150+ currencies.</p>
 
         <h3>Math & Text Tools</h3>
-        <p>The <a href="/math/percentage-calculator">Percentage Calculator</a> handles all percentage modes: basic percentages, percentage increase and decrease, percentage difference, and percentage of a total - with a formula breakdown for each mode. The <a href="/word-counter">Word Counter</a> gives instant word, character, sentence, paragraph, and reading time counts. The <a href="/compare-text">Text Diff Checker</a> compares two texts side by side with color-coded additions and removals, and the <a href="/compare-text/compare-excel">Excel Diff Checker</a> does the same for spreadsheet files.</p>
+        <p>The <a href="/math/percentage-calculator">Percentage Calculator</a> handles all percentage modes: basic percentages, percentage increase and decrease, percentage difference, and percentage of a total. The <a href="/word-counter">Word Counter</a> gives instant word, character, sentence, paragraph, and reading time counts. The <a href="/compare/text">Text Diff Checker</a> compares two texts side by side with color-coded additions and removals.</p>
 
         <h3>Date & Time Tools</h3>
-        <p>The <a href="/week-number">Week Number</a> tool shows the current ISO 8601 week number with a full year calendar and code snippets for 20+ programming languages. The <a href="/date-calculator">Date Calculator</a> computes the number of days, workdays, weeks, and years-months-days between any two dates, and can add or subtract days from a date.</p>
+        <p>The <a href="/week-number">Week Number</a> tool shows the current ISO 8601 week number with a full year calendar and code snippets for 20+ programming languages. The <a href="/date-calculator">Date Calculator</a> computes the number of days, workdays, weeks, and years-months-days between any two dates.</p>
 
         <h2>Frequently Asked Questions</h2>
 
         <h3>Are all tools really free?</h3>
-        <p>Yes. Every tool on Calculations.tools is completely free - no subscriptions, no usage limits, no premium features. The site is supported by unobtrusive advertising.</p>
+        <p>Yes. Every tool on Calculations.tools is completely free - no subscriptions, no usage limits, no premium features.</p>
 
         <h3>Do I need to create an account?</h3>
         <p>No. All tools are immediately accessible without registration. Visit the tool you need and start calculating.</p>
@@ -132,4 +141,3 @@ const schema = [
     </div>
   </main>
 </BaseLayout>
-

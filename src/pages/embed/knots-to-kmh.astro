@@ -2,33 +2,33 @@
 import EmbedLayout from '../../layouts/EmbedLayout.astro';
 ---
 
-<EmbedLayout title="ft/s to mph Converter - calculations.tools">
+<EmbedLayout title="Knots to km/h Converter - calculations.tools">
   <section class="calculator-interface">
     <div class="calculator-container">
 
       <div class="calculator-header">
-        <h2>ft/s to mph Converter</h2>
+        <h2>Knots to km/h Converter</h2>
         <p>Type in either field - converts instantly in both directions</p>
       </div>
 
       <div class="pair-inputs">
         <div class="pair-field">
-          <label for="fm-a">Feet per second (ft/s)</label>
-          <input id="fm-a" type="text" inputmode="decimal" placeholder="e.g. 100" />
+          <label for="kk-a">Knots (kn)</label>
+          <input id="kk-a" type="text" inputmode="decimal" placeholder="e.g. 20" />
         </div>
         <div class="pair-eq">=</div>
         <div class="pair-field">
-          <label for="fm-b">Miles per hour (mph)</label>
-          <input id="fm-b" type="text" inputmode="decimal" placeholder="e.g. 68.18" />
+          <label for="kk-b">Kilometers per hour (km/h)</label>
+          <input id="kk-b" type="text" inputmode="decimal" placeholder="e.g. 37.04" />
         </div>
       </div>
 
-      <div class="pair-formula-note">1 ft/s = 15/22 mph (≈ 0.681818) &nbsp;·&nbsp; 1 mph = 22/15 ft/s (≈ 1.46667)</div>
+      <div class="pair-formula-note">1 knot = 1.852 km/h (exact) &nbsp;·&nbsp; 1 km/h = 0.539957 knots</div>
 
     </div>
   </section>
 
-  <script src="/js/fps-to-mph.js" is:inline></script>
+  <script src="/js/knots-to-kmh.js" is:inline></script>
 </EmbedLayout>
 
 <style>
