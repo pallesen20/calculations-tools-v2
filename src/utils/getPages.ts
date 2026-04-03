@@ -1064,7 +1064,7 @@ TOP_CURRENCIES.forEach(from => {
       changefreq: 'daily' as const,
       priority: 0.7,
       icon: '💱',
-      short: `${from} to ${to} live rate`,
+      short: `${from} to ${to} · ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
     });
   });
 });
