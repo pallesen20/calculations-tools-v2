@@ -43,20 +43,28 @@ const registry: Omit<PageMeta, 'url'>[] = []; // populated below
 
 type Entry = Omit<PageMeta, 'url'> & { path: string; icon?: string; short?: string; units?: string; featured?: boolean };
 
-export const TOP_CURRENCIES = ['USD','EUR','GBP','DKK','NOK','SEK','CHF','JPY','AUD','CAD','NZD','CNY','INR','HKD','SGD'];
+export const TOP_CURRENCIES = ['USD','EUR','GBP','DKK','NOK','SEK','CHF','JPY','AUD','CAD','NZD','CNY','INR','HKD','SGD','BRL','MXN','KRW','MYR','THB','IDR','ZAR','TRY','PLN','CZK','HUF','ILS','PHP','RON','ISK'];
 
 export const CURRENCY_NAMES: Record<string, string> = {
   USD: 'US Dollar', EUR: 'Euro', GBP: 'British Pound', DKK: 'Danish Krone',
   NOK: 'Norwegian Krone', SEK: 'Swedish Krona', CHF: 'Swiss Franc', JPY: 'Japanese Yen',
   AUD: 'Australian Dollar', CAD: 'Canadian Dollar', NZD: 'New Zealand Dollar',
-  CNY: 'Chinese Yuan', INR: 'Indian Rupee', HKD: 'Hong Kong Dollar', SGD: 'Singapore Dollar',
+  CNY: 'Chinese Yuan', INR: 'Indian Rupee', HKD: 'Hong Kong Dollar', SGD: 'Singapore Dollar', BRL: 'Brazilian Real',
+  MXN: 'Mexican Peso', KRW: 'South Korean Won', MYR: 'Malaysian Ringgit', THB: 'Thai Baht',
+  IDR: 'Indonesian Rupiah', ZAR: 'South African Rand', TRY: 'Turkish Lira', PLN: 'Polish Zloty',
+  CZK: 'Czech Koruna', HUF: 'Hungarian Forint', ILS: 'Israeli Shekel', PHP: 'Philippine Peso',
+  RON: 'Romanian Leu', ISK: 'Icelandic Krona',
 };
 
 export const CURRENCY_PLURALS: Record<string, string> = {
   USD: 'US Dollars', EUR: 'Euros', GBP: 'British Pounds', DKK: 'Danish Kroner',
   NOK: 'Norwegian Kroner', SEK: 'Swedish Kronor', CHF: 'Swiss Francs', JPY: 'Japanese Yen',
   AUD: 'Australian Dollars', CAD: 'Canadian Dollars', NZD: 'New Zealand Dollars',
-  CNY: 'Chinese Yuan', INR: 'Indian Rupees', HKD: 'Hong Kong Dollars', SGD: 'Singapore Dollars',
+  CNY: 'Chinese Yuan', INR: 'Indian Rupees', HKD: 'Hong Kong Dollars', SGD: 'Singapore Dollars', BRL: 'Brazilian Real',
+  MXN: 'Mexican Pesos', KRW: 'South Korean Won', MYR: 'Malaysian Ringgit', THB: 'Thai Baht',
+  IDR: 'Indonesian Rupiah', ZAR: 'South African Rand', TRY: 'Turkish Lira', PLN: 'Polish Zlotych',
+  CZK: 'Czech Koruny', HUF: 'Hungarian Forints', ILS: 'Israeli Shekels', PHP: 'Philippine Pesos',
+  RON: 'Romanian Lei', ISK: 'Icelandic Kronur',
 };
 
 export const TOP_PAIRINGS: Record<string, string[]> = {
@@ -72,9 +80,24 @@ export const TOP_PAIRINGS: Record<string, string[]> = {
   CAD: ['USD','EUR','GBP','JPY','AUD','CHF','NZD','CNY'],
   NZD: ['USD','AUD','EUR','GBP','JPY','CAD','CHF','SGD'],
   CNY: ['USD','JPY','EUR','GBP','HKD','AUD','CAD','SGD'],
-  INR: ['USD','EUR','GBP','AED','SGD','JPY','AUD','CAD'],
+  INR: ['USD','EUR','GBP','SGD','JPY','AUD','CAD','CHF'],
   HKD: ['USD','CNY','EUR','GBP','JPY','AUD','SGD','CAD'],
   SGD: ['USD','MYR','EUR','GBP','JPY','AUD','HKD','CNY'],
+  BRL: ['USD','EUR','GBP','CAD','JPY','AUD','CHF','CNY'],
+  MXN: ['USD','EUR','GBP','CAD','JPY','AUD','CHF','CNY'],
+  KRW: ['USD','JPY','EUR','CNY','AUD','GBP','HKD','SGD'],
+  MYR: ['SGD','USD','EUR','GBP','JPY','AUD','CNY','HKD'],
+  THB: ['USD','SGD','EUR','JPY','AUD','GBP','CNY','HKD'],
+  IDR: ['USD','SGD','EUR','AUD','JPY','MYR','GBP','CNY'],
+  ZAR: ['USD','EUR','GBP','JPY','AUD','CHF','CNY','INR'],
+  TRY: ['USD','EUR','GBP','CHF','JPY','AUD','CAD','CNY'],
+  PLN: ['EUR','USD','GBP','CHF','CZK','HUF','NOK','SEK'],
+  CZK: ['EUR','USD','GBP','CHF','PLN','HUF','NOK','SEK'],
+  HUF: ['EUR','USD','GBP','CHF','CZK','PLN','NOK','SEK'],
+  ILS: ['USD','EUR','GBP','CHF','JPY','AUD','CAD','CNY'],
+  PHP: ['USD','EUR','SGD','JPY','AUD','GBP','HKD','CNY'],
+  RON: ['EUR','USD','GBP','CHF','HUF','CZK','PLN','NOK'],
+  ISK: ['EUR','GBP','USD','DKK','NOK','SEK','CHF','CAD'],
 };
 
 const entries: Entry[] = [
