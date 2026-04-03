@@ -245,7 +245,7 @@ async function loadChart(from, to, days) {
   const base = from === 'EUR' ? from : to === 'EUR' ? to : from;
   const quote = base === from ? to : from;
   try {
-    const res = await fetch(`https://api.frankfurter.app/${start}..${end}?from=${base}&to=${quote}`);
+    const res = await fetch(`https://api.frankfurter.dev/v1/${start}..${end}?from=${base}&to=${quote}`);
     const data = await res.json();
     let points = Object.entries(data.rates).map(([date, r]) => ({ date, value: r[quote] }));
     if (base !== from) points = points.map(p => ({ date: p.date, value: 1 / p.value }));
