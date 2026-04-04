@@ -657,7 +657,7 @@ const entries: Entry[] = [
     changefreq: 'weekly',
     priority: 1.0,
     icon: '🌡️',
-    short: 'Heat & temperature scales',
+    short: 'Celsius, Fahrenheit, Kelvin',
     units: '°C, °F, K, °R, °Ré',
   },
   {
@@ -1383,7 +1383,7 @@ export function getSearchIndex(): SearchEntry[] {
     .map(e => ({
       t: e.title.split(' - ')[0].split(' | ')[0].trim(),
       p: e.path,
-      k: e.short || e.description.slice(0, 120),
+      k: [e.short || e.description.slice(0, 120), e.units].filter(Boolean).join(' '),
       c: _catLabel(e.path),
       i: e.icon || '',
       y: 'tool' as const,

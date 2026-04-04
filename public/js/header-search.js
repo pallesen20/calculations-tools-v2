@@ -2,6 +2,12 @@
   var index = null;
   var debounceTimer = null;
   var activeIdx = -1;
+  var lastTrackedQuery = '';
+
+  function pushDL(obj) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(obj);
+  }
 
   var input = document.getElementById('headerSearchInput');
   var results = document.getElementById('headerSearchResults');
@@ -14,15 +20,33 @@
 
   if (!input) return;
 
+  function norm(s) {
+    return s.replace(/[\/°\-·,\s]/g, '');
+  }
+
+  var STOP = { to: 1, a: 1, the: 1, in: 1, from: 1, and: 1, of: 1 };
+
   function score(item, q) {
     var t = item.t.toLowerCase();
     var k = item.k.toLowerCase();
+    var nt = norm(t);
+    var nk = norm(k);
+    var nq = norm(q);
     if (t === q) return 100;
     if (t.startsWith(q)) return 80;
+    if (nt.startsWith(nq)) return 78;
     var wordBoundary = ' ' + q;
     if (t.includes(wordBoundary)) return 70;
     if (t.includes(q)) return 60;
+    if (nt.includes(nq)) return 58;
     if (k.includes(q)) return 40;
+    if (nk.includes(nq)) return 38;
+    var tokens = q.split(/\s+/).map(norm).filter(function (w) { return w.length > 1 && !STOP[w]; });
+    if (tokens.length > 1) {
+      var hits = tokens.filter(function (tok) { return nt.includes(tok) || nk.includes(tok); }).length;
+      if (hits === tokens.length) return 55;
+      if (hits > 0) return 20;
+    }
     var words = t.split(/[\s\-\/\(\)]+/).filter(Boolean);
     var initials = words.map(function (w) { return w[0] || ''; }).join('').toLowerCase();
     if (initials === q) return 35;
@@ -62,6 +86,11 @@
     }).join('');
     results.hidden = false;
     activeIdx = -1;
+    results.querySelectorAll('.search-result-item').forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        pushDL({ event: 'search_result_click', search_term: q, result_title: items[i].t, result_path: items[i].p });
+      });
+    });
   }
 
   function search(q) {
@@ -76,7 +105,12 @@
       if (a.item.y !== b.item.y) return a.item.y === 'tool' ? -1 : 1;
       return b.s - a.s;
     });
-    renderResults(scored.slice(0, 8).map(function (x) { return x.item; }), q);
+    var topItems = scored.slice(0, 8).map(function (x) { return x.item; });
+    renderResults(topItems, q);
+    if (q !== lastTrackedQuery) {
+      lastTrackedQuery = q;
+      pushDL({ event: 'site_search', search_term: q, results_count: scored.length });
+    }
   }
 
   function closeResults() {
