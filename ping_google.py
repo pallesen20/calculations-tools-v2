@@ -93,7 +93,7 @@ def main():
             pinged.add(url)
             ok += 1
         else:
-            print(f'  [{i}/{len(batch)}] ERROR {url} — {err}')
+            print(f'  [{i}/{len(batch)}] ERROR {url} - {err}')
             failed.append(url)
         time.sleep(BATCH_DELAY)
 

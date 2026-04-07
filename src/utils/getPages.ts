@@ -845,7 +845,7 @@ const entries: Entry[] = [
   {
     path: '/conversion/length-converter/cm-to-ft',
     title: 'Centimeters to Feet Converter',
-    description: 'Convert centimeters to feet instantly. Formula: ft = cm ÷ 30.48. Height reference table included — 170 cm, 175 cm, 180 cm in feet and more.',
+    description: 'Convert centimeters to feet instantly. Formula: ft = cm ÷ 30.48. Height reference table included - 170 cm, 175 cm, 180 cm in feet and more.',
     changefreq: 'monthly' as const,
     priority: 0.9,
     icon: '📏',
@@ -855,7 +855,7 @@ const entries: Entry[] = [
   {
     path: '/conversion/length-converter/ft-to-cm',
     title: 'Feet to Centimeters Converter',
-    description: 'Convert feet to centimeters instantly. Formula: cm = ft × 30.48. Height reference table included — 5 ft, 5\'10", 6 ft in cm and more.',
+    description: 'Convert feet to centimeters instantly. Formula: cm = ft × 30.48. Height reference table included - 5 ft, 5\'10", 6 ft in cm and more.',
     changefreq: 'monthly' as const,
     priority: 0.9,
     icon: '📏',
