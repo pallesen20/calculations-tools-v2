@@ -2,7 +2,6 @@
   var index = null;
   var debounceTimer = null;
   var activeIdx = -1;
-  var lastTrackedQuery = '';
 
   function pushDL(obj) {
     window.dataLayer = window.dataLayer || [];
@@ -107,10 +106,6 @@
     });
     var topItems = scored.slice(0, 8).map(function (x) { return x.item; });
     renderResults(topItems, q);
-    if (q !== lastTrackedQuery) {
-      lastTrackedQuery = q;
-      pushDL({ event: 'site_search', search_term: q, results_count: scored.length });
-    }
   }
 
   function closeResults() {

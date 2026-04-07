@@ -1,0 +1,253 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{in} = \\text{cm} \\div 2.54$$",
+  rev: "$$\\text{cm} = \\text{in} \\times 2.54$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert cm to inches' },
+  { id: 'reverse',         label: 'How to convert inches to cm' },
+  { id: 'reference-table', label: 'cm to inches reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Centimeters to Inches Converter",
+    "url": "https://calculations.tools/conversion/length-converter/cm-to-in",
+    "description": "Convert centimeters to inches instantly. Formula: in = cm ÷ 2.54. Includes reverse inches to cm conversion and a reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert centimeters to inches",
+    "description": "Convert centimeters to inches using the exact international conversion factor.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter cm value", "text": "Type your centimeters value in the cm field. The inches result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted inches value appears immediately. For 1 cm, the result is 0.393701 in." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the in field to convert back to cm. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many inches is 1 cm?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1 centimeter equals 0.393701 inches. This is the reciprocal of 2.54 (the exact number of cm in one inch). In millimeters: 1 cm = 10 mm = 0.393701 in." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert cm to inches?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide centimeters by 2.54. Example: 30 cm ÷ 2.54 = 11.811 in. Since 2.54 is an exact definition, the conversion introduces no rounding error. Quick estimate: multiply by 0.4 (1.6% high)." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many inches is 170 cm?",
+        "acceptedAnswer": { "@type": "Answer", "text": "170 cm equals 66.929 inches, or 5 feet 6.93 inches. Divide by 2.54: 170 ÷ 2.54 = 66.929 in. To split into feet and inches: 66 ÷ 12 = 5 ft remainder 6.929 in." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 5 foot 7 in cm?",
+        "acceptedAnswer": { "@type": "Answer", "text": "5 feet 7 inches equals 170.18 cm. Convert to total inches: 5 × 12 + 7 = 67 in. Multiply by 2.54: 67 × 2.54 = 170.18 cm. The height converter handles feet-and-inches input directly." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Centimeters to Inches Converter"
+  metaTitle="Centimeters to Inches Converter | cm to in ᐅ"
+  description="Convert centimeters to inches instantly. Formula: in = cm ÷ 2.54. Reverse inches to cm included. Reference table for screen sizes, clothing, and body measurements."
+  canonical="https://calculations.tools/conversion/length-converter/cm-to-in"
+  tocItems={tocItems}
+  embedSlug="cm-to-in"
+  schema={schema}
+  ogFormula="in = cm ÷ 2.54"
+  ogExample="30 cm = 30 ÷ 2.54 = 11.811 in"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Centimeters to Inches Converter</h2>
+          <p>Type in either field — converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Centimeters (cm)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Inches (in)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 0.3937" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 cm = 0.393701 in &nbsp;·&nbsp; 1 in = 2.54 cm</div>
+
+      </div>
+    </section>
+
+    <script src="/js/cm-to-in.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert centimeters to inches, divide by <strong>2.54</strong>. So 30 cm = 11.811 in. The factor is exact — one inch is defined as exactly 2.54 cm since the International Yard and Pound Agreement of 1959.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact factor: 1 in = 2.54 cm (international definition, fixed in 1959).</li>
+          <li>1 cm = 0.393701 in — roughly 4/10 of an inch.</li>
+          <li>Quick mental check: multiply cm by 0.4 for a fast estimate (1.6% high).</li>
+          <li>Screen sizes are marketed in inches in most countries — converting from cm spec sheets is a common need.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any value in the cm field and the inches result appears instantly. You can also type in the inches field to convert back to cm — it works in both directions without pressing a button.</p>
+
+      <h2 id="formula">How Do You Convert Centimeters to Inches?</h2>
+      <p>Divide centimeters by 2.54. This is exact: 2.54 is the defined number of centimeters per inch, fixed in 1959. Alternatively, multiply by 0.393701 (the reciprocal of 2.54, rounded to 6 decimal places).</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 10 cm = 3.937 in. 50 cm = 19.685 in. 100 cm = 39.370 in.</p>
+
+      <h2 id="reverse">How Do You Convert Inches to Centimeters?</h2>
+      <p>Multiply inches by 2.54. For a full multi-unit converter, the <a href="/conversion/length-converter">length converter</a> handles all metric and imperial units at once.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 6 in = 15.24 cm. 12 in = 30.48 cm. 36 in = 91.44 cm.</p>
+
+      <h2 id="reference-table">Centimeters to Inches Reference Table</h2>
+      <p>Common body measurements, screen sizes, and clothing dimensions converted using the exact factor 1 ÷ 2.54.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Centimeters</th><th>Inches</th><th>Common context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 cm</td><td>0.394 in</td><td>Small button</td></tr>
+            <tr><td>10 cm</td><td>3.937 in</td><td>Smartphone width</td></tr>
+            <tr><td>15.24 cm</td><td>6 in</td><td>Half a foot</td></tr>
+            <tr><td>25.4 cm</td><td>10 in</td><td>Tablet screen</td></tr>
+            <tr><td>30 cm</td><td>11.811 in</td><td>Standard ruler</td></tr>
+            <tr><td>33.02 cm</td><td>13 in</td><td>Small laptop</td></tr>
+            <tr><td>39.62 cm</td><td>15.6 in</td><td>Standard laptop</td></tr>
+            <tr><td>60.96 cm</td><td>24 in</td><td>Desktop monitor</td></tr>
+            <tr><td>68.58 cm</td><td>27 in</td><td>Large monitor</td></tr>
+            <tr><td>139.7 cm</td><td>55 in</td><td>Large TV</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert cm to Inches?</h2>
+      <p>Centimeters are the standard unit for small measurements in metric countries, while inches remain common in the US and for specific product categories globally. Converting between the two is routine for anyone buying US-market electronics, clothing, or hardware from abroad.</p>
+      <ul>
+        <li><strong>Screen sizes</strong> — global spec sheets often list dimensions in both cm and inches; US retailers primarily list inches.</li>
+        <li><strong>Clothing</strong> — EU waist/inseam in cm vs US sizing in inches.</li>
+        <li><strong>Height</strong> — medical records in cm need converting to feet and inches for US formats.</li>
+        <li><strong>Hardware</strong> — drill bits and pipe fittings in mm/cm vs US inch fractions.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many inches is 1 cm?</h3>
+      <p>0.393701 inches. That's 1 ÷ 2.54. In fractions: approximately 25/64 of an inch. A centimeter is 10 millimeters; 1 inch is 25.4 millimeters. So 1 cm is slightly less than half an inch.</p>
+
+      <h3>How do you convert cm to inches?</h3>
+      <p>Divide by 2.54. Quick mental estimate: multiply by 0.4 (gives a result 1.6% too high). For 30 cm: 30 × 0.4 = 12, actual is 11.811 in. The difference is about 5 mm — fine for casual use but not engineering.</p>
+
+      <h3>How many inches is 170 cm?</h3>
+      <p>66.93 inches, or 5 feet 6.93 inches. Divide 170 by 2.54 = 66.929 in. To convert to feet: 66 ÷ 12 = 5 ft with 6.929 in remaining. Use the <a href="/conversion/height-converter">height converter</a> for feet-and-inches output directly.</p>
+
+      <h3>What is 5 foot 7 in cm?</h3>
+      <p>170.18 cm. Convert to total inches: 5 × 12 + 7 = 67 in. Multiply by 2.54: 67 × 2.54 = 170.18 cm. If you need to convert the other direction (cm to feet and inches), the <a href="/conversion/height-converter">height converter</a> handles that format automatically.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/in-to-cm">Inches to Centimeters Converter</a>
+            <p>Reverse conversion — inches to cm with an inches-first reference table.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📐</span>
+          <div>
+            <a href="/conversion/height-converter">Height Converter</a>
+            <p>Convert height between cm, feet and inches, and meters — handles mixed formats.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter (all units)</a>
+            <p>Convert between all metric and imperial length units simultaneously.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/cm-to-ft">Centimeters to Feet Converter</a>
+            <p>Convert cm to feet — most used for height (170 cm, 175 cm, 180 cm in feet).</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/cm-to-mm">Centimeters to Millimeters Converter</a>
+            <p>Convert cm to mm for sewing, photography, and precision measurements.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/ft-to-m">Feet to Meters Converter</a>
+            <p>Convert feet to meters — common for height and distance conversions.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

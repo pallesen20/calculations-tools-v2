@@ -1,0 +1,238 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{yd} = \\text{m} \\div 0.9144$$",
+  rev: "$$\\text{m} = \\text{yd} \\times 0.9144$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert meters to yards' },
+  { id: 'reverse',         label: 'How to convert yards to meters' },
+  { id: 'reference-table', label: 'Meters to yards reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Meters to Yards Converter",
+    "url": "https://calculations.tools/conversion/length-converter/m-to-yd",
+    "description": "Convert meters to yards instantly. Formula: yd = m ÷ 0.9144. Includes reverse yards to meters conversion and a reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert meters to yards",
+    "description": "Convert meters to yards using the exact international conversion factor.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter meters value", "text": "Type your meters value in the m field. The yards result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted yards value appears immediately. For 1 m, the result is 1.09361 yd." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the yd field to convert back to meters. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many yards is 1 meter?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1 meter equals 1.09361 yards. The exact value is 1 ÷ 0.9144 = 1.0936132983... yards. A meter is about 9.4% longer than a yard, which is 3 feet or exactly 0.9144 meters." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert meters to yards?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide meters by 0.9144, or multiply by 1.09361. Example: 400 m ÷ 0.9144 = 437.4 yd. Quick mental estimate: multiply by 1.09 (0.06% low), or add 9% to the meter value." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many yards is 400 meters?",
+        "acceptedAnswer": { "@type": "Answer", "text": "400 meters equals 437.445 yards. Divide by 0.9144: 400 ÷ 0.9144 = 437.445 yd. The 400 m race is about 37.4 yards longer than the old 440 yard dash (which was exactly 1/4 mile)." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many meters is a football field?",
+        "acceptedAnswer": { "@type": "Answer", "text": "An American football field is 100 yards, which equals 91.44 meters. Including the end zones (10 yards each), the total length is 120 yards or 109.728 meters." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Meters to Yards Converter"
+  metaTitle="Meters to Yards Converter | m to yd ᐅ"
+  description="Convert meters to yards instantly. Formula: yd = m ÷ 0.9144. Reverse yards to meters included. Reference table for athletics tracks, pools, and sports fields."
+  canonical="https://calculations.tools/conversion/length-converter/m-to-yd"
+  tocItems={tocItems}
+  embedSlug="m-to-yd"
+  schema={schema}
+  ogFormula="yd = m ÷ 0.9144"
+  ogExample="400 m = 437.4 yd"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Meters to Yards Converter</h2>
+          <p>Type in either field — converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Meters (m)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Yards (yd)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 1.09361" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 m = 1.09361 yd &nbsp;·&nbsp; 1 yd = 0.9144 m</div>
+
+      </div>
+    </section>
+
+    <script src="/js/m-to-yd.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert meters to yards, divide by <strong>0.9144</strong> (or multiply by 1.09361). So 400 m = 437.4 yd. The factor is exact — one yard is defined as exactly 0.9144 meters since the International Yard and Pound Agreement of 1959.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact factor: 1 yd = 0.9144 m, so 1 m = 1.09361 yd (international definition, fixed in 1959).</li>
+          <li>A meter is about 9.4% longer than a yard.</li>
+          <li>Quick mental check: multiply meters by 1.09 for a close estimate (0.06% low).</li>
+          <li>The 400 m athletics track event replaced the 440 yard dash — it's about 37 yards longer.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any value in the meters field and the yards result appears instantly. You can also type in the yards field to convert back to meters — it works in both directions without pressing a button.</p>
+
+      <h2 id="formula">How Do You Convert Meters to Yards?</h2>
+      <p>Divide meters by 0.9144, or equivalently multiply by 1.09361. The underlying definition: one yard = 3 feet = 3 × 0.3048 m = 0.9144 m exactly. So dividing by 0.9144 is dividing by an exact number.</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 1 m = 1.094 yd. 100 m = 109.36 yd. 400 m = 437.45 yd.</p>
+
+      <h2 id="reverse">How Do You Convert Yards to Meters?</h2>
+      <p>Multiply yards by 0.9144. For a full multi-unit converter, the <a href="/conversion/length-converter">length converter</a> handles all metric and imperial units simultaneously.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 100 yd = 91.44 m. 440 yd = 402.336 m. 1760 yd = 1609.344 m (1 mile).</p>
+
+      <h2 id="reference-table">Meters to Yards Reference Table</h2>
+      <p>Common athletics, swimming, and sports field dimensions converted using the exact factor 1 ÷ 0.9144.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Meters</th><th>Yards</th><th>Common context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 m</td><td>1.094 yd</td><td>Standard meter</td></tr>
+            <tr><td>50 m</td><td>54.68 yd</td><td>Olympic pool length</td></tr>
+            <tr><td>91.44 m</td><td>100 yd</td><td>American football field</td></tr>
+            <tr><td>100 m</td><td>109.36 yd</td><td>Sprint distance</td></tr>
+            <tr><td>200 m</td><td>218.72 yd</td><td>Sprint/curve event</td></tr>
+            <tr><td>400 m</td><td>437.45 yd</td><td>One lap (standard track)</td></tr>
+            <tr><td>800 m</td><td>874.89 yd</td><td>Middle distance</td></tr>
+            <tr><td>1000 m</td><td>1093.61 yd</td><td>1 kilometer</td></tr>
+            <tr><td>1609.344 m</td><td>1760 yd</td><td>1 mile</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert Meters to Yards?</h2>
+      <p>Yards remain in everyday use in the US for sports, fabric, and some construction. International athletics, swimming, and most other sports use meters. According to NIST (2023), the yard-to-meter conversion is most commonly needed in sports contexts where US and international standards co-exist.</p>
+      <ul>
+        <li><strong>Athletics</strong> — track events are in meters internationally; US high school records are sometimes in yards.</li>
+        <li><strong>Swimming</strong> — NCAA and many US pools are 25-yard short course; international competition is 50-meter long course.</li>
+        <li><strong>Golf</strong> — US and UK courses measure in yards; European scoreboards increasingly show meters.</li>
+        <li><strong>Fabric</strong> — US fabric is by the yard; EU fabric by the meter.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many yards is 1 meter?</h3>
+      <p>1.09361 yards. The exact value is 1 ÷ 0.9144 = 1.0936132983... yd. A meter is slightly longer than a yard — about 9.4% more. In practical terms: if you have 10 meters of fabric, that's about 10.94 yards.</p>
+
+      <h3>How do you convert meters to yards?</h3>
+      <p>Divide by 0.9144 or multiply by 1.09361. Mental shortcut: add 9% to the meter value (multiply by 1.09, error 0.06%). For 100 m: 100 + 9 = 109 yd; actual is 109.36 yd. For sports use, the difference is under half a yard per 100 meters.</p>
+
+      <h3>How many yards is 400 meters?</h3>
+      <p>437.445 yards. The 400 m race replaced the 440 yard dash (= exactly ¼ mile = 402.336 m) in international athletics. The 400 m is about 35 yards longer than the old quarter-mile dash, which is why 400 m world record times are slightly slower than old quarter-mile records adjusted for distance.</p>
+
+      <h3>How many meters is a football field?</h3>
+      <p>An American football field (playing area only) is 100 yards = 91.44 meters. Including both end zones (10 yards each), the total is 120 yards = 109.728 meters. For the <a href="/conversion/length-converter/yd-to-m">yards to meters</a> direction, use that dedicated converter.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/yd-to-m">Yards to Meters Converter</a>
+            <p>Reverse conversion — yards to meters with a yards-first reference table.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter (all units)</a>
+            <p>Convert between all metric and imperial length units simultaneously.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/m-to-ft">Meters to Feet Converter</a>
+            <p>Convert meters to feet — 1 yard = 3 feet, so both converters are closely related.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/km-to-mi">Kilometers to Miles Converter</a>
+            <p>Convert km to miles — 1 mile = 1,760 yards = 1.609344 km.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

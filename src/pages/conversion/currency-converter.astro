@@ -1,6 +1,6 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
-import { CURRENCY_NAMES } from '../../utils/getPages';
+import { CURRENCY_NAMES, TOP_PAIRINGS } from '../../utils/getPages';
 
 const POPULAR_PAIRS: [string, string][] = [
   ['EUR','USD'],['GBP','USD'],['USD','JPY'],['AUD','USD'],
@@ -14,6 +14,7 @@ const tocItems = [
   { id: 'how-rates-work',       label: 'How exchange rates work' },
   { id: 'provider-comparison',  label: 'Comparing exchange providers' },
   { id: 'popular-pairs',        label: 'Popular currency pairs' },
+  { id: 'all-pairs',            label: 'All currency pair converters' },
   { id: 'travelers',            label: 'Practical tips for travelers' },
   { id: 'common-mistakes',      label: 'Common mistakes' },
   { id: 'faq',                  label: 'FAQs' },
@@ -275,6 +276,21 @@ const schema = [
       </div>
       <p>Pairs that do not include the US dollar are called minor pairs or cross rates (for example EUR/GBP, EUR/JPY). These typically have wider spreads than majors because they are less liquid. When you convert between two non-USD currencies, most providers route the trade through USD intermediately - EUR to JPY is effectively EUR to USD, then USD to JPY.</p>
 
+      <h2 id="all-pairs">All currency pair converters</h2>
+      <p>Each link below opens a dedicated converter with live exchange rate data and a 30-day chart.</p>
+      {Object.entries(TOP_PAIRINGS).map(([from, targets]) => (
+        <div class="currency-pair-group">
+          <h3>{CURRENCY_NAMES[from]} ({from})</h3>
+          <div class="pair-links-grid">
+            {targets.map(to => (
+              <a href={`/conversion/currency-converter/${from.toLowerCase()}-to-${to.toLowerCase()}`}>
+                {from} → {to}
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+
       <h2 id="travelers">Practical tips for travelers</h2>
 
       <h3>Use a no-fee card for most spending</h3>
@@ -332,27 +348,32 @@ const schema = [
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
-          <a href="/conversion/weight-converter">
-            <span class="tool-icon">⚖️</span>
-            <span><strong>Weight Converter</strong> - kg, lbs, oz, stone, metric tons</span>
-          </a>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter</a>
+            <p>kg, lbs, oz, stone, metric tons</p>
+          </div>
         </li>
         <li>
-          <a href="/conversion/length-converter">
-            <span class="tool-icon">📏</span>
-            <span><strong>Length Converter</strong> - km, miles, feet, inches, meters</span>
-          </a>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter</a>
+            <p>km, miles, feet, inches, meters</p>
+          </div>
         </li>
         <li>
-          <a href="/conversion/temperature-converter">
-            <span class="tool-icon">🌡️</span>
-            <span><strong>Temperature Converter</strong> - Celsius, Fahrenheit, Kelvin</span>
-          </a>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter">Temperature Converter</a>
+            <p>Celsius, Fahrenheit, Kelvin</p>
+          </div>
         </li>
         <li>
-          <a href="/math/percentage-calculator">
-            <span class="tool-icon">%</span>
-            <span><strong>Percentage Calculator</strong> - increases, decreases, and differences</span>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>Increases, decreases, and differences</p>
+          </div>
           </a>
         </li>
       </ul>
@@ -361,3 +382,11 @@ const schema = [
   </div>
 
 </CalculatorLayout>
+
+<style is:global>
+  .currency-pair-group { margin-bottom: 1.25rem; }
+  .currency-pair-group h3 { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 0.4rem; font-weight: 500; }
+  .pair-links-grid { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; margin: 0; }
+  .pair-links-grid a { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 0.3rem 0.75rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; white-space: nowrap; }
+  .pair-links-grid a:hover { background: rgba(255,255,255,0.12); color: white; }
+</style>

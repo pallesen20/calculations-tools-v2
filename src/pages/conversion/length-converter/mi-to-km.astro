@@ -1,0 +1,241 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{km} = \\text{mi} \\times 1.609344$$",
+  rev: "$$\\text{mi} = \\text{km} \\div 1.609344$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert miles to km' },
+  { id: 'reverse',         label: 'How to convert km to miles' },
+  { id: 'reference-table', label: 'Miles to km reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Miles to Kilometers Converter",
+    "url": "https://calculations.tools/conversion/length-converter/mi-to-km",
+    "description": "Convert miles to kilometers instantly. Formula: km = mi × 1.609344. Includes reverse km to miles conversion and a reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert miles to kilometers",
+    "description": "Convert miles to kilometers using the exact international conversion factor.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter miles value", "text": "Type your miles value in the mi field. The km result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted km value appears immediately. For 1 mi, the result is 1.60934 km." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the km field to convert back to miles. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many km is 1 mile?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1 mile equals exactly 1.609344 kilometers. This is a fixed international definition established by the International Yard and Pound Agreement of 1959. One mile = 1,609.344 meters exactly." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert miles to km?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply miles by 1.609344. Example: 5 mi × 1.609344 = 8.04672 km. The factor is exact. Quick mental shortcut: multiply by 8 and divide by 5 (8/5 = 1.6, which is 0.58% low)." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many miles is 100 km?",
+        "acceptedAnswer": { "@type": "Answer", "text": "100 km equals 62.137 miles. Divide by 1.609344: 100 ÷ 1.609344 = 62.137 mi. A 100 km ultramarathon is about 62.1 miles." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many km is a marathon?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A marathon is 26.219 miles, which equals 42.195 kilometers. The distance was standardized at 26 miles 385 yards (42.195 km) in 1921 by the IAAF. The half marathon is 13.109 miles or 21.097 km." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Miles to Kilometers Converter"
+  metaTitle="Miles to Kilometers Converter | mi to km ᐅ"
+  description="Convert miles to kilometers instantly. Formula: km = mi × 1.609344. Reverse km to miles included. Reference table for road distances and running routes."
+  canonical="https://calculations.tools/conversion/length-converter/mi-to-km"
+  tocItems={tocItems}
+  embedSlug="mi-to-km"
+  schema={schema}
+  ogFormula="km = mi × 1.609344"
+  ogExample="5 mi = 5 × 1.609344 = 8.047 km"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Miles to Kilometers Converter</h2>
+          <p>Type in either field — converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Miles (mi)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Kilometers (km)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 1.60934" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 mi = 1.609344 km &nbsp;·&nbsp; 1 km = 0.621371 mi</div>
+
+      </div>
+    </section>
+
+    <script src="/js/mi-to-km.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert miles to kilometers, multiply by <strong>1.609344</strong>. So 5 mi = 8.047 km. The factor is exact — one mile is defined as exactly 1,609.344 meters since the International Yard and Pound Agreement of 1959.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact factor: 1 mi = 1.609344 km (international definition, fixed in 1959).</li>
+          <li>Quick mental check: multiply miles by 1.6 for a close estimate (0.58% low).</li>
+          <li>A marathon is exactly 42.195 km (26.219 miles) per IAAF standards.</li>
+          <li>Only 3 countries use miles for road distances: US, UK, and Liberia (NIST, 2023).</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any value in the miles field and the km result appears instantly. You can also type in the km field to convert back to miles — it works in both directions without pressing a button.</p>
+
+      <h2 id="formula">How Do You Convert Miles to Kilometers?</h2>
+      <p>Multiply miles by 1.609344. This is exact: one international mile is defined as exactly 1,609.344 meters under the International Yard and Pound Agreement of 1959. No rounding is introduced by the factor itself.</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 1 mi = 1.609 km. 10 mi = 16.093 km. 26.219 mi = 42.195 km.</p>
+
+      <p>Mental shortcut: multiply by 8 and divide by 5. For 10 miles: 10 × 8 = 80, ÷ 5 = 16 km. Actual: 16.093 km. Error is 0.58% — same as in the mph/km/h conversion since they share the same factor.</p>
+
+      <h2 id="reverse">How Do You Convert Kilometers to Miles?</h2>
+      <p>Divide km by 1.609344 or multiply by 0.621371. For a full multi-unit converter, the <a href="/conversion/length-converter">length converter</a> handles all units simultaneously.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 5 km = 3.107 mi. 10 km = 6.214 mi. 42.195 km = 26.219 mi.</p>
+
+      <h2 id="reference-table">Miles to Kilometers Reference Table</h2>
+      <p>Common running distances and road distances converted using the exact factor 1.609344.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Miles</th><th>Kilometers</th><th>Common context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.5 mi</td><td>0.805 km</td><td>Short jog</td></tr>
+            <tr><td>1 mi</td><td>1.609 km</td><td>Standard mile run</td></tr>
+            <tr><td>3 mi</td><td>4.828 km</td><td>Approx. 5K distance</td></tr>
+            <tr><td>5 mi</td><td>8.047 km</td><td>5-mile road race</td></tr>
+            <tr><td>6.214 mi</td><td>10 km</td><td>10K race</td></tr>
+            <tr><td>10 mi</td><td>16.093 km</td><td>10-mile road race</td></tr>
+            <tr><td>13.109 mi</td><td>21.097 km</td><td>Half marathon</td></tr>
+            <tr><td>26.219 mi</td><td>42.195 km</td><td>Marathon</td></tr>
+            <tr><td>50 mi</td><td>80.467 km</td><td>50-mile ultramarathon</td></tr>
+            <tr><td>100 mi</td><td>160.934 km</td><td>100-mile ultramarathon</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert Miles to Kilometers?</h2>
+      <p>Miles are used in the US, UK, and Liberia for road distances. Most running events worldwide use kilometers. According to NIST (2023), converting between miles and km is one of the most commonly needed everyday unit conversions for English speakers.</p>
+      <ul>
+        <li><strong>Running</strong> — US training plans use miles; international races use km. 1 mile pace ≠ 1 km pace.</li>
+        <li><strong>Driving abroad</strong> — a US driver in Europe sees km signs; a UK driver does too outside Britain.</li>
+        <li><strong>Fitness apps</strong> — many apps let you switch between miles and km for logged distances.</li>
+        <li><strong>Fuel economy</strong> — converting mpg to L/100km requires this factor.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many km is 1 mile?</h3>
+      <p>Exactly 1.609344 km. This is an internationally fixed definition — 1 mile = 1,609.344 meters. The factor is not rounded; it's a precise legal definition. 1 mile is also exactly 8 furlongs, 1,760 yards, or 5,280 feet.</p>
+
+      <h3>How do you convert miles to km?</h3>
+      <p>Multiply by 1.609344. Quick shortcut: multiply by 1.6 (0.58% low) or multiply by 8 and divide by 5 (same result). For 26.219 miles (a marathon): 26.219 × 1.609344 = 42.195 km.</p>
+
+      <h3>How many miles is 100 km?</h3>
+      <p>62.137 miles. Divide 100 by 1.609344 = 62.137 mi. A 100 km ultramarathon is sometimes called "100K" and is about 62.1 miles — more than twice a marathon. Use the <a href="/conversion/length-converter/km-to-mi">km to miles converter</a> for this direction.</p>
+
+      <h3>How many km is a marathon?</h3>
+      <p>A marathon is 42.195 km (26 miles 385 yards). The IAAF standardized this distance in 1921. A half marathon is 21.097 km (13.109 miles). Both distances are exact conversions of the imperial measurements using the 1.609344 factor.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/km-to-mi">Kilometers to Miles Converter</a>
+            <p>Reverse conversion — km to miles with a km-first reference table.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter (all units)</a>
+            <p>Convert between all metric and imperial length units simultaneously.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚡</span>
+          <div>
+            <a href="/conversion/speed-converter/mph-to-kmh">mph to km/h Converter</a>
+            <p>Convert road speeds between miles per hour and kilometers per hour.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter/m-to-ft">Meters to Feet Converter</a>
+            <p>Convert meters to feet — common for altitude and construction.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

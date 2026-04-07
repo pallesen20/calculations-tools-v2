@@ -8,6 +8,7 @@ const tocItems = [
   { id: 'metric-vs-imperial', label: 'Metric vs imperial' },
   { id: 'common',           label: 'Common conversions' },
   { id: 'reference',        label: 'Quick reference table' },
+  { id: 'pair-converters',  label: 'Dedicated pair converters' },
   { id: 'common-mistakes',  label: 'Common mistakes' },
   { id: 'faq',              label: 'FAQs' },
   { id: 'related-tools',    label: 'Related tools' },
@@ -241,6 +242,41 @@ const schema = [
       </table>
       </div>
 
+      <h2 id="pair-converters">Dedicated pair converters</h2>
+      <p>Each link below opens a dedicated page for that specific unit pair, with a formula, reference table, and worked examples.</p>
+
+      <h3>Height &amp; body measurements</h3>
+      <div class="pair-links-grid">
+        <a href="/conversion/length-converter/cm-to-ft">cm → ft</a>
+        <a href="/conversion/length-converter/ft-to-cm">ft → cm</a>
+        <a href="/conversion/length-converter/m-to-ft">m → ft</a>
+        <a href="/conversion/length-converter/ft-to-m">ft → m</a>
+      </div>
+
+      <h3>Small measurements</h3>
+      <div class="pair-links-grid">
+        <a href="/conversion/length-converter/mm-to-cm">mm → cm</a>
+        <a href="/conversion/length-converter/cm-to-mm">cm → mm</a>
+        <a href="/conversion/length-converter/mm-to-in">mm → in</a>
+        <a href="/conversion/length-converter/in-to-mm">in → mm</a>
+        <a href="/conversion/length-converter/cm-to-in">cm → in</a>
+        <a href="/conversion/length-converter/in-to-cm">in → cm</a>
+      </div>
+
+      <h3>Feet &amp; inches</h3>
+      <div class="pair-links-grid">
+        <a href="/conversion/length-converter/ft-to-in">ft → in</a>
+        <a href="/conversion/length-converter/in-to-ft">in → ft</a>
+      </div>
+
+      <h3>Distance</h3>
+      <div class="pair-links-grid">
+        <a href="/conversion/length-converter/km-to-mi">km → mi</a>
+        <a href="/conversion/length-converter/mi-to-km">mi → km</a>
+        <a href="/conversion/length-converter/m-to-yd">m → yd</a>
+        <a href="/conversion/length-converter/yd-to-m">yd → m</a>
+      </div>
+
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Confusing miles and nautical miles</h3>
@@ -311,3 +347,9 @@ const schema = [
   </div>
 
 </CalculatorLayout>
+
+<style is:global>
+  .pair-links-grid { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; margin: 0.5rem 0 1.25rem; }
+  .pair-links-grid a { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 0.3rem 0.75rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; white-space: nowrap; }
+  .pair-links-grid a:hover { background: rgba(255,255,255,0.12); color: white; }
+</style>
