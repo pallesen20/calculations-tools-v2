@@ -3,6 +3,7 @@ import { execSync } from 'child_process';
 import BaseLayout from './BaseLayout.astro';
 import Sources from '../components/Sources.astro';
 import type { Source } from '../components/Sources.astro';
+import { socials } from '../data/socials';
 
 interface TocItem {
   id: string;
@@ -37,8 +38,22 @@ const ogImage = (ogFormula && ogExample)
 
 const AUTHOR = {
   "@type": "Person",
-  "name": "Jesper Pallesen",
-  "url": "https://calculations.tools/about-us/jesper-pallesen"
+    "name": "Jesper Pallesen",
+    "url": "https://calculations.tools/about-us/jesper-pallesen",
+    "sameAs": ["https://www.linkedin.com/in/jesperpallesen20/", "https://gamesevenmarketing.com/", "https://dutix.io/"],
+    "jobTitle": "Founder & Developer",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Calculations.tools",
+      "logo": "https://calculations.tools/open-graph.webp",
+      "description": "Free, accurate calculators and converters - no sign-up, no ads, instant results.",
+      "url": "https://calculations.tools",
+      "foundingDate": "2025",
+      "sameAs": socials.map(s => s.href),
+      "areaServed": "Worldwide"
+    },
+    "description": "SEO strategist, software developer, and former professional hockey player. Founder of calculations.tools.",
+    "knowsAbout": ["SEO", "Software Development", "Data Analytics", "Technical SEO", "Content Strategy"]
 };
 
 const augmentedSchema = schema
@@ -251,7 +266,7 @@ const iframeSnippet = embedUrl
     transition: color 0.2s;
   }
   .toc-link:hover { color: white; }
-  .embed-section { margin-top: 1rem; }
+  .embed-section { margin: 1rem 0 2rem 0; }
   .embed-button {
     width: 100%;
     padding: 0.6rem 1rem;

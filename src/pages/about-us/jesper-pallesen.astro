@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { socials } from '../../data/socials';
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -10,17 +11,35 @@ const personSchema = {
   "jobTitle": "Founder & Developer",
   "description": "I have worked with SEO and software development since 2017, helping businesses grow their online visibility across multiple markets and languages. My work sits at the intersection of technical SEO and data analytics - building systems that are both measurable and durable. Calculations.tools grew out of a personal frustration: too many online tools are engineered to extract value from users rather than provide it. I built this site to be the opposite - a resource that genuinely helps people with everyday tasks and stays free indefinitely. Every calculation runs locally in your browser; nothing is transmitted to any server.",
   "worksFor": {
-    "@type": "Organization",
-    "name": "calculations.tools",
-    "publishingPrinciples": "https://calculations.tools/editorial-standards",
-    "url": "https://calculations.tools"
-  },
+      "@type": "Organization",
+      "name": "Calculations.tools",
+      "logo": "https://calculations.tools/open-graph.webp",
+      "description": "Free, accurate calculators and converters - no sign-up, no ads, instant results.",
+      "url": "https://calculations.tools",
+      "foundingDate": "2025",
+      "sameAs": socials.map(s => s.href),
+      "areaServed": "Worldwide"
+    },
   "sameAs": [
     "https://www.linkedin.com/in/jesperpallesen20/",
     "https://gamesevenmarketing.com/",
     "https://dutix.io/"
   ],
-  "knowsAbout": ["SEO", "Software Development", "Data Analytics", "Technical SEO", "Content Strategy", "Web Development"]
+  "knowsAbout": ["SEO", "Software Development", "Data Analytics", "Technical SEO", "Content Strategy", "Web Development"],
+  "mainEntityOfPage": {
+    "@type": "ProfilePage",
+    "url": "https://calculations.tools/about-us/jesper-pallesen",
+    "name": "Jesper Pallesen, founder at calculations.tools",
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "WebSite",
+      "@id": "https://calculations.tools/#website",
+      "url": "https://calculations.tools",
+      "name": "calculations.tools",
+      "description": "Free, accurate calculators and converters - no sign-up, no ads, instant results.",
+      "inLanguage": "en-US"
+    }
+  }
 };
 
 const tools = [

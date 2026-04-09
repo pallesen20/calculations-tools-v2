@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { socials } from '../data/socials';
 
 const schema = {
   "@context": "https://schema.org",
@@ -15,7 +16,12 @@ const schema = {
   "publisher": {
     "@type": "Organization",
     "name": "calculations.tools",
-    "url": "https://calculations.tools"
+    "logo": "https://calculations.tools/open-graph.webp",
+    "url": "https://calculations.tools",
+    "description": "Free online calculators and converters for health, math, unit conversion, text, and date calculations. Built by a human, free forever.",
+    "foundingDate": "2025",
+    "sameAs": socials.map(s => s.href),
+    "areaServed": "Worldwide"
   }
 };
 

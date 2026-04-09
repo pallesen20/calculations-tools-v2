@@ -1,35 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { socials } from '../../data/socials';
 
 const schema = [
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Calculations.tools",
-    "url": "https://calculations.tools",
-    "logo": "https://calculations.tools/open-graph.webp",
-    "description": "Free online calculators and converters for health, math, unit conversion, text, and date calculations. Built by a human, free forever.",
-    "publishingPrinciples": "https://calculations.tools/editorial-standards",
-    "founder": {
-      "@type": "Person",
-      "name": "Jesper Pallesen",
-      "url": "https://www.linkedin.com/in/jesperpallesen20/",
-      "jobTitle": "Founder & Developer",
-      "knowsAbout": ["SEO", "Software Development", "Data Analytics", "Technical SEO", "Web Development"]
-    },
-    "areaServed": "Worldwide"
-  },
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Jesper Pallesen",
     "url": "https://calculations.tools/about-us",
-    "sameAs": ["https://www.linkedin.com/in/jesperpallesen20/"],
+    "sameAs": ["https://www.linkedin.com/in/jesperpallesen20/", "https://gamesevenmarketing.com/", "https://dutix.io/"],
     "jobTitle": "Founder & Developer",
     "worksFor": {
       "@type": "Organization",
       "name": "Calculations.tools",
-      "url": "https://calculations.tools"
+      "logo": "https://calculations.tools/open-graph.webp",
+      "description": "Free, accurate calculators and converters - no sign-up, no ads, instant results.",
+      "url": "https://calculations.tools",
+      "foundingDate": "2025",
+      "sameAs": socials.map(s => s.href),
+      "areaServed": "Worldwide"
     },
     "description": "SEO strategist, software developer, and former professional hockey player. Founder of calculations.tools.",
     "knowsAbout": ["SEO", "Software Development", "Data Analytics", "Technical SEO", "Content Strategy"]
