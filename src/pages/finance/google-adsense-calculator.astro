@@ -1,0 +1,369 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  earnings: "$$\\text{Earnings} = \\text{Page Views} \\times \\frac{\\text{CTR}}{100} \\times \\text{CPC}$$",
+  rpm:      "$$\\text{Page RPM} = \\frac{\\text{Earnings}}{\\text{Page Views}} \\times 1{,}000$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'Google',
+    title: 'Revenue per thousand impressions (RPM) - Google AdSense Help',
+    journal: 'Google AdSense Help Center',
+    year: 2024,
+    url: 'https://support.google.com/adsense/answer/190515',
+  },
+  {
+    author: 'Google',
+    title: 'AdSense revenue share - Google AdSense Help',
+    journal: 'Google AdSense Help Center',
+    year: 2024,
+    url: 'https://support.google.com/adsense/answer/180195',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',       label: 'How to use this calculator' },
+  { id: 'how-adsense-works', label: 'How AdSense revenue works' },
+  { id: 'formula',          label: 'AdSense earnings formula' },
+  { id: 'rpm-benchmarks',   label: 'RPM benchmarks by niche' },
+  { id: 'cpc-by-niche',     label: 'CPC by niche' },
+  { id: 'how-to-see-cpc',   label: 'How to see CPC in AdSense' },
+  { id: 'increase-earnings', label: 'Increase AdSense earnings' },
+  { id: 'faq',              label: 'FAQs' },
+  { id: 'related-tools',    label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Google AdSense Calculator",
+    "url": "https://calculations.tools/finance/google-adsense-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Estimate your Google AdSense earnings from daily page views, CTR, and CPC. Shows daily, monthly, and annual revenue plus your Page RPM.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much does AdSense pay per 1,000 views?",
+        "acceptedAnswer": { "@type": "Answer", "text": "AdSense pays $1 to $40 per 1,000 page views depending on your niche, audience country, and ad placement. This metric is called Page RPM. Finance and insurance sites earn $15-40 RPM; lifestyle and entertainment sites typically earn $1-8 RPM. US and UK traffic drives the highest rates due to strong advertiser competition." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is RPM in Google AdSense?",
+        "acceptedAnswer": { "@type": "Answer", "text": "RPM (Revenue Per Mille) is your estimated earnings per 1,000 page views. It's calculated as (total earnings divided by page views) multiplied by 1,000. RPM is the most useful benchmark for comparing monetization performance across different content, because it accounts for both your click-through rate and your average CPC in a single number." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good CTR for AdSense?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A good CTR for AdSense is 1-3% for most content sites. Below 0.5% typically indicates poor ad placement or audience mismatch. Above 3% is considered strong. CTR above 10% may trigger a Google account review, since unusually high click rates can indicate invalid traffic. Aim for naturally-placed ads that are relevant to your content." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I see my CPC in Google AdSense?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Log into your AdSense account, go to Reports, then click on the date range you want to analyze. In the metrics section, add 'CPC' (Cost Per Click) as a column. You can also break CPC down by ad unit, page, or country. The CPC shown is your net earnings per click after Google's revenue share - not the gross advertiser spend." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does AdSense pay for impressions or clicks?",
+        "acceptedAnswer": { "@type": "Answer", "text": "AdSense pays for both. Most earnings come from CPC (cost per click) ads, where you earn each time a visitor clicks an ad. Some ads run on a CPM basis, paying per 1,000 impressions regardless of clicks. Since 2024, Google calculates AdSense payments on a per-impression basis internally, but publishers still see CPC and RPM metrics in their reports." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Google AdSense Calculator"
+  metaTitle="Google AdSense Calculator | Estimate Ad Revenue Instantly ᐅ"
+  description="Estimate your Google AdSense earnings from daily page views, CTR, and CPC. Shows daily, monthly, and annual revenue plus your Page RPM. Free, instant, no login needed."
+  canonical="https://calculations.tools/finance/google-adsense-calculator"
+  tocItems={tocItems}
+  embedSlug="google-adsense-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="Earnings = Page Views x (CTR / 100) x CPC"
+  ogExample="10,000 views x 2% CTR x $0.25 CPC = $50/day"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Estimate AdSense Earnings</h2>
+          <p>Enter your daily page views, CTR, and average CPC</p>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="gac-pageviews">Daily Page Views</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="gac-pageviews" class="bmi-input" placeholder="e.g. 10000" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="gac-ctr">Click-Through Rate (CTR %)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="gac-ctr" class="bmi-input" value="2" placeholder="2" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="gac-cpc">Average CPC (USD)</label>
+          <div class="gac-cpc-wrap">
+            <span class="gac-dollar">$</span>
+            <input type="text" inputmode="decimal" id="gac-cpc" class="bmi-input gac-cpc-input" value="0.25" placeholder="0.25" />
+          </div>
+        </div>
+        <div id="gac-result" class="lbm-result hidden">
+          <div class="gac-results-grid">
+            <div class="gac-result-row">
+              <span class="gac-period-label">Daily clicks</span>
+              <span class="gac-period-val" id="gac-res-clicks">-</span>
+            </div>
+            <div class="gac-result-row">
+              <span class="gac-period-label">Daily earnings</span>
+              <span class="gac-period-val" id="gac-res-daily">-</span>
+            </div>
+            <div class="gac-result-row gac-row-highlight">
+              <span class="gac-period-label">Monthly earnings</span>
+              <span class="gac-period-val" id="gac-res-monthly">-</span>
+            </div>
+            <div class="gac-result-row">
+              <span class="gac-period-label">Annual earnings</span>
+              <span class="gac-period-val" id="gac-res-annual">-</span>
+            </div>
+            <div class="gac-result-row gac-row-rpm">
+              <span class="gac-period-label">Page RPM</span>
+              <span class="gac-period-val" id="gac-res-rpm">-</span>
+            </div>
+          </div>
+          <p class="gac-note">Estimates are pre-tax and assume consistent daily traffic.</p>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/google-adsense-calculator.js" is:inline></script>
+    <FinanceDisclaimer />
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Multiply your daily page views by your CTR percentage and average CPC to get your daily AdSense earnings. At 10,000 daily views, a 2% CTR, and $0.25 CPC, you earn $50/day or around $1,520/month. Enter your own numbers above to get a personalised estimate for any niche or traffic level.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Google pays AdSense publishers approximately 68% of advertiser spend on content ads (Google, 2024).</li>
+          <li>Page RPM ranges from $1 to $40+ depending on niche - finance earns the most, entertainment the least.</li>
+          <li>The average CTR for banner ads on content sites is 1-3%; above 3% is strong, above 10% triggers review.</li>
+          <li>CPC varies by vertical: finance keywords can pay $5-50+, while lifestyle keywords pay $0.10-$1.50.</li>
+          <li>Monthly earnings = Daily Page Views x (CTR/100) x CPC x 30.44.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This AdSense Calculator</h2>
+      <p>Enter three inputs: your average daily page views, your CTR (the percentage of visitors who click an ad), and your average CPC in USD. The calculator shows daily clicks, daily earnings, monthly and annual revenue, and your Page <a href="/glossary/rpm">RPM</a>. If you don't know your CPC yet, use $0.25 as a starting estimate for a general content site.</p>
+      <p>To find your actual CTR and CPC, log into Google AdSense, go to Reports, and check the last 30 days. Use those real figures to validate this estimate against your actual earnings. The calculator is also useful for projecting revenue at different traffic levels - try doubling your page views to see the earnings impact.</p>
+
+      <h2 id="how-adsense-works">How Does AdSense Revenue Work?</h2>
+      <p>Google AdSense serves ads on your site from Google's display network and pays you each time a visitor clicks (or, for CPM ads, each time the ad is viewed 1,000 times). Publishers keep approximately 68% of advertiser spend on content ads (Google, 2024). The CPC and RPM you see in your AdSense dashboard are already your net share - not the gross advertiser bid.</p>
+      <p>Three factors drive your total earnings: traffic volume (page views), engagement quality (CTR), and ad value (CPC). Niche matters more than most publishers realise - a finance site with 5,000 daily views can out-earn a lifestyle site with 50,000 daily views because the CPC difference is an order of magnitude.</p>
+      <p>Since early 2024, Google moved AdSense to a per-impression payment model internally, but publishers still see CPC and RPM in reports. Nothing changes for how you estimate earnings - the formula remains the same.</p>
+
+      <h2 id="formula">What Is the AdSense Earnings Formula?</h2>
+      <p>Every AdSense earnings estimate uses a single core formula. Multiply page views by CTR to get clicks, then multiply clicks by CPC to get earnings. Page RPM - the most useful benchmarking metric - divides earnings by page views and multiplies by 1,000.</p>
+
+      <Formula expr={f.earnings} />
+
+      <p>Worked example: 10,000 daily page views, 2% <a href="/glossary/ctr">CTR</a>, $0.25 <a href="/glossary/cpc">CPC</a>:</p>
+      <ul>
+        <li>Daily clicks: 10,000 x 0.02 = <strong>200 clicks</strong></li>
+        <li>Daily earnings: 200 x $0.25 = <strong>$50.00</strong></li>
+        <li>Monthly: $50 x 30.44 = <strong>$1,522</strong></li>
+        <li>Annual: $50 x 365 = <strong>$18,250</strong></li>
+      </ul>
+
+      <p>Page RPM for that same site:</p>
+      <Formula expr={f.rpm} />
+      <p>($50 / 10,000) x 1,000 = <strong>$5.00 RPM</strong>. That's a typical result for a general content site in a non-specialist niche.</p>
+
+      <h2 id="rpm-benchmarks">What Is a Good RPM for AdSense?</h2>
+      <p>A good AdSense RPM depends heavily on niche and traffic geography. Finance and insurance sites routinely earn $15-40 RPM because advertisers pay premium CPCs for those keywords. General blogs and news sites average $2-8 RPM. US, UK, Canadian, and Australian traffic earns significantly higher RPM than traffic from lower-income countries due to stronger advertiser competition (Google AdSense, 2024).</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Niche</th>
+              <th>Typical RPM</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Finance / Insurance</td><td>$15 - $40</td><td>High-value keywords, strong advertiser competition</td></tr>
+            <tr><td>Technology / Software</td><td>$10 - $25</td><td>Tech buyers have high purchase intent</td></tr>
+            <tr><td>Health / Medical</td><td>$8 - $20</td><td>Pharma and supplement advertisers pay well</td></tr>
+            <tr><td>Business / Marketing</td><td>$8 - $18</td><td>B2B advertisers target professional audiences</td></tr>
+            <tr><td>Lifestyle / Food / Travel</td><td>$3 - $8</td><td>Lower CPC but large audience volumes</td></tr>
+            <tr><td>News / Entertainment</td><td>$1 - $5</td><td>High traffic but low advertiser CPCs</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>RPM below $1 usually signals one of three problems: non-English or low-income-country traffic, poor ad placement, or invalid traffic from bots. If your RPM sits below $1 despite good content, check your ad unit placement and geographic traffic mix first.</p>
+
+      <h2 id="cpc-by-niche">What Is a Good CPC for AdSense?</h2>
+      <p>CPC (Cost Per Click) is the amount you earn each time a visitor clicks an ad. The average AdSense CPC ranges from $0.05 to $3.00 for most content sites, but high-value niches like finance, legal, and insurance can produce CPCs of $5 to $50+ per click. A CPC above $0.50 is solid for a general site; above $1.00 is excellent.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Niche</th>
+              <th>Average CPC Range</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Finance / Insurance / Legal</td><td>$1.00 - $50+</td><td>Most valuable keywords in search advertising</td></tr>
+            <tr><td>Technology / Software</td><td>$0.50 - $8.00</td><td>SaaS and enterprise software drive highest end</td></tr>
+            <tr><td>Health / Medical</td><td>$0.50 - $5.00</td><td>Varies widely by specific health topic</td></tr>
+            <tr><td>Business / Marketing</td><td>$0.40 - $4.00</td><td>B2B leads command premium CPCs</td></tr>
+            <tr><td>Lifestyle / Food / Travel</td><td>$0.10 - $1.50</td><td>High volume, lower per-click value</td></tr>
+            <tr><td>Entertainment / Gaming</td><td>$0.05 - $0.50</td><td>Young demographic, low advertiser value</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>CPC also varies significantly by country. A click from a US or UK visitor is often worth 3-10x more than the same click from a visitor in South Asia or Sub-Saharan Africa. If your traffic is global, your effective CPC will land somewhere between the high and low extremes.</p>
+
+      <h2 id="how-to-see-cpc">How to See Your CPC in Google AdSense</h2>
+      <p>Your CPC is visible in your AdSense Reports section. The default report view often shows RPM and Page views, but you can add CPC as a column. Here's exactly how to find it: log into AdSense, click Reports in the left menu, set your date range (last 30 days works well), then click the columns icon and enable CPC. The figure shown is your net CPC - your share after Google's revenue split.</p>
+      <p>You can also break CPC down further. Under the Dimensions menu, add "Ad unit" to see which ad placements earn the highest CPC. This is useful for prioritising your highest-value ad slots. Add "Country" to see which geographic markets deliver the best rates for your content.</p>
+      <p>A few things to keep in mind: CPC in AdSense reports is an average across all clicks in the period. Individual clicks vary widely - one click might earn $0.02 and the next $4.50 depending on which ad was displayed. The average is what matters for forecasting, which is what this calculator uses.</p>
+
+      <h2 id="increase-earnings">How to Increase Your AdSense Earnings</h2>
+      <p>AdSense earnings grow through three levers: more traffic (page views), higher CTR (ad placement and format), and higher CPC (content topic and audience quality). The highest-impact changes are usually content strategy - shifting toward higher-CPC topics can double or triple RPM with zero increase in traffic.</p>
+      <ul>
+        <li><strong>Target higher-CPC keywords.</strong> A personal finance article on "best balance transfer credit cards" will earn 10-20x more per click than an article on "funny cat videos." The same traffic volume, radically different CPC.</li>
+        <li><strong>Optimise ad placement.</strong> Ads within the content body - especially above the fold and after the first paragraph - consistently outperform sidebar and footer placements. Use AdSense auto ads or experiment with manual placement.</li>
+        <li><strong>Build US/UK/CA/AU traffic.</strong> Tier-1 English-speaking markets deliver the highest CPCs. If your content can attract these audiences, RPM often doubles compared to global-average traffic.</li>
+        <li><strong>Improve page speed.</strong> Faster pages reduce bounce rate, increase pages-per-session, and mean more ad impressions per visitor. Core Web Vitals improvements directly impact earnings.</li>
+        <li><strong>Grow email and return traffic.</strong> Returning visitors have higher CTR than new visitors because they're more engaged with your content and trust your site more.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How much does AdSense pay per 1,000 views?</h3>
+      <p>AdSense pays $1 to $40 per 1,000 page views depending on niche, audience country, and ad placement. This metric is called Page RPM. Finance sites earn $15-40 RPM; lifestyle and entertainment sites earn $1-8 RPM. US and UK traffic drives the highest rates. Use the calculator above to estimate your specific RPM from your own CTR and CPC inputs.</p>
+
+      <h3>What is RPM in Google AdSense?</h3>
+      <p>RPM (Revenue Per Mille) is your estimated earnings per 1,000 page views. The formula is: (total earnings / page views) x 1,000. It's the most practical benchmark for evaluating ad performance because it combines CTR and CPC into one number. A $5 RPM means you earn $5 for every 1,000 visitors, regardless of how many clicked.</p>
+
+      <h3>What is a good CTR for AdSense?</h3>
+      <p>A good AdSense CTR is 1-3% for most content sites. Below 0.5% usually means ads are poorly placed or mismatched with your audience. Above 3% is strong. Google may review accounts with CTR above 10%, as very high click rates can indicate invalid traffic. Focus on relevant ad placement rather than forcing high visibility - genuine clicks convert better for advertisers.</p>
+
+      <h3>How do I see my CPC in Google AdSense?</h3>
+      <p>Go to AdSense Reports, set your date range, and add CPC as a column via the columns icon. You can filter by ad unit or country to see which placements and markets earn the most per click. The CPC shown is your net share - approximately 68% of what the advertiser paid. You can also see estimated earnings per click by dividing your total earnings by total clicks.</p>
+
+      <h3>Does AdSense pay for impressions or clicks?</h3>
+      <p>AdSense pays for both, but most earnings come from clicks (CPC). Some ads run on a CPM (cost per mille) basis and pay per 1,000 impressions regardless of clicks. Since 2024, Google processes AdSense payments on a per-impression basis internally, but publishers still see CPC, CTR, and RPM metrics in their dashboards. For estimation purposes, the CPC-based formula in this calculator remains the standard approach.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💵</span>
+          <div>
+            <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+            <p>Convert your AdSense income to an hourly rate to compare against salaried employment.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📈</span>
+          <div>
+            <a href="/finance/roi-calculator">ROI Calculator</a>
+            <p>Calculate return on investment for content creation, SEO tools, or paid traffic used to grow AdSense revenue.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📊</span>
+          <div>
+            <a href="/finance/compound-interest-calculator">Compound Interest Calculator</a>
+            <p>Model how reinvesting AdSense earnings into site growth compounds over time.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>Calculate CTR, conversion rates, or the percentage change in your monthly AdSense earnings.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">↗</span>
+          <div>
+            <a href="/math/percentage-calculator/increase">Percentage Increase Calculator</a>
+            <p>Measure how much your RPM or monthly revenue has grown after optimisation.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .gac-cpc-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .gac-dollar {
+    position: absolute;
+    left: 0.85rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .gac-cpc-input {
+    padding-left: 1.75rem !important;
+  }
+  .gac-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .gac-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .gac-result-row:last-child { border-bottom: none; }
+  .gac-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .gac-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .gac-row-rpm { border-top: 1px solid rgba(255,255,255,0.12); }
+  .gac-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .gac-row-highlight .gac-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .gac-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .gac-row-highlight .gac-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .gac-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-align: center; margin: 0.6rem 0 0; }
+</style>

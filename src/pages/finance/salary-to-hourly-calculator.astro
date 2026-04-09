@@ -1,0 +1,458 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  hourly: "$$\\text{Hourly Rate} = \\frac{\\text{Annual Salary}}{\\text{Hours per Week} \\times \\text{Weeks per Year}}$$",
+  annual: "$$\\text{Annual Salary} = \\text{Hourly Rate} \\times \\text{Hours per Week} \\times \\text{Weeks per Year}$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'U.S. Bureau of Labor Statistics',
+    title: 'Occupational Employment and Wage Statistics — National Employment and Wage Estimates',
+    journal: 'U.S. Department of Labor',
+    year: 2024,
+    url: 'https://www.bls.gov/oes/current/oes_nat.htm',
+  },
+  {
+    author: 'U.S. Department of Labor, Wage and Hour Division',
+    title: 'Overtime Pay — Frequently Asked Questions',
+    journal: 'U.S. Department of Labor',
+    year: 2024,
+    url: 'https://www.dol.gov/agencies/whd/overtime',
+  },
+  {
+    author: 'U.S. Bureau of Labor Statistics',
+    title: 'Employer Costs for Employee Compensation — News Release',
+    journal: 'U.S. Department of Labor',
+    year: 2024,
+    url: 'https://www.bls.gov/news.release/ecec.nr0.htm',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',       label: 'How to use' },
+  { id: 'formula',          label: 'Salary to hourly formula' },
+  { id: 'standard-hours',   label: 'Standard work hours' },
+  { id: 'pay-periods',      label: 'Pay period types' },
+  { id: 'examples',         label: 'Salary examples' },
+  { id: 'salary-vs-hourly', label: 'Salary vs. hourly pay' },
+  { id: 'mistakes',         label: 'Common mistakes' },
+  { id: 'faq',              label: 'FAQs' },
+  { id: 'related-tools',    label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Salary to Hourly Calculator",
+    "url": "https://calculations.tools/finance/salary-to-hourly-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Convert any salary to an hourly rate instantly. Supports all pay periods - annual, monthly, bi-weekly, weekly, daily - with auto-detected currency and customisable work hours.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I convert my annual salary to an hourly rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide your annual salary by the number of hours you work in a year. At the standard 40 hours per week and 52 weeks per year, that is 2,080 hours. Example: $60,000 annual salary divided by 2,080 hours equals $28.85 per hour. Adjust the hours per week or weeks per year fields if your schedule differs from the standard." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many work hours are in a year?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A standard full-time work year in the US contains 2,080 hours, calculated as 40 hours per week multiplied by 52 weeks. This figure is used by the IRS, BLS, and federal agencies for wage comparisons. If you take unpaid leave, reduce weeks per year accordingly: 50 weeks gives 2,000 hours; 48 weeks gives 1,920 hours." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is $50,000 a year as an hourly rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "$50,000 per year equals $24.04 per hour at the standard 2,080-hour work year (40 hours/week, 52 weeks). If you work fewer weeks - say 50 weeks due to unpaid vacation - the hourly equivalent rises to $25.00. Monthly it equals $4,167; weekly it equals $962; bi-weekly it equals $1,923." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert a monthly salary to an hourly rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the monthly salary by 12 to get the annual figure, then divide by your total annual hours. Example: $5,000 per month multiplied by 12 equals $60,000 per year. Divided by 2,080 hours gives $28.85 per hour. The calculator does this in one step - select 'Per month' as your pay period and enter your monthly amount." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is $15 an hour as an annual salary?",
+        "acceptedAnswer": { "@type": "Answer", "text": "$15 per hour equals $31,200 per year at a standard 40-hour week and 52-week year (2,080 hours). Monthly that is $2,600; bi-weekly it is $1,200; weekly it is $600. To calculate: hourly rate multiplied by hours per week multiplied by weeks per year equals annual salary." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Salary to Hourly Calculator"
+  metaTitle="Salary to Hourly Calculator | Convert Weekly, Monthly, Annual ᐅ"
+  description="Convert any salary to an hourly rate instantly. Supports annual, monthly, bi-weekly, weekly, and daily pay periods. Auto-detects your currency. Adjust hours per week and weeks per year."
+  canonical="https://calculations.tools/finance/salary-to-hourly-calculator"
+  tocItems={tocItems}
+  embedSlug="salary-to-hourly-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="Hourly = Annual Salary / (Hours per Week x Weeks per Year)"
+  ogExample="$60,000 / (40 hrs x 52 wks) = $28.85/hr"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Convert Salary to Hourly Rate</h2>
+          <p>Enter your salary and schedule to see all pay period equivalents</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="sth-amount">Your Salary</label>
+          <div class="sth-amount-row">
+            <div class="sth-currency-wrap">
+              <select id="sth-currency" class="sth-currency-select" aria-label="Currency"></select>
+              <svg class="sth-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+            </div>
+            <input type="text" inputmode="decimal" id="sth-amount" class="bmi-input sth-amount-input" placeholder="Enter amount" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="sth-period">Pay Period</label>
+          <div class="bmi-input-wrap">
+            <select id="sth-period" class="bmi-input">
+              <option value="annual">Per year (annual)</option>
+              <option value="monthly">Per month</option>
+              <option value="biweekly">Every two weeks (bi-weekly)</option>
+              <option value="weekly">Per week</option>
+              <option value="daily">Per day</option>
+              <option value="hourly">Per hour</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="sth-hours">Hours per Week</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="sth-hours" class="bmi-input" value="40" placeholder="40" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="sth-weeks">Weeks per Year</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="sth-weeks" class="bmi-input" value="52" placeholder="52" />
+          </div>
+        </div>
+
+        <div id="sth-result" class="lbm-result hidden">
+          <div class="sth-results-grid">
+            <div class="sth-result-row sth-row-highlight">
+              <span class="sth-period-label">Hourly</span>
+              <span class="sth-period-val" id="sth-res-hourly">-</span>
+            </div>
+            <div class="sth-result-row">
+              <span class="sth-period-label">Daily</span>
+              <span class="sth-period-val" id="sth-res-daily">-</span>
+            </div>
+            <div class="sth-result-row">
+              <span class="sth-period-label">Weekly</span>
+              <span class="sth-period-val" id="sth-res-weekly">-</span>
+            </div>
+            <div class="sth-result-row">
+              <span class="sth-period-label">Bi-weekly</span>
+              <span class="sth-period-val" id="sth-res-biweekly">-</span>
+            </div>
+            <div class="sth-result-row">
+              <span class="sth-period-label">Monthly</span>
+              <span class="sth-period-val" id="sth-res-monthly">-</span>
+            </div>
+            <div class="sth-result-row sth-row-annual">
+              <span class="sth-period-label">Annual</span>
+              <span class="sth-period-val" id="sth-res-annual">-</span>
+            </div>
+          </div>
+          <p class="sth-note">Daily rate assumes 5 working days per week.</p>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/salary-to-hourly-calculator.js" is:inline></script>
+    <FinanceDisclaimer />
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Divide your annual salary by the total hours you work in a year to get your hourly rate. At the US standard of 40 hours per week and 52 weeks, that's 2,080 hours. A $60,000 salary equals $28.85 per hour. Change the pay period selector to convert from monthly, bi-weekly, weekly, or daily figures too.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The US standard work year is 2,080 hours (40 hrs x 52 weeks), used by the BLS and IRS for wage comparisons.</li>
+          <li>The US median annual wage was $59,228 in 2023, equal to roughly $28.47/hour (Bureau of Labor Statistics, 2024).</li>
+          <li>Bi-weekly pay (every two weeks, 26 pay periods/year) is the most common pay frequency in US private-sector employment (BLS, 2022).</li>
+          <li>Hourly Rate = Annual Salary / (Hours per Week x Weeks per Year).</li>
+          <li>Reducing weeks per year to 50 (two weeks unpaid leave) raises the effective hourly rate: $60,000 / 2,000 hours = $30.00/hr instead of $28.85/hr.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Convert Annual Salary to Hourly Rate</h2>
+      <p>The standard conversion divides your annual salary by 2,080 hours, the BLS-defined full-time work year. A $60,000 salary becomes $28.85/hour; a $100,000 salary becomes $48.08/hour. If your hours or working weeks differ from the standard, adjust the inputs above - the formula stays the same.</p>
+
+      <h2 id="formula">What Is the Salary to Hourly Formula?</h2>
+      <p>One formula drives every conversion on this page. Annual salary divided by total annual hours gives the hourly rate - everything else (daily, weekly, monthly) scales from that single figure.</p>
+      <Formula expr={f.hourly} />
+      <p>To go the other direction - from hourly to annual:</p>
+      <Formula expr={f.annual} />
+      <p>Worked example: $75,000 per year divided by (40 hours x 52 weeks) = $75,000 / 2,080 = <strong>$36.06/hour</strong>. Reverse check: $36.06 x 40 x 52 = $75,005 (rounding to cents). The reverse formula uses the same inputs - no new variables needed.</p>
+
+      <h2 id="standard-hours">What Is the Standard Work Year in Hours?</h2>
+      <p>The US standard work year is 2,080 hours (40 hours x 52 weeks), the figure used by the BLS, IRS, and the Office of Personnel Management for federal pay calculations. Actual hours vary based on overtime, unpaid leave, and contract terms. The table below shows common scenarios.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Work Schedule</th>
+              <th>Hours/Week</th>
+              <th>Weeks/Year</th>
+              <th>Total Hours/Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Part-time (half)</td><td>20</td><td>52</td><td>1,040</td></tr>
+            <tr><td>Standard full-time</td><td>40</td><td>52</td><td>2,080</td></tr>
+            <tr><td>Full-time, 2 weeks unpaid leave</td><td>40</td><td>50</td><td>2,000</td></tr>
+            <tr><td>Full-time, 4 weeks unpaid leave</td><td>40</td><td>48</td><td>1,920</td></tr>
+            <tr><td>Extended full-time</td><td>45</td><td>52</td><td>2,340</td></tr>
+            <tr><td>Contractor (variable, ~30 hrs)</td><td>30</td><td>48</td><td>1,440</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Notice how unpaid leave raises your effective hourly rate. Two weeks of unpaid time off on a $60,000 salary gives an effective rate of $30.00/hr - not $28.85/hr - because you earn the same annual pay in fewer hours.</p>
+
+      <h2 id="pay-periods">What Do the Different Pay Periods Mean?</h2>
+      <p>Pay period choice affects cash flow planning but not total annual income. Bi-weekly and semi-monthly are often confused: bi-weekly means every two weeks (26 pay days per year), while semi-monthly means twice a month (24 pay days per year). The table below shows how each period relates to annual salary at 2,080 hours per year.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Pay Period</th>
+              <th>Periods/Year</th>
+              <th>Formula</th>
+              <th>Example ($60,000/yr)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Hourly</td><td>2,080</td><td>Annual / 2,080</td><td>$28.85</td></tr>
+            <tr><td>Daily</td><td>260</td><td>Annual / 260</td><td>$230.77</td></tr>
+            <tr><td>Weekly</td><td>52</td><td>Annual / 52</td><td>$1,153.85</td></tr>
+            <tr><td>Bi-weekly</td><td>26</td><td>Annual / 26</td><td>$2,307.69</td></tr>
+            <tr><td>Semi-monthly</td><td>24</td><td>Annual / 24</td><td>$2,500.00</td></tr>
+            <tr><td>Monthly</td><td>12</td><td>Annual / 12</td><td>$5,000.00</td></tr>
+            <tr><td>Annual</td><td>1</td><td>-</td><td>$60,000.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="examples">How Much Is $50,000 a Year per Hour?</h2>
+      <p>$50,000 per year equals $24.04 per hour at the standard 2,080-hour work year. The table below lists common annual salaries and their hourly equivalents, all calculated at 40 hours per week and 52 weeks per year. Use it as a quick reference when comparing job offers across different pay periods.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Annual Salary</th>
+              <th>Monthly</th>
+              <th>Bi-weekly</th>
+              <th>Weekly</th>
+              <th>Hourly</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>$30,000</td><td>$2,500</td><td>$1,154</td><td>$577</td><td>$14.42</td></tr>
+            <tr><td>$40,000</td><td>$3,333</td><td>$1,538</td><td>$769</td><td>$19.23</td></tr>
+            <tr><td>$50,000</td><td>$4,167</td><td>$1,923</td><td>$962</td><td>$24.04</td></tr>
+            <tr><td>$60,000</td><td>$5,000</td><td>$2,308</td><td>$1,154</td><td>$28.85</td></tr>
+            <tr><td>$75,000</td><td>$6,250</td><td>$2,885</td><td>$1,442</td><td>$36.06</td></tr>
+            <tr><td>$100,000</td><td>$8,333</td><td>$3,846</td><td>$1,923</td><td>$48.08</td></tr>
+            <tr><td>$120,000</td><td>$10,000</td><td>$4,615</td><td>$2,308</td><td>$57.69</td></tr>
+            <tr><td>$150,000</td><td>$12,500</td><td>$5,769</td><td>$2,885</td><td>$72.12</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The US median annual wage was $59,228 in 2023 (Bureau of Labor Statistics, 2024) - which lands between the $57.69/hr and $28.85/hr rows above. That's $28.47/hour at the standard 2,080-hour benchmark.</p>
+
+      <h2 id="salary-vs-hourly">Is It Better to Be Paid Salary or Hourly?</h2>
+      <p>Neither structure is universally better - the right answer depends on job type, hours predictability, and the value of overtime. Salaried employees in the US who earn above $684/week are typically exempt from the Fair Labor Standards Act's overtime rules (FLSA, 2024), meaning extra hours often go unpaid. Hourly workers earn 1.5x for every hour beyond 40 per week.</p>
+      <p>Salary has advantages: predictable monthly income, benefits are more commonly tied to salaried roles, and it signals career progression in most industries. Hourly suits jobs where hours fluctuate and overtime pay is realistic. If you regularly work 45-50 hours as a salaried employee, your true effective hourly rate is lower than the calculator shows - use a reduced-hours scenario to see the real figure.</p>
+
+      <h2 id="mistakes">What Are Common Mistakes When Converting Salary to Hourly?</h2>
+      <p>The most frequent error is dividing by 2,080 when actual worked hours are higher. A salaried professional working 50 hours per week is actually earning $28.85/hr on a $60,000 salary in name only - their true effective rate is $60,000 / (50 x 52) = $23.08/hr. That's a 20% difference that matters when evaluating job offers.</p>
+      <p>Three other mistakes to avoid:</p>
+      <ul>
+        <li><strong>Ignoring unpaid leave.</strong> If you take two weeks of unpaid vacation, your effective annual earnings from that salary are unchanged, but your hourly rate rises because you're working fewer hours for the same pay.</li>
+        <li><strong>Forgetting total compensation.</strong> Benefits (health insurance, retirement match, paid time off) typically add 25-40% to the cash salary value (BLS Employer Costs for Employee Compensation, 2024). A $55,000 salary with full benefits often outweighs a $65,000 contract without them.</li>
+        <li><strong>Using <a href="/glossary/gross-pay">gross pay</a> when budgeting.</strong> The hourly rate this calculator shows is the pre-tax figure. After income tax, Social Security, and Medicare, take-home pay is typically 65-75% of gross for most US workers.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How do I convert monthly salary to hourly rate?</h3>
+      <p>Multiply your monthly salary by 12 to get the annual figure, then divide by your total annual hours. For $5,000/month: $5,000 x 12 = $60,000/year. Divided by 2,080 hours (40 hrs/week x 52 weeks) = $28.85/hour. The calculator does this automatically - select "Per month" and enter your monthly amount.</p>
+
+      <h3>How many work hours are in a year?</h3>
+      <p>A standard US full-time work year has 2,080 hours: 40 hours per week multiplied by 52 weeks. This is the figure used by the BLS and federal payroll systems. If you work part-time (20 hrs/week), your annual hours are 1,040. If you take unpaid leave, reduce the weeks-per-year field in the calculator to get your actual total.</p>
+
+      <h3>What is $15 an hour as an annual salary?</h3>
+      <p>$15 per hour equals $31,200 per year at a standard 40-hour week and 52-week year. Monthly that's $2,600; bi-weekly it's $1,200; weekly it's $600. Formula: $15 x 40 x 52 = $31,200. At 35 hours per week, the annual figure falls to $27,300. Select "Per hour" in the calculator and enter 15 to see the full breakdown.</p>
+
+      <h3>Does the salary to hourly conversion include overtime?</h3>
+      <p>No - this calculator converts your base salary using contracted hours. It doesn't factor in overtime pay. For salaried employees, overtime is usually included in the fixed salary with no additional compensation. For hourly workers, overtime is paid at 1.5x the base rate for hours over 40 per week under US federal law (FLSA). Calculate overtime separately.</p>
+
+      <h3>Should I use gross or net salary for the hourly calculation?</h3>
+      <p>Use <a href="/glossary/gross-pay">gross pay</a> (pre-tax salary) for comparing job offers and calculating your market rate - that's what employers quote. Use net pay (after tax and deductions) when planning your monthly budget or cash flow. This calculator uses gross figures. Your effective net hourly rate is typically 65-75% of the gross rate shown, depending on your tax bracket and deductions.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🏦</span>
+          <div>
+            <a href="/finance/compound-interest-calculator">Compound Interest Calculator</a>
+            <p>See how your salary savings grow over time with compounding - useful for planning retirement contributions from each paycheck.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🏠</span>
+          <div>
+            <a href="/finance/loan-payment-calculator">Loan Payment Calculator</a>
+            <p>Calculate monthly mortgage or loan payments to see how much of your hourly earnings go toward debt service.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📈</span>
+          <div>
+            <a href="/finance/roi-calculator">ROI Calculator</a>
+            <p>Measure the return on investing a portion of your salary - useful when comparing a pay rise against equity compensation.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>Calculate tax rates, benefit deductions, or salary increases as a percentage of your gross or hourly pay.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/finance/break-even-calculator">Break-Even Calculator</a>
+            <p>Useful for freelancers and contractors to find the minimum hourly rate needed to cover costs and reach profitability.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</CalculatorLayout>
+
+<style is:global>
+  .sth-amount-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .sth-currency-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .sth-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .sth-currency-select:focus {
+    outline: none;
+    border-color: rgba(167,139,250,0.8);
+    background: rgba(167,139,250,0.22);
+  }
+  .sth-currency-chevron {
+    pointer-events: none;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(167,139,250,0.9);
+  }
+  .sth-amount-input {
+    flex: 1;
+    min-width: 0;
+    border-color: rgba(255,255,255,0.25) !important;
+    font-size: 1rem !important;
+  }
+  .sth-amount-input:focus {
+    border-color: rgba(167,139,250,0.6) !important;
+  }
+  .sth-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .sth-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .sth-result-row:last-child { border-bottom: none; }
+  .sth-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .sth-row-highlight {
+    background: rgba(167,139,250,0.08) !important;
+    border-bottom-color: rgba(167,139,250,0.15) !important;
+  }
+  .sth-row-annual { border-top: 1px solid rgba(255,255,255,0.12); }
+  .sth-period-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+  }
+  .sth-row-highlight .sth-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .sth-period-val {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    font-variant-numeric: tabular-nums;
+  }
+  .sth-row-highlight .sth-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .sth-note {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    margin: 0.6rem 0 0;
+  }
+</style>

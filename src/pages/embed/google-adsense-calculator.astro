@@ -1,0 +1,107 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Google AdSense Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Google AdSense Calculator</h2>
+        <p>Enter your daily page views, CTR, and average CPC</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="gac-pageviews">Daily Page Views</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="gac-pageviews" class="bmi-input" placeholder="e.g. 10000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="gac-ctr">Click-Through Rate (CTR %)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="gac-ctr" class="bmi-input" value="2" placeholder="2" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="gac-cpc">Average CPC (USD)</label>
+        <div class="gac-cpc-wrap">
+          <span class="gac-dollar">$</span>
+          <input type="text" inputmode="decimal" id="gac-cpc" class="bmi-input gac-cpc-input" value="0.25" placeholder="0.25" />
+        </div>
+      </div>
+
+      <div id="gac-result" class="lbm-result hidden">
+        <div class="gac-results-grid">
+          <div class="gac-result-row">
+            <span class="gac-period-label">Daily clicks</span>
+            <span class="gac-period-val" id="gac-res-clicks">-</span>
+          </div>
+          <div class="gac-result-row">
+            <span class="gac-period-label">Daily earnings</span>
+            <span class="gac-period-val" id="gac-res-daily">-</span>
+          </div>
+          <div class="gac-result-row gac-row-highlight">
+            <span class="gac-period-label">Monthly earnings</span>
+            <span class="gac-period-val" id="gac-res-monthly">-</span>
+          </div>
+          <div class="gac-result-row">
+            <span class="gac-period-label">Annual earnings</span>
+            <span class="gac-period-val" id="gac-res-annual">-</span>
+          </div>
+          <div class="gac-result-row gac-row-rpm">
+            <span class="gac-period-label">Page RPM</span>
+            <span class="gac-period-val" id="gac-res-rpm">-</span>
+          </div>
+        </div>
+        <p class="gac-note">Estimates are pre-tax and assume consistent daily traffic.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/google-adsense-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .gac-cpc-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .gac-dollar {
+    position: absolute;
+    left: 0.85rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.5);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .gac-cpc-input {
+    padding-left: 1.75rem !important;
+  }
+  .gac-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .gac-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .gac-result-row:last-child { border-bottom: none; }
+  .gac-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .gac-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .gac-row-rpm { border-top: 1px solid rgba(255,255,255,0.12); }
+  .gac-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .gac-row-highlight .gac-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .gac-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .gac-row-highlight .gac-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .gac-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-align: center; margin: 0.6rem 0 0; }
+</style>

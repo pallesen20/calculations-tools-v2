@@ -1,0 +1,136 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Salary to Hourly Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Salary to Hourly Calculator</h2>
+        <p>Enter your salary and schedule to see all pay period equivalents</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="sth-amount">Your Salary</label>
+        <div class="sth-amount-row">
+          <div class="sth-currency-wrap">
+            <select id="sth-currency" class="sth-currency-select" aria-label="Currency"></select>
+            <svg class="sth-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
+          <input type="text" inputmode="decimal" id="sth-amount" class="bmi-input sth-amount-input" placeholder="Enter amount" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="sth-period">Pay Period</label>
+        <div class="bmi-input-wrap">
+          <select id="sth-period" class="bmi-input">
+            <option value="annual">Per year (annual)</option>
+            <option value="monthly">Per month</option>
+            <option value="biweekly">Every two weeks (bi-weekly)</option>
+            <option value="weekly">Per week</option>
+            <option value="daily">Per day</option>
+            <option value="hourly">Per hour</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="sth-hours">Hours per Week</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="sth-hours" class="bmi-input" value="40" placeholder="40" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="sth-weeks">Weeks per Year</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="sth-weeks" class="bmi-input" value="52" placeholder="52" />
+        </div>
+      </div>
+
+      <div id="sth-result" class="lbm-result hidden">
+        <div class="sth-results-grid">
+          <div class="sth-result-row sth-row-highlight">
+            <span class="sth-period-label">Hourly</span>
+            <span class="sth-period-val" id="sth-res-hourly">-</span>
+          </div>
+          <div class="sth-result-row">
+            <span class="sth-period-label">Daily</span>
+            <span class="sth-period-val" id="sth-res-daily">-</span>
+          </div>
+          <div class="sth-result-row">
+            <span class="sth-period-label">Weekly</span>
+            <span class="sth-period-val" id="sth-res-weekly">-</span>
+          </div>
+          <div class="sth-result-row">
+            <span class="sth-period-label">Bi-weekly</span>
+            <span class="sth-period-val" id="sth-res-biweekly">-</span>
+          </div>
+          <div class="sth-result-row">
+            <span class="sth-period-label">Monthly</span>
+            <span class="sth-period-val" id="sth-res-monthly">-</span>
+          </div>
+          <div class="sth-result-row sth-row-annual">
+            <span class="sth-period-label">Annual</span>
+            <span class="sth-period-val" id="sth-res-annual">-</span>
+          </div>
+        </div>
+        <p class="sth-note">Daily rate assumes 5 working days per week.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/salary-to-hourly-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .sth-amount-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .sth-currency-wrap { position: relative; flex-shrink: 0; }
+  .sth-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .sth-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .sth-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .sth-amount-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .sth-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .sth-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .sth-result-row:last-child { border-bottom: none; }
+  .sth-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .sth-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .sth-row-annual { border-top: 1px solid rgba(255,255,255,0.12); }
+  .sth-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .sth-row-highlight .sth-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .sth-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .sth-row-highlight .sth-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .sth-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-align: center; margin: 0.6rem 0 0; }
+</style>

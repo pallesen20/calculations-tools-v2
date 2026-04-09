@@ -1409,6 +1409,24 @@ const entries: Entry[] = [
     icon: '💰',
     short: 'Net Income / Shareholders\' Equity × 100',
   },
+  {
+    path: '/finance/salary-to-hourly-calculator',
+    title: 'Salary to Hourly Calculator - All Pay Periods',
+    description: 'Convert any salary to an hourly rate instantly. Supports annual, monthly, bi-weekly, weekly, and daily pay periods. Auto-detects your currency. Adjust hours per week and weeks per year.',
+    changefreq: 'monthly',
+    priority: 1.0,
+    icon: '💵',
+    short: 'Annual, monthly, bi-weekly, weekly, hourly',
+  },
+  {
+    path: '/finance/google-adsense-calculator',
+    title: 'Google AdSense Calculator - Estimate Your Ad Revenue',
+    description: 'Estimate your Google AdSense earnings from daily page views, CTR, and CPC. Shows daily, monthly, and annual revenue plus your Page RPM. Free, instant, no login needed.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    icon: '💰',
+    short: 'Page views x CTR x CPC = earnings',
+  },
 ];
 
 GLOSSARY_TERMS.forEach(t => {
@@ -1438,7 +1456,7 @@ TOP_CURRENCIES.forEach(from => {
       title: `Convert ${from} to ${to} | ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
       description: `Convert ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]} with live mid-market rates. Includes reference amounts and top ${from} currency pairings.`,
       changefreq: 'daily' as const,
-      priority: 0.7,
+      priority: 0.9,
       icon: '💱',
       short: `${from} to ${to} · ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
     });
@@ -1526,6 +1544,8 @@ const FINANCE_GROUPS: Record<string, string> = {
   'compound-interest-calculator':       'Loans & Capital',
   'loan-payment-calculator':            'Loans & Capital',
   'working-capital-calculator':         'Loans & Capital',
+  'salary-to-hourly-calculator':        'Salary',
+  'google-adsense-calculator':          'Business Planning',
 };
 
 export function getFinanceTools(): HealthToolMeta[] {

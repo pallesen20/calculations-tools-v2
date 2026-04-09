@@ -266,7 +266,7 @@ const iframeSnippet = embedUrl
     transition: color 0.2s;
   }
   .toc-link:hover { color: white; }
-  .embed-section { margin: 1rem 0 2rem 0; }
+  .embed-section { margin-top: 1rem; }
   .embed-button {
     width: 100%;
     padding: 0.6rem 1rem;
@@ -336,5 +336,8 @@ const iframeSnippet = embedUrl
         "content";
     }
     .page-sidebar { position: static; }
+  }
+  @media (min-width: 769px) {
+    .page-sidebar { margin-bottom: 2rem; }
   }
 </style>

@@ -1297,4 +1297,101 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'gross-pay': {
+    definition: [
+      'Gross pay is the total compensation earned during a pay period before any deductions are applied. It includes base salary or hourly wages, overtime, bonuses, commissions, and other taxable compensation. When an employer quotes a salary of $60,000 per year, that is a gross pay figure.',
+      'Gross pay is distinct from net pay (take-home pay). Federal income tax, state income tax, Social Security (6.2%), Medicare (1.45%), health insurance premiums, and retirement contributions (e.g. 401k) are all deducted from gross pay to arrive at the amount actually deposited into your account.',
+    ],
+    whenToUse: 'Use gross pay when comparing job offers, calculating your hourly equivalent salary, or filing tax returns. Use net pay when planning your monthly budget or cash flow, since that is the actual amount available to spend.',
+    examples: {
+      headers: ['Component', 'Amount'],
+      rows: [
+        ['Base salary (annual)', '$60,000'],
+        ['Gross pay per bi-weekly period', '$2,307.69'],
+        ['Federal income tax (est. 22%)', '-$507.69'],
+        ['Social Security (6.2%)', '-$143.08'],
+        ['Medicare (1.45%)', '-$33.46'],
+        ['Health insurance premium', '-$150.00'],
+        ['Net pay (take-home)', '~$1,473.46'],
+      ],
+    },
+    pitfalls: 'Never budget using gross pay figures. A $60,000 salary sounds like $5,000 per month, but after taxes and deductions, most workers in the US take home $3,200-$3,800 per month. Use net pay for all monthly expense planning.',
+    faqs: [
+      { q: 'Is gross pay the same as salary?', a: 'Gross pay and salary are related but not identical. Salary is the agreed annual or periodic rate. Gross pay is the actual amount earned in a specific pay period, which may differ from base salary if bonuses, overtime, or commissions are included.' },
+      { q: 'What percentage of gross pay do most people take home?', a: 'For most US workers earning $40,000-$100,000, net pay is roughly 65-75% of gross pay. The exact figure depends on filing status, state taxes, retirement contributions, and benefit elections. Higher earners in high-tax states may keep as little as 55-60%.' },
+    ],
+  },
+
+  'rpm': {
+    definition: [
+      'RPM (Revenue Per Mille, from the Latin for "thousand") is the estimated earnings a publisher receives for every 1,000 page views on an ad-supported website. It is calculated by dividing total earnings by page views, then multiplying by 1,000. A site earning $50 from 10,000 page views has an RPM of $5.00.',
+      'RPM is the most practical metric for comparing ad monetisation performance because it combines both click-through rate (CTR) and cost per click (CPC) into a single number. A publisher with a high CPC but low CTR may have the same RPM as one with a lower CPC but higher CTR. Finance sites typically earn $15-40 RPM; general content sites average $2-8 RPM.',
+    ],
+    whenToUse: 'Use RPM to benchmark your monetisation performance across different content types, traffic sources, or time periods. Compare your RPM against niche averages to identify whether your CTR, CPC, or ad placement is the limiting factor.',
+    examples: {
+      headers: ['Niche', 'Typical RPM'],
+      rows: [
+        ['Finance / Insurance', '$15 - $40'],
+        ['Technology / Software', '$10 - $25'],
+        ['Health / Medical', '$8 - $20'],
+        ['Lifestyle / Food / Travel', '$3 - $8'],
+        ['Entertainment / Gaming', '$1 - $5'],
+      ],
+    },
+    pitfalls: 'RPM is an estimate, not a guarantee. It averages across all sessions in a period, so a single day with unusually high or low traffic can distort the figure. Always analyse RPM over 30+ days to get a reliable baseline. Also note that RPM in AdSense is your net share - not the gross advertiser spend.',
+    faqs: [
+      { q: 'What is the difference between RPM and CPM?', a: 'RPM (Revenue Per Mille) is a publisher metric - your earnings per 1,000 page views. CPM (Cost Per Mille) is an advertiser metric - what advertisers pay per 1,000 ad impressions. They measure the same thing from different perspectives. Your RPM will always be lower than the advertiser\'s CPM because Google keeps a revenue share.' },
+      { q: 'How do I increase my AdSense RPM?', a: 'The three main levers are: target higher-CPC niches (finance and tech content earns 5-10x more per click than entertainment), optimise ad placement (in-content ads above the fold outperform sidebar ads), and build US/UK/CA/AU traffic (tier-1 countries deliver the highest advertiser CPCs by a large margin).' },
+    ],
+  },
+
+  'cpc': {
+    definition: [
+      'CPC (Cost Per Click) is the amount a publisher earns each time a visitor clicks an ad on their page. In Google AdSense, the CPC shown in your reports is the net figure - your share after Google\'s revenue split. Google keeps approximately 32% and pays publishers approximately 68% of what advertisers spend on content ads.',
+      'CPC varies enormously by niche and geography. Finance, insurance, and legal keywords can produce CPCs of $5-50+, while entertainment and lifestyle keywords typically yield $0.05-$0.50. A single click from a US-based visitor on a finance keyword can be worth more than 100 clicks from a low-income-country visitor on a general content page.',
+    ],
+    whenToUse: 'Use CPC alongside CTR to calculate your Page RPM and forecast AdSense earnings. When optimising for revenue, improving CPC (by targeting higher-value content) is often more impactful than improving CTR, since a 2x CPC increase doubles earnings without needing any more traffic.',
+    examples: {
+      headers: ['Niche', 'Average CPC Range'],
+      rows: [
+        ['Finance / Insurance / Legal', '$1.00 - $50+'],
+        ['Technology / Software', '$0.50 - $8.00'],
+        ['Health / Medical', '$0.50 - $5.00'],
+        ['Lifestyle / Food / Travel', '$0.10 - $1.50'],
+        ['Entertainment / Gaming', '$0.05 - $0.50'],
+      ],
+    },
+    pitfalls: 'The CPC in your AdSense reports is an average across all clicks in a period. Individual clicks vary widely - one click might earn $0.02 and the next $4.50 depending on which ad was served. Do not base strategy on a single click\'s value. Also note that CPC is not the same as CPM: CPC is per click, CPM is per 1,000 impressions.',
+    faqs: [
+      { q: 'How do I see my CPC in Google AdSense?', a: 'Log into AdSense, go to Reports, set your date range, and add CPC as a column via the columns icon. You can filter by ad unit or country to see which placements and geographic markets earn the most per click. The figure shown is your net share - approximately 68% of what the advertiser paid.' },
+      { q: 'Why is my CPC so low?', a: 'Low CPC usually means your content targets low-value keywords, your audience is from low-advertiser-spend geographies, or your ad placements attract low-competition ad inventory. The most impactful fix is to create content in higher-CPC niches (finance, tech, health) targeting US, UK, Canadian, or Australian audiences.' },
+    ],
+  },
+
+  'ctr': {
+    definition: [
+      'CTR (Click-Through Rate) is the percentage of ad impressions that result in a click. It is calculated by dividing total clicks by total impressions and multiplying by 100. If 10,000 ads are displayed and 200 are clicked, the CTR is 2%. For Google AdSense, CTR is typically measured at the page level: clicks divided by page views.',
+      'A typical AdSense CTR for banner ads on content sites is 1-3%. CTR depends heavily on ad placement, ad format, and how relevant the ads are to the content. Ads placed within the content body near the top of the page consistently outperform sidebar and footer ads. Responsive ad units that adapt to device size typically achieve higher CTR than fixed-size units.',
+    ],
+    whenToUse: 'Use CTR with CPC to calculate your Page RPM and forecast AdSense earnings. When optimising for revenue, focus on CTR if your CPC is already strong - in that case, improving ad placement and format can significantly increase earnings without changing your content strategy.',
+    pitfalls: 'A very high CTR (above 10%) can trigger a Google AdSense review for invalid traffic. Google monitors CTR patterns and may suspend accounts where clicks appear to be artificially inflated. Always aim for natural CTR from genuinely interested visitors rather than trying to maximise clicks through misleading placement. CTR above 3% through good placement is excellent; above 10% raises flags.',
+    faqs: [
+      { q: 'What is a good CTR for AdSense?', a: 'A good AdSense CTR is 1-3% for most content sites. Below 0.5% usually means ads are poorly placed or mismatched with the audience. Above 3% is strong and achievable with well-placed in-content ads. Google may review accounts with CTR above 10%, as unusually high rates can indicate invalid traffic or deceptive ad placement.' },
+      { q: 'How do I increase my AdSense CTR?', a: 'Place ads within the content body rather than only in sidebars or footers. Ads after the first paragraph and within long-form content perform best. Use responsive ad formats that fit any screen size. Match ad colour schemes loosely to your site design so they feel native rather than intrusive. Avoid excessive ad density, which trains visitors to ignore ads entirely.' },
+    ],
+  },
+
+  'net-pay': {
+    definition: [
+      'Net pay, also called take-home pay, is the amount deposited into your bank account after all deductions are removed from gross pay. Mandatory deductions include federal income tax, state income tax (where applicable), Social Security (6.2% up to the wage base), and Medicare (1.45%). Voluntary deductions include health insurance premiums, dental, vision, 401k contributions, and HSA contributions.',
+      'Net pay is the figure that matters for day-to-day budgeting. It is always lower than gross pay - sometimes significantly so. For a $60,000 annual salary, net pay for a single filer in a median-tax US state is typically $42,000-$46,000 per year, or $1,600-$1,770 bi-weekly.',
+    ],
+    whenToUse: 'Use net pay for monthly budgeting, rent-to-income calculations, and savings planning. Use gross pay for comparing job offers and calculating your market hourly rate.',
+    pitfalls: 'Do not confuse net pay with disposable income. Net pay is after tax and statutory deductions, but you may still have fixed expenses (rent, car payment, loan repayments) that reduce what is truly discretionary.',
+    faqs: [
+      { q: 'How do I calculate my net pay from gross pay?', a: 'Start with gross pay, subtract federal income tax (based on your bracket and W-4 allowances), Social Security (6.2%), Medicare (1.45%), state income tax, and any voluntary deductions (health insurance, 401k). The remainder is your net pay. A paycheck stub shows each deduction line by line.' },
+      { q: 'Does a higher 401k contribution reduce my net pay?', a: 'Yes - traditional 401k contributions reduce your taxable income, which lowers your federal and state income tax. The net effect on take-home pay is less than the contribution amount. Contributing $200 bi-weekly may only reduce net pay by $140-$160 depending on your marginal tax rate.' },
+    ],
+  },
+
 };
