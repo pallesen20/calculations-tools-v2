@@ -1,0 +1,571 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Editorial Standards - calculations.tools",
+  "url": "https://calculations.tools/editorial-standards",
+  "description": "How calculations.tools sources, verifies, and maintains its tools and content - including formula verification, source requirements, health content standards, and correction policy.",
+  "author": {
+    "@type": "Person",
+    "name": "Jesper Pallesen",
+    "url": "https://calculations.tools/about-us/jesper-pallesen"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "calculations.tools",
+    "url": "https://calculations.tools"
+  }
+};
+
+const steps = [
+  {
+    num: '01',
+    title: 'Source identification',
+    body: 'Every formula is traced to a primary source before work begins - a peer-reviewed publication, an international standards body (ISO, NIST, WHO), a recognised academic textbook, or a national authority such as the CDC or NHS. Secondary sources are not used as the sole basis for any calculation.',
+  },
+  {
+    num: '02',
+    title: 'Formula verification',
+    body: 'The formula is validated against known reference values. For example, 0 °C must equal exactly 32 °F and 273.15 K; 1 kg must equal 2.20462 lb. Edge cases (zero, negative values, very large numbers) are tested before publication. Any discrepancy triggers a re-check against the source.',
+  },
+  {
+    num: '03',
+    title: 'Content review',
+    body: 'Every factual claim in the accompanying content must be traceable to a linked, publicly accessible source. Statistics, classification thresholds, and reference ranges are checked against the original publication - not secondary summaries. On health, scientific, and reference-data pages, sources are cited inline. Unit conversion factors and mathematical formulas that are definitional constants do not require a citation - the formula itself is the verifiable claim.',
+  },
+  {
+    num: '04',
+    title: 'Publication check',
+    body: 'Before a tool goes live, the interactive output is manually tested against the reference values from step 2. The displayed formula, worked example, and reference table are all cross-checked for internal consistency. The tool is also tested on mobile.',
+  },
+];
+
+const sourceStandards = [
+  { label: 'Accepted', items: ['Peer-reviewed journals (PubMed, JSTOR)', 'International standards bodies (ISO, NIST, BIPM)', 'National health authorities (WHO, CDC, NHS, NIH)', 'Government statistical agencies', 'Recognised academic textbooks', 'Official product or API documentation'] },
+  { label: 'Not accepted', items: ['Unsourced Wikipedia claims (article is a starting point, not a source)', 'Other calculator or converter websites', 'Press releases without primary data', 'Social media or forums', 'Content marketing articles without cited methodology'] },
+];
+---
+
+<BaseLayout
+  title="Editorial Standards"
+  metaTitle="Editorial Standards - calculations.tools"
+  description="How calculations.tools sources, verifies, and updates its tools and content. Our formula verification process, source requirements, health content policy, and how to report an error."
+  canonical="https://calculations.tools/editorial-standards"
+  schema={schema}
+>
+  <div class="es-page">
+    <div class="es-container">
+
+      <header class="es-hero">
+        <p class="es-eyebrow">How we work</p>
+        <h1 class="es-headline">Editorial Standards</h1>
+        <p class="es-subline">Every tool on this site is built on a verifiable formula, backed by a primary source, and tested before it is published. This page explains exactly how that works - and what to do if you find an error.</p>
+      </header>
+
+      <section class="es-section" id="who-creates">
+        <div class="es-section-label">Authorship</div>
+        <div class="es-section-body">
+          <h2>Who creates this content</h2>
+          <p>All tools and content on calculations.tools are built, written, and maintained by <a href="/about-us/jesper-pallesen" class="es-link">Jesper Pallesen</a>, the site's founder and sole author. Jesper has worked in SEO and software development since 2017, with a focus on technical accuracy, data-driven analysis, and clear explanation of quantitative concepts.</p>
+          <p>Because there is one author, there is one consistent quality standard across the entire site. Every tool is built using the same process, verified against the same types of sources, and held to the same threshold before publication. There is no inconsistency between contributors, and no tool is published by someone unfamiliar with the subject matter.</p>
+          <a href="/about-us/jesper-pallesen" class="es-btn es-btn-ghost">Read about Jesper →</a>
+        </div>
+      </section>
+
+      <section class="es-section" id="accuracy-process">
+        <div class="es-section-label">Verification process</div>
+        <div class="es-section-body">
+          <h2>How we verify accuracy</h2>
+          <p>Every tool follows a four-step verification process before it is published. The process is designed so that the accuracy of the result is independent of memory or assumption - it must be traceable to a primary source and testable against known values.</p>
+          <div class="es-steps">
+            {steps.map(s => (
+              <div class="es-step">
+                <div class="es-step-num">{s.num}</div>
+                <div class="es-step-content">
+                  <h3>{s.title}</h3>
+                  <p>{s.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="es-section" id="sources">
+        <div class="es-section-label">Source policy</div>
+        <div class="es-section-body">
+          <h2>What counts as an acceptable source</h2>
+          <p>Not all sources are equal. The following table defines which sources meet the bar for this site and which do not.</p>
+          <div class="es-source-grid">
+            {sourceStandards.map(col => (
+              <div class={`es-source-col es-source-col--${col.label === 'Accepted' ? 'yes' : 'no'}`}>
+                <div class="es-source-col-label">{col.label}</div>
+                <ul>
+                  {col.items.map(item => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p class="es-note">Wikipedia is used as a navigation tool to find primary sources (journal papers, institutional reports), not as a source itself. When a Wikipedia article references a primary source and that source is publicly accessible, the primary source is cited directly.</p>
+        </div>
+      </section>
+
+      <section class="es-section" id="health-content">
+        <div class="es-section-label">Health content</div>
+        <div class="es-section-body">
+          <h2>Health and medical standards</h2>
+          <p>Health tools - including BMI, body fat percentage, lean body mass, and ideal weight calculators - are held to a stricter standard than general converters, because users may act on the results.</p>
+          <div class="es-health-rules">
+            <div class="es-health-rule">
+              <div class="es-health-rule-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div>
+                <strong>Classification thresholds come from primary health authorities.</strong> BMI ranges, body fat norms, and similar reference values are sourced from WHO, CDC, NIH, or equivalent national bodies - not from third-party fitness sites.
+              </div>
+            </div>
+            <div class="es-health-rule">
+              <div class="es-health-rule-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <div>
+                <strong>Results are reference values, not medical advice.</strong> Every health tool displays a disclaimer that results are for general information only and should not replace consultation with a qualified health professional.
+              </div>
+            </div>
+            <div class="es-health-rule">
+              <div class="es-health-rule-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <div>
+                <strong>Population limitations are stated.</strong> Where a formula applies only to a specific population (adults vs. children, men vs. women, specific ethnicities), that limitation is stated on the tool page. Sub-calculators are built where the distinction materially affects the result.
+              </div>
+            </div>
+            <div class="es-health-rule">
+              <div class="es-health-rule-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+              </div>
+              <div>
+                <strong>Health content is reviewed when guidelines change.</strong> When a major health authority updates its classification thresholds or recommendations, the relevant tools and content are updated to reflect the current standard.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="es-section" id="finance-content">
+        <div class="es-section-label">Finance content</div>
+        <div class="es-section-body">
+          <h2>Finance and investment standards</h2>
+          <p>Finance tools are divided into two tiers. Accounting and profitability tools (EBITDA, gross margin, break-even) are definitional - the formula is the answer. Valuation, returns, and personal finance tools (ROI, P/E ratio, compound interest, loan payments) produce outputs that users may act on financially. The latter are held to a higher standard.</p>
+          <div class="es-health-rules">
+            <div class="es-health-rule">
+              <div class="es-health-rule-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div>
+                <strong>Formulas are sourced from recognised financial standards.</strong> ROI, P/E ratio, ROE, and enterprise value calculations follow standard CFA Institute and academic finance definitions. Where multiple conventions exist, the tool states which convention is used.
+              </div>
+            </div>
+            <div class="es-health-rule">
+              <div class="es-health-rule-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              </div>
+              <div>
+                <strong>Valuation and personal finance tools carry a disclaimer.</strong> Tools where users may base investment or personal financial decisions on the output display a notice that results are for informational purposes only and do not constitute financial advice.
+              </div>
+            </div>
+            <div class="es-health-rule">
+              <div class="es-health-rule-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <div>
+                <strong>Assumptions are stated, not hidden.</strong> Tools that require assumed inputs (interest rate, inflation, time horizon) display those assumptions clearly. Results are not presented as predictions - they are outputs of the model inputs provided.
+              </div>
+            </div>
+            <div class="es-health-rule">
+              <div class="es-health-rule-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div>
+                <strong>Accounting formulas need no disclaimer.</strong> EBITDA, EBIT, gross margin, and similar tools apply definitional formulas. They are not used to make investment decisions - they describe financial structure. No disclaimer is added to these tools because none is warranted.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="es-section" id="updates">
+        <div class="es-section-label">Keeping content current</div>
+        <div class="es-section-body">
+          <h2>How we stay current</h2>
+          <p>Accuracy degrades when content is left static. Conversion factors and mathematical formulas are stable, but reference data, classification thresholds, and recommended values can change.</p>
+          <div class="es-update-grid">
+            <div class="es-update-card">
+              <h3>Evergreen content</h3>
+              <p>Tools based on fixed mathematical or physical relationships (unit conversions, percentage calculations) are not time-sensitive. They are reviewed when a bug is reported or when a standards change is identified.</p>
+            </div>
+            <div class="es-update-card">
+              <h3>Health reference data</h3>
+              <p>Classification thresholds, population norms, and clinical reference ranges are monitored against WHO, CDC, and NIH publications. Updates to these pages are made when the underlying guidance changes.</p>
+            </div>
+            <div class="es-update-card">
+              <h3>Currency rates</h3>
+              <p>Exchange rates are provided by the <a href="https://www.frankfurter.app" target="_blank" rel="noopener noreferrer" class="es-link">Frankfurter API</a>, which sources data from the European Central Bank. Rates are fetched live and reflect the most recent available ECB publication.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="es-section" id="transparency">
+        <div class="es-section-label">Independence</div>
+        <div class="es-section-body">
+          <h2>Commercial transparency</h2>
+          <p>Tools are selected and built based on genuine usefulness to users - not commercial relationships. The following commitments apply to all content on this site:</p>
+          <ul class="es-commitments">
+            <li><strong>No paid tool placements.</strong> No third party pays to have a tool built, featured, or ranked on this site.</li>
+            <li><strong>No affiliate distortion.</strong> Where affiliate links exist (e.g. links to products or services), they are disclosed. Affiliate relationships do not influence which tools are built or how results are presented.</li>
+            <li><strong>No sponsored content.</strong> All content is written independently. There are no advertorials or sponsored editorial pieces on this site.</li>
+            <li><strong>Formulas are shown.</strong> Every tool displays the formula it uses. You can verify any result independently using a calculator, spreadsheet, or by consulting the cited source directly.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="es-cta" id="corrections">
+        <div class="es-cta-inner">
+          <h2>Found an error?</h2>
+          <p>If you believe a formula, result, or piece of content on this site is inaccurate, please report it. Errors are taken seriously: every report is investigated, and confirmed errors are corrected promptly.</p>
+          <p class="es-cta-email">Email <a href="mailto:info@calculations.tools" class="es-link-bright">info@calculations.tools</a> with the URL of the relevant tool and a description of the issue. If you can include the expected correct result and the source you are referencing, that helps resolve it faster.</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .es-page {
+    min-height: 100vh;
+    padding: 3rem 1rem 5rem;
+  }
+  .es-container {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .es-hero {
+    text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 3.5rem;
+  }
+  .es-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1rem;
+  }
+  .es-headline {
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  .es-subline {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .es-section {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    align-items: start;
+  }
+  @media (max-width: 640px) {
+    .es-section { grid-template-columns: 1fr; gap: 0.5rem; }
+  }
+  .es-section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    padding-top: 0.35rem;
+  }
+  .es-section-body h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+  }
+  .es-section-body p {
+    font-size: 0.93rem;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .es-link {
+    color: #a78bfa;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .es-link:hover { color: white; text-decoration: none; }
+  .es-link-bright {
+    color: #a78bfa;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s;
+  }
+  .es-link-bright:hover { color: white; text-decoration: none; }
+
+  .es-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.15s;
+    margin-top: 0.5rem;
+  }
+  .es-btn:hover { opacity: 0.85; transform: translateY(-1px); text-decoration: none; }
+  .es-btn-ghost {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.75) !important;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .es-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .es-step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 1.25rem;
+    padding: 1.35rem 1.5rem;
+    align-items: start;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .es-step:last-child { border-bottom: none; }
+  .es-step:nth-child(odd) { background: rgba(255,255,255,0.03); }
+  .es-step-num {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #a78bfa;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+  .es-step-content h3 {
+    font-size: 0.93rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.45rem;
+  }
+  .es-step-content p {
+    font-size: 0.86rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .es-source-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  @media (max-width: 540px) {
+    .es-source-grid { grid-template-columns: 1fr; }
+  }
+  .es-source-col {
+    border-radius: 12px;
+    padding: 1.25rem 1.25rem 1.1rem;
+    border: 1px solid;
+  }
+  .es-source-col--yes {
+    background: rgba(74,222,128,0.05);
+    border-color: rgba(74,222,128,0.2);
+  }
+  .es-source-col--no {
+    background: rgba(248,113,113,0.05);
+    border-color: rgba(248,113,113,0.15);
+  }
+  .es-source-col-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.85rem;
+  }
+  .es-source-col--yes .es-source-col-label { color: #4ade80; }
+  .es-source-col--no .es-source-col-label { color: #f87171; }
+  .es-source-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .es-source-col li {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.58);
+    line-height: 1.5;
+    padding-left: 1.1rem;
+    position: relative;
+  }
+  .es-source-col--yes li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #4ade80;
+    font-size: 0.75rem;
+    top: 0.1rem;
+  }
+  .es-source-col--no li::before {
+    content: '✕';
+    position: absolute;
+    left: 0;
+    color: #f87171;
+    font-size: 0.75rem;
+    top: 0.1rem;
+  }
+  .es-note {
+    font-size: 0.82rem !important;
+    color: rgba(255,255,255,0.4) !important;
+    font-style: italic;
+    border-left: 2px solid rgba(255,255,255,0.1);
+    padding-left: 0.85rem;
+    margin: 0 !important;
+  }
+
+  .es-health-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .es-health-rule {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.1rem 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+  }
+  .es-health-rule strong {
+    color: rgba(255,255,255,0.9);
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 0.88rem;
+  }
+  .es-health-rule-icon {
+    color: #a78bfa;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .es-update-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  @media (max-width: 700px) {
+    .es-update-grid { grid-template-columns: 1fr; }
+  }
+  .es-update-card {
+    padding: 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+  .es-update-card h3 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.6rem;
+  }
+  .es-update-card p {
+    font-size: 0.82rem !important;
+    color: rgba(255,255,255,0.5) !important;
+    line-height: 1.65;
+    margin: 0 !important;
+  }
+
+  .es-commitments {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .es-commitments li {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .es-commitments li::before {
+    content: '-';
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.2);
+  }
+  .es-commitments strong {
+    color: rgba(255,255,255,0.9);
+  }
+
+  .es-cta {
+    margin-top: 0.5rem;
+  }
+  .es-cta-inner {
+    padding: 2.5rem;
+    background: rgba(167,139,250,0.07);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 16px;
+  }
+  .es-cta-inner h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.75rem;
+  }
+  .es-cta-inner p {
+    font-size: 0.93rem;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+  .es-cta-email {
+    margin: 0 !important;
+  }
+</style>

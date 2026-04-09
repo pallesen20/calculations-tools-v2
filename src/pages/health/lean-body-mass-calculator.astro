@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
+import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
 
 const f = {
   boerMale:    "$$\\text{LBM} = 0.407 \\times W + 0.267 \\times H - 19.2$$",
@@ -207,6 +208,7 @@ const schema = [
     </section>
 
     <script src="/js/lean-body-mass-calculator.js" is:inline></script>
+  <HealthDisclaimer />
   </div>
 
   <div slot="content">

@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
+import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
 
 const f = {
   devine:   "$$\\text{IBW}_{\\text{male}} = 50.0 + 2.3 \\times (\\text{height (in)} - 60)$$",
@@ -216,6 +217,7 @@ const schema = [
         <script src="/js/ideal-weight-calculator.js" is:inline></script>
       </div>
     </section>
+  <HealthDisclaimer />
   </div>
 
   <div slot="content">

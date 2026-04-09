@@ -35,10 +35,19 @@ const ogImage = (ogFormula && ogExample)
   ? `https://calculations-image-generator.vercel.app/api/og-web?category=${encodeURIComponent(_category)}&calculator=${encodeURIComponent(title)}&formula=${encodeURIComponent(ogFormula)}&example=${encodeURIComponent(ogExample)}`
   : undefined;
 
-const augmentedSchema = (ogImage && schema)
-  ? (Array.isArray(schema) ? schema : [schema]).map((s: any) =>
-      s['@type'] === 'WebApplication' && !s.image ? { ...s, image: ogImage } : s
-    )
+const AUTHOR = {
+  "@type": "Person",
+  "name": "Jesper Pallesen",
+  "url": "https://calculations.tools/about-us/jesper-pallesen"
+};
+
+const augmentedSchema = schema
+  ? (Array.isArray(schema) ? schema : [schema]).map((s: any) => {
+      if (s['@type'] !== 'WebApplication') return s;
+      const withImage = (ogImage && !s.image) ? { ...s, image: ogImage } : s;
+      const withAuthor = !withImage.author ? { ...withImage, author: AUTHOR } : withImage;
+      return !withAuthor.publishingPrinciples ? { ...withAuthor, publishingPrinciples: "https://calculations.tools/editorial-standards" } : withAuthor;
+    })
   : schema;
 
 let lastUpdated = '';
@@ -77,7 +86,7 @@ const iframeSnippet = embedUrl
               <img src="/jesper.webp" height="50" width="50" alt="Jesper Pallesen" />
               <div class="author-box">
                 <span class="eyebrow">Created by</span>
-                <a class="author" href="/about-us">Jesper Pallesen</a>
+                <a class="author" href="/about-us/jesper-pallesen">Jesper Pallesen</a>
               </div>
               <div class="last-updated">
                 <span class="eyebrow">Last updated</span>

@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
+import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
 
 const f = {
   navyMale:   "$$\\text{BF\\%} = \\frac{495}{1.0324 - 0.19077 \\cdot \\log_{10}(\\text{waist} - \\text{neck}) + 0.15456 \\cdot \\log_{10}(\\text{height})} - 450$$",
@@ -255,6 +256,7 @@ const schema = [
     </section>
 
     <script src="/js/body-fat-calculator.js" is:inline></script>
+  <HealthDisclaimer />
   </div>
 
   <div slot="content">

@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
+import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
 
 const f = {
   ffmi:     "$$\\text{FFMI} = \\frac{\\text{LBM (kg)}}{\\text{height (m)}^2}$$",
@@ -206,6 +207,7 @@ const schema = [
     </section>
 
     <script src="/js/ffmi-calculator.js" is:inline></script>
+  <HealthDisclaimer />
   </div>
 
   <div slot="content">

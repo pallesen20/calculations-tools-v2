@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
 
 const f = {
   ev:        "$$\\text{EV} = \\text{Market Cap} + \\text{Total Debt} - \\text{Cash \\& Equivalents}$$",
@@ -175,6 +176,7 @@ const schema = [
       </div>
     </section>
     <script src="/js/enterprise-value-calculator.js" is:inline></script>
+  <FinanceDisclaimer />
   </div>
 
   <div slot="content">

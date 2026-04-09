@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
 
 const f = {
   roe:       "$$\\text{ROE} = \\frac{\\text{Net Income}}{\\text{Shareholders' Equity}} \\times 100$$",
@@ -156,6 +157,7 @@ const schema = [
       </div>
     </section>
     <script src="/js/roe-calculator.js" is:inline></script>
+  <FinanceDisclaimer />
   </div>
 
   <div slot="content">

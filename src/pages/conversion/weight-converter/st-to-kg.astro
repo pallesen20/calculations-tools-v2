@@ -1,0 +1,230 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{kg} = \\text{st} \\times 6.35029$$",
+  rev: "$$\\text{st} = \\text{kg} \\div 6.35029$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert stone to kg' },
+  { id: 'reverse',         label: 'How to convert kg to stone' },
+  { id: 'reference-table', label: 'Stone to kg reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Stone to Kilograms Converter",
+    "url": "https://calculations.tools/conversion/weight-converter/st-to-kg",
+    "description": "Convert stone to kilograms instantly. Formula: kg = st × 6.35029. Includes reverse kg to stone conversion and a body weight reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many kg is 1 stone?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1 stone equals 6.35029 kg. Derived from 1 stone = 14 lb and 1 lb = 0.45359237 kg: 14 × 0.45359237 = 6.35029 kg." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert stone to kg?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply stone by 6.35029. Example: 11 stone × 6.35029 = 69.853 kg. Quick estimate: multiply by 6.35." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many kg is 12 stone?",
+        "acceptedAnswer": { "@type": "Answer", "text": "12 stone equals 76.204 kg. Multiply 12 by 6.35029: 12 × 6.35029 = 76.203 kg." }
+      },
+      {
+        "@type": "Question",
+        "name": "What countries use stone for body weight?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Stone is used almost exclusively in the United Kingdom and Ireland for expressing body weight. It is not used in the United States (which uses pounds) or in metric countries (which use kilograms)." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Stone to Kilograms Converter"
+  metaTitle="Stone to Kilograms Converter | st to kg ᐅ"
+  description="Convert stone to kilograms instantly. Formula: kg = st × 6.35029. Body weight reference table - 8 st, 10 st, 12 st, 14 st in kg and more."
+  canonical="https://calculations.tools/conversion/weight-converter/st-to-kg"
+  tocItems={tocItems}
+  embedSlug="st-to-kg"
+  schema={schema}
+  ogFormula="kg = st × 6.35029"
+  ogExample="11 st = 69.85 kg"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Stone to Kilogram (st to kg) Calculator</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Stone (st)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 10" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Kilograms (kg)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 63.5" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 st = 6.35029 kg &nbsp;·&nbsp; 1 kg = 0.157473 st</div>
+
+      </div>
+    </section>
+
+    <script src="/js/st-to-kg.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert stone to kilograms, multiply by <strong>6.35029</strong>. So 10 st = 63.5 kg and 12 st = 76.2 kg. The stone is defined as exactly 14 pounds, and since 1 lb = 0.45359237 kg, 1 st = 14 × 0.45359237 = 6.35029... kg.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>1 st = 14 lb = 6.35029 kg (exact from the pound definition).</li>
+          <li>10 st = 63.5 kg. 11 st = 69.85 kg. 12 st = 76.2 kg.</li>
+          <li>Stone is used almost exclusively in the UK and Ireland for body weight.</li>
+          <li>Quick estimate: multiply st by 6.35 (error under 0.005%).</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any stone value in the st field and the kg result appears instantly. You can also type in the kg field to convert back to stone. If you have stone and pounds (e.g., 11 st 4 lb), convert the extra pounds to a decimal first: 11 + 4/14 = 11.286 st.</p>
+
+      <h2 id="formula">How Do You Convert Stone to Kilograms?</h2>
+      <p>Multiply stone by 6.35029. One stone is defined as exactly 14 pounds. Using the international pound definition (1 lb = 0.45359237 kg): 1 st = 14 × 0.45359237 = 6.350293... kg.</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 8 st = 50.80 kg. 9 st = 57.15 kg. 10 st = 63.50 kg. 11 st = 69.85 kg. 12 st = 76.20 kg. 13 st = 82.55 kg. 14 st = 88.90 kg.</p>
+
+      <h2 id="reverse">How Do You Convert Kilograms to Stone?</h2>
+      <p>Divide kilograms by 6.35029. See the dedicated <a href="/conversion/weight-converter/kg-to-st">kilograms to stone converter</a> for a kg-first reference table.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 60 kg = 9.449 st. 70 kg = 11.023 st. 80 kg = 12.598 st.</p>
+
+      <h2 id="reference-table">Stone to Kilograms Reference Table</h2>
+      <p>Common adult body weight values in stone converted to kg:</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Stone (st)</th><th>Kilograms (kg)</th><th>Pounds (lb)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>7 st</td><td>44.45 kg</td><td>98 lb</td></tr>
+            <tr><td>8 st</td><td>50.80 kg</td><td>112 lb</td></tr>
+            <tr><td>9 st</td><td>57.15 kg</td><td>126 lb</td></tr>
+            <tr><td>10 st</td><td>63.50 kg</td><td>140 lb</td></tr>
+            <tr><td>11 st</td><td>69.85 kg</td><td>154 lb</td></tr>
+            <tr><td>12 st</td><td>76.20 kg</td><td>168 lb</td></tr>
+            <tr><td>13 st</td><td>82.55 kg</td><td>182 lb</td></tr>
+            <tr><td>14 st</td><td>88.90 kg</td><td>196 lb</td></tr>
+            <tr><td>15 st</td><td>95.25 kg</td><td>210 lb</td></tr>
+            <tr><td>16 st</td><td>101.60 kg</td><td>224 lb</td></tr>
+            <tr><td>18 st</td><td>114.31 kg</td><td>252 lb</td></tr>
+            <tr><td>20 st</td><td>127.01 kg</td><td>280 lb</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert Stone to kg?</h2>
+      <p>Stone is used almost exclusively in the UK and Ireland for expressing human body weight. Common scenarios:</p>
+      <ul>
+        <li><strong>UK health and NHS</strong> - UK patients often report body weight in stone; NHS systems may record in kg. Conversion is needed for clinical documentation.</li>
+        <li><strong>International travel</strong> - communicating weight to non-UK medical or fitness professionals who use kg.</li>
+        <li><strong>Fitness apps</strong> - many international apps use kg; UK users tracking weight need to convert their stone readings.</li>
+        <li><strong>Research</strong> - academic papers use kg; UK survey data often collects stone.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many kg is 1 stone?</h3>
+      <p>1 stone = 6.35029 kg exactly. This comes from 1 st = 14 lb and 1 lb = 0.45359237 kg: 14 × 0.45359237 = 6.35029... kg.</p>
+
+      <h3>How do you convert stone to kg?</h3>
+      <p>Multiply stone by 6.35029. Quick mental shortcut: multiply by 6.35 (error under 0.005%). For 12 st: 12 × 6.35 = 76.2 kg (actual: 76.203 kg).</p>
+
+      <h3>How many kg is 12 stone?</h3>
+      <p>12 st = 76.20 kg. Multiply 12 × 6.35029 = 76.203 kg. This is a common adult male body weight in the UK.</p>
+
+      <h3>What countries use stone for body weight?</h3>
+      <p>Primarily the UK and Ireland. The US uses pounds exclusively; all other countries use kilograms. Stone is not used in scientific or clinical international contexts.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/kg-to-st">Kilograms to Stone Converter</a>
+            <p>Reverse conversion - enter kg and get stone instantly, with a kg-first reference table.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/st-to-lb">Stone to Pounds Converter</a>
+            <p>Convert stone to lbs within the imperial system.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/kg-to-lb">Kilograms to Pounds Converter</a>
+            <p>Convert kg to lbs for US-format body weight.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter (all units)</a>
+            <p>Convert between all metric and imperial weight units simultaneously.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

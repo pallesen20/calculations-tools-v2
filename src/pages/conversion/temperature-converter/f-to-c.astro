@@ -1,0 +1,245 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$°C = (°F - 32) \\times \\frac{5}{9}$$",
+  rev: "$$°F = °C \\times \\frac{9}{5} + 32$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert Fahrenheit to Celsius' },
+  { id: 'reverse',         label: 'How to convert Celsius to Fahrenheit' },
+  { id: 'reference-table', label: 'Fahrenheit to Celsius reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fahrenheit to Celsius Converter",
+    "url": "https://calculations.tools/conversion/temperature-converter/f-to-c",
+    "description": "Convert Fahrenheit to Celsius instantly. Formula: °C = (°F − 32) × 5/9. Includes reverse Celsius to Fahrenheit conversion and a full reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert Fahrenheit to Celsius",
+    "description": "Convert Fahrenheit to Celsius using the standard formula.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter Fahrenheit value", "text": "Type your Fahrenheit temperature in the °F field. The Celsius result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted Celsius value appears immediately. For 98.6°F, the result is 37°C." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the °C field to convert back to Fahrenheit. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you convert Fahrenheit to Celsius?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Subtract 32, then multiply by 5/9. Formula: °C = (°F − 32) × 5/9. Example: 98.6°F − 32 = 66.6, × 5/9 = 37°C. Quick mental estimate: subtract 30 and halve (works within ~3°C for everyday temperatures)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 72 degrees Fahrenheit in Celsius?",
+        "acceptedAnswer": { "@type": "Answer", "text": "72°F equals 22.2°C. Calculation: (72 − 32) × 5/9 = 40 × 5/9 = 22.2°C. This is a comfortable room temperature." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 350°F in Celsius?",
+        "acceptedAnswer": { "@type": "Answer", "text": "350°F equals 176.7°C. Calculation: (350 − 32) × 5/9 = 318 × 5/9 = 176.7°C. This is a standard moderate oven temperature for baking." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 100 degrees Fahrenheit in Celsius?",
+        "acceptedAnswer": { "@type": "Answer", "text": "100°F equals 37.8°C. Calculation: (100 − 32) × 5/9 = 68 × 5/9 = 37.78°C. This is just above the fever threshold (38°C / 100.4°F)." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Fahrenheit to Celsius Converter"
+  metaTitle="Fahrenheit to Celsius Converter | °F to °C ᐅ"
+  description="Convert Fahrenheit to Celsius instantly. Formula: °C = (°F − 32) × 5/9. Includes common temperatures - body temp, oven settings, weather - and reverse °C to °F."
+  canonical="https://calculations.tools/conversion/temperature-converter/f-to-c"
+  tocItems={tocItems}
+  embedSlug="f-to-c"
+  schema={schema}
+  ogFormula="°C = (°F − 32) × 5/9"
+  ogExample="98.6°F = 37°C"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Fahrenheit to Celsius (°F to °C) Converter</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Fahrenheit (°F)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 98.6" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Celsius (°C)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 37" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">°C = (°F − 32) × 5/9 &nbsp;·&nbsp; °F = °C × 9/5 + 32</div>
+
+      </div>
+    </section>
+
+    <script src="/js/f-to-c.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert Fahrenheit to Celsius, subtract <strong>32</strong> then multiply by <strong>5/9</strong>. Formula: °C = (°F − 32) × 5/9. Key values: 32°F = 0°C, 72°F = 22.2°C, 98.6°F = 37°C, 212°F = 100°C. Quick mental estimate: subtract 30 and halve.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Formula: °C = (°F − 32) × 5/9 (subtracting 32 removes the zero offset; multiplying by 5/9 scales to Celsius degree size).</li>
+          <li>98.6°F = 37°C - normal human body temperature.</li>
+          <li>350°F = 176.7°C - common moderate oven temperature in US recipes.</li>
+          <li>32°F = 0°C - water freezes; 212°F = 100°C - water boils at sea level.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any Fahrenheit value in the °F field and the Celsius result appears instantly. You can also type in the °C field to convert back to Fahrenheit - it works in both directions without pressing a button.</p>
+
+      <h2 id="formula">How Do You Convert Fahrenheit to Celsius?</h2>
+      <p>Subtract 32 first to remove the zero-point offset, then multiply by 5/9 to scale from Fahrenheit degree size to Celsius degree size. The two-step process is necessary because the scales differ in both where zero is and how large each degree is.</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 32°F = 0°C. 68°F = 20°C. 72°F = 22.2°C. 98.6°F = 37°C. 212°F = 100°C. 350°F = 176.7°C. 400°F = 204.4°C.</p>
+
+      <p>Mental shortcut: subtract 30 and halve. For 72°F: 72 − 30 = 42, ÷ 2 = 21°C (actual: 22.2°C, error ~1°C). Works well for everyday weather and room temperatures but loses accuracy at extremes.</p>
+
+      <h2 id="reverse">How Do You Convert Celsius to Fahrenheit?</h2>
+      <p>Multiply by 9/5 then add 32. See the dedicated <a href="/conversion/temperature-converter/c-to-f">Celsius to Fahrenheit converter</a> for a Celsius-first reference table.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 0°C = 32°F. 20°C = 68°F. 37°C = 98.6°F. 100°C = 212°F.</p>
+
+      <h2 id="reference-table">Fahrenheit to Celsius Reference Table</h2>
+      <p>Common US temperatures converted using the exact formula °C = (°F − 32) × 5/9:</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Fahrenheit (°F)</th><th>Celsius (°C)</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>-40°F</td><td>-40°C</td><td>Scales are equal at this point</td></tr>
+            <tr><td>0°F</td><td>-17.8°C</td><td>Very cold; Fahrenheit zero</td></tr>
+            <tr><td>32°F</td><td>0°C</td><td>Water freezes</td></tr>
+            <tr><td>50°F</td><td>10°C</td><td>Cool day</td></tr>
+            <tr><td>68°F</td><td>20°C</td><td>Comfortable room temperature</td></tr>
+            <tr><td>72°F</td><td>22.2°C</td><td>Typical US indoor thermostat</td></tr>
+            <tr><td>86°F</td><td>30°C</td><td>Hot day</td></tr>
+            <tr><td>98.6°F</td><td>37°C</td><td>Normal body temperature</td></tr>
+            <tr><td>100.4°F</td><td>38°C</td><td>Fever threshold (adults)</td></tr>
+            <tr><td>212°F</td><td>100°C</td><td>Water boils at sea level</td></tr>
+            <tr><td>325°F</td><td>162.8°C</td><td>Slow oven</td></tr>
+            <tr><td>350°F</td><td>176.7°C</td><td>Moderate oven (most baking)</td></tr>
+            <tr><td>400°F</td><td>204.4°C</td><td>Hot oven</td></tr>
+            <tr><td>450°F</td><td>232.2°C</td><td>Very hot oven / pizza</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert Fahrenheit to Celsius?</h2>
+      <p>The Fahrenheit scale is used in the US for everyday temperatures. Everyone else uses Celsius. Common conversion needs:</p>
+      <ul>
+        <li><strong>Cooking</strong> - US recipes give oven temperatures in °F. Converting to °C (or gas marks) is needed for European ovens and most non-US recipe websites.</li>
+        <li><strong>Weather</strong> - US weather forecasts in °F need converting for travellers and people moving from metric countries.</li>
+        <li><strong>Medicine</strong> - US thermometers and medical references use °F. 98.6°F = 37°C (normal); 100.4°F = 38°C (fever).</li>
+        <li><strong>HVAC</strong> - US air conditioning and heating settings are in °F; international equipment and standards use °C.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How do you convert Fahrenheit to Celsius?</h3>
+      <p>Subtract 32, then multiply by 5/9. Formula: °C = (°F − 32) × 5/9. Example: 98.6°F − 32 = 66.6, × 5/9 = 37°C. Quick mental estimate: subtract 30, then halve (works within 2–3°C for everyday temps).</p>
+
+      <h3>What is 72°F in Celsius?</h3>
+      <p>72°F = 22.2°C. Calculation: (72 − 32) × 5/9 = 40 × 5/9 = 22.22°C. This is a common comfortable indoor temperature.</p>
+
+      <h3>What is 350°F in Celsius?</h3>
+      <p>350°F = 176.7°C. Calculation: (350 − 32) × 5/9 = 318 × 5/9 = 176.67°C. This is the most common oven temperature in US baking recipes.</p>
+
+      <h3>What is 100°F in Celsius?</h3>
+      <p>100°F = 37.8°C. Calculation: (100 − 32) × 5/9 = 68 × 5/9 = 37.78°C. This is just above normal body temperature (37°C) and approaches the fever threshold (38°C / 100.4°F).</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter/c-to-f">Celsius to Fahrenheit Converter</a>
+            <p>Reverse conversion - enter °C and get °F instantly, with a Celsius-first reference table.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter/f-to-k">Fahrenheit to Kelvin Converter</a>
+            <p>Convert °F to Kelvin for scientific calculations.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter">Temperature Converter (all scales)</a>
+            <p>Convert between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur simultaneously.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter</a>
+            <p>Convert between kilograms, pounds, ounces, stone, and more.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

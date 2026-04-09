@@ -1,0 +1,318 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Jesper Pallesen",
+  "url": "https://calculations.tools/about-us/jesper-pallesen",
+  "image": "https://calculations.tools/jesper.webp",
+  "jobTitle": "Founder & Developer",
+  "description": "I have worked with SEO and software development since 2017, helping businesses grow their online visibility across multiple markets and languages. My work sits at the intersection of technical SEO and data analytics - building systems that are both measurable and durable. Calculations.tools grew out of a personal frustration: too many online tools are engineered to extract value from users rather than provide it. I built this site to be the opposite - a resource that genuinely helps people with everyday tasks and stays free indefinitely. Every calculation runs locally in your browser; nothing is transmitted to any server.",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "calculations.tools",
+    "publishingPrinciples": "https://calculations.tools/editorial-standards",
+    "url": "https://calculations.tools"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/jesperpallesen20/",
+    "https://gamesevenmarketing.com/",
+    "https://dutix.io/"
+  ],
+  "knowsAbout": ["SEO", "Software Development", "Data Analytics", "Technical SEO", "Content Strategy", "Web Development"]
+};
+
+const tools = [
+  { href: '/math/percentage-calculator', icon: '%', title: 'Percentage Calculator', desc: 'Calculate percentages, changes, and differences instantly.' },
+  { href: '/conversion/temperature-converter/c-to-f', icon: '🌡️', title: 'Celsius to Fahrenheit', desc: 'The most-searched temperature conversion, with reference table.' },
+  { href: '/conversion/weight-converter/kg-to-lb', icon: '⚖️', title: 'Kilograms to Pounds', desc: 'Body weight conversion with a full reference table.' },
+  { href: '/conversion/length-converter/km-to-mi', icon: '📏', title: 'Kilometers to Miles', desc: 'Road distance and running conversion with exact factor.' },
+  { href: '/conversion/currency-converter', icon: '💱', title: 'Currency Converter', desc: 'Live mid-market rates for 150+ currencies.' },
+  { href: '/health/bmi-calculator', icon: '🩺', title: 'BMI Calculator', desc: 'Body mass index for adults with WHO category ranges.' },
+];
+---
+
+<BaseLayout
+  title="Jesper Pallesen - Founder of calculations.tools"
+  metaTitle="Jesper Pallesen - Founder of calculations.tools"
+  description="Jesper Pallesen is the founder of calculations.tools. SEO strategist and developer since 2017, former professional hockey player. Learn about his background and other projects."
+  canonical="https://calculations.tools/about-us/jesper-pallesen"
+  schema={personSchema}
+>
+  <div class="ap-page">
+    <div class="ap-container">
+      <header class="ap-hero">
+        <img
+          src="/jesper.webp"
+          alt="Jesper Pallesen"
+          class="ap-photo"
+          width="120"
+          height="120"
+          fetchpriority="high"
+          loading="eager"
+        />
+        <h1 class="ap-name">Jesper Pallesen</h1>
+        <p class="ap-role">Founder &amp; Developer · <a href="https://calculations.tools" class="ap-site-link">calculations.tools</a></p>
+        <div class="ap-actions">
+          <a
+            href="https://www.linkedin.com/in/jesperpallesen20/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ap-btn ap-btn-linkedin"
+            aria-label="Jesper Pallesen on LinkedIn"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
+          <a href="/about-us" class="ap-btn ap-btn-ghost">About the site →</a>
+        </div>
+      </header>
+      <section class="ap-bio">
+        <h2>About me</h2>
+        <p>I have worked with SEO and software development since 2017, helping businesses grow their online visibility across multiple markets and languages. My work sits at the intersection of technical SEO and data analytics - building systems that are both measurable and durable.</p>
+        <p>Calculations.tools grew out of a personal frustration: too many online tools are engineered to extract value from users rather than provide it. I built this site to be the opposite - a resource that genuinely helps people with everyday tasks and stays free indefinitely. Every calculation runs locally in your browser; nothing is transmitted to any server.</p>
+        <p>Before my career in digital, I was a professional hockey player competing in Denmark and Germany. The discipline and focus that come with professional sport translate directly into how I approach development and SEO - methodical, detail-oriented, and built for the long game.</p>
+        <p>Outside of work I travel with my family, hike in the mountains, and explore Scandinavian nature with my wife.</p>
+      </section>
+      <section class="ap-projects">
+        <h2>Other projects</h2>
+        <div class="ap-projects-grid">
+          <a href="https://gamesevenmarketing.com/" target="_blank" rel="noopener noreferrer" class="ap-project-card">
+            <span class="ap-project-name">Game Seven Marketing</span>
+            <span class="ap-project-url">gamesevenmarketing.com</span>
+            <p class="ap-project-desc">SEO and digital marketing agency specialising in organic growth across competitive markets.</p>
+            <span class="ap-project-arrow">↗</span>
+          </a>
+          <a href="https://dutix.io/" target="_blank" rel="noopener noreferrer" class="ap-project-card">
+            <span class="ap-project-name">Dutix</span>
+            <span class="ap-project-url">dutix.io</span>
+            <p class="ap-project-desc">A software project built and maintained alongside calculations.tools.</p>
+            <span class="ap-project-arrow">↗</span>
+          </a>
+        </div>
+      </section>
+      <section class="ap-tools">
+        <h2>Jesper's selected tools</h2>
+        <p class="ap-tools-intro">A selection of tools from the site - all free, no account required.</p>
+        <div class="ap-tools-grid">
+          {tools.map(t => (
+            <a href={t.href} class="ap-tool-card">
+              <span class="ap-tool-icon">{t.icon}</span>
+              <div>
+                <span class="ap-tool-name">{t.title}</span>
+                <p class="ap-tool-desc">{t.desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+        <div class="ap-tools-more">
+          <a href="/" class="ap-btn ap-btn-ghost">Browse all tools →</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .ap-page {
+    min-height: 100vh;
+    padding: 3rem 1rem 5rem;
+  }
+  .ap-container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .ap-hero {
+    text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 3rem;
+  }
+  .ap-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 3px solid rgba(255,255,255,0.15);
+    display: block;
+    margin: 0 auto 1.25rem;
+    -webkit-user-drag: none;
+  }
+  .ap-name {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.4rem;
+  }
+  .ap-role {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.5rem;
+  }
+  .ap-site-link {
+    color: #a78bfa;
+    text-decoration: none;
+  }
+  .ap-site-link:hover { color: white; text-decoration: none; }
+  .ap-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .ap-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .ap-btn:hover { opacity: 0.85; transform: translateY(-1px); text-decoration: none; }
+  .ap-btn-linkedin {
+    background: #0a66c2;
+    color: white !important;
+  }
+  .ap-btn-ghost {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.75) !important;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .ap-bio {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ap-bio h2, .ap-projects h2, .ap-tools h2 {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.1rem;
+  }
+  .ap-bio p {
+    font-size: 0.93rem;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .ap-projects {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ap-projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 540px) {
+    .ap-projects-grid { grid-template-columns: 1fr; }
+  }
+  .ap-project-card {
+    position: relative;
+    display: block;
+    padding: 1.25rem;
+    background: var(--glass-bg-md);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .ap-project-card:hover {
+    border-color: rgba(167,139,250,0.4);
+    background: rgba(255,255,255,0.07);
+    text-decoration: none;
+  }
+  .ap-project-name {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.2rem;
+  }
+  .ap-project-url {
+    display: block;
+    font-size: 0.75rem;
+    color: #a78bfa;
+    margin-bottom: 0.65rem;
+  }
+  .ap-project-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .ap-project-arrow {
+    position: absolute;
+    top: 1rem;
+    right: 1.1rem;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .ap-tools { margin-bottom: 1rem; }
+  .ap-tools-intro {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 1.25rem;
+  }
+  .ap-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 540px) {
+    .ap-tools-grid { grid-template-columns: 1fr; }
+  }
+  .ap-tool-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .ap-tool-card:hover {
+    border-color: rgba(167,139,250,0.35);
+    background: rgba(255,255,255,0.07);
+    text-decoration: none;
+  }
+  .ap-tool-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .ap-tool-name {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+  }
+  .ap-tool-desc {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .ap-tools-more {
+    text-align: center;
+    margin-top: 1rem;
+  }
+</style>

@@ -32,6 +32,15 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['depreciation-amortization', 'operating-expenses', 'ebitda'],
   },
   {
+    slug: 'cdn',
+    term: 'CDN (Content Delivery Network)',
+    letter: 'C',
+    category: 'Web Technology',
+    siteCategory: 'Tech',
+    shortDef: 'A CDN is a globally distributed network of servers that delivers files to users from the location nearest to them, reducing load time. On this site, some tools load large third-party libraries (such as Tesseract.js, SheetJS, and PDF.js) from a CDN instead of bundling them.',
+    relatedTerms: [],
+  },
+  {
     slug: 'cogs',
     term: 'Cost of Goods Sold (COGS)',
     letter: 'C',

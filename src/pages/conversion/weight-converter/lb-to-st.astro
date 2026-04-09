@@ -1,0 +1,217 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{st} = \\text{lb} \\div 14$$",
+  rev: "$$\\text{lb} = \\text{st} \\times 14$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert lbs to stone' },
+  { id: 'reverse',         label: 'How to convert stone to lbs' },
+  { id: 'reference-table', label: 'lbs to stone reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pounds to Stone Converter",
+    "url": "https://calculations.tools/conversion/weight-converter/lb-to-st",
+    "description": "Convert pounds to stone instantly. Formula: st = lb ÷ 14. Includes reverse stone to pounds conversion and a body weight reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many stone is 154 pounds?",
+        "acceptedAnswer": { "@type": "Answer", "text": "154 pounds equals exactly 11 stone. Divide 154 by 14: 154 ÷ 14 = 11 st." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert pounds to stone?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide pounds by 14. Example: 168 lb ÷ 14 = 12 stone. This is an exact conversion." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many stone is 200 pounds?",
+        "acceptedAnswer": { "@type": "Answer", "text": "200 pounds equals 14.286 stone (14 stone 4 pounds). Divide 200 by 14: 200 ÷ 14 = 14.286 st. The 0.286 × 14 = 4 extra pounds." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Pounds to Stone Converter"
+  metaTitle="Pounds to Stone Converter | lbs to st ᐅ"
+  description="Convert pounds to stone instantly. Formula: st = lb ÷ 14. Body weight reference table - 112 lb, 140 lb, 168 lb in stone and more."
+  canonical="https://calculations.tools/conversion/weight-converter/lb-to-st"
+  tocItems={tocItems}
+  embedSlug="lb-to-st"
+  schema={schema}
+  ogFormula="st = lb ÷ 14"
+  ogExample="140 lb = 10 st"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Pound to Stone (lb to st) Calculator</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Pounds (lb)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 140" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Stone (st)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 10" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 lb = 0.071429 st &nbsp;·&nbsp; 1 st = 14 lb</div>
+
+      </div>
+    </section>
+
+    <script src="/js/lb-to-st.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert pounds to stone, divide by <strong>14</strong>. So 140 lb = 10 st and 154 lb = 11 st exactly. One stone = 14 lb by definition - an exact conversion in the avoirdupois system.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact: 1 lb = 1/14 st - defined, not approximate.</li>
+          <li>140 lb = 10 st. 154 lb = 11 st. 168 lb = 12 st.</li>
+          <li>For whole stone + remaining pounds: integer part is stone, multiply decimal by 14 for lbs.</li>
+          <li>Stone is used in UK and Ireland; lbs are used in the US.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any pounds value in the lb field and the stone result appears instantly. You can also type in the st field to convert back. The result is decimal stone. To express as stone and pounds: the integer part is stone, multiply the decimal remainder by 14 to get extra lbs. Example: 160 lb = 11.429 st = 11 st + 0.429 × 14 = 11 st 6 lb.</p>
+
+      <h2 id="formula">How Do You Convert Pounds to Stone?</h2>
+      <p>Divide pounds by 14. One stone is exactly 14 avoirdupois pounds.</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 112 lb = 8 st. 126 lb = 9 st. 140 lb = 10 st. 154 lb = 11 st. 168 lb = 12 st. 182 lb = 13 st. 196 lb = 14 st.</p>
+
+      <h2 id="reverse">How Do You Convert Stone to Pounds?</h2>
+      <p>Multiply stone by 14. See the dedicated <a href="/conversion/weight-converter/st-to-lb">stone to pounds converter</a> for a stone-first reference table.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 9 st = 126 lb. 11 st = 154 lb. 13 st = 182 lb.</p>
+
+      <h2 id="reference-table">Pounds to Stone Reference Table</h2>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Pounds (lb)</th><th>Stone (st)</th><th>Kilograms (kg)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>98 lb</td><td>7 st</td><td>44.45 kg</td></tr>
+            <tr><td>112 lb</td><td>8 st</td><td>50.80 kg</td></tr>
+            <tr><td>126 lb</td><td>9 st</td><td>57.15 kg</td></tr>
+            <tr><td>140 lb</td><td>10 st</td><td>63.50 kg</td></tr>
+            <tr><td>154 lb</td><td>11 st</td><td>69.85 kg</td></tr>
+            <tr><td>168 lb</td><td>12 st</td><td>76.20 kg</td></tr>
+            <tr><td>182 lb</td><td>13 st</td><td>82.55 kg</td></tr>
+            <tr><td>196 lb</td><td>14 st</td><td>88.90 kg</td></tr>
+            <tr><td>210 lb</td><td>15 st</td><td>95.25 kg</td></tr>
+            <tr><td>224 lb</td><td>16 st</td><td>101.60 kg</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert lbs to Stone?</h2>
+      <ul>
+        <li><strong>US to UK communication</strong> - US residents reporting weight in lbs to UK contacts who use stone.</li>
+        <li><strong>UK slimming and fitness</strong> - UK weight loss programs track progress in stone; US-sourced data is in lbs.</li>
+        <li><strong>Medical cross-referencing</strong> - US medical charts in lbs need to be communicated in stone for UK patient understanding.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many stone is 154 pounds?</h3>
+      <p>Exactly 11 stone. 154 ÷ 14 = 11. This is a clean round number - any multiple of 14 lbs is a whole number of stone.</p>
+
+      <h3>How do you convert lbs to stone?</h3>
+      <p>Divide by 14. For 200 lb: 200 ÷ 14 = 14.286 st. The integer part (14) is stone; multiply 0.286 × 14 = 4 for the extra pounds → 14 stone 4 pounds.</p>
+
+      <h3>How many stone is 200 pounds?</h3>
+      <p>200 lb = 14.286 st = 14 stone 4 pounds. Divide 200 ÷ 14 = 14.286; the 0.286 remainder × 14 = 4 extra lbs.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/st-to-lb">Stone to Pounds Converter</a>
+            <p>Reverse conversion - enter stone and get lbs instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/lb-to-kg">Pounds to Kilograms Converter</a>
+            <p>Convert lbs to kg for metric body weight.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/kg-to-st">Kilograms to Stone Converter</a>
+            <p>Convert kg to stone for UK body weight.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter (all units)</a>
+            <p>Convert between all metric and imperial weight units simultaneously.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

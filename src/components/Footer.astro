@@ -1,4 +1,39 @@
 ---
+const year = new Date().getFullYear();
+
+const cols = [
+  {
+    heading: 'Math & Finance',
+    links: [
+      { label: 'Percentage Calculator', href: '/math/percentage-calculator' },
+      { label: 'Percentage Increase', href: '/math/percentage-calculator/increase' },
+      { label: 'Percentage Decrease', href: '/math/percentage-calculator/decrease' },
+      { label: 'Currency Converter', href: '/conversion/currency-converter' },
+      { label: 'Compare CSV Files', href: '/compare/csv' },
+    ],
+  },
+  {
+    heading: 'Unit Converters',
+    links: [
+      { label: 'Temperature Converter', href: '/conversion/temperature-converter' },
+      { label: 'Weight Converter', href: '/conversion/weight-converter' },
+      { label: 'Length Converter', href: '/conversion/length-converter' },
+      { label: 'Speed Converter', href: '/conversion/speed-converter' },
+      { label: 'Height Converter', href: '/conversion/height-converter' },
+    ],
+  },
+  {
+    heading: 'Health',
+    links: [
+      { label: 'BMI Calculator', href: '/health/bmi-calculator' },
+      { label: 'Body Fat Calculator', href: '/health/body-fat-calculator' },
+      { label: 'Lean Body Mass', href: '/health/lean-body-mass-calculator' },
+      { label: 'Ideal Weight Calculator', href: '/health/ideal-weight-calculator' },
+      { label: 'FFMI Calculator', href: '/health/ffmi-calculator' },
+    ],
+  },
+];
+
 const socials = [
   {
     label: 'Instagram',
@@ -12,33 +47,91 @@ const socials = [
   },
 ];
 ---
+
 <footer class="footer">
   <div class="container">
-    <div class="footer-inner">
-      <p>&copy; <span id="footer-year"></span> calculations.tools. All rights reserved. | <a href="/privacy-policy">Privacy Policy</a></p>
-      <i>Built to help by <a href="https://www.linkedin.com/in/jesperpallesen20/" target="_blank">Jesper Pallesen</a> and <a href="https://gamesevenmarketing.com/" target="_blank">Game Seven Marketing</a></i>
-      {socials.length > 0 && (
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo"><img src="/favicon-96x96.webp" width="50" height="50" alt="Calculations.tools" style="border-radius:6px;"/></a>
+        <p class="footer-tagline">Free, accurate calculators and converters - no sign-up, no ads, instant results.</p>
+        <div class="footer-contact">
+          <p>Found an error or have an idea for a new tool? Let us know!</p>
+          <a href="mailto:info@calculations.tools">info@calculations.tools</a>
+        </div>
         <div class="footer-socials">
           {socials.map(s => (
             <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} class="footer-social-link" set:html={s.svg} />
           ))}
         </div>
-      )}
+      </div>
+
+      {cols.map(col => (
+        <div class="footer-col">
+          <h3 class="footer-heading">{col.heading}</h3>
+          <ul>
+            {col.links.map(l => (
+              <li><a href={l.href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {year} calculations.tools. All rights reserved.</p>
+      <nav class="footer-bottom-links" aria-label="Footer navigation">
+        <a href="/about-us">About Us</a>
+        <a href="/about-us/jesper-pallesen">Meet the Author</a>
+        <a href="/editorial-standards">Editorial Standards</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+      </nav>
     </div>
   </div>
 </footer>
 
 <style>
-  .footer-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.35rem;
+  .footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3rem 0 1.5rem;
+    color: var(--text-muted);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .footer-logo {
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+  .footer-tagline {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 1rem;
+    max-width: 240px;
+  }
+  .footer-contact {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .footer-contact a:hover {
+    color: rgba(255,255,255,0.85);
   }
   .footer-socials {
     display: flex;
     gap: 0.75rem;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
   .footer-social-link {
     color: rgba(255,255,255,0.3);
@@ -48,5 +141,84 @@ const socials = [
   }
   .footer-social-link:hover {
     color: rgba(255,255,255,0.7);
+  }
+  .footer-heading {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.85rem;
+  }
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .footer-col a {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover {
+    color: rgba(255,255,255,0.9);
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+  }
+  .footer-bottom-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .footer-bottom-links a {
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-bottom-links a:hover {
+    color: rgba(255,255,255,0.7);
+  }
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+    .footer-tagline {
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 540px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-bottom-links {
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+    }
+    .footer-socials {
+      justify-content: center;
+    }
+    .footer-brand {
+      text-align: center;
+    }
   }
 </style>

@@ -1,0 +1,219 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{lb} = \\text{oz} \\div 16$$",
+  rev: "$$\\text{oz} = \\text{lb} \\times 16$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert oz to lbs' },
+  { id: 'reverse',         label: 'How to convert lbs to oz' },
+  { id: 'reference-table', label: 'Ounces to pounds reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Ounces to Pounds Converter",
+    "url": "https://calculations.tools/conversion/weight-converter/oz-to-lb",
+    "description": "Convert ounces to pounds instantly. Formula: lb = oz ÷ 16. Includes reverse pounds to ounces conversion and a reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many pounds is 16 ounces?",
+        "acceptedAnswer": { "@type": "Answer", "text": "16 ounces equals exactly 1 pound. This is the definition of the pound in the avoirdupois system: 1 lb = 16 oz." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert ounces to pounds?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide ounces by 16. Example: 24 oz ÷ 16 = 1.5 lb. This is exact - no approximation needed." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many pounds is 32 ounces?",
+        "acceptedAnswer": { "@type": "Answer", "text": "32 ounces equals exactly 2 pounds. Divide 32 by 16: 32 ÷ 16 = 2 lb." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Ounces to Pounds Converter"
+  metaTitle="Ounces to Pounds Converter | oz to lbs ᐅ"
+  description="Convert ounces to pounds instantly. Formula: lb = oz ÷ 16. Reference table included - 8 oz, 16 oz, 24 oz, 32 oz in pounds and more."
+  canonical="https://calculations.tools/conversion/weight-converter/oz-to-lb"
+  tocItems={tocItems}
+  embedSlug="oz-to-lb"
+  schema={schema}
+  ogFormula="lb = oz ÷ 16"
+  ogExample="24 oz = 1.5 lb"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Ounce to Pound (oz to lb) Calculator</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Ounces (oz)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 16" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Pounds (lb)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 oz = 0.0625 lb &nbsp;·&nbsp; 1 lb = 16 oz</div>
+
+      </div>
+    </section>
+
+    <script src="/js/oz-to-lb.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert ounces to pounds, divide by <strong>16</strong>. So 16 oz = 1 lb, 24 oz = 1.5 lb, and 32 oz = 2 lb. This is an exact conversion in the avoirdupois system - 1 lb is defined as exactly 16 oz.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact: 1 oz = 0.0625 lb (= 1/16 lb) - defined, not approximate.</li>
+          <li>16 oz = 1 lb. 32 oz = 2 lb. 48 oz = 3 lb.</li>
+          <li>To convert lbs back to oz, multiply by 16.</li>
+          <li>Fluid ounces measure volume, not weight - do not confuse with oz here.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any oz value in the oz field and the pounds result appears instantly. You can also type in the lb field to convert back to oz. The conversion is exact - divide by 16.</p>
+
+      <h2 id="formula">How Do You Convert Ounces to Pounds?</h2>
+      <p>Divide ounces by 16. In the avoirdupois system, 1 pound = 16 ounces exactly. So 1 oz = 1/16 lb = 0.0625 lb.</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 8 oz = 0.5 lb. 12 oz = 0.75 lb. 16 oz = 1 lb. 24 oz = 1.5 lb. 32 oz = 2 lb. 48 oz = 3 lb. 64 oz = 4 lb.</p>
+
+      <h2 id="reverse">How Do You Convert Pounds to Ounces?</h2>
+      <p>Multiply pounds by 16. See the dedicated <a href="/conversion/weight-converter/lb-to-oz">pounds to ounces converter</a> for a lbs-first reference table.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 0.5 lb = 8 oz. 1.5 lb = 24 oz. 2.5 lb = 40 oz.</p>
+
+      <h2 id="reference-table">Ounces to Pounds Reference Table</h2>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Ounces (oz)</th><th>Pounds (lb)</th><th>Common context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>4 oz</td><td>0.25 lb</td><td>Quarter pound</td></tr>
+            <tr><td>8 oz</td><td>0.5 lb</td><td>Half pound</td></tr>
+            <tr><td>12 oz</td><td>0.75 lb</td><td>Soda can size (US)</td></tr>
+            <tr><td>16 oz</td><td>1 lb</td><td>Standard pound</td></tr>
+            <tr><td>20 oz</td><td>1.25 lb</td><td>-</td></tr>
+            <tr><td>24 oz</td><td>1.5 lb</td><td>-</td></tr>
+            <tr><td>32 oz</td><td>2 lb</td><td>-</td></tr>
+            <tr><td>48 oz</td><td>3 lb</td><td>-</td></tr>
+            <tr><td>64 oz</td><td>4 lb</td><td>-</td></tr>
+            <tr><td>80 oz</td><td>5 lb</td><td>Small flour bag</td></tr>
+            <tr><td>160 oz</td><td>10 lb</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert oz to lbs?</h2>
+      <ul>
+        <li><strong>Food packaging</strong> - US products list net weight in oz; bulk price comparisons use price per lb.</li>
+        <li><strong>Postal</strong> - USPS weight limits are set in oz for lightweight mail; heavier packages switch to lbs.</li>
+        <li><strong>Cooking</strong> - scaling up recipes from oz-based serving sizes to lb-based shopping quantities.</li>
+        <li><strong>Retail</strong> - converting unit weights from oz to lb for per-pound pricing comparisons.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many pounds is 16 ounces?</h3>
+      <p>Exactly 1 pound. 16 ÷ 16 = 1. The pound is defined as 16 avoirdupois ounces.</p>
+
+      <h3>How do you convert oz to lbs?</h3>
+      <p>Divide by 16. For 40 oz: 40 ÷ 16 = 2.5 lb. The result is exact - no rounding.</p>
+
+      <h3>How many pounds is 32 ounces?</h3>
+      <p>32 oz = 2 lb exactly. 32 ÷ 16 = 2.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/lb-to-oz">Pounds to Ounces Converter</a>
+            <p>Reverse conversion - enter lbs and get oz instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/oz-to-g">Ounces to Grams Converter</a>
+            <p>Convert oz to grams for metric cooking and measurements.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/lb-to-kg">Pounds to Kilograms Converter</a>
+            <p>Convert lbs to kg for metric body weight.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter (all units)</a>
+            <p>Convert between all metric and imperial weight units simultaneously.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

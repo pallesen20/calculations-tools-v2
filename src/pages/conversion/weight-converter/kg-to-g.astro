@@ -1,0 +1,223 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{g} = \\text{kg} \\times 1000$$",
+  rev: "$$\\text{kg} = \\text{g} \\div 1000$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert kg to grams' },
+  { id: 'reverse',         label: 'How to convert grams to kg' },
+  { id: 'reference-table', label: 'kg to grams reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Kilograms to Grams Converter",
+    "url": "https://calculations.tools/conversion/weight-converter/kg-to-g",
+    "description": "Convert kilograms to grams instantly. Formula: g = kg × 1000. Includes reverse grams to kg conversion and a reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many grams is 1 kg?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1 kilogram equals exactly 1000 grams. The prefix 'kilo' means 1000 in the SI system. This is an exact, defined conversion with no rounding." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert kg to grams?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply kilograms by 1000. Example: 2.5 kg × 1000 = 2500 g. This is an exact conversion - no approximation needed." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many grams is 0.5 kg?",
+        "acceptedAnswer": { "@type": "Answer", "text": "0.5 kg equals exactly 500 grams. Multiply 0.5 by 1000: 0.5 × 1000 = 500 g." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Kilograms to Grams Converter"
+  metaTitle="Kilograms to Grams Converter | kg to g ᐅ"
+  description="Convert kilograms to grams instantly. Formula: g = kg × 1000. Reference table included - 0.1 kg, 0.5 kg, 1 kg, 2 kg in grams and more."
+  canonical="https://calculations.tools/conversion/weight-converter/kg-to-g"
+  tocItems={tocItems}
+  embedSlug="kg-to-g"
+  schema={schema}
+  ogFormula="g = kg × 1000"
+  ogExample="2.5 kg = 2500 g"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Kilogram to Gram (kg to g) Calculator</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Kilograms (kg)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Grams (g)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 1000" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 kg = 1000 g &nbsp;·&nbsp; 1 g = 0.001 kg</div>
+
+      </div>
+    </section>
+
+    <script src="/js/kg-to-g.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert kilograms to grams, multiply by <strong>1000</strong>. So 1 kg = 1000 g, 0.5 kg = 500 g, and 2.5 kg = 2500 g. This is an exact conversion - the SI prefix "kilo" means 1000 by definition.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact: 1 kg = 1000 g - defined, not approximate.</li>
+          <li>Move the decimal point 3 places to the right to go from kg to g.</li>
+          <li>0.5 kg = 500 g. 1 kg = 1000 g. 2.5 kg = 2500 g.</li>
+          <li>To convert grams back to kg, divide by 1000 (move decimal 3 places left).</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any kg value in the kg field and the grams result appears instantly. You can also type in the g field to convert back to kg. The conversion is exact: multiply by 1000 or divide by 1000.</p>
+
+      <h2 id="formula">How Do You Convert Kilograms to Grams?</h2>
+      <p>Multiply kilograms by 1000. The prefix "kilo" in the SI system means exactly 1000, so 1 kilogram = 1000 grams by definition. There is no rounding involved.</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 0.1 kg = 100 g. 0.25 kg = 250 g. 0.5 kg = 500 g. 1 kg = 1000 g. 1.5 kg = 1500 g. 2 kg = 2000 g. 5 kg = 5000 g.</p>
+
+      <p>Shortcut: to convert kg to g, just move the decimal point three places to the right. For 1.75 kg: move decimal → 1750 g.</p>
+
+      <h2 id="reverse">How Do You Convert Grams to Kilograms?</h2>
+      <p>Divide grams by 1000 (move the decimal point three places to the left). See the dedicated <a href="/conversion/weight-converter/g-to-kg">grams to kilograms converter</a> for a grams-first reference table.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 250 g = 0.25 kg. 500 g = 0.5 kg. 750 g = 0.75 kg. 1500 g = 1.5 kg.</p>
+
+      <h2 id="reference-table">Kilograms to Grams Reference Table</h2>
+      <p>Common weight values converted using the exact factor of 1000 g/kg:</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Kilograms (kg)</th><th>Grams (g)</th><th>Common context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.001 kg</td><td>1 g</td><td>-</td></tr>
+            <tr><td>0.01 kg</td><td>10 g</td><td>-</td></tr>
+            <tr><td>0.1 kg</td><td>100 g</td><td>Standard food serving</td></tr>
+            <tr><td>0.25 kg</td><td>250 g</td><td>Quarter kilogram</td></tr>
+            <tr><td>0.5 kg</td><td>500 g</td><td>Half kilogram</td></tr>
+            <tr><td>0.75 kg</td><td>750 g</td><td>-</td></tr>
+            <tr><td>1 kg</td><td>1,000 g</td><td>Standard kitchen unit</td></tr>
+            <tr><td>1.5 kg</td><td>1,500 g</td><td>-</td></tr>
+            <tr><td>2 kg</td><td>2,000 g</td><td>-</td></tr>
+            <tr><td>5 kg</td><td>5,000 g</td><td>Flour / sugar bag</td></tr>
+            <tr><td>10 kg</td><td>10,000 g</td><td>-</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert kg to Grams?</h2>
+      <p>This conversion is common when working with scales or recipes that use grams but quantities are specified in kilograms, or when entering data into systems that require a single unit:</p>
+      <ul>
+        <li><strong>Cooking and baking</strong> - precision recipes specify flour, sugar, and butter in grams; bulk quantities are purchased in kg.</li>
+        <li><strong>Chemistry and lab</strong> - reagent amounts listed in kg need to be converted to g for analytical balances.</li>
+        <li><strong>Nutritional data</strong> - daily intake values are in grams; food quantities may be listed in kg.</li>
+        <li><strong>Shipping</strong> - parcel weight systems often require a single unit; converting kg to g is needed when the API or form expects grams.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many grams is 1 kg?</h3>
+      <p>Exactly 1000 grams. The SI prefix "kilo" means 1000, so this is a definition - not an approximation. 1 kilogram = 1000 grams = 1,000,000 milligrams.</p>
+
+      <h3>How do you convert kg to grams?</h3>
+      <p>Multiply by 1000, or move the decimal point three places to the right. For 3.75 kg: move decimal → 3750 g. No rounding needed, it is exact.</p>
+
+      <h3>How many grams is 0.5 kg?</h3>
+      <p>Exactly 500 grams. 0.5 × 1000 = 500 g. This is a common kitchen measurement - half a kilogram of flour, butter, or sugar.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/g-to-kg">Grams to Kilograms Converter</a>
+            <p>Reverse conversion - enter grams and get kg instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/kg-to-lb">Kilograms to Pounds Converter</a>
+            <p>Convert kg to lbs for body weight and US measurements.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/mg-to-g">Milligrams to Grams Converter</a>
+            <p>Convert mg to grams for medication dosing and chemistry.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter (all units)</a>
+            <p>Convert between all metric and imperial weight units simultaneously.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

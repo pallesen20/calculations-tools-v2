@@ -61,6 +61,31 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'cdn': {
+    definition: [
+      'A Content Delivery Network (CDN) is a geographically distributed network of servers designed to serve files to end users from the location closest to them. Instead of every request travelling to a single origin server, a CDN caches and serves copies of files from dozens or hundreds of edge locations worldwide. This reduces the physical distance data must travel, lowering latency and improving load speed.',
+      'CDNs are most commonly used to deliver static assets: JavaScript libraries, CSS files, fonts, images, and video. Large open-source libraries such as Tesseract.js (OCR), SheetJS (Excel processing), and PDF.js (PDF rendering) are routinely served from public CDNs because distributing multi-megabyte bundles with every page load would be slow and expensive for small sites.',
+      'When this site mentions that a tool "loads from CDN," it means the browser fetches a third-party library file from an external CDN provider (such as jsDelivr or unpkg) the first time you use that tool. Only the library code is fetched - none of your files or data are sent anywhere. After the first load, the browser caches the file, so repeat visits in the same session skip the download entirely.',
+    ],
+    whenToUse: 'Understanding CDN loading matters when you are on a slow or metered connection, or using a browser with strict content-security policies. If a tool states it "requires no CDN," it means all code is already bundled with the page - nothing external is fetched, and the tool works offline.',
+    examples: {
+      headers: ['Library', 'Used for', 'CDN size (approx.)'],
+      rows: [
+        ['Tesseract.js', 'OCR - image to text', '~25 MB (includes language model)'],
+        ['SheetJS (xlsx)', 'Excel / spreadsheet parsing', '~1 MB'],
+        ['PDF.js', 'PDF rendering and text extraction', '~2 MB'],
+        ['mammoth.js', 'Word (.docx) document parsing', '~0.5 MB'],
+        ['KaTeX', 'Math formula rendering', '~0.3 MB'],
+      ],
+    },
+    pitfalls: 'The main trade-off with CDN loading is a dependency on a third-party service. If the CDN is unreachable (rare, but possible), the tool will fail to load its library and will not function. Tools that bundle all code locally avoid this dependency but increase the initial page weight. This site uses CDN loading only for large, infrequently-used libraries where the trade-off favours CDN delivery.',
+    faqs: [
+      { q: 'Does loading from a CDN mean my files are uploaded somewhere?', a: 'No. CDN loading only fetches library code - the JavaScript that powers a tool. Your files, text, and input data never leave your browser. The distinction is: the library comes down to your browser from the CDN; your data stays entirely on your device.' },
+      { q: 'Why do some tools on this site require a CDN and others do not?', a: 'Tools that need large specialised libraries (OCR, Excel parsing, PDF rendering) load those libraries from a CDN to avoid bloating the initial page load for all visitors. Simpler tools - such as the text and code comparison tools - run on pure JavaScript that is bundled directly into the page, requiring no external CDN fetch.' },
+      { q: 'Will the CDN library be re-downloaded every time I use the tool?', a: 'No. Your browser caches CDN files after the first download. Subsequent uses in the same browser session (and often across sessions, depending on cache expiry headers) will serve the file from your local browser cache rather than fetching it again.' },
+    ],
+  },
+
   'cogs': {
     definition: [
       'Cost of Goods Sold (COGS) is the aggregate of all direct costs incurred to produce the goods or deliver the services a company sells during a period. For a product business, this typically includes raw materials, direct labour (workers on the production line), and manufacturing overhead (factory rent, utilities, equipment depreciation). For a service business, it includes direct labour hours billed to clients and any direct project costs.',

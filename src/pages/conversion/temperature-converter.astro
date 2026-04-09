@@ -12,6 +12,7 @@ const tocItems = [
   { id: 'temperature-differences', label: 'Temperature differences vs absolute' },
   { id: 'common-mistakes',     label: 'Common mistakes' },
   { id: 'faq',                 label: 'FAQs' },
+  { id: 'sub-pages',           label: 'Dedicated conversion pages' },
   { id: 'related-tools',       label: 'Related tools' },
 ];
 
@@ -322,6 +323,22 @@ const schema = [
 
       <h3>What is Rankine used for?</h3>
       <p>Rankine is used in US thermodynamics, aerospace engineering, and HVAC where absolute temperatures are needed but engineers work in Fahrenheit. It is the Fahrenheit counterpart of Kelvin: same degree size as Fahrenheit, but starting from absolute zero (0°R = 0 K = -273.15°C).</p>
+
+      <h2 id="sub-pages">Dedicated conversion pages</h2>
+      <p>Each page below focuses on a single conversion pair with a full reference table, exact formula, and worked examples.</p>
+      <div class="responsive-table">
+      <table>
+        <thead><tr><th>Conversion</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td><a href="/conversion/temperature-converter/c-to-f">Celsius to Fahrenheit</a></td><td>°F = °C × 9/5 + 32</td></tr>
+          <tr><td><a href="/conversion/temperature-converter/f-to-c">Fahrenheit to Celsius</a></td><td>°C = (°F − 32) × 5/9</td></tr>
+          <tr><td><a href="/conversion/temperature-converter/c-to-k">Celsius to Kelvin</a></td><td>K = °C + 273.15</td></tr>
+          <tr><td><a href="/conversion/temperature-converter/k-to-c">Kelvin to Celsius</a></td><td>°C = K − 273.15</td></tr>
+          <tr><td><a href="/conversion/temperature-converter/f-to-k">Fahrenheit to Kelvin</a></td><td>K = (°F − 32) × 5/9 + 273.15</td></tr>
+          <tr><td><a href="/conversion/temperature-converter/k-to-f">Kelvin to Fahrenheit</a></td><td>°F = (K − 273.15) × 9/5 + 32</td></tr>
+        </tbody>
+      </table>
+      </div>
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">

@@ -1,0 +1,220 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{g} = \\text{mg} \\div 1000$$",
+  rev: "$$\\text{mg} = \\text{g} \\times 1000$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert mg to grams' },
+  { id: 'reverse',         label: 'How to convert grams to mg' },
+  { id: 'reference-table', label: 'mg to grams reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Milligrams to Grams Converter",
+    "url": "https://calculations.tools/conversion/weight-converter/mg-to-g",
+    "description": "Convert milligrams to grams instantly. Formula: g = mg ÷ 1000. Includes reverse grams to mg conversion and a medication dosage reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How many grams is 500 mg?",
+        "acceptedAnswer": { "@type": "Answer", "text": "500 milligrams equals 0.5 grams. Divide 500 by 1000: 500 ÷ 1000 = 0.5 g. This is the weight of a standard 500 mg paracetamol tablet." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you convert mg to grams?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide milligrams by 1000. Example: 250 mg ÷ 1000 = 0.25 g. This is exact - the prefix 'milli' means 1/1000 in the SI system." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many grams is 1000 mg?",
+        "acceptedAnswer": { "@type": "Answer", "text": "1000 milligrams equals exactly 1 gram. This is the definition of the milligram: 1 mg = 0.001 g, so 1000 mg = 1 g." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Milligrams to Grams Converter"
+  metaTitle="Milligrams to Grams Converter | mg to g ᐅ"
+  description="Convert milligrams to grams instantly. Formula: g = mg ÷ 1000. Medication dosage reference table - 100 mg, 250 mg, 500 mg, 1000 mg in grams."
+  canonical="https://calculations.tools/conversion/weight-converter/mg-to-g"
+  tocItems={tocItems}
+  embedSlug="mg-to-g"
+  schema={schema}
+  ogFormula="g = mg ÷ 1000"
+  ogExample="500 mg = 0.5 g"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Milligram to Gram (mg to g) Calculator</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Milligrams (mg)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 500" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Grams (g)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 0.5" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">1 mg = 0.001 g &nbsp;·&nbsp; 1 g = 1000 mg</div>
+
+      </div>
+    </section>
+
+    <script src="/js/mg-to-g.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert milligrams to grams, divide by <strong>1000</strong>. So 500 mg = 0.5 g and 1000 mg = 1 g. This is exact - the SI prefix "milli" means 1/1000 by definition.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact: 1 mg = 0.001 g - defined by the SI prefix "milli" = 1/1000.</li>
+          <li>500 mg = 0.5 g. 1000 mg = 1 g. 250 mg = 0.25 g.</li>
+          <li>Move the decimal three places left to convert mg to g.</li>
+          <li>Common medication doses: ibuprofen 200–400 mg, paracetamol 500–1000 mg.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any milligrams value in the mg field and the grams result appears instantly. You can also type in the g field to convert back to mg. The conversion is exact - divide by 1000.</p>
+
+      <h2 id="formula">How Do You Convert Milligrams to Grams?</h2>
+      <p>Divide milligrams by 1000. The SI prefix "milli" means 1/1000, so 1 milligram = 0.001 gram by definition. Move the decimal point three places to the left.</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked examples: 100 mg = 0.1 g. 200 mg = 0.2 g. 250 mg = 0.25 g. 400 mg = 0.4 g. 500 mg = 0.5 g. 1000 mg = 1 g. 2000 mg = 2 g.</p>
+
+      <h2 id="reverse">How Do You Convert Grams to Milligrams?</h2>
+      <p>Multiply grams by 1000. See the dedicated <a href="/conversion/weight-converter/g-to-mg">grams to milligrams converter</a> for a grams-first reference table.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 0.5 g = 500 mg. 1 g = 1000 mg. 2.5 g = 2500 mg.</p>
+
+      <h2 id="reference-table">Milligrams to Grams Reference Table</h2>
+      <p>Common medication doses and laboratory measurements converted from mg to grams:</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Milligrams (mg)</th><th>Grams (g)</th><th>Common context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>50 mg</td><td>0.05 g</td><td>Low-dose aspirin</td></tr>
+            <tr><td>100 mg</td><td>0.1 g</td><td>-</td></tr>
+            <tr><td>200 mg</td><td>0.2 g</td><td>Ibuprofen tablet</td></tr>
+            <tr><td>250 mg</td><td>0.25 g</td><td>Amoxicillin 250 mg</td></tr>
+            <tr><td>400 mg</td><td>0.4 g</td><td>Ibuprofen standard dose</td></tr>
+            <tr><td>500 mg</td><td>0.5 g</td><td>Paracetamol tablet</td></tr>
+            <tr><td>600 mg</td><td>0.6 g</td><td>Ibuprofen max single dose</td></tr>
+            <tr><td>1000 mg</td><td>1 g</td><td>Paracetamol max single dose</td></tr>
+            <tr><td>1500 mg</td><td>1.5 g</td><td>-</td></tr>
+            <tr><td>2000 mg</td><td>2 g</td><td>Metformin 1000 mg twice daily</td></tr>
+            <tr><td>4000 mg</td><td>4 g</td><td>Paracetamol max daily dose</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert mg to Grams?</h2>
+      <ul>
+        <li><strong>Medication dosing</strong> - drug doses are in mg; pharmacy scales and dispensing records may require grams.</li>
+        <li><strong>Nutritional labels</strong> - vitamins and minerals are listed in mg; daily intake totals may be reported in grams.</li>
+        <li><strong>Chemistry and lab</strong> - reagent quantities in milligrams need to be expressed in grams for formula calculations.</li>
+        <li><strong>Precious metals and gems</strong> - small weights in mg need conversion to grams for weighing and valuation.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How many grams is 500 mg?</h3>
+      <p>500 mg = 0.5 g. Divide 500 by 1000. This is the weight of a standard paracetamol or acetaminophen tablet.</p>
+
+      <h3>How do you convert mg to grams?</h3>
+      <p>Divide by 1000, or move the decimal three places left. For 750 mg: 750 ÷ 1000 = 0.75 g. Exact - no rounding needed.</p>
+
+      <h3>How many grams is 1000 mg?</h3>
+      <p>1000 mg = 1 g exactly. This is the most common anchor point: 1 gram = 1000 milligrams by definition.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/g-to-mg">Grams to Milligrams Converter</a>
+            <p>Reverse conversion - enter grams and get mg instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/g-to-kg">Grams to Kilograms Converter</a>
+            <p>Convert grams to kg for larger measurements.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter/g-to-oz">Grams to Ounces Converter</a>
+            <p>Convert grams to oz for cooking and food measurements.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter (all units)</a>
+            <p>Convert between all metric and imperial weight units simultaneously.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

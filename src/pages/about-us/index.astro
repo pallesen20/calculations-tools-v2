@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const schema = [
   {
@@ -9,6 +9,7 @@ const schema = [
     "url": "https://calculations.tools",
     "logo": "https://calculations.tools/open-graph.webp",
     "description": "Free online calculators and converters for health, math, unit conversion, text, and date calculations. Built by a human, free forever.",
+    "publishingPrinciples": "https://calculations.tools/editorial-standards",
     "founder": {
       "@type": "Person",
       "name": "Jesper Pallesen",
@@ -110,8 +111,7 @@ const schema = [
           <h2>About the founder</h2>
           <p>Jesper Pallesen has worked with SEO and software development since 2017, helping businesses grow their online visibility across multiple markets and languages. His expertise sits at the intersection of technical SEO and data analytics - building systems that are both measurable and durable.</p>
           <p>Calculations.tools grew out of a personal frustration: too many online tools are engineered to extract value from users rather than provide it. Jesper built this site to be the opposite - a resource that genuinely helps people with everyday tasks and stays free for users indefinitely. The motivation is simple: tools should serve the people who use them.</p>
-          <p>Before his career in digital, Jesper was a professional hockey player competing in Denmark and Germany. The discipline and focus that come with professional sport translate directly into how he approaches development and SEO - methodical, detail-oriented, and built for the long game. His work covers the full scope: technical audits, content strategy, and domain networks that strengthen SERP equity.</p>
-          <p>Outside of work, Jesper travels with his family, hikes in the mountains, and explores the Scandinavian nature with his wife.</p>
+          <a href="/about-us/jesper-pallesen" class="ap-btn ap-btn-ghost">Go to founder page →</a>
         </div>
       </section>
 
@@ -123,7 +123,7 @@ const schema = [
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <h3>Accuracy first</h3>
-            <p>Every formula is verified against established mathematical and scientific references before publication. We show the workings so you can check for yourself.</p>
+            <p>Every formula is verified against established mathematical and scientific references before publication. We show the workings so you can check for yourself. See our <a href="/editorial-standards" style="color:#a78bfa;text-decoration:none;">editorial standards</a>.</p>
           </div>
           <div class="au-principle">
             <div class="au-principle-icon">
@@ -183,7 +183,22 @@ const schema = [
     max-width: 820px;
     margin: 0 auto;
   }
-
+  .ap-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .ap-btn-ghost {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.75) !important;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
   .au-hero {
     text-align: center;
     padding: 0 0 3rem;

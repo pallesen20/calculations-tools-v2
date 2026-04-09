@@ -3,6 +3,7 @@ import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import type { Source } from '../../../components/Sources.astro';
+import HealthDisclaimer from '../../../components/HealthDisclaimer.astro';
 
 const f = {
   metric:       "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
@@ -234,6 +235,7 @@ const schema = [
     </section>
 
     <script src="/js/bmi-weight-loss-calculator.js" is:inline></script>
+  <HealthDisclaimer />
   </div>
 
   <div slot="content">

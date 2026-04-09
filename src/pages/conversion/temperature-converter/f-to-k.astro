@@ -1,0 +1,240 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$K = (°F - 32) \\times \\frac{5}{9} + 273.15$$",
+  rev: "$$°F = (K - 273.15) \\times \\frac{9}{5} + 32$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert Fahrenheit to Kelvin' },
+  { id: 'reverse',         label: 'How to convert Kelvin to Fahrenheit' },
+  { id: 'reference-table', label: 'Fahrenheit to Kelvin reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fahrenheit to Kelvin Converter",
+    "url": "https://calculations.tools/conversion/temperature-converter/f-to-k",
+    "description": "Convert Fahrenheit to Kelvin instantly. Formula: K = (°F − 32) × 5/9 + 273.15. Includes reverse Kelvin to Fahrenheit conversion and a reference table.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert Fahrenheit to Kelvin",
+    "description": "Convert Fahrenheit to Kelvin using the two-step formula.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter Fahrenheit value", "text": "Type your Fahrenheit temperature in the °F field. The Kelvin result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted Kelvin value appears immediately. For 32°F, the result is 273.15 K." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the K field to convert back to Fahrenheit. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you convert Fahrenheit to Kelvin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Subtract 32, multiply by 5/9, then add 273.15. Formula: K = (°F − 32) × 5/9 + 273.15. Example: 32°F → (32 − 32) × 5/9 + 273.15 = 0 + 273.15 = 273.15 K." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 32 degrees Fahrenheit in Kelvin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "32°F equals 273.15 K. This is the freezing point of water. Calculation: (32 − 32) × 5/9 + 273.15 = 0 + 273.15 = 273.15 K." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is 212 degrees Fahrenheit in Kelvin?",
+        "acceptedAnswer": { "@type": "Answer", "text": "212°F equals 373.15 K. This is the boiling point of water at sea level. Calculation: (212 − 32) × 5/9 + 273.15 = 180 × 5/9 + 273.15 = 100 + 273.15 = 373.15 K." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does Fahrenheit to Kelvin require two steps?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Because Fahrenheit and Kelvin differ in both zero point and degree size. Converting Fahrenheit to Celsius first (subtract 32, multiply by 5/9), then Celsius to Kelvin (add 273.15) is the most intuitive approach. The combined formula does this in one equation." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Fahrenheit to Kelvin Converter"
+  metaTitle="Fahrenheit to Kelvin Converter | °F to K ᐅ"
+  description="Convert Fahrenheit to Kelvin instantly. Formula: K = (°F − 32) × 5/9 + 273.15. Includes reverse Kelvin to Fahrenheit conversion and a reference table."
+  canonical="https://calculations.tools/conversion/temperature-converter/f-to-k"
+  tocItems={tocItems}
+  embedSlug="f-to-k"
+  schema={schema}
+  ogFormula="K = (°F − 32) × 5/9 + 273.15"
+  ogExample="32°F = 273.15 K"
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+
+        <div class="calculator-header">
+          <h2>Instant Fahrenheit to Kelvin (°F to K) Converter</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Fahrenheit (°F)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 32" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Kelvin (K)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 273.15" />
+          </div>
+        </div>
+
+        <div class="pair-formula-note">K = (°F − 32) × 5/9 + 273.15 &nbsp;·&nbsp; °F = (K − 273.15) × 9/5 + 32</div>
+
+      </div>
+    </section>
+
+    <script src="/js/f-to-k.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert Fahrenheit to Kelvin: subtract 32, multiply by 5/9, then add 273.15. Formula: K = (°F − 32) × 5/9 + 273.15. Key values: 32°F = 273.15 K (water freezes), 212°F = 373.15 K (water boils), −459.67°F = 0 K (absolute zero).</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Formula: K = (°F − 32) × 5/9 + 273.15 - convert to Celsius first, then add 273.15.</li>
+          <li>32°F = 273.15 K - water freezes.</li>
+          <li>212°F = 373.15 K - water boils at sea level.</li>
+          <li>−459.67°F = 0 K - absolute zero (the minimum possible temperature).</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Converter</h2>
+      <p>Type any Fahrenheit value in the °F field and the Kelvin result appears instantly. You can also type in the K field to convert back to Fahrenheit - it works in both directions without pressing a button.</p>
+
+      <h2 id="formula">How Do You Convert Fahrenheit to Kelvin?</h2>
+      <p>The conversion requires two adjustments: first convert Fahrenheit to Celsius (subtract 32, multiply by 5/9), then convert Celsius to Kelvin (add 273.15). These two steps are combined into one formula:</p>
+
+      <Formula expr={f.fwd} />
+
+      <p>Worked step-by-step for 98.6°F: (98.6 − 32) = 66.6, × 5/9 = 37, + 273.15 = 310.15 K.</p>
+      <p>Other examples: 32°F = 273.15 K. 72°F = 295.37 K. 212°F = 373.15 K. −40°F = 233.15 K.</p>
+
+      <h2 id="reverse">How Do You Convert Kelvin to Fahrenheit?</h2>
+      <p>Subtract 273.15, multiply by 9/5, then add 32. See the dedicated <a href="/conversion/temperature-converter/k-to-f">Kelvin to Fahrenheit converter</a> for a Kelvin-first reference table.</p>
+
+      <Formula expr={f.rev} />
+
+      <p>Worked examples: 273.15 K = 32°F. 298.15 K = 68.3°F. 373.15 K = 212°F.</p>
+
+      <h2 id="reference-table">Fahrenheit to Kelvin Reference Table</h2>
+      <p>Common temperatures converted using K = (°F − 32) × 5/9 + 273.15:</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Fahrenheit (°F)</th><th>Kelvin (K)</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>−459.67°F</td><td>0 K</td><td>Absolute zero</td></tr>
+            <tr><td>−40°F</td><td>233.15 K</td><td>°C = °F crossover point</td></tr>
+            <tr><td>0°F</td><td>255.37 K</td><td>Fahrenheit zero</td></tr>
+            <tr><td>32°F</td><td>273.15 K</td><td>Water freezes</td></tr>
+            <tr><td>68°F</td><td>293.15 K</td><td>Room temperature</td></tr>
+            <tr><td>72°F</td><td>295.37 K</td><td>Typical US indoor thermostat</td></tr>
+            <tr><td>98.6°F</td><td>310.15 K</td><td>Normal body temperature</td></tr>
+            <tr><td>100.4°F</td><td>311.15 K</td><td>Fever threshold (adults)</td></tr>
+            <tr><td>212°F</td><td>373.15 K</td><td>Water boils at sea level</td></tr>
+            <tr><td>350°F</td><td>449.82 K</td><td>Moderate oven (US baking)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-use">When Do You Need to Convert Fahrenheit to Kelvin?</h2>
+      <p>This conversion is needed when working with US-based temperature data in scientific contexts that require absolute temperatures:</p>
+      <ul>
+        <li><strong>Thermodynamics</strong> - US engineering problems often give temperatures in °F, but gas laws and efficiency equations require Kelvin.</li>
+        <li><strong>Chemical engineering</strong> - US-originated process temperatures in °F must be converted to K for thermodynamic property lookups.</li>
+        <li><strong>Physics courses</strong> - textbooks that use Fahrenheit examples (common in older US editions) require converting to Kelvin for ideal gas and blackbody radiation problems.</li>
+        <li><strong>HVAC engineering</strong> - US HVAC uses °F; international standards and heat transfer equations use Kelvin.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How do you convert Fahrenheit to Kelvin?</h3>
+      <p>Subtract 32, multiply by 5/9, then add 273.15. The intermediate result after the first two steps is the Celsius equivalent. Formula: K = (°F − 32) × 5/9 + 273.15. Example: 212°F → (212 − 32) × 5/9 + 273.15 = 100 + 273.15 = 373.15 K.</p>
+
+      <h3>What is 32°F in Kelvin?</h3>
+      <p>32°F = 273.15 K. This is the freezing point of water. Calculation: (32 − 32) × 5/9 + 273.15 = 0 + 273.15 = 273.15 K.</p>
+
+      <h3>What is 212°F in Kelvin?</h3>
+      <p>212°F = 373.15 K. This is the boiling point of water at sea level. Calculation: (212 − 32) × 5/9 + 273.15 = 180 × 5/9 + 273.15 = 100 + 273.15 = 373.15 K.</p>
+
+      <h3>What is absolute zero in Fahrenheit?</h3>
+      <p>Absolute zero is −459.67°F (= 0 K = −273.15°C). It is the lowest possible temperature. Calculation using the reverse formula: (0 − 273.15) × 9/5 + 32 = −491.67 + 32 = −459.67°F.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter/k-to-f">Kelvin to Fahrenheit Converter</a>
+            <p>Reverse conversion - enter K and get °F instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter/f-to-c">Fahrenheit to Celsius Converter</a>
+            <p>The most common temperature conversion - °F to °C for everyday use.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter">Temperature Converter (all scales)</a>
+            <p>Convert between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur simultaneously.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter</a>
+            <p>Convert between meters, kilometers, feet, inches, miles, and more.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>
