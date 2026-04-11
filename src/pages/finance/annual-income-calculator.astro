@@ -1,0 +1,442 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  fromHourly: "$$\\text{Annual Income} = \\text{Hourly Rate} \\times \\text{Hours per Week} \\times \\text{Weeks per Year}$$",
+  fromMonthly: "$$\\text{Annual Income} = \\text{Monthly Pay} \\times 12$$",
+  toHourly: "$$\\text{Hourly Rate} = \\frac{\\text{Annual Income}}{\\text{Hours per Week} \\times \\text{Weeks per Year}}$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'U.S. Bureau of Labor Statistics',
+    title: 'Usual Weekly Earnings of Wage and Salary Workers, Third Quarter 2025',
+    journal: 'U.S. Department of Labor',
+    year: 2025,
+    url: 'https://www.bls.gov/news.release/pdf/wkyeng.pdf',
+  },
+  {
+    author: 'U.S. Bureau of Labor Statistics',
+    title: 'Occupational Employment and Wage Statistics - National Employment and Wage Estimates',
+    journal: 'U.S. Department of Labor',
+    year: 2024,
+    url: 'https://www.bls.gov/oes/current/oes_nat.htm',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',       label: 'How to use this calculator' },
+  { id: 'how-to-calculate', label: 'How to calculate annual income' },
+  { id: 'formula',          label: 'Annual income formula' },
+  { id: 'gross-vs-net',     label: 'Gross vs. net annual income' },
+  { id: 'reference-table',  label: 'Hourly to annual income table' },
+  { id: 'where-used',       label: 'Where annual income is used' },
+  { id: 'mistakes',         label: 'Common mistakes' },
+  { id: 'faq',              label: 'FAQs' },
+  { id: 'related-tools',    label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Annual Income Calculator",
+    "url": "https://calculations.tools/finance/annual-income-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate your total annual income from any pay period. Enter hourly, daily, weekly, bi-weekly, or monthly pay to see your gross yearly income, with optional bonus/extra income included.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is annual income?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Annual income is the total amount of money you earn in a year before taxes are deducted. It includes wages, salary, freelance pay, bonuses, and any other compensation received within a 12-month period. Lenders, landlords, and government agencies use gross annual income to assess your financial situation." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate annual income from hourly pay?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply your hourly rate by the hours you work per week, then multiply by the weeks you work per year. The standard US calculation is hourly rate x 40 hours x 52 weeks = annual income. For $25/hour: $25 x 40 x 52 = $52,000 per year. If you work fewer weeks or different hours, adjust both inputs accordingly." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between gross and net annual income?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Gross annual income is your total earnings before any deductions - the figure on your offer letter or pay stub before taxes. Net annual income is what you actually receive after federal and state income tax, Social Security, Medicare, and any benefit deductions are removed. For most US workers, net pay is 65-80% of gross, depending on tax bracket and deductions." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is $25 an hour as annual income?",
+        "acceptedAnswer": { "@type": "Answer", "text": "$25 an hour equals $52,000 per year at a standard 40-hour week and 52-week year (2,080 hours). Monthly that is $4,333; bi-weekly it is $2,000; weekly it is $1,000. If you work only 50 weeks per year, the annual figure falls to $50,000. Use the calculator above to adjust for your actual hours and schedule." }
+      },
+      {
+        "@type": "Question",
+        "name": "What counts as annual income for a loan or rental application?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Lenders and landlords typically include wages, salary, self-employment income, bonuses, commissions, rental income, alimony, child support, pension payments, and Social Security benefits in their annual income calculation. They use your gross figure before taxes. Most lenders require proof of income through two years of tax returns, recent pay stubs, or bank statements." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Annual Income Calculator"
+  metaTitle="Annual Income Calculator | Hourly to Yearly ᐅ"
+  description="Calculate your gross annual income from any pay period: hourly, daily, weekly, bi-weekly, or monthly. Add bonuses for a complete total. Auto-detects your currency."
+  canonical="https://calculations.tools/finance/annual-income-calculator"
+  tocItems={tocItems}
+  embedSlug="annual-income-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="Annual Income = Hourly Rate x Hours per Week x Weeks per Year"
+  ogExample="$25/hr x 40 hrs x 52 wks = $52,000/year"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Your Annual Income</h2>
+          <p>Enter your pay and schedule to see your yearly earnings</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="aic-amount">Your Pay</label>
+          <div class="aic-amount-row">
+            <div class="aic-currency-wrap">
+              <select id="aic-currency" class="aic-currency-select" aria-label="Currency"></select>
+              <svg class="aic-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+            </div>
+            <input type="text" inputmode="decimal" id="aic-amount" class="bmi-input aic-amount-input" placeholder="Enter amount" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="aic-period">Pay Period</label>
+          <div class="bmi-input-wrap">
+            <select id="aic-period" class="bmi-input">
+              <option value="hourly">Per hour</option>
+              <option value="daily">Per day</option>
+              <option value="weekly">Per week</option>
+              <option value="biweekly">Every two weeks (bi-weekly)</option>
+              <option value="monthly">Per month</option>
+              <option value="annual">Per year (annual)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bmi-field" id="aic-hours-field">
+          <label class="bmi-label" for="aic-hours">Hours per Week</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="aic-hours" class="bmi-input" value="40" placeholder="40" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="aic-weeks">Weeks per Year</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="aic-weeks" class="bmi-input" value="52" placeholder="52" />
+          </div>
+        </div>
+
+        <div class="bmi-field aic-bonus-toggle-row">
+          <label class="aic-toggle-label">
+            <input type="checkbox" id="aic-bonus-toggle" class="aic-toggle-checkbox" />
+            <span class="aic-toggle-text">Add bonus or extra income</span>
+          </label>
+        </div>
+
+        <div class="bmi-field" id="aic-bonus-field" style="display:none">
+          <label class="bmi-label" for="aic-bonus">Annual Bonus / Extra Income</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="aic-bonus" class="bmi-input" placeholder="e.g. 5000" />
+          </div>
+        </div>
+
+        <div id="aic-result" class="lbm-result hidden">
+          <div class="aic-results-grid">
+            <div class="aic-result-row aic-row-highlight">
+              <span class="aic-period-label">Annual income</span>
+              <span class="aic-period-val" id="aic-res-annual">-</span>
+            </div>
+            <div class="aic-result-row">
+              <span class="aic-period-label">Monthly</span>
+              <span class="aic-period-val" id="aic-res-monthly">-</span>
+            </div>
+            <div class="aic-result-row">
+              <span class="aic-period-label">Bi-weekly</span>
+              <span class="aic-period-val" id="aic-res-biweekly">-</span>
+            </div>
+            <div class="aic-result-row">
+              <span class="aic-period-label">Weekly</span>
+              <span class="aic-period-val" id="aic-res-weekly">-</span>
+            </div>
+            <div class="aic-result-row">
+              <span class="aic-period-label">Daily</span>
+              <span class="aic-period-val" id="aic-res-daily">-</span>
+            </div>
+            <div class="aic-result-row aic-row-hourly">
+              <span class="aic-period-label">Hourly</span>
+              <span class="aic-period-val" id="aic-res-hourly">-</span>
+            </div>
+          </div>
+          <p class="aic-note">Figures are gross (pre-tax). Daily rate assumes 5 working days per week.</p>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/annual-income-calculator.js" is:inline></script>
+    <FinanceDisclaimer />
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Annual income is your total gross earnings over 12 months before taxes. To calculate it from hourly pay, multiply your rate by hours per week and weeks per year. At $25/hour, 40 hours/week, and 52 weeks, that's $52,000/year. Enter any pay period above and the calculator converts it to an annual figure instantly.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The US standard work year is 2,080 hours (40 hrs/week x 52 weeks), used by the BLS and IRS for all wage comparisons.</li>
+          <li>Median weekly earnings for US full-time workers reached $1,214 in Q3 2025, equal to $63,128 per year (Bureau of Labor Statistics, 2025).</li>
+          <li>Gross annual income is always the pre-tax figure. Net annual income is typically 65-80% of gross for most US workers.</li>
+          <li>Formula: Annual Income = Hourly Rate x Hours per Week x Weeks per Year.</li>
+          <li>Lenders use gross annual income to assess loan eligibility - net income is used for monthly budget planning.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Annual Income Calculator</h2>
+      <p>Select your <a href="/glossary/pay-period">pay period</a> from the dropdown, enter your pay amount, and adjust hours per week and weeks per year if they differ from the standard 40/52. The calculator instantly shows your gross annual income plus every other pay period breakdown. Use the "Add bonus" toggle to include a one-time payment or any extra annual income on top of your regular pay.</p>
+      <p>The currency selector auto-detects your location and defaults to your local currency. If your pay is in a different currency, simply change the selector - the numbers work identically regardless of currency.</p>
+
+      <h2 id="how-to-calculate">How to Calculate Annual Income</h2>
+      <p>The calculation method depends on your pay structure. The US median full-time weekly earnings were $1,214 in Q3 2025, equal to $63,128 annualised (Bureau of Labor Statistics, 2025). Here are the four common starting points:</p>
+      <ul>
+        <li><strong>From hourly pay:</strong> Hourly rate x hours per week x weeks per year. At $30/hour x 40 x 52 = $62,400/year.</li>
+        <li><strong>From weekly pay:</strong> Weekly pay x weeks worked per year. $1,200/week x 52 = $62,400/year.</li>
+        <li><strong>From bi-weekly pay:</strong> Bi-weekly pay x 26. $2,400 x 26 = $62,400/year.</li>
+        <li><strong>From monthly pay:</strong> Monthly pay x 12. $5,200 x 12 = $62,400/year.</li>
+      </ul>
+      <p>Include all income sources for a complete figure: base wages, overtime, bonuses, commissions, and any side income. Lenders and landlords want your total <a href="/glossary/gross-pay">gross pay</a> from all sources combined.</p>
+
+      <h2 id="formula">What Is the Annual Income Formula?</h2>
+      <p>For hourly workers, the annual income formula multiplies the hourly rate by total annual hours. The standard US work year uses 2,080 hours (BLS, 2024), but you should adjust if your schedule differs.</p>
+
+      <Formula expr={f.fromHourly} />
+
+      <p>To convert in the other direction - from annual salary back to an hourly rate:</p>
+
+      <Formula expr={f.toHourly} />
+
+      <p>For monthly-paid workers, the formula is even simpler:</p>
+
+      <Formula expr={f.fromMonthly} />
+
+      <p>Worked example at $30/hour, 40 hours/week, 50 weeks/year (two weeks unpaid leave):</p>
+      <ul>
+        <li>Annual income: $30 x 40 x 50 = <strong>$60,000</strong></li>
+        <li>vs. standard 52 weeks: $30 x 40 x 52 = <strong>$62,400</strong></li>
+      </ul>
+      <p>Those two unpaid weeks cost $2,400 in annual income. This is why weeks-per-year is an important input - not just hours-per-week.</p>
+
+      <h2 id="gross-vs-net">What Is the Difference Between Gross and Net Annual Income?</h2>
+      <p>Gross annual income is what you earn before any deductions. Net annual income is what you take home after taxes and other deductions are removed. For most full-time US workers earning $50,000-$100,000, net pay is roughly 70-75% of gross (IRS, 2024). The gap widens in higher tax brackets.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Annual Gross Income</th>
+              <th>Estimated Net (US single filer)</th>
+              <th>Effective Tax Rate (approx.)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>$30,000</td><td>$25,500 - $26,500</td><td>~12%</td></tr>
+            <tr><td>$50,000</td><td>$40,000 - $42,000</td><td>~18%</td></tr>
+            <tr><td>$75,000</td><td>$58,000 - $61,000</td><td>~21%</td></tr>
+            <tr><td>$100,000</td><td>$74,000 - $78,000</td><td>~24%</td></tr>
+            <tr><td>$150,000</td><td>$103,000 - $108,000</td><td>~29%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>This calculator shows gross annual income only - the pre-tax figure. When you need your <a href="/glossary/net-pay">net pay</a> for budgeting, apply your effective tax rate to the gross figure the calculator gives you. State income tax, Social Security (6.2%), and Medicare (1.45%) all reduce your take-home pay beyond just federal income tax.</p>
+
+      <h2 id="reference-table">What Is My Annual Income From My Hourly Rate?</h2>
+      <p>The table below converts common hourly rates to annual income at a standard 40-hour week and 52-week year (2,080 hours total). It's a quick reference for job comparison, loan applications, or benefit eligibility checks.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Hourly Rate</th>
+              <th>Weekly</th>
+              <th>Bi-weekly</th>
+              <th>Monthly</th>
+              <th>Annual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>$10 / hr</td><td>$400</td><td>$800</td><td>$1,733</td><td>$20,800</td></tr>
+            <tr><td>$12 / hr</td><td>$480</td><td>$960</td><td>$2,080</td><td>$24,960</td></tr>
+            <tr><td>$15 / hr</td><td>$600</td><td>$1,200</td><td>$2,600</td><td>$31,200</td></tr>
+            <tr><td>$18 / hr</td><td>$720</td><td>$1,440</td><td>$3,120</td><td>$37,440</td></tr>
+            <tr><td>$20 / hr</td><td>$800</td><td>$1,600</td><td>$3,467</td><td>$41,600</td></tr>
+            <tr><td>$25 / hr</td><td>$1,000</td><td>$2,000</td><td>$4,333</td><td>$52,000</td></tr>
+            <tr><td>$30 / hr</td><td>$1,200</td><td>$2,400</td><td>$5,200</td><td>$62,400</td></tr>
+            <tr><td>$35 / hr</td><td>$1,400</td><td>$2,800</td><td>$6,067</td><td>$72,800</td></tr>
+            <tr><td>$40 / hr</td><td>$1,600</td><td>$3,200</td><td>$6,933</td><td>$83,200</td></tr>
+            <tr><td>$50 / hr</td><td>$2,000</td><td>$4,000</td><td>$8,667</td><td>$104,000</td></tr>
+            <tr><td>$60 / hr</td><td>$2,400</td><td>$4,800</td><td>$10,400</td><td>$124,800</td></tr>
+            <tr><td>$75 / hr</td><td>$3,000</td><td>$6,000</td><td>$13,000</td><td>$156,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="where-used">Where Is Annual Income Used?</h2>
+      <p>You'll need your gross annual income figure in a surprising number of situations. Mortgage lenders typically require that your monthly debt payments don't exceed 28-36% of your gross monthly income (the "front-end DTI ratio"), so knowing your annual gross is step one for any home loan calculation.</p>
+      <ul>
+        <li><strong>Loan and mortgage applications.</strong> Banks use gross annual income to calculate your debt-to-income ratio and determine how much you can borrow.</li>
+        <li><strong>Rental applications.</strong> Most landlords require that annual income is at least 40x the monthly rent - a $2,500/month apartment requires $100,000/year in income.</li>
+        <li><strong>Health insurance marketplace.</strong> Subsidies under the ACA are based on Modified Adjusted Gross Income (MAGI), which starts with gross annual income.</li>
+        <li><strong>Student loan repayment plans.</strong> Income-driven repayment plans (IDR) base monthly payments on your annual gross income and family size.</li>
+        <li><strong>Tax filing.</strong> Your gross annual income determines which tax bracket you fall into and whether you owe estimated quarterly taxes.</li>
+      </ul>
+
+      <h2 id="mistakes">What Are Common Mistakes When Calculating Annual Income?</h2>
+      <p>The most frequent error is using net pay (take-home) instead of gross pay when reporting annual income. Lenders and applications always want the gross figure - what you earn before taxes, not what lands in your bank account. Using net pay can make your income appear 20-35% lower than it actually is (IRS, 2024).</p>
+      <p>Three other mistakes to avoid:</p>
+      <ul>
+        <li><strong>Forgetting unpaid leave.</strong> If you take two weeks unpaid, your annual hours are 2,000 not 2,080. This changes the hourly-to-annual calculation and matters for accurate income reporting.</li>
+        <li><strong>Omitting irregular income.</strong> Bonuses, commissions, and freelance payments count toward annual income. Lenders typically average the last two years of variable income. Use the bonus toggle in the calculator to include these.</li>
+        <li><strong>Using monthly pay x 12 for bi-weekly workers.</strong> Workers paid bi-weekly receive 26 pay cheques per year, not 24 (which is semi-monthly). Multiplying the wrong bi-weekly figure by 12 instead of 26 creates an undercount. The calculator handles this automatically.</li>
+      </ul>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>What is annual income?</h3>
+      <p>Annual income is the total amount you earn over 12 months before taxes. It includes wages, salary, bonuses, commissions, freelance earnings, rental income, and investment income. When lenders and landlords ask for your annual income, they want the gross figure - everything you earn before deductions. It's the most widely used measure of financial capacity.</p>
+
+      <h3>How do I calculate annual income from hourly pay?</h3>
+      <p>Multiply your hourly rate by the hours you work each week, then multiply that result by the number of weeks you work per year. Standard formula: hourly rate x 40 hours x 52 weeks = $52,000 for $25/hour. If you work part-time or take unpaid leave, adjust both inputs. The calculator above handles all combinations and shows every pay period breakdown instantly.</p>
+
+      <h3>What is the difference between gross and net annual income?</h3>
+      <p>Gross annual income is your total earnings before any deductions: taxes, Social Security, Medicare, health insurance premiums, and retirement contributions. Net annual income is what you receive after all those deductions. For most US workers earning $50,000-$100,000, net pay is around 70-75% of gross. Use gross income for reporting purposes and net income for personal budgeting.</p>
+
+      <h3>What is $25 an hour as annual income?</h3>
+      <p>$25 an hour equals $52,000 per year at a standard 40-hour week and 52-week year (2,080 hours). Monthly that's $4,333; bi-weekly it's $2,000; weekly it's $1,000. If you work only 50 weeks per year, the annual figure drops to $50,000. Enter 25 in the calculator above, select "Per hour," and adjust the weeks field if you take unpaid time off.</p>
+
+      <h3>What counts as annual income for a loan or rental application?</h3>
+      <p>Most lenders and landlords count wages, salary, self-employment income, bonuses, commissions, rental income, alimony, child support, pension payments, and Social Security benefits. They use the gross figure before taxes. Proof is usually required: two years of tax returns, recent pay stubs, or three months of bank statements. Student loans, unemployment benefits, and cash gifts typically don't count.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💵</span>
+          <div>
+            <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+            <p>The reverse tool: start from any salary and see the equivalent hourly rate across all pay periods.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🏦</span>
+          <div>
+            <a href="/finance/compound-interest-calculator">Compound Interest Calculator</a>
+            <p>See how saving a fixed percentage of your annual income grows over time with compounding.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🏠</span>
+          <div>
+            <a href="/finance/loan-payment-calculator">Loan Payment Calculator</a>
+            <p>Use your annual income to check affordability - calculate monthly mortgage or loan payments and your debt-to-income ratio.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>Calculate what percentage of your annual income goes to taxes, rent, savings, or any other expense.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">↗</span>
+          <div>
+            <a href="/math/percentage-calculator/increase">Percentage Increase Calculator</a>
+            <p>Measure your year-over-year income growth or calculate the value of a salary raise as a percentage increase.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .aic-amount-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .aic-currency-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .aic-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .aic-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .aic-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .aic-amount-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .aic-amount-input:focus { border-color: rgba(167,139,250,0.6) !important; }
+  .aic-bonus-toggle-row { padding: 0.1rem 0; }
+  .aic-toggle-label { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+  .aic-toggle-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #a78bfa; }
+  .aic-toggle-text { font-size: 0.85rem; color: rgba(255,255,255,0.65); user-select: none; }
+  .aic-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .aic-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .aic-result-row:last-child { border-bottom: none; }
+  .aic-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .aic-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .aic-row-hourly { border-top: 1px solid rgba(255,255,255,0.12); }
+  .aic-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .aic-row-highlight .aic-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .aic-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .aic-row-highlight .aic-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .aic-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-align: center; margin: 0.6rem 0 0; }
+</style>

@@ -1,0 +1,409 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  forward: "$$\\text{GST Amount} = \\text{Net Price} \\times \\frac{\\text{GST Rate}}{100}$$",
+  gross:   "$$\\text{Gross Price} = \\text{Net Price} + \\text{GST Amount}$$",
+  reverse: "$$\\text{Net Price} = \\frac{\\text{Gross Price}}{1 + \\text{GST Rate} / 100}$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'Inland Revenue Department',
+    title: 'GST (Goods and Services Tax)',
+    journal: 'Inland Revenue New Zealand',
+    year: 2024,
+    url: 'https://www.ird.govt.nz/gst',
+  },
+  {
+    author: 'Inland Revenue Authority of Singapore',
+    title: 'Goods and Services Tax (GST)',
+    journal: 'IRAS',
+    year: 2024,
+    url: 'https://www.iras.gov.sg/taxes/goods-services-tax-(gst)',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',           label: 'How to use this calculator' },
+  { id: 'how-to-calculate',     label: 'How to calculate GST' },
+  { id: 'reverse-gst',          label: 'How to remove GST from a price' },
+  { id: 'gst-rates-by-country', label: 'GST rates by country (2024)' },
+  { id: 'canada-gst',           label: "Canada's GST/HST system" },
+  { id: 'india-gst',            label: "India's multi-rate GST" },
+  { id: 'gst-vs-vat',           label: 'Is GST the same as VAT?' },
+  { id: 'faq',                  label: 'FAQs' },
+  { id: 'related-tools',        label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "GST Calculator",
+    "url": "https://calculations.tools/tax/gst-calculator",
+    "description": "Calculate GST for Australia, New Zealand, Singapore, Canada, and India. Add GST to a net price or remove it from a gross total. Covers all Australian states, Canadian provinces, and India's four GST slabs.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I calculate GST?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the net price by the GST rate divided by 100 to get the GST amount, then add it to the net price for the gross total. At Australia's 10% GST on A$100 net: A$100 x 0.10 = A$10 GST, giving a gross of A$110. Select your country above to pre-fill the rate, or enter any rate manually." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I remove GST from a price?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide the gross (GST-inclusive) price by (1 + GST Rate / 100). For an A$110 gross at 10% GST: A$110 / 1.10 = A$100 net price, and the GST was A$10. Never subtract 10% directly from the gross — that gives A$99 (wrong). Use the Remove GST mode in this calculator to avoid this error." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the GST rate in Australia?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Australia's GST rate is 10%, introduced on 1 July 2000 and unchanged since. It applies to most goods and services sold in Australia. Basic food items, healthcare, education, childcare, and some financial services are GST-free. Administered by the Australian Taxation Office (ATO)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between GST and VAT?",
+        "acceptedAnswer": { "@type": "Answer", "text": "GST and VAT are the same type of tax with different names. Both are multi-stage consumption taxes collected at each production step, with businesses reclaiming input tax paid on purchases. Europe and most of Africa use VAT; Australia, Canada, India, New Zealand, and Singapore use GST. The math is identical." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Canada's GST rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Canada's federal GST rate is 5%. Most provinces also charge a provincial tax, which is either separate PST or combined with federal GST into HST. Ontario's HST is 13%, Quebec's combined rate is 14.975%, and Alberta charges only federal GST at 5%. The effective rate you pay depends on your province." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="GST Calculator"
+  metaTitle="Instant GST Calculator | Goods & Services Tax Add or Remove ᐅ"
+  description="Calculate GST for Australia (10%), New Zealand (15%), Singapore (9%), Canada (5–15%), and India (5/12/18/28%). Add GST to a net price or remove it from a gross total."
+  canonical="https://calculations.tools/tax/gst-calculator"
+  tocItems={tocItems}
+  embedSlug="gst-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="GST Amount = Net Price x GST Rate / 100"
+  ogExample="A$100 x 10% = A$10 GST - Gross: A$110"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Instantly Add or Remove Goods and Services Tax</h2>
+          <p>Add GST to a net price or remove it from a gross total</p>
+        </div>
+
+        <div class="gst-mode-toggle">
+          <button id="gst-mode-add" class="gst-mode-btn gst-mode-active">Add GST</button>
+          <button id="gst-mode-remove" class="gst-mode-btn">Remove GST</button>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="gst-country">Country / region (optional)</label>
+          <div class="gst-country-wrap">
+            <select id="gst-country" class="gst-country-select" aria-label="Country preset"></select>
+            <svg class="gst-country-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" id="gst-price-label" for="gst-price">Net price (excl. GST)</label>
+          <div class="gst-price-row">
+            <div class="gst-currency-wrap">
+              <select id="gst-currency" class="gst-currency-select" aria-label="Currency"></select>
+              <svg class="gst-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+            </div>
+            <input type="text" inputmode="decimal" id="gst-price" class="bmi-input gst-price-input" placeholder="e.g. 100.00" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="gst-rate">GST rate (%)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="gst-rate" class="bmi-input" placeholder="e.g. 10" />
+          </div>
+        </div>
+
+        <div id="gst-result" class="lbm-result hidden">
+          <div class="gst-results-grid">
+            <div class="gst-result-row" id="gst-row-net">
+              <span class="gst-period-label">Net price (excl. GST)</span>
+              <span class="gst-period-val" id="gst-res-net">-</span>
+            </div>
+            <div class="gst-result-row gst-row-tax">
+              <span class="gst-period-label">GST amount</span>
+              <span class="gst-period-val" id="gst-res-gst">-</span>
+            </div>
+            <div class="gst-result-row gst-row-highlight" id="gst-row-gross">
+              <span class="gst-period-label">Gross price (incl. GST)</span>
+              <span class="gst-period-val" id="gst-res-gross">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/gst-calculator.js" is:inline></script>
+    <FinanceDisclaimer />
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>A GST calculator takes a net price and a GST rate and returns the GST amount plus the gross total. Select your country to pre-fill the rate automatically, then switch to "Remove GST" mode to work backwards from a tax-inclusive price. Covers Australia (10%), New Zealand (15%), Singapore (9%), Canada (5–15%), and India (5%, 12%, 18%, 28%).</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Five major economies use GST: Australia, Canada, India, New Zealand, and Singapore. GST and <a href="/glossary/value-added-tax">VAT</a> are mechanically identical — only the name differs.</li>
+          <li>Australia's GST rate has been 10% since introduction on 1 July 2000, unchanged for over 24 years (ATO, 2024).</li>
+          <li>Forward formula: GST = Net × (Rate / 100). Reverse formula: Net = Gross / (1 + Rate / 100).</li>
+          <li>Canada's effective GST rate depends on province — from 5% in Alberta to 15% HST in the Maritime provinces.</li>
+          <li>India's <a href="/glossary/gst">GST</a> has four slabs: 5%, 12%, 18%, and 28%. It replaced over a dozen state and central taxes when introduced in July 2017.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This GST Calculator</h2>
+      <p>Select your country from the preset dropdown to auto-fill the rate and currency, or enter any rate manually. "Add GST" takes a net (excl. GST) price and shows you the GST amount and gross total. "Remove GST" takes a gross (incl. GST) price and works backwards to the net. The calculator updates as you type — no button press needed.</p>
+      <p>The country presets cover all Australian states (one rate nationwide), New Zealand, Singapore, all Canadian provinces individually, and India's four GST slabs. If your country isn't listed, enter the rate manually — the formula works the same regardless of which country uses it.</p>
+
+      <h2 id="how-to-calculate">How Do You Calculate GST?</h2>
+      <p>Multiply the net price by the GST rate divided by 100 to get the GST amount, then add it to the net price for the gross total. For an A$500 item at Australia's 10% GST: A$500 × 0.10 = A$50 GST, giving a gross of A$550. Australia, New Zealand, Singapore, Canada, and India collectively represent over 2 billion consumers who pay GST on everyday purchases (World Bank, 2024).</p>
+      <p>The forward formula:</p>
+      <Formula expr={f.forward} />
+      <Formula expr={f.gross} />
+      <p>Example at New Zealand's 15% rate: NZ$200 net price. GST = NZ$200 × 0.15 = NZ$30. Gross = NZ$200 + NZ$30 = NZ$230. In New Zealand and Australia, retail prices are displayed inclusive of GST, so the gross price is what you see on the shelf (IRD, 2024).</p>
+
+      <h2 id="reverse-gst">How Do You Remove GST from a Price?</h2>
+      <p>Divide the gross (GST-inclusive) price by (1 + GST Rate / 100). This is the correct reverse formula. For an A$110 gross at 10% GST: A$110 / 1.10 = A$100 net price, and the GST component was A$10. Singapore's IRAS explicitly requires this method on GST-registered invoices (IRAS, 2024).</p>
+      <p>The reverse formula:</p>
+      <Formula expr={f.reverse} />
+      <p>The common mistake is subtracting the percentage directly: A$110 × 0.10 = A$11, giving A$99 net. This is wrong by A$1 on a A$110 transaction — the error compounds quickly on large invoices. Use the "Remove GST" mode above to avoid this every time.</p>
+
+      <h2 id="gst-rates-by-country">GST Rates by Country (2024)</h2>
+      <p>The five main GST countries each have distinct rate structures. Australia and New Zealand use a single uniform rate for almost everything. Singapore raised its rate from 7% to 8% in 2023 and again to 9% in January 2024. Canada and India are more complex, with provincial or product-level variation that changes the effective rate you pay.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Country</th><th>Rate</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Australia</td><td>10%</td><td>Single rate since July 2000; basic food, healthcare, and education are GST-free</td></tr>
+            <tr><td>New Zealand</td><td>15%</td><td>Single rate; one of the world's broadest GST bases with few exemptions</td></tr>
+            <tr><td>Singapore</td><td>9%</td><td>Raised from 8% in January 2024; applies to most goods and services</td></tr>
+            <tr><td>Canada (federal)</td><td>5%</td><td>Federal GST only; provinces add PST or combine into HST — see table below</td></tr>
+            <tr><td>India</td><td>5% / 12% / 18% / 28%</td><td>Four-slab system; most services at 18%; luxury and tobacco at 28%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>For full VAT/GST rates across Europe and the rest of the world, see the <a href="/tax/vat-calculator">VAT calculator</a> country table.</p>
+
+      <h2 id="canada-gst">Canada's GST/HST System Explained</h2>
+      <p>Canada has the world's most complex GST structure. The federal rate is 5%, but most provinces layer a provincial sales tax on top. Some provinces combine federal and provincial taxes into a single Harmonised Sales Tax (HST), while others keep them separate. Alberta is the only province with no provincial sales tax — shoppers pay the federal 5% and nothing more.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Province / Territory</th><th>Federal GST</th><th>Provincial Tax</th><th>Combined Rate</th><th>System</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Alberta</td><td>5%</td><td>None</td><td>5%</td><td>GST only</td></tr>
+            <tr><td>British Columbia</td><td>5%</td><td>7% PST</td><td>12%</td><td>Separate GST + PST</td></tr>
+            <tr><td>Manitoba</td><td>5%</td><td>7% RST</td><td>12%</td><td>Separate GST + RST</td></tr>
+            <tr><td>Saskatchewan</td><td>5%</td><td>6% PST</td><td>11%</td><td>Separate GST + PST</td></tr>
+            <tr><td>Ontario</td><td>—</td><td>—</td><td>13%</td><td>HST (harmonised)</td></tr>
+            <tr><td>Quebec</td><td>5%</td><td>9.975% QST</td><td>14.975%</td><td>Separate GST + QST</td></tr>
+            <tr><td>New Brunswick</td><td>—</td><td>—</td><td>15%</td><td>HST (harmonised)</td></tr>
+            <tr><td>Nova Scotia</td><td>—</td><td>—</td><td>15%</td><td>HST (harmonised)</td></tr>
+            <tr><td>Prince Edward Island</td><td>—</td><td>—</td><td>15%</td><td>HST (harmonised)</td></tr>
+            <tr><td>Newfoundland &amp; Labrador</td><td>—</td><td>—</td><td>15%</td><td>HST (harmonised)</td></tr>
+            <tr><td>Northwest Territories</td><td>5%</td><td>None</td><td>5%</td><td>GST only</td></tr>
+            <tr><td>Nunavut</td><td>5%</td><td>None</td><td>5%</td><td>GST only</td></tr>
+            <tr><td>Yukon</td><td>5%</td><td>None</td><td>5%</td><td>GST only</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>For HST provinces, the combined rate applies as a single tax. For provinces with separate GST and PST, both are calculated on the net price and added together. Quebec's QST is technically calculated on the GST-inclusive price in some cases, which is why the combined figure is slightly above 14.9%.</p>
+
+      <h2 id="india-gst">India's Multi-Rate GST System</h2>
+      <p>India introduced GST in July 2017, replacing a fragmented system of over a dozen central and state taxes. The Indian GST has four main tax slabs, plus a zero rate for essential goods. India's GST also has a dual structure — Central GST (CGST) and State GST (SGST) are both charged at half the slab rate, adding up to the full rate shown below.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>GST Slab</th><th>What it covers</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0%</td><td>Essential goods: fresh food, milk, eggs, vegetables, fruits, salt, books, newspapers</td></tr>
+            <tr><td>5%</td><td>Basic goods: packed food, cooking oils, sugar, tea, coffee, economy class rail tickets, hotels under ₹1000/night</td></tr>
+            <tr><td>12%</td><td>Processed foods, butter, cheese, frozen meat, business class rail travel, mid-range hotels, medicines</td></tr>
+            <tr><td>18%</td><td>Standard rate for most services (IT, finance, telecom), personal care products, restaurants, electronics</td></tr>
+            <tr><td>28%</td><td>Luxury goods, tobacco, aerated drinks, automobiles, cement, large appliances</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The 18% slab covers the majority of services and is the most common rate for B2B transactions. When calculating GST on an Indian invoice, confirm which slab applies to your specific goods or services category, as the rate varies widely — 5% on a hotel stay under ₹1000 versus 28% on a luxury car are both GST, just different slabs.</p>
+
+      <h2 id="gst-vs-vat">Is GST the Same as VAT?</h2>
+      <p>Yes. GST and <a href="/glossary/value-added-tax">VAT</a> are the same type of consumption tax with different names. Both are collected at each stage of production, and both allow businesses to reclaim the tax they paid on inputs (called input tax credits). The tax is ultimately borne by the end consumer. The formula — and this calculator — works identically for both.</p>
+      <p>The name split is largely geographic: Europe, the UK, and most of Africa and Asia use "VAT"; Australia, Canada, India, New Zealand, and Singapore use "GST". A few countries use other names — Japan calls it "Consumption Tax", Brazil uses "ICMS", Turkey uses "KDV" — but all are VAT-type taxes mechanically. For a full comparison of VAT, GST, and US sales tax, see the <a href="/tax/vat-calculator#vat-vs-gst">VAT vs GST vs Sales Tax section</a> on the VAT calculator page.</p>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How do I calculate GST?</h3>
+      <p>Multiply the net price by the GST rate divided by 100 to get the GST amount, then add it to the net price. At 10% on A$100: A$100 × 0.10 = A$10 GST, gross = A$110. Select your country in the preset above to fill the rate automatically — Australia, New Zealand, Singapore, all Canadian provinces, and India's slabs are included.</p>
+
+      <h3>How do I remove GST from a price?</h3>
+      <p>Divide the gross price by (1 + GST Rate / 100). For an A$110 gross at 10%: A$110 / 1.10 = A$100 net, GST was A$10. Don't subtract 10% from A$110 — that gives A$99, which is wrong. Use the "Remove GST" mode in this calculator to always get the correct result without mental arithmetic.</p>
+
+      <h3>What is the GST rate in Australia?</h3>
+      <p>Australia's GST rate is 10%, unchanged since introduction on 1 July 2000. It applies to most goods and services. Basic food (unprocessed), healthcare, education, childcare, and some financial services are GST-free. If you're unsure whether something is taxable, the Australian Taxation Office (ATO) publishes a full list of GST-free and input-taxed supplies.</p>
+
+      <h3>What is the difference between GST and VAT?</h3>
+      <p>GST and VAT are mechanically identical — both are multi-stage consumption taxes where businesses collect tax on sales and reclaim tax paid on purchases. The difference is purely the name. Europe calls it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST. This calculator and the <a href="/tax/vat-calculator">VAT calculator</a> use the same formulas.</p>
+
+      <h3>What is Canada's GST rate?</h3>
+      <p>Canada's federal GST rate is 5%. But most provinces add a provincial tax — either a separate PST or a combined HST. The effective rate you pay ranges from 5% in Alberta (no provincial tax) to 15% HST in the Maritime provinces. The calculator preset includes all provinces individually so you can match your exact location.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🌍</span>
+          <div>
+            <a href="/tax/vat-calculator">VAT Calculator</a>
+            <p>Calculate VAT for Europe, the UK, and 40+ countries — the same tax type as GST, just with a different name.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🧾</span>
+          <div>
+            <a href="/tax/sales-tax-calculator">Sales Tax Calculator</a>
+            <p>Calculate US sales tax on any purchase or reverse from a total, with a full table of state rates.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>GST is a percentage calculation — use this for any percentage of a number, or to find what percentage one value is of another.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📅</span>
+          <div>
+            <a href="/finance/annual-income-calculator">Annual Income Calculator</a>
+            <p>Know your gross and net annual earnings — useful context when budgeting for GST-inclusive business expenses.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .gst-mode-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(167,139,250,0.4);
+  }
+  .gst-mode-btn {
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .gst-mode-btn:first-child { border-right: 1px solid rgba(167,139,250,0.4); }
+  .gst-mode-btn.gst-mode-active {
+    background: rgba(167,139,250,0.18);
+    color: #a78bfa;
+  }
+  .gst-mode-btn:hover:not(.gst-mode-active) { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.75); }
+  .gst-country-wrap { position: relative; }
+  .gst-country-select {
+    width: 100%;
+    padding: 0.6rem 2.5rem 0.6rem 0.75rem;
+    background: rgba(167,139,250,0.1);
+    border: 1px solid rgba(167,139,250,0.35);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .gst-country-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.18); }
+  .gst-country-chevron { pointer-events: none; position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .gst-price-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .gst-currency-wrap { position: relative; flex-shrink: 0; }
+  .gst-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .gst-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .gst-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .gst-price-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .gst-price-input:focus { border-color: rgba(167,139,250,0.6) !important; }
+  .gst-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .gst-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .gst-result-row:last-child { border-bottom: none; }
+  .gst-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .gst-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .gst-row-tax { border-top: 1px solid rgba(255,255,255,0.08); }
+  .gst-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .gst-row-highlight .gst-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .gst-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .gst-row-highlight .gst-period-val { color: #a78bfa; font-size: 1.15rem; }
+</style>

@@ -1,0 +1,133 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Sales Tax Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Sales Tax Calculator</h2>
+        <p>Add tax to a price or remove it from a total</p>
+      </div>
+
+      <div class="stc-mode-toggle">
+        <button id="stc-mode-add" class="stc-mode-btn stc-mode-active">Add tax</button>
+        <button id="stc-mode-remove" class="stc-mode-btn">Remove tax</button>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" id="stc-price-label" for="stc-price">Pre-tax price</label>
+        <div class="stc-price-row">
+          <div class="stc-currency-wrap">
+            <select id="stc-currency" class="stc-currency-select" aria-label="Currency"></select>
+            <svg class="stc-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
+          <input type="text" inputmode="decimal" id="stc-price" class="bmi-input stc-price-input" placeholder="e.g. 50.00" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="stc-rate">Tax rate (%)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="stc-rate" class="bmi-input" placeholder="e.g. 8.25" />
+        </div>
+      </div>
+
+      <div id="stc-result" class="lbm-result hidden">
+        <div class="stc-results-grid">
+          <div class="stc-result-row" id="stc-row-pretax">
+            <span class="stc-period-label">Pre-tax price</span>
+            <span class="stc-period-val" id="stc-res-pretax">-</span>
+          </div>
+          <div class="stc-result-row stc-row-tax">
+            <span class="stc-period-label">Tax amount</span>
+            <span class="stc-period-val" id="stc-res-tax">-</span>
+          </div>
+          <div class="stc-result-row stc-row-highlight" id="stc-row-total">
+            <span class="stc-period-label">Total (with tax)</span>
+            <span class="stc-period-val" id="stc-res-total">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/sales-tax-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .stc-mode-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(167,139,250,0.4);
+  }
+  .stc-mode-btn {
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .stc-mode-btn:first-child { border-right: 1px solid rgba(167,139,250,0.4); }
+  .stc-mode-btn.stc-mode-active {
+    background: rgba(167,139,250,0.18);
+    color: #a78bfa;
+  }
+  .stc-mode-btn:hover:not(.stc-mode-active) { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.75); }
+  .stc-price-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .stc-currency-wrap { position: relative; flex-shrink: 0; }
+  .stc-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .stc-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .stc-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .stc-price-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .stc-price-input:focus { border-color: rgba(167,139,250,0.6) !important; }
+  .stc-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .stc-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .stc-result-row:last-child { border-bottom: none; }
+  .stc-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .stc-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .stc-row-tax { border-top: 1px solid rgba(255,255,255,0.08); }
+  .stc-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .stc-row-highlight .stc-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .stc-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .stc-row-highlight .stc-period-val { color: #a78bfa; font-size: 1.15rem; }
+</style>

@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return 'USD';
   }
 
-  const currencySelect = document.getElementById('gac-currency');
+  const currencySelect = document.getElementById('stc-currency');
   if (currencySelect) {
     const detected = detectCurrency();
     TOP_CURRENCIES.forEach(c => {
@@ -47,57 +47,82 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function parseVal(id, fallback) {
+  let mode = 'add';
+
+  const modeAddBtn = document.getElementById('stc-mode-add');
+  const modeRemoveBtn = document.getElementById('stc-mode-remove');
+  const priceLabel = document.getElementById('stc-price-label');
+
+  function setMode(newMode) {
+    mode = newMode;
+    if (newMode === 'add') {
+      modeAddBtn?.classList.add('stc-mode-active');
+      modeRemoveBtn?.classList.remove('stc-mode-active');
+      if (priceLabel) priceLabel.textContent = 'Pre-tax price';
+    } else {
+      modeRemoveBtn?.classList.add('stc-mode-active');
+      modeAddBtn?.classList.remove('stc-mode-active');
+      if (priceLabel) priceLabel.textContent = 'Total price (incl. tax)';
+    }
+    const totalRow = document.getElementById('stc-row-total');
+    const pretaxRow = document.getElementById('stc-row-pretax');
+    if (mode === 'add') {
+      totalRow?.classList.add('stc-row-highlight');
+      pretaxRow?.classList.remove('stc-row-highlight');
+    } else {
+      pretaxRow?.classList.add('stc-row-highlight');
+      totalRow?.classList.remove('stc-row-highlight');
+    }
+    calculate();
+  }
+
+  modeAddBtn?.addEventListener('click', () => setMode('add'));
+  modeRemoveBtn?.addEventListener('click', () => setMode('remove'));
+
+  function parseVal(id) {
     const el = document.getElementById(id);
-    if (!el || el.value.trim() === '') return fallback !== undefined ? fallback : NaN;
+    if (!el || el.value.trim() === '') return NaN;
     const v = parseFloat(el.value.replace(/,/g, '').replace(/\s/g, ''));
-    return isNaN(v) ? (fallback !== undefined ? fallback : NaN) : v;
+    return isNaN(v) ? NaN : v;
   }
 
   function fmt(n, symbol) {
     if (!isFinite(n) || n < 0) return '-';
-    if (n >= 1e6) return symbol + (n / 1e6).toFixed(2) + 'M';
-    return symbol + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-
-  function fmtNum(n) {
-    if (!isFinite(n) || n < 0) return '-';
-    return Math.round(n).toLocaleString('en-US');
+    return symbol + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function calculate() {
-    const pageViews = parseVal('gac-pageviews');
-    const ctr = parseVal('gac-ctr', 2);
-    const cpc = parseVal('gac-cpc', 0.25);
-    const currency = document.getElementById('gac-currency')?.value || 'USD';
-    const symbol = SYMBOLS[currency] + ' ' || (currency + ' ');
+    const price = parseVal('stc-price');
+    const rate = parseVal('stc-rate');
+    const currency = document.getElementById('stc-currency')?.value || 'USD';
+    const symbol = (SYMBOLS[currency] || currency) + ' ';
 
-    if (isNaN(pageViews) || pageViews <= 0 || ctr <= 0 || ctr > 100 || cpc <= 0) {
-      document.getElementById('gac-result')?.classList.add('hidden');
+    if (isNaN(price) || price < 0 || isNaN(rate) || rate < 0) {
+      document.getElementById('stc-result')?.classList.add('hidden');
       return;
     }
 
-    const dailyClicks = pageViews * (ctr / 100);
-    const dailyEarnings = dailyClicks * cpc;
-    const monthlyEarnings = dailyEarnings * 30.44;
-    const annualEarnings = dailyEarnings * 365;
-    const rpm = (dailyEarnings / pageViews) * 1000;
+    let preTax, taxAmount, total;
+    if (mode === 'add') {
+      preTax = price;
+      taxAmount = price * (rate / 100);
+      total = price + taxAmount;
+    } else {
+      total = price;
+      preTax = price / (1 + rate / 100);
+      taxAmount = total - preTax;
+    }
 
-    document.getElementById('gac-res-clicks').textContent = fmtNum(dailyClicks);
-    document.getElementById('gac-res-daily').textContent = fmt(dailyEarnings, symbol);
-    document.getElementById('gac-res-monthly').textContent = fmt(monthlyEarnings, symbol);
-    document.getElementById('gac-res-annual').textContent = fmt(annualEarnings, symbol);
-    document.getElementById('gac-res-rpm').textContent = fmt(rpm, symbol);
+    document.getElementById('stc-res-pretax').textContent = fmt(preTax, symbol);
+    document.getElementById('stc-res-tax').textContent = fmt(taxAmount, symbol);
+    document.getElementById('stc-res-total').textContent = fmt(total, symbol);
 
-    document.getElementById('gac-result')?.classList.remove('hidden');
+    document.getElementById('stc-result')?.classList.remove('hidden');
   }
 
-  ['gac-pageviews', 'gac-ctr', 'gac-cpc'].forEach(id => {
+  ['stc-price', 'stc-rate'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', calculate);
   });
-  ['gac-currency'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('change', calculate);
-  });
+  document.getElementById('stc-currency')?.addEventListener('change', calculate);
 });

@@ -25,9 +25,12 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
       </div>
 
       <div class="bmi-field">
-        <label class="bmi-label" for="gac-cpc">Average CPC (USD)</label>
-        <div class="gac-cpc-wrap">
-          <span class="gac-dollar">$</span>
+        <label class="bmi-label" for="gac-cpc">Average CPC</label>
+        <div class="gac-cpc-row">
+          <div class="gac-currency-wrap">
+            <select id="gac-currency" class="gac-currency-select" aria-label="Currency"></select>
+            <svg class="gac-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
           <input type="text" inputmode="decimal" id="gac-cpc" class="bmi-input gac-cpc-input" value="0.25" placeholder="0.25" />
         </div>
       </div>
@@ -64,22 +67,30 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
 </EmbedLayout>
 
 <style>
-  .gac-cpc-wrap {
-    position: relative;
+  .gac-cpc-row {
     display: flex;
-    align-items: center;
+    gap: 0.5rem;
+    align-items: stretch;
   }
-  .gac-dollar {
-    position: absolute;
-    left: 0.85rem;
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.5);
-    pointer-events: none;
-    z-index: 1;
+  .gac-currency-wrap { position: relative; flex-shrink: 0; }
+  .gac-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
   }
-  .gac-cpc-input {
-    padding-left: 1.75rem !important;
-  }
+  .gac-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .gac-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .gac-cpc-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
   .gac-results-grid {
     display: flex;
     flex-direction: column;

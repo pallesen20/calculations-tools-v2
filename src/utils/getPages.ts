@@ -1427,6 +1427,50 @@ const entries: Entry[] = [
     icon: '💰',
     short: 'Page views x CTR x CPC = earnings',
   },
+  {
+    path: '/finance/annual-income-calculator',
+    title: 'Annual Income Calculator - Hourly, Monthly & Yearly Earnings',
+    description: 'Calculate your gross annual income from any pay period: hourly, daily, weekly, bi-weekly, or monthly. Add bonus income for a complete total. Auto-detects your currency.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    icon: '📅',
+    short: 'Convert any pay period to annual income',
+  },
+  {
+    path: '/tax',
+    title: 'Tax Calculators - Free Online Tax Tools',
+    description: 'Free tax calculators for sales tax, reverse tax calculation, and more. Fast, accurate, no registration needed.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '🧾',
+  },
+  {
+    path: '/tax/sales-tax-calculator',
+    title: 'Sales Tax Calculator - Add or Remove Tax Instantly',
+    description: 'Calculate sales tax on any purchase or remove tax from a total. Enter the price and tax rate to instantly see the tax amount and total. Add or reverse mode. Auto-detects your currency.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    icon: '🧾',
+    short: 'Add tax to a price or reverse from a total',
+  },
+  {
+    path: '/tax/vat-calculator',
+    title: 'VAT Calculator - Add or Remove VAT Instantly',
+    description: 'Calculate VAT on any net price or remove VAT from a gross total. Covers standard VAT rates for 40+ countries in 2026. Add or reverse mode. Auto-detects your currency.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    icon: '🌍',
+    short: 'Add VAT to a net price or reverse from gross',
+  },
+  {
+    path: '/tax/gst-calculator',
+    title: 'GST Calculator - Australia, Canada, India, NZ & Singapore',
+    description: 'Calculate GST for Australia (10%), New Zealand (15%), Singapore (9%), Canada (5–15% by province), and India (5/12/18/28%). Add GST or remove it from a gross price.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    icon: '🌏',
+    short: 'Add GST or remove it from a gross price',
+  },
 ];
 
 GLOSSARY_TERMS.forEach(t => {
@@ -1545,6 +1589,7 @@ const FINANCE_GROUPS: Record<string, string> = {
   'loan-payment-calculator':            'Loans & Capital',
   'working-capital-calculator':         'Loans & Capital',
   'salary-to-hourly-calculator':        'Salary',
+  'annual-income-calculator':           'Salary',
   'google-adsense-calculator':          'Business Planning',
 };
 
@@ -1560,6 +1605,28 @@ export function getFinanceTools(): HealthToolMeta[] {
         description: e.description,
         icon:        e.icon ?? '',
         group:       FINANCE_GROUPS[seg] ?? 'Finance',
+      };
+    });
+}
+
+const TAX_GROUPS: Record<string, string> = {
+  'sales-tax-calculator': 'Sales Tax',
+  'vat-calculator':       'VAT',
+  'gst-calculator':       'GST',
+};
+
+export function getTaxTools(): HealthToolMeta[] {
+  return entries
+    .filter(e => e.path.startsWith('/tax/') && e.path !== '/tax')
+    .map(e => {
+      const seg = e.path.replace('/tax/', '').split('/')[0];
+      return {
+        path:        e.path,
+        title:       e.title.split(' - ')[0],
+        short:       e.short ?? '',
+        description: e.description,
+        icon:        e.icon ?? '',
+        group:       TAX_GROUPS[seg] ?? 'Tax',
       };
     });
 }
@@ -1703,6 +1770,7 @@ export interface CategoryCard {
 const CATEGORY_CARDS_DEF: Array<{ name: string; icon: string; hubPath: string; prefix?: string; paths?: string[] }> = [
   { name: 'Health',         icon: '❤️',  hubPath: '/health',       prefix: '/health/'      },
   { name: 'Finance',        icon: '💰',  hubPath: '/finance',      prefix: '/finance/'     },
+  { name: 'Tax',            icon: '🧾',  hubPath: '/tax',          prefix: '/tax/'         },
   { name: 'Conversion',     icon: '↔️',  hubPath: '/conversion',   prefix: '/conversion/'  },
   { name: 'Math',           icon: '∑',   hubPath: '/math',         prefix: '/math/'        },
   { name: 'Compare',        icon: '⚖️',  hubPath: '/compare',      prefix: '/compare/'     },
@@ -1758,6 +1826,7 @@ export interface SearchEntry {
 
 function _catLabel(path: string): string {
   if (path.startsWith('/finance')) return 'Finance';
+  if (path.startsWith('/tax')) return 'Tax';
   if (path.startsWith('/health')) return 'Health';
   if (path.startsWith('/math')) return 'Math';
   if (path.startsWith('/conversion')) return 'Conversion';

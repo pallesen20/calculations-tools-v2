@@ -1,0 +1,155 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Annual Income Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Annual Income Calculator</h2>
+        <p>Enter your pay and schedule to see your yearly earnings</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="aic-amount">Your Pay</label>
+        <div class="aic-amount-row">
+          <div class="aic-currency-wrap">
+            <select id="aic-currency" class="aic-currency-select" aria-label="Currency"></select>
+            <svg class="aic-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
+          <input type="text" inputmode="decimal" id="aic-amount" class="bmi-input aic-amount-input" placeholder="Enter amount" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="aic-period">Pay Period</label>
+        <div class="bmi-input-wrap">
+          <select id="aic-period" class="bmi-input">
+            <option value="hourly">Per hour</option>
+            <option value="daily">Per day</option>
+            <option value="weekly">Per week</option>
+            <option value="biweekly">Every two weeks (bi-weekly)</option>
+            <option value="monthly">Per month</option>
+            <option value="annual">Per year (annual)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bmi-field" id="aic-hours-field">
+        <label class="bmi-label" for="aic-hours">Hours per Week</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="aic-hours" class="bmi-input" value="40" placeholder="40" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="aic-weeks">Weeks per Year</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="aic-weeks" class="bmi-input" value="52" placeholder="52" />
+        </div>
+      </div>
+
+      <div class="bmi-field aic-bonus-toggle-row">
+        <label class="aic-toggle-label">
+          <input type="checkbox" id="aic-bonus-toggle" class="aic-toggle-checkbox" />
+          <span class="aic-toggle-text">Add bonus or extra income</span>
+        </label>
+      </div>
+
+      <div class="bmi-field" id="aic-bonus-field" style="display:none">
+        <label class="bmi-label" for="aic-bonus">Annual Bonus / Extra Income</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="aic-bonus" class="bmi-input" placeholder="e.g. 5000" />
+        </div>
+      </div>
+
+      <div id="aic-result" class="lbm-result hidden">
+        <div class="aic-results-grid">
+          <div class="aic-result-row aic-row-highlight">
+            <span class="aic-period-label">Annual income</span>
+            <span class="aic-period-val" id="aic-res-annual">-</span>
+          </div>
+          <div class="aic-result-row">
+            <span class="aic-period-label">Monthly</span>
+            <span class="aic-period-val" id="aic-res-monthly">-</span>
+          </div>
+          <div class="aic-result-row">
+            <span class="aic-period-label">Bi-weekly</span>
+            <span class="aic-period-val" id="aic-res-biweekly">-</span>
+          </div>
+          <div class="aic-result-row">
+            <span class="aic-period-label">Weekly</span>
+            <span class="aic-period-val" id="aic-res-weekly">-</span>
+          </div>
+          <div class="aic-result-row">
+            <span class="aic-period-label">Daily</span>
+            <span class="aic-period-val" id="aic-res-daily">-</span>
+          </div>
+          <div class="aic-result-row aic-row-hourly">
+            <span class="aic-period-label">Hourly</span>
+            <span class="aic-period-val" id="aic-res-hourly">-</span>
+          </div>
+        </div>
+        <p class="aic-note">Figures are gross (pre-tax). Daily rate assumes 5 working days per week.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/annual-income-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .aic-amount-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .aic-currency-wrap { position: relative; flex-shrink: 0; }
+  .aic-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .aic-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .aic-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .aic-amount-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .aic-amount-input:focus { border-color: rgba(167,139,250,0.6) !important; }
+  .aic-bonus-toggle-row { padding: 0.1rem 0; }
+  .aic-toggle-label { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+  .aic-toggle-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #a78bfa; }
+  .aic-toggle-text { font-size: 0.85rem; color: rgba(255,255,255,0.65); user-select: none; }
+  .aic-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .aic-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .aic-result-row:last-child { border-bottom: none; }
+  .aic-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .aic-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .aic-row-hourly { border-top: 1px solid rgba(255,255,255,0.12); }
+  .aic-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .aic-row-highlight .aic-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .aic-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .aic-row-highlight .aic-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .aic-note { font-size: 0.75rem; color: rgba(255,255,255,0.3); text-align: center; margin: 0.6rem 0 0; }
+</style>

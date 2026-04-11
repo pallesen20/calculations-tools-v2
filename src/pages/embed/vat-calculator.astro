@@ -1,0 +1,133 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="VAT Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>VAT Calculator</h2>
+        <p>Add VAT to a net price or remove it from a gross total</p>
+      </div>
+
+      <div class="vat-mode-toggle">
+        <button id="vat-mode-add" class="vat-mode-btn vat-mode-active">Add VAT</button>
+        <button id="vat-mode-remove" class="vat-mode-btn">Remove VAT</button>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" id="vat-price-label" for="vat-price">Net price (excl. VAT)</label>
+        <div class="vat-price-row">
+          <div class="vat-currency-wrap">
+            <select id="vat-currency" class="vat-currency-select" aria-label="Currency"></select>
+            <svg class="vat-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
+          <input type="text" inputmode="decimal" id="vat-price" class="bmi-input vat-price-input" placeholder="e.g. 100.00" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="vat-rate">VAT rate (%)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="vat-rate" class="bmi-input" placeholder="e.g. 20" />
+        </div>
+      </div>
+
+      <div id="vat-result" class="lbm-result hidden">
+        <div class="vat-results-grid">
+          <div class="vat-result-row" id="vat-row-net">
+            <span class="vat-period-label">Net price (excl. VAT)</span>
+            <span class="vat-period-val" id="vat-res-net">-</span>
+          </div>
+          <div class="vat-result-row vat-row-tax">
+            <span class="vat-period-label">VAT amount</span>
+            <span class="vat-period-val" id="vat-res-vat">-</span>
+          </div>
+          <div class="vat-result-row vat-row-highlight" id="vat-row-gross">
+            <span class="vat-period-label">Gross price (incl. VAT)</span>
+            <span class="vat-period-val" id="vat-res-gross">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/vat-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .vat-mode-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(167,139,250,0.4);
+  }
+  .vat-mode-btn {
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .vat-mode-btn:first-child { border-right: 1px solid rgba(167,139,250,0.4); }
+  .vat-mode-btn.vat-mode-active {
+    background: rgba(167,139,250,0.18);
+    color: #a78bfa;
+  }
+  .vat-mode-btn:hover:not(.vat-mode-active) { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.75); }
+  .vat-price-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .vat-currency-wrap { position: relative; flex-shrink: 0; }
+  .vat-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .vat-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .vat-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .vat-price-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .vat-price-input:focus { border-color: rgba(167,139,250,0.6) !important; }
+  .vat-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .vat-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .vat-result-row:last-child { border-bottom: none; }
+  .vat-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .vat-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .vat-row-tax { border-top: 1px solid rgba(255,255,255,0.08); }
+  .vat-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .vat-row-highlight .vat-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .vat-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .vat-row-highlight .vat-period-val { color: #a78bfa; font-size: 1.15rem; }
+</style>

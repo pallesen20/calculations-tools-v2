@@ -1381,6 +1381,97 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'pay-period': {
+    definition: [
+      'A pay period is the recurring cycle of time for which an employer calculates and pays wages or salary. The most common types in the US are weekly (52 pay cheques/year), bi-weekly (26 pay cheques/year), semi-monthly (24 pay cheques/year), and monthly (12 pay cheques/year). Bi-weekly and semi-monthly are often confused: bi-weekly means every two weeks; semi-monthly means twice a calendar month (e.g., the 1st and 15th).',
+      'Pay period choice does not affect total annual income - only how and when that income is distributed. A $62,400 annual salary pays out as $1,200/week, $2,400 bi-weekly, $2,600 semi-monthly, or $5,200/month. Bi-weekly workers receive two "extra" pay cheques per year compared to semi-monthly workers, which can help with budgeting for irregular expenses.',
+    ],
+    whenToUse: 'Use pay period when converting between hourly and annual income, calculating payroll costs, or comparing job offers that quote salary on different schedules. Always confirm which type a new employer uses - bi-weekly and semi-monthly pay produce different per-cheque amounts even at the same annual salary.',
+    examples: {
+      headers: ['Pay Period', 'Cheques/Year', '$62,400 annual salary'],
+      rows: [
+        ['Weekly', '52', '$1,200 per week'],
+        ['Bi-weekly', '26', '$2,400 every 2 weeks'],
+        ['Semi-monthly', '24', '$2,600 twice a month'],
+        ['Monthly', '12', '$5,200 per month'],
+      ],
+    },
+    pitfalls: 'The most common mistake is treating bi-weekly and semi-monthly as the same. Multiplying a bi-weekly pay cheque by 24 (instead of 26) underestimates annual income by 7.7%. Always multiply bi-weekly pay by 26 and semi-monthly pay by 24 to get an accurate annual figure.',
+    faqs: [
+      { q: 'What is the difference between bi-weekly and semi-monthly pay?', a: 'Bi-weekly means you are paid every two weeks, resulting in 26 pay cheques per year. Semi-monthly means you are paid twice a month on fixed dates (typically the 1st and 15th), giving 24 pay cheques per year. At the same annual salary, bi-weekly pay cheques are slightly smaller but you receive two extra per year.' },
+      { q: 'How many pay periods are in a year?', a: 'It depends on your pay schedule. Weekly: 52 pay periods. Bi-weekly: 26 pay periods. Semi-monthly: 24 pay periods. Monthly: 12 pay periods. Most US private-sector employees are paid bi-weekly (26 pay periods), which is the most common schedule according to the Bureau of Labor Statistics.' },
+    ],
+  },
+
+  'sales-tax': {
+    definition: [
+      'Sales tax is a consumption tax imposed at the point of sale on retail goods and services. The seller adds the tax to the purchase price, collects it from the buyer, and remits it to the state or local government. Rates are set by state legislatures, and most states allow counties and cities to layer additional local rates on top of the state base rate. The Tax Foundation reports that 45 US states plus Washington D.C. levy a statewide sales tax, with rates ranging from 2.9% (Colorado) to 7.25% (California).',
+      'Unlike income tax (which taxes earnings) or property tax (which taxes assets), sales tax taxes spending at the moment of purchase. It is often described as regressive because lower-income households spend a larger proportion of their income on taxable goods, so the effective burden falls more heavily on them as a share of income.',
+    ],
+    whenToUse: 'Use the sales tax formula when pricing products for sale, checking a receipt, estimating the total cost of a large purchase, or reverse-calculating the original price from a tax-inclusive total. Always use the combined state plus local rate for your specific location, not just the state-level rate.',
+    examples: {
+      headers: ['Pre-tax price', 'Tax rate', 'Tax amount', 'Total price'],
+      rows: [
+        ['$50.00', '8.00%', '$4.00', '$54.00'],
+        ['$200.00', '7.25%', '$14.50', '$214.50'],
+        ['$1,000.00', '9.55%', '$95.50', '$1,095.50'],
+        ['$25.99', '6.25%', '$1.62', '$27.61'],
+      ],
+    },
+    pitfalls: 'The most common error is the reverse calculation: subtracting the tax percentage directly from the total gives the wrong pre-tax price. For a $108 total at 8%, subtracting $8.64 (108 x 0.08) gives $99.36 - incorrect. The correct method is $108 / 1.08 = $100.00. Always divide by (1 + rate) to reverse out sales tax.',
+    faqs: [
+      { q: 'How do I calculate sales tax on a purchase?', a: 'Multiply the pre-tax price by the tax rate divided by 100. For a $50 item at 8%: $50 x 0.08 = $4.00 tax. Add the tax to the price to get the total: $54.00. Use the combined state and local rate for your location, not just the state rate alone.' },
+      { q: 'How do I remove sales tax from a total price?', a: 'Divide the tax-inclusive total by (1 + Tax Rate / 100). For a $108.00 total at 8%: $108 / 1.08 = $100.00 pre-tax. The tax was $8.00. Never subtract the percentage directly from the total - that method overstates the tax amount and gives the wrong original price.' },
+      { q: 'Which US states have no sales tax?', a: 'Five states have no statewide sales tax: Alaska, Delaware, Montana, New Hampshire, and Oregon. Delaware, Montana, New Hampshire, and Oregon also have no local sales taxes. Alaska allows local municipalities to levy their own sales taxes, so many Alaskan cities do charge rates above 0%.' },
+    ],
+  },
+
+  'value-added-tax': {
+    definition: [
+      'Value Added Tax (VAT) is a multi-stage consumption tax. Unlike sales tax, which is collected only at the final retail sale, VAT is collected at every stage of production and distribution. A manufacturer pays VAT when buying raw materials, a wholesaler pays VAT when buying finished goods, and a retailer pays VAT when buying stock - but each claims back the VAT it paid on its inputs from the government. Only the net value added at each stage is actually taxed.',
+      'The end consumer bears the full VAT cost because they cannot reclaim it. For a business, VAT is broadly neutral - they collect it on sales and reclaim it on purchases. Over 175 of 193 UN member countries use VAT as their primary consumption tax, with standard rates ranging from 4.5% (Andorra) to 27% (Hungary). The EU average standard rate is 21.9% (Tax Foundation, 2026). The United States is the only major economy that does not have a federal VAT.',
+    ],
+    whenToUse: 'Use the VAT formula when creating invoices (add VAT to a net price), pricing products for sale in a VAT country, or reverse-calculating the net price from a tax-inclusive total. Businesses registered for VAT must always show the net price, VAT amount, and gross price separately on invoices.',
+    examples: {
+      headers: ['Net price', 'VAT rate', 'VAT amount', 'Gross price'],
+      rows: [
+        ['£100.00', '20% (UK)', '£20.00', '£120.00'],
+        ['€500.00', '19% (Germany)', '€95.00', '€595.00'],
+        ['€200.00', '25% (Sweden)', '€50.00', '€250.00'],
+        ['AU$300.00', '10% (Australia GST)', 'AU$30.00', 'AU$330.00'],
+      ],
+    },
+    pitfalls: 'The most common reverse-calculation mistake is subtracting the VAT percentage directly from the gross price. For a £120 gross at 20% VAT, subtracting £120 x 0.20 = £24 gives £96 net - which is wrong. The correct method is £120 / 1.20 = £100.00. Always divide by (1 + rate) to extract VAT from a gross price.',
+    faqs: [
+      { q: 'How do I calculate VAT on a price?', a: 'Multiply the net price by the VAT rate divided by 100 to get the VAT amount, then add it to the net price. At 20% VAT on £100: £100 x 0.20 = £20 VAT; gross = £120. Use the VAT calculator at calculations.tools/tax/vat-calculator to do this instantly.' },
+      { q: 'How do I remove VAT from a gross price?', a: 'Divide the gross price by (1 + VAT Rate / 100). For £120 gross at 20% VAT: £120 / 1.20 = £100 net. The VAT was £20. Never subtract the percentage directly from the gross - that method overstates the tax and gives the wrong net price every time.' },
+      { q: 'What is the difference between VAT and GST?', a: 'VAT and GST are the same type of tax with different names. Both are multi-stage consumption taxes where businesses reclaim input tax. Europe, the UK, and most of Africa and Asia call it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST. The calculation formula is identical.' },
+    ],
+  },
+
+  'gst': {
+    definition: [
+      'GST (Goods and Services Tax) is the name used in Australia, Canada, India, New Zealand, and Singapore for a tax that works identically to VAT. It is a multi-stage consumption tax collected at each step of production and distribution. Each business in the supply chain pays GST on its purchases and collects GST on its sales, remitting only the difference to the government. End consumers bear the full cost because they cannot reclaim it.',
+      "The key rates vary by country: Australia applies a flat 10% GST, New Zealand 15%, Singapore 9% (raised from 8% in January 2024), Canada's federal GST is 5% (combined with provincial taxes up to 15%), and India uses a multi-rate structure of 5%, 12%, 18%, and 28%. Despite the different name, any VAT calculator works for GST calculations, since the formula is identical.",
+    ],
+    whenToUse: 'Use GST calculations when invoicing in Australia, Canada, India, New Zealand, or Singapore; when pricing goods for sale in those markets; or when checking whether a quoted price includes or excludes GST. In Australia and New Zealand, consumer prices are usually shown GST-inclusive; in India, prices are often shown net (excluding GST).',
+    examples: {
+      headers: ['Country', 'GST rate', 'Net price', 'GST amount', 'Gross price'],
+      rows: [
+        ['Australia', '10%', 'AU$100', 'AU$10', 'AU$110'],
+        ['New Zealand', '15%', 'NZ$100', 'NZ$15', 'NZ$115'],
+        ['Singapore', '9%', 'S$100', 'S$9', 'S$109'],
+        ['Canada (federal)', '5%', 'CA$100', 'CA$5', 'CA$105'],
+      ],
+    },
+    pitfalls: "Canada's tax system is especially complex because the federal GST is often combined with a provincial sales tax (PST) or replaced by a Harmonised Sales Tax (HST) that merges both. The combined rate ranges from 5% (Alberta, which has no provincial sales tax) to 15% (New Brunswick, Newfoundland, Nova Scotia, PEI). Always use the combined rate for Canadian calculations.",
+    faqs: [
+      { q: 'Is GST the same as VAT?', a: 'Yes. GST and VAT are the same type of tax with different names. Both are multi-stage consumption taxes where businesses collect tax on sales and reclaim it on purchases. Europe calls it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST. The formula for calculating both is identical.' },
+      { q: 'What is the GST rate in Australia?', a: 'Australia applies a flat 10% GST on most goods and services. Some supplies are GST-free (fresh food, certain medical services, and exports) and some are input-taxed (financial services, residential rent). The Australian GST has been in force since 1 July 2000.' },
+      { q: 'How do I reverse GST from a price?', a: 'Divide the GST-inclusive price by (1 + GST Rate / 100). For an AU$110 price including 10% GST: AU$110 / 1.10 = AU$100 net; the GST was AU$10. This is the same reverse formula used for VAT. Never subtract the percentage directly from the gross price.' },
+    ],
+  },
+
   'net-pay': {
     definition: [
       'Net pay, also called take-home pay, is the amount deposited into your bank account after all deductions are removed from gross pay. Mandatory deductions include federal income tax, state income tax (where applicable), Social Security (6.2% up to the wage base), and Medicare (1.45%). Voluntary deductions include health insurance premiums, dental, vision, 401k contributions, and HSA contributions.',

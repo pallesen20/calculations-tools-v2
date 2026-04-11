@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return 'USD';
   }
 
-  const currencySelect = document.getElementById('gac-currency');
+  const currencySelect = document.getElementById('aic-currency');
   if (currencySelect) {
     const detected = detectCurrency();
     TOP_CURRENCIES.forEach(c => {
@@ -44,6 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
       opt.textContent = c;
       if (c === detected) opt.selected = true;
       currencySelect.appendChild(opt);
+    });
+  }
+
+  const periodEl = document.getElementById('aic-period');
+  const hoursField = document.getElementById('aic-hours-field');
+
+  function updateHoursVisibility() {
+    if (!hoursField || !periodEl) return;
+    hoursField.style.display = periodEl.value === 'hourly' ? 'block' : 'none';
+  }
+
+  if (periodEl) {
+    periodEl.addEventListener('change', updateHoursVisibility);
+    updateHoursVisibility();
+  }
+
+  const bonusToggle = document.getElementById('aic-bonus-toggle');
+  const bonusField = document.getElementById('aic-bonus-field');
+  if (bonusToggle && bonusField) {
+    bonusToggle.addEventListener('change', () => {
+      bonusField.style.display = bonusToggle.checked ? 'block' : 'none';
+      calculate();
     });
   }
 
@@ -56,47 +78,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function fmt(n, symbol) {
     if (!isFinite(n) || n < 0) return '-';
-    if (n >= 1e6) return symbol + (n / 1e6).toFixed(2) + 'M';
-    return symbol + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-
-  function fmtNum(n) {
-    if (!isFinite(n) || n < 0) return '-';
-    return Math.round(n).toLocaleString('en-US');
+    const abs = Math.abs(n);
+    if (abs >= 1e6) return symbol + (abs / 1e6).toFixed(2) + 'M';
+    return symbol + abs.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function calculate() {
-    const pageViews = parseVal('gac-pageviews');
-    const ctr = parseVal('gac-ctr', 2);
-    const cpc = parseVal('gac-cpc', 0.25);
-    const currency = document.getElementById('gac-currency')?.value || 'USD';
+    const amount = parseVal('aic-amount');
+    const period = periodEl?.value || 'hourly';
+    const hours = parseVal('aic-hours', 40);
+    const weeks = parseVal('aic-weeks', 52);
+    const currency = document.getElementById('aic-currency')?.value || 'USD';
     const symbol = SYMBOLS[currency] + ' ' || (currency + ' ');
+    const bonusChecked = bonusToggle?.checked;
+    const bonus = bonusChecked ? parseVal('aic-bonus', 0) : 0;
 
-    if (isNaN(pageViews) || pageViews <= 0 || ctr <= 0 || ctr > 100 || cpc <= 0) {
-      document.getElementById('gac-result')?.classList.add('hidden');
+    if (isNaN(amount) || amount <= 0 || hours <= 0 || weeks <= 0) {
+      document.getElementById('aic-result')?.classList.add('hidden');
       return;
     }
 
-    const dailyClicks = pageViews * (ctr / 100);
-    const dailyEarnings = dailyClicks * cpc;
-    const monthlyEarnings = dailyEarnings * 30.44;
-    const annualEarnings = dailyEarnings * 365;
-    const rpm = (dailyEarnings / pageViews) * 1000;
+    const totalHours = hours * weeks;
+    let annual;
+    switch (period) {
+      case 'hourly':   annual = amount * totalHours; break;
+      case 'daily':    annual = amount * 5 * weeks; break;
+      case 'weekly':   annual = amount * weeks; break;
+      case 'biweekly': annual = amount * (weeks / 2); break;
+      case 'monthly':  annual = amount * 12; break;
+      default:         annual = amount;
+    }
+    annual += (isNaN(bonus) ? 0 : bonus);
 
-    document.getElementById('gac-res-clicks').textContent = fmtNum(dailyClicks);
-    document.getElementById('gac-res-daily').textContent = fmt(dailyEarnings, symbol);
-    document.getElementById('gac-res-monthly').textContent = fmt(monthlyEarnings, symbol);
-    document.getElementById('gac-res-annual').textContent = fmt(annualEarnings, symbol);
-    document.getElementById('gac-res-rpm').textContent = fmt(rpm, symbol);
+    const hourlyRate   = annual / totalHours;
+    const dailyRate    = annual / (weeks * 5);
+    const weeklyRate   = annual / weeks;
+    const biweeklyRate = annual / (weeks / 2);
+    const monthlyRate  = annual / 12;
 
-    document.getElementById('gac-result')?.classList.remove('hidden');
+    document.getElementById('aic-res-annual').textContent    = fmt(annual, symbol);
+    document.getElementById('aic-res-monthly').textContent   = fmt(monthlyRate, symbol);
+    document.getElementById('aic-res-biweekly').textContent  = fmt(biweeklyRate, symbol);
+    document.getElementById('aic-res-weekly').textContent    = fmt(weeklyRate, symbol);
+    document.getElementById('aic-res-daily').textContent     = fmt(dailyRate, symbol);
+    document.getElementById('aic-res-hourly').textContent    = fmt(hourlyRate, symbol);
+
+    document.getElementById('aic-result')?.classList.remove('hidden');
   }
 
-  ['gac-pageviews', 'gac-ctr', 'gac-cpc'].forEach(id => {
+  ['aic-amount', 'aic-hours', 'aic-weeks', 'aic-bonus'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', calculate);
   });
-  ['gac-currency'].forEach(id => {
+  ['aic-period', 'aic-currency'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('change', calculate);
   });

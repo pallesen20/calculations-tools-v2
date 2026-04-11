@@ -32,10 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (map[tz]) return map[tz];
       if (tz.startsWith('America/')) return 'USD';
     } catch(e) {}
-    return 'USD';
+    return 'EUR';
   }
 
-  const currencySelect = document.getElementById('gac-currency');
+  const currencySelect = document.getElementById('vat-currency');
   if (currencySelect) {
     const detected = detectCurrency();
     TOP_CURRENCIES.forEach(c => {
@@ -47,57 +47,82 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function parseVal(id, fallback) {
+  let mode = 'add';
+
+  const modeAddBtn = document.getElementById('vat-mode-add');
+  const modeRemoveBtn = document.getElementById('vat-mode-remove');
+  const priceLabel = document.getElementById('vat-price-label');
+
+  function setMode(newMode) {
+    mode = newMode;
+    if (newMode === 'add') {
+      modeAddBtn?.classList.add('vat-mode-active');
+      modeRemoveBtn?.classList.remove('vat-mode-active');
+      if (priceLabel) priceLabel.textContent = 'Net price (excl. VAT)';
+    } else {
+      modeRemoveBtn?.classList.add('vat-mode-active');
+      modeAddBtn?.classList.remove('vat-mode-active');
+      if (priceLabel) priceLabel.textContent = 'Gross price (incl. VAT)';
+    }
+    const totalRow = document.getElementById('vat-row-gross');
+    const netRow = document.getElementById('vat-row-net');
+    if (mode === 'add') {
+      totalRow?.classList.add('vat-row-highlight');
+      netRow?.classList.remove('vat-row-highlight');
+    } else {
+      netRow?.classList.add('vat-row-highlight');
+      totalRow?.classList.remove('vat-row-highlight');
+    }
+    calculate();
+  }
+
+  modeAddBtn?.addEventListener('click', () => setMode('add'));
+  modeRemoveBtn?.addEventListener('click', () => setMode('remove'));
+
+  function parseVal(id) {
     const el = document.getElementById(id);
-    if (!el || el.value.trim() === '') return fallback !== undefined ? fallback : NaN;
+    if (!el || el.value.trim() === '') return NaN;
     const v = parseFloat(el.value.replace(/,/g, '').replace(/\s/g, ''));
-    return isNaN(v) ? (fallback !== undefined ? fallback : NaN) : v;
+    return isNaN(v) ? NaN : v;
   }
 
   function fmt(n, symbol) {
     if (!isFinite(n) || n < 0) return '-';
-    if (n >= 1e6) return symbol + (n / 1e6).toFixed(2) + 'M';
-    return symbol + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-
-  function fmtNum(n) {
-    if (!isFinite(n) || n < 0) return '-';
-    return Math.round(n).toLocaleString('en-US');
+    return symbol + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function calculate() {
-    const pageViews = parseVal('gac-pageviews');
-    const ctr = parseVal('gac-ctr', 2);
-    const cpc = parseVal('gac-cpc', 0.25);
-    const currency = document.getElementById('gac-currency')?.value || 'USD';
-    const symbol = SYMBOLS[currency] + ' ' || (currency + ' ');
+    const price = parseVal('vat-price');
+    const rate = parseVal('vat-rate');
+    const currency = document.getElementById('vat-currency')?.value || 'EUR';
+    const symbol = (SYMBOLS[currency] || currency) + ' ';
 
-    if (isNaN(pageViews) || pageViews <= 0 || ctr <= 0 || ctr > 100 || cpc <= 0) {
-      document.getElementById('gac-result')?.classList.add('hidden');
+    if (isNaN(price) || price < 0 || isNaN(rate) || rate < 0) {
+      document.getElementById('vat-result')?.classList.add('hidden');
       return;
     }
 
-    const dailyClicks = pageViews * (ctr / 100);
-    const dailyEarnings = dailyClicks * cpc;
-    const monthlyEarnings = dailyEarnings * 30.44;
-    const annualEarnings = dailyEarnings * 365;
-    const rpm = (dailyEarnings / pageViews) * 1000;
+    let net, vatAmount, gross;
+    if (mode === 'add') {
+      net = price;
+      vatAmount = price * (rate / 100);
+      gross = price + vatAmount;
+    } else {
+      gross = price;
+      net = price / (1 + rate / 100);
+      vatAmount = gross - net;
+    }
 
-    document.getElementById('gac-res-clicks').textContent = fmtNum(dailyClicks);
-    document.getElementById('gac-res-daily').textContent = fmt(dailyEarnings, symbol);
-    document.getElementById('gac-res-monthly').textContent = fmt(monthlyEarnings, symbol);
-    document.getElementById('gac-res-annual').textContent = fmt(annualEarnings, symbol);
-    document.getElementById('gac-res-rpm').textContent = fmt(rpm, symbol);
+    document.getElementById('vat-res-net').textContent = fmt(net, symbol);
+    document.getElementById('vat-res-vat').textContent = fmt(vatAmount, symbol);
+    document.getElementById('vat-res-gross').textContent = fmt(gross, symbol);
 
-    document.getElementById('gac-result')?.classList.remove('hidden');
+    document.getElementById('vat-result')?.classList.remove('hidden');
   }
 
-  ['gac-pageviews', 'gac-ctr', 'gac-cpc'].forEach(id => {
+  ['vat-price', 'vat-rate'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', calculate);
   });
-  ['gac-currency'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('change', calculate);
-  });
+  document.getElementById('vat-currency')?.addEventListener('change', calculate);
 });

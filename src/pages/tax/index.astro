@@ -1,0 +1,148 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { getTaxTools } from '../../utils/getPages';
+
+const tools = getTaxTools();
+
+const groupMap = tools.reduce((acc, t) => {
+  (acc[t.group] ??= []).push(t);
+  return acc;
+}, {} as Record<string, typeof tools>);
+
+const groups = Object.entries(groupMap);
+const totalTools = tools.length;
+const totalCategories = groups.length;
+
+const tocItems = [
+  { id: 'tools',      label: 'All tax tools' },
+  { id: 'which-tool', label: 'Which calculator to use' },
+  { id: 'faq',        label: 'FAQs' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Tax Calculators",
+    "url": "https://calculations.tools/tax",
+    "description": "Free tax calculators for sales tax, reverse tax calculation, and more. Instant results, no registration required.",
+    "hasPart": tools.map(t => ({
+      "@type": "WebApplication",
+      "name": t.title,
+      "url": `https://calculations.tools${t.path}`,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How do I calculate sales tax?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply the pre-tax price by the tax rate divided by 100. For an 8% rate on a $50 item: $50 x 0.08 = $4.00 tax, giving a total of $54.00. Use the Sales Tax Calculator above to calculate any combination of price and rate instantly." } },
+      { "@type": "Question", "name": "Which states have no sales tax?", "acceptedAnswer": { "@type": "Answer", "text": "Five US states have no statewide sales tax: Alaska, Delaware, Montana, New Hampshire, and Oregon. Delaware, Montana, New Hampshire, and Oregon also have no local taxes. Alaska allows local municipalities to levy sales taxes." } },
+      { "@type": "Question", "name": "Are these tax calculators free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No registration, no usage limits. All calculations run in your browser - no data is sent to any server." } },
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Tax Calculators"
+  metaTitle="Free Tax Calculators - Sales Tax & More ᐅ"
+  description="Free tax calculators for sales tax, reverse tax, and more. Instant results, auto-detects your currency. No registration needed."
+  canonical="https://calculations.tools/tax"
+  tocItems={tocItems}
+  schema={schema}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container hi-container">
+
+        <div class="calculator-header">
+          <h2>Tax Calculator Hub</h2>
+          <p>Sales tax, reverse tax, and more - free and instant</p>
+        </div>
+
+        <div class="hi-stats">
+          <div class="hi-stat">
+            <div class="hi-stat-val">{totalTools}</div>
+            <div class="hi-stat-lbl">Tools</div>
+          </div>
+          <div class="hi-stat">
+            <div class="hi-stat-val">{totalCategories}</div>
+            <div class="hi-stat-lbl">Categories</div>
+          </div>
+          <div class="hi-stat hi-stat-wide">
+            <div class="hi-stat-val hi-stat-free">Free</div>
+            <div class="hi-stat-lbl">No login · runs in browser</div>
+          </div>
+        </div>
+
+        {groups.map(([groupName, groupTools]) => (
+          <div class="hi-group">
+            <div class="hi-group-header">
+              <span class="hi-group-label">{groupName}</span>
+            </div>
+            <div class="hi-grid">
+              {groupTools.map(tool => (
+                <a href={tool.path} class="hi-card">
+                  <div class="hi-icon">{tool.icon}</div>
+                  <div class="hi-body">
+                    <div class="hi-title">{tool.title}</div>
+                    {tool.short && <div class="hi-short">{tool.short}</div>}
+                  </div>
+                  <div class="hi-arrow">→</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+
+      </div>
+    </section>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">What's in the tax section</div>
+        <p>This section contains free tax calculators for everyday use. The <a href="/tax/sales-tax-calculator">Sales Tax Calculator</a> covers both directions: add tax to a pre-tax price, or remove tax from a tax-inclusive total. The <a href="/tax/vat-calculator">VAT Calculator</a> covers European and global VAT rates. The <a href="/tax/gst-calculator">GST Calculator</a> covers Australia, New Zealand, Singapore, Canada (all provinces), and India's four slabs. More tools covering income tax and capital gains are coming soon.</p>
+      </div>
+
+      <h2 id="tools">All tax tools</h2>
+      <p>Every tool is free, runs entirely in your browser, and updates as you type. No button press, no registration, no data sent to any server.</p>
+
+      <h2 id="which-tool">Which calculator to use</h2>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Your goal</th><th>Tool</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Add sales tax to a price and see the total</td><td><a href="/tax/sales-tax-calculator">Sales Tax Calculator</a></td></tr>
+          <tr><td>Remove tax from a total to find the original price</td><td><a href="/tax/sales-tax-calculator">Sales Tax Calculator (Reverse mode)</a></td></tr>
+          <tr><td>Calculate VAT for a European or global purchase</td><td><a href="/tax/vat-calculator">VAT Calculator</a></td></tr>
+          <tr><td>Calculate GST for Australia, NZ, Singapore, Canada, or India</td><td><a href="/tax/gst-calculator">GST Calculator</a></td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>How do I calculate sales tax?</h3>
+      <p>Multiply the pre-tax price by the tax rate divided by 100. A $50 item at 8% tax: $50 x 0.08 = $4.00 tax, total $54.00. The <a href="/tax/sales-tax-calculator">Sales Tax Calculator</a> handles this instantly for any price and rate, and it auto-detects your local currency.</p>
+
+      <h3>Which US states have no sales tax?</h3>
+      <p>Five states have no statewide sales tax: Alaska, Delaware, Montana, New Hampshire, and Oregon. Delaware, Montana, New Hampshire, and Oregon have no local taxes either. Alaska allows local municipalities to set their own sales tax, so many Alaskan cities do charge one.</p>
+
+      <h3>Are these tax calculators free?</h3>
+      <p>Yes, completely free. No registration, no usage limits, no premium tier. Every calculator runs entirely in your browser - nothing is sent to any server.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style>
+  .hi-container { max-width: 100% !important; }
+</style>

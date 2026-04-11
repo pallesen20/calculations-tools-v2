@@ -1,0 +1,156 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="GST Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>GST Calculator</h2>
+        <p>Add GST to a net price or remove it from a gross total</p>
+      </div>
+
+      <div class="gst-mode-toggle">
+        <button id="gst-mode-add" class="gst-mode-btn gst-mode-active">Add GST</button>
+        <button id="gst-mode-remove" class="gst-mode-btn">Remove GST</button>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="gst-country">Country / region (optional)</label>
+        <div class="gst-country-wrap">
+          <select id="gst-country" class="gst-country-select" aria-label="Country preset"></select>
+          <svg class="gst-country-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" id="gst-price-label" for="gst-price">Net price (excl. GST)</label>
+        <div class="gst-price-row">
+          <div class="gst-currency-wrap">
+            <select id="gst-currency" class="gst-currency-select" aria-label="Currency"></select>
+            <svg class="gst-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
+          <input type="text" inputmode="decimal" id="gst-price" class="bmi-input gst-price-input" placeholder="e.g. 100.00" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="gst-rate">GST rate (%)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="gst-rate" class="bmi-input" placeholder="e.g. 10" />
+        </div>
+      </div>
+
+      <div id="gst-result" class="lbm-result hidden">
+        <div class="gst-results-grid">
+          <div class="gst-result-row" id="gst-row-net">
+            <span class="gst-period-label">Net price (excl. GST)</span>
+            <span class="gst-period-val" id="gst-res-net">-</span>
+          </div>
+          <div class="gst-result-row gst-row-tax">
+            <span class="gst-period-label">GST amount</span>
+            <span class="gst-period-val" id="gst-res-gst">-</span>
+          </div>
+          <div class="gst-result-row gst-row-highlight" id="gst-row-gross">
+            <span class="gst-period-label">Gross price (incl. GST)</span>
+            <span class="gst-period-val" id="gst-res-gross">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/gst-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .gst-mode-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(167,139,250,0.4);
+  }
+  .gst-mode-btn {
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .gst-mode-btn:first-child { border-right: 1px solid rgba(167,139,250,0.4); }
+  .gst-mode-btn.gst-mode-active {
+    background: rgba(167,139,250,0.18);
+    color: #a78bfa;
+  }
+  .gst-mode-btn:hover:not(.gst-mode-active) { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.75); }
+  .gst-country-wrap { position: relative; }
+  .gst-country-select {
+    width: 100%;
+    padding: 0.6rem 2.5rem 0.6rem 0.75rem;
+    background: rgba(167,139,250,0.1);
+    border: 1px solid rgba(167,139,250,0.35);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .gst-country-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.18); }
+  .gst-country-chevron { pointer-events: none; position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .gst-price-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .gst-currency-wrap { position: relative; flex-shrink: 0; }
+  .gst-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .gst-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .gst-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .gst-price-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .gst-price-input:focus { border-color: rgba(167,139,250,0.6) !important; }
+  .gst-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .gst-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .gst-result-row:last-child { border-bottom: none; }
+  .gst-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .gst-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .gst-row-tax { border-top: 1px solid rgba(255,255,255,0.08); }
+  .gst-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .gst-row-highlight .gst-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .gst-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .gst-row-highlight .gst-period-val { color: #a78bfa; font-size: 1.15rem; }
+</style>
