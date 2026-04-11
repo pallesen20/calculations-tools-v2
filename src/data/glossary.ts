@@ -318,7 +318,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Personal Finance',
     siteCategory: 'Finance',
     shortDef: 'A pay period is the recurring length of time for which an employer calculates and pays wages. Common types are weekly, bi-weekly (every two weeks), semi-monthly (twice a month), and monthly. Bi-weekly gives 26 pay cheques per year; semi-monthly gives 24.',
-    relatedTools: ['/finance/annual-income-calculator', '/finance/salary-to-hourly-calculator'],
+    relatedTools: ['/finance/annual-income-calculator', '/finance/salary-to-hourly-calculator', '/finance/pay-raise-calculator'],
     relatedTerms: ['gross-pay', 'net-pay'],
   },
   {
@@ -615,7 +615,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'Gross pay is the total amount earned before any deductions - income tax, Social Security, Medicare, health insurance premiums, or retirement contributions. It is the figure quoted in salary offers and used to calculate hourly rates.',
     formula: '$$\\text{Gross Pay} = \\text{Hourly Rate} \\times \\text{Hours Worked}$$',
-    relatedTools: ['/finance/salary-to-hourly-calculator'],
+    relatedTools: ['/finance/salary-to-hourly-calculator', '/finance/pay-raise-calculator'],
     relatedTerms: ['net-pay'],
   },
   {
@@ -625,7 +625,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Personal Finance',
     siteCategory: 'Finance',
     shortDef: 'Net pay is take-home pay - the amount deposited into your bank account after all mandatory and voluntary deductions are removed from gross pay. For most US workers, net pay is 65-75% of gross pay depending on tax bracket and benefit elections.',
-    relatedTools: ['/finance/salary-to-hourly-calculator'],
+    relatedTools: ['/finance/salary-to-hourly-calculator', '/finance/pay-raise-calculator'],
     relatedTerms: ['gross-pay'],
   },
   {
@@ -669,5 +669,26 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'Waist circumference measures abdominal girth at the natural waist. It is a direct indicator of visceral fat - the most metabolically harmful fat depot - and predicts cardiometabolic risk independently of BMI.',
     relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator'],
     relatedTerms: ['bmi', 'body-fat-percentage', 'body-composition'],
+  },
+  {
+    slug: 'merit-increase',
+    term: 'Merit Increase',
+    letter: 'M',
+    category: 'Personal Finance',
+    siteCategory: 'Finance',
+    shortDef: 'A merit increase is a salary raise awarded based on individual job performance, distinct from cost-of-living adjustments. U.S. employers typically budget separate merit pools of 3-5%, distributed according to performance ratings, with high performers receiving a larger share.',
+    relatedTools: ['/finance/pay-raise-calculator'],
+    relatedTerms: ['gross-pay', 'cost-of-living-adjustment'],
+  },
+  {
+    slug: 'cost-of-living-adjustment',
+    term: 'Cost-of-Living Adjustment (COLA)',
+    letter: 'C',
+    category: 'Personal Finance',
+    siteCategory: 'Finance',
+    shortDef: 'A cost-of-living adjustment (COLA) is an automatic salary or benefit increase tied to a price index - usually the Consumer Price Index (CPI) - to preserve purchasing power as prices rise. Social Security applies an annual COLA; many employers issue a COLA separately from merit increases.',
+    formula: '$$\\text{New Salary} = \\text{Old Salary} \\times (1 + \\text{CPI Change})$$',
+    relatedTools: ['/finance/pay-raise-calculator'],
+    relatedTerms: ['merit-increase', 'gross-pay'],
   },
 ];

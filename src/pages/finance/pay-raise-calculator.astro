@@ -1,0 +1,544 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  newSalary:  "$$\\text{New Salary} = \\text{Current Salary} \\times \\left(1 + \\frac{\\text{Raise \\%}}{100}\\right)$$",
+  raiseAmt:   "$$\\text{Raise Amount} = \\text{Current Salary} \\times \\frac{\\text{Raise \\%}}{100}$$",
+  raisePct:   "$$\\text{Raise \\%} = \\frac{\\text{New Salary} - \\text{Current Salary}}{\\text{Current Salary}} \\times 100$$",
+  afterTax:   "$$\\text{After-Tax Raise} = \\text{Gross Raise} \\times (1 - \\text{Effective Tax Rate})$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'Mercer',
+    title: 'US Employers Plan to Keep 2026 Salary Increases Flat to 2025',
+    journal: 'Mercer',
+    year: 2025,
+    url: 'https://www.mercer.com/en-us/about/newsroom/most-us-employers-plan-to-keep-2026-salary-increases-flat/',
+  },
+  {
+    author: 'The Conference Board',
+    title: 'In Corporate America, 2026 Pay Raise Budgets Projected to Hold Steady',
+    journal: 'The Conference Board',
+    year: 2025,
+    url: 'https://www.conference-board.org/press/pay-raise-budgets',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',       label: 'How to use this calculator' },
+  { id: 'how-to-calculate', label: 'How to calculate a pay raise' },
+  { id: 'average-raise',    label: 'Average pay raise in 2026' },
+  { id: 'good-raise',       label: 'What is a good pay raise?' },
+  { id: 'when-to-ask',      label: 'When to ask for a raise' },
+  { id: 'after-tax',        label: 'Pay raise and taxes' },
+  { id: 'raise-examples',   label: 'Pay raise examples' },
+  { id: 'faq',              label: 'FAQs' },
+  { id: 'related-tools',    label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pay Raise Calculator",
+    "url": "https://calculations.tools/finance/pay-raise-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate your new salary after a pay raise. Shows new salary across all pay periods, the dollar raise amount, and optional after-tax increase based on your effective tax rate.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the Pay Raise Calculator",
+    "description": "Calculate your new salary and after-tax raise in three steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter your current salary", "text": "Type your current salary and choose the pay period: annual, monthly, bi-weekly, weekly, or hourly." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter your raise", "text": "Switch between percentage raise and flat dollar amount. Enter the raise your employer offered." },
+      { "@type": "HowToStep", "position": 3, "name": "Add your tax rate (optional)", "text": "Enter your effective tax rate to see how much of your raise you will actually take home after taxes." },
+      { "@type": "HowToStep", "position": 4, "name": "Read your results", "text": "The calculator shows your new salary across all pay periods, the raise amount per period, and after-tax raise if a tax rate was entered." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I calculate a pay raise percentage?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Subtract your old salary from your new salary, divide the result by your old salary, then multiply by 100. Formula: (New Salary - Old Salary) / Old Salary x 100. If your salary goes from $60,000 to $63,000, that is ($63,000 - $60,000) / $60,000 x 100 = 5% raise." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the average pay raise percentage in 2026?",
+        "acceptedAnswer": { "@type": "Answer", "text": "U.S. employers projected average total salary increases of 3.5% for 2026 according to Mercer and The Conference Board surveys. Merit-only budgets averaged 3.2%. High performers typically receive 5-8%, while promotions generate 10-20%+ increases. These figures held roughly flat from 2025 as employers balanced wage growth against economic uncertainty." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does a pay raise affect my tax bracket?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A pay raise can push part of your income into a higher tax bracket, but only the amount above each threshold is taxed at the higher rate. The US federal tax system is progressive, meaning a raise does not make your entire salary taxed at the higher rate. Enter your effective tax rate in the calculator to see your true after-tax raise." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good pay raise percentage?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A raise matching or exceeding inflation preserves purchasing power. With US CPI at roughly 2.8% in 2025, a 3%+ raise is the minimum to stay even. A merit increase of 5-7% signals strong performance. A raise below the inflation rate is effectively a pay cut in real terms, even if the dollar amount is higher." }
+      },
+      {
+        "@type": "Question",
+        "name": "When should I ask for a pay raise?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The best times to ask are during your annual performance review, after completing a major project, when taking on new responsibilities, or after six to twelve months of strong results. LinkedIn's Workforce Confidence Index found that 64% of early-career workers who asked for a raise received one, yet only 37% actually asked." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Pay Raise Calculator"
+  metaTitle="Pay Raise Calculator | New Salary Before & After Tax ᐅ"
+  description="Calculate your new salary after a pay raise. Enter any pay period, choose % or flat raise, and add a tax rate to see your exact before-tax and after-tax increase across all pay periods."
+  canonical="https://calculations.tools/finance/pay-raise-calculator"
+  tocItems={tocItems}
+  embedSlug="pay-raise-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="New Salary = Current Salary x (1 + Raise% / 100)"
+  ogExample="$60,000 x 1.05 = $63,000 new annual salary (+$3,000/yr)"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate New Salary Before & After Tax</h2>
+          <p>See your new salary and after-tax raise across all pay periods</p>
+        </div>
+
+        <div class="pr-type-toggle">
+          <button id="pr-type-pct" class="pr-type-btn pr-type-active">By percentage</button>
+          <button id="pr-type-flat" class="pr-type-btn">By amount</button>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pr-current">Current salary</label>
+          <div class="pr-amount-row">
+            <div class="pr-currency-wrap">
+              <select id="pr-currency" class="pr-currency-select" aria-label="Currency"></select>
+              <svg class="pr-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+            </div>
+            <input type="text" inputmode="decimal" id="pr-current" class="bmi-input pr-amount-input" placeholder="e.g. 60000" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pr-period">Pay period</label>
+          <div class="bmi-input-wrap" style="padding-right: 0.75rem;">
+            <select id="pr-period" class="bmi-input">
+              <option value="annual">Per year (annual)</option>
+              <option value="monthly">Per month</option>
+              <option value="biweekly">Every two weeks (bi-weekly)</option>
+              <option value="weekly">Per week</option>
+              <option value="hourly">Per hour</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" id="pr-raise-label" for="pr-raise">Raise percentage</label>
+          <div class="pr-raise-row">
+            <input type="text" inputmode="decimal" id="pr-raise" class="bmi-input pr-raise-input" placeholder="e.g. 5" />
+            <span class="pr-raise-suffix" id="pr-raise-suffix">%</span>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="pr-tax-rate">Effective tax rate (optional)</label>
+          <div class="pr-raise-row">
+            <input type="text" inputmode="decimal" id="pr-tax-rate" class="bmi-input pr-raise-input" placeholder="e.g. 25" />
+            <span class="pr-raise-suffix">%</span>
+          </div>
+        </div>
+
+        <div id="pr-result" class="lbm-result hidden">
+
+          <div class="pr-raise-badge">
+            Raise: <span id="pr-res-pct" class="pr-badge-val">-</span>
+          </div>
+
+          <div class="pr-section-label">New salary</div>
+          <div class="pr-results-grid">
+            <div class="pr-result-row pr-row-highlight">
+              <span class="pr-period-label">Annual</span>
+              <span class="pr-period-val" id="pr-res-annual">-</span>
+            </div>
+            <div class="pr-result-row">
+              <span class="pr-period-label">Monthly</span>
+              <span class="pr-period-val" id="pr-res-monthly">-</span>
+            </div>
+            <div class="pr-result-row">
+              <span class="pr-period-label">Bi-weekly</span>
+              <span class="pr-period-val" id="pr-res-biweekly">-</span>
+            </div>
+            <div class="pr-result-row">
+              <span class="pr-period-label">Weekly</span>
+              <span class="pr-period-val" id="pr-res-weekly">-</span>
+            </div>
+            <div class="pr-result-row pr-row-last">
+              <span class="pr-period-label">Hourly</span>
+              <span class="pr-period-val" id="pr-res-hourly">-</span>
+            </div>
+          </div>
+
+          <div class="pr-section-label">Your raise (before tax)</div>
+          <div class="pr-results-grid">
+            <div class="pr-result-row">
+              <span class="pr-period-label">Per year</span>
+              <span class="pr-period-val pr-green" id="pr-raise-annual">-</span>
+            </div>
+            <div class="pr-result-row">
+              <span class="pr-period-label">Per month</span>
+              <span class="pr-period-val pr-green" id="pr-raise-monthly">-</span>
+            </div>
+            <div class="pr-result-row pr-row-last">
+              <span class="pr-period-label">Per week</span>
+              <span class="pr-period-val pr-green" id="pr-raise-weekly">-</span>
+            </div>
+          </div>
+
+          <div id="pr-tax-section" class="hidden">
+            <div class="pr-section-label">After-tax raise (estimated)</div>
+            <div class="pr-results-grid">
+              <div class="pr-result-row">
+                <span class="pr-period-label">Per year (after tax)</span>
+                <span class="pr-period-val pr-green" id="pr-raise-after-annual">-</span>
+              </div>
+              <div class="pr-result-row pr-row-last">
+                <span class="pr-period-label">Per month (after tax)</span>
+                <span class="pr-period-val pr-green" id="pr-raise-after-monthly">-</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/pay-raise-calculator.js" is:inline></script>
+    <FinanceDisclaimer />
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>A pay raise calculator shows your new salary and the exact dollar increase across every pay period after you enter your current salary and raise percentage. Add your effective tax rate to see how much of the raise you actually take home. U.S. employers projected average salary increases of 3.5% for 2026 (Mercer, 2025).</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>U.S. employers forecast average total salary increases of 3.5% for 2026, flat versus 2025 (Mercer, 2025).</li>
+          <li>New Salary = Current Salary x (1 + Raise% / 100). A 5% raise on $60,000 gives $63,000.</li>
+          <li>A raise below the current inflation rate is a real-terms pay cut, even when the dollar amount is higher.</li>
+          <li>In the US progressive tax system, only the portion of income above each bracket threshold is taxed at the higher rate.</li>
+          <li>64% of early-career workers who asked for a raise received one, yet only 37% actually asked (LinkedIn, 2023).</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Pay Raise Calculator</h2>
+      <p>Enter your current salary and choose the matching <a href="/glossary/pay-period">pay period</a>: annual, monthly, bi-weekly, weekly, or hourly. Toggle between a percentage raise and a flat dollar amount, then type your raise figure. The calculator instantly shows your new salary across every pay period. Add your effective tax rate to see your after-tax take-home increase as well.</p>
+      <p>The currency selector auto-detects your location. If your salary is quoted in a different currency, switch the selector - the math works identically regardless of currency. All results are <a href="/glossary/gross-pay">gross pay</a> figures unless a tax rate is entered.</p>
+
+      <h2 id="how-to-calculate">How to Calculate a Pay Raise</h2>
+      <p>Three formulas cover every scenario. The Conference Board reported average salary budget increases of 3.4% in 2025 with a 3.5% median, and the same is expected for 2026 (The Conference Board, 2025). All three formulas below use the same annual-equivalent logic regardless of pay period.</p>
+
+      <p>To find your new salary after a percentage raise:</p>
+      <Formula expr={f.newSalary} />
+
+      <p>To find the dollar value of a percentage raise:</p>
+      <Formula expr={f.raiseAmt} />
+
+      <p>To calculate what percentage raise you received from two salary figures:</p>
+      <Formula expr={f.raisePct} />
+
+      <p>Worked example: current salary $60,000, raise of 5%.</p>
+      <ul>
+        <li>Raise amount: $60,000 x (5/100) = <strong>$3,000</strong></li>
+        <li>New annual salary: $60,000 + $3,000 = <strong>$63,000</strong></li>
+        <li>New monthly: $63,000 / 12 = <strong>$5,250</strong></li>
+        <li>New bi-weekly: $63,000 / 26 = <strong>$2,423.08</strong></li>
+        <li>New hourly (2,080 hrs): $63,000 / 2,080 = <strong>$30.29/hr</strong></li>
+      </ul>
+
+      <h2 id="average-raise">What Is the Average Pay Raise in 2026?</h2>
+      <p>U.S. employers planned average total salary increases of 3.5% for 2026, holding roughly flat from 2025 levels, according to Mercer's Compensation Planning Survey (2025). The Conference Board reported a 3.5% median salary budget for both 2025 and 2026, reflecting a mix of merit, cost-of-living, and promotional increases (The Conference Board, 2025).</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Raise type</th>
+              <th>Typical range</th>
+              <th>Who receives it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="/glossary/cost-of-living-adjustment">Cost-of-living adjustment (COLA)</a></td><td>2-3%</td><td>Most employees annually</td></tr>
+            <tr><td><a href="/glossary/merit-increase">Merit increase</a></td><td>3-5%</td><td>Solid performers</td></tr>
+            <tr><td>High performer</td><td>5-8%</td><td>Top 10-20% of staff</td></tr>
+            <tr><td>Promotion</td><td>10-20%</td><td>Role or level change</td></tr>
+            <tr><td>Counter-offer / retention</td><td>15-30%</td><td>Flight-risk employees</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Industry matters too. Financial services and high-tech averaged total increases of 3.7% for 2026, while healthcare services and retail averaged 3.3-3.4% (Mercer, 2025). If your industry tends to lag, a job change is historically the fastest path to a large salary increase.</p>
+
+      <h2 id="good-raise">What Is a Good Pay Raise Percentage?</h2>
+      <p>A raise is "good" if it exceeds inflation, preserving your purchasing power. The US Consumer Price Index rose roughly 2.8% in 2025, making 3%+ the minimum for a real-terms increase. Anything below inflation is effectively a pay cut in real terms, even if the dollar amount is higher. The BLS median weekly earnings figure is useful for benchmarking your salary against the national median.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Raise %</th>
+              <th>What it signals</th>
+              <th>Real-terms outcome at 2.8% inflation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Below 2.8%</td><td>Below average / budget constrained</td><td>Real-terms pay cut</td></tr>
+            <tr><td>2.8 - 3.5%</td><td>COLA / standard cost-of-living</td><td>Break-even to slight gain</td></tr>
+            <tr><td>3.5 - 5%</td><td>Solid merit increase</td><td>Modest real gain</td></tr>
+            <tr><td>5 - 8%</td><td>Strong performance recognition</td><td>Meaningful real gain</td></tr>
+            <tr><td>10%+</td><td>Promotion or counter-offer</td><td>Significant real gain</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="when-to-ask">When Should You Ask for a Pay Raise?</h2>
+      <p>Timing your raise request dramatically affects your success rate. LinkedIn's Workforce Confidence Index (2023) found that 64% of early-career workers who asked for a raise received one, but only 37% ever asked. The gap between asking and receiving is the single largest missed opportunity in salary negotiation.</p>
+
+      <p>The strongest moments to request a raise:</p>
+      <ul>
+        <li><strong>Annual performance review.</strong> This is when budgets are already allocated and managers have formal authority to approve increases.</li>
+        <li><strong>After a major win.</strong> Completing a high-impact project or signing a large client puts concrete evidence of value fresh in your manager's mind.</li>
+        <li><strong>When taking on new responsibilities.</strong> Scope creep without a pay adjustment is the easiest case to make - you're already doing a bigger job.</li>
+        <li><strong>After six to twelve months in role.</strong> Asking within the first three to six months rarely succeeds. After a year with documented results, you have a track record.</li>
+        <li><strong>When the company is doing well.</strong> Revenue growth, a new product launch, or a strong earnings quarter signals that budget exists for raises.</li>
+      </ul>
+
+      <p>Most HR professionals and career coaches recommend requesting a raise no more than once per year in the same role. Repeated asks signal that you're not managing expectations well - focus each request on specific, measurable contributions.</p>
+
+      <h2 id="after-tax">How Does a Pay Raise Affect Taxes?</h2>
+      <p>In the US progressive tax system, a raise does not push your entire salary into a higher bracket - only the income above each threshold is taxed at the higher rate. The federal marginal rates run from 10% on income up to $11,925 (single, 2025) to 37% above $626,350. A $3,000 raise on a $60,000 salary at the 22% marginal rate costs roughly $660 in additional federal tax, leaving around $2,340 in after-tax benefit.</p>
+
+      <Formula expr={f.afterTax} />
+
+      <p>Your effective tax rate (total tax / total income) is always lower than your marginal rate. For most US workers earning $50,000-$100,000, the effective federal rate sits around 12-22%. State income tax, Social Security (6.2%), and Medicare (1.45%) all add to the total burden. Use the calculator's optional tax rate field with your actual effective rate for the most accurate after-tax estimate. A <a href="/finance/salary-to-hourly-calculator">salary to hourly conversion</a> can help you see the post-raise rate per hour too.</p>
+
+      <h2 id="raise-examples">Pay Raise Examples Across Common Salaries</h2>
+      <p>The table below shows the annual and monthly raise amounts for common salary levels at 3%, 5%, and 10% raise percentages. Use it as a quick reference when benchmarking an offer or preparing for a negotiation.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Current salary</th>
+              <th>3% raise</th>
+              <th>5% raise</th>
+              <th>10% raise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>$30,000</td><td>+$900/yr (+$75/mo)</td><td>+$1,500/yr (+$125/mo)</td><td>+$3,000/yr (+$250/mo)</td></tr>
+            <tr><td>$45,000</td><td>+$1,350/yr (+$113/mo)</td><td>+$2,250/yr (+$188/mo)</td><td>+$4,500/yr (+$375/mo)</td></tr>
+            <tr><td>$60,000</td><td>+$1,800/yr (+$150/mo)</td><td>+$3,000/yr (+$250/mo)</td><td>+$6,000/yr (+$500/mo)</td></tr>
+            <tr><td>$75,000</td><td>+$2,250/yr (+$188/mo)</td><td>+$3,750/yr (+$313/mo)</td><td>+$7,500/yr (+$625/mo)</td></tr>
+            <tr><td>$100,000</td><td>+$3,000/yr (+$250/mo)</td><td>+$5,000/yr (+$417/mo)</td><td>+$10,000/yr (+$833/mo)</td></tr>
+            <tr><td>$150,000</td><td>+$4,500/yr (+$375/mo)</td><td>+$7,500/yr (+$625/mo)</td><td>+$15,000/yr (+$1,250/mo)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Notice that higher-earners see a much larger dollar difference even at the same percentage - a 5% raise on $150,000 is $7,500/year compared to $1,500 on $30,000. This asymmetry is why percentage-based raises benefit higher earners disproportionately over time. When comparing offers, always compare absolute dollar amounts across the same pay period using the calculator above.</p>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How do I calculate a pay raise percentage?</h3>
+      <p>Subtract your old salary from your new salary, divide by your old salary, then multiply by 100. For $60,000 to $63,000: ($63,000 - $60,000) / $60,000 x 100 = 5%. To go the other direction and find the new salary from a given percentage, multiply current salary by (1 + raise/100). A <a href="/math/percentage-calculator/increase">percentage increase calculator</a> handles both directions instantly.</p>
+
+      <h3>What is the average pay raise in 2026?</h3>
+      <p>U.S. employers forecast average total salary increases of 3.5% for 2026, with a 3.4% mean and 3.5% median across budget surveys (Mercer and The Conference Board, 2025). Merit-only budgets averaged 3.2%. High performers typically receive 5-8%, and promotions generate 10-20%+ increases. Actual increases vary significantly by industry and company size.</p>
+
+      <h3>Does a pay raise affect my tax bracket?</h3>
+      <p>Yes, but only partially. The US federal tax system is progressive, so only the income above each bracket threshold is taxed at the higher rate. A $3,000 raise at the 22% marginal rate costs roughly $660 in additional federal tax, leaving ~$2,340 after-tax gain. Enter your effective rate in the calculator's optional tax field to see the precise after-tax increase for your situation.</p>
+
+      <h3>What is a good pay raise percentage?</h3>
+      <p>A raise that beats inflation preserves purchasing power. With US CPI around 2.8% in 2025, a raise of 3%+ is the baseline for a real gain. A merit increase of 5-7% reflects strong performance recognition. If your raise is below the inflation rate, your salary has effectively decreased in real terms even though the number is larger.</p>
+
+      <h3>When should I ask for a pay raise?</h3>
+      <p>The best time is during your annual review, after a high-impact project, or when your responsibilities have grown beyond your original role. Wait at least six months in a new position before asking. LinkedIn data (2023) shows 64% of early-career workers who asked received a raise, but only 37% actually asked - the biggest barrier is simply not asking.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💵</span>
+          <div>
+            <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+            <p>Convert your new post-raise annual salary to an hourly, weekly, bi-weekly, or monthly rate to compare job offers on the same basis.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📅</span>
+          <div>
+            <a href="/finance/annual-income-calculator">Annual Income Calculator</a>
+            <p>Calculate your total annual income from any pay period, including bonuses on top of your raised base salary.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">↗</span>
+          <div>
+            <a href="/math/percentage-calculator/increase">Percentage Increase Calculator</a>
+            <p>Find the percentage increase between any two salary figures, or calculate what a given percentage raise means in dollar terms.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>Useful for working out what percentage of your gross salary goes to taxes, benefits, or savings after a raise.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🏦</span>
+          <div>
+            <a href="/finance/compound-interest-calculator">Compound Interest Calculator</a>
+            <p>See how investing a portion of your raise grows over time - useful for retirement contribution planning after a salary increase.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+
+<style is:global>
+  .pr-type-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(167,139,250,0.4);
+  }
+  .pr-type-btn {
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .pr-type-btn:first-child { border-right: 1px solid rgba(167,139,250,0.4); }
+  .pr-type-btn.pr-type-active {
+    background: rgba(167,139,250,0.18);
+    color: #a78bfa;
+  }
+  .pr-type-btn:hover:not(.pr-type-active) { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.75); }
+  .pr-amount-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .pr-currency-wrap { position: relative; flex-shrink: 0; }
+  .pr-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .pr-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .pr-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .pr-amount-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .pr-amount-input:focus { border-color: rgba(167,139,250,0.6) !important; }
+  .pr-raise-row { position: relative; }
+  .pr-raise-input { width: 100%; padding-right: 3rem !important; }
+  .pr-raise-input:focus { border-color: rgba(167,139,250,0.6) !important; }
+  .pr-raise-suffix {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    font-weight: 600;
+    pointer-events: none;
+  }
+  .pr-raise-badge {
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    background: rgba(167,139,250,0.06);
+    border-radius: 6px;
+  }
+  .pr-badge-val {
+    color: #a78bfa;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .pr-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin: 0.9rem 0 0.3rem;
+  }
+  .pr-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .pr-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .pr-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .pr-row-highlight {
+    background: rgba(167,139,250,0.08) !important;
+    border-bottom-color: rgba(167,139,250,0.15) !important;
+  }
+  .pr-row-last { border-bottom: none; }
+  .pr-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .pr-row-highlight .pr-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .pr-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .pr-row-highlight .pr-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .pr-green { color: #4ade80; }
+</style>

@@ -1437,6 +1437,15 @@ const entries: Entry[] = [
     short: 'Convert any pay period to annual income',
   },
   {
+    path: '/finance/pay-raise-calculator',
+    title: 'Pay Raise Calculator - Salary Increase Before & After Tax',
+    description: 'Calculate your new salary after a pay raise. Enter any pay period, choose % or flat raise, and add a tax rate to see your exact before-tax and after-tax increase across all pay periods.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    icon: '↑',
+    short: 'New salary before & after tax, all periods',
+  },
+  {
     path: '/tax',
     title: 'Tax Calculators - Free Online Tax Tools',
     description: 'Free tax calculators for sales tax, reverse tax calculation, and more. Fast, accurate, no registration needed.',
@@ -1590,6 +1599,7 @@ const FINANCE_GROUPS: Record<string, string> = {
   'working-capital-calculator':         'Loans & Capital',
   'salary-to-hourly-calculator':        'Salary',
   'annual-income-calculator':           'Salary',
+  'pay-raise-calculator':               'Salary',
   'google-adsense-calculator':          'Business Planning',
 };
 

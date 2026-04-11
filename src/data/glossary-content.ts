@@ -1485,4 +1485,48 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'merit-increase': {
+    definition: [
+      'A merit increase is a salary raise tied directly to an individual employee\'s job performance, distinct from automatic cost-of-living adjustments or across-the-board increases. Employers budget a merit pool - typically 3-5% of total payroll - and allocate larger raises to high performers, smaller ones to average performers, and nothing to below-average performers.',
+      'Merit increases are usually applied during annual performance review cycles. A typical distribution gives the top 10-20% of performers 5-8% raises, middle performers 3-4%, and bottom performers 0-2%. The dollar impact scales with base salary, meaning the same percentage raise delivers more money to higher earners.',
+    ],
+    whenToUse: 'Compare your merit increase against the company\'s stated merit pool percentage. If the pool is 3.5% and you receive 3%, you are slightly below average. If you receive 5-6% from a 3.5% pool, your manager is allocating more than your share - a strong signal of above-average performance standing.',
+    examples: {
+      headers: ['Performance tier', 'Typical merit %', '$60,000 salary raise', '$100,000 salary raise'],
+      rows: [
+        ['Below expectations', '0%', '$0', '$0'],
+        ['Meets expectations', '2.5 - 3.5%', '+$1,500 - $2,100', '+$2,500 - $3,500'],
+        ['Exceeds expectations', '4 - 6%', '+$2,400 - $3,600', '+$4,000 - $6,000'],
+        ['Top performer', '6 - 10%', '+$3,600 - $6,000', '+$6,000 - $10,000'],
+      ],
+    },
+    pitfalls: 'Merit increases compound over time. A 5% raise versus a 3% raise on a $60,000 salary is only $1,200 in year one, but over 10 years the higher raise trajectory produces a significantly larger base. Negotiate each raise as if it is permanent, because it is - your future raises are percentages of the new, higher figure.',
+    faqs: [
+      { q: 'Is a merit increase the same as a cost-of-living raise?', a: 'No. A merit increase rewards individual performance; a cost-of-living adjustment (COLA) simply offsets inflation for all employees. Many companies issue a COLA to everyone and a separate merit increase to strong performers. A raise of only 2-3% when inflation is 3% is effectively a COLA with no merit component.' },
+      { q: 'How do I negotiate a higher merit increase?', a: 'Document specific, quantifiable contributions before your review: revenue generated, costs saved, projects delivered ahead of schedule. Frame your ask around market data - know the median salary for your role and location. A raise 1-2% above the stated merit pool is achievable with strong evidence.' },
+    ],
+  },
+
+  'cost-of-living-adjustment': {
+    definition: [
+      'A cost-of-living adjustment (COLA) is an automatic increase to wages, salaries, or benefits designed to offset inflation - keeping purchasing power stable as the general price level rises. The adjustment is typically tied to a price index, most commonly the Consumer Price Index for All Urban Consumers (CPI-U) in the United States.',
+      'Social Security benefits receive an official COLA each year determined by the SSA. For 2026, the COLA was 2.8%, based on Q3 2025 CPI data. Many private employers also issue a COLA - sometimes bundled into a single annual increase with a merit component, sometimes paid as a separate flat adjustment for all employees.',
+    ],
+    whenToUse: 'Use COLA as a baseline when evaluating any annual salary increase. A raise that exactly matches COLA preserves your current standard of living but provides no real income growth. A raise below COLA is a real-terms pay cut even if the dollar amount is higher.',
+    examples: {
+      headers: ['Year', 'US CPI change', 'SSA COLA applied', 'Real gain from a 3.5% raise'],
+      rows: [
+        ['2022', '+8.0%', '+8.7%', '-4.5% (real loss)'],
+        ['2023', '+3.4%', '+3.2%', '+0.1% (near break-even)'],
+        ['2024', '+2.9%', '+2.5%', '+0.6% (slight real gain)'],
+        ['2025', '+2.8%', '+2.8%', '+0.7% (modest real gain)'],
+      ],
+    },
+    pitfalls: 'COLA and merit increases serve different purposes. Bundling them into a single percentage makes it hard to know whether you received real performance recognition or just an inflation offset. When negotiating, ask your employer to separate the COLA component from the merit component so you can evaluate each independently.',
+    faqs: [
+      { q: 'How is the Social Security COLA calculated?', a: 'The SSA compares the average CPI-W (Consumer Price Index for Urban Wage Earners) in Q3 of the current year against Q3 of the previous year. If the index rose, all Social Security benefits increase by the same percentage the following January. For 2026, the COLA was 2.8%.' },
+      { q: 'Does every employer give a COLA?', a: 'No. COLA is mandatory for Social Security and some government pension plans, but private employers are not required to give inflation-linked raises. Many employers issue a single combined increase that blends COLA and merit, making it difficult to separate the two components.' },
+    ],
+  },
+
 };

@@ -1,0 +1,221 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Pay Raise Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Pay Raise Calculator</h2>
+        <p>See your new salary and after-tax raise across all pay periods</p>
+      </div>
+
+      <div class="pr-type-toggle">
+        <button id="pr-type-pct" class="pr-type-btn pr-type-active">By percentage</button>
+        <button id="pr-type-flat" class="pr-type-btn">By amount</button>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pr-current">Current salary</label>
+        <div class="pr-amount-row">
+          <div class="pr-currency-wrap">
+            <select id="pr-currency" class="pr-currency-select" aria-label="Currency"></select>
+            <svg class="pr-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
+          <input type="text" inputmode="decimal" id="pr-current" class="bmi-input pr-amount-input" placeholder="e.g. 60000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pr-period">Pay period</label>
+        <div class="bmi-input-wrap" style="padding-right: 0.75rem;">
+          <select id="pr-period" class="bmi-input">
+            <option value="annual">Per year (annual)</option>
+            <option value="monthly">Per month</option>
+            <option value="biweekly">Every two weeks (bi-weekly)</option>
+            <option value="weekly">Per week</option>
+            <option value="hourly">Per hour</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" id="pr-raise-label" for="pr-raise">Raise percentage</label>
+        <div class="pr-raise-row">
+          <input type="text" inputmode="decimal" id="pr-raise" class="bmi-input pr-raise-input" placeholder="e.g. 5" />
+          <span class="pr-raise-suffix" id="pr-raise-suffix">%</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pr-tax-rate">Effective tax rate (optional)</label>
+        <div class="pr-raise-row">
+          <input type="text" inputmode="decimal" id="pr-tax-rate" class="bmi-input pr-raise-input" placeholder="e.g. 25" />
+          <span class="pr-raise-suffix">%</span>
+        </div>
+      </div>
+
+      <div id="pr-result" class="lbm-result hidden">
+
+        <div class="pr-raise-badge">
+          Raise: <span id="pr-res-pct" class="pr-badge-val">-</span>
+        </div>
+
+        <div class="pr-section-label">New salary</div>
+        <div class="pr-results-grid">
+          <div class="pr-result-row pr-row-highlight">
+            <span class="pr-period-label">Annual</span>
+            <span class="pr-period-val" id="pr-res-annual">-</span>
+          </div>
+          <div class="pr-result-row">
+            <span class="pr-period-label">Monthly</span>
+            <span class="pr-period-val" id="pr-res-monthly">-</span>
+          </div>
+          <div class="pr-result-row">
+            <span class="pr-period-label">Bi-weekly</span>
+            <span class="pr-period-val" id="pr-res-biweekly">-</span>
+          </div>
+          <div class="pr-result-row">
+            <span class="pr-period-label">Weekly</span>
+            <span class="pr-period-val" id="pr-res-weekly">-</span>
+          </div>
+          <div class="pr-result-row pr-row-last">
+            <span class="pr-period-label">Hourly</span>
+            <span class="pr-period-val" id="pr-res-hourly">-</span>
+          </div>
+        </div>
+
+        <div class="pr-section-label">Your raise (before tax)</div>
+        <div class="pr-results-grid">
+          <div class="pr-result-row">
+            <span class="pr-period-label">Per year</span>
+            <span class="pr-period-val pr-green" id="pr-raise-annual">-</span>
+          </div>
+          <div class="pr-result-row">
+            <span class="pr-period-label">Per month</span>
+            <span class="pr-period-val pr-green" id="pr-raise-monthly">-</span>
+          </div>
+          <div class="pr-result-row pr-row-last">
+            <span class="pr-period-label">Per week</span>
+            <span class="pr-period-val pr-green" id="pr-raise-weekly">-</span>
+          </div>
+        </div>
+
+        <div id="pr-tax-section" class="hidden">
+          <div class="pr-section-label">After-tax raise (estimated)</div>
+          <div class="pr-results-grid">
+            <div class="pr-result-row">
+              <span class="pr-period-label">Per year (after tax)</span>
+              <span class="pr-period-val pr-green" id="pr-raise-after-annual">-</span>
+            </div>
+            <div class="pr-result-row pr-row-last">
+              <span class="pr-period-label">Per month (after tax)</span>
+              <span class="pr-period-val pr-green" id="pr-raise-after-monthly">-</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/pay-raise-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .pr-type-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.25rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(167,139,250,0.4);
+  }
+  .pr-type-btn {
+    flex: 1;
+    padding: 0.55rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .pr-type-btn:first-child { border-right: 1px solid rgba(167,139,250,0.4); }
+  .pr-type-btn.pr-type-active { background: rgba(167,139,250,0.18); color: #a78bfa; }
+  .pr-type-btn:hover:not(.pr-type-active) { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.75); }
+  .pr-amount-row { display: flex; gap: 0.5rem; align-items: stretch; }
+  .pr-currency-wrap { position: relative; flex-shrink: 0; }
+  .pr-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .pr-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .pr-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .pr-amount-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
+  .pr-raise-row { position: relative; }
+  .pr-raise-input { width: 100%; padding-right: 3rem !important; }
+  .pr-raise-suffix {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.55);
+    font-size: 0.875rem;
+    font-weight: 600;
+    pointer-events: none;
+  }
+  .pr-raise-badge {
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    background: rgba(167,139,250,0.06);
+    border-radius: 6px;
+  }
+  .pr-badge-val { color: #a78bfa; font-weight: 700; font-size: 1rem; }
+  .pr-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin: 0.9rem 0 0.3rem;
+  }
+  .pr-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .pr-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .pr-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .pr-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .pr-row-last { border-bottom: none; }
+  .pr-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .pr-row-highlight .pr-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .pr-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .pr-row-highlight .pr-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .pr-green { color: #4ade80; }
+</style>
