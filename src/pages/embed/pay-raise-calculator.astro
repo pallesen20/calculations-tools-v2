@@ -22,13 +22,13 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
             <select id="pr-currency" class="pr-currency-select" aria-label="Currency"></select>
             <svg class="pr-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
           </div>
-          <input type="text" inputmode="decimal" id="pr-current" class="bmi-input pr-amount-input" placeholder="e.g. 60000" />
+          <input type="text" inputmode="decimal" id="pr-current" class="amount-input" placeholder="e.g. 60000" />
         </div>
       </div>
 
       <div class="bmi-field">
         <label class="bmi-label" for="pr-period">Pay period</label>
-        <div class="bmi-input-wrap" style="padding-right: 0.75rem;">
+        <div class="bmi-input-wrap">
           <select id="pr-period" class="bmi-input">
             <option value="annual">Per year (annual)</option>
             <option value="monthly">Per month</option>
@@ -41,17 +41,17 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
 
       <div class="bmi-field">
         <label class="bmi-label" id="pr-raise-label" for="pr-raise">Raise percentage</label>
-        <div class="pr-raise-row">
-          <input type="text" inputmode="decimal" id="pr-raise" class="bmi-input pr-raise-input" placeholder="e.g. 5" />
-          <span class="pr-raise-suffix" id="pr-raise-suffix">%</span>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="pr-raise" class="bmi-input" placeholder="e.g. 5" />
+          <span class="bmi-unit-tag" id="pr-raise-suffix">%</span>
         </div>
       </div>
 
       <div class="bmi-field">
         <label class="bmi-label" for="pr-tax-rate">Effective tax rate (optional)</label>
-        <div class="pr-raise-row">
-          <input type="text" inputmode="decimal" id="pr-tax-rate" class="bmi-input pr-raise-input" placeholder="e.g. 25" />
-          <span class="pr-raise-suffix">%</span>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="pr-tax-rate" class="bmi-input" placeholder="e.g. 25" />
+          <span class="bmi-unit-tag">%</span>
         </div>
       </div>
 
@@ -165,19 +165,6 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   }
   .pr-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
   .pr-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
-  .pr-amount-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
-  .pr-raise-row { position: relative; }
-  .pr-raise-input { width: 100%; padding-right: 3rem !important; }
-  .pr-raise-suffix {
-    position: absolute;
-    right: 0.75rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgba(255,255,255,0.55);
-    font-size: 0.875rem;
-    font-weight: 600;
-    pointer-events: none;
-  }
   .pr-raise-badge {
     text-align: center;
     font-size: 0.85rem;

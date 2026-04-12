@@ -118,7 +118,7 @@ const schema = [
               <select id="sth-currency" class="sth-currency-select" aria-label="Currency"></select>
               <svg class="sth-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
             </div>
-            <input type="text" inputmode="decimal" id="sth-amount" class="bmi-input sth-amount-input" placeholder="Enter amount" />
+            <input type="text" inputmode="decimal" id="sth-amount" class="amount-input" placeholder="Enter amount" />
           </div>
         </div>
 
@@ -405,15 +405,6 @@ const schema = [
     top: 50%;
     transform: translateY(-50%);
     color: rgba(167,139,250,0.9);
-  }
-  .sth-amount-input {
-    flex: 1;
-    min-width: 0;
-    border-color: rgba(255,255,255,0.25) !important;
-    font-size: 1rem !important;
-  }
-  .sth-amount-input:focus {
-    border-color: rgba(167,139,250,0.6) !important;
   }
   .sth-results-grid {
     display: flex;

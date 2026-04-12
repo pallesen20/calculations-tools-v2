@@ -111,7 +111,7 @@ const schema = [
               <select id="stc-currency" class="stc-currency-select" aria-label="Currency"></select>
               <svg class="stc-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
             </div>
-            <input type="text" inputmode="decimal" id="stc-price" class="bmi-input stc-price-input" placeholder="e.g. 50.00" />
+            <input type="text" inputmode="decimal" id="stc-price" class="bmi-input amount-input" placeholder="e.g. 50.00" />
           </div>
         </div>
 
@@ -349,8 +349,6 @@ const schema = [
   }
   .stc-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
   .stc-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
-  .stc-price-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
-  .stc-price-input:focus { border-color: rgba(167,139,250,0.6) !important; }
   .stc-results-grid {
     display: flex;
     flex-direction: column;

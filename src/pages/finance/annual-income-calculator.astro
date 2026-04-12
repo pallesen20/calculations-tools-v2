@@ -112,7 +112,7 @@ const schema = [
               <select id="aic-currency" class="aic-currency-select" aria-label="Currency"></select>
               <svg class="aic-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
             </div>
-            <input type="text" inputmode="decimal" id="aic-amount" class="bmi-input aic-amount-input" placeholder="Enter amount" />
+            <input type="text" inputmode="decimal" id="aic-amount" class="amount-input" placeholder="Enter amount" />
           </div>
         </div>
 
@@ -409,8 +409,6 @@ const schema = [
   }
   .aic-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
   .aic-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
-  .aic-amount-input { flex: 1; min-width: 0; border-color: rgba(255,255,255,0.25) !important; font-size: 1rem !important; }
-  .aic-amount-input:focus { border-color: rgba(167,139,250,0.6) !important; }
   .aic-bonus-toggle-row { padding: 0.1rem 0; }
   .aic-toggle-label { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
   .aic-toggle-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: #a78bfa; }

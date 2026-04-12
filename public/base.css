@@ -1318,6 +1318,16 @@ th {
 }
 .bmi-input:focus { outline: none; }
 .bmi-input::placeholder { color: rgba(255,255,255,0.25); }
+select.bmi-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.5)' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
 .bmi-unit-tag {
   display: flex;
   align-items: center;
@@ -1893,3 +1903,16 @@ th {
 .ct-sbs-panel + .ct-sbs-panel { border-left: 1px solid rgba(255,255,255,0.08); }
 @media (max-width: 640px) { .ct-sbs { grid-template-columns: 1fr; } .ct-sbs-panel + .ct-sbs-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); } }
 .glossary-inline-link:hover { color: white; }
+.amount-input {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  color: white;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+.amount-input:focus { outline: none; border-color: rgba(59,130,246,0.7); }
+.amount-input::placeholder { color: rgba(255,255,255,0.25); }
