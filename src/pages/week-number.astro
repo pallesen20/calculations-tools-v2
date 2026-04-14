@@ -79,11 +79,9 @@ const schema = [
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container wn-container">
-
-        <!-- Hero -->
         <div class="wn-hero">
           <div class="wn-hero-bg"></div>
-          <div class="wn-label">Current Week Number</div>
+          <div class="wn-label"><h2>Current Week Number</h2></div>
           <div class="wn-number" id="wn-number">--</div>
           <div class="wn-range" id="wn-range">Loading…</div>
           <div class="wn-live">
@@ -95,8 +93,6 @@ const schema = [
           </div>
           <div class="wn-bar-label" id="wn-progress-label">Year progress</div>
         </div>
-
-        <!-- Info cards -->
         <div class="wn-cards">
           <div class="wn-card">
             <div class="wn-card-val" id="wn-day">--</div>
@@ -115,8 +111,6 @@ const schema = [
             <div class="wn-card-lbl">Leap Year</div>
           </div>
         </div>
-
-        <!-- Week table -->
         <div class="wn-table-card">
           <h2 class="wn-table-title">
             All Week Numbers <span id="wn-table-year">2026</span>
@@ -135,8 +129,6 @@ const schema = [
             </table>
           </div>
         </div>
-
-        <!-- Programming routines -->
         <div class="wn-code-card">
           <h2 class="wn-code-title">Programming Routines</h2>
           <p class="wn-code-sub">Get the current ISO 8601 week number in your language</p>
@@ -144,15 +136,16 @@ const schema = [
           {[
             { lang: 'Excel',      label: 'Microsoft Excel / LibreOffice Calc',
               code: `=ISOWEEKNUM(TODAY())`,
-              note: `Or in older versions: <code>=WEEKNUM(TODAY(),21)</code> where 21 is ISO-8601. In Excel 2007 use <code>WEEKNUM(TODAY(),2)</code>.` },
+              note: `Or in older versions: <code>=WEEKNUM(TODAY(),21)</code> where 21 is ISO-8601. In Excel 2007 use <code>WEEKNUM(TODAY(),2)</code>. See our <a href="/compare/excel">Excel file diff checker</a> →` },
             { lang: 'Sheets',     label: 'Google Sheets',
               code: `=WEEKNUM(TODAY();21)`,
-              note: `Type 21 is ISO-8601 - compatible with Excel and LibreOffice.` },
+              note: `Type 21 is ISO-8601 - compatible with Excel and LibreOffice. See our <a href="/compare/google-sheets">Google Sheets diff checker</a> →` },
             { lang: 'PHP',        label: 'PHP',
               code: `$weekNumber = date("W");`,
               note: `Or <code>date("W", epoch)</code> for other dates. Use capital <code>W</code>, not <code>w</code>.` },
             { lang: 'Python',     label: 'Python',
-              code: `datetime.date.today().isocalendar()[1]` },
+              code: `datetime.date.today().isocalendar()[1]`,
+              note:  `See our <a href="/compare/python">Python code diff checker</a> →` },
             { lang: 'Perl',       label: 'Perl',
               code: `my $weekNumber = POSIX::strftime("%V", gmtime time);`,
               note: `Replace <code>time</code> with other epoch timestamps for other week numbers.` },
@@ -161,7 +154,7 @@ const schema = [
               note: `Use <code>WEEK_OF_YEAR</code> from the Calendar class.` },
             { lang: 'JS',         label: 'JavaScript',
               code: `Date.prototype.getWeek = function () {\n    var target  = new Date(this.valueOf());\n    var dayNr   = (this.getDay() + 6) % 7;\n    target.setDate(target.getDate() - dayNr + 3);\n    var firstThursday = target.valueOf();\n    target.setMonth(0, 1);\n    if (target.getDay() != 4) {\n        target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);\n    }\n    return 1 + Math.ceil((firstThursday - target) / 604800000);\n}\n\nvar d = new Date();\nalert(d.getWeek());`,
-              note: `Extend the Date prototype using the above code.` },
+              note: `Extend the Date prototype using the above code. See our <a href="/compare/javascript">JavaScript & TypeScript code diff checker</a> →` },
             { lang: 'C#',         label: 'C#',
               code: `CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(\n    DateTime.Now,\n    CalendarWeekRule.FirstFourDayWeek,\n    DayOfWeek.Monday\n);` },
             { lang: 'MySQL',      label: 'MySQL',
@@ -291,7 +284,7 @@ const schema = [
       <p>Week numbers are in everyday use in Sweden, Norway, Denmark, Finland, and the Netherlands in a way that is unusual elsewhere. People refer to vacations ("I'm off in week 28"), deadlines ("submit by week 12"), and meetings ("let's schedule in week 9") using week numbers in ordinary conversation. Public institutions, schools, and broadcasters publish schedules in week number format as a matter of course.</p>
 
       <h3>Agriculture and seasonal industries</h3>
-      <p>Farming, fishing, and food processing industries use week numbers extensively for harvest and supply chain planning. A supplier contract might specify deliveries in "weeks 14-18" (the spring harvest window) rather than calendar dates, since the exact dates of a given week number are consistent year to year in terms of seasonal position.</p>
+      <p>Farming, fishing, and food processing industries use week numbers extensively for harvest and supply chain planning. A supplier contract might specify deliveries in "weeks 14-18" (the spring harvest window) rather than <a href="/date-calculator">calendar dates</a>, since the exact dates of a given week number are consistent year to year in terms of seasonal position.</p>
 
       <h3>Payroll and HR systems</h3>
       <p>Weekly payroll cycles are often tracked by ISO week number, particularly in European companies. A timesheet for "Week 22" is unambiguous regardless of the year or the employee's location. Many HR systems generate reports and pay runs keyed to ISO week numbers.</p>
