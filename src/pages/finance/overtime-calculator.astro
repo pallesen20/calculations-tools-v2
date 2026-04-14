@@ -1,0 +1,469 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  otPay:      "$$\\text{Overtime Pay} = \\text{Hourly Rate} \\times \\text{Multiplier} \\times \\text{Overtime Hours}$$",
+  otPremium:  "$$\\text{Overtime Premium} = \\text{Hourly Rate} \\times (\\text{Multiplier} - 1) \\times \\text{Overtime Hours}$$",
+  totalPay:   "$$\\text{Total Pay} = (\\text{Hourly Rate} \\times \\text{Regular Hours}) + (\\text{Hourly Rate} \\times \\text{Multiplier} \\times \\text{OT Hours})$$",
+  effective:  "$$\\text{Effective Rate} = \\frac{\\text{Total Pay}}{\\text{Total Hours Worked}}$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'ADP',
+    title: 'How to Calculate Overtime Pay',
+    journal: 'ADP',
+    year: 2025,
+    url: 'https://www.adp.com/resources/articles-and-insights/articles/h/how-to-calculate-overtime-pay.aspx',
+  },
+  {
+    author: 'Internal Revenue Service',
+    title: 'Questions and Answers About the New Deduction for Qualified Overtime Compensation',
+    journal: 'IRS Newsroom',
+    year: 2025,
+    url: 'https://www.irs.gov/newsroom/questions-and-answers-about-the-new-deduction-for-qualified-overtime-compensation',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',       label: 'How to use this calculator' },
+  { id: 'how-to-calculate', label: 'How to calculate overtime pay' },
+  { id: 'overtime-rates',   label: 'Overtime rates by country' },
+  { id: 'multipliers',      label: 'Common overtime multipliers' },
+  { id: 'ot-tax',           label: 'Is overtime taxed differently?' },
+  { id: 'salaried',         label: 'Overtime for salaried workers' },
+  { id: 'ot-examples',      label: 'Overtime pay examples' },
+  { id: 'faq',              label: 'FAQs' },
+  { id: 'related-tools',    label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Overtime Calculator",
+    "url": "https://calculations.tools/finance/overtime-calculator",
+    "description": "Calculate overtime pay from your hourly rate, regular hours, overtime hours, and multiplier. Shows regular pay, overtime pay, overtime premium, and total earnings.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the Overtime Calculator",
+    "description": "Calculate your overtime pay in three steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter your hourly rate", "text": "Type your regular hourly wage and select your currency." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter your hours", "text": "Enter your regular hours worked and your overtime hours for the pay period." },
+      { "@type": "HowToStep", "position": 3, "name": "Choose your multiplier", "text": "Select your overtime rate: 1.5x (time and a half) is the US federal standard. Use custom to enter any rate your employer uses." },
+      { "@type": "HowToStep", "position": 4, "name": "Read your results", "text": "The calculator shows your regular pay, overtime pay, the extra premium you earned, total pay, and your effective hourly rate for all hours worked." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is overtime pay calculated?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Overtime pay equals your regular hourly rate multiplied by the overtime multiplier, multiplied by the overtime hours worked. At the US federal standard of 1.5x, a $20/hr worker earns $30/hr for every overtime hour. For 10 overtime hours that is $300 in overtime pay on top of regular earnings." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the standard overtime rate in the US?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The US Fair Labor Standards Act (FLSA) requires non-exempt employees to receive at least 1.5 times their regular pay for hours worked beyond 40 per workweek. Some states have stricter rules: California requires 1.5x after 8 hours per day and 2x after 12 hours in a single day." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is overtime pay taxed at a higher rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Overtime is taxed as ordinary income using the same brackets as regular wages - there is no special higher rate. However, earning overtime in a week can push your withholding into a higher bracket temporarily, making your paycheck look more taxed. For 2025-2028, a new federal deduction of up to $12,500 applies to qualifying overtime compensation." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do salaried workers get overtime pay?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Salaried workers earning below $684 per week ($35,568 annually) are entitled to FLSA overtime regardless of their job title. Salaried workers above this threshold may be exempt if they perform executive, administrative, or professional duties. Always check your FLSA classification with your employer or HR department." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is double time pay?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Double time (2x) means you earn twice your regular hourly rate for qualifying hours. California mandates double time for hours beyond 12 in a single workday or for the seventh consecutive day of work in a workweek. Some employers offer double time voluntarily for holidays or emergency call-ins." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Overtime Calculator"
+  metaTitle="Overtime Calculator | Time & a Half Pay ᐅ"
+  description="Calculate overtime pay from your hourly rate, hours worked, and multiplier. Covers 1.5x, 2x, and custom rates. Shows regular pay, OT pay, premium earned, and total."
+  canonical="https://calculations.tools/finance/overtime-calculator"
+  tocItems={tocItems}
+  embedSlug="overtime-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="Overtime Pay = Hourly Rate x Multiplier x OT Hours"
+  ogExample="$20/hr x 1.5 x 10 hrs = $300 overtime pay"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Overtime Pay</h2>
+          <p>Enter your rate, hours, and multiplier to see your total earnings</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ot-rate">Hourly rate</label>
+          <div class="ot-amount-row">
+            <div class="ot-currency-wrap">
+              <select id="ot-currency" class="ot-currency-select" aria-label="Currency"></select>
+              <svg class="ot-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+            </div>
+            <input type="text" inputmode="decimal" id="ot-rate" class="amount-input" placeholder="e.g. 20.00" />
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ot-regular">Regular hours worked</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ot-regular" class="bmi-input" placeholder="e.g. 40" />
+            <span class="bmi-unit-tag">hrs</span>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ot-hours">Overtime hours worked</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ot-hours" class="bmi-input" placeholder="e.g. 10" />
+            <span class="bmi-unit-tag">hrs</span>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="ot-multiplier">Overtime multiplier</label>
+          <div class="bmi-input-wrap">
+            <select id="ot-multiplier" class="bmi-input">
+              <option value="1.25">1.25x - Time and a quarter</option>
+              <option value="1.5" selected>1.5x - Time and a half (US standard)</option>
+              <option value="1.75">1.75x - Time and three quarters</option>
+              <option value="2">2x - Double time</option>
+              <option value="2.5">2.5x</option>
+              <option value="3">3x - Triple time</option>
+              <option value="custom">Custom rate</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bmi-field" id="ot-custom-wrap" style="display:none">
+          <label class="bmi-label" for="ot-custom">Custom multiplier</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="ot-custom" class="bmi-input" placeholder="e.g. 1.35" />
+            <span class="bmi-unit-tag">x</span>
+          </div>
+        </div>
+
+        <div id="ot-result" class="lbm-result hidden">
+          <div class="ot-badge-row">
+            <span class="ot-badge">
+              <span class="ot-badge-label">OT rate</span>
+              <span class="ot-badge-val" id="ot-res-multiplier">-</span>
+            </span>
+            <span class="ot-badge">
+              <span class="ot-badge-label">Total hours</span>
+              <span class="ot-badge-val" id="ot-res-total-hours">-</span>
+            </span>
+          </div>
+
+          <div class="ot-results-grid">
+            <div class="ot-result-row">
+              <span class="ot-period-label">Regular pay</span>
+              <span class="ot-period-val" id="ot-res-regular">-</span>
+            </div>
+            <div class="ot-result-row">
+              <span class="ot-period-label">Overtime pay</span>
+              <span class="ot-period-val" id="ot-res-ot-pay">-</span>
+            </div>
+            <div class="ot-result-row">
+              <span class="ot-period-label">Overtime premium</span>
+              <span class="ot-period-val ot-green" id="ot-res-premium">-</span>
+            </div>
+            <div class="ot-result-row ot-row-highlight">
+              <span class="ot-period-label">Total pay</span>
+              <span class="ot-period-val" id="ot-res-total">-</span>
+            </div>
+            <div class="ot-result-row ot-row-last">
+              <span class="ot-period-label">Effective hourly rate</span>
+              <span class="ot-period-val" id="ot-res-effective">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/js/overtime-calculator.js" is:inline></script>
+    <FinanceDisclaimer />
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>Overtime pay is your regular hourly rate multiplied by an overtime multiplier (typically 1.5x) for every hour worked beyond the threshold. In the US that threshold is 40 hours per week. Enter your rate, regular hours, and overtime hours above - the calculator shows your regular pay, overtime pay, the extra premium you earned, and your total.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The US FLSA requires at least 1.5x pay for hours over 40 per workweek for non-exempt employees (Department of Labor, 2025).</li>
+          <li>Formula: Overtime Pay = Hourly Rate x Multiplier x Overtime Hours.</li>
+          <li>For 2025-2028, a US federal deduction of up to $12,500 per individual applies to qualifying overtime compensation (IRS, 2025).</li>
+          <li>Overtime rates vary widely by country - from 1.25x in Japan and France to 3x in Mexico for extended overtime hours.</li>
+          <li>California is the only US state with a statutory daily double-time requirement (2x after 12 hours in one day).</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to Use This Overtime Calculator</h2>
+      <p>Enter your regular hourly rate, the number of regular hours you worked, and your overtime hours. If you're paid a salary and need your effective hourly rate first, use the <a href="/finance/salary-to-hourly-calculator">salary to hourly calculator</a>. Then select your overtime multiplier - 1.5x is the US federal standard, but your employer or country may use a different rate. The calculator instantly shows your regular pay, overtime pay, the overtime premium (the extra amount you earned above your regular rate), your total pay, and your effective hourly rate across all hours.</p>
+
+      <h2 id="how-to-calculate">How to Calculate Overtime Pay</h2>
+      <p>Multiply your regular hourly rate by the overtime multiplier, then multiply by the number of overtime hours. At the US standard of 1.5x, a worker earning $20/hr earns $30/hr for each overtime hour. The FLSA requires non-exempt employees to receive at least 1.5x regular pay for hours over 40 in a workweek (ADP, 2025).</p>
+      <Formula expr={f.otPay} />
+      <p>To find only the extra premium above your base rate:</p>
+      <Formula expr={f.otPremium} />
+      <p>And your total weekly pay combines both components:</p>
+      <Formula expr={f.totalPay} />
+      <p>Your effective hourly rate is the average rate across all hours, including regular and overtime:</p>
+      <Formula expr={f.effective} />
+      <p>Worked example: $25/hr, 40 regular hours, 8 overtime hours at 1.5x. Regular pay = $1,000. Overtime pay = $25 x 1.5 x 8 = $300. Total = <strong>$1,300</strong>. Effective rate = $1,300 / 48 = <strong>$27.08/hr</strong>.</p>
+
+      <h2 id="overtime-rates">What Are Overtime Pay Rates Around the World?</h2>
+      <p>Overtime rules differ dramatically by country. The US federal standard of 1.5x (time and a half) after 40 hours is actually one of the lower thresholds globally - France triggers overtime after just 35 hours, while the UK has no mandatory overtime premium at all. The table below covers the key rules for major economies.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Weekly threshold</th>
+              <th>Overtime rate</th>
+              <th>Notable rule</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>USA (federal)</strong></td><td>40 hrs</td><td>1.5x</td><td>FLSA applies to non-exempt workers only</td></tr>
+            <tr><td>USA (California)</td><td>8 hrs/day</td><td>1.5x; 2x after 12 hrs/day</td><td>Daily OT rule; 2x on 7th consecutive day</td></tr>
+            <tr><td>Canada (federal)</td><td>40 hrs</td><td>1.5x</td><td>Ontario threshold is 44 hrs/week</td></tr>
+            <tr><td>United Kingdom</td><td>No statutory threshold</td><td>No mandatory premium</td><td>Total pay must stay above minimum wage</td></tr>
+            <tr><td>France</td><td>35 hrs</td><td>1.25x (hrs 36-43); 1.5x (44+ hrs)</td><td>35-hour standard workweek since 2000</td></tr>
+            <tr><td>Germany</td><td>No statutory rate</td><td>Set by collective agreement</td><td>Max 10 hrs/day; agreements typically pay 1.25-1.5x</td></tr>
+            <tr><td>Japan</td><td>40 hrs</td><td>1.25x (standard); 1.35x (weekends)</td><td>Night work (10 PM-5 AM) adds 25% surcharge</td></tr>
+            <tr><td>Australia</td><td>Varies by award</td><td>1.5x (first 2 OT hrs); 2x after</td><td>Modern Awards set rates by industry</td></tr>
+            <tr><td>India</td><td>9 hrs/day or 48 hrs/week</td><td>2x</td><td>Double rate applies across most sectors</td></tr>
+            <tr><td>Brazil</td><td>44 hrs</td><td>1.5x (weekdays); 2x (Sundays/holidays)</td><td>Max 2 OT hours/day requires agreement</td></tr>
+            <tr><td>Mexico</td><td>48 hrs</td><td>2x (first 9 OT hrs); 3x (beyond 9 hrs)</td><td>Linked to profit-sharing obligations</td></tr>
+            <tr><td>Philippines</td><td>Standard workday</td><td>1.25x (regular days); 1.30x (rest days)</td><td>Higher rates apply on public holidays</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="multipliers">What Are the Common Overtime Multipliers?</h2>
+      <p>The most common <a href="/glossary/overtime-pay">overtime pay</a> multipliers globally range from 1.25x to 3x, with the specific rate depending on your country, industry, employment contract, and the type of hours worked. Many employers pay higher rates than the legal minimum - always check your contract or collective agreement first.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Multiplier</th>
+              <th>Name</th>
+              <th>Where commonly used</th>
+              <th>Extra earned per $20/hr</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>1.25x</strong></td><td>Time and a quarter</td><td>France (hrs 36-43), Japan, Philippines</td><td>+$5.00/hr</td></tr>
+            <tr><td><strong>1.35x</strong></td><td>-</td><td>Japan (weekend work)</td><td>+$7.00/hr</td></tr>
+            <tr><td><strong>1.5x</strong></td><td><a href="/glossary/time-and-a-half">Time and a half</a></td><td>USA federal, Canada, Australia (first 2 hrs)</td><td>+$10.00/hr</td></tr>
+            <tr><td><strong>1.75x</strong></td><td>Time and three quarters</td><td>Some employer contracts</td><td>+$15.00/hr</td></tr>
+            <tr><td><strong>2.0x</strong></td><td>Double time</td><td>California (12+ hrs/day), India, Australia (extended)</td><td>+$20.00/hr</td></tr>
+            <tr><td><strong>2.5x</strong></td><td>-</td><td>Some employer policies for holidays</td><td>+$30.00/hr</td></tr>
+            <tr><td><strong>3.0x</strong></td><td>Triple time</td><td>Mexico (beyond 9 OT hrs/week)</td><td>+$40.00/hr</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="ot-tax">Is Overtime Pay Taxed Differently?</h2>
+      <p>Overtime is taxed as ordinary income at the same federal tax brackets as regular wages - there is no special "overtime tax rate" in the US. However, a significant change took effect in 2025: the One Big Beautiful Bill Act introduced a federal deduction of up to $12,500 per individual ($25,000 for joint filers) for qualifying overtime compensation for tax years 2025-2028, phasing out above $150,000 income (IRS, 2025). This means many overtime workers will keep more of their premium pay starting with their 2025 tax return filed in 2026.</p>
+      <p>Your paycheck may look more heavily withheld during high-overtime weeks because payroll systems annualise your weekly earnings to estimate withholding. This isn't a higher tax rate - it's a timing difference that typically self-corrects at year-end if your <a href="/finance/annual-income-calculator">annual income</a> stays in a lower bracket.</p>
+
+      <h2 id="salaried">Do Salaried Workers Get Overtime?</h2>
+      <p>Under the FLSA, salaried employees earning below $684 per week ($35,568 per year) are entitled to overtime pay regardless of their job title or duties. Salaried workers above that threshold may be exempt if they perform executive, administrative, or professional duties - but "salary" alone doesn't exempt a worker; the duties test must also be met. This threshold affects millions of US workers (Department of Labor, 2025).</p>
+      <p>To calculate overtime for a salaried non-exempt employee, divide the weekly salary by the number of hours that salary is meant to cover to get the regular rate. Then apply the 1.5x multiplier to hours beyond 40. This is the "regular rate" method required by the FLSA.</p>
+
+      <h2 id="ot-examples">Overtime Pay Examples</h2>
+      <p>The table below shows total pay and overtime premium for common hourly rates at the US standard 1.5x multiplier, based on a 40-hour regular week with 10 hours of overtime - a typical scenario for retail, manufacturing, and healthcare workers.</p>
+
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Hourly rate</th>
+              <th>Regular pay (40 hrs)</th>
+              <th>OT pay (10 hrs at 1.5x)</th>
+              <th>OT premium</th>
+              <th>Total pay</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>$15/hr</td><td>$600</td><td>$225</td><td>$75</td><td>$825</td></tr>
+            <tr><td>$20/hr</td><td>$800</td><td>$300</td><td>$100</td><td>$1,100</td></tr>
+            <tr><td>$25/hr</td><td>$1,000</td><td>$375</td><td>$125</td><td>$1,375</td></tr>
+            <tr><td>$30/hr</td><td>$1,200</td><td>$450</td><td>$150</td><td>$1,650</td></tr>
+            <tr><td>$40/hr</td><td>$1,600</td><td>$600</td><td>$200</td><td>$2,200</td></tr>
+            <tr><td>$50/hr</td><td>$2,000</td><td>$750</td><td>$250</td><td>$2,750</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="faq">Frequently Asked Questions</h2>
+
+      <h3>How is overtime pay calculated?</h3>
+      <p>Multiply your regular hourly rate by your overtime multiplier, then by the number of overtime hours worked. At 1.5x, a $20/hr worker earns $30/hr for each overtime hour. For 10 overtime hours, that is $300 in overtime pay on top of $800 in regular pay, giving a total of $1,100 for the week.</p>
+
+      <h3>What is the standard overtime rate in the US?</h3>
+      <p>The US FLSA requires at least 1.5 times your regular pay for hours over 40 per workweek for non-exempt employees. California has stricter rules: 1.5x after 8 hours in a day, and 2x (double time) after 12 hours in a single day or on the seventh consecutive day worked in a workweek.</p>
+
+      <h3>Is overtime pay taxed at a higher rate?</h3>
+      <p>No. Overtime is taxed as ordinary income at the same brackets as your regular wages. Your withholding may look larger during high-overtime weeks because payroll annualises the payment, but your actual tax rate doesn't change. For 2025-2028, a new deduction of up to $12,500 applies to qualifying overtime income (IRS, 2025).</p>
+
+      <h3>Do salaried employees get overtime?</h3>
+      <p>Salaried employees earning below $684/week ($35,568/year) are entitled to FLSA overtime. Above that threshold, you may be exempt if you also perform executive, administrative, or professional duties. Job title alone doesn't determine exemption - the duties test matters. Check your Form SF-50, box 35, or ask HR for your FLSA classification.</p>
+
+      <h3>What is double time pay?</h3>
+      <p>Double time (2x) means you earn twice your regular hourly rate for qualifying hours. California mandates it for hours beyond 12 in a single workday or on the seventh consecutive day in a workweek. Some employers also offer voluntary double time for holidays, call-outs, or emergency shifts, even where not legally required.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">↑</span>
+          <div>
+            <a href="/finance/pay-raise-calculator">Pay Raise Calculator</a>
+            <p>See how a percentage or flat raise changes your salary across all pay periods, with optional after-tax view.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📅</span>
+          <div>
+            <a href="/finance/annual-income-calculator">Annual Income Calculator</a>
+            <p>Convert any pay rate - hourly, weekly, bi-weekly, or monthly - to your total gross annual income.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⏱</span>
+          <div>
+            <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+            <p>Divide your annual or monthly salary by hours worked to find your effective hourly rate.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🧾</span>
+          <div>
+            <a href="/tax/sales-tax-calculator">Sales Tax Calculator</a>
+            <p>Add or remove sales tax from any amount - useful when budgeting total cost of goods with overtime earnings.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>Calculate what percentage of your total pay comes from overtime premium vs regular earnings.</p>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</CalculatorLayout>
+
+<style is:global>
+  .ot-amount-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  .ot-currency-wrap { position: relative; flex-shrink: 0; }
+  .ot-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .ot-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .ot-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .ot-badge-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .ot-badge {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.45rem 0.5rem;
+    background: rgba(167,139,250,0.06);
+    border-radius: 8px;
+    border: 1px solid rgba(167,139,250,0.15);
+  }
+  .ot-badge-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .ot-badge-val {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #a78bfa;
+    font-variant-numeric: tabular-nums;
+  }
+  .ot-results-grid {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ot-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .ot-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .ot-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .ot-row-last { border-bottom: none; }
+  .ot-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .ot-row-highlight .ot-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .ot-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .ot-row-highlight .ot-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .ot-green { color: #4ade80; }
+</style>

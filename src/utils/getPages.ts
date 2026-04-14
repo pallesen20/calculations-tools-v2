@@ -1437,6 +1437,15 @@ const entries: Entry[] = [
     short: 'Convert any pay period to annual income',
   },
   {
+    path: '/finance/overtime-calculator',
+    title: 'Overtime Calculator - Time and a Half Pay',
+    description: 'Calculate overtime pay from your hourly rate, hours worked, and multiplier. Covers 1.5x, 2x, and custom rates. Shows regular pay, OT pay, premium earned, and total.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    icon: '⏱',
+    short: 'Regular + OT pay, premium, and effective rate',
+  },
+  {
     path: '/finance/pay-raise-calculator',
     title: 'Pay Raise Calculator - Salary Increase Before & After Tax',
     description: 'Calculate your new salary after a pay raise. Enter any pay period, choose % or flat raise, and add a tax rate to see your exact before-tax and after-tax increase across all pay periods.',

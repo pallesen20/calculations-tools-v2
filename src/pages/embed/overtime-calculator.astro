@@ -1,0 +1,138 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Overtime Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Overtime Calculator</h2>
+        <p>Enter your rate, hours, and multiplier to see your total earnings</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ot-rate">Hourly rate</label>
+        <div class="ot-amount-row">
+          <div class="ot-currency-wrap">
+            <select id="ot-currency" class="ot-currency-select" aria-label="Currency"></select>
+            <svg class="ot-currency-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </div>
+          <input type="text" inputmode="decimal" id="ot-rate" class="amount-input" placeholder="e.g. 20.00" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ot-regular">Regular hours worked</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ot-regular" class="bmi-input" placeholder="e.g. 40" />
+          <span class="bmi-unit-tag">hrs</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ot-hours">Overtime hours worked</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ot-hours" class="bmi-input" placeholder="e.g. 10" />
+          <span class="bmi-unit-tag">hrs</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ot-multiplier">Overtime multiplier</label>
+        <div class="bmi-input-wrap">
+          <select id="ot-multiplier" class="bmi-input">
+            <option value="1.25">1.25x - Time and a quarter</option>
+            <option value="1.5" selected>1.5x - Time and a half (US standard)</option>
+            <option value="1.75">1.75x - Time and three quarters</option>
+            <option value="2">2x - Double time</option>
+            <option value="2.5">2.5x</option>
+            <option value="3">3x - Triple time</option>
+            <option value="custom">Custom rate</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bmi-field" id="ot-custom-wrap" style="display:none">
+        <label class="bmi-label" for="ot-custom">Custom multiplier</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ot-custom" class="bmi-input" placeholder="e.g. 1.35" />
+          <span class="bmi-unit-tag">x</span>
+        </div>
+      </div>
+
+      <div id="ot-result" class="lbm-result hidden">
+        <div class="ot-badge-row">
+          <span class="ot-badge">
+            <span class="ot-badge-label">OT rate</span>
+            <span class="ot-badge-val" id="ot-res-multiplier">-</span>
+          </span>
+          <span class="ot-badge">
+            <span class="ot-badge-label">Total hours</span>
+            <span class="ot-badge-val" id="ot-res-total-hours">-</span>
+          </span>
+        </div>
+
+        <div class="ot-results-grid">
+          <div class="ot-result-row">
+            <span class="ot-period-label">Regular pay</span>
+            <span class="ot-period-val" id="ot-res-regular">-</span>
+          </div>
+          <div class="ot-result-row">
+            <span class="ot-period-label">Overtime pay</span>
+            <span class="ot-period-val" id="ot-res-ot-pay">-</span>
+          </div>
+          <div class="ot-result-row">
+            <span class="ot-period-label">Overtime premium</span>
+            <span class="ot-period-val ot-green" id="ot-res-premium">-</span>
+          </div>
+          <div class="ot-result-row ot-row-highlight">
+            <span class="ot-period-label">Total pay</span>
+            <span class="ot-period-val" id="ot-res-total">-</span>
+          </div>
+          <div class="ot-result-row ot-row-last">
+            <span class="ot-period-label">Effective hourly rate</span>
+            <span class="ot-period-val" id="ot-res-effective">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/overtime-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .ot-amount-row { display: flex; gap: 0.5rem; align-items: stretch; }
+  .ot-currency-wrap { position: relative; flex-shrink: 0; }
+  .ot-currency-select {
+    width: 92px;
+    height: 100%;
+    padding: 0 2rem 0 0.75rem;
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.45);
+    border-radius: 8px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    letter-spacing: 0.03em;
+  }
+  .ot-currency-select:focus { outline: none; border-color: rgba(167,139,250,0.8); background: rgba(167,139,250,0.22); }
+  .ot-currency-chevron { pointer-events: none; position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); color: rgba(167,139,250,0.9); }
+  .ot-badge-row { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .ot-badge { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 0.45rem 0.5rem; background: rgba(167,139,250,0.06); border-radius: 8px; border: 1px solid rgba(167,139,250,0.15); }
+  .ot-badge-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .ot-badge-val { font-size: 1rem; font-weight: 700; color: #a78bfa; font-variant-numeric: tabular-nums; }
+  .ot-results-grid { display: flex; flex-direction: column; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; }
+  .ot-result-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .ot-result-row:nth-child(odd) { background: rgba(255,255,255,0.025); }
+  .ot-row-highlight { background: rgba(167,139,250,0.08) !important; border-bottom-color: rgba(167,139,250,0.15) !important; }
+  .ot-row-last { border-bottom: none; }
+  .ot-period-label { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .ot-row-highlight .ot-period-label { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .ot-period-val { font-size: 1rem; font-weight: 700; color: white; font-variant-numeric: tabular-nums; }
+  .ot-row-highlight .ot-period-val { color: #a78bfa; font-size: 1.15rem; }
+  .ot-green { color: #4ade80; }
+</style>

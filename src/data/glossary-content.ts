@@ -1529,4 +1529,68 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'overtime-pay': {
+    definition: [
+      'Overtime pay is the additional compensation employees earn for hours worked beyond a standard threshold - most commonly 40 hours per workweek in the United States. Under the Fair Labor Standards Act (FLSA), non-exempt employees must receive at least 1.5 times their regular rate of pay for every overtime hour.',
+      'The overtime premium - the extra amount above base pay - is the key financial benefit of working overtime. At 1.5x, a $20/hr worker earns an extra $10 for each overtime hour on top of their normal $20, making the total overtime rate $30/hr.',
+    ],
+    whenToUse: 'Calculate overtime pay whenever you work beyond the standard threshold for your country or employment contract. Use the overtime rate to verify your paycheck, compare the value of overtime versus time-off-in-lieu, or plan your earnings for a high-hours week.',
+    examples: {
+      headers: ['Scenario', 'Regular pay', 'Overtime pay', 'Total'],
+      rows: [
+        ['$20/hr, 40 reg + 10 OT at 1.5x', '$800', '$300', '$1,100'],
+        ['$25/hr, 40 reg + 8 OT at 1.5x', '$1,000', '$300', '$1,300'],
+        ['$30/hr, 40 reg + 5 OT at 2.0x', '$1,200', '$300', '$1,500'],
+      ],
+    },
+    pitfalls: 'Overtime pay is taxed as ordinary income - there is no special higher rate. However, your paycheck withholding may look larger during overtime weeks because payroll systems annualise your earnings. This is a timing difference, not a permanent tax increase. Also note that not all employees qualify: exempt salaried workers above the FLSA threshold may not receive overtime.',
+    faqs: [
+      { q: 'What is the overtime rate in the US?', a: 'The US FLSA requires at least 1.5 times the regular hourly rate for hours over 40 per workweek for non-exempt employees. California also has a daily rule: 1.5x after 8 hours in one day, and 2x after 12 hours in one day or on the seventh consecutive day of work.' },
+      { q: 'Is overtime pay mandatory for salaried workers?', a: 'Salaried workers earning below $684 per week ($35,568 annually) are entitled to FLSA overtime regardless of title. Above that threshold, exemption depends on job duties - executive, administrative, and professional roles may qualify as exempt. Job title alone does not determine overtime eligibility.' },
+    ],
+  },
+
+  'time-and-a-half': {
+    definition: [
+      'Time and a half is an overtime pay rate equal to 1.5 times an employee\'s regular hourly wage. It is the minimum overtime rate required by the US Fair Labor Standards Act for non-exempt employees working more than 40 hours in a workweek.',
+      'The name refers to the structure of the payment: you receive your normal time (1x) plus an additional half (0.5x), totalling 1.5x. At $20/hr, time and a half is $30/hr for each overtime hour.',
+    ],
+    whenToUse: 'Use time and a half as your default overtime multiplier when calculating US overtime pay unless your employer, state law, or employment contract specifies a higher rate. California requires double time (2x) in certain daily overtime situations.',
+    examples: {
+      headers: ['Regular rate', 'Time-and-a-half rate', 'Extra earned per hour'],
+      rows: [
+        ['$15/hr', '$22.50/hr', '+$7.50'],
+        ['$20/hr', '$30.00/hr', '+$10.00'],
+        ['$30/hr', '$45.00/hr', '+$15.00'],
+        ['$50/hr', '$75.00/hr', '+$25.00'],
+      ],
+    },
+    pitfalls: 'Some employers describe overtime pay informally as "time and a half" when they actually pay a different rate. Always check your employment contract or collective agreement for the exact multiplier. Outside the US, 1.5x is not universal - France starts at 1.25x, Japan at 1.25x, and India requires 2x.',
+    faqs: [
+      { q: 'Is time and a half the same everywhere?', a: 'No. The 1.5x rate is the US federal standard under the FLSA, but other countries use different multipliers. France pays 1.25x for hours 36-43 and 1.5x beyond 43. Japan uses 1.25x for standard overtime and 1.35x on weekends. Australia starts at 1.5x but moves to 2x after the first two overtime hours.' },
+      { q: 'Does time and a half apply to bonuses?', a: 'Non-discretionary bonuses (e.g. attendance or production bonuses) must be included in the regular rate of pay before calculating overtime, which can raise the effective overtime rate above the simple 1.5x of base wages. Discretionary bonuses paid at the employer\'s sole discretion are excluded from the regular rate.' },
+    ],
+  },
+
+  'regular-rate-of-pay': {
+    definition: [
+      'The regular rate of pay is the baseline hourly rate used to calculate overtime compensation under the FLSA. For hourly workers it equals the standard hourly wage. For salaried workers it is calculated by dividing the weekly salary by the number of hours the salary is intended to cover.',
+      'The regular rate must include most forms of compensation - base wages, shift differentials, and non-discretionary bonuses - but excludes purely discretionary bonuses, overtime premiums already paid, and certain benefit payments.',
+    ],
+    whenToUse: 'Use the regular rate of pay when computing overtime for any worker whose compensation includes more than a simple hourly wage. If a worker earns a bonus, commission, or shift premium, these amounts are added to base wages before dividing by hours to determine the correct regular rate.',
+    examples: {
+      headers: ['Worker type', 'Weekly earnings', 'Hours', 'Regular rate'],
+      rows: [
+        ['Hourly worker', '$800 (40 hrs x $20)', '40', '$20.00/hr'],
+        ['Salaried non-exempt', '$1,200 salary for 40 hrs', '40', '$30.00/hr'],
+        ['Hourly + $100 bonus', '$900 total ($800 + $100)', '40', '$22.50/hr'],
+      ],
+    },
+    pitfalls: 'Many employers mistakenly calculate overtime using base wage only, ignoring bonuses or shift differentials. This understates the regular rate and results in underpayment of overtime. The FLSA requires that most non-discretionary extra pay be factored in before the 1.5x multiplier is applied.',
+    faqs: [
+      { q: 'How do you calculate the regular rate for a salaried worker?', a: 'Divide the weekly salary by the number of hours the salary covers. A $1,200 weekly salary for a 40-hour week gives a $30/hr regular rate. Overtime hours beyond 40 must then be paid at $45/hr (1.5x). The salary itself covers the first 40 hours; only the 0.5x premium is additional.' },
+      { q: 'Does the regular rate include overtime premiums already paid?', a: 'No. Overtime premiums already paid (the extra 0.5x above base rate) are excluded when computing the regular rate. This prevents double-counting. Also excluded: discretionary bonuses, vacation or sick pay, and reimbursements for expenses.' },
+    ],
+  },
+
 };
