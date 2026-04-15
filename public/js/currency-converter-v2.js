@@ -381,10 +381,19 @@ function populateSelects() {
     fromEl.add(new Option(`${code} – ${CURRENCIES[code]}`, code));
     toEl.add(new Option(`${code} – ${CURRENCIES[code]}`, code));
   });
-  fromEl.value = getCookie('cc_from') || detectCurrency();
-  toEl.value = getCookie('cc_to') || (fromEl.value === 'EUR' ? 'USD' : 'EUR');
+  const card = document.getElementById('cp-card');
+  const pairFrom = card?.dataset.from;
+  const pairTo = card?.dataset.to;
+  fromEl.value = pairFrom || getCookie('cc_from') || detectCurrency();
+  toEl.value = pairTo || getCookie('cc_to') || (fromEl.value === 'EUR' ? 'USD' : 'EUR');
+  const params = new URLSearchParams(window.location.search);
+  const urlAmount = params.get('amount');
   const savedAmount = getCookie('cc_amount');
-  if (savedAmount) document.getElementById('cp-amount').value = savedAmount;
+  if (urlAmount && !isNaN(parseFloat(urlAmount))) {
+    document.getElementById('cp-amount').value = urlAmount;
+  } else if (savedAmount) {
+    document.getElementById('cp-amount').value = savedAmount;
+  }
 }
 
 async function fetchRates() {

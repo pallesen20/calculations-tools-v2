@@ -217,10 +217,18 @@ function populateSelects() {
     fromEl.add(new Option(`${code} – ${CURRENCIES[code]}`, code));
     toEl.add(new Option(`${code} – ${CURRENCIES[code]}`, code));
   });
-  fromEl.value = getCookie('cc_from') || detectCurrency();
-  toEl.value   = getCookie('cc_to')   || (fromEl.value === 'EUR' ? 'USD' : 'EUR');
+  const params = new URLSearchParams(window.location.search);
+  const urlFrom = params.get('from')?.toUpperCase();
+  const urlTo = params.get('to')?.toUpperCase();
+  const urlAmount = params.get('amount');
+  fromEl.value = (urlFrom && CURRENCIES[urlFrom] ? urlFrom : null) || getCookie('cc_from') || detectCurrency();
+  toEl.value   = (urlTo && CURRENCIES[urlTo] ? urlTo : null) || getCookie('cc_to') || (fromEl.value === 'EUR' ? 'USD' : 'EUR');
   const savedAmount = getCookie('cc_amount');
-  if (savedAmount) document.getElementById('cc-amount').value = savedAmount;
+  if (urlAmount && !isNaN(parseFloat(urlAmount))) {
+    document.getElementById('cc-amount').value = urlAmount;
+  } else if (savedAmount) {
+    document.getElementById('cc-amount').value = savedAmount;
+  }
 }
 
 async function fetchRates() {
