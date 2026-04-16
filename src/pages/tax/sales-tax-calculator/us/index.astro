@@ -1,0 +1,451 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { US_SALES_TAX, NATIONAL_AVG_COMBINED } from '../../../../data/us-sales-tax';
+
+const CELL = 44;
+const GAP = 4;
+const STEP = CELL + GAP;
+const MARGIN = 4;
+const COLS = 12;
+const ROWS = 8;
+const W = COLS * STEP + MARGIN;
+const H = ROWS * STEP + MARGIN + 60;
+
+function getColor(state: typeof US_SALES_TAX[0]): string {
+  if (state.noTax) return 'rgba(100,116,139,0.55)';
+  const r = state.avgCombined;
+  if (r < 5) return 'rgba(52,211,153,0.55)';
+  if (r < 6.5) return 'rgba(251,191,36,0.6)';
+  if (r < 8) return 'rgba(251,146,60,0.65)';
+  if (r < 9) return 'rgba(239,68,68,0.65)';
+  return 'rgba(220,38,127,0.72)';
+}
+
+function getHoverColor(state: typeof US_SALES_TAX[0]): string {
+  if (state.noTax) return 'rgba(100,116,139,0.85)';
+  const r = state.avgCombined;
+  if (r < 5) return 'rgba(52,211,153,0.85)';
+  if (r < 6.5) return 'rgba(251,191,36,0.9)';
+  if (r < 8) return 'rgba(251,146,60,0.9)';
+  if (r < 9) return 'rgba(239,68,68,0.9)';
+  return 'rgba(220,38,127,0.92)';
+}
+
+const cx = (col: number) => MARGIN + col * STEP;
+const cy = (row: number) => MARGIN + row * STEP;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "US Sales Tax Calculator - All 50 States",
+  "url": "https://calculations.tools/tax/sales-tax-calculator/us",
+  "description": "Interactive US sales tax map and calculator hub. Find rates for all 50 states, compare state vs. combined rates, and calculate tax for any purchase amount.",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://calculations.tools" },
+      { "@type": "ListItem", "position": 2, "name": "Sales Tax Calculator", "item": "https://calculations.tools/tax/sales-tax-calculator" },
+      { "@type": "ListItem", "position": 3, "name": "US States", "item": "https://calculations.tools/tax/sales-tax-calculator/us" }
+    ]
+  }
+};
+
+const sorted = [...US_SALES_TAX].sort((a, b) => b.avgCombined - a.avgCombined);
+---
+
+<BaseLayout
+  title="US Sales Tax Calculator - All 50 States"
+  metaTitle="US Sales Tax by State 2026 - All 50 States ᐅ"
+  description="Find sales tax rates for all 50 US states. Interactive map, state-by-state comparison table, and individual calculators for every state. Updated for 2026."
+  canonical="https://calculations.tools/tax/sales-tax-calculator/us"
+  schema={schema}
+>
+  <main class="us-hub">
+
+    <div class="us-hub-hero">
+      <div class="us-hub-hero-inner">
+        <h1>US Sales Tax by State 2026</h1>
+        <p class="us-hub-lead">Click any state on the map to open its calculator. Sales tax rates range from 0% (five states) to a combined average of 9.55% (Louisiana and Tennessee).</p>
+        <div class="updated-live">
+        <span class="cc-dot"></span>
+        <span>Tax rates updated monthly</span>
+      </div>
+      </div>
+    </div>
+
+    <div class="us-hub-content">
+
+      <section class="us-map-section">
+        <h2>Interactive US Sales Tax Map</h2>
+        <p class="us-map-sub">Each tile shows the state abbreviation and average combined rate. Color indicates rate tier. Click to open the state calculator.</p>
+
+        <div class="us-map-wrap">
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            xmlns="http://www.w3.org/2000/svg"
+            class="us-map-svg"
+            role="img"
+            aria-label="Interactive US sales tax map - click a state to open its calculator"
+          >
+            {US_SALES_TAX.map(state => {
+              const x = cx(state.mapCol);
+              const y = cy(state.mapRow);
+              const color = getColor(state);
+              const hoverColor = getHoverColor(state);
+              const label = state.noTax ? '0%' : `${state.avgCombined}%`;
+              return (
+                <a href={`/tax/sales-tax-calculator/us/${state.slug}`} class="map-state-link" data-state={state.name} data-rate={state.avgCombined} data-hover={hoverColor} aria-label={`${state.name}: ${state.noTax ? 'No sales tax' : `${state.avgCombined}% avg`}`}>
+                  <rect x={x} y={y} width={CELL} height={CELL} rx="5" class="map-state-rect" style={`fill:${color}`} data-fill={color} />
+                  <text x={x + CELL / 2} y={y + 16} text-anchor="middle" class="map-abbr">{state.abbr}</text>
+                  <text x={x + CELL / 2} y={y + 30} text-anchor="middle" class="map-rate">{label}</text>
+                </a>
+              );
+            })}
+
+            <text x={MARGIN} y={ROWS * STEP + MARGIN + 22} class="map-legend-title">Rate tier:</text>
+            <rect x={MARGIN + 68} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(100,116,139,0.55)" />
+            <text x={MARGIN + 86} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">No tax</text>
+            <rect x={MARGIN + 135} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(52,211,153,0.55)" />
+            <text x={MARGIN + 153} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">Under 5%</text>
+            <rect x={MARGIN + 220} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(251,191,36,0.6)" />
+            <text x={MARGIN + 238} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">5-6.5%</text>
+            <rect x={MARGIN + 295} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(251,146,60,0.65)" />
+            <text x={MARGIN + 313} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">6.5-8%</text>
+            <rect x={MARGIN + 368} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(239,68,68,0.65)" />
+            <text x={MARGIN + 386} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">8-9%</text>
+            <rect x={MARGIN + 430} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(220,38,127,0.72)" />
+            <text x={MARGIN + 448} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">9%+</text>
+          </svg>
+
+          <div class="map-tooltip" id="map-tooltip" style="display:none">
+            <div class="map-tip-name" id="map-tip-name"></div>
+            <div class="map-tip-rate" id="map-tip-rate"></div>
+            <div class="map-tip-hint">Click to open calculator</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="us-table-section">
+        <h2>Sales tax rates by state - 2026</h2>
+        <p style="color: white;">Sorted by average combined rate (highest to lowest). The national average combined rate is <strong>{NATIONAL_AVG_COMBINED}%</strong> (<a href="https://taxfoundation.org/data/all/state/sales-tax-rates/" target="_blank" rel="noopener noreferrer">Tax Foundation, 2026</a>).</p>
+
+        <div class="responsive-table">
+          <table class="us-states-table">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>State rate</th>
+                <th>Avg combined</th>
+                <th>Max combined</th>
+                <th>Groceries</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map(state => (
+                <tr>
+                  <td>
+                    <a href={`/tax/sales-tax-calculator/us/${state.slug}`} class="us-state-link">
+                      <span class="us-state-abbr">{state.abbr}</span>
+                      {state.name}
+                    </a>
+                  </td>
+                  <td>{state.noTax ? <span class="us-notax-badge">None</span> : `${state.stateRate}%`}</td>
+                  <td class={state.avgCombined >= 9 ? 'us-rate-high' : state.avgCombined === 0 ? 'us-rate-zero' : ''}>{state.avgCombined}%</td>
+                  <td>{state.maxCombined}%</td>
+                  <td class="us-exemption">{state.groceries}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="us-facts-section">
+        <h2>Key facts about US sales tax</h2>
+        <div class="us-facts-grid">
+          <div class="us-fact-card">
+            <div class="us-fact-num">5</div>
+            <div class="us-fact-label">States with no sales tax</div>
+            <div class="us-fact-detail">Alaska (state only), Delaware, Montana, New Hampshire, Oregon</div>
+          </div>
+          <div class="us-fact-card">
+            <div class="us-fact-num">9.55%</div>
+            <div class="us-fact-label">Highest avg combined rate</div>
+            <div class="us-fact-detail">Louisiana and Tennessee (tied)</div>
+          </div>
+          <div class="us-fact-card">
+            <div class="us-fact-num">{NATIONAL_AVG_COMBINED}%</div>
+            <div class="us-fact-label">National average combined</div>
+            <div class="us-fact-detail">Tax Foundation 2026 data</div>
+          </div>
+          <div class="us-fact-card">
+            <div class="us-fact-num">45</div>
+            <div class="us-fact-label">States with a sales tax</div>
+            <div class="us-fact-detail">Plus D.C. - rates set at state and local level</div>
+          </div>
+        </div>
+      </section>
+        <div class="seo-container">
+          <div class="answer-box">
+            <div class="answer-box-label">Quick answer</div>
+            <p>US sales tax rates vary by state - and within states by city and county. Five states charge no sales tax at all. The highest average combined rate is 9.55% (Louisiana and Tennessee). Click any state in the map above or in the table to open its dedicated calculator.</p>
+          </div>
+
+          <h2>How US sales tax works</h2>
+          <p>Unlike VAT (used in Europe and most of the world), US sales tax is not included in listed prices. It is added at the point of purchase based on where the buyer takes delivery. The rate depends on three levels of government: state, county, and city - each of which may add its own percentage.</p>
+
+          <p>For example, a purchase in Los Angeles pays 7.25% (California state) + 1% (Los Angeles County) + 2% (City of LA) = 10.25% combined. The retailer collects the full combined rate and remits each portion to the appropriate government agency.</p>
+
+          <h2>States with the highest sales tax (2026)</h2>
+          <p>These five states have the highest average combined rates, meaning shoppers consistently pay the most in sales tax on everyday purchases (<a href="https://taxfoundation.org/data/all/state/sales-tax-rates/" target="_blank" rel="noopener noreferrer">Tax Foundation, 2026</a>):</p>
+          <ol>
+            {sorted.slice(0, 5).map((s, i) => (
+              <li><a href={`/tax/sales-tax-calculator/us/${s.slug}`}>{s.name}</a> - {s.avgCombined}% average combined</li>
+            ))}
+          </ol>
+
+          <h2>States with no sales tax</h2>
+          <p>Five states levy no general sales tax whatsoever. Shoppers in these states pay the sticker price with no additions:</p>
+          <ul>
+            {US_SALES_TAX.filter(s => s.noTax).map(s => (
+              <li><a href={`/tax/sales-tax-calculator/us/${s.slug}`}>{s.name}</a> - {s.notes.split('.')[0]}.</li>
+            ))}
+          </ul>
+
+          <h2>Sales tax exemptions by state</h2>
+          <p>Most states exempt prescription drugs from sales tax. Grocery exemptions vary widely: some states fully exempt food, some apply a reduced rate, and a few tax groceries at the full rate. Clothing exemptions are rarer - only Minnesota, New Jersey, Pennsylvania, Wisconsin, and a few others exempt it year-round.</p>
+
+          <p>States that <strong>fully tax groceries</strong>: Alabama, Idaho, Mississippi, South Dakota (at reduced rate), Tennessee (at reduced rate). This places a disproportionate burden on lower-income households who spend a higher share of income on food.</p>
+
+          <h2>Online sales tax and economic nexus</h2>
+          <p>Since the US Supreme Court's South Dakota v. Wayfair ruling in 2018, online sellers must collect sales tax in any state where they exceed the economic nexus threshold - typically $100,000 in annual sales or 200 transactions. This means online prices may now reflect sales tax even from out-of-state retailers.</p>
+
+          <h2>Related tools</h2>
+          <ul class="related-tools-list">
+            <li>
+              <span class="tool-icon">%</span>
+              <div>
+                <a href="/math/percentage-calculator">Percentage Calculator</a>
+                <p>Calculate any percentage quickly - useful for manually checking sales tax amounts.</p>
+              </div>
+            </li>
+            <li>
+              <span class="tool-icon">💱</span>
+              <div>
+                <a href="/conversion/currency-converter">Currency Converter</a>
+                <p>Convert between 150+ currencies with live mid-market rates.</p>
+              </div>
+            </li>
+            <li>
+              <span class="tool-icon">💰</span>
+              <div>
+                <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+                <p>Convert annual salary to hourly rate and estimate take-home pay.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .us-hub { min-height: 100vh; }
+  .us-hub-hero {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 2.5rem 1.5rem 2rem;
+  }
+  .us-hub-hero-inner { max-width: 900px; margin: 0 auto; }
+  .us-hub-hero h1 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    color: white;
+    margin: 0 0 0.75rem;
+  }
+  .us-hub-lead {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 640px;
+    line-height: 1.6;
+    margin: 0 0 1.25rem;
+  }
+  .us-hub-content { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; display: flex; flex-direction: column; gap: 3rem; }
+  .us-map-section h2,
+  .us-table-section h2,
+  .us-facts-section h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+    margin: 0 0 0.5rem;
+  }
+  .us-map-sub {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 1.25rem;
+  }
+  .us-map-wrap {
+    position: relative;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    overflow: hidden;
+  }
+  .us-map-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .map-state-link { cursor: pointer; text-decoration: none; }
+  .map-state-link:focus { outline: 2px solid rgba(139,92,246,0.8); outline-offset: 2px; border-radius: 5px; }
+  .map-state-rect {
+    transition: filter 0.12s, opacity 0.12s;
+  }
+  .map-state-link:hover .map-state-rect {
+    filter: brightness(1.35) saturate(1.2);
+  }
+  .map-abbr {
+    font-size: 11px;
+    font-weight: 700;
+    fill: white;
+    pointer-events: none;
+    font-family: system-ui, sans-serif;
+  }
+  .map-rate {
+    font-size: 8.5px;
+    fill: rgba(255,255,255,0.85);
+    pointer-events: none;
+    font-family: system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+  .map-legend-title {
+    font-size: 9px;
+    fill: rgba(255,255,255,0.5);
+    font-family: system-ui, sans-serif;
+  }
+  .map-legend-text {
+    font-size: 9px;
+    fill: rgba(255,255,255,0.65);
+    font-family: system-ui, sans-serif;
+  }
+  .map-tooltip {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(15,10,30,0.95);
+    border: 1px solid rgba(139,92,246,0.4);
+    border-radius: 8px;
+    padding: 0.6rem 0.85rem;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .map-tip-name { font-size: 0.85rem; font-weight: 600; color: white; }
+  .map-tip-rate { font-size: 1rem; font-weight: 700; color: rgba(167,139,250,0.9); margin: 0.1rem 0; }
+  .map-tip-hint { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+  .us-states-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+  .us-states-table th {
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .us-states-table td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.8);
+    vertical-align: middle;
+  }
+  .us-states-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+  .us-state-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .us-state-link:hover { color: rgba(167,139,250,0.9); }
+  .us-state-abbr {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 20px;
+    background: rgba(139,92,246,0.2);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(167,139,250,0.9);
+    flex-shrink: 0;
+  }
+  .us-notax-badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    background: rgba(52,211,153,0.15);
+    border: 1px solid rgba(52,211,153,0.3);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: rgba(52,211,153,0.9);
+  }
+  .us-rate-high { color: rgba(248,113,113,0.9) !important; font-weight: 600; }
+  .us-rate-zero { color: rgba(52,211,153,0.9) !important; }
+  .us-exemption { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+  .us-facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .us-fact-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 1.1rem;
+  }
+  .us-fact-num {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: rgba(167,139,250,0.9);
+    margin-bottom: 0.25rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .us-fact-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+  .us-fact-detail { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.4; }
+  @media (max-width: 600px) {
+    .us-states-table th:nth-child(4),
+    .us-states-table td:nth-child(4) { display: none; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tooltip = document.getElementById('map-tooltip');
+    const tipName = document.getElementById('map-tip-name');
+    const tipRate = document.getElementById('map-tip-rate');
+
+    document.querySelectorAll('.map-state-link').forEach(link => {
+      const name = (link as HTMLElement).dataset.state || '';
+      const rate = parseFloat((link as HTMLElement).dataset.rate || '0');
+
+      link.addEventListener('mouseenter', () => {
+        if (!tooltip || !tipName || !tipRate) return;
+        tipName.textContent = name;
+        tipRate.textContent = rate === 0 ? 'No sales tax (0%)' : `${rate}% avg combined`;
+        tooltip.style.display = '';
+      });
+
+      link.addEventListener('mouseleave', () => {
+        if (tooltip) tooltip.style.display = 'none';
+      });
+    });
+  });
+</script>

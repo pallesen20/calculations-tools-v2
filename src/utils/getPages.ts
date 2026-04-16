@@ -1,4 +1,5 @@
 import { GLOSSARY_TERMS } from '../data/glossary';
+import { US_SALES_TAX } from '../data/us-sales-tax';
 
 export const SITE = 'https://calculations.tools';
 
@@ -1463,15 +1464,6 @@ const entries: Entry[] = [
     icon: '🧾',
   },
   {
-    path: '/tax/sales-tax-calculator',
-    title: 'Sales Tax Calculator - Add or Remove Tax Instantly',
-    description: 'Calculate sales tax on any purchase or remove tax from a total. Enter the price and tax rate to instantly see the tax amount and total. Add or reverse mode. Auto-detects your currency.',
-    changefreq: 'monthly',
-    priority: 0.9,
-    icon: '🧾',
-    short: 'Add tax to a price or reverse from a total',
-  },
-  {
     path: '/tax/vat-calculator',
     title: 'VAT Calculator - Add or Remove VAT Instantly',
     description: 'Calculate VAT on any net price or remove VAT from a gross total. Covers standard VAT rates for 40+ countries in 2026. Add or reverse mode. Auto-detects your currency.',
@@ -1522,6 +1514,41 @@ TOP_CURRENCIES.forEach(from => {
       icon: '💱',
       short: `${from} to ${to} · ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
     });
+  });
+});
+
+entries.push({
+  path: '/tax/sales-tax-calculator',
+  title: 'Sales Tax Calculator - Add or Remove Tax Instantly',
+  description: 'Calculate sales tax on any purchase or remove tax from a total. Enter the price and tax rate to instantly see the tax amount and total. Add or reverse mode. Auto-detects your currency.',
+  changefreq: 'monthly' as const,
+  priority: 1.0,
+  icon: '🧾',
+  short: 'Add tax to a price or reverse from a total',
+  featured: true,
+});
+
+entries.push({
+  path: '/tax/sales-tax-calculator/us',
+  title: 'US Sales Tax Calculator - All 50 States Interactive Map',
+  description: 'Interactive US sales tax map. Find rates for all 50 states, compare combined rates, and navigate to individual state calculators.',
+  changefreq: 'monthly' as const,
+  priority: 1.0,
+  icon: '🗺️',
+  short: 'Interactive map - click any state',
+});
+
+US_SALES_TAX.forEach(state => {
+  entries.push({
+    path: `/tax/sales-tax-calculator/us/${state.slug}`,
+    title: `${state.name} Sales Tax Calculator - ${state.noTax ? 'No Sales Tax' : `${state.stateRate}% State Rate`}`,
+    description: state.noTax
+      ? `${state.name} has no state or local sales tax. Learn about exemptions and compare to other states.`
+      : `Calculate ${state.name} sales tax. State rate ${state.stateRate}%, average combined ${state.avgCombined}%. Includes city rates, exemptions, and reverse tax calculator.`,
+    changefreq: 'monthly' as const,
+    priority: 0.9,
+    icon: '🧾',
+    short: state.noTax ? 'No sales tax' : `${state.stateRate}% state, ${state.avgCombined}% avg combined`,
   });
 });
 
@@ -1609,6 +1636,7 @@ const FINANCE_GROUPS: Record<string, string> = {
   'salary-to-hourly-calculator':        'Salary',
   'annual-income-calculator':           'Salary',
   'pay-raise-calculator':               'Salary',
+  'overtime-calculator':               'Salary',
   'google-adsense-calculator':          'Business Planning',
 };
 

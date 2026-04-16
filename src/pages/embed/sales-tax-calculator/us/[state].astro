@@ -1,0 +1,276 @@
+---
+import EmbedLayout from '../../../../layouts/EmbedLayout.astro';
+import { US_SALES_TAX } from '../../../../data/us-sales-tax';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+
+export function getStaticPaths() {
+  return US_SALES_TAX.map(s => ({
+    params: { state: s.slug },
+    props: { state: s },
+  }));
+}
+
+const { state } = Astro.props;
+
+let exampleZip = '10001';
+try {
+  const zipJson = JSON.parse(readFileSync(resolve('public/data/zip-tax/' + state.abbr.toLowerCase() + '.json'), 'utf-8'));
+  if (zipJson.example_zip) {
+    exampleZip = zipJson.example_zip;
+  } else if (zipJson.zips) {
+    const first = Object.keys(zipJson.zips)[0];
+    if (first) exampleZip = first;
+  }
+} catch {}
+
+const noTax = state.noTax;
+---
+
+<EmbedLayout title={`${state.name} Sales Tax Calculator - calculations.tools`}>
+  <div class="stax-card" id="stax-calculator" data-rate={state.avgCombined} data-slug={state.abbr.toLowerCase()}>
+
+    <div class="stax-header">
+      <div class="stax-state-badge">{state.abbr}</div>
+      <div class="stax-header-info">
+        <div class="stax-state-name">Calculate {state.name} Sales Tax</div>
+        {noTax ? (
+          <div class="stax-rate-line stax-no-tax">
+            <span class="stax-rate-pill stax-notax-pill">No state tax</span>
+          </div>
+        ) : (
+          <div class="stax-rate-line">
+            <span class="stax-rate-pill">{state.stateRate}% state</span>
+            <span class="stax-rate-pill stax-combined">{state.avgCombined}% avg combined</span>
+          </div>
+        )}
+      </div>
+    </div>
+
+    {noTax && (
+      <div class="stax-no-tax-notice">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        <div>
+          <strong>{state.name} has no sales tax.</strong> The sticker price is what you pay.
+        </div>
+      </div>
+    )}
+
+    <div class="stax-mode-toggle">
+      <button class="stax-mode-btn active" data-mode="add">Add tax</button>
+      <button class="stax-mode-btn" data-mode="reverse">Remove tax</button>
+    </div>
+
+    <div class="bmi-field">
+      <label class="bmi-label" for="stax-zip">ZIP code (optional)</label>
+      <div class="bmi-input-wrap">
+        <input id="stax-zip" class="bmi-input" type="text" inputmode="numeric" placeholder={`e.g. ${exampleZip}`} maxlength="5" />
+      </div>
+      <span id="stax-zip-status" class="stax-zip-status"></span>
+      <a id="stax-zip-redirect" class="stax-zip-redirect" href="#" style="display:none"></a>
+    </div>
+
+    <div id="stax-add-panel">
+      <div class="bmi-field">
+        <label class="bmi-label" for="stax-pretax">Pre-tax price ($)</label>
+        <input id="stax-pretax" class="amount-input" type="text" inputmode="decimal" placeholder="100.00" />
+      </div>
+
+      <div class="bmi-field" id="stax-override-wrap">
+        <label class="bmi-label" for="stax-rate-override">Rate override (optional)</label>
+        <div class="bmi-input-wrap">
+          <input id="stax-rate-override" class="bmi-input" type="text" inputmode="decimal" placeholder={state.avgCombined.toFixed(2)} />
+          <span class="bmi-unit-tag">%</span>
+        </div>
+        <span class="stax-rate-hint">{noTax ? `No state tax. Enter a local rate if your city charges one.` : `Default: ${state.avgCombined}% avg combined.`}</span>
+      </div>
+
+      <div class="stax-results">
+        <div class="stax-result-row">
+          <span>Sales tax</span>
+          <span id="stax-tax-amount" class="stax-result-val">-</span>
+        </div>
+        <div class="stax-result-row stax-row-total">
+          <span>Total price</span>
+          <span id="stax-total-price" class="stax-result-val">-</span>
+        </div>
+        <div class="stax-result-row stax-row-last">
+          <span>Rate used</span>
+          <span id="stax-rate-used" class="stax-result-val stax-rate-val">-</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="stax-reverse-panel" style="display:none">
+      <div class="bmi-field">
+        <label class="bmi-label" for="stax-total-input">Total paid (tax included, $)</label>
+        <input id="stax-total-input" class="amount-input" type="text" inputmode="decimal" placeholder="107.00" />
+      </div>
+
+      <div class="stax-results">
+        <div class="stax-result-row">
+          <span>Pre-tax price</span>
+          <span id="stax-pretax-result" class="stax-result-val">-</span>
+        </div>
+        <div class="stax-result-row stax-row-total">
+          <span>Tax paid</span>
+          <span id="stax-tax-result" class="stax-result-val">-</span>
+        </div>
+        <div class="stax-result-row stax-row-last">
+          <span>Rate used</span>
+          <span id="stax-rate-used-rev" class="stax-result-val stax-rate-val">-</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/js/sales-tax-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .stax-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .stax-header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+  .stax-state-badge {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(59,130,246,0.6));
+    border: 1px solid rgba(139,92,246,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+  .stax-state-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+  .stax-rate-line {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .stax-rate-pill {
+    font-size: 0.73rem;
+    padding: 0.18rem 0.5rem;
+    border-radius: 20px;
+    background: rgba(139,92,246,0.25);
+    border: 1px solid rgba(139,92,246,0.4);
+    color: rgba(255,255,255,0.85);
+  }
+  .stax-rate-pill.stax-combined {
+    background: rgba(59,130,246,0.2);
+    border-color: rgba(59,130,246,0.35);
+  }
+  .stax-rate-line.stax-no-tax .stax-rate-pill {
+    background: rgba(52,211,153,0.2);
+    border-color: rgba(52,211,153,0.4);
+    color: rgba(52,211,153,0.9);
+  }
+  .stax-no-tax-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.75rem;
+    background: rgba(52,211,153,0.08);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 10px;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .stax-no-tax-notice svg { flex-shrink: 0; margin-top: 0.1rem; color: rgba(52,211,153,0.8); }
+  .stax-mode-toggle {
+    display: flex;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 3px;
+    gap: 3px;
+  }
+  .stax-mode-btn {
+    flex: 1;
+    padding: 0.45rem 0.75rem;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .stax-mode-btn.active {
+    background: rgba(139,92,246,0.5);
+    color: white;
+  }
+  .stax-rate-hint {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.2rem;
+  }
+  .stax-results {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 0.75rem;
+  }
+  .stax-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stax-row-total {
+    background: rgba(139,92,246,0.08);
+    border-bottom-color: rgba(139,92,246,0.15);
+    font-weight: 600;
+    color: white;
+  }
+  .stax-row-last { border-bottom: none; }
+  .stax-result-val { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .stax-rate-val { color: rgba(167,139,250,0.9); }
+  .stax-notax-pill {
+    background: rgba(52,211,153,0.15);
+    border: 1px solid rgba(52,211,153,0.35);
+    color: rgba(52,211,153,0.9);
+  }
+  .stax-zip-status {
+    display: block;
+    font-size: 0.73rem;
+    transition: color 0.15s;
+  }
+  .stax-zip-ok { color: rgba(52,211,153,0.85); }
+  .stax-zip-warn { color: rgba(251,191,36,0.85); }
+  .stax-zip-loading { color: rgba(255,255,255,0.4); }
+  .stax-zip-redirect {
+    display: block;
+    font-size: 0.73rem;
+    margin-top: 0.2rem;
+    text-decoration: underline;
+    color: rgba(167,139,250,0.9);
+  }
+  .stax-zip-redirect:hover { color: rgba(167,139,250,1); }
+</style>

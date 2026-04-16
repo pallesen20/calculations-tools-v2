@@ -1,128 +1,254 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const TOP_CURRENCIES = ['USD','EUR','GBP','DKK','NOK','SEK','CHF','JPY','AUD','CAD','NZD','CNY','INR','HKD','SGD','BRL','MXN','KRW','MYR','THB','IDR','ZAR','TRY','PLN','CZK','HUF','ILS','PHP','RON','ISK'];
-  const SYMBOLS = {
-    USD:'$', EUR:'€', GBP:'£', DKK:'DKK', NOK:'NOK', SEK:'SEK', CHF:'Fr', JPY:'¥',
-    AUD:'A$', CAD:'C$', NZD:'NZ$', CNY:'¥', INR:'₹', HKD:'HK$', SGD:'S$', BRL:'R$',
-    MXN:'MX$', KRW:'₩', MYR:'RM', THB:'฿', IDR:'Rp', ZAR:'R', TRY:'₺', PLN:'zł',
-    CZK:'Kč', HUF:'Ft', ILS:'₪', PHP:'₱', RON:'lei', ISK:'kr'
+  const el = document.getElementById('stax-calculator');
+  if (!el) return;
+
+  const defaultRate = parseFloat(el.dataset.rate) || 0;
+  const stateSlug = el.dataset.slug || '';
+  let mode = 'add';
+  let zipRate = null;
+
+  const STATE_INFO = {
+    ak: ['Alaska', 'alaska'], al: ['Alabama', 'alabama'],
+    ar: ['Arkansas', 'arkansas'], az: ['Arizona', 'arizona'],
+    ca: ['California', 'california'], co: ['Colorado', 'colorado'],
+    ct: ['Connecticut', 'connecticut'], de: ['Delaware', 'delaware'],
+    fl: ['Florida', 'florida'], ga: ['Georgia', 'georgia'],
+    hi: ['Hawaii', 'hawaii'], ia: ['Iowa', 'iowa'],
+    id: ['Idaho', 'idaho'], il: ['Illinois', 'illinois'],
+    in: ['Indiana', 'indiana'], ks: ['Kansas', 'kansas'],
+    ky: ['Kentucky', 'kentucky'], la: ['Louisiana', 'louisiana'],
+    ma: ['Massachusetts', 'massachusetts'], md: ['Maryland', 'maryland'],
+    me: ['Maine', 'maine'], mi: ['Michigan', 'michigan'],
+    mn: ['Minnesota', 'minnesota'], mo: ['Missouri', 'missouri'],
+    ms: ['Mississippi', 'mississippi'], mt: ['Montana', 'montana'],
+    nc: ['North Carolina', 'north-carolina'], nd: ['North Dakota', 'north-dakota'],
+    ne: ['Nebraska', 'nebraska'], nh: ['New Hampshire', 'new-hampshire'],
+    nj: ['New Jersey', 'new-jersey'], nm: ['New Mexico', 'new-mexico'],
+    nv: ['Nevada', 'nevada'], ny: ['New York', 'new-york'],
+    oh: ['Ohio', 'ohio'], ok: ['Oklahoma', 'oklahoma'],
+    or: ['Oregon', 'oregon'], pa: ['Pennsylvania', 'pennsylvania'],
+    ri: ['Rhode Island', 'rhode-island'], sc: ['South Carolina', 'south-carolina'],
+    sd: ['South Dakota', 'south-dakota'], tn: ['Tennessee', 'tennessee'],
+    tx: ['Texas', 'texas'], ut: ['Utah', 'utah'],
+    va: ['Virginia', 'virginia'], vt: ['Vermont', 'vermont'],
+    wa: ['Washington', 'washington'], wi: ['Wisconsin', 'wisconsin'],
+    wv: ['West Virginia', 'west-virginia'], wy: ['Wyoming', 'wyoming']
   };
 
-  function detectCurrency() {
-    try {
-      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-      const map = {
-        'Europe/London':'GBP','Europe/Dublin':'EUR','Europe/Paris':'EUR','Europe/Berlin':'EUR',
-        'Europe/Rome':'EUR','Europe/Madrid':'EUR','Europe/Amsterdam':'EUR','Europe/Brussels':'EUR',
-        'Europe/Vienna':'EUR','Europe/Athens':'EUR','Europe/Helsinki':'EUR','Europe/Lisbon':'EUR',
-        'Europe/Luxembourg':'EUR','Europe/Malta':'EUR','Europe/Nicosia':'EUR','Europe/Riga':'EUR',
-        'Europe/Tallinn':'EUR','Europe/Vilnius':'EUR','Europe/Bratislava':'EUR','Europe/Ljubljana':'EUR',
-        'Europe/Copenhagen':'DKK','Europe/Oslo':'NOK','Europe/Stockholm':'SEK','Europe/Zurich':'CHF',
-        'Europe/Warsaw':'PLN','Europe/Prague':'CZK','Europe/Budapest':'HUF','Europe/Bucharest':'RON',
-        'Europe/Istanbul':'TRY','Asia/Tokyo':'JPY','Asia/Shanghai':'CNY','Asia/Hong_Kong':'HKD',
-        'Asia/Singapore':'SGD','Asia/Seoul':'KRW','Asia/Kolkata':'INR','Asia/Kuala_Lumpur':'MYR',
-        'Asia/Bangkok':'THB','Asia/Jakarta':'IDR','Asia/Jerusalem':'ILS','Asia/Manila':'PHP',
-        'Australia/Sydney':'AUD','Australia/Melbourne':'AUD','Australia/Brisbane':'AUD',
-        'Australia/Perth':'AUD','Australia/Adelaide':'AUD','Pacific/Auckland':'NZD',
-        'America/Sao_Paulo':'BRL','America/Manaus':'BRL','America/Recife':'BRL',
-        'America/Mexico_City':'MXN','America/Monterrey':'MXN','America/Tijuana':'MXN',
-        'America/Toronto':'CAD','America/Vancouver':'CAD','America/Winnipeg':'CAD',
-        'America/Edmonton':'CAD','America/Halifax':'CAD','Africa/Johannesburg':'ZAR',
-        'Atlantic/Reykjavik':'ISK'
-      };
-      if (map[tz]) return map[tz];
-      if (tz.startsWith('America/')) return 'USD';
-    } catch(e) {}
-    return 'USD';
-  }
-
-  const currencySelect = document.getElementById('stc-currency');
-  if (currencySelect) {
-    const detected = detectCurrency();
-    TOP_CURRENCIES.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c;
-      opt.textContent = c;
-      if (c === detected) opt.selected = true;
-      currencySelect.appendChild(opt);
-    });
-  }
-
-  let mode = 'add';
-
-  const modeAddBtn = document.getElementById('stc-mode-add');
-  const modeRemoveBtn = document.getElementById('stc-mode-remove');
-  const priceLabel = document.getElementById('stc-price-label');
-
-  function setMode(newMode) {
-    mode = newMode;
-    if (newMode === 'add') {
-      modeAddBtn?.classList.add('stc-mode-active');
-      modeRemoveBtn?.classList.remove('stc-mode-active');
-      if (priceLabel) priceLabel.textContent = 'Pre-tax price';
-    } else {
-      modeRemoveBtn?.classList.add('stc-mode-active');
-      modeAddBtn?.classList.remove('stc-mode-active');
-      if (priceLabel) priceLabel.textContent = 'Total price (incl. tax)';
+  function getRate() {
+    if (zipRate !== null) return zipRate;
+    const override = document.getElementById('stax-rate-override');
+    if (override && override.value.trim() !== '') {
+      const v = parseFloat(override.value.replace(',', '.'));
+      if (!isNaN(v) && v >= 0 && v <= 25) return v;
     }
-    const totalRow = document.getElementById('stc-row-total');
-    const pretaxRow = document.getElementById('stc-row-pretax');
-    if (mode === 'add') {
-      totalRow?.classList.add('stc-row-highlight');
-      pretaxRow?.classList.remove('stc-row-highlight');
+    return defaultRate;
+  }
+
+  function fmt(n) {
+    return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function setText(id, val) {
+    const node = document.getElementById(id);
+    if (node) node.textContent = val;
+  }
+
+  function clearAdd() {
+    setText('stax-tax-amount', '-');
+    setText('stax-total-price', '-');
+    setText('stax-rate-used', '-');
+  }
+
+  function clearReverse() {
+    setText('stax-pretax-result', '-');
+    setText('stax-tax-result', '-');
+    setText('stax-rate-used-rev', '-');
+  }
+
+  function calculateAdd() {
+    const price = parseFloat(document.getElementById('stax-pretax').value.replace(',', '.'));
+    if (isNaN(price) || price < 0) { clearAdd(); return; }
+    const rate = getRate() / 100;
+    const tax = price * rate;
+    const total = price + tax;
+    setText('stax-tax-amount', '$' + fmt(tax));
+    setText('stax-total-price', '$' + fmt(total));
+    setText('stax-rate-used', getRate().toFixed(3) + '%');
+  }
+
+  function calculateReverse() {
+    const total = parseFloat(document.getElementById('stax-total-input').value.replace(',', '.'));
+    if (isNaN(total) || total < 0) { clearReverse(); return; }
+    const rate = getRate() / 100;
+    const pretax = total / (1 + rate);
+    const tax = total - pretax;
+    setText('stax-pretax-result', '$' + fmt(pretax));
+    setText('stax-tax-result', '$' + fmt(tax));
+    setText('stax-rate-used-rev', getRate().toFixed(3) + '%');
+  }
+
+  function calculate() {
+    if (mode === 'add') { calculateAdd(); } else { calculateReverse(); }
+  }
+
+  document.querySelectorAll('.stax-mode-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      mode = this.dataset.mode;
+      document.querySelectorAll('.stax-mode-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const addPanel = document.getElementById('stax-add-panel');
+      const revPanel = document.getElementById('stax-reverse-panel');
+      if (addPanel) addPanel.style.display = mode === 'add' ? '' : 'none';
+      if (revPanel) revPanel.style.display = mode === 'reverse' ? '' : 'none';
+      calculate();
+    });
+  });
+
+  ['stax-pretax', 'stax-total-input', 'stax-rate-override'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) input.addEventListener('input', calculate);
+  });
+
+  const zipInput = document.getElementById('stax-zip');
+  const zipStatus = document.getElementById('stax-zip-status');
+
+  function setZipStatus(msg, type) {
+    if (!zipStatus) return;
+    zipStatus.textContent = msg;
+    zipStatus.className = 'stax-zip-status' + (type ? ' stax-zip-' + type : '');
+  }
+
+  function showZipRedirect(abbr) {
+    const info = STATE_INFO[abbr];
+    if (!info) return;
+    const link = document.getElementById('stax-zip-redirect');
+    if (!link) return;
+    link.href = '/tax/sales-tax-calculator/us/' + info[1];
+    link.textContent = 'Calculate ' + info[0] + ' sales tax \u2192';
+    link.style.display = '';
+  }
+
+  function hideZipRedirect() {
+    const link = document.getElementById('stax-zip-redirect');
+    if (link) link.style.display = 'none';
+  }
+
+  let zipCache = null;
+  let zipFetchPending = false;
+  let prefixData = null;
+  let prefixFetchPromise = null;
+
+  function fetchPrefixData() {
+    if (prefixData) return Promise.resolve(prefixData);
+    if (prefixFetchPromise) return prefixFetchPromise;
+    prefixFetchPromise = fetch('/data/zip-prefixes.json')
+      .then(r => r.ok ? r.json() : {})
+      .then(data => { prefixData = data; return data; })
+      .catch(() => { prefixData = {}; return {}; });
+    return prefixFetchPromise;
+  }
+
+  function applyZipData(zip, data) {
+    if (!data) {
+      setZipStatus('ZIP data unavailable. Using state average.', 'warn');
+      zipRate = null;
+      calculate();
+      return;
+    }
+
+    if (data.uniform) {
+      zipRate = data.default;
+      const overrideWrap = document.getElementById('stax-override-wrap');
+      if (overrideWrap) overrideWrap.style.display = 'none';
+      setZipStatus('Uniform statewide rate: ' + zipRate.toFixed(3) + '%', 'ok');
+      calculate();
+      return;
+    }
+
+    const entry = data.zips && data.zips[zip];
+    const overrideWrap = document.getElementById('stax-override-wrap');
+
+    if (entry) {
+      zipRate = entry.rate;
+      if (overrideWrap) overrideWrap.style.display = 'none';
+      setZipStatus(entry.city + ': ' + zipRate.toFixed(3) + '%', 'ok');
     } else {
-      pretaxRow?.classList.add('stc-row-highlight');
-      totalRow?.classList.remove('stc-row-highlight');
+      zipRate = null;
+      if (overrideWrap) overrideWrap.style.display = '';
+      setZipStatus('No exact match - using the state average of ' + defaultRate + '%. Enter your exact rate below if you know it.', 'warn');
     }
     calculate();
   }
 
-  modeAddBtn?.addEventListener('click', () => setMode('add'));
-  modeRemoveBtn?.addEventListener('click', () => setMode('remove'));
-
-  function parseVal(id) {
-    const el = document.getElementById(id);
-    if (!el || el.value.trim() === '') return NaN;
-    const v = parseFloat(el.value.replace(/,/g, '').replace(/\s/g, ''));
-    return isNaN(v) ? NaN : v;
-  }
-
-  function fmt(n, symbol) {
-    if (!isFinite(n) || n < 0) return '-';
-    return symbol + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-
-  function calculate() {
-    const price = parseVal('stc-price');
-    const rate = parseVal('stc-rate');
-    const currency = document.getElementById('stc-currency')?.value || 'USD';
-    const symbol = (SYMBOLS[currency] || currency) + ' ';
-
-    if (isNaN(price) || price < 0 || isNaN(rate) || rate < 0) {
-      document.getElementById('stc-result')?.classList.add('hidden');
+  function lookupZip(zip) {
+    if (zipCache) {
+      applyZipData(zip, zipCache);
       return;
     }
 
-    let preTax, taxAmount, total;
-    if (mode === 'add') {
-      preTax = price;
-      taxAmount = price * (rate / 100);
-      total = price + taxAmount;
-    } else {
-      total = price;
-      preTax = price / (1 + rate / 100);
-      taxAmount = total - preTax;
-    }
+    if (zipFetchPending) return;
+    zipFetchPending = true;
+    setZipStatus('Looking up ZIP code...', 'loading');
 
-    document.getElementById('stc-res-pretax').textContent = fmt(preTax, symbol);
-    document.getElementById('stc-res-tax').textContent = fmt(taxAmount, symbol);
-    document.getElementById('stc-res-total').textContent = fmt(total, symbol);
-
-    document.getElementById('stc-result')?.classList.remove('hidden');
+    fetch('/data/zip-tax/' + stateSlug + '.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        zipCache = data;
+        zipFetchPending = false;
+        applyZipData(zip, data);
+      })
+      .catch(() => {
+        zipFetchPending = false;
+        setZipStatus('Could not load ZIP data. Using state average.', 'warn');
+        zipRate = null;
+        calculate();
+      });
   }
 
-  ['stc-price', 'stc-rate'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', calculate);
-  });
-  document.getElementById('stc-currency')?.addEventListener('change', calculate);
+  function handleZipInput(val) {
+    hideZipRedirect();
+
+    if (val.length !== 5) {
+      zipRate = null;
+      setZipStatus('', '');
+      const overrideWrap = document.getElementById('stax-override-wrap');
+      if (overrideWrap) overrideWrap.style.display = '';
+      calculate();
+      return;
+    }
+
+    fetchPrefixData().then(prefixes => {
+      const zipState = prefixes[val.substring(0, 3)];
+      if (zipState && zipState !== stateSlug) {
+        const stateName = STATE_INFO[zipState] ? STATE_INFO[zipState][0] : zipState.toUpperCase();
+        setZipStatus('That ZIP is in ' + stateName + '.', 'warn');
+        showZipRedirect(zipState);
+        zipRate = null;
+        const overrideWrap = document.getElementById('stax-override-wrap');
+        if (overrideWrap) overrideWrap.style.display = '';
+        calculate();
+        return;
+      }
+      lookupZip(val);
+    });
+  }
+
+  if (zipInput) {
+    zipInput.addEventListener('input', function () {
+      const val = this.value.replace(/\D/g, '').slice(0, 5);
+      this.value = val;
+      handleZipInput(val);
+    });
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlAmount = urlParams.get('amount');
+  if (urlAmount && !isNaN(parseFloat(urlAmount))) {
+    const pretaxEl = document.getElementById('stax-pretax');
+    if (pretaxEl) pretaxEl.value = urlAmount;
+  }
+
+  calculate();
+  hideZipRedirect();
 });

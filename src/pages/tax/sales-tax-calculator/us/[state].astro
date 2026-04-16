@@ -1,0 +1,657 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import FinanceDisclaimer from '../../../../components/FinanceDisclaimer.astro';
+import { US_SALES_TAX, NATIONAL_AVG_COMBINED } from '../../../../data/us-sales-tax';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+
+export function getStaticPaths() {
+  return US_SALES_TAX.map(s => ({
+    params: { state: s.slug },
+    props: { state: s },
+  }));
+}
+
+const { state } = Astro.props;
+
+let exampleZip = '10001';
+try {
+  const zipJson = JSON.parse(readFileSync(resolve('public/data/zip-tax/' + state.abbr.toLowerCase() + '.json'), 'utf-8'));
+  if (zipJson.example_zip) {
+    exampleZip = zipJson.example_zip;
+  } else if (zipJson.zips) {
+    const first = Object.keys(zipJson.zips)[0];
+    if (first) exampleZip = first;
+  }
+} catch {}
+
+const noTax = state.noTax;
+const rateLabel = noTax ? 'No sales tax' : `${state.stateRate}% state rate`;
+const avgLabel = noTax ? '0%' : `${state.avgCombined}%`;
+
+const tocItems = [
+  { id: 'how-to-use', label: `How to calculate ${state.name} sales tax` },
+  { id: 'rates', label: `${state.name} sales tax rates 2025` },
+  { id: 'exemptions', label: `What is exempt in ${state.name}?` },
+  { id: 'cities', label: `Sales tax by city in ${state.name}` },
+  { id: 'reverse', label: 'Remove tax: find the pre-tax price' },
+  { id: 'tips', label: `${state.name} shopper tips` },
+  { id: 'faq', label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const faq1ans = noTax
+  ? `${state.name} has no state or local sales tax. You pay 0% on all purchases.`
+  : `${state.name}'s state sales tax rate is ${state.stateRate}%. When local taxes are included, the average combined rate across the state is ${state.avgCombined}%. Rates vary by city and county, ranging up to ${state.maxCombined}%.`;
+
+const faq3ans = noTax
+  ? `${state.name} charges no sales tax, so no calculation is needed. The price you see is the price you pay.`
+  : `Multiply the pre-tax price by ${state.avgCombined / 100} (the average combined rate) to get the tax amount. For example, a $100 item costs $${(100 * (1 + state.avgCombined / 100)).toFixed(2)} total. Use the calculator above to compute this instantly for any amount.`;
+
+const faq4ans = noTax
+  ? `${state.name} has no sales tax, so the total price equals the pre-tax price.`
+  : `Divide the total price by ${(1 + state.avgCombined / 100).toFixed(4)} to get the pre-tax price. For example, if you paid $${(100 * (1 + state.avgCombined / 100)).toFixed(2)}, the pre-tax price was $100.00. Use the Remove Tax mode in the calculator above.`;
+
+const faq5ans = noTax
+  ? `No. ${state.name} has no state or local sales tax at all.`
+  : (state.stateRate === state.avgCombined
+    ? `No. ${state.name} does not allow local jurisdictions to levy their own sales taxes. The ${state.stateRate}% state rate applies uniformly statewide.`
+    : `Yes. On top of the ${state.stateRate}% state rate, cities and counties add their own local taxes. The average combined rate statewide is ${state.avgCombined}%, with some areas reaching ${state.maxCombined}%.`);
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `${state.name} Sales Tax Calculator`,
+    "url": `https://calculations.tools/tax/sales-tax-calculator/us/${state.slug}`,
+    "description": `Calculate ${state.name} sales tax instantly. State rate: ${state.stateRate}%. Average combined rate: ${state.avgCombined}%. Add or remove tax in one click.`,
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `https://calculations.tools/tax/sales-tax-calculator/us/${state.slug}?amount={amount}`
+      },
+      "query-input": "required name=amount"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": `How to calculate ${state.name} sales tax`,
+    "description": `Step-by-step guide to calculating sales tax on a purchase in ${state.name}.`,
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter your ZIP code (optional)", "text": `Type your 5-digit ZIP code to automatically load the exact local rate for your address. The calculator falls back to ${state.name}'s ${state.avgCombined}% average if your ZIP is not found.` },
+      { "@type": "HowToStep", "position": 2, "name": "Enter your pre-tax price", "text": "Type the price of your item before tax. The tax amount and total update instantly." },
+      { "@type": "HowToStep", "position": 3, "name": "Override the rate if needed", "text": "If your ZIP was not found or you know a specific rate, enter it in the rate override field." },
+      { "@type": "HowToStep", "position": 4, "name": "Reverse: find the pre-tax price", "text": "Switch to Remove Tax mode and enter the total you paid to see the pre-tax price and tax amount separately." },
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": `What is the sales tax rate in ${state.name}?`, "acceptedAnswer": { "@type": "Answer", "text": faq1ans } },
+      { "@type": "Question", "name": `Are groceries taxed in ${state.name}?`, "acceptedAnswer": { "@type": "Answer", "text": `In ${state.name}, groceries are: ${state.groceries}. Prescription drugs are ${state.prescriptionDrugs.toLowerCase()}.` } },
+      { "@type": "Question", "name": `How do I calculate sales tax in ${state.name}?`, "acceptedAnswer": { "@type": "Answer", "text": faq3ans } },
+      { "@type": "Question", "name": `How do I find the pre-tax price from a total in ${state.name}?`, "acceptedAnswer": { "@type": "Answer", "text": faq4ans } },
+      { "@type": "Question", "name": `Does ${state.name} have local sales taxes?`, "acceptedAnswer": { "@type": "Answer", "text": faq5ans } },
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title={`${state.name} Sales Tax Calculator`}
+  metaTitle={`${state.name} Sales Tax Calculator | Avg. ${state.avgCombined}% in 2026 ᐅ`}
+  description={noTax ? `${state.name} has no state sales tax. Calculate any purchase total instantly. Includes city rates, exemptions, and a reverse tax calculator.` : `Calculate ${state.name} sales tax instantly. State rate ${state.stateRate}%, average combined ${state.avgCombined}%. Add or remove tax. Includes city rates, exemptions table, and reverse calculator.`}
+  canonical={`https://calculations.tools/tax/sales-tax-calculator/us/${state.slug}`}
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug={`sales-tax-calculator/us/${state.slug}`}
+  ogFormula={noTax ? `${state.name}: No sales tax` : `Tax = Price × ${state.avgCombined}%`}
+  ogExample={noTax ? `$100 × 0% = $0 tax` : `$100 × ${state.avgCombined}% = $${(100 * state.avgCombined / 100).toFixed(2)} tax`}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="stax-card" id="stax-calculator" data-rate={state.avgCombined} data-slug={state.abbr.toLowerCase()}>
+
+          <div class="stax-header">
+            <div class="stax-state-badge">{state.abbr}</div>
+            <div class="stax-header-info">
+              <div class="stax-state-name">Calculate {state.name} Sales Tax</div>
+              {noTax ? (
+                <div class="stax-rate-line stax-no-tax">
+                  <span class="stax-rate-pill stax-notax-pill">No state tax</span>
+                </div>
+              ) : (
+                <div class="stax-rate-line">
+                  <span class="stax-rate-pill">{state.stateRate}% state</span>
+                  <span class="stax-rate-pill stax-combined">{state.avgCombined}% avg combined</span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div class="updated-live">
+            <span class="cc-dot"></span>
+            <span>Tax rates updated monthly</span>
+          </div>
+          {noTax && (
+            <div class="stax-no-tax-notice">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>{state.name} has no sales tax.</strong> The sticker price is what you pay - no tax is added at checkout.
+              </div>
+            </div>
+          )}
+
+          <div class="stax-mode-toggle">
+            <button class="stax-mode-btn active" data-mode="add">Add tax</button>
+            <button class="stax-mode-btn" data-mode="reverse">Remove tax</button>
+          </div>
+
+          <div class="bmi-field">
+            <label class="bmi-label" for="stax-zip">ZIP code - purchase location (optional)</label>
+            <div class="bmi-input-wrap">
+              <input id="stax-zip" class="bmi-input" type="text" inputmode="numeric" placeholder={`e.g. ${exampleZip}`} maxlength="5" />
+            </div>
+            <span id="stax-zip-status" class="stax-zip-status"></span>
+            <a id="stax-zip-redirect" class="stax-zip-redirect" href="#" style="display:none"></a>
+          </div>
+
+          <div id="stax-add-panel">
+            <div class="bmi-field">
+              <label class="bmi-label" for="stax-pretax">Pre-tax price ($)</label>
+              <input id="stax-pretax" class="amount-input" type="text" inputmode="decimal" placeholder="100.00" />
+            </div>
+
+            <div class="bmi-field" id="stax-override-wrap">
+              <label class="bmi-label" for="stax-rate-override">Rate override (optional)</label>
+              <div class="bmi-input-wrap">
+                <input id="stax-rate-override" class="bmi-input" type="text" inputmode="decimal" placeholder={state.avgCombined.toFixed(2)} />
+                <span class="bmi-unit-tag">%</span>
+              </div>
+              <span class="stax-rate-hint">{noTax ? `No state tax. Enter a local rate if your city charges one.` : `Default: ${state.avgCombined}% avg combined. Enter your city/county rate for precision.`}</span>
+            </div>
+
+            <div class="stax-results">
+              <div class="stax-result-row">
+                <span>Sales tax</span>
+                <span id="stax-tax-amount" class="stax-result-val">-</span>
+              </div>
+              <div class="stax-result-row stax-row-total">
+                <span>Total price</span>
+                <span id="stax-total-price" class="stax-result-val">-</span>
+              </div>
+              <div class="stax-result-row stax-row-last">
+                <span>Rate used</span>
+                <span id="stax-rate-used" class="stax-result-val stax-rate-val">-</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="stax-reverse-panel" style="display:none">
+            <div class="bmi-field">
+              <label class="bmi-label" for="stax-total-input">Total paid (tax included, $)</label>
+              <input id="stax-total-input" class="amount-input" type="text" inputmode="decimal" placeholder="107.00" />
+            </div>
+
+            <div class="stax-results">
+              <div class="stax-result-row">
+                <span>Pre-tax price</span>
+                <span id="stax-pretax-result" class="stax-result-val">-</span>
+              </div>
+              <div class="stax-result-row stax-row-total">
+                <span>Tax paid</span>
+                <span id="stax-tax-result" class="stax-result-val">-</span>
+              </div>
+              <div class="stax-result-row stax-row-last">
+                <span>Rate used</span>
+                <span id="stax-rate-used-rev" class="stax-result-val stax-rate-val">-</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <FinanceDisclaimer />
+    <script src="/js/sales-tax-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        {noTax ? (
+          <p>{state.name} is one of five US states with no sales tax at any level. There is no state rate and no local rate - the price you see on the shelf is the price you pay at the register.</p>
+        ) : (
+          <p>{state.name}'s <a href="/glossary/sales-tax">state sales tax</a> rate is <strong>{state.stateRate}%</strong>. When city and county taxes are added, the average combined rate across the state is <strong>{state.avgCombined}%</strong>, and rates can reach as high as {state.maxCombined}% in some areas. Use the calculator above to find the exact tax and total for any purchase.</p>
+        )}
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          {noTax ? (
+            <>
+              <li>{state.name} has no state sales tax and no local sales tax either - every purchase is 0%.</li>
+              <li>The state is one of four with no sales tax at any level (Delaware, Montana, New Hampshire, Oregon). Alaska has no state tax but does levy local taxes in many cities.</li>
+              <li>{state.notes}</li>
+            </>
+          ) : (
+            <>
+              <li>State rate: {state.stateRate}% - average combined (state + local): {state.avgCombined}%</li>
+              <li>Groceries: {state.groceries} | Prescription drugs: {state.prescriptionDrugs}</li>
+              <li>{state.notes}</li>
+              <li>The national average combined rate is {NATIONAL_AVG_COMBINED}% (<a href="https://taxfoundation.org/data/all/state/sales-tax-rates/" target="_blank" rel="noopener noreferrer">Tax Foundation, 2026</a>).</li>
+            </>
+          )}
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to calculate {state.name} sales tax</h2>
+      {noTax ? (
+        <>
+          <p>{state.name} charges no sales tax, so no calculation is needed. Every purchase is tax-free regardless of what you buy or where in the state you shop. The price on the sticker is the final price.</p>
+          <p>If you're a business collecting sales tax on behalf of another state (for example, selling online to customers in other states), see our <a href="/tax/sales-tax-calculator/us">US sales tax calculator hub</a> to look up rates for any other state.</p>
+        </>
+      ) : (
+        <>
+          <p>Enter your ZIP code in the calculator above for the exact local rate at your address - the tool matches it instantly and auto-fills the rate. Without a ZIP, it defaults to {state.name}'s {state.avgCombined}% average combined rate. At that average, a $100 item costs ${(100 * (1 + state.avgCombined / 100)).toFixed(2)} total.</p>
+
+          <p>The formula is straightforward:</p>
+          <ul>
+            <li><strong>Tax amount</strong> = Pre-tax price x (Rate / 100)</li>
+            <li><strong>Total price</strong> = Pre-tax price + Tax amount</li>
+          </ul>
+
+          <p>To reverse the calculation (find the pre-tax price from a total you already paid), switch to <em>Remove tax</em> mode. The formula is: Pre-tax price = Total / (1 + Rate / 100).</p>
+
+          <p>The default rate in the calculator is <strong>{state.avgCombined}%</strong> - {state.name}'s statewide average combined rate. If you know your specific city or county rate, enter it in the rate override field for a more precise result. City rates for {state.name}'s major areas are listed in the table below.</p>
+        </>
+      )}
+
+      <h2 id="rates">{state.name} sales tax rates 2025</h2>
+      {noTax ? (
+        <p>{state.name} does not impose a sales tax at any government level. There is no state sales tax and no local sales tax. This makes it one of just five such states in the US, alongside Alaska (which allows local-only taxes), Delaware, Montana, and Oregon.</p>
+      ) : (
+        <>
+          <p>{state.name}'s tax structure puts it {state.avgCombined > NATIONAL_AVG_COMBINED ? `above` : `below`} the national average combined rate of {NATIONAL_AVG_COMBINED}%. Here is a breakdown of the rate structure (<a href="https://taxfoundation.org/data/all/state/sales-tax-rates/" target="_blank" rel="noopener noreferrer">Tax Foundation, 2026</a>):</p>
+
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rate type</th>
+                  <th>Rate</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>State rate</td>
+                  <td><strong>{state.stateRate}%</strong></td>
+                  <td>Applies statewide on all taxable items</td>
+                </tr>
+                {state.stateRate !== state.avgCombined && (
+                  <tr>
+                    <td>Average local rate</td>
+                    <td><strong>{(state.avgCombined - state.stateRate).toFixed(3).replace(/\.?0+$/, '')}%</strong></td>
+                    <td>City and county additions vary by location</td>
+                  </tr>
+                )}
+                <tr>
+                  <td>Average combined</td>
+                  <td><strong>{state.avgCombined}%</strong></td>
+                  <td>State + typical local - what most residents pay</td>
+                </tr>
+                <tr>
+                  <td>Maximum combined</td>
+                  <td><strong>{state.maxCombined}%</strong></td>
+                  <td>Highest rate found anywhere in the state</td>
+                </tr>
+                <tr>
+                  <td>National average</td>
+                  <td>{NATIONAL_AVG_COMBINED}%</td>
+                  <td>For comparisonr</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+
+      <h2 id="exemptions">What is exempt from {state.name} sales tax?</h2>
+      {noTax ? (
+        <p>Because {state.name} has no sales tax, all purchases are tax-free by definition - there is nothing to exempt.</p>
+      ) : (
+        <>
+          <p>Not all purchases are taxed equally in {state.name}. Key exemptions reduce the tax burden on essentials. Prescription drugs are {state.prescriptionDrugs.toLowerCase()} - a standard exemption in most states. Groceries are {state.groceries.toLowerCase()}, which has a significant impact on household budgets.</p>
+
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>{state.name} treatment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Groceries / food</td>
+                  <td>{state.groceries}</td>
+                </tr>
+                <tr>
+                  <td>Prescription drugs</td>
+                  <td>{state.prescriptionDrugs}</td>
+                </tr>
+                <tr>
+                  <td>OTC medications</td>
+                  <td>{state.otcDrugs}</td>
+                </tr>
+                <tr>
+                  <td>Clothing</td>
+                  <td>{state.clothing}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Exemptions are set at the state level but may not override local taxes. When a category is "exempt" from the state rate, local taxes may still apply in some jurisdictions. Always confirm with your local tax authority for high-value purchases.</p>
+        </>
+      )}
+
+      <h2 id="cities">Sales tax by city in {state.name}</h2>
+      {noTax ? (
+        <p>There are no city or county sales taxes in {state.name}. All locations charge 0%.</p>
+      ) : (
+        <>
+          <p>Combined sales tax rates vary significantly across {state.name}'s cities and counties. The figures below represent the total combined rate (state + county + city) as of 2024-2025. Use the rate override field in the calculator to apply your exact local rate.</p>
+
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>City</th>
+                  <th>Combined rate</th>
+                  <th>vs. state avg</th>
+                </tr>
+              </thead>
+              <tbody>
+                {state.cities.map(city => (
+                  <tr>
+                    <td>{city.name}</td>
+                    <td><strong>{city.rate}%</strong></td>
+                    <td>
+                      {city.rate > state.avgCombined
+                        ? <span class="stax-above">+{(city.rate - state.avgCombined).toFixed(2)}%</span>
+                        : city.rate < state.avgCombined
+                          ? <span class="stax-below">-{(state.avgCombined - city.rate).toFixed(2)}%</span>
+                          : <span>avg</span>
+                      }
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>To find the combined rate for a specific address in {state.name}, use the <a href=`https://www.avalara.com/taxrates/en/state-rates/${state.slug}.html` target="_blank" rel="noopener noreferrer">Avalara rate lookup tool</a> or check your city or county government website.</p>
+        </>
+      )}
+
+      <h2 id="reverse">Remove tax: find the pre-tax price</h2>
+      <p>If you have a receipt and want to know what the item cost before tax, you need the reverse sales tax calculation. This is common when comparing advertised prices, calculating business expenses, or verifying a charge.</p>
+
+      {noTax ? (
+        <p>In {state.name}, the total price equals the pre-tax price since there is no sales tax to remove.</p>
+      ) : (
+        <>
+          <p>The reverse formula divides the total by (1 + rate). At {state.name}'s {state.avgCombined}% average rate: Pre-tax = Total / {(1 + state.avgCombined / 100).toFixed(4)}. For example, if you paid ${(100 * (1 + state.avgCombined / 100)).toFixed(2)}, the pre-tax price was $100.00 and the tax was ${(100 * state.avgCombined / 100).toFixed(2)}.</p>
+          <p>Use the <em>Remove tax</em> mode in the calculator above. Enter what you paid, and the tool instantly splits out the pre-tax price and the tax amount.</p>
+        </>
+      )}
+
+      <h2 id="tips">{state.name} sales tax tips</h2>
+      {noTax ? (
+        <>
+          <p>{state.name} shoppers enjoy a permanent advantage: every posted price is the final price. There are no seasonal tax holidays because there is no tax to holiday from. This also simplifies bookkeeping for small businesses - no tax to collect, no returns to file.</p>
+          <p>If you sell goods online and ship to customers in other states, you may still owe sales tax to those states under economic nexus rules (the South Dakota v. Wayfair 2018 Supreme Court decision). Use our <a href="/tax/sales-tax-calculator/us">state-by-state calculator hub</a> to check rates for any state you sell to.</p>
+        </>
+      ) : (
+        <>
+          <p>A few practical tips for shopping and doing business in {state.name}:</p>
+          <ul>
+            <li><strong>Use the combined rate, not just the state rate.</strong> The {state.stateRate}% state rate understates what you actually pay in most of {state.name}. The {state.avgCombined}% average combined rate is the more useful benchmark.</li>
+            <li><strong>Check for tax-free weekends.</strong> Several states run annual tax holidays on clothing and school supplies. Check the {state.name} Department of Revenue website for current year dates.</li>
+            <li><strong>Exemption documentation.</strong> If you are buying exempt items (resale, manufacturing, agriculture), you typically need to provide an exemption certificate. Keep copies for your records.</li>
+            <li><strong>Online purchases.</strong> If you buy from an online seller with economic nexus in {state.name}, {state.name} sales tax applies at your delivery address rate. Small sellers below the economic nexus threshold (usually $100,000 in annual sales) may not collect it.</li>
+          </ul>
+        </>
+      )}
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is the sales tax rate in {state.name}?</h3>
+      {noTax ? (
+        <p>{state.name} has no state or local sales tax. The effective rate is 0% on all purchases statewide.</p>
+      ) : (
+        <p>{state.name}'s state sales tax rate is {state.stateRate}%. When local taxes are factored in, most residents pay around {state.avgCombined}% - the statewide average combined rate. Rates can reach as high as {state.maxCombined}% in some cities or counties.</p>
+      )}
+
+      <h3>Are groceries taxed in {state.name}?</h3>
+      <p>Groceries in {state.name} are: <strong>{state.groceries}</strong>. Prescription drugs are <strong>{state.prescriptionDrugs.toLowerCase()}</strong>, and OTC medications are <strong>{state.otcDrugs.toLowerCase()}</strong>.</p>
+
+      <h3>How do I calculate sales tax in {state.name}?</h3>
+      {noTax ? (
+        <p>No calculation is needed. {state.name} has no sales tax, so the listed price is always the final price.</p>
+      ) : (
+        <p>Multiply the pre-tax price by the decimal form of the rate. At {state.name}'s {state.avgCombined}% average: Tax = Price x {(state.avgCombined / 100).toFixed(4)}. A $50 item has a ${(50 * state.avgCombined / 100).toFixed(2)} tax, making the total ${(50 * (1 + state.avgCombined / 100)).toFixed(2)}. Use the calculator on this page for instant results.</p>
+      )}
+
+      <h3>How do I remove sales tax from a total in {state.name}?</h3>
+      {noTax ? (
+        <p>{state.name} has no sales tax, so the total always equals the pre-tax price.</p>
+      ) : (
+        <p>Divide the total by {(1 + state.avgCombined / 100).toFixed(4)} to get the pre-tax price. For example, if you paid ${(107 * (1 + state.avgCombined / 100) / (1 + 0.07)).toFixed(2)}, the pre-tax price was ${(107 * (1 + state.avgCombined / 100) / (1 + 0.07) / (1 + state.avgCombined / 100)).toFixed(2)}. Switch to Remove Tax mode in the calculator above to do this automatically.</p>
+      )}
+
+      <h3>How does {state.name}'s sales tax compare to other states?</h3>
+      {noTax ? (
+        <p>{state.name} has no sales tax at any level - one of four states with truly zero sales tax (Delaware, Montana, New Hampshire, Oregon). Alaska has no state rate but allows local taxes. Every other state levies at least some sales tax.</p>
+      ) : (
+        <p>{state.name}'s {state.avgCombined}% average combined rate is {state.avgCombined > NATIONAL_AVG_COMBINED ? `above` : `below`} the national average of {NATIONAL_AVG_COMBINED}%. See our <a href="/tax/sales-tax-calculator/us">US sales tax map</a> to compare all 50 states side by side.</p>
+      )}
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🗺️</span>
+          <div>
+            <a href="/tax/sales-tax-calculator/us">US Sales Tax Calculator - All 50 States</a>
+            <p>Interactive map and calculator hub covering every US state. Compare rates side by side.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>Calculate any percentage, percentage change, or percentage difference.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💰</span>
+          <div>
+            <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+            <p>Convert your annual salary to an hourly rate and estimate take-home pay.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⏱</span>
+          <div>
+            <a href="/finance/overtime-calculator">Overtime Calculator</a>
+            <p>Calculate regular and overtime pay from your hourly rate and hours worked.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .stax-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .stax-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .stax-state-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(59,130,246,0.6));
+    border: 1px solid rgba(139,92,246,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+  .stax-state-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.35rem;
+  }
+  .stax-rate-line {
+    display: flex;
+    gap: 0.5rem;
+    color: white;
+    flex-wrap: wrap;
+  }
+  .stax-rate-pill {
+    font-size: 0.78rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 20px;
+    background: rgba(139,92,246,0.25);
+    border: 1px solid rgba(139,92,246,0.4);
+    color: rgba(255,255,255,0.85);
+  }
+  .stax-rate-pill.stax-combined {
+    background: rgba(59,130,246,0.2);
+    border-color: rgba(59,130,246,0.35);
+  }
+  .stax-rate-line.stax-no-tax .stax-rate-pill {
+    background: rgba(52,211,153,0.2);
+    border-color: rgba(52,211,153,0.4);
+    color: rgba(52,211,153,0.9);
+  }
+  .stax-no-tax-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(52,211,153,0.08);
+    border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 10px;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .stax-no-tax-notice svg { flex-shrink: 0; margin-top: 0.1rem; color: rgba(52,211,153,0.8); }
+  .stax-mode-toggle {
+    display: flex;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 3px;
+    gap: 3px;
+  }
+  .stax-mode-btn {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .stax-mode-btn.active {
+    background: rgba(139,92,246,0.5);
+    color: white;
+  }
+  .stax-rate-hint {
+    font-size: 0.74rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.2rem;
+  }
+  .stax-results {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 1rem;
+  }
+  .stax-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stax-row-total {
+    background: rgba(139,92,246,0.08);
+    border-bottom-color: rgba(139,92,246,0.15);
+    font-weight: 600;
+    color: white;
+  }
+  .stax-row-last { border-bottom: none; }
+  .stax-result-val { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .stax-rate-val { color: rgba(167,139,250,0.9); }
+  .stax-above { color: rgba(251,146,60,0.9); font-size: 0.82rem; }
+  .stax-below { color: rgba(52,211,153,0.9); font-size: 0.82rem; }
+  .stax-notax-pill {
+    background: rgba(52,211,153,0.15);
+    border: 1px solid rgba(52,211,153,0.35);
+    color: rgba(52,211,153,0.9);
+  }
+  .stax-zip-status {
+    display: block;
+    font-size: 0.76rem;
+    /* margin-top: 0.3rem;
+    min-height: 1em; */
+    transition: color 0.15s;
+  }
+  .stax-zip-ok { color: rgba(52,211,153,0.85); }
+  .stax-zip-warn { color: rgba(251,191,36,0.85); }
+  .stax-zip-loading { color: rgba(255,255,255,0.4); }
+  .stax-zip-redirect {
+    display: block;
+    font-size: 0.76rem;
+    margin-top: 0.25rem;
+    text-decoration: underline !important;
+  }
+  .stax-zip-redirect:hover { color: rgba(255,255,255,0.4); }
+</style>
