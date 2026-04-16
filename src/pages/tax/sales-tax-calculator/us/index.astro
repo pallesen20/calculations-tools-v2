@@ -39,15 +39,7 @@ const schema = {
   "@type": "WebPage",
   "name": "US Sales Tax Calculator - All 50 States",
   "url": "https://calculations.tools/tax/sales-tax-calculator/us",
-  "description": "Interactive US sales tax map and calculator hub. Find rates for all 50 states, compare state vs. combined rates, and calculate tax for any purchase amount.",
-  "breadcrumb": {
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://calculations.tools" },
-      { "@type": "ListItem", "position": 2, "name": "Sales Tax Calculator", "item": "https://calculations.tools/tax/sales-tax-calculator" },
-      { "@type": "ListItem", "position": 3, "name": "US States", "item": "https://calculations.tools/tax/sales-tax-calculator/us" }
-    ]
-  }
+  "description": "Interactive US sales tax map and calculator hub. Find rates for all 50 states, compare state vs. combined rates, and calculate tax for any purchase amount."
 };
 
 const sorted = [...US_SALES_TAX].sort((a, b) => b.avgCombined - a.avgCombined);
