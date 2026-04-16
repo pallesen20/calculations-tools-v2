@@ -31,7 +31,7 @@ const avgLabel = noTax ? '0%' : `${state.avgCombined}%`;
 
 const tocItems = [
   { id: 'how-to-use', label: `How to calculate ${state.name} sales tax` },
-  { id: 'rates', label: `${state.name} sales tax rates 2025` },
+  { id: 'rates', label: `${state.name} sales tax rates 2026` },
   { id: 'exemptions', label: `What is exempt in ${state.name}?` },
   { id: 'cities', label: `Sales tax by city in ${state.name}` },
   { id: 'reverse', label: 'Remove tax: find the pre-tax price' },
@@ -280,7 +280,7 @@ const schema = [
         </>
       )}
 
-      <h2 id="rates">{state.name} sales tax rates 2025</h2>
+      <h2 id="rates">{state.name} sales tax rates 2026</h2>
       {noTax ? (
         <p>{state.name} does not impose a sales tax at any government level. There is no state sales tax and no local sales tax. This makes it one of just five such states in the US, alongside Alaska (which allows local-only taxes), Delaware, Montana, and Oregon.</p>
       ) : (
@@ -322,7 +322,7 @@ const schema = [
                 <tr>
                   <td>National average</td>
                   <td>{NATIONAL_AVG_COMBINED}%</td>
-                  <td>For comparisonr</td>
+                  <td>For comparison</td>
                 </tr>
               </tbody>
             </table>
