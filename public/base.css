@@ -179,8 +179,9 @@
     color: var(--brand-from);
     text-decoration: none !important;
 }
-.seo-container:not(.no-underline) a {
-    text-decoration: underline;
+.seo-container.no-underline a,
+.seo-container a.no-underline {
+    text-decoration: none;
 }
 .breadcrumb-nav {
     max-width: 1200px;
@@ -1313,7 +1314,6 @@ th {
   border: none;
   padding: 0.65rem 0.75rem;
   color: white;
-  font-size: 1rem;
   min-width: 0;
 }
 .bmi-input:focus { outline: none; }
@@ -1913,12 +1913,11 @@ select.bmi-input {
 .amount-input {
   flex: 1;
   min-width: 0;
-  background: rgba(255,255,255,0.08);
+  background: transparent;
   border: 1px solid rgba(255,255,255,0.15);
   border-radius: 8px;
   padding: 0.65rem 0.75rem;
   color: white;
-  font-size: 1rem;
   transition: border-color 0.2s;
 }
 .amount-input:focus { outline: none; border-color: rgba(59,130,246,0.7); }

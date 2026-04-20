@@ -1,6 +1,7 @@
 import { GLOSSARY_TERMS } from '../data/glossary';
 import { US_SALES_TAX } from '../data/us-sales-tax';
 import { US_INCOME_TAX } from '../data/us-income-tax';
+import { EU_INCOME_TAX } from '../data/eu-income-tax';
 
 export const SITE = 'https://calculations.tools';
 
@@ -502,6 +503,7 @@ const entries: Entry[] = [
     priority: 1.0,
     icon: '📅',
     short: 'ISO 8601 week number & year calendar',
+    featured: true,
   },
   {
     path: '/date-calculator',
@@ -610,6 +612,7 @@ const entries: Entry[] = [
     icon: '🏋️',
     priority: 1.0,
     short: 'FFMI, category & natural limit',
+    featured: true,
   },
   {
     path: '/health/body-fat-calculator',
@@ -1530,12 +1533,22 @@ entries.push({
 });
 
 entries.push({
+  path: '/tax/income-tax-calculator/eu',
+  title: 'European Income Tax Calculators',
+  description: 'Free income tax calculators for 7 European countries. Calculate net salary, income tax, and social contributions for Germany, Netherlands, Denmark, Sweden, France, Italy, and Ireland.',
+  changefreq: 'monthly' as const,
+  priority: 0.9,
+  icon: '🇪🇺',
+  short: 'Germany, Netherlands, Denmark, Sweden and more',
+});
+
+entries.push({
   path: '/tax/income-tax-calculator/us',
   title: 'US Income Tax Calculator - All 50 States',
   description: 'Full US income tax calculator for all 50 states. Federal and state tax brackets, FICA, filing status, deductions, and take-home pay breakdown for every state.',
   changefreq: 'monthly' as const,
   priority: 1.0,
-  icon: '🗺️',
+  icon: '🇺🇸',
   short: 'Interactive map - click any state',
 });
 
@@ -1550,6 +1563,18 @@ US_INCOME_TAX.forEach(state => {
     priority: 0.9,
     icon: '💸',
     short: state.noTax ? 'No state income tax' : `Up to ${state.topRate}% state rate`,
+  });
+});
+
+EU_INCOME_TAX.forEach(country => {
+  entries.push({
+    path: `/tax/income-tax-calculator/eu/${country.slug}`,
+    title: `${country.name} Income Tax Calculator`,
+    description: `${country.name} income tax calculator. Calculate net salary, income tax, and social contributions. Top rate ${country.topRate}%. Full take-home pay breakdown for any gross income.`,
+    changefreq: 'monthly' as const,
+    priority: 0.9,
+    icon: country.flag,
+    short: `Up to ${country.topRate}% + social contributions`,
   });
 });
 
@@ -1570,7 +1595,7 @@ entries.push({
   description: 'Interactive US sales tax map. Find rates for all 50 states, compare combined rates, and navigate to individual state calculators.',
   changefreq: 'monthly' as const,
   priority: 1.0,
-  icon: '🗺️',
+  icon: '🇺🇸',
   short: 'Interactive map - click any state',
 });
 

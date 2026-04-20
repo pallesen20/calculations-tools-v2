@@ -8,6 +8,7 @@ const tocItems = [
   { id: 'use-cases',      label: 'When week numbers are used' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',            label: 'FAQs' },
+  { id: 'programming',    label: 'Programming Routines' },
   { id: 'related-tools',  label: 'Related tools' },
 ];
 
@@ -112,8 +113,7 @@ const schema = [
           </div>
         </div>
         <div class="wn-table-card">
-          <h2 class="wn-table-title">
-            All Week Numbers <span id="wn-table-year">2026</span>
+          <h2 class="wn-table-title">Week of the Year - All Week Numbers <span id="wn-table-year">2026</span>
           </h2>
           <p class="wn-table-sub">ISO 8601 week numbering · Weeks start on Monday</p>
           <div class="wn-table-wrap">
@@ -129,8 +129,102 @@ const schema = [
             </table>
           </div>
         </div>
-        <div class="wn-code-card">
-          <h2 class="wn-code-title">Programming Routines</h2>
+      </div>
+    </section>
+    <script src="/js/week-number.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>The current ISO 8601 week number is displayed at the top of this page and updates automatically. Under ISO 8601, <strong>week 1 is the week containing the first Thursday of the year</strong>. Weeks run Monday to Sunday. Most years have 52 weeks; a year has 53 weeks when January 1 falls on a Thursday (or Wednesday in a leap year).</p>
+      </div>
+      <h2 id="what-is-iso">How ISO 8601 week numbers work</h2>
+      <p>ISO 8601 is the international standard for representing dates and times, published by the International Organization for Standardization. It defines the week number using what is known as the <strong>first-Thursday rule</strong>: week 1 of the year is the calendar week that contains the first Thursday of January. Because a week runs Monday to Sunday, this is always the week that has at least 4 days in the new year.</p>
+      <p>The rule has one non-obvious implication: January 1 is not always in week 1. If January 1 falls on a Friday, Saturday, or Sunday, those days still belong to the last week of the previous year. Week 1 of the new year begins on the following Monday.</p>
+      <h3>The first-Thursday rule explained</h3>
+      <p>An easy way to remember the rule: find the first Thursday of the year. Whatever week that Thursday falls in is week 1. Working backward from that Thursday, the Monday four days earlier is the first day of week 1.</p>
+      <p>For example, if January 1 is a Wednesday, then that Wednesday is already in the week whose Thursday is January 2. That makes January 2 the first Thursday, so the week of December 29 to January 4 is week 1 - and December 29, 30, and 31 of the previous year are technically in week 1 of the new year.</p>
+      <h2 id="iso-vs-us">ISO week numbering vs US week numbering</h2>
+      <p>Two different week-numbering systems are in common use worldwide. The ISO system is the international standard; the US system is used in North America and some other countries. They differ in two ways: which day starts the week, and how week 1 is defined.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Property</th><th>ISO 8601</th><th>US / North American</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Week starts on</td><td>Monday</td><td>Sunday</td></tr>
+          <tr><td>Week 1 defined as</td><td>Week containing first Thursday of the year</td><td>Week containing January 1</td></tr>
+          <tr><td>Minimum days in week 1</td><td>4</td><td>1</td></tr>
+          <tr><td>Where used</td><td>Europe, most enterprise software, most databases</td><td>United States, Canada, some legacy software</td></tr>
+          <tr><td>Excel function</td><td>=ISOWEEKNUM(date)</td><td>=WEEKNUM(date, 1) or =WEEKNUM(date, 2)</td></tr>
+          <tr><td>Can week numbers differ?</td><td colspan="2">Yes - by up to 1 week, most often in early January and late December</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The practical consequence: if you are sharing a week number with a US counterpart, confirm which system you are both using. "Week 1" can refer to different dates depending on the convention.</p>
+      <h2 id="week-53">Years with 53 weeks</h2>
+      <p>A calendar year has exactly 52 ISO weeks in most cases. A year has 53 ISO weeks when its January 1 falls on a Thursday (in non-leap years) or on a Wednesday or Thursday (in leap years). This happens roughly every 5 to 6 years. Week 53 always contains only a few days - typically 1 to 3 - bridging the gap between two calendar years.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Year</th><th>Jan 1 weekday</th><th>Leap year</th><th>ISO weeks</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2020</td><td>Wednesday</td><td>Yes</td><td>53</td></tr>
+          <tr><td>2021</td><td>Friday</td><td>No</td><td>52</td></tr>
+          <tr><td>2022</td><td>Saturday</td><td>No</td><td>52</td></tr>
+          <tr><td>2023</td><td>Sunday</td><td>No</td><td>52</td></tr>
+          <tr><td>2024</td><td>Monday</td><td>Yes</td><td>52</td></tr>
+          <tr><td>2025</td><td>Wednesday</td><td>No</td><td>52</td></tr>
+          <tr><td><strong>2026</strong></td><td><strong>Thursday</strong></td><td>No</td><td><strong>53</strong></td></tr>
+          <tr><td>2027</td><td>Friday</td><td>No</td><td>52</td></tr>
+          <tr><td>2028</td><td>Saturday</td><td>Yes</td><td>52</td></tr>
+          <tr><td>2029</td><td>Monday</td><td>No</td><td>52</td></tr>
+          <tr><td>2030</td><td>Tuesday</td><td>No</td><td>52</td></tr>
+          <tr><td>2031</td><td>Wednesday</td><td>No</td><td>52</td></tr>
+          <tr><td><strong>2032</strong></td><td><strong>Thursday</strong></td><td>Yes</td><td><strong>53</strong></td></tr>
+          <tr><td><strong>2037</strong></td><td><strong>Thursday</strong></td><td>No</td><td><strong>53</strong></td></tr>
+          <tr><td><strong>2043</strong></td><td><strong>Thursday</strong></td><td>No</td><td><strong>53</strong></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h2 id="use-cases">When week numbers are used</h2>
+      <h3>Business and project scheduling</h3>
+      <p>Week numbers are the standard unit of planning in many industries, particularly manufacturing, logistics, and construction. Rather than specifying a date range, a production schedule might say "deliver in W34" - meaning the week beginning on the Monday of ISO week 34. This is more compact and less ambiguous than saying "the week of August 18" (which depends on which day the recipient considers the start of the week).</p>
+      <p>Most enterprise resource planning (ERP) systems, including SAP, Oracle, and Microsoft Dynamics, use ISO week numbers in planning views and reports. If you work with data exported from these systems, the week numbers will follow ISO 8601.</p>
+      <h3>Scandinavia and Northern Europe</h3>
+      <p>Week numbers are in everyday use in Sweden, Norway, Denmark, Finland, and the Netherlands in a way that is unusual elsewhere. People refer to vacations ("I'm off in week 28"), deadlines ("submit by week 12"), and meetings ("let's schedule in week 9") using week numbers in ordinary conversation. Public institutions, schools, and broadcasters publish schedules in week number format as a matter of course.</p>
+      <h3>Agriculture and seasonal industries</h3>
+      <p>Farming, fishing, and food processing industries use week numbers extensively for harvest and supply chain planning. A supplier contract might specify deliveries in "weeks 14-18" (the spring harvest window) rather than <a href="/date-calculator">calendar dates</a>, since the exact dates of a given week number are consistent year to year in terms of seasonal position.</p>
+      <h3>Payroll and HR systems</h3>
+      <p>Weekly payroll cycles are often tracked by ISO week number, particularly in European companies. A timesheet for "Week 22" is unambiguous regardless of the year or the employee's location. Many HR systems generate reports and pay runs keyed to ISO week numbers.</p>
+      <h2 id="common-mistakes">Common mistakes</h2>
+      <h3>Confusing ISO and US week numbers in software</h3>
+      <p>The most common programming mistake with week numbers is using a function that returns US-style weeks (starting Sunday, with week 1 anchored to January 1) when ISO weeks are needed. In Excel, <code>=WEEKNUM(date)</code> returns US weeks by default. You must use <code>=ISOWEEKNUM(date)</code> or <code>=WEEKNUM(date,21)</code> for ISO weeks. In SQL, <code>DATEPART(wk, date)</code> in SQL Server returns US weeks; use <code>DATEPART(isowk, date)</code> for ISO.</p>
+      <h3>Assuming week 1 starts on January 1</h3>
+      <p>A date in early January is not always in week 1. If you filter data for "week 1" and expect to capture all records from January 1 onward, you will miss records from January 1-3 when those days fall on Friday through Sunday (because those days are in week 53 of the prior year). Always check the actual Monday-to-Sunday date range of week 1 before filtering.</p>
+      <h3>Year boundary confusion</h3>
+      <p>A date in late December can have an ISO year that is different from its calendar year. December 31, 2018 was in ISO week 1 of 2019 - its ISO year is 2019, not 2018. If you store week numbers alongside a calendar year column, the combination may be internally inconsistent for dates in late December or early January. Use the ISO year (the year that the week belongs to) alongside the week number, not the calendar year of the date.</p>
+      <h2 id="faq">FAQs</h2>
+      <h3>What is the current week number?</h3>
+      <p>The current ISO 8601 week number is shown at the top of this page and updates automatically each week.</p>
+      <h3>How is the ISO 8601 week number calculated?</h3>
+      <p>Week 1 is the week containing the first Thursday of January. Weeks run Monday to Sunday. Count how many complete weeks have passed since that first Monday to get the week number for any date.</p>
+      <h3>Why doesn't week 1 always start on January 1?</h3>
+      <p>Because ISO 8601 defines week 1 by its Thursday, not its first day. If January 1 falls on a Friday, Saturday, or Sunday, those days belong to week 52 or 53 of the previous year. Week 1 of the new year starts on the following Monday.</p>
+      <h3>What is the difference between ISO and US week numbers?</h3>
+      <p>ISO weeks start on Monday; US weeks start on Sunday. ISO week 1 is the week with the first Thursday; US week 1 is the week containing January 1. They can differ by 1, especially in early January and late December.</p>
+      <h3>How many weeks are in a year?</h3>
+      <p>Most years have 52 ISO weeks. A year has 53 weeks when January 1 falls on a Thursday (non-leap year) or Wednesday or Thursday (leap year). 2026 is a 53-week year.</p>
+      <h3>How do I get the ISO week number in Excel?</h3>
+      <p>Use <code>=ISOWEEKNUM(TODAY())</code>. In older Excel versions without this function, use <code>=WEEKNUM(TODAY(),21)</code> - return type 21 specifies ISO-8601.</p>
+      <h3>Can a week span two different calendar years?</h3>
+      <p>Yes. The last few days of December can belong to week 1 of the next year, and the first few days of January can belong to week 52 or 53 of the previous year, depending on what day they fall on.</p>
+      <h3>Which countries use ISO week numbering?</h3>
+      <p>ISO week numbering is the standard across most of Europe, especially Scandinavia, Germany, the Netherlands, and the UK. It is the default in most programming languages, databases, and enterprise software. The US and Canada traditionally use Sunday-based week numbering anchored to January 1.</p>
+      <div class="wn-code-card">
+          <h2 class="wn-code-title" id="programming">Programming Routines</h2>
           <p class="wn-code-sub">Get the current ISO 8601 week number in your language</p>
 
           {[
@@ -205,127 +299,6 @@ const schema = [
             </div>
           ))}
         </div>
-
-      </div>
-    </section>
-
-    <script src="/js/week-number.js" is:inline></script>
-  </div>
-
-  <div slot="content">
-    <div class="seo-container">
-
-      <div class="answer-box">
-        <div class="answer-box-label">Quick answer</div>
-        <p>The current ISO 8601 week number is displayed at the top of this page and updates automatically. Under ISO 8601, <strong>week 1 is the week containing the first Thursday of the year</strong>. Weeks run Monday to Sunday. Most years have 52 weeks; a year has 53 weeks when January 1 falls on a Thursday (or Wednesday in a leap year).</p>
-      </div>
-
-      <h2 id="what-is-iso">How ISO 8601 week numbers work</h2>
-      <p>ISO 8601 is the international standard for representing dates and times, published by the International Organization for Standardization. It defines the week number using what is known as the <strong>first-Thursday rule</strong>: week 1 of the year is the calendar week that contains the first Thursday of January. Because a week runs Monday to Sunday, this is always the week that has at least 4 days in the new year.</p>
-      <p>The rule has one non-obvious implication: January 1 is not always in week 1. If January 1 falls on a Friday, Saturday, or Sunday, those days still belong to the last week of the previous year. Week 1 of the new year begins on the following Monday.</p>
-
-      <h3>The first-Thursday rule explained</h3>
-      <p>An easy way to remember the rule: find the first Thursday of the year. Whatever week that Thursday falls in is week 1. Working backward from that Thursday, the Monday four days earlier is the first day of week 1.</p>
-      <p>For example, if January 1 is a Wednesday, then that Wednesday is already in the week whose Thursday is January 2. That makes January 2 the first Thursday, so the week of December 29 to January 4 is week 1 - and December 29, 30, and 31 of the previous year are technically in week 1 of the new year.</p>
-
-      <h2 id="iso-vs-us">ISO week numbering vs US week numbering</h2>
-      <p>Two different week-numbering systems are in common use worldwide. The ISO system is the international standard; the US system is used in North America and some other countries. They differ in two ways: which day starts the week, and how week 1 is defined.</p>
-      <div class="responsive-table">
-      <table>
-        <thead>
-          <tr><th>Property</th><th>ISO 8601</th><th>US / North American</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Week starts on</td><td>Monday</td><td>Sunday</td></tr>
-          <tr><td>Week 1 defined as</td><td>Week containing first Thursday of the year</td><td>Week containing January 1</td></tr>
-          <tr><td>Minimum days in week 1</td><td>4</td><td>1</td></tr>
-          <tr><td>Where used</td><td>Europe, most enterprise software, most databases</td><td>United States, Canada, some legacy software</td></tr>
-          <tr><td>Excel function</td><td>=ISOWEEKNUM(date)</td><td>=WEEKNUM(date, 1) or =WEEKNUM(date, 2)</td></tr>
-          <tr><td>Can week numbers differ?</td><td colspan="2">Yes - by up to 1 week, most often in early January and late December</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>The practical consequence: if you are sharing a week number with a US counterpart, confirm which system you are both using. "Week 1" can refer to different dates depending on the convention.</p>
-
-      <h2 id="week-53">Years with 53 weeks</h2>
-      <p>A calendar year has exactly 52 ISO weeks in most cases. A year has 53 ISO weeks when its January 1 falls on a Thursday (in non-leap years) or on a Wednesday or Thursday (in leap years). This happens roughly every 5 to 6 years. Week 53 always contains only a few days - typically 1 to 3 - bridging the gap between two calendar years.</p>
-      <div class="responsive-table">
-      <table>
-        <thead>
-          <tr><th>Year</th><th>Jan 1 weekday</th><th>Leap year</th><th>ISO weeks</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>2020</td><td>Wednesday</td><td>Yes</td><td>53</td></tr>
-          <tr><td>2021</td><td>Friday</td><td>No</td><td>52</td></tr>
-          <tr><td>2022</td><td>Saturday</td><td>No</td><td>52</td></tr>
-          <tr><td>2023</td><td>Sunday</td><td>No</td><td>52</td></tr>
-          <tr><td>2024</td><td>Monday</td><td>Yes</td><td>52</td></tr>
-          <tr><td>2025</td><td>Wednesday</td><td>No</td><td>52</td></tr>
-          <tr><td><strong>2026</strong></td><td><strong>Thursday</strong></td><td>No</td><td><strong>53</strong></td></tr>
-          <tr><td>2027</td><td>Friday</td><td>No</td><td>52</td></tr>
-          <tr><td>2028</td><td>Saturday</td><td>Yes</td><td>52</td></tr>
-          <tr><td>2029</td><td>Monday</td><td>No</td><td>52</td></tr>
-          <tr><td>2030</td><td>Tuesday</td><td>No</td><td>52</td></tr>
-          <tr><td>2031</td><td>Wednesday</td><td>No</td><td>52</td></tr>
-          <tr><td><strong>2032</strong></td><td><strong>Thursday</strong></td><td>Yes</td><td><strong>53</strong></td></tr>
-          <tr><td><strong>2037</strong></td><td><strong>Thursday</strong></td><td>No</td><td><strong>53</strong></td></tr>
-          <tr><td><strong>2043</strong></td><td><strong>Thursday</strong></td><td>No</td><td><strong>53</strong></td></tr>
-        </tbody>
-      </table>
-      </div>
-
-      <h2 id="use-cases">When week numbers are used</h2>
-
-      <h3>Business and project scheduling</h3>
-      <p>Week numbers are the standard unit of planning in many industries, particularly manufacturing, logistics, and construction. Rather than specifying a date range, a production schedule might say "deliver in W34" - meaning the week beginning on the Monday of ISO week 34. This is more compact and less ambiguous than saying "the week of August 18" (which depends on which day the recipient considers the start of the week).</p>
-      <p>Most enterprise resource planning (ERP) systems, including SAP, Oracle, and Microsoft Dynamics, use ISO week numbers in planning views and reports. If you work with data exported from these systems, the week numbers will follow ISO 8601.</p>
-
-      <h3>Scandinavia and Northern Europe</h3>
-      <p>Week numbers are in everyday use in Sweden, Norway, Denmark, Finland, and the Netherlands in a way that is unusual elsewhere. People refer to vacations ("I'm off in week 28"), deadlines ("submit by week 12"), and meetings ("let's schedule in week 9") using week numbers in ordinary conversation. Public institutions, schools, and broadcasters publish schedules in week number format as a matter of course.</p>
-
-      <h3>Agriculture and seasonal industries</h3>
-      <p>Farming, fishing, and food processing industries use week numbers extensively for harvest and supply chain planning. A supplier contract might specify deliveries in "weeks 14-18" (the spring harvest window) rather than <a href="/date-calculator">calendar dates</a>, since the exact dates of a given week number are consistent year to year in terms of seasonal position.</p>
-
-      <h3>Payroll and HR systems</h3>
-      <p>Weekly payroll cycles are often tracked by ISO week number, particularly in European companies. A timesheet for "Week 22" is unambiguous regardless of the year or the employee's location. Many HR systems generate reports and pay runs keyed to ISO week numbers.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
-      <h3>Confusing ISO and US week numbers in software</h3>
-      <p>The most common programming mistake with week numbers is using a function that returns US-style weeks (starting Sunday, with week 1 anchored to January 1) when ISO weeks are needed. In Excel, <code>=WEEKNUM(date)</code> returns US weeks by default. You must use <code>=ISOWEEKNUM(date)</code> or <code>=WEEKNUM(date,21)</code> for ISO weeks. In SQL, <code>DATEPART(wk, date)</code> in SQL Server returns US weeks; use <code>DATEPART(isowk, date)</code> for ISO.</p>
-
-      <h3>Assuming week 1 starts on January 1</h3>
-      <p>A date in early January is not always in week 1. If you filter data for "week 1" and expect to capture all records from January 1 onward, you will miss records from January 1-3 when those days fall on Friday through Sunday (because those days are in week 53 of the prior year). Always check the actual Monday-to-Sunday date range of week 1 before filtering.</p>
-
-      <h3>Year boundary confusion</h3>
-      <p>A date in late December can have an ISO year that is different from its calendar year. December 31, 2018 was in ISO week 1 of 2019 - its ISO year is 2019, not 2018. If you store week numbers alongside a calendar year column, the combination may be internally inconsistent for dates in late December or early January. Use the ISO year (the year that the week belongs to) alongside the week number, not the calendar year of the date.</p>
-
-      <h2 id="faq">FAQs</h2>
-
-      <h3>What is the current week number?</h3>
-      <p>The current ISO 8601 week number is shown at the top of this page and updates automatically each week.</p>
-
-      <h3>How is the ISO 8601 week number calculated?</h3>
-      <p>Week 1 is the week containing the first Thursday of January. Weeks run Monday to Sunday. Count how many complete weeks have passed since that first Monday to get the week number for any date.</p>
-
-      <h3>Why doesn't week 1 always start on January 1?</h3>
-      <p>Because ISO 8601 defines week 1 by its Thursday, not its first day. If January 1 falls on a Friday, Saturday, or Sunday, those days belong to week 52 or 53 of the previous year. Week 1 of the new year starts on the following Monday.</p>
-
-      <h3>What is the difference between ISO and US week numbers?</h3>
-      <p>ISO weeks start on Monday; US weeks start on Sunday. ISO week 1 is the week with the first Thursday; US week 1 is the week containing January 1. They can differ by 1, especially in early January and late December.</p>
-
-      <h3>How many weeks are in a year?</h3>
-      <p>Most years have 52 ISO weeks. A year has 53 weeks when January 1 falls on a Thursday (non-leap year) or Wednesday or Thursday (leap year). 2026 is a 53-week year.</p>
-
-      <h3>How do I get the ISO week number in Excel?</h3>
-      <p>Use <code>=ISOWEEKNUM(TODAY())</code>. In older Excel versions without this function, use <code>=WEEKNUM(TODAY(),21)</code> - return type 21 specifies ISO-8601.</p>
-
-      <h3>Can a week span two different calendar years?</h3>
-      <p>Yes. The last few days of December can belong to week 1 of the next year, and the first few days of January can belong to week 52 or 53 of the previous year, depending on what day they fall on.</p>
-
-      <h3>Which countries use ISO week numbering?</h3>
-      <p>ISO week numbering is the standard across most of Europe, especially Scandinavia, Germany, the Netherlands, and the UK. It is the default in most programming languages, databases, and enterprise software. The US and Canada traditionally use Sunday-based week numbering anchored to January 1.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>

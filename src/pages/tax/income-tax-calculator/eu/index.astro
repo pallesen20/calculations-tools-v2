@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { EU_INCOME_TAX } from '../../../../data/eu-income-tax';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "European Income Tax Calculators",
+  "url": "https://calculations.tools/tax/income-tax-calculator/eu",
+  "description": "Free income tax calculators for European countries. Calculate net salary, social contributions, and take-home pay for Germany, Netherlands, Denmark, Sweden, France, Italy, and Ireland.",
+};
+
+const countries = [
+  { slug: 'germany', name: 'Germany', abbr: 'DE', currency: 'EUR', topRate: '45%', note: 'Progressive formula §32a EStG + social contributions', available: true },
+  { slug: 'netherlands', name: 'Netherlands', abbr: 'NL', currency: 'EUR', topRate: '49.5%', note: 'Box 1 income tax including national insurance', available: false },
+  { slug: 'denmark', name: 'Denmark', abbr: 'DK', currency: 'DKK', topRate: '~55%', note: 'AM-bidrag 8% + income tax + municipal tax', available: false },
+  { slug: 'sweden', name: 'Sweden', abbr: 'SE', currency: 'SEK', topRate: '~57%', note: 'Municipal + state income tax', available: false },
+  { slug: 'france', name: 'France', abbr: 'FR', currency: 'EUR', topRate: '45%', note: 'Progressive brackets + social charges', available: false },
+  { slug: 'italy', name: 'Italy', abbr: 'IT', currency: 'EUR', topRate: '43%', note: 'IRPEF brackets + INPS contributions', available: false },
+  { slug: 'ireland', name: 'Ireland', abbr: 'IE', currency: 'EUR', topRate: '40%', note: 'Standard/higher rate bands + PRSI + USC', available: false },
+];
+---
+
+<BaseLayout
+  title="European Income Tax Calculators - EU Countries 2026"
+  metaTitle="European Income Tax Calculators 2026"
+  description="Free income tax calculators for 7 European countries. Calculate net salary, income tax, and social contributions for Germany, Netherlands, Denmark, Sweden, France, Italy, and Ireland."
+  canonical="https://calculations.tools/tax/income-tax-calculator/eu"
+  schema={schema}
+>
+  <div class="container">
+  <div class="seo-container" style="max-width:860px;margin:1rem auto;padding:2rem 1.5rem">
+    <h1>European Income Tax Calculators 2026</h1>
+    <p style="color:rgba(255,255,255,0.65);margin-bottom:2rem">Free income tax and net salary calculators for major European countries. Each calculator includes income tax, social security contributions, and full take-home pay breakdown using official 2026 rates.</p>
+
+    <div class="eu-hub-grid">
+      {countries.map(c => (
+        <div class={`eu-hub-card ${!c.available ? 'eu-hub-card--soon' : ''}`}>
+          <div class="eu-hub-badge">{c.abbr}</div>
+          <div class="eu-hub-info">
+            <div class="eu-hub-name">{c.name}</div>
+            <div class="eu-hub-rate">Top rate: {c.topRate} &middot; {c.currency}</div>
+            <div class="eu-hub-note">{c.note}</div>
+          </div>
+          <div class="eu-hub-action">
+            {c.available ? (
+              <a href={`/tax/income-tax-calculator/eu/${c.slug}`} class="eu-hub-btn no-underline">Calculate &rarr;</a>
+            ) : (
+              <span class="eu-hub-soon">Coming soon</span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <h2 style="margin-top:2.5rem">About these calculators</h2>
+    <p>Each European country calculator uses official 2026 tax rates and contribution thresholds. The calculators show income tax, all mandatory social security contributions (employee share), and net take-home pay broken down annually and monthly.</p>
+    <p>European income tax systems differ significantly from the US - most combine income tax with substantial social contributions that fund pensions, health insurance, and unemployment. The effective total deduction rate is typically 35-50% of gross salary for average earners.</p>
+
+    <ul class="related-tools-list" style="margin-top:1.5rem">
+      <li>
+        <span class="tool-icon">🗺️</span>
+        <div>
+          <a href="/tax/income-tax-calculator/us">US Income Tax - All 50 States</a>
+          <p>Federal and state income tax calculator for all 50 US states including FICA.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tool-icon">💰</span>
+        <div>
+          <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+          <p>Convert any annual or monthly salary to an hourly rate.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .eu-hub-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+  .eu-hub-card {
+    display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; transition: border-color 0.15s;
+  }
+  .eu-hub-card:not(.eu-hub-card--soon):hover {
+    border-color: rgba(139,92,246,0.35); background: rgba(139,92,246,0.05);
+  }
+  .eu-hub-card--soon { opacity: 0.55; }
+  .eu-hub-badge {
+    width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(139,92,246,0.5), rgba(59,130,246,0.5));
+    border: 1px solid rgba(139,92,246,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: 700; color: white;
+  }
+  .eu-hub-info { flex: 1; min-width: 0; }
+  .eu-hub-name { font-weight: 600; color: white; font-size: 0.95rem; }
+  .eu-hub-rate { font-size: 0.78rem; color: rgba(167,139,250,0.85); margin: 0.15rem 0; }
+  .eu-hub-note { font-size: 0.76rem; color: rgba(255,255,255,0.4); }
+  .eu-hub-btn {
+    padding: 0.35rem 0.9rem; background: rgba(139,92,246,0.25);
+    border: 1px solid rgba(139,92,246,0.4); border-radius: 20px;
+    color: rgba(255,255,255,0.9); font-size: 0.82rem; text-decoration: none;
+    white-space: nowrap; transition: background 0.15s;
+  }
+  .eu-hub-btn:hover { background: rgba(139,92,246,0.4); }
+  .eu-hub-soon {
+    padding: 0.35rem 0.9rem; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
+    color: rgba(255,255,255,0.35); font-size: 0.78rem; white-space: nowrap;
+  }
+</style>
