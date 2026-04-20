@@ -1,0 +1,684 @@
+---
+import CalculatorLayout from '../../../../layouts/CalculatorLayout.astro';
+import FinanceDisclaimer from '../../../../components/FinanceDisclaimer.astro';
+import { US_INCOME_TAX, FEDERAL_BRACKETS, FEDERAL_STANDARD_DEDUCTIONS, FICA_2025 } from '../../../../data/us-income-tax';
+import type { Source } from '../../components/Sources.astro';
+
+export function getStaticPaths() {
+  return US_INCOME_TAX.map(s => ({
+    params: { state: s.slug },
+    props: { state: s },
+  }));
+}
+const sources: Source[] = [
+  {
+    author: 'Tax Foundation',
+    title: 'State Individual Income Tax Rates and Brackets, 2026',
+    year: 2026,
+    url: 'https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/',
+  },
+  {
+    author: 'Internal Revenue Service (IRS)',
+    title: 'Topic no. 751, Social Security and Medicare withholding rates',
+    year: 2026,
+    url: 'https://www.irs.gov/taxtopics/tc751',
+  },
+];
+
+const { state } = Astro.props;
+
+const fs = state.single;
+const topRate = state.topRate;
+const noTax = state.noTax;
+const hasLocalTax = state.hasLocalTax;
+
+const tocItems = [
+  { id: 'how-to-use', label: `How to calculate ${state.name} income tax` },
+  { id: 'brackets', label: `${state.name} income tax brackets 2026` },
+  { id: 'federal', label: 'Federal income tax brackets 2026' },
+  { id: 'fica', label: 'FICA: Social Security & Medicare' },
+  ...(hasLocalTax ? [{ id: 'local', label: `${state.name} local income taxes` }] : []),
+  { id: 'deductions', label: 'Deductions and exemptions' },
+  { id: 'compare', label: `How ${state.name} compares` },
+  { id: 'faq', label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const bracketsSingle = JSON.stringify(fs.brackets.map(b => [b.min, b.max, b.rate]));
+const bracketsMfj = JSON.stringify(state.mfj.brackets.map(b => [b.min, b.max, b.rate]));
+const bracketsHoh = JSON.stringify(state.hoh.brackets.map(b => [b.min, b.max, b.rate]));
+const bracketsMfs = JSON.stringify(state.mfs.brackets.map(b => [b.min, b.max, b.rate]));
+
+const fedBracketsForDisplay = FEDERAL_BRACKETS.single;
+
+function calcTaxForDisplay(income: number, brackets: typeof fs.brackets) {
+  let tax = 0;
+  for (const b of brackets) {
+    if (income <= b.min) break;
+    const top = b.max === null ? income : Math.min(income, b.max);
+    tax += (top - b.min) * (b.rate / 100);
+  }
+  return tax;
+}
+
+const exampleIncome = 75000;
+const exampleFedTaxable = Math.max(0, exampleIncome - FEDERAL_STANDARD_DEDUCTIONS.single);
+const exampleFedTax = calcTaxForDisplay(exampleFedTaxable, FEDERAL_BRACKETS.single.map(b => ({ min: b.min, max: b.max, rate: b.rate })));
+const exampleStateStd = fs.standardDeduction;
+const exampleStateExempt = fs.personalExemption || 0;
+const exampleStateTaxable = Math.max(0, exampleIncome - exampleStateStd - exampleStateExempt);
+const exampleStateTax = noTax ? 0 : calcTaxForDisplay(exampleStateTaxable, fs.brackets);
+const exampleSS = Math.min(exampleIncome, FICA_2025.socialSecurityWageBase) * FICA_2025.socialSecurityRate / 100;
+const exampleMed = exampleIncome * FICA_2025.medicareRate / 100;
+const exampleTotal = exampleFedTax + exampleStateTax + exampleSS + exampleMed;
+const exampleTakeHome = exampleIncome - exampleTotal;
+const exampleEffective = (exampleTotal / exampleIncome * 100).toFixed(1);
+
+const faqAns1 = noTax
+  ? `${state.name} has no state income tax. Residents pay only federal income tax and FICA (Social Security and Medicare).`
+  : `${state.name}'s top income tax rate is ${topRate}%${fs.brackets.length === 1 ? ' flat (applied to all income)' : ` (the highest of ${fs.brackets.length} brackets)`}. The state also provides a standard deduction of $${fs.standardDeduction.toLocaleString()} for single filers.`;
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": `${state.name} Income Tax Calculator`,
+    "url": `https://calculations.tools/tax/income-tax-calculator/us/${state.slug}`,
+    "description": `Calculate ${state.name} income tax for 2026. Includes federal and state brackets, FICA, filing status, deductions, and full take-home pay breakdown.`,
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `What is the income tax rate in ${state.name}?`,
+        "acceptedAnswer": { "@type": "Answer", "text": faqAns1 },
+      },
+      {
+        "@type": "Question",
+        "name": `How much income tax will I pay in ${state.name} on $75,000?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `A single filer earning $75,000 in ${state.name} in 2026 would pay approximately $${exampleFedTax.toFixed(0)} in federal income tax, $${exampleStateTax.toFixed(0)} in ${state.name} state income tax, and $${(exampleSS + exampleMed).toFixed(0)} in FICA taxes (Social Security and Medicare), leaving a take-home pay of approximately $${exampleTakeHome.toFixed(0)} per year. The overall effective tax rate is approximately ${exampleEffective}%.`,
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "What is FICA and do I have to pay it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `Yes, FICA is mandatory for most W-2 employees. It consists of Social Security (6.2% on wages up to $${FICA_2025.socialSecurityWageBase.toLocaleString()} in 2026) and Medicare (1.45% on all wages). High earners pay an additional 0.9% Medicare surtax on wages over $200,000.`,
+        },
+      },
+    ],
+  }
+];
+---
+
+<CalculatorLayout
+  title={`${state.name} Income Tax Calculator 2026`}
+  metaTitle={`${state.name} Income Tax Calculator 2026 - Take-Home Pay ᐅ`}
+  description={noTax ? `${state.name} has no state income tax. Use this calculator to see your federal income tax, FICA, and take-home pay for 2026.` : `${state.name} income tax calculator for 2026. Includes state brackets (top rate ${topRate}%), federal tax, Social Security, and Medicare. See your exact take-home pay.`}
+  canonical={`https://calculations.tools/tax/income-tax-calculator/us/${state.slug}`}
+  tocItems={tocItems}
+  schema={schema}
+  sources={sources}
+  embedSlug={`income-tax-calculator/us/${state.slug}`}
+  ogFormula={noTax ? `${state.name}: No state income tax` : `${state.name} top rate: ${topRate}%`}
+  ogExample={`$75,000 salary - ~$${exampleTotal.toFixed(0)} taxes = ~$${exampleTakeHome.toFixed(0)} take-home`}
+>
+
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="itax-card" id="itax-calculator"
+          data-slug={state.slug}
+          data-no-tax={noTax}
+          data-has-local-tax={hasLocalTax}
+          data-brackets-single={bracketsSingle}
+          data-brackets-mfj={bracketsMfj}
+          data-brackets-hoh={bracketsHoh}
+          data-brackets-mfs={bracketsMfs}
+          data-std-single={state.single.standardDeduction}
+          data-std-mfj={state.mfj.standardDeduction}
+          data-std-hoh={state.hoh.standardDeduction}
+          data-std-mfs={state.mfs.standardDeduction}
+          data-exempt-single={state.single.personalExemption || 0}
+          data-exempt-mfj={state.mfj.personalExemption || 0}
+          data-exempt-hoh={state.hoh.personalExemption || 0}
+          data-exempt-mfs={state.mfs.personalExemption || 0}
+        >
+          <div class="itax-header">
+            <div class="itax-state-badge">{state.abbr}</div>
+            <div class="itax-header-info">
+              <div class="itax-state-name"><h2>Calculate {state.name} Income Tax</h2></div>
+              {noTax ? (
+                <div class="itax-rate-line itax-no-tax">
+                  <span class="itax-rate-pill itax-notax-pill">No state income tax</span>
+                </div>
+              ) : (
+                <div class="itax-rate-line">
+                  <span class="itax-rate-pill">{fs.brackets.length === 1 ? `${topRate}% flat` : `Up to ${topRate}%`}</span>
+                  <span class="itax-rate-pill itax-pill-alt">{fs.brackets.length} bracket{fs.brackets.length !== 1 ? 's' : ''}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div class="updated-live">
+            <span class="cc-dot"></span>
+            <span>Tax brackets updated quarterly</span>
+          </div>
+
+          {noTax && (
+            <div class="itax-no-tax-notice">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              <div>
+                <strong>{state.name} has no state income tax.</strong> You still pay federal income tax and FICA (Social Security + Medicare).
+              </div>
+            </div>
+          )}
+
+          <div class="bmi-field">
+            <label class="bmi-label" for="itax-gross">Annual gross income ($)</label>
+            <input id="itax-gross" class="amount-input itax-input" type="text" inputmode="decimal" placeholder="75,000" />
+          </div>
+
+          <div class="bmi-field">
+            <label class="bmi-label" for="itax-filing">Filing status</label>
+            <div class="bmi-input-wrap">
+              <select id="itax-filing" class="bmi-input">
+                <option value="single">Single</option>
+                <option value="mfj">Married Filing Jointly</option>
+                <option value="hoh">Head of Household</option>
+                <option value="mfs">Married Filing Separately</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="bmi-field">
+            <label class="bmi-label" for="itax-pretax-deductions">Pre-tax deductions (optional)</label>
+            <div class="bmi-input-wrap">
+            <input id="itax-pretax-deductions" class="bmi-input itax-input" type="text" inputmode="decimal" placeholder="e.g. 23500 for max 401(k)" />
+            </div>
+            <span class="stax-rate-hint">401(k), IRA, HSA, health insurance premiums. Reduces both income and FICA taxable wages.</span>
+          </div>
+
+          <div class="bmi-field">
+            <label class="bmi-label" for="itax-itemized">Itemized deductions (optional)</label>
+            <div class="bmi-input-wrap">
+            <input id="itax-itemized" class="bmi-input itax-input" type="text" inputmode="decimal" placeholder="Leave blank to use standard deduction" />
+            </div>
+            <span class="stax-rate-hint">Mortgage interest, state/local taxes, charity. If blank or less than standard deduction, the standard deduction is used automatically.</span>
+          </div>
+
+          <div class="bmi-field">
+            <label class="bmi-label" for="itax-posttax-deductions">Post-tax deductions (optional)</label>
+            <div class="bmi-input-wrap">
+            <input id="itax-posttax-deductions" class="bmi-input itax-input" type="text" inputmode="decimal" placeholder="e.g. Roth 401(k), life insurance" />
+            </div>
+            <span class="stax-rate-hint">Roth contributions, union dues, etc. Deducted from take-home but do not reduce taxable income.</span>
+          </div>
+
+          {hasLocalTax && state.localRates && state.localRates.length > 0 && (
+            <div class="bmi-field">
+              <label class="bmi-label" for="itax-local">{state.localTaxLabel || 'Local'} income tax (optional)</label>
+              <div class="bmi-input-wrap">
+                <select id="itax-local" class="bmi-input">
+                  <option value="0">None / I don't know</option>
+                  {state.localRates.map(lr => (
+                    <option value={lr.rate}>{lr.name} - {lr.rate}%</option>
+                  ))}
+                </select>
+              </div>
+              {state.localTaxNote && (
+                <span class="stax-rate-hint">{state.localTaxNote}</span>
+              )}
+            </div>
+          )}
+
+          {hasLocalTax && (!state.localRates || state.localRates.length === 0) && (
+            <div class="bmi-field">
+              <label class="bmi-label" for="itax-local-custom">Local income tax rate (optional)</label>
+              <div class="bmi-input-wrap">
+                <input id="itax-local-custom" class="bmi-input itax-input" type="text" inputmode="decimal" placeholder="0.00" />
+                <span class="bmi-unit-tag">%</span>
+              </div>
+              {state.localTaxNote && (
+                <span class="stax-rate-hint">{state.localTaxNote}</span>
+              )}
+            </div>
+          )}
+
+          <div id="itax-results" class="hidden">
+            <div class="itax-results-grid">
+
+              <div class="itax-results-section">
+                <div class="itax-section-label">Income</div>
+                <div class="itax-result-row">
+                  <span>Gross income</span>
+                  <span id="itax-res-gross" class="itax-val">-</span>
+                </div>
+                <div class="itax-result-row">
+                  <span>Pre-tax deductions</span>
+                  <span id="itax-res-pretax" class="itax-val itax-deduct-val">-</span>
+                </div>
+                <div class="itax-result-row itax-row-highlight">
+                  <span>Adjusted gross income</span>
+                  <span id="itax-res-agi" class="itax-val">-</span>
+                </div>
+              </div>
+
+              <div class="itax-results-section">
+                <div class="itax-section-label">Taxes</div>
+                <div class="itax-result-row">
+                  <span>Federal income tax</span>
+                  <span id="itax-res-fed" class="itax-val itax-tax-val">-</span>
+                </div>
+                <div class="itax-result-row itax-nested">
+                  <span>Eff. / Marginal federal rate</span>
+                  <span id="itax-res-fed-eff" class="itax-val itax-rate-val">-</span>
+                  <span style="color:rgba(255,255,255,0.3);font-size:0.78rem;margin:0 0.15rem">/</span>
+                  <span id="itax-res-fed-marginal" class="itax-val itax-rate-val">-</span>
+                </div>
+                <div class="itax-result-row">
+                  <span>{noTax ? `${state.name} state tax` : `${state.name} income tax`}</span>
+                  <span id="itax-res-state" class="itax-val itax-tax-val">-</span>
+                </div>
+                {!noTax && (
+                  <div class="itax-result-row itax-nested">
+                    <span>Eff. / Marginal state rate</span>
+                    <span id="itax-res-state-eff" class="itax-val itax-rate-val">-</span>
+                    <span style="color:rgba(255,255,255,0.3);font-size:0.78rem;margin:0 0.15rem">/</span>
+                    <span id="itax-res-state-marginal" class="itax-val itax-rate-val">-</span>
+                  </div>
+                )}
+                {hasLocalTax && (
+                  <div class="itax-result-row">
+                    <span>Local tax</span>
+                    <span id="itax-res-local" class="itax-val itax-tax-val">-</span>
+                  </div>
+                )}
+                <div class="itax-result-row">
+                  <span>Social Security (6.2%)</span>
+                  <span id="itax-res-ss" class="itax-val itax-tax-val">-</span>
+                </div>
+                <div class="itax-result-row">
+                  <span>Medicare (1.45%+)</span>
+                  <span id="itax-res-med" class="itax-val itax-tax-val">-</span>
+                </div>
+                <div class="itax-result-row itax-row-highlight itax-row-tax-total">
+                  <span>Total taxes</span>
+                  <span id="itax-res-total-tax" class="itax-val">-</span>
+                </div>
+                <div class="itax-result-row itax-nested">
+                  <span>Overall effective rate</span>
+                  <span id="itax-res-effective" class="itax-val itax-rate-val">-</span>
+                </div>
+              </div>
+
+              <div class="itax-results-section">
+                <div class="itax-section-label">Take-home pay</div>
+                <div class="itax-result-row">
+                  <span>Post-tax deductions</span>
+                  <span id="itax-res-posttax" class="itax-val itax-deduct-val">-</span>
+                </div>
+                <div class="itax-result-row itax-row-highlight">
+                  <span>Annual take-home</span>
+                  <span id="itax-res-takehome" class="itax-val">-</span>
+                </div>
+                <div class="itax-result-row">
+                  <span>Monthly take-home</span>
+                  <span id="itax-res-takehome-mo" class="itax-val">-</span>
+                </div>
+                <div class="itax-result-row itax-row-last">
+                  <span>Bi-weekly paycheck</span>
+                  <span id="itax-res-takehome-bw" class="itax-val">-</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="itax-breakdown-wrap">
+              <details class="itax-breakdown-details">
+                <summary>Federal tax bracket breakdown</summary>
+                <div class="responsive-table" style="margin-top:0.75rem">
+                  <table class="itax-breakdown-table">
+                    <thead><tr><th>Income range</th><th>Rate</th><th>Income in bracket</th><th>Tax</th></tr></thead>
+                    <tbody id="itax-fed-breakdown"></tbody>
+                  </table>
+                </div>
+              </details>
+              {!noTax && (
+                <details class="itax-breakdown-details">
+                  <summary>{state.name} state tax bracket breakdown</summary>
+                  <div class="responsive-table" style="margin-top:0.75rem">
+                    <table class="itax-breakdown-table">
+                      <thead><tr><th>Income range</th><th>Rate</th><th>Income in bracket</th><th>Tax</th></tr></thead>
+                      <tbody id="itax-state-breakdown"></tbody>
+                    </table>
+                  </div>
+                </details>
+              )}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <FinanceDisclaimer />
+    <script src="/js/income-tax-calculator-us-state.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        {noTax ? (
+          <p><strong>{state.name} has no state income tax.</strong> Residents pay federal income tax at the standard US rates (10-37% in 2026) plus FICA taxes (6.2% Social Security on wages up to $176,100, plus 1.45% Medicare). Use the calculator above to see your exact federal tax and take-home pay.</p>
+        ) : (
+          <p>{state.name} income tax rates range from {fs.brackets[0]?.rate}% to {topRate}% in 2026{fs.brackets.length === 1 ? ' (flat rate applied to all income)' : ` across ${fs.brackets.length} tax brackets`}. On top of state tax, residents pay federal income tax (10-37%) and FICA (7.65%). A single filer earning $75,000 in {state.name} takes home approximately <strong>${exampleTakeHome.toLocaleString('en-US', { maximumFractionDigits: 0 })}</strong> after all taxes - an effective rate of {exampleEffective}%.</p>
+        )}
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key facts - {state.name} 2026</div>
+        <ul>
+          {noTax ? (
+            <>
+              <li>No state income tax - residents keep 100% of their wages from state taxation</li>
+              <li>Federal income tax: 10-37% (2026 brackets). Standard deduction: $15,000 (single)</li>
+              <li>FICA: 6.2% Social Security (up to $176,100) + 1.45% Medicare = 7.65% total</li>
+              <li>{state.notes}</li>
+            </>
+          ) : (
+            <>
+              <li>State income tax: {fs.brackets.length === 1 ? `flat ${topRate}%` : `${fs.brackets[0].rate}% - ${topRate}%`} | Standard deduction: ${fs.standardDeduction.toLocaleString()} (single)</li>
+              {(fs.personalExemption || 0) > 0 && <li>Personal exemption: ${(fs.personalExemption || 0).toLocaleString()} per filer</li>}
+              {hasLocalTax && <li>Local income taxes apply - select your {state.localTaxLabel || 'locality'} in the calculator above</li>}
+              <li>Federal income tax: 10-37% on top of state tax</li>
+              <li>{state.notes}</li>
+            </>
+          )}
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to calculate {state.name} income tax</h2>
+      <p>Use the calculator above for an instant result. Here is how the calculation works step by step:</p>
+      <ol>
+        <li><strong>Start with gross income</strong> - your total wages or salary before any deductions</li>
+        <li><strong>Subtract pre-tax deductions</strong> - 401(k) contributions, HSA, health insurance premiums paid pre-tax. This reduces both income tax and FICA</li>
+        <li><strong>Apply the federal standard deduction</strong> ($15,000 for single in 2026) or your itemized deductions, whichever is larger, to get federal taxable income</li>
+        <li><strong>Calculate federal income tax</strong> by applying the 2026 bracket rates (10-37%) to your federal taxable income</li>
+        {!noTax && <li><strong>Calculate {state.name} state income tax</strong> - subtract the state standard deduction{(fs.personalExemption || 0) > 0 ? ` and personal exemption ($${(fs.personalExemption || 0).toLocaleString()})` : ''} from AGI, then apply the state brackets</li>}
+        <li><strong>Add FICA taxes</strong> - 6.2% Social Security (capped at $176,100) + 1.45% Medicare (uncapped) + 0.9% additional Medicare above $200,000</li>
+        <li><strong>Subtract post-tax deductions</strong> - Roth 401(k), union dues, etc.</li>
+      </ol>
+
+      <h2 id="brackets">{state.name} income tax brackets 2026</h2>
+      {noTax ? (
+        <p>{state.name} has no state income tax. There are no brackets to apply - all wages are exempt from state income tax. {state.notes}</p>
+      ) : (
+        <>
+          <p>{fs.brackets.length === 1
+            ? `${state.name} uses a flat income tax rate of ${topRate}% applied to all taxable income. The state standard deduction for single filers is $${fs.standardDeduction.toLocaleString()}${(fs.personalExemption||0) > 0 ? `, plus a $${(fs.personalExemption||0).toLocaleString()} personal exemption` : ''}.`
+            : `${state.name} uses ${fs.brackets.length} income tax brackets ranging from ${fs.brackets[0].rate}% to ${topRate}%. The single filer standard deduction is $${fs.standardDeduction.toLocaleString()}${(fs.personalExemption||0) > 0 ? ` plus a $${(fs.personalExemption||0).toLocaleString()} personal exemption` : ''}.`
+          }</p>
+
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>Taxable income (single, 2026)</th><th>Rate</th></tr>
+              </thead>
+              <tbody>
+                {fs.brackets.map(b => (
+                  <tr>
+                    <td>{b.max === null ? `Over $${b.min.toLocaleString()}` : `$${b.min.toLocaleString()} - $${b.max.toLocaleString()}`}</td>
+                    <td><strong>{b.rate}%</strong></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {state.mfj.brackets.length > 0 && JSON.stringify(state.mfj.brackets) !== JSON.stringify(fs.brackets) && (
+            <>
+              <p>Married filing jointly brackets differ - the income thresholds are higher:</p>
+              <div class="responsive-table">
+                <table>
+                  <thead><tr><th>Taxable income (MFJ, 2026)</th><th>Rate</th></tr></thead>
+                  <tbody>
+                    {state.mfj.brackets.map(b => (
+                      <tr>
+                        <td>{b.max === null ? `Over $${b.min.toLocaleString()}` : `$${b.min.toLocaleString()} - $${b.max.toLocaleString()}`}</td>
+                        <td><strong>{b.rate}%</strong></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
+          <p>Source: <a href="https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/" target="_blank" rel="noopener noreferrer">Tax Foundation 2026</a>.</p>
+        </>
+      )}
+
+      <h2 id="federal">Federal income tax brackets 2026</h2>
+      <p>Federal income tax applies to all US residents regardless of state. The 2026 brackets (<a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" target="_blank" rel="noopener noreferrer">IR-2025-103</a>) are:</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Taxable income (single)</th><th>Taxable income (MFJ)</th><th>Rate</th></tr></thead>
+          <tbody>
+            <tr><td>$0 - $11,925</td><td>$0 - $23,850</td><td>10%</td></tr>
+            <tr><td>$11,926 - $48,475</td><td>$23,851 - $96,950</td><td>12%</td></tr>
+            <tr><td>$48,476 - $103,350</td><td>$96,951 - $206,700</td><td>22%</td></tr>
+            <tr><td>$103,351 - $197,300</td><td>$206,701 - $394,600</td><td>24%</td></tr>
+            <tr><td>$197,301 - $250,525</td><td>$394,601 - $501,050</td><td>32%</td></tr>
+            <tr><td>$250,526 - $626,350</td><td>$501,051 - $751,600</td><td>35%</td></tr>
+            <tr><td>Over $626,350</td><td>Over $751,600</td><td>37%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Federal standard deductions: Single $15,000 | <a href="/glossary/mfj">MFJ</a> $30,000 | Head of Household $22,500. The standard deduction is subtracted from gross income before applying brackets.</p>
+
+      <h2 id="fica">FICA: Social Security and Medicare (2026)</h2>
+      <p><a href="/glossary/fica">FICA taxes</a> are separate from income tax and fund Social Security and Medicare. Employees pay:</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Tax</th><th>Rate</th><th>Wage base</th></tr></thead>
+          <tbody>
+            <tr><td>Social Security</td><td>6.2%</td><td>First $176,100 of wages</td></tr>
+            <tr><td>Medicare</td><td>1.45%</td><td>All wages (no cap)</td></tr>
+            <tr><td>Additional Medicare surtax</td><td>0.9%</td><td>Wages over $200,000 (single) / $250,000 (MFJ)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Employers match the 6.2% Social Security and 1.45% Medicare contributions, so the total FICA contribution is 15.3% of wages up to the wage base. Self-employed individuals pay the full 15.3% (the "self-employment tax") but can deduct half as a business expense.</p>
+      <p>Source: <a href="https://www.irs.gov/taxtopics/tc751" target="_blank" rel="noopener noreferrer">IRS Topic No. 751 - Social Security and Medicare Withholding Rates</a>.</p>
+
+      {hasLocalTax && (
+        <>
+          <h2 id="local">{state.name} local income taxes</h2>
+          <p>{state.localTaxNote || `Some localities in ${state.name} levy additional income taxes on top of the state rate.`}</p>
+          {state.localRates && state.localRates.length > 0 && (
+            <div class="responsive-table">
+              <table>
+                <thead><tr><th>{state.localTaxLabel || 'Locality'}</th><th>Additional rate</th></tr></thead>
+                <tbody>
+                  {state.localRates.map(lr => (
+                    <tr><td>{lr.name}</td><td>{lr.rate}%</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
+      )}
+
+      <h2 id="deductions">Deductions and exemptions in {state.name}</h2>
+      <p><strong>Federal deductions (2026):</strong> The standard deduction is $15,000 for single filers ($30,000 MFJ). Itemize instead if your deductions (mortgage interest, state/local taxes capped at $10,000, charitable contributions, medical expenses over 7.5% of AGI) exceed the standard deduction.</p>
+      {!noTax && (
+        <p><strong>{state.name} state deductions:</strong> The state standard deduction is ${fs.standardDeduction.toLocaleString()} for single filers{(fs.personalExemption || 0) > 0 ? `, plus a $${(fs.personalExemption || 0).toLocaleString()} personal exemption per filer` : ''}. {state.mfj.standardDeduction > 0 ? `Married filing jointly filers get a $${state.mfj.standardDeduction.toLocaleString()} state standard deduction.` : ''}</p>
+      )}
+      <p><strong>Key pre-tax deductions that reduce both income tax and FICA taxable wages:</strong></p>
+      <ul>
+        <li>Traditional 401(k) or 403(b): up to $23,500 in 2026 ($31,000 if age 50+)</li>
+        <li>Health Savings Account (HSA): up to $4,300 self-only / $8,550 family in 2026</li>
+        <li>Employer health insurance premiums (Section 125 cafeteria plan)</li>
+        <li>Flexible Spending Account (FSA): up to $3,300 in 2026</li>
+        <li>Traditional IRA: up to $7,000 ($8,000 if 50+), subject to income limits</li>
+      </ul>
+
+      <h2 id="compare">How {state.name} compares to other states</h2>
+      {noTax ? (
+        <p>{state.name} is one of nine states with no income tax - a significant financial advantage for high earners. With no state income tax, a resident earning $100,000 in {state.name} pays roughly $3,000-$10,000 less annually in state taxes compared to the median state. See our <a href="/tax/income-tax-calculator/us">US income tax map</a> to compare all states.</p>
+      ) : (
+        <p>{state.name}'s top rate of {topRate}% places it {topRate > 7 ? 'among the higher-tax states' : topRate > 4 ? 'near the middle of the range' : 'among the lower-tax states'} in the US. The national median top state income tax rate is approximately 5-6%. California has the highest at 13.3%; nine states have no income tax at all. See our <a href="/tax/income-tax-calculator/us">US income tax comparison map</a> for a state-by-state view.</p>
+      )}
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>Does {state.name} have a state income tax?</h3>
+      {noTax ? (
+        <p>No. {state.name} has no state income tax on wages or salaries. Residents pay only federal income tax and FICA taxes. {state.notes}</p>
+      ) : (
+        <p>Yes. {state.name} taxes income at {fs.brackets.length === 1 ? `a flat rate of ${topRate}%` : `rates from ${fs.brackets[0].rate}% to ${topRate}%`} for the 2026 tax year.</p>
+      )}
+
+      <h3>How much income tax will I pay in {state.name} on $75,000?</h3>
+      <p>A single filer earning $75,000 in {state.name} in 2026 would pay approximately:</p>
+      <ul>
+        <li>Federal income tax: ${exampleFedTax.toLocaleString('en-US', { maximumFractionDigits: 0 })}</li>
+        {!noTax && <li>{state.name} state income tax: ${exampleStateTax.toLocaleString('en-US', { maximumFractionDigits: 0 })}</li>}
+        <li>Social Security: ${exampleSS.toLocaleString('en-US', { maximumFractionDigits: 0 })}</li>
+        <li>Medicare: ${exampleMed.toLocaleString('en-US', { maximumFractionDigits: 0 })}</li>
+        <li><strong>Take-home: ~${exampleTakeHome.toLocaleString('en-US', { maximumFractionDigits: 0 })} ({exampleEffective}% effective rate)</strong></li>
+      </ul>
+      <p>Use the calculator above for your exact income, filing status, and deductions.</p>
+
+      <h3>What is the difference between marginal and effective tax rate?</h3>
+      <p>Your marginal rate is the rate applied to your last dollar of income - the highest bracket you've reached. Your effective rate is total tax divided by gross income - what you actually pay on average. Your effective rate is always lower than your marginal rate in a progressive tax system, because only income within each bracket is taxed at that rate.</p>
+
+      <h3>Can I reduce my {state.name} income tax?</h3>
+      <p>Yes. Key strategies: maximize pre-tax retirement contributions (401k, IRA), contribute to an HSA if on a high-deductible health plan, and check whether itemizing deductions exceeds your standard deduction. Pre-tax contributions reduce both income tax and FICA taxes. Contributions to a traditional IRA reduce federal taxable income but may not reduce state income tax in all states.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🗺️</span>
+          <div>
+            <a href="/tax/income-tax-calculator/us">US Income Tax - All 50 States</a>
+            <p>Interactive map and hub covering income tax calculators for all 50 states.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🛒</span>
+          <div>
+            <a href={`/tax/sales-tax-calculator/us/${state.slug}`}>{state.name} Sales Tax Calculator</a>
+            <p>Calculate sales tax on purchases in {state.name} with ZIP code lookup.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💰</span>
+          <div>
+            <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+            <p>Convert your annual salary to an hourly rate.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⏱</span>
+          <div>
+            <a href="/finance/overtime-calculator">Overtime Calculator</a>
+            <p>Calculate regular and overtime pay from your hourly rate and hours worked.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+
+<style is:global>
+  .itax-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .itax-header { display: flex; align-items: center; gap: 1rem; }
+  .itax-state-badge {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(59,130,246,0.6));
+    border: 1px solid rgba(139,92,246,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .itax-state-name { color: white; margin-bottom: 0.35rem; }
+  .itax-rate-line { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .itax-rate-pill {
+    font-size: 0.78rem; padding: 0.2rem 0.55rem; border-radius: 20px;
+    background: rgba(139,92,246,0.25); border: 1px solid rgba(139,92,246,0.4); color: rgba(255,255,255,0.85);
+  }
+  .itax-pill-alt { background: rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.35); }
+  .itax-rate-line.itax-no-tax .itax-rate-pill { background: rgba(52,211,153,0.2); border-color: rgba(52,211,153,0.4); color: rgba(52,211,153,0.9); }
+  .itax-notax-pill { background: rgba(52,211,153,0.15) !important; border: 1px solid rgba(52,211,153,0.35) !important; color: rgba(52,211,153,0.9) !important; }
+  .itax-no-tax-notice {
+    display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem;
+    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2);
+    border-radius: 10px; color: rgba(255,255,255,0.85); font-size: 0.9rem; line-height: 1.5;
+  }
+  .itax-no-tax-notice svg { flex-shrink: 0; margin-top: 0.1rem; color: rgba(52,211,153,0.8); }
+  .itax-results-grid { display: flex; flex-direction: column; gap: 0; }
+  .itax-results-section {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; overflow: hidden; margin-top: 0.75rem;
+  }
+  .itax-section-label {
+    padding: 0.45rem 1rem; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: rgba(255,255,255,0.45); background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .itax-result-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.6rem 1rem; font-size: 0.88rem; color: rgba(255,255,255,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .itax-result-row:last-child { border-bottom: none; }
+  .itax-row-highlight { background: rgba(139,92,246,0.08); font-weight: 600; color: white; border-bottom-color: rgba(139,92,246,0.15) !important; }
+  .itax-row-tax-total { background: rgba(239,68,68,0.07) !important; border-bottom-color: rgba(239,68,68,0.15) !important; }
+  .itax-row-last { border-bottom: none; }
+  .itax-nested { padding-left: 1.5rem; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+  .itax-val { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .itax-tax-val { color: rgba(248,113,113,0.9); }
+  .itax-deduct-val { color: rgba(52,211,153,0.85); }
+  .itax-rate-val { color: rgba(167,139,250,0.9); font-size: 0.82rem; }
+  .itax-breakdown-wrap { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .itax-breakdown-details {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; overflow: hidden;
+  }
+  .itax-breakdown-details summary {
+    padding: 0.6rem 1rem; font-size: 0.82rem; color: rgba(255,255,255,0.6);
+    cursor: pointer; list-style: none; user-select: none;
+  }
+  .itax-breakdown-details summary:hover { color: rgba(255,255,255,0.85); }
+  .itax-breakdown-details[open] summary { color: rgba(167,139,250,0.9); }
+  .itax-breakdown-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .itax-breakdown-table th { padding: 0.4rem 0.6rem; text-align: left; color: rgba(255,255,255,0.4); font-size: 0.73rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .itax-breakdown-table td { padding: 0.4rem 0.6rem; color: rgba(255,255,255,0.75); border-top: 1px solid rgba(255,255,255,0.04); }
+  .stax-rate-hint {
+    font-size: 0.74rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.2rem;
+  }
+</style>

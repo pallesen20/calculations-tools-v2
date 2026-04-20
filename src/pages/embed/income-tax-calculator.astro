@@ -1,0 +1,96 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Income Tax Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Income Tax Calculator</h2>
+        <p>Any country or currency - enter your gross income and tax rate</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="itc-currency">Currency</label>
+        <div class="bmi-input-wrap">
+          <select id="itc-currency" class="bmi-input"></select>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="itc-income">Annual gross income</label>
+        <div class="bmi-input-wrap">
+          <input id="itc-income" class="amount-input" type="text" inputmode="decimal" placeholder="75000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="itc-rate">Effective income tax rate</label>
+        <div class="bmi-input-wrap">
+          <input id="itc-rate" class="bmi-input" type="text" inputmode="decimal" placeholder="25.00" />
+          <span class="bmi-unit-tag">%</span>
+        </div>
+      </div>
+
+      <div id="itc-result" class="hidden">
+        <div class="itc-results">
+          <div class="itc-result-row">
+            <span>Gross income</span>
+            <span id="itc-res-income" class="itc-val">-</span>
+          </div>
+          <div class="itc-result-row">
+            <span>Income tax</span>
+            <span id="itc-res-tax" class="itc-val itc-tax-val">-</span>
+          </div>
+          <div class="itc-result-row itc-row-highlight">
+            <span>After-tax income (annual)</span>
+            <span id="itc-res-aftertax" class="itc-val">-</span>
+          </div>
+          <div class="itc-result-row">
+            <span>Monthly take-home</span>
+            <span id="itc-res-monthly" class="itc-val">-</span>
+          </div>
+          <div class="itc-result-row">
+            <span>Weekly take-home</span>
+            <span id="itc-res-weekly" class="itc-val">-</span>
+          </div>
+          <div class="itc-result-row itc-row-last">
+            <span>Rate used</span>
+            <span id="itc-res-rate-used" class="itc-val itc-rate-val">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/income-tax-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .itc-results {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+  .itc-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .itc-row-highlight {
+    background: rgba(139,92,246,0.08);
+    font-weight: 600;
+    color: white;
+    border-bottom-color: rgba(139,92,246,0.15);
+  }
+  .itc-row-last { border-bottom: none; }
+  .itc-val { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .itc-tax-val { color: rgba(248,113,113,0.9); }
+  .itc-rate-val { color: rgba(167,139,250,0.9); }
+</style>

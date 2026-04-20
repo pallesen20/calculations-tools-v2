@@ -1572,6 +1572,54 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'fica': {
+    definition: [
+      'FICA (Federal Insurance Contributions Act) taxes are mandatory payroll taxes withheld from every US W-2 paycheck. The total employee rate is 7.65%: 6.2% for Social Security and 1.45% for Medicare. Social Security is capped - once wages exceed the annual wage base ($176,100 in 2025), no further Social Security tax is withheld for the rest of the year. Medicare has no cap; the 1.45% applies to all wages. High earners also owe an Additional Medicare Tax of 0.9% on wages above $200,000 for single filers ($250,000 for married filing jointly), paid only by the employee.',
+      'Employers pay a matching 7.65% on top of each employee\'s wages - 6.2% Social Security and 1.45% Medicare. This means the combined FICA contribution on a paycheck is 15.3%. From an employer\'s perspective, a $100,000 salary actually costs $107,650 before any other benefits. Unlike income tax, which varies by bracket and deductions, FICA is a flat percentage applied mechanically to wages.',
+      'Self-employed individuals pay both halves of FICA themselves as the "self-employment tax" of 15.3% on net self-employment income. To offset the extra burden, the IRS allows them to deduct half of the self-employment tax (7.65%) from gross income when calculating federal income tax. FICA does not apply to distributions from S-corporations, partnerships, or pass-through entities - only to wages and salaries.',
+    ],
+    whenToUse: 'Use FICA estimates when comparing job offers by true take-home value, calculating the real employer cost of a hire (wages plus 7.65% FICA match), or planning self-employment income where you owe the full 15.3% self-employment tax. Also use it when evaluating whether to defer income into pre-tax accounts - traditional 401(k) and HSA contributions reduce FICA taxable wages as well as income tax.',
+    examples: {
+      headers: ['Gross wages', 'Social Security (6.2%)', 'Medicare (1.45%)', 'Total FICA', 'Employer match'],
+      rows: [
+        ['$50,000', '$3,100', '$725', '$3,825', '$3,825'],
+        ['$100,000', '$6,200', '$1,450', '$7,650', '$7,650'],
+        ['$176,100 (wage base)', '$10,918', '$2,553', '$13,471', '$13,471'],
+        ['$200,000', '$10,918', '$2,900', '$13,818', '$13,818'],
+        ['$250,000 (single, Addl. Medicare)', '$10,918', '$3,625 + $450*', '$14,993*', '$13,818'],
+      ],
+    },
+    pitfalls: '* The Additional Medicare Tax of 0.9% on wages above $200,000 (single) is paid only by the employee - the employer does not match it. Many paycheck calculators omit this line item. The second common mistake is treating the Social Security wage base as fixed: it increases annually. Using the prior year\'s cap overstates Social Security withholding for high earners. Finally, note that FICA is not reduced by the standard deduction or itemized deductions - it applies to gross wages before any income tax adjustments.',
+    faqs: [
+      { q: 'What does FICA stand for, and what does it fund?', a: 'FICA stands for the Federal Insurance Contributions Act. The Social Security portion (6.2%) funds retirement, disability, and survivor benefits administered by the Social Security Administration. The Medicare portion (1.45%) funds hospital insurance for people 65 and older and certain disabled individuals.' },
+      { q: 'Do employers pay FICA in addition to your salary?', a: 'Yes. Employers pay a matching 7.65% on top of every employee\'s wages - separate from and in addition to the gross salary. A $100,000 salaried employee costs the employer at least $107,650 in FICA alone, before health insurance, retirement contributions, or other benefits.' },
+      { q: 'Can I avoid paying FICA?', a: 'For most W-2 employees, no. FICA is mandatory and withheld automatically. However, some limited exemptions exist: student workers employed by their own university, members of certain religious groups who have formally opted out, and non-resident aliens on specific visa types may be partially or fully exempt. Self-employed individuals cannot avoid the tax but can deduct half of it.' },
+    ],
+  },
+
+  'mfj': {
+    definition: [
+      'Married Filing Jointly (MFJ) is a US federal income tax filing status available to legally married couples. Both spouses\' income, deductions, and credits are combined on a single tax return. MFJ uses wider tax brackets than single filers - in 2025, the 22% bracket for MFJ starts at $94,300 compared to $47,150 for single filers. The standard deduction is also double: $30,000 MFJ versus $15,000 single in 2025. For most couples where one spouse earns significantly more than the other, MFJ produces a lower combined tax bill than filing separately.',
+      'The MFJ benefit is largest when income is unequal between spouses. If one partner earns $120,000 and the other earns $0, filing jointly keeps the higher income in lower brackets. When both spouses earn similar high incomes, the so-called "marriage penalty" can arise - their combined income pushes them into higher brackets than they would face as two single filers. The marriage penalty is most pronounced in the 32%, 35%, and 37% brackets where MFJ thresholds are less than double the single thresholds.',
+      'MFJ is one of four federal filing statuses: single, married filing jointly, married filing separately (MFS), and head of household (HoH). Most married couples choose MFJ because it provides broader brackets and a higher standard deduction than MFS. Filing separately is sometimes advantageous when one spouse has significant medical expenses (subject to a 7.5% AGI floor), student loan income-driven repayment plans, or legal liability concerns.',
+    ],
+    whenToUse: 'Use MFJ if you are legally married and want the lowest combined federal tax bill in most situations. Run a comparison with married filing separately if one spouse has high medical expenses, significant miscellaneous deductions, or an income-driven student loan repayment plan that benefits from a lower individual AGI.',
+    examples: {
+      headers: ['Filing status', '$180,000 combined income', 'Standard deduction', 'Taxable income', 'Estimated federal tax'],
+      rows: [
+        ['Single x2 (each $90,000)', 'Two separate returns', '$15,000 x2 = $30,000', '$75,000 each', '~$12,615 each = $25,230 total'],
+        ['Married Filing Jointly', 'One joint return', '$30,000', '$150,000 combined', '~$24,183 total'],
+        ['Married Filing Separately', 'Two separate returns', '$15,000 x2', '$75,000 each', '~$12,615 each = $25,230 total'],
+      ],
+    },
+    pitfalls: 'Both spouses are jointly and severally liable for taxes, interest, and penalties on an MFJ return - even if only one spouse earned the income or made an error. If you have concerns about a spouse\'s tax compliance, consider filing separately to protect yourself from their tax liabilities. Also note that some tax benefits phase out at lower thresholds for MFJ filers than for single filers (e.g. Roth IRA contribution limits).',
+    faqs: [
+      { q: 'Does Married Filing Jointly always save taxes?', a: 'No. For two high earners with similar incomes, MFJ can trigger a "marriage penalty" where combined brackets are higher than filing as two single people. This is most pronounced in the 32-37% federal brackets and in states like California. For couples with very unequal incomes (one high earner, one low or non-earner), MFJ almost always saves taxes.' },
+      { q: 'Can I file jointly if my spouse has no income?', a: 'Yes. You can file MFJ even if one spouse had zero income, did not work, or did not file individually. The non-earning spouse still signs the joint return. This is often the most tax-efficient option for couples with a stay-at-home partner.' },
+      { q: 'What is the difference between MFJ and MFS?', a: 'Married Filing Jointly combines both spouses\' income on one return, uses wider brackets, and doubles the standard deduction. Married Filing Separately (MFS) treats each spouse as nearly independent - each uses single-style brackets and a lower standard deduction. MFS is rarely advantageous for federal taxes but may reduce individual AGI for income-driven student loan repayment calculations or when one spouse has large deductions subject to AGI-based floors.' },
+    ],
+  },
+
   'regular-rate-of-pay': {
     definition: [
       'The regular rate of pay is the baseline hourly rate used to calculate overtime compensation under the FLSA. For hourly workers it equals the standard hourly wage. For salaried workers it is calculated by dividing the weekly salary by the number of hours the salary is intended to cover.',

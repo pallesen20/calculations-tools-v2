@@ -1,0 +1,320 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { US_INCOME_TAX } from '../../../../data/us-income-tax';
+
+const CELL = 44;
+const GAP = 4;
+const STEP = CELL + GAP;
+const MARGIN = 4;
+const COLS = 12;
+const ROWS = 8;
+const W = COLS * STEP + MARGIN;
+const H = ROWS * STEP + MARGIN + 60;
+
+function getColor(state: typeof US_INCOME_TAX[0]): string {
+  if (state.noTax) return 'rgba(100,116,139,0.55)';
+  const r = state.topRate;
+  if (r < 3) return 'rgba(52,211,153,0.55)';
+  if (r < 5) return 'rgba(251,191,36,0.6)';
+  if (r < 7) return 'rgba(251,146,60,0.65)';
+  if (r < 9) return 'rgba(239,68,68,0.65)';
+  return 'rgba(220,38,127,0.72)';
+}
+
+const cx = (col: number) => MARGIN + col * STEP;
+const cy = (row: number) => MARGIN + row * STEP;
+
+const sorted = [...US_INCOME_TAX].filter(s => !s.noTax).sort((a, b) => b.topRate - a.topRate);
+const noTaxStates = US_INCOME_TAX.filter(s => s.noTax);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "US Income Tax Calculator - All 50 States",
+  "url": "https://calculations.tools/tax/income-tax-calculator/us",
+  "description": "US income tax calculator hub covering all 50 states. View 2026 tax brackets, compare state rates, and open full paycheck calculators for every state including federal, state, and FICA taxes."
+};
+---
+
+<BaseLayout
+  title="US Income Tax Calculator - All 50 States"
+  metaTitle="US Income Tax by State 2026 | US Paycheck Calculators ᐅ"
+  description="Full US income tax calculator for all 50 states. 2026 federal and state tax brackets, FICA, filing status, deductions, and take-home pay breakdown for every state."
+  canonical="https://calculations.tools/tax/income-tax-calculator/us"
+  schema={schema}
+>
+  <main class="us-hub">
+
+    <div class="us-hub-hero">
+      <div class="us-hub-hero-inner">
+        <h1>US Income Tax Calculator 2026 - All 50 States</h1>
+        <p class="us-hub-lead">Click any state to open a full income tax calculator with 2026 federal brackets, state brackets, FICA taxes, filing status, deductions, and take-home pay. Nine states have no income tax.</p>
+        <div class="updated-live">
+          <span class="cc-dot"></span>
+          <span>Tax brackets updated quarterly</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="us-hub-content">
+
+      <section class="us-map-section">
+        <h2>Interactive US Income Tax Map</h2>
+        <p class="us-map-sub">Color indicates state top marginal rate. Click any state to open the full income tax calculator.</p>
+
+        <div class="us-map-wrap">
+          <svg
+            viewBox={`0 0 ${W} ${H}`}
+            xmlns="http://www.w3.org/2000/svg"
+            class="us-map-svg"
+            role="img"
+            aria-label="Interactive US income tax map - click a state to open its calculator"
+          >
+            {US_INCOME_TAX.map(state => {
+              const x = cx(state.mapCol);
+              const y = cy(state.mapRow);
+              const color = getColor(state);
+              const label = state.noTax ? '0%' : `${state.topRate}%`;
+              return (
+                <a href={`/tax/income-tax-calculator/us/${state.slug}`} class="map-state-link" data-state={state.name} data-rate={state.topRate} data-notax={state.noTax ? 'true' : 'false'} aria-label={state.name + ': ' + (state.noTax ? 'No income tax' : state.topRate + '% top rate')}>
+                  <rect x={x} y={y} width={CELL} height={CELL} rx="5" class="map-state-rect" style={`fill:${color}`} />
+                  <text x={x + CELL / 2} y={y + 16} text-anchor="middle" class="map-abbr">{state.abbr}</text>
+                  <text x={x + CELL / 2} y={y + 30} text-anchor="middle" class="map-rate">{label}</text>
+                </a>
+              );
+            })}
+
+            <text x={MARGIN} y={ROWS * STEP + MARGIN + 22} class="map-legend-title">Top rate:</text>
+            <rect x={MARGIN + 60} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(100,116,139,0.55)" />
+            <text x={MARGIN + 78} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">No tax</text>
+            <rect x={MARGIN + 130} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(52,211,153,0.55)" />
+            <text x={MARGIN + 148} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">Under 3%</text>
+            <rect x={MARGIN + 218} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(251,191,36,0.6)" />
+            <text x={MARGIN + 236} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">3-5%</text>
+            <rect x={MARGIN + 280} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(251,146,60,0.65)" />
+            <text x={MARGIN + 298} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">5-7%</text>
+            <rect x={MARGIN + 345} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(239,68,68,0.65)" />
+            <text x={MARGIN + 363} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">7-9%</text>
+            <rect x={MARGIN + 410} y={ROWS * STEP + MARGIN + 10} width={14} height={14} rx="3" fill="rgba(220,38,127,0.72)" />
+            <text x={MARGIN + 428} y={ROWS * STEP + MARGIN + 22} class="map-legend-text">9%+</text>
+          </svg>
+
+          <div class="map-tooltip" id="map-tooltip" style="display:none">
+            <div class="map-tip-name" id="map-tip-name"></div>
+            <div class="map-tip-rate" id="map-tip-rate"></div>
+            <div class="map-tip-hint">Click to open calculator</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="us-facts-section">
+        <h2>Key facts about US income tax 2026</h2>
+        <div class="us-facts-grid">
+          <div class="us-fact-card">
+            <div class="us-fact-num">9</div>
+            <div class="us-fact-label">States with no income tax</div>
+            <div class="us-fact-detail">AK, FL, NV, NH, SD, TN, TX, WA, WY</div>
+          </div>
+          <div class="us-fact-card">
+            <div class="us-fact-num">13.3%</div>
+            <div class="us-fact-label">Highest state top rate</div>
+            <div class="us-fact-detail">California (+ 1% mental health surcharge)</div>
+          </div>
+          <div class="us-fact-card">
+            <div class="us-fact-num">37%</div>
+            <div class="us-fact-label">Federal top marginal rate</div>
+            <div class="us-fact-detail">On income over $626,350 (single, 2026)</div>
+          </div>
+          <div class="us-fact-card">
+            <div class="us-fact-num">$15,000</div>
+            <div class="us-fact-label">Federal standard deduction</div>
+            <div class="us-fact-detail">Single filers, 2026 ($30,000 for MFJ)</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="us-table-section">
+        <h2>State income tax rates 2026</h2>
+        <p style="color: white;">Sorted by top marginal rate (highest to lowest). Rates are for 2026 tax year. Sources: <a href="https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/" target="_blank" rel="noopener noreferrer">Tax Foundation 2026</a>; state revenue departments.</p>
+
+        <div class="responsive-table">
+          <table class="us-states-table">
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>Top rate</th>
+                <th>Structure</th>
+                <th>Local tax?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {noTaxStates.map(state => (
+                <tr>
+                  <td>
+                    <a href={`/tax/income-tax-calculator/us/${state.slug}`} class="us-state-link">
+                      <span class="us-state-abbr">{state.abbr}</span>
+                      {state.name}
+                    </a>
+                  </td>
+                  <td><span class="us-notax-badge">No tax</span></td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              ))}
+              {sorted.map(state => (
+                <tr>
+                  <td>
+                    <a href={`/tax/income-tax-calculator/us/${state.slug}`} class="us-state-link">
+                      <span class="us-state-abbr">{state.abbr}</span>
+                      {state.name}
+                    </a>
+                  </td>
+                  <td class={state.topRate >= 9 ? 'us-rate-high' : ''}><strong>{state.topRate}%</strong></td>
+                  <td class="us-exemption">{state.single.brackets.length <= 1 ? 'Flat rate' : state.single.brackets.length + ' brackets'}</td>
+                  <td>{state.hasLocalTax ? <span class="us-local-badge">Yes</span> : <span style="color:rgba(255,255,255,0.35)">No</span>}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div class="seo-container">
+        <div class="answer-box">
+          <div class="answer-box-label">Quick answer</div>
+          <p>US income tax is paid at both the federal and state level. Federal rates range from 10% to 37% (2026). Nine states have no income tax; California has the highest top rate at 13.3%. Most workers also pay 7.65% in FICA taxes (Social Security + Medicare). Click any state above for a full paycheck breakdown.</p>
+        </div>
+
+        <h2>How US income tax works</h2>
+        <p>The US uses a progressive federal income tax system with seven brackets (10-37% in 2026). Tax is applied only to taxable income, which is gross income minus deductions (the standard deduction is $15,000 for single filers in 2026).</p>
+        <p>On top of federal income tax, most states levy their own income tax. Nine states - Alaska, Florida, Nevada, New Hampshire, South Dakota, Tennessee, Texas, Washington, and Wyoming - have no state income tax on wages.</p>
+        <p>Employees also pay <a href="/glossary/fica">FICA taxes</a>: 6.2% for Social Security (on wages up to $176,100) and 1.45% for Medicare (uncapped), totaling 7.65%. High earners pay an additional 0.9% Medicare surtax on wages above $200,000.</p>
+
+        <h2>States with the highest income tax (2026)</h2>
+        <p>These states have the highest top marginal rates on ordinary income:</p>
+        <ol>
+          {sorted.slice(0, 8).map((s, i) => (
+            <li><a href={`/tax/income-tax-calculator/us/${s.slug}`}>{s.name}</a> - {s.topRate}% top rate</li>
+          ))}
+        </ol>
+
+        <h2>States with no income tax</h2>
+        <p>Nine states collect no income tax on wages:</p>
+        <ul>
+          {noTaxStates.map(s => (
+            <li><a href={`/tax/income-tax-calculator/us/${s.slug}`}>{s.name}</a></li>
+          ))}
+        </ul>
+        <p>Note: Washington state has a capital gains tax (7%) on gains over $250,000. New Hampshire eliminated its last remaining income tax (on interest and dividends) as of January 1, 2026.</p>
+
+        <h2>2026 federal income tax brackets</h2>
+        <p>Federal brackets for single filers, 2026 tax year (<a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" target="_blank" rel="noopener noreferrer">IR-2025-103</a>):</p>
+        <div class="responsive-table">
+          <table>
+            <thead><tr><th>Taxable income (single)</th><th>Rate</th></tr></thead>
+            <tbody>
+              <tr><td>$0 - $11,925</td><td>10%</td></tr>
+              <tr><td>$11,926 - $48,475</td><td>12%</td></tr>
+              <tr><td>$48,476 - $103,350</td><td>22%</td></tr>
+              <tr><td>$103,351 - $197,300</td><td>24%</td></tr>
+              <tr><td>$197,301 - $250,525</td><td>32%</td></tr>
+              <tr><td>$250,526 - $626,350</td><td>35%</td></tr>
+              <tr><td>Over $626,350</td><td>37%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Standard deduction 2026: $15,000 (single), $30,000 (married filing jointly), $22,500 (head of household).</p>
+
+        <h2>Related tools</h2>
+        <ul class="related-tools-list">
+          <li>
+            <span class="tool-icon">💵</span>
+            <div>
+              <a href="/tax/income-tax-calculator">Global Income Tax Calculator</a>
+              <p>Simple calculator for any country or currency - enter income and tax rate.</p>
+            </div>
+          </li>
+          <li>
+            <span class="tool-icon">🛒</span>
+            <div>
+              <a href="/tax/sales-tax-calculator/us">US Sales Tax Calculator - All 50 States</a>
+              <p>Calculate sales tax for any state with ZIP code lookup and city rates.</p>
+            </div>
+          </li>
+          <li>
+            <span class="tool-icon">💰</span>
+            <div>
+              <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+              <p>Convert annual salary to hourly rate and estimate take-home pay.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .us-hub { min-height: 100vh; }
+  .us-hub-hero { border-bottom: 1px solid rgba(255,255,255,0.08); padding: 2.5rem 1.5rem 2rem; }
+  .us-hub-hero-inner { max-width: 900px; margin: 0 auto; }
+  .us-hub-hero h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 700; color: white; margin: 0 0 0.75rem; }
+  .us-hub-lead { font-size: 1rem; color: rgba(255,255,255,0.65); max-width: 640px; line-height: 1.6; margin: 0 0 1.25rem; }
+  .us-hub-content { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; display: flex; flex-direction: column; gap: 3rem; }
+  .us-map-section h2, .us-table-section h2, .us-facts-section h2 { font-size: 1.3rem; font-weight: 600; color: white; margin: 0 0 0.5rem; }
+  .us-map-sub { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin: 0 0 1.25rem; }
+  .us-map-wrap { position: relative; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; overflow: hidden; }
+  .us-map-svg { width: 100%; height: auto; display: block; }
+  .map-state-link { cursor: pointer; text-decoration: none; }
+  .map-state-link:focus { outline: 2px solid rgba(139,92,246,0.8); outline-offset: 2px; border-radius: 5px; }
+  .map-state-rect { transition: filter 0.12s; }
+  .map-state-link:hover .map-state-rect { filter: brightness(1.35) saturate(1.2); }
+  .map-abbr { font-size: 11px; font-weight: 700; fill: white; pointer-events: none; font-family: system-ui, sans-serif; }
+  .map-rate { font-size: 8.5px; fill: rgba(255,255,255,0.85); pointer-events: none; font-family: system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+  .map-legend-title { font-size: 9px; fill: rgba(255,255,255,0.5); font-family: system-ui, sans-serif; }
+  .map-legend-text { font-size: 9px; fill: rgba(255,255,255,0.65); font-family: system-ui, sans-serif; }
+  .map-tooltip { position: absolute; top: 12px; right: 12px; background: rgba(15,10,30,0.95); border: 1px solid rgba(139,92,246,0.4); border-radius: 8px; padding: 0.6rem 0.85rem; pointer-events: none; z-index: 10; }
+  .map-tip-name { font-size: 0.85rem; font-weight: 600; color: white; }
+  .map-tip-rate { font-size: 1rem; font-weight: 700; color: rgba(167,139,250,0.9); margin: 0.1rem 0; }
+  .map-tip-hint { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+  .us-states-table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+  .us-states-table th { text-align: left; padding: 0.6rem 0.75rem; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .us-states-table td { padding: 0.55rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: rgba(255,255,255,0.8); vertical-align: middle; }
+  .us-states-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+  .us-state-link { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 500; }
+  .us-state-link:hover { color: rgba(167,139,250,0.9); }
+  .us-state-abbr { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 20px; background: rgba(139,92,246,0.2); border-radius: 4px; font-size: 0.7rem; font-weight: 700; color: rgba(167,139,250,0.9); flex-shrink: 0; }
+  .us-notax-badge { display: inline-block; padding: 0.15rem 0.5rem; background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.3); border-radius: 20px; font-size: 0.7rem; color: rgba(52,211,153,0.9); }
+  .us-local-badge { display: inline-block; padding: 0.15rem 0.45rem; background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.3); border-radius: 20px; font-size: 0.7rem; color: rgba(251,191,36,0.9); }
+  .us-rate-high { color: rgba(248,113,113,0.9) !important; }
+  .us-exemption { font-size: 0.82rem; color: rgba(255,255,255,0.6); }
+  .us-facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
+  .us-fact-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 1.1rem; }
+  .us-fact-num { font-size: 1.75rem; font-weight: 700; color: rgba(167,139,250,0.9); margin-bottom: 0.25rem; font-variant-numeric: tabular-nums; }
+  .us-fact-label { font-size: 0.85rem; font-weight: 600; color: white; margin-bottom: 0.3rem; }
+  .us-fact-detail { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.4; }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    var tooltip = document.getElementById('map-tooltip');
+    var tipName = document.getElementById('map-tip-name');
+    var tipRate = document.getElementById('map-tip-rate');
+
+    document.querySelectorAll('.map-state-link').forEach(function(link) {
+      var name = link.dataset.state || '';
+      var rate = parseFloat(link.dataset.rate || '0');
+      var noTax = link.dataset.notax === 'true';
+
+      link.addEventListener('mouseenter', function() {
+        if (!tooltip || !tipName || !tipRate) return;
+        tipName.textContent = name;
+        tipRate.textContent = noTax ? 'No income tax' : rate + '% top marginal rate';
+        tooltip.style.display = '';
+      });
+      link.addEventListener('mouseleave', function() {
+        if (tooltip) tooltip.style.display = 'none';
+      });
+    });
+  });
+</script>

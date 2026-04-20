@@ -1,5 +1,6 @@
 import { GLOSSARY_TERMS } from '../data/glossary';
 import { US_SALES_TAX } from '../data/us-sales-tax';
+import { US_INCOME_TAX } from '../data/us-income-tax';
 
 export const SITE = 'https://calculations.tools';
 
@@ -1518,6 +1519,41 @@ TOP_CURRENCIES.forEach(from => {
 });
 
 entries.push({
+  path: '/tax/income-tax-calculator',
+  title: 'Income Tax Calculator - Free Online Tool',
+  description: 'Free income tax calculator for any country or currency. Enter your income and tax rate to instantly see your tax liability, after-tax income, and monthly take-home pay.',
+  changefreq: 'monthly' as const,
+  priority: 1.0,
+  icon: '💸',
+  short: 'Enter income and rate - see take-home pay',
+  featured: true,
+});
+
+entries.push({
+  path: '/tax/income-tax-calculator/us',
+  title: 'US Income Tax Calculator - All 50 States',
+  description: 'Full US income tax calculator for all 50 states. Federal and state tax brackets, FICA, filing status, deductions, and take-home pay breakdown for every state.',
+  changefreq: 'monthly' as const,
+  priority: 1.0,
+  icon: '🗺️',
+  short: 'Interactive map - click any state',
+});
+
+US_INCOME_TAX.forEach(state => {
+  entries.push({
+    path: `/tax/income-tax-calculator/us/${state.slug}`,
+    title: `${state.name} Income Tax Calculator`,
+    description: state.noTax
+      ? `${state.name} has no state income tax. Calculate your federal income tax, FICA, and take-home pay.`
+      : `${state.name} income tax calculator. State rate up to ${state.topRate}%, federal brackets, FICA, filing status, and full take-home pay breakdown.`,
+    changefreq: 'monthly' as const,
+    priority: 0.9,
+    icon: '💸',
+    short: state.noTax ? 'No state income tax' : `Up to ${state.topRate}% state rate`,
+  });
+});
+
+entries.push({
   path: '/tax/sales-tax-calculator',
   title: 'Sales Tax Calculator - Add or Remove Tax Instantly',
   description: 'Calculate sales tax on any purchase or remove tax from a total. Enter the price and tax rate to instantly see the tax amount and total. Add or reverse mode. Auto-detects your currency.',
@@ -1658,6 +1694,7 @@ export function getFinanceTools(): HealthToolMeta[] {
 
 const TAX_GROUPS: Record<string, string> = {
   'sales-tax-calculator': 'Sales Tax',
+  'income-tax-calculator': 'Income Tax',
   'vat-calculator':       'VAT',
   'gst-calculator':       'GST',
 };
