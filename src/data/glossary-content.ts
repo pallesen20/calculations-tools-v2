@@ -1641,4 +1641,68 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'heffingskorting': {
+    definition: [
+      'A heffingskorting is a Dutch tax credit that reduces the income tax owed - not the taxable income. This makes it more valuable than a deduction: a €1,000 credit saves exactly €1,000 in tax regardless of your bracket, whereas a €1,000 deduction saves only €355-€495 depending on which bracket you are in.',
+      'The two main heffingskortingen for employees are the algemene heffingskorting (general tax credit) and the arbeidskorting (employment credit). Both are calculated as a function of income and phase out at higher incomes. They are applied after Box 1 income tax is computed.',
+    ],
+    whenToUse: 'Use when calculating Dutch net salary from gross. Both credits reduce your final income tax bill. If the combined credits exceed your income tax, the excess is generally not refundable - you cannot pay negative tax. Use the Netherlands income tax calculator to compute your exact credits automatically.',
+    examples: {
+      headers: ['Gross income', 'Box 1 tax', 'AHK credit', 'AK credit', 'Net tax'],
+      rows: [
+        ['€40,000', '€14,175', '€1,628', '€5,685', '€6,862'],
+        ['€60,000', '€21,832', '€1,178', '€4,747', '€15,907'],
+        ['€80,000', '€32,010', '€0', '€2,109', '€29,901'],
+      ],
+    },
+    pitfalls: 'The heffingskortingen are non-refundable: they can reduce income tax to zero but cannot generate a cash refund on their own. They also phase out - higher earners receive smaller credits. Many online salary calculators only apply the AHK and miss the AK, or vice versa, leading to inaccurate take-home estimates.',
+    faqs: [
+      { q: 'What is the difference between the algemene heffingskorting and the arbeidskorting?', a: 'The algemene heffingskorting (AHK) is available to all Dutch taxpayers below state pension age. The arbeidskorting is only available to people with employment income - it rewards work. Both phase out at higher incomes. A typical €60,000 employee receives around €1,178 AHK and €4,747 AK in 2026.' },
+      { q: 'Are the heffingskortingen applied by the employer or the tax authority?', a: 'The employer deducts payroll tax (loonheffing) monthly, which incorporates an estimated AHK. The full picture - including the arbeidskorting - is reconciled in the annual income tax return (aangifte inkomstenbelasting) with the Belastingdienst (Dutch tax authority).' },
+    ],
+  },
+
+  'arbeidskorting': {
+    definition: [
+      'The arbeidskorting is a Dutch employment tax credit that reduces income tax for people with wages, salary, or other employment income. It is designed to make work financially more rewarding compared to benefits, by lowering the effective tax rate on earned income.',
+      'For 2026 the credit builds in four segments: it grows from 0 to €996 on income up to €11,965 (at 8.324%), continues growing to a peak of €5,685 at €45,592, then phases out at 6.51% per euro until it reaches zero at €132,920. Above €132,920 the credit is nil.',
+    ],
+    whenToUse: 'Apply the arbeidskorting whenever computing Dutch net salary for an employee. It is one of the two credits that directly reduce Box 1 income tax. It is not available to self-employed individuals using the zelfstandigenaftrek (entrepreneur deduction), benefit recipients, or pensioners - they have different credits.',
+    examples: {
+      headers: ['Gross income', 'Arbeidskorting', 'Notes'],
+      rows: [
+        ['€20,000', '€3,744', 'Building phase (segment 2)'],
+        ['€45,592', '€5,685', 'Maximum credit reached'],
+        ['€80,000', '€3,357', 'Phase-out phase (segment 4)'],
+        ['€132,920+', '€0', 'Credit fully phased out'],
+      ],
+    },
+    pitfalls: 'The arbeidskorting is often omitted in quick net salary estimates. Missing it results in significantly overstating the tax burden, especially at mid-range incomes where the credit is near its maximum. Also note: the credit has separate (lower) amounts for AOW recipients above state pension age.',
+    faqs: [
+      { q: 'At what income is the arbeidskorting at its maximum?', a: 'The arbeidskorting reaches its maximum of €5,685 at an employment income of €45,592 in 2026. Below that income it builds progressively. Above €45,592 the credit phases out at 6.51 cents per euro until it is fully gone at €132,920.' },
+      { q: 'Is the arbeidskorting the same as the algemene heffingskorting?', a: 'No. The algemene heffingskorting (AHK) is available to all Dutch taxpayers. The arbeidskorting is only for people with employment income. Both are applied to reduce Box 1 income tax. Together they can cut the effective tax rate substantially, especially for incomes in the €30,000-€60,000 range.' },
+    ],
+  },
+
+  'box-1-income-tax': {
+    definition: [
+      'Box 1 is the Dutch income tax category for income from employment and home ownership (work and home - werk en woning). It covers wages, freelance income, business profit, and the imputed rental value of an owner-occupied home. Most employees only have Box 1 income.',
+      'In 2026 Box 1 has three rate brackets. The first bracket (35.75% up to €38,883) is a combined rate including income tax plus social insurance premiums: AOW state pension (17.90%), ANW survivor benefit (0.10%), and WLZ long-term care (9.65%). Brackets 2 and 3 are pure income tax.',
+    ],
+    whenToUse: 'Use Box 1 rates whenever computing the income tax and social insurance burden for a Dutch employee or self-employed person earning wages or business profits. For investment income use Box 3 (wealth tax). For substantial interest in a company (5%+) use Box 2.',
+    examples: {
+      headers: ['Income bracket (2026)', 'Rate', 'Includes social insurance?'],
+      rows: [
+        ['Up to €38,883', '35.75%', 'Yes - AOW 17.90% + ANW 0.10% + WLZ 9.65%'],
+        ['€38,883 - €78,426', '37.56%', 'No - income tax only'],
+        ['Above €78,426', '49.50%', 'No - income tax only'],
+      ],
+    },
+    pitfalls: 'The first-bracket rate (35.75%) is often misquoted as "just income tax" - it is actually a combined rate including social insurance. AOW recipients do not pay the 17.90% AOW premium, dropping their first bracket rate to 17.85%. Forgetting this distinction leads to overestimating tax for pensioners by nearly 18 percentage points on the first €38,883 of income.',
+    faqs: [
+      { q: 'Why is the Dutch first tax bracket rate so high at 35.75%?', a: 'The 35.75% rate is a combined rate, not pure income tax. It bundles the income tax rate (8.10%) with three social insurance premiums: AOW state pension (17.90%), ANW survivor benefit (0.10%), and WLZ long-term care (9.65%). AOW recipients do not pay the 17.90% AOW premium, cutting their first-bracket rate to 17.85%.' },
+      { q: 'What is the difference between Box 1, Box 2, and Box 3 in the Netherlands?', a: 'Box 1 covers employment and business income (taxed at progressive rates 35.75-49.5%). Box 2 covers income from substantial company interest - dividends and capital gains from a 5%+ stake in a company (26.9% flat in 2026). Box 3 is a wealth tax on savings and investments charged on a deemed return regardless of actual return.' },
+    ],
+  },
+
 };

@@ -12,60 +12,18 @@ export function getStaticPaths() {
 }
 
 const { country } = Astro.props;
-const g = country.germanZones!;
+const isGermany = country.slug === 'germany';
+const isNetherlands = country.slug === 'netherlands';
+const g = country.germanZones;
+const ex = country.exampleIncome;
+const nlB = country.nlBrackets;
+const nlH = country.nlHeffingskorting;
+const nlA = country.nlArbeidskorting;
 
-const sources: Source[] = [
-  {
-    author: 'Bundesministerium der Finanzen',
-    title: 'Einkommensteuergesetz (EStG) - § 32a EStG Einkommensteuertarif 2026',
-    year: 2026,
-    url: 'https://www.gesetze-im-internet.de/estg/__32a.html',
-  },
-  {
-    author: 'Bundesministerium der Finanzen',
-    title: 'Sozialversicherungsrechengrossen 2026',
-    year: 2026,
-    url: 'https://www.bundesregierung.de/breg-de/aktuelles/beitragsgemessungsgrenzen-2386514',
-  },
-  {
-    author: 'Bundeszentralamt fur Steuern',
-    title: 'Solidaritatszuschlaggesetz (SolZG) 2026',
-    year: 2026,
-    url: 'https://www.bundesfinanzministerium.de/Content/DE/FAQ/2020-06-17-solidaritaetszuschlag.html',
-  },
-];
-
-const tocItems = [
-  { id: 'how-to-use', label: `How to calculate German income tax` },
-  { id: 'zones', label: 'Income tax zones 2026' },
-  { id: 'social', label: 'Social security contributions 2026' },
-  { id: 'tax-classes', label: 'Tax classes (Steuerklassen)' },
-  { id: 'soli', label: 'Solidarity surcharge (Solidaritatszuschlag)' },
-  { id: 'church', label: 'Church tax (Kirchensteuer)' },
-  { id: 'compare', label: 'How Germany compares' },
-  { id: 'faq', label: 'FAQs' },
-  { id: 'related-tools', label: 'Related tools' },
-];
-
-const zoneData = JSON.stringify(g);
-const socialData = JSON.stringify({
-  rvRate: country.rvRate,
-  rvCeiling: country.rvCeiling,
-  kvPublicRate: country.kvPublicRate,
-  kvCeiling: country.kvCeiling,
-  pvRateWith: country.pvRateWith,
-  pvRateChildless: country.pvRateChildless,
-  pvRateSnWith: country.pvRateSnWith || 0,
-  pvRateSnChildless: country.pvRateSnChildless || 0,
-  avRate: country.avRate,
-  avCeiling: country.avCeiling,
-});
-const soliData = JSON.stringify({
-  threshSingle: country.soliThreshSingle || 0,
-  threshMarried: country.soliThreshMarried || 0,
-});
+const fmtEur = (n: number) => '€' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
 
 function calcGermanTax(zvE: number): number {
+  if (!g) return 0;
   const yTop = (g.z2t - g.gf) / 10000;
   const c3 = (g.a2 * yTop + g.b2) * yTop;
   const zTop = (g.z3t - g.z2t) / 10000;
@@ -85,28 +43,147 @@ function calcGermanTax(zvE: number): number {
   return Math.floor(0.45 * zvE - c5);
 }
 
-const ex = country.exampleIncome;
-const exZvE = Math.max(0, ex - country.werbungskosten);
-const exEst = calcGermanTax(exZvE);
-const exRV = Math.round(country.rvRate * Math.min(ex, country.rvCeiling));
-const exKV = Math.round(country.kvPublicRate * Math.min(ex, country.kvCeiling));
-const exPV = Math.round(country.pvRateWith * Math.min(ex, country.kvCeiling));
-const exAV = Math.round(country.avRate * Math.min(ex, country.avCeiling));
+function calcNLTax(gross: number): number {
+  if (!nlB) return 0;
+  const t1 = Math.min(gross, nlB.b1Top) * nlB.b1Rate;
+  const t2 = gross > nlB.b1Top ? Math.min(gross - nlB.b1Top, nlB.b2Top - nlB.b1Top) * nlB.b2Rate : 0;
+  const t3 = gross > nlB.b2Top ? (gross - nlB.b2Top) * nlB.b3Rate : 0;
+  return Math.round(t1 + t2 + t3);
+}
+
+function calcNLAhk(gross: number): number {
+  if (!nlH) return 0;
+  if (gross <= nlH.phaseFrom) return nlH.max;
+  if (gross >= nlH.phaseTo) return 0;
+  return Math.max(0, Math.round(nlH.max - (gross - nlH.phaseFrom) * nlH.phaseRate));
+}
+
+function calcNLAk(gross: number): number {
+  if (!nlA) return 0;
+  if (gross <= nlA.s1Top) return Math.round(gross * nlA.s1Rate);
+  if (gross <= nlA.s2Top) return Math.round(nlA.s2Base + (gross - nlA.s1Top) * nlA.s2Rate);
+  if (gross <= nlA.s3Top) return Math.round(nlA.s3Base + (gross - nlA.s2Top) * nlA.s3Rate);
+  if (gross <= nlA.s4Top) return Math.max(0, Math.round(nlA.s4Base - (gross - nlA.s3Top) * nlA.s4Rate));
+  return 0;
+}
+
+const exZvE = (isGermany && g) ? Math.max(0, ex - country.werbungskosten) : 0;
+const exEst = isGermany ? calcGermanTax(exZvE) : 0;
+const exRV = isGermany ? Math.round(country.rvRate * Math.min(ex, country.rvCeiling)) : 0;
+const exKV = isGermany ? Math.round(country.kvPublicRate * Math.min(ex, country.kvCeiling)) : 0;
+const exPV = isGermany ? Math.round(country.pvRateWith * Math.min(ex, country.kvCeiling)) : 0;
+const exAV = isGermany ? Math.round(country.avRate * Math.min(ex, country.avCeiling)) : 0;
 const exTotal = exEst + exRV + exKV + exPV + exAV;
 const exNet = ex - exTotal;
 const exNetMonthly = Math.round(exNet / 12);
 const exEff = (exTotal / ex * 100).toFixed(1);
 const exEstEff = (exEst / ex * 100).toFixed(1);
 
-const fmtEur = (n: number) => '\u20ac' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+const nlExTax = isNetherlands ? calcNLTax(ex) : 0;
+const nlExAhk = isNetherlands ? calcNLAhk(ex) : 0;
+const nlExAk = isNetherlands ? calcNLAk(ex) : 0;
+const nlExNetTax = Math.max(0, nlExTax - nlExAhk - nlExAk);
+const nlExNet = ex - nlExNetTax;
+const nlExNetMonthly = Math.round(nlExNet / 12);
+const nlExEff = ex > 0 ? (nlExNetTax / ex * 100).toFixed(1) : '0.0';
 
-const schema = [
+const zoneData = g ? JSON.stringify(g) : '{}';
+const socialData = JSON.stringify({
+  rvRate: country.rvRate,
+  rvCeiling: country.rvCeiling,
+  kvPublicRate: country.kvPublicRate,
+  kvCeiling: country.kvCeiling,
+  pvRateWith: country.pvRateWith,
+  pvRateChildless: country.pvRateChildless,
+  pvRateSnWith: country.pvRateSnWith || 0,
+  pvRateSnChildless: country.pvRateSnChildless || 0,
+  avRate: country.avRate,
+  avCeiling: country.avCeiling,
+});
+const soliData = JSON.stringify({
+  threshSingle: country.soliThreshSingle || 0,
+  threshMarried: country.soliThreshMarried || 0,
+});
+const nlBracketsData = nlB ? JSON.stringify(nlB) : '{}';
+const nlHeffingData = nlH ? JSON.stringify(nlH) : '{}';
+const nlArbeidData = nlA ? JSON.stringify(nlA) : '{}';
+
+const deSources: Source[] = isGermany ? [
+  {
+    author: 'Bundesministerium der Finanzen',
+    title: 'Einkommensteuergesetz (EStG) - § 32a EStG Einkommensteuertarif 2026',
+    year: 2026,
+    url: 'https://www.gesetze-im-internet.de/estg/__32a.html',
+  },
+  {
+    author: 'Bundesministerium der Finanzen',
+    title: 'Sozialversicherungsrechengrossen 2026',
+    year: 2026,
+    url: 'https://www.bundesregierung.de/breg-de/aktuelles/beitragsgemessungsgrenzen-2386514',
+  },
+  {
+    author: 'Bundeszentralamt fur Steuern',
+    title: 'Solidaritatszuschlaggesetz (SolZG) 2026',
+    year: 2026,
+    url: 'https://www.bundesfinanzministerium.de/Content/DE/FAQ/2020-06-17-solidaritaetszuschlag.html',
+  },
+] : [];
+
+const nlSources: Source[] = isNetherlands ? [
+  {
+    author: 'Belastingdienst',
+    title: 'Tabel algemene heffingskorting 2026',
+    year: 2026,
+    url: 'https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/heffingskortingen/algemene_heffingskorting/tabel-algemene-heffingskorting-2026',
+  },
+  {
+    author: 'Belastingdienst',
+    title: 'Tabel arbeidskorting 2026',
+    year: 2026,
+    url: 'https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/heffingskortingen/arbeidskorting/tabel-arbeidskorting-2026',
+  },
+  {
+    author: 'Business.gov.nl',
+    title: 'Tax brackets for income tax will change in 2026',
+    year: 2026,
+    url: 'https://business.gov.nl/amendments/income-tax-brackets-change-in-2026/',
+  },
+] : [];
+
+const sources = isGermany ? deSources : nlSources;
+
+const deTocItems = [
+  { id: 'how-to-use', label: 'How to calculate German income tax' },
+  { id: 'zones', label: 'Income tax zones 2026' },
+  { id: 'social', label: 'Social security contributions 2026' },
+  { id: 'tax-classes', label: 'Tax classes (Steuerklassen)' },
+  { id: 'soli', label: 'Solidarity surcharge (Solidaritatszuschlag)' },
+  { id: 'church', label: 'Church tax (Kirchensteuer)' },
+  { id: 'compare', label: 'How Germany compares' },
+  { id: 'faq', label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const nlTocItems = [
+  { id: 'how-it-works', label: 'How Dutch income tax works' },
+  { id: 'brackets', label: 'Box 1 tax brackets 2026' },
+  { id: 'credits', label: 'Tax credits (heffingskortingen)' },
+  { id: 'step-by-step', label: 'Step-by-step calculation' },
+  { id: 'healthcare', label: 'Healthcare insurance (ZVW)' },
+  { id: 'compare', label: 'How Netherlands compares' },
+  { id: 'faq', label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const tocItems = isGermany ? deTocItems : nlTocItems;
+
+const deSchema = [
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": `${country.name} Income Tax Calculator 2026`,
-    "url": `https://calculations.tools/tax/income-tax-calculator/eu/${country.slug}`,
-    "description": `Calculate German income tax (Lohnsteuer) for 2026. Includes \u00a732a EStG progressive formula, solidarity surcharge, church tax, all social security contributions, and full net salary breakdown.`,
+    "name": "Germany Income Tax Calculator 2026",
+    "url": "https://calculations.tools/tax/income-tax-calculator/eu/germany",
+    "description": "Calculate German income tax (Lohnsteuer) for 2026. Includes §32a EStG progressive formula, solidarity surcharge, church tax, all social security contributions, and full net salary breakdown.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
     "browserRequirements": "Requires JavaScript",
@@ -160,19 +237,93 @@ const schema = [
     ],
   },
 ];
+
+const nlSchema = isNetherlands ? [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Netherlands Income Tax Calculator 2026",
+    "url": "https://calculations.tools/tax/income-tax-calculator/eu/netherlands",
+    "description": "Calculate Dutch income tax (Box 1) for 2026. Includes all three tax brackets, algemene heffingskorting, arbeidskorting credits, AOW pension age toggle, and full net salary breakdown.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is the income tax rate in the Netherlands in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `Netherlands Box 1 income tax has three brackets in 2026. Income up to €38,883 is taxed at 35.75% - a combined rate that includes income tax plus social insurance (AOW pension 17.90%, ANW 0.10%, WLZ long-term care 9.65%). Income between €38,883 and €78,426 is taxed at 37.56%. Income above €78,426 is taxed at 49.50%. Tax credits (heffingskortingen) reduce the final tax owed, cutting the effective rate significantly below these headline rates.`,
+        },
+      },
+      {
+        "@type": "Question",
+        "name": `How much will I take home on a €${ex.toLocaleString()} salary in the Netherlands in 2026?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `On a €${ex.toLocaleString()} gross salary in 2026, a Dutch employee pays approximately ${fmtEur(nlExTax)} in Box 1 income tax before credits. After the general tax credit (algemene heffingskorting: ${fmtEur(nlExAhk)}) and employment credit (arbeidskorting: ${fmtEur(nlExAk)}), net income tax is approximately ${fmtEur(nlExNetTax)}. Take-home: approximately ${fmtEur(nlExNet)}/year (${fmtEur(nlExNetMonthly)}/month) - an effective deduction rate of ${nlExEff}%.`,
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "What is the algemene heffingskorting in the Netherlands?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `The algemene heffingskorting (general tax credit) reduces Dutch income tax directly. In 2026, the maximum credit is €3,115 for taxpayers below state pension age. It phases out at 6.398% for every euro above €29,736, reaching zero at €78,426. AOW recipients receive a maximum of €1,556, phased out at 3.195%. The credit is non-refundable - it reduces tax to zero but cannot produce a refund on its own.`,
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "What is the arbeidskorting in the Netherlands in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `The arbeidskorting (employment tax credit) rewards work income. For 2026 it builds to a maximum of €5,685 at €45,592 employment income, then phases out at 6.51% until it reaches zero at €132,920. The credit is calculated in four income steps. It's non-refundable and available only to employees - self-employed workers use the zelfstandigenaftrek instead. Only the arbeidskorting and the algemene heffingskorting are included in this calculator.`,
+        },
+      },
+      {
+        "@type": "Question",
+        "name": "Are Dutch social security contributions included in the income tax rate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `Yes. The Netherlands embeds social insurance premiums inside the first Box 1 bracket. The 35.75% first-bracket rate consists of 8.10% income tax plus 27.65% social insurance (AOW 17.90%, ANW 0.10%, WLZ 9.65%). Above €38,883, no further social insurance is charged - brackets 2 and 3 are pure income tax. Health insurance (ZVW) is handled separately: employees pay a nominal premium directly to their insurer, and employers pay the income-related ZVW contribution as a separate wage cost.`,
+        },
+      },
+    ],
+  },
+] : [];
+
+const schema = isGermany ? deSchema : nlSchema;
+
+const deTitle = 'Germany Income Tax Calculator 2026 (Lohnsteuer)';
+const nlTitle = 'Netherlands Income Tax Calculator 2026 (Box 1)';
+const deMetaTitle = 'Germany Income Tax Calculator 2026 | German Salary Calculator';
+const nlMetaTitle = 'Netherlands Income Tax Calculator 2026 | NL Salary Calculator';
+const deDescription = `Germany income tax calculator 2026. Includes Lohnsteuer (§32a EStG), solidarity surcharge, church tax, and all social contributions. See exact net salary for any gross income and tax class.`;
+const nlDescription = `Dutch income tax calculator 2026. Calculate Box 1 tax, algemene heffingskorting and arbeidskorting credits, and net salary for any gross income. Official 2026 rates from Belastingdienst.`;
+const deFormula = 'Germany: 14% - 45% progressive (§32a)';
+const nlFormula = 'Netherlands Box 1: 35.75% / 37.56% / 49.50% - credits';
+const deExample = `€${ex.toLocaleString()} gross - ~€${exTotal.toLocaleString()} taxes = ~€${exNet.toLocaleString()} net`;
+const nlExample = `€${ex.toLocaleString()} gross - €${nlExNetTax.toLocaleString()} net tax = €${nlExNet.toLocaleString()} net`;
 ---
 
 <CalculatorLayout
-  title={`Germany Income Tax Calculator 2026 (Lohnsteuer)`}
-  metaTitle={`Germany Income Tax Calculator 2026 | German Salary Calculator`}
-  description={`Germany income tax calculator 2026. Includes Lohnsteuer (\u00a732a EStG), solidarity surcharge, church tax, and all social contributions. See exact net salary for any gross income and tax class.`}
+  title={isGermany ? deTitle : nlTitle}
+  metaTitle={isGermany ? deMetaTitle : nlMetaTitle}
+  description={isGermany ? deDescription : nlDescription}
   canonical={`https://calculations.tools/tax/income-tax-calculator/eu/${country.slug}`}
   tocItems={tocItems}
   schema={schema}
   sources={sources}
   embedSlug={`income-tax-calculator/eu/${country.slug}`}
-  ogFormula={`Germany: 14% - 45% progressive (§32a)`}
-  ogExample={`€${ex.toLocaleString()} gross - ~€${exTotal.toLocaleString()} taxes = ~€${exNet.toLocaleString()} net`}
+  ogFormula={isGermany ? deFormula : nlFormula}
+  ogExample={isGermany ? deExample : nlExample}
 >
 
   <div slot="calculator">
@@ -186,6 +337,9 @@ const schema = [
           data-werbungskosten={country.werbungskosten}
           data-entlastungsbetrag={country.taxClass2Deduction || 0}
           data-currency-symbol={country.currencySymbol}
+          data-nl-brackets={nlBracketsData}
+          data-nl-heffingskorting={nlHeffingData}
+          data-nl-arbeidskorting={nlArbeidData}
         >
 
           <div class="itax-header">
@@ -193,8 +347,18 @@ const schema = [
             <div class="itax-header-info">
               <div class="itax-state-name"><h2>Calculate Income Tax in {country.name}</h2></div>
               <div class="itax-rate-line">
-                <span class="itax-rate-pill">14% - 45% progressive</span>
-                <span class="itax-rate-pill itax-pill-alt">§32a EStG formula</span>
+                {isGermany && (
+                  <>
+                    <span class="itax-rate-pill">14% - 45% progressive</span>
+                    <span class="itax-rate-pill itax-pill-alt">§32a EStG formula</span>
+                  </>
+                )}
+                {isNetherlands && (
+                  <>
+                    <span class="itax-rate-pill">35.75% - 49.5% progressive</span>
+                    <span class="itax-rate-pill itax-pill-alt">Box 1 + heffingskortingen</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -246,7 +410,7 @@ const schema = [
                   <input id="eutax-private-contrib" class="bmi-input eutax-input" type="text" inputmode="decimal" placeholder="e.g. 6,000" />
                   <span class="bmi-unit-tag">{country.currencySymbol}</span>
                 </div>
-                <span class="stax-rate-hint">Enter your total annual premium. If employer contribution applies, the calculator deducts up to 50% (max 7.3% × capped gross) automatically.</span>
+                <span class="stax-rate-hint">Enter your total annual premium. If employer contribution applies, the calculator deducts up to 50% (max 7.3% x capped gross) automatically.</span>
               </div>
             </>
           )}
@@ -302,95 +466,173 @@ const schema = [
             </div>
           )}
 
-          <div id="eutax-results" class="hidden">
-            <div class="itax-results-grid">
-
-              <div class="itax-results-section">
-                <div class="itax-section-label">Income</div>
-                <div class="itax-result-row">
-                  <span>Gross salary (annual)</span>
-                  <span id="eutax-res-gross" class="itax-val">-</span>
-                </div>
-                <div class="itax-result-row">
-                  <span>Taxable income (zvE)</span>
-                  <span id="eutax-res-zve" class="itax-val">-</span>
-                </div>
-              </div>
-
-              <div class="itax-results-section">
-                <div class="itax-section-label">Income taxes</div>
-                <div class="itax-result-row">
-                  <span>Income tax (Lohnsteuer)</span>
-                  <span id="eutax-res-est" class="itax-val itax-tax-val">-</span>
-                </div>
-                <div class="itax-result-row itax-nested">
-                  <span>Eff. rate / Marginal rate</span>
-                  <span id="eutax-res-est-rates" class="itax-val itax-rate-val">-</span>
-                </div>
-                <div class="itax-result-row" id="eutax-row-soli">
-                  <span>Solidarity surcharge (Soli)</span>
-                  <span id="eutax-res-soli" class="itax-val itax-tax-val">-</span>
-                </div>
-                <div class="itax-result-row" id="eutax-row-kirche" style="display:none">
-                  <span>Church tax (Kirchensteuer)</span>
-                  <span id="eutax-res-kirche" class="itax-val itax-tax-val">-</span>
-                </div>
-                <div class="itax-result-row itax-row-highlight">
-                  <span>Total income taxes</span>
-                  <span id="eutax-res-total-taxes" class="itax-val">-</span>
-                </div>
-              </div>
-
-              <div class="itax-results-section">
-                <div class="itax-section-label">Social contributions (employee share)</div>
-                <div class="itax-result-row">
-                  <span>Pension insurance (RV 9.3%)</span>
-                  <span id="eutax-res-rv" class="itax-val itax-tax-val">-</span>
-                </div>
-                <div class="itax-result-row">
-                  <span>Health insurance (KV 8.75%)</span>
-                  <span id="eutax-res-kv" class="itax-val itax-tax-val">-</span>
-                </div>
-                <div class="itax-result-row">
-                  <span id="eutax-pv-label">Long-term care (PV 1.8%)</span>
-                  <span id="eutax-res-pv" class="itax-val itax-tax-val">-</span>
-                </div>
-                <div class="itax-result-row">
-                  <span>Unemployment insurance (AV 1.3%)</span>
-                  <span id="eutax-res-av" class="itax-val itax-tax-val">-</span>
-                </div>
-                <div class="itax-result-row itax-row-highlight">
-                  <span>Total social contributions</span>
-                  <span id="eutax-res-total-social" class="itax-val">-</span>
-                </div>
-              </div>
-
-              <div class="itax-results-section">
-                <div class="itax-section-label">Total deductions</div>
-                <div class="itax-result-row itax-row-highlight itax-row-tax-total">
-                  <span>Total deductions</span>
-                  <span id="eutax-res-total" class="itax-val">-</span>
-                </div>
-                <div class="itax-result-row itax-nested">
-                  <span>Overall effective rate</span>
-                  <span id="eutax-res-eff" class="itax-val itax-rate-val">-</span>
-                </div>
-              </div>
-
-              <div class="itax-results-section">
-                <div class="itax-section-label">Net salary</div>
-                <div class="itax-result-row itax-row-highlight">
-                  <span>Annual net</span>
-                  <span id="eutax-res-net-annual" class="itax-val">-</span>
-                </div>
-                <div class="itax-result-row itax-row-last">
-                  <span>Monthly net</span>
-                  <span id="eutax-res-net-monthly" class="itax-val">-</span>
-                </div>
-              </div>
-
+          {country.hasAowToggle && (
+            <div class="bmi-field eutax-toggle-field">
+              <label class="bmi-label">State pension age (AOW)</label>
+              <label class="eutax-toggle">
+                <input type="checkbox" id="nl-aow" />
+                <span class="eutax-toggle-track"></span>
+                <span class="eutax-toggle-label">Receiving AOW throughout 2026</span>
+              </label>
+              <span class="stax-rate-hint">AOW recipients pay no AOW premium - first bracket drops from 35.75% to 17.85%. Heffingskortingen amounts are also reduced proportionally.</span>
             </div>
-          </div>
+          )}
+
+          {isGermany && (
+            <div id="eutax-results" class="hidden">
+              <div class="itax-results-grid">
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Income</div>
+                  <div class="itax-result-row">
+                    <span>Gross salary (annual)</span>
+                    <span id="eutax-res-gross" class="itax-val">-</span>
+                  </div>
+                  <div class="itax-result-row">
+                    <span>Taxable income (zvE)</span>
+                    <span id="eutax-res-zve" class="itax-val">-</span>
+                  </div>
+                </div>
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Income taxes</div>
+                  <div class="itax-result-row">
+                    <span>Income tax (Lohnsteuer)</span>
+                    <span id="eutax-res-est" class="itax-val itax-tax-val">-</span>
+                  </div>
+                  <div class="itax-result-row itax-nested">
+                    <span>Eff. rate / Marginal rate</span>
+                    <span id="eutax-res-est-rates" class="itax-val itax-rate-val">-</span>
+                  </div>
+                  <div class="itax-result-row" id="eutax-row-soli">
+                    <span>Solidarity surcharge (Soli)</span>
+                    <span id="eutax-res-soli" class="itax-val itax-tax-val">-</span>
+                  </div>
+                  <div class="itax-result-row" id="eutax-row-kirche" style="display:none">
+                    <span>Church tax (Kirchensteuer)</span>
+                    <span id="eutax-res-kirche" class="itax-val itax-tax-val">-</span>
+                  </div>
+                  <div class="itax-result-row itax-row-highlight">
+                    <span>Total income taxes</span>
+                    <span id="eutax-res-total-taxes" class="itax-val">-</span>
+                  </div>
+                </div>
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Social contributions (employee share)</div>
+                  <div class="itax-result-row">
+                    <span>Pension insurance (RV 9.3%)</span>
+                    <span id="eutax-res-rv" class="itax-val itax-tax-val">-</span>
+                  </div>
+                  <div class="itax-result-row">
+                    <span>Health insurance (KV 8.75%)</span>
+                    <span id="eutax-res-kv" class="itax-val itax-tax-val">-</span>
+                  </div>
+                  <div class="itax-result-row">
+                    <span id="eutax-pv-label">Long-term care (PV 1.8%)</span>
+                    <span id="eutax-res-pv" class="itax-val itax-tax-val">-</span>
+                  </div>
+                  <div class="itax-result-row">
+                    <span>Unemployment insurance (AV 1.3%)</span>
+                    <span id="eutax-res-av" class="itax-val itax-tax-val">-</span>
+                  </div>
+                  <div class="itax-result-row itax-row-highlight">
+                    <span>Total social contributions</span>
+                    <span id="eutax-res-total-social" class="itax-val">-</span>
+                  </div>
+                </div>
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Total deductions</div>
+                  <div class="itax-result-row itax-row-highlight itax-row-tax-total">
+                    <span>Total deductions</span>
+                    <span id="eutax-res-total" class="itax-val">-</span>
+                  </div>
+                  <div class="itax-result-row itax-nested">
+                    <span>Overall effective rate</span>
+                    <span id="eutax-res-eff" class="itax-val itax-rate-val">-</span>
+                  </div>
+                </div>
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Net salary</div>
+                  <div class="itax-result-row itax-row-highlight">
+                    <span>Annual net</span>
+                    <span id="eutax-res-net-annual" class="itax-val">-</span>
+                  </div>
+                  <div class="itax-result-row itax-row-last">
+                    <span>Monthly net</span>
+                    <span id="eutax-res-net-monthly" class="itax-val">-</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
+
+          {isNetherlands && (
+            <div id="eutax-results" class="hidden">
+              <div class="itax-results-grid">
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Income</div>
+                  <div class="itax-result-row">
+                    <span>Gross income (annual)</span>
+                    <span id="eutax-res-gross" class="itax-val">-</span>
+                  </div>
+                </div>
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Box 1 income tax</div>
+                  <div class="itax-result-row">
+                    <span>Box 1 tax (before credits)</span>
+                    <span id="eutax-res-est" class="itax-val itax-tax-val">-</span>
+                  </div>
+                  <div class="itax-result-row itax-nested">
+                    <span>Eff. rate / Marginal rate</span>
+                    <span id="eutax-res-est-rates" class="itax-val itax-rate-val">-</span>
+                  </div>
+                </div>
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Tax credits (heffingskortingen)</div>
+                  <div class="itax-result-row">
+                    <span>General tax credit (algemene heffingskorting)</span>
+                    <span id="nl-res-ahk" class="itax-val itax-credit-val">-</span>
+                  </div>
+                  <div class="itax-result-row">
+                    <span>Employment credit (arbeidskorting)</span>
+                    <span id="nl-res-ak" class="itax-val itax-credit-val">-</span>
+                  </div>
+                </div>
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Summary</div>
+                  <div class="itax-result-row itax-row-highlight itax-row-tax-total">
+                    <span>Net income tax</span>
+                    <span id="eutax-res-total" class="itax-val">-</span>
+                  </div>
+                  <div class="itax-result-row itax-nested">
+                    <span>Overall effective rate</span>
+                    <span id="eutax-res-eff" class="itax-val itax-rate-val">-</span>
+                  </div>
+                </div>
+
+                <div class="itax-results-section">
+                  <div class="itax-section-label">Net salary</div>
+                  <div class="itax-result-row itax-row-highlight">
+                    <span>Annual net</span>
+                    <span id="eutax-res-net-annual" class="itax-val">-</span>
+                  </div>
+                  <div class="itax-result-row itax-row-last">
+                    <span>Monthly net</span>
+                    <span id="eutax-res-net-monthly" class="itax-val">-</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
 
         </div>
       </div>
@@ -402,275 +644,447 @@ const schema = [
   <div slot="content">
     <div class="seo-container">
 
-      <div class="answer-box">
-        <div class="answer-box-label">Quick answer</div>
-        <p>German income tax (Lohnsteuer) uses a progressive formula under §32a EStG - the marginal rate rises continuously from 14% (on income above the €12,348 basic allowance) to 42% (above €69,878), with a 45% top rate above €277,825. Social security contributions add another ~21.35% of gross (with ceilings). A Tax Class I employee on <strong>€{ex.toLocaleString()} gross</strong> takes home approximately <strong>{fmtEur(exNet)}/year ({fmtEur(exNetMonthly)}/month)</strong> after all deductions - an overall effective rate of {exEff}%.</p>
-      </div>
-
-      <div class="answer-box">
-        <div class="answer-box-label">Key facts - Germany 2026</div>
-        <ul>
-          <li>Grundfreibetrag (basic tax-free allowance): €{g.gf.toLocaleString()} per person</li>
-          <li>Income tax marginal rates: 14% rising to 42% (income above €{g.z3t.toLocaleString()}); 45% Reichensteuer above €{g.z4t.toLocaleString()}</li>
-          <li>Solidarity surcharge (Soli): 0% for most - only applies if annual income tax exceeds €{country.soliThreshSingle?.toLocaleString()}</li>
-          <li>Church tax: 8% (Bayern/Baden-Wurttemberg) or 9% (all other states) of income tax - only for registered church members</li>
-          <li>Social contributions employee total: ~21.35% on gross (with separate ceilings for health/care at €69,750 and pension/unemployment at €101,400)</li>
-          <li>Werbungskostenpauschale (standard work expense deduction): €{country.werbungskosten.toLocaleString()}</li>
-        </ul>
-      </div>
-
-      <h2 id="how-to-use">How to calculate German income tax</h2>
-      <p>The German payroll deduction works in three distinct layers. Use the calculator above for an instant result. Here is how it works step by step:</p>
-      <ol>
-        <li><strong>Determine annual gross salary</strong> - your total salary before any deductions. Convert monthly to annual by multiplying by 12.</li>
-        <li><strong>Subtract the Werbungskostenpauschale (€{country.werbungskosten.toLocaleString()})</strong> - the standard employee expense deduction applied automatically. This reduces your taxable income (zvE - zu versteuerndes Einkommen).</li>
-        <li><strong>Apply the §32a EStG formula</strong> to your zvE to calculate Lohnsteuer (income tax). The rate starts at 0% (up to €{g.gf.toLocaleString()}), then rises from 14% through a smooth formula to 42%, then stays flat at 42% until €{g.z4t.toLocaleString()} where it jumps to 45%.</li>
-        <li><strong>Check if Solidaritatszuschlag (Soli) applies</strong> - pay 0 if your income tax is below €{country.soliThreshSingle?.toLocaleString()} (Tax Class I/II/IV/V/VI) or €{country.soliThreshMarried?.toLocaleString()} (Class III). Above the threshold, Soli phases in at 20% of the excess, capped at 5.5% of income tax.</li>
-        <li><strong>Add church tax</strong> if you are a registered church member: 8% of income tax in Bayern and Baden-Wurttemberg, 9% in all other states.</li>
-        <li><strong>Calculate social contributions</strong>: pension 9.3%, health 8.75% (statutory), long-term care 1.8% or 2.4% (childless), unemployment 1.3% - each applied up to their respective ceilings.</li>
-        <li><strong>Net salary = Gross - Lohnsteuer - Soli - Church tax - All social contributions</strong></li>
-      </ol>
-
-      <h2 id="zones">Germany income tax zones 2026 (§32a EStG)</h2>
-      <p>Unlike most countries, Germany does not use fixed tax brackets. The §32a EStG formula creates five zones where the marginal rate rises smoothly within each zone - there are no sudden jumps in tax liability.</p>
-      <div class="responsive-table">
-        <table>
-          <thead>
-            <tr><th>Zone</th><th>Taxable income (zvE)</th><th>Marginal rate</th><th>Description</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Up to €{g.gf.toLocaleString()}</td>
-              <td><strong>0%</strong></td>
-              <td>Grundfreibetrag - fully tax-free</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>€{(g.gf + 1).toLocaleString()} - €{g.z2t.toLocaleString()}</td>
-              <td><strong>14% rising</strong></td>
-              <td>Quadratic formula - rate starts at 14%, rises to ~24%</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>€{(g.z2t + 1).toLocaleString()} - €{g.z3t.toLocaleString()}</td>
-              <td><strong>~24% to 42%</strong></td>
-              <td>Quadratic formula continues - rate rises to 42%</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>€{(g.z3t + 1).toLocaleString()} - €{g.z4t.toLocaleString()}</td>
-              <td><strong>42% flat</strong></td>
-              <td>Spitzensteuersatz - flat 42% marginal rate</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Over €{g.z4t.toLocaleString()}</td>
-              <td><strong>45% flat</strong></td>
-              <td>Reichensteuer - 45% on every additional euro</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>The marginal rate applies only to income within each zone - not to total income. An employee on €70,000 does not pay 42% on their full income; they pay 0% on the first €{g.gf.toLocaleString()}, 14-42% on the progressive portion, and 42% on the slice above €{g.z3t.toLocaleString()}.</p>
-      <p>Source: <a href="https://www.gesetze-im-internet.de/estg/__32a.html" target="_blank" rel="noopener noreferrer">§32a EStG - Einkommensteuertarif 2026</a>.</p>
-
-      <h2 id="social">Social security contributions 2026 (employee share)</h2>
-      <p>German employees pay four compulsory social security contributions on top of income tax. These are split equally between employer and employee (except the long-term care childless surcharge, which is borne entirely by the employee).</p>
-      <div class="responsive-table">
-        <table>
-          <thead>
-            <tr><th>Contribution</th><th>Employee rate</th><th>Annual ceiling</th><th>Max annual employee cost</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Pension (Rentenversicherung, RV)</td>
-              <td><strong>9.3%</strong></td>
-              <td>€{country.rvCeiling.toLocaleString()}</td>
-              <td>€{Math.round(country.rvRate * country.rvCeiling).toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>Health - statutory (Krankenversicherung, KV)</td>
-              <td><strong>8.75%</strong></td>
-              <td>€{country.kvCeiling.toLocaleString()}</td>
-              <td>€{Math.round(country.kvPublicRate * country.kvCeiling).toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>Long-term care (Pflegeversicherung, PV) - with children</td>
-              <td><strong>1.8%</strong></td>
-              <td>€{country.kvCeiling.toLocaleString()}</td>
-              <td>€{Math.round(country.pvRateWith * country.kvCeiling).toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>Long-term care (PV) - childless (age 23+)</td>
-              <td><strong>2.4%</strong></td>
-              <td>€{country.kvCeiling.toLocaleString()}</td>
-              <td>€{Math.round(country.pvRateChildless * country.kvCeiling).toLocaleString()}</td>
-            </tr>
-            <tr>
-              <td>Unemployment (Arbeitslosenversicherung, AV)</td>
-              <td><strong>1.3%</strong></td>
-              <td>€{country.rvCeiling.toLocaleString()}</td>
-              <td>€{Math.round(country.avRate * country.avCeiling).toLocaleString()}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>The health insurance rate of 8.75% includes the base rate of 7.3% plus half of the average Zusatzbeitrag (additional contribution) of 2.9% = 1.45%. The actual rate varies by health insurer; the calculator uses the 2026 average. Employers pay an equal matching contribution for each of these.</p>
-      <p>Saxony (Sachsen) exception: employees pay 2.3% (with children) or 2.9% (childless) for long-term care; the employer pays 1.3% instead of 1.8%. Select Sachsen in the calculator to apply this rate.</p>
-      <p>Source: <a href="https://www.bundesregierung.de/breg-de/aktuelles/beitragsgemessungsgrenzen-2386514" target="_blank" rel="noopener noreferrer">Sozialversicherungsrechengrossen 2026 - Bundesregierung</a>.</p>
-
-      <h2 id="tax-classes">Tax classes (Steuerklassen) in Germany</h2>
-      <p>Your tax class determines the payroll withholding rate applied each month. The annual tax liability is the same regardless of class - but the class changes how much is withheld during the year.</p>
-      <div class="responsive-table">
-        <table>
-          <thead>
-            <tr><th>Class</th><th>For</th><th>Key effect</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>I</strong></td>
-              <td>Single, divorced, widowed, separated</td>
-              <td>Standard allowances apply</td>
-            </tr>
-            <tr>
-              <td><strong>II</strong></td>
-              <td>Single parents raising a child alone</td>
-              <td>Additional €{country.taxClass2Deduction?.toLocaleString()} lone-parent allowance (Entlastungsbetrag) reduces taxable income</td>
-            </tr>
-            <tr>
-              <td><strong>III</strong></td>
-              <td>Higher-earning married spouse</td>
-              <td>Splitting method: income tax computed on half income and doubled. Significantly lower withholding. Partner must be in Class V.</td>
-            </tr>
-            <tr>
-              <td><strong>IV</strong></td>
-              <td>Married couples with similar income</td>
-              <td>Same calculation as Class I for each partner. Can use Faktorverfahren for more precise withholding.</td>
-            </tr>
-            <tr>
-              <td><strong>V</strong></td>
-              <td>Lower-earning married spouse (paired with Class III)</td>
-              <td>No personal allowance applied. Higher withholding - partner's Class III compensates.</td>
-            </tr>
-            <tr>
-              <td><strong>VI</strong></td>
-              <td>Second or additional employment</td>
-              <td>No allowances, highest withholding rate. Applied to all income from the second job.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Married couples typically choose III/V (higher earner gets IV) when one partner earns significantly more, or IV/IV for similar incomes. The III/V combination maximises take-home pay during the year but may result in an additional payment at annual tax filing if the combined tax liability exceeds withholding.</p>
-
-      <h2 id="soli">Solidarity surcharge (Solidaritatszuschlag) 2026</h2>
-      <p>The Soli was originally introduced to fund German reunification. Since 2021 it has been abolished for most taxpayers.</p>
-      <ul>
-        <li><strong>Exempt:</strong> Tax Class I/II/IV/V/VI filers with annual income tax up to €{country.soliThreshSingle?.toLocaleString()}. This covers virtually all middle-income earners.</li>
-        <li><strong>Phase-in zone:</strong> Income tax between €{country.soliThreshSingle?.toLocaleString()} and approx €28,000 - Soli is phased in at 20% of the amount exceeding the threshold, capped at 5.5% of income tax.</li>
-        <li><strong>Full rate:</strong> Income tax above approx €28,000 - full 5.5% Soli applies. This affects single filers earning roughly €{'\u20ac'}105,000+ gross.</li>
-        <li><strong>Class III:</strong> Doubled threshold of €{country.soliThreshMarried?.toLocaleString()} (income tax), benefiting from the splitting method.</li>
-      </ul>
-      <p>Source: <a href="https://www.bundesfinanzministerium.de/Content/DE/FAQ/2020-06-17-solidaritaetszuschlag.html" target="_blank" rel="noopener noreferrer">Bundeszentralamt fur Steuern - Solidaritatszuschlag</a>.</p>
-
-      <h2 id="church">Church tax (Kirchensteuer) 2026</h2>
-      <p>Church tax applies only to registered members of recognised religious communities (primarily Roman Catholic and Protestant). It is collected automatically by the employer alongside income tax.</p>
-      <div class="responsive-table">
-        <table>
-          <thead>
-            <tr><th>States</th><th>Church tax rate</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Bayern (Bavaria), Baden-Wurttemberg</td>
-              <td><strong>8%</strong> of income tax</td>
-            </tr>
-            <tr>
-              <td>All other 14 states</td>
-              <td><strong>9%</strong> of income tax</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Church tax is deductible as a special expense (Sonderausgabe) on your annual tax return, providing a partial offset. To leave the church and stop paying, you must formally de-register (Kirchenaustritt) at your local registry office.</p>
-
-      <h2 id="compare">How Germany compares to other EU countries</h2>
-      <p>Germany's effective total tax burden (income tax + social contributions) is among the highest in the EU for average earners. At the OECD average wage, Germany's tax wedge is approximately 47-48% - meaning nearly half of gross employment cost is tax and contributions.</p>
-      <div class="responsive-table">
-        <table>
-          <thead>
-            <tr><th>Country</th><th>Top income tax rate</th><th>Standard employee social contributions</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><strong>Germany</strong></td><td>42% / 45% (Reichensteuer)</td><td>~21.35% (capped)</td></tr>
-            <tr><td>Denmark</td><td>~55% effective (incl. AM-bidrag)</td><td>1% (most social costs employer-side)</td></tr>
-            <tr><td>France</td><td>45%</td><td>~22%</td></tr>
-            <tr><td>Sweden</td><td>~57% (state + municipal)</td><td>7% (employee pension only)</td></tr>
-            <tr><td>Netherlands</td><td>49.5%</td><td>Included in brackets</td></tr>
-            <tr><td>Italy</td><td>43%</td><td>~9.19%</td></tr>
-            <tr><td>Ireland</td><td>40% + USC + PRSI</td><td>~4% PRSI + USC 0.5-8%</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>Germany's ceilings on social contributions (€{country.rvCeiling.toLocaleString()} for pension/unemployment, €{country.kvCeiling.toLocaleString()} for health/care) mean high earners effectively pay a lower percentage of their total income in social contributions than average earners.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
-      <h3>What is the income tax rate in Germany in 2026?</h3>
-      <p>Germany uses a progressive formula under §32a EStG rather than fixed brackets. The marginal rate starts at 14% on income above €{g.gf.toLocaleString()} (the Grundfreibetrag), rises continuously to 42% on income above €{g.z3t.toLocaleString()}, and reaches 45% (Reichensteuer) above €{g.z4t.toLocaleString()}. The effective income tax rate is always lower than the marginal rate since only income in each zone is taxed at that zone's rate.</p>
-
-      <h3>How much tax will I pay in Germany on €{ex.toLocaleString()} gross?</h3>
-      <p>A Tax Class I employee earning €{ex.toLocaleString()} per year in Germany in 2026 would pay approximately:</p>
-      <ul>
-        <li>Income tax (Lohnsteuer): {fmtEur(exEst)} ({exEstEff}% effective)</li>
-        <li>Solidarity surcharge: €0 (income tax below €{country.soliThreshSingle?.toLocaleString()} threshold)</li>
-        <li>Pension (RV): {fmtEur(exRV)}</li>
-        <li>Health (KV, statutory): {fmtEur(exKV)}</li>
-        <li>Long-term care (PV, with children): {fmtEur(exPV)}</li>
-        <li>Unemployment (AV): {fmtEur(exAV)}</li>
-        <li><strong>Net annual: {fmtEur(exNet)} ({fmtEur(exNetMonthly)}/month) - {exEff}% overall effective deduction rate</strong></li>
-      </ul>
-
-      <h3>What is the Grundfreibetrag and how does it work?</h3>
-      <p>The Grundfreibetrag is Germany's basic personal tax-free allowance - €{g.gf.toLocaleString()} per person in 2026 (doubled to €{(g.gf * 2).toLocaleString()} for married couples). Income up to this amount is completely free from income tax. It is built into the §32a formula rather than shown as a separate deduction line, so the formula automatically returns €0 tax for incomes at or below €{g.gf.toLocaleString()}.</p>
-
-      <h3>Can I reduce my German income tax?</h3>
-      <p>Yes. Key strategies: contribute to a company pension scheme (bAV) since employer contributions are often tax and contribution-free up to certain limits; claim actual Werbungskosten (work expenses) if they exceed the €{country.werbungskosten.toLocaleString()} flat rate; deduct Sonderausgaben (special expenses) such as pension contributions, church tax, and insurance premiums on your annual return; use the annual Steuererklarung to reclaim over-withheld Lohnsteuer.</p>
-
-      <h3>What is the difference between Lohnsteuer and Einkommensteuer?</h3>
-      <p>Lohnsteuer (payroll tax) is income tax withheld by your employer monthly based on your tax class. Einkommensteuer (income tax) is your actual annual tax liability calculated when you file your Steuererklarung (tax return). If the Lohnsteuer withheld during the year exceeds your actual Einkommensteuer, you receive a refund. If it falls short (common for Class III/V couples), you pay the difference. The rates and formula are identical - Lohnsteuer is simply an advance payment of Einkommensteuer.</p>
-
-      <h2 id="related-tools">Related tools</h2>
-      <ul class="related-tools-list">
-        <li>
-          <span class="tool-icon">🌍</span>
-          <div>
-            <a href="/tax/income-tax-calculator/eu">EU Income Tax Calculators</a>
-            <p>Income tax calculators for Germany, Netherlands, Denmark, Sweden, France, Italy, and Ireland.</p>
+      {isGermany && g && (
+        <>
+          <div class="answer-box">
+            <div class="answer-box-label">Quick answer</div>
+            <p>German income tax (Lohnsteuer) uses a progressive formula under §32a EStG - the marginal rate rises continuously from 14% (on income above the €12,348 basic allowance) to 42% (above €69,878), with a 45% top rate above €277,825. Social security contributions add another ~21.35% of gross (with ceilings). A Tax Class I employee on <strong>€{ex.toLocaleString()} gross</strong> takes home approximately <strong>{fmtEur(exNet)}/year ({fmtEur(exNetMonthly)}/month)</strong> after all deductions - an overall effective rate of {exEff}%.</p>
           </div>
-        </li>
-        <li>
-          <span class="tool-icon">🗺️</span>
-          <div>
-            <a href="/tax/income-tax-calculator/us">US Income Tax - All 50 States</a>
-            <p>Federal and state income tax calculator for all 50 US states.</p>
+
+          <div class="answer-box">
+            <div class="answer-box-label">Key facts - Germany 2026</div>
+            <ul>
+              <li>Grundfreibetrag (basic tax-free allowance): €{g.gf.toLocaleString()} per person</li>
+              <li>Income tax marginal rates: 14% rising to 42% (income above €{g.z3t.toLocaleString()}); 45% Reichensteuer above €{g.z4t.toLocaleString()}</li>
+              <li>Solidarity surcharge (Soli): 0% for most - only applies if annual income tax exceeds €{country.soliThreshSingle?.toLocaleString()}</li>
+              <li>Church tax: 8% (Bayern/Baden-Wurttemberg) or 9% (all other states) of income tax - only for registered church members</li>
+              <li>Social contributions employee total: ~21.35% on gross (with separate ceilings for health/care at €69,750 and pension/unemployment at €101,400)</li>
+              <li>Werbungskostenpauschale (standard work expense deduction): €{country.werbungskosten.toLocaleString()}</li>
+            </ul>
           </div>
-        </li>
-        <li>
-          <span class="tool-icon">💰</span>
-          <div>
-            <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
-            <p>Convert your annual or monthly salary to an equivalent hourly rate.</p>
+
+          <h2 id="how-to-use">How to calculate German income tax</h2>
+          <p>The German payroll deduction works in three distinct layers. Use the calculator above for an instant result. Here is how it works step by step:</p>
+          <ol>
+            <li><strong>Determine annual gross salary</strong> - your total salary before any deductions. Convert monthly to annual by multiplying by 12.</li>
+            <li><strong>Subtract the Werbungskostenpauschale (€{country.werbungskosten.toLocaleString()})</strong> - the standard employee expense deduction applied automatically. This reduces your taxable income (zvE - zu versteuerndes Einkommen).</li>
+            <li><strong>Apply the §32a EStG formula</strong> to your zvE to calculate Lohnsteuer. The rate starts at 0% (up to €{g.gf.toLocaleString()}), then rises from 14% through a smooth formula to 42%, then stays flat at 42% until €{g.z4t.toLocaleString()} where it jumps to 45%.</li>
+            <li><strong>Check if Solidaritatszuschlag (Soli) applies</strong> - pay 0 if your income tax is below €{country.soliThreshSingle?.toLocaleString()} (Tax Class I/II/IV/V/VI) or €{country.soliThreshMarried?.toLocaleString()} (Class III). Above the threshold, Soli phases in at 20% of the excess, capped at 5.5% of income tax.</li>
+            <li><strong>Add church tax</strong> if you are a registered church member: 8% of income tax in Bayern and Baden-Wurttemberg, 9% in all other states.</li>
+            <li><strong>Calculate social contributions</strong>: pension 9.3%, health 8.75% (statutory), long-term care 1.8% or 2.4% (childless), unemployment 1.3% - each applied up to their respective ceilings.</li>
+            <li><strong>Net salary = Gross - Lohnsteuer - Soli - Church tax - All social contributions</strong></li>
+          </ol>
+
+          <h2 id="zones">Germany income tax zones 2026 (§32a EStG)</h2>
+          <p>Unlike most countries, Germany does not use fixed tax brackets. The §32a EStG formula creates five zones where the marginal rate rises smoothly within each zone - there are no sudden jumps in tax liability.</p>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>Zone</th><th>Taxable income (zvE)</th><th>Marginal rate</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Up to €{g.gf.toLocaleString()}</td>
+                  <td><strong>0%</strong></td>
+                  <td>Grundfreibetrag - fully tax-free</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>€{(g.gf + 1).toLocaleString()} - €{g.z2t.toLocaleString()}</td>
+                  <td><strong>14% rising</strong></td>
+                  <td>Quadratic formula - rate starts at 14%, rises to ~24%</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>€{(g.z2t + 1).toLocaleString()} - €{g.z3t.toLocaleString()}</td>
+                  <td><strong>~24% to 42%</strong></td>
+                  <td>Quadratic formula continues - rate rises to 42%</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>€{(g.z3t + 1).toLocaleString()} - €{g.z4t.toLocaleString()}</td>
+                  <td><strong>42% flat</strong></td>
+                  <td>Spitzensteuersatz - flat 42% marginal rate</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Over €{g.z4t.toLocaleString()}</td>
+                  <td><strong>45% flat</strong></td>
+                  <td>Reichensteuer - 45% on every additional euro</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </li>
-        <li>
-          <span class="tool-icon">💱</span>
-          <div>
-            <a href="/currency/eur-to-usd">EUR to USD Converter</a>
-            <p>Convert your German salary to US dollars at current exchange rates.</p>
+          <p>The marginal rate applies only to income within each zone - not to total income. An employee on €70,000 does not pay 42% on their full income; they pay 0% on the first €{g.gf.toLocaleString()}, 14-42% on the progressive portion, and 42% on the slice above €{g.z3t.toLocaleString()}.</p>
+          <p>Source: <a href="https://www.gesetze-im-internet.de/estg/__32a.html" target="_blank" rel="noopener noreferrer">§32a EStG - Einkommensteuertarif 2026</a>.</p>
+
+          <h2 id="social">Social security contributions 2026 (employee share)</h2>
+          <p>German employees pay four compulsory social security contributions on top of income tax. These are split equally between employer and employee (except the long-term care childless surcharge, which is borne entirely by the employee).</p>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>Contribution</th><th>Employee rate</th><th>Annual ceiling</th><th>Max annual employee cost</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Pension (Rentenversicherung, RV)</td>
+                  <td><strong>9.3%</strong></td>
+                  <td>€{country.rvCeiling.toLocaleString()}</td>
+                  <td>€{Math.round(country.rvRate * country.rvCeiling).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td>Health - statutory (Krankenversicherung, KV)</td>
+                  <td><strong>8.75%</strong></td>
+                  <td>€{country.kvCeiling.toLocaleString()}</td>
+                  <td>€{Math.round(country.kvPublicRate * country.kvCeiling).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td>Long-term care (Pflegeversicherung, PV) - with children</td>
+                  <td><strong>1.8%</strong></td>
+                  <td>€{country.kvCeiling.toLocaleString()}</td>
+                  <td>€{Math.round(country.pvRateWith * country.kvCeiling).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td>Long-term care (PV) - childless (age 23+)</td>
+                  <td><strong>2.4%</strong></td>
+                  <td>€{country.kvCeiling.toLocaleString()}</td>
+                  <td>€{Math.round(country.pvRateChildless * country.kvCeiling).toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td>Unemployment (Arbeitslosenversicherung, AV)</td>
+                  <td><strong>1.3%</strong></td>
+                  <td>€{country.rvCeiling.toLocaleString()}</td>
+                  <td>€{Math.round(country.avRate * country.avCeiling).toLocaleString()}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </li>
-      </ul>
+          <p>The health insurance rate of 8.75% includes the base rate of 7.3% plus half of the average Zusatzbeitrag (additional contribution) of 2.9% = 1.45%. The actual rate varies by health insurer; the calculator uses the 2026 average. Employers pay an equal matching contribution for each of these.</p>
+          <p>Saxony (Sachsen) exception: employees pay 2.3% (with children) or 2.9% (childless) for long-term care; the employer pays 1.3% instead of 1.8%. Select Sachsen in the calculator to apply this rate.</p>
+          <p>Source: <a href="https://www.bundesregierung.de/breg-de/aktuelles/beitragsgemessungsgrenzen-2386514" target="_blank" rel="noopener noreferrer">Sozialversicherungsrechengrossen 2026 - Bundesregierung</a>.</p>
+
+          <h2 id="tax-classes">Tax classes (Steuerklassen) in Germany</h2>
+          <p>Your tax class determines the payroll withholding rate applied each month. The annual tax liability is the same regardless of class - but the class changes how much is withheld during the year.</p>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>Class</th><th>For</th><th>Key effect</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>I</strong></td>
+                  <td>Single, divorced, widowed, separated</td>
+                  <td>Standard allowances apply</td>
+                </tr>
+                <tr>
+                  <td><strong>II</strong></td>
+                  <td>Single parents raising a child alone</td>
+                  <td>Additional €{country.taxClass2Deduction?.toLocaleString()} lone-parent allowance (Entlastungsbetrag) reduces taxable income</td>
+                </tr>
+                <tr>
+                  <td><strong>III</strong></td>
+                  <td>Higher-earning married spouse</td>
+                  <td>Splitting method: income tax computed on half income and doubled. Significantly lower withholding. Partner must be in Class V.</td>
+                </tr>
+                <tr>
+                  <td><strong>IV</strong></td>
+                  <td>Married couples with similar income</td>
+                  <td>Same calculation as Class I for each partner. Can use Faktorverfahren for more precise withholding.</td>
+                </tr>
+                <tr>
+                  <td><strong>V</strong></td>
+                  <td>Lower-earning married spouse (paired with Class III)</td>
+                  <td>No personal allowance applied. Higher withholding - partner's Class III compensates.</td>
+                </tr>
+                <tr>
+                  <td><strong>VI</strong></td>
+                  <td>Second or additional employment</td>
+                  <td>No allowances, highest withholding rate. Applied to all income from the second job.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Married couples typically choose III/V when one partner earns significantly more, or IV/IV for similar incomes. The III/V combination maximises take-home pay during the year but may result in an additional payment at annual tax filing if the combined tax liability exceeds withholding.</p>
+
+          <h2 id="soli">Solidarity surcharge (Solidaritatszuschlag) 2026</h2>
+          <p>The Soli was originally introduced to fund German reunification. Since 2021 it has been abolished for most taxpayers.</p>
+          <ul>
+            <li><strong>Exempt:</strong> Tax Class I/II/IV/V/VI filers with annual income tax up to €{country.soliThreshSingle?.toLocaleString()}. This covers virtually all middle-income earners.</li>
+            <li><strong>Phase-in zone:</strong> Income tax between €{country.soliThreshSingle?.toLocaleString()} and approx €28,000 - Soli is phased in at 20% of the amount exceeding the threshold, capped at 5.5% of income tax.</li>
+            <li><strong>Full rate:</strong> Income tax above approx €28,000 - full 5.5% Soli applies. This affects single filers earning roughly €105,000+ gross.</li>
+            <li><strong>Class III:</strong> Doubled threshold of €{country.soliThreshMarried?.toLocaleString()} (income tax), benefiting from the splitting method.</li>
+          </ul>
+          <p>Source: <a href="https://www.bundesfinanzministerium.de/Content/DE/FAQ/2020-06-17-solidaritaetszuschlag.html" target="_blank" rel="noopener noreferrer">Bundeszentralamt fur Steuern - Solidaritatszuschlag</a>.</p>
+
+          <h2 id="church">Church tax (Kirchensteuer) 2026</h2>
+          <p>Church tax applies only to registered members of recognised religious communities (primarily Roman Catholic and Protestant). It is collected automatically by the employer alongside income tax.</p>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>States</th><th>Church tax rate</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Bayern (Bavaria), Baden-Wurttemberg</td>
+                  <td><strong>8%</strong> of income tax</td>
+                </tr>
+                <tr>
+                  <td>All other 14 states</td>
+                  <td><strong>9%</strong> of income tax</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Church tax is deductible as a special expense (Sonderausgabe) on your annual tax return, providing a partial offset. To leave the church and stop paying, you must formally de-register (Kirchenaustritt) at your local registry office.</p>
+
+          <h2 id="compare">How Germany compares to other EU countries</h2>
+          <p>Germany's effective total tax burden (income tax + social contributions) is among the highest in the EU for average earners. At the OECD average wage, Germany's tax wedge is approximately 47-48% - meaning nearly half of gross employment cost is tax and contributions.</p>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>Country</th><th>Top income tax rate</th><th>Standard employee social contributions</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Germany</strong></td><td>42% / 45% (Reichensteuer)</td><td>~21.35% (capped)</td></tr>
+                <tr><td>Denmark</td><td>~55% effective (incl. AM-bidrag)</td><td>1% (most social costs employer-side)</td></tr>
+                <tr><td>France</td><td>45%</td><td>~22%</td></tr>
+                <tr><td>Sweden</td><td>~57% (state + municipal)</td><td>7% (employee pension only)</td></tr>
+                <tr><td><a href="/tax/income-tax-calculator/eu/netherlands">Netherlands</a></td><td>49.5%</td><td>Included in brackets</td></tr>
+                <tr><td>Italy</td><td>43%</td><td>~9.19%</td></tr>
+                <tr><td>Ireland</td><td>40% + USC + PRSI</td><td>~4% PRSI + USC 0.5-8%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Germany's ceilings on social contributions (€{country.rvCeiling.toLocaleString()} for pension/unemployment, €{country.kvCeiling.toLocaleString()} for health/care) mean high earners effectively pay a lower percentage of their total income in social contributions than average earners.</p>
+
+          <h2 id="faq">Frequently asked questions</h2>
+
+          <h3>What is the income tax rate in Germany in 2026?</h3>
+          <p>Germany uses a progressive formula under §32a EStG rather than fixed brackets. The marginal rate starts at 14% on income above €{g.gf.toLocaleString()} (the Grundfreibetrag), rises continuously to 42% on income above €{g.z3t.toLocaleString()}, and reaches 45% (Reichensteuer) above €{g.z4t.toLocaleString()}. The effective income tax rate is always lower than the marginal rate since only income in each zone is taxed at that zone's rate.</p>
+
+          <h3>How much tax will I pay in Germany on €{ex.toLocaleString()} gross?</h3>
+          <p>A Tax Class I employee earning €{ex.toLocaleString()} per year in Germany in 2026 would pay approximately:</p>
+          <ul>
+            <li>Income tax (Lohnsteuer): {fmtEur(exEst)} ({exEstEff}% effective)</li>
+            <li>Solidarity surcharge: €0 (income tax below €{country.soliThreshSingle?.toLocaleString()} threshold)</li>
+            <li>Pension (RV): {fmtEur(exRV)}</li>
+            <li>Health (KV, statutory): {fmtEur(exKV)}</li>
+            <li>Long-term care (PV, with children): {fmtEur(exPV)}</li>
+            <li>Unemployment (AV): {fmtEur(exAV)}</li>
+            <li><strong>Net annual: {fmtEur(exNet)} ({fmtEur(exNetMonthly)}/month) - {exEff}% overall effective deduction rate</strong></li>
+          </ul>
+
+          <h3>What is the Grundfreibetrag and how does it work?</h3>
+          <p>The Grundfreibetrag is Germany's basic personal tax-free allowance - €{g.gf.toLocaleString()} per person in 2026 (doubled to €{(g.gf * 2).toLocaleString()} for married couples). Income up to this amount is completely free from income tax. It is built into the §32a formula rather than shown as a separate deduction line, so the formula automatically returns €0 tax for incomes at or below €{g.gf.toLocaleString()}.</p>
+
+          <h3>Can I reduce my German income tax?</h3>
+          <p>Yes. Key strategies: contribute to a company pension scheme (bAV) since employer contributions are often tax and contribution-free up to certain limits; claim actual Werbungskosten (work expenses) if they exceed the €{country.werbungskosten.toLocaleString()} flat rate; deduct Sonderausgaben (special expenses) such as pension contributions, church tax, and insurance premiums on your annual return; use the annual Steuererklarung to reclaim over-withheld Lohnsteuer.</p>
+
+          <h3>What is the difference between Lohnsteuer and Einkommensteuer?</h3>
+          <p>Lohnsteuer (payroll tax) is income tax withheld by your employer monthly based on your tax class. Einkommensteuer (income tax) is your actual annual tax liability calculated when you file your Steuererklarung (tax return). If the Lohnsteuer withheld during the year exceeds your actual Einkommensteuer, you receive a refund. If it falls short (common for Class III/V couples), you pay the difference. The rates and formula are identical - Lohnsteuer is simply an advance payment of Einkommensteuer.</p>
+
+          <h2 id="related-tools">Related tools</h2>
+          <ul class="related-tools-list">
+            <li>
+              <span class="tool-icon">🌍</span>
+              <div>
+                <a href="/tax/income-tax-calculator/eu">EU Income Tax Calculators</a>
+                <p>Income tax calculators for Germany, Netherlands, Denmark, Sweden, France, Italy, and Ireland.</p>
+              </div>
+            </li>
+            <li>
+              <span class="tool-icon">🗺️</span>
+              <div>
+                <a href="/tax/income-tax-calculator/us">US Income Tax - All 50 States</a>
+                <p>Federal and state income tax calculator for all 50 US states.</p>
+              </div>
+            </li>
+            <li>
+              <span class="tool-icon">💰</span>
+              <div>
+                <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+                <p>Convert your annual or monthly salary to an equivalent hourly rate.</p>
+              </div>
+            </li>
+            <li>
+              <span class="tool-icon">💱</span>
+              <div>
+                <a href="/currency/eur-to-usd">EUR to USD Converter</a>
+                <p>Convert your German salary to US dollars at current exchange rates.</p>
+              </div>
+            </li>
+          </ul>
+        </>
+      )}
+
+      {isNetherlands && nlB && nlH && nlA && (
+        <>
+          <div class="answer-box">
+            <div class="answer-box-label">Quick answer</div>
+            <p>Dutch income tax (<a href="/glossary/box-1-income-tax">Box 1</a>) taxes salary income through three brackets in 2026. The first-bracket rate of 35.75% includes social insurance (AOW, ANW, WLZ). Tax credits (<a href="/glossary/heffingskorting">heffingskortingen</a>) directly reduce your final tax bill - most employees benefit from up to {fmtEur(nlH.max + nlA.s4Base)} in credits. A Dutch employee on <strong>€{ex.toLocaleString()} gross</strong> takes home approximately <strong>{fmtEur(nlExNet)}/year ({fmtEur(nlExNetMonthly)}/month)</strong> - an effective rate of {nlExEff}%.</p>
+          </div>
+
+          <div class="answer-box">
+            <div class="answer-box-label">Key facts - Netherlands 2026</div>
+            <ul>
+              <li>Box 1 bracket 1: up to €{nlB.b1Top.toLocaleString()} at {(nlB.b1Rate * 100).toFixed(2)}% (includes 27.65% social insurance: AOW + ANW + WLZ)</li>
+              <li>Box 1 bracket 2: €{nlB.b1Top.toLocaleString()} - €{nlB.b2Top.toLocaleString()} at {(nlB.b2Rate * 100).toFixed(2)}% (income tax only)</li>
+              <li>Box 1 bracket 3: over €{nlB.b2Top.toLocaleString()} at {(nlB.b3Rate * 100).toFixed(2)}%</li>
+              <li>Algemene heffingskorting (general credit): max €{nlH.max.toLocaleString()}, phases out at {(nlH.phaseRate * 100).toFixed(3)}% from €{nlH.phaseFrom.toLocaleString()}</li>
+              <li>Arbeidskorting (employment credit): max €{nlA.s4Base.toLocaleString()}, phases out from €{nlA.s3Top.toLocaleString()}</li>
+              <li>Health insurance (ZVW): paid separately to insurer, NOT deducted from salary in this calculation</li>
+            </ul>
+          </div>
+
+          <h2 id="how-it-works">How Dutch income tax works</h2>
+          <p>The Netherlands taxes income in "boxes." Box 1 covers income from work and home ownership - this is what applies to employment income. Unlike Germany, the Netherlands embeds social insurance premiums directly into Box 1 rates, so the first bracket combines income tax and three social insurance contributions into one percentage. According to the Belastingdienst (2026), the social insurance portion is 27.65% of income in the first bracket.</p>
+          <p>What makes the Dutch system distinct is its use of tax credits (heffingskortingen) that reduce the tax owed - not the taxable income. Every worker gets a general credit (algemene heffingskorting) and employed workers get an additional employment credit (arbeidskorting). These credits are income-dependent and phase out at higher incomes, effectively creating a more progressive system than the headline brackets suggest.</p>
+
+          <h2 id="brackets">Box 1 tax brackets 2026</h2>
+          <p>Box 1 uses three income brackets in 2026. The key distinction between bracket 1 and brackets 2-3 is that social insurance premiums (AOW, ANW, WLZ totalling 27.65%) are only charged on income in bracket 1. Above €{nlB.b1Top.toLocaleString()}, only income tax applies. Source: <a href="https://business.gov.nl/amendments/income-tax-brackets-change-in-2026/" target="_blank" rel="noopener noreferrer">Business.gov.nl - Tax brackets 2026</a>.</p>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>Bracket</th><th>Income range</th><th>Rate (under AOW age)</th><th>Rate (AOW recipients)</th><th>Components</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td>Up to €{nlB.b1Top.toLocaleString()}</td>
+                  <td><strong>{(nlB.b1Rate * 100).toFixed(2)}%</strong></td>
+                  <td><strong>{(nlB.b1RateAow * 100).toFixed(2)}%</strong></td>
+                  <td>8.10% income tax + 27.65% social insurance</td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td>€{nlB.b1Top.toLocaleString()} - €{nlB.b2Top.toLocaleString()}</td>
+                  <td><strong>{(nlB.b2Rate * 100).toFixed(2)}%</strong></td>
+                  <td><strong>{(nlB.b2Rate * 100).toFixed(2)}%</strong></td>
+                  <td>Income tax only</td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong></td>
+                  <td>Over €{nlB.b2Top.toLocaleString()}</td>
+                  <td><strong>{(nlB.b3Rate * 100).toFixed(2)}%</strong></td>
+                  <td><strong>{(nlB.b3Rate * 100).toFixed(2)}%</strong></td>
+                  <td>Income tax only</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>AOW recipients (people at or above state pension age throughout 2026) pay no AOW premium (17.90%), so their first bracket rate drops to {(nlB.b1RateAow * 100).toFixed(2)}%. Brackets 2 and 3 are unaffected. For people born before 1 January 1946, a slightly higher first-bracket ceiling may apply.</p>
+
+          <h2 id="credits">Tax credits (heffingskortingen) 2026</h2>
+          <p>Dutch tax credits reduce the income tax owed after applying the bracket rates. They are not deductions from income - they reduce the tax bill euro-for-euro. Both main credits phase out at higher incomes, so the net benefit decreases as your salary rises. Source: <a href="https://www.belastingdienst.nl/wps/wcm/connect/bldcontentnl/belastingdienst/prive/inkomstenbelasting/heffingskortingen_boxen_tarieven/heffingskortingen/algemene_heffingskorting/tabel-algemene-heffingskorting-2026" target="_blank" rel="noopener noreferrer">Belastingdienst - Heffingskortingen 2026</a>.</p>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>Credit</th><th>Max (under AOW)</th><th>Max (AOW)</th><th>Phase-out starts</th><th>Phase-out rate</th><th>Zero at</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Algemene heffingskorting</td>
+                  <td><strong>€{nlH.max.toLocaleString()}</strong></td>
+                  <td>€{nlH.maxAow.toLocaleString()}</td>
+                  <td>€{nlH.phaseFrom.toLocaleString()}</td>
+                  <td>{(nlH.phaseRate * 100).toFixed(3)}%</td>
+                  <td>€{nlH.phaseTo.toLocaleString()}</td>
+                </tr>
+                <tr>
+                  <td>Arbeidskorting</td>
+                  <td><strong>€{nlA.s4Base.toLocaleString()}</strong></td>
+                  <td>€{nlA.s4BaseAow.toLocaleString()}</td>
+                  <td>€{nlA.s3Top.toLocaleString()}</td>
+                  <td>{(nlA.s4Rate * 100).toFixed(3)}%</td>
+                  <td>€{nlA.s4Top.toLocaleString()}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The arbeidskorting builds up on a four-step scale before reaching its maximum. For incomes between €0 and €{nlA.s1Top.toLocaleString()}, the credit is {(nlA.s1Rate * 100).toFixed(3)}% of employment income. It rises steeply between €{nlA.s1Top.toLocaleString()} and €{nlA.s3Top.toLocaleString()}, reaching its peak at €{nlA.s4Base.toLocaleString()}, then phases down. This means low earners benefit proportionally more from this credit than middle earners.</p>
+
+          <h2 id="step-by-step">Step-by-step: how to calculate Dutch net salary</h2>
+          <p>The Dutch net salary calculation has four steps. For a €{ex.toLocaleString()} gross salary in 2026:</p>
+          <ol>
+            <li><strong>Calculate Box 1 tax:</strong> {fmtEur(nlB.b1Top)} x {(nlB.b1Rate * 100).toFixed(2)}% = {fmtEur(Math.round(nlB.b1Top * nlB.b1Rate))} (bracket 1) + {fmtEur(ex - nlB.b1Top)} x {(nlB.b2Rate * 100).toFixed(2)}% = {fmtEur(Math.round((ex - nlB.b1Top) * nlB.b2Rate))} (bracket 2). Total: {fmtEur(nlExTax)}.</li>
+            <li><strong>Subtract the algemene heffingskorting:</strong> Max €{nlH.max.toLocaleString()} minus phase-out = {fmtEur(nlExAhk)} at this income level.</li>
+            <li><strong>Subtract the arbeidskorting:</strong> {fmtEur(nlExAk)} at €{ex.toLocaleString()} (in phase-out range above €{nlA.s3Top.toLocaleString()}).</li>
+            <li><strong>Net income tax = {fmtEur(nlExTax)} - {fmtEur(nlExAhk)} - {fmtEur(nlExAk)} = {fmtEur(nlExNetTax)}.</strong> Annual net salary: {fmtEur(nlExNet)} ({fmtEur(nlExNetMonthly)}/month).</li>
+          </ol>
+
+          <h2 id="healthcare">Healthcare insurance (ZVW) in the Netherlands</h2>
+          <p>The Netherlands has a mandatory basic health insurance (basisverzekering) under the Health Insurance Act (ZVW). Every resident must take out their own policy with a private insurer. The nominal premium averages around €170-185 per month in 2026 - this is NOT deducted from your salary and is paid by employees directly to their health insurer.</p>
+          <p>Employers pay a separate income-related ZVW contribution (inkomensafhankelijke bijdrage ZVW) calculated as a percentage of your gross salary. This is a wage cost for the employer and is not deducted from your take-home pay, so it does not appear in this calculator's results. The employee-side of Dutch healthcare is handled entirely outside of the Box 1 income tax system.</p>
+
+          <h2 id="compare">How Netherlands compares to other EU countries</h2>
+          <p>The Netherlands has a competitive effective tax rate for middle incomes thanks to its generous heffingskortingen credits. At €{ex.toLocaleString()} gross, the effective Dutch income tax rate of {nlExEff}% compares favourably with Germany's ~{exEff}% total deduction rate (which includes substantial social contributions). The Netherlands' tax system is relatively transparent - three brackets plus two credits cover most employees.</p>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr><th>Country</th><th>Top income tax rate</th><th>Approx. eff. rate at €60k</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Netherlands</strong></td><td>49.5%</td><td>~{nlExEff}% (Box 1 + credits)</td></tr>
+                <tr><td><a href="/tax/income-tax-calculator/eu/germany">Germany</a></td><td>42% / 45%</td><td>~{exEff}% (tax + social)</td></tr>
+                <tr><td>Denmark</td><td>~55%</td><td>~38-42%</td></tr>
+                <tr><td>France</td><td>45%</td><td>~30-35%</td></tr>
+                <tr><td>Sweden</td><td>~57%</td><td>~30-35%</td></tr>
+                <tr><td>Ireland</td><td>40%</td><td>~30%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 id="faq">Frequently asked questions</h2>
+
+          <h3>What is the income tax rate in the Netherlands in 2026?</h3>
+          <p>Netherlands Box 1 has three brackets: up to €{nlB.b1Top.toLocaleString()} at {(nlB.b1Rate * 100).toFixed(2)}% (includes 27.65% social insurance), €{nlB.b1Top.toLocaleString()}-€{nlB.b2Top.toLocaleString()} at {(nlB.b2Rate * 100).toFixed(2)}%, and above €{nlB.b2Top.toLocaleString()} at {(nlB.b3Rate * 100).toFixed(2)}%. Tax credits (heffingskortingen) reduce the final bill significantly - at €{ex.toLocaleString()} gross, the effective rate after credits is just {nlExEff}%.</p>
+
+          <h3>How much will I take home on a €{ex.toLocaleString()} salary in the Netherlands?</h3>
+          <p>On €{ex.toLocaleString()} gross in 2026, you pay {fmtEur(nlExTax)} in Box 1 tax before credits, then subtract the algemene heffingskorting ({fmtEur(nlExAhk)}) and arbeidskorting ({fmtEur(nlExAk)}). Net income tax: {fmtEur(nlExNetTax)}. Annual take-home: {fmtEur(nlExNet)} ({fmtEur(nlExNetMonthly)}/month). Add to this the ZVW nominal premium you pay to your health insurer directly (around €170-185/month in 2026).</p>
+
+          <h3>What is the 30% ruling in the Netherlands?</h3>
+          <p>The 30% ruling (or 27% from 2027) is a Dutch tax benefit for employees recruited from abroad. It allows eligible expats to receive up to 30% of their gross salary as a tax-free allowance, effectively reducing the taxable income. To qualify, you must have been living more than 150km from the Dutch border in the 24 months before your Dutch employment started and have specific expertise that is scarce in the Dutch labour market. The ruling applies for a maximum of five years. This calculator does not include the 30% ruling.</p>
+
+          <h3>Are social security contributions included in Dutch income tax?</h3>
+          <p>Yes, for the first bracket only. The 35.75% first-bracket rate already includes 27.65% in social insurance premiums (AOW state pension 17.90%, ANW survivor's pension 0.10%, WLZ long-term care 9.65%). Income in brackets 2 and 3 is charged only income tax - no additional social insurance. This is why Netherlands has no separate "social contributions" line in the calculator: they're already baked into the first-bracket rate.</p>
+
+          <h3>What happens to the heffingskortingen at higher incomes?</h3>
+          <p>Both credits phase out as income rises. The algemene heffingskorting (max €{nlH.max.toLocaleString()}) starts reducing at €{nlH.phaseFrom.toLocaleString()} and reaches zero at €{nlH.phaseTo.toLocaleString()}. The arbeidskorting (max €{nlA.s4Base.toLocaleString()}) starts reducing at €{nlA.s3Top.toLocaleString()} and reaches zero at €{nlA.s4Top.toLocaleString()}. High earners above €{nlA.s4Top.toLocaleString()} receive neither credit, making their effective tax rate equal to the headline bracket rates with no offset.</p>
+
+          <h2 id="related-tools">Related tools</h2>
+          <ul class="related-tools-list">
+            <li>
+              <span class="tool-icon">🌍</span>
+              <div>
+                <a href="/tax/income-tax-calculator/eu">EU Income Tax Calculators</a>
+                <p>Income tax calculators for all major European countries in one place.</p>
+              </div>
+            </li>
+            <li>
+              <span class="tool-icon">🇩🇪</span>
+              <div>
+                <a href="/tax/income-tax-calculator/eu/germany">Germany Income Tax Calculator</a>
+                <p>Compare Dutch take-home pay with Germany's Lohnsteuer and social contribution system.</p>
+              </div>
+            </li>
+            <li>
+              <span class="tool-icon">🗺️</span>
+              <div>
+                <a href="/tax/income-tax-calculator/us">US Income Tax - All 50 States</a>
+                <p>Federal and state income tax calculator for all 50 US states.</p>
+              </div>
+            </li>
+            <li>
+              <span class="tool-icon">💰</span>
+              <div>
+                <a href="/finance/salary-to-hourly-calculator">Salary to Hourly Calculator</a>
+                <p>Convert your annual or monthly salary to an equivalent hourly rate.</p>
+              </div>
+            </li>
+          </ul>
+        </>
+      )}
 
     </div>
   </div>
@@ -738,14 +1152,6 @@ const schema = [
     background: rgba(139,92,246,0.25); border: 1px solid rgba(139,92,246,0.4); color: rgba(255,255,255,0.85);
   }
   .itax-pill-alt { background: rgba(59,130,246,0.2); border-color: rgba(59,130,246,0.35); }
-  .itax-rate-line.itax-no-tax .itax-rate-pill { background: rgba(52,211,153,0.2); border-color: rgba(52,211,153,0.4); color: rgba(52,211,153,0.9); }
-  .itax-notax-pill { background: rgba(52,211,153,0.15) !important; border: 1px solid rgba(52,211,153,0.35) !important; color: rgba(52,211,153,0.9) !important; }
-  .itax-no-tax-notice {
-    display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem;
-    background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2);
-    border-radius: 10px; color: rgba(255,255,255,0.85); font-size: 0.9rem; line-height: 1.5;
-  }
-  .itax-no-tax-notice svg { flex-shrink: 0; margin-top: 0.1rem; color: rgba(52,211,153,0.8); }
   .itax-results-grid { display: flex; flex-direction: column; gap: 0; }
   .itax-results-section {
     background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
@@ -762,6 +1168,7 @@ const schema = [
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .itax-result-row:last-child { border-bottom: none; }
+  .itax-credit-val { color: rgba(52,211,153,0.9) !important; }
   .stax-rate-hint {
     font-size: 0.74rem;
     color: rgba(255,255,255,0.4);

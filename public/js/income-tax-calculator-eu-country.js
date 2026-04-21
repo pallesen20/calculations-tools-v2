@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!el) return;
   const country = el.dataset.country;
   if (country === 'de') initGermany(el);
+  if (country === 'nl') initNetherlands(el);
 });
 
 function initGermany(el) {
@@ -11,7 +12,7 @@ function initGermany(el) {
   const soliCfg = JSON.parse(el.dataset.soli || '{}');
   const WERKPAUSCH = parseFloat(el.dataset.werbungskosten || '1230');
   const ENTLAST = parseFloat(el.dataset.entlastungsbetrag || '4260');
-  const CUR = el.dataset.currencySymbol || '\u20ac';
+  const CUR = el.dataset.currencySymbol || '€';
 
   const y_top = (z.z2t - z.gf) / 10000;
   const C3 = (z.a2 * y_top + z.b2) * y_top;
@@ -177,8 +178,8 @@ function initGermany(el) {
     setText('eutax-res-zve', fmt(zvE > 0 ? zvE : gross));
     setText('eutax-res-est', fmt(est));
     setText('eutax-res-est-rates', fmtRate(effIncomeTax) + ' / ' + fmtRate(marginalIncomeTax));
-    setText('eutax-res-soli', soli > 0 ? fmt(soli) : '\u2014');
-    setText('eutax-res-kirche', kirchensteuer > 0 ? fmt(kirchensteuer) : '\u2014');
+    setText('eutax-res-soli', soli > 0 ? fmt(soli) : '—');
+    setText('eutax-res-kirche', kirchensteuer > 0 ? fmt(kirchensteuer) : '—');
     setText('eutax-res-total-taxes', fmt(totalTaxes));
     setText('eutax-res-rv', fmt(rv));
     setText('eutax-res-kv', fmt(kv));
@@ -219,6 +220,117 @@ function initGermany(el) {
 
   const stateSelect = document.getElementById('eutax-state');
   if (stateSelect) stateSelect.addEventListener('change', calculate);
+
+  calculate();
+}
+
+function initNetherlands(el) {
+  const b = JSON.parse(el.dataset.nlBrackets || '{}');
+  const h = JSON.parse(el.dataset.nlHeffingskorting || '{}');
+  const a = JSON.parse(el.dataset.nlArbeidskorting || '{}');
+  const CUR = el.dataset.currencySymbol || '€';
+
+  function box1Tax(gross, isAow) {
+    const b1Rate = isAow ? b.b1RateAow : b.b1Rate;
+    const t1 = Math.min(gross, b.b1Top) * b1Rate;
+    const t2 = gross > b.b1Top ? Math.min(gross - b.b1Top, b.b2Top - b.b1Top) * b.b2Rate : 0;
+    const t3 = gross > b.b2Top ? (gross - b.b2Top) * b.b3Rate : 0;
+    return Math.round(t1 + t2 + t3);
+  }
+
+  function marginalRate(gross, isAow) {
+    if (gross <= b.b1Top) return (isAow ? b.b1RateAow : b.b1Rate) * 100;
+    if (gross <= b.b2Top) return b.b2Rate * 100;
+    return b.b3Rate * 100;
+  }
+
+  function calcAhk(gross, isAow) {
+    const max = isAow ? h.maxAow : h.max;
+    const rate = isAow ? h.phaseRateAow : h.phaseRate;
+    if (gross <= h.phaseFrom) return max;
+    if (gross >= h.phaseTo) return 0;
+    return Math.max(0, Math.round(max - (gross - h.phaseFrom) * rate));
+  }
+
+  function calcAk(gross, isAow) {
+    const s1Rate = isAow ? a.s1RateAow : a.s1Rate;
+    const s2Base = isAow ? a.s2BaseAow : a.s2Base;
+    const s2Rate = isAow ? a.s2RateAow : a.s2Rate;
+    const s3Base = isAow ? a.s3BaseAow : a.s3Base;
+    const s3Rate = isAow ? a.s3RateAow : a.s3Rate;
+    const s4Base = isAow ? a.s4BaseAow : a.s4Base;
+    const s4Rate = isAow ? a.s4RateAow : a.s4Rate;
+
+    if (gross <= a.s1Top) return Math.round(gross * s1Rate);
+    if (gross <= a.s2Top) return Math.round(s2Base + (gross - a.s1Top) * s2Rate);
+    if (gross <= a.s3Top) return Math.round(s3Base + (gross - a.s2Top) * s3Rate);
+    if (gross <= a.s4Top) return Math.max(0, Math.round(s4Base - (gross - a.s3Top) * s4Rate));
+    return 0;
+  }
+
+  function parseNum(id) {
+    const node = document.getElementById(id);
+    if (!node || node.value.trim() === '') return 0;
+    const v = parseFloat(node.value.replace(/,/g, '.').replace(/\s/g, ''));
+    return isNaN(v) || v < 0 ? 0 : v;
+  }
+
+  function fmt(n) {
+    if (!isFinite(n)) return '-';
+    return CUR + Math.abs(n).toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function fmtRate(n) {
+    if (!isFinite(n) || n < 0) return '-';
+    return n.toFixed(2) + '%';
+  }
+
+  function setText(id, txt) {
+    const node = document.getElementById(id);
+    if (node) node.textContent = txt;
+  }
+
+  function calculate() {
+    const period = document.querySelector('input[name="eutax-period"]:checked');
+    const periodVal = period ? period.value : 'annual';
+    const rawGross = parseNum('eutax-gross');
+    const gross = periodVal === 'monthly' ? rawGross * 12 : rawGross;
+
+    if (gross <= 0) {
+      document.getElementById('eutax-results')?.classList.add('hidden');
+      return;
+    }
+
+    const isAow = document.getElementById('nl-aow')?.checked || false;
+
+    const tax = box1Tax(gross, isAow);
+    const ahk = calcAhk(gross, isAow);
+    const ak = calcAk(gross, isAow);
+    const netTax = Math.max(0, tax - ahk - ak);
+    const annualNet = gross - netTax;
+
+    const effTax = gross > 0 ? (tax / gross) * 100 : 0;
+    const margRate = marginalRate(gross, isAow);
+    const effNet = gross > 0 ? (netTax / gross) * 100 : 0;
+
+    setText('eutax-res-gross', fmt(gross));
+    setText('eutax-res-est', fmt(tax));
+    setText('eutax-res-est-rates', fmtRate(effTax) + ' / ' + fmtRate(margRate));
+    setText('nl-res-ahk', '−' + fmt(ahk));
+    setText('nl-res-ak', '−' + fmt(ak));
+    setText('eutax-res-total', fmt(netTax));
+    setText('eutax-res-eff', fmtRate(effNet));
+    setText('eutax-res-net-annual', fmt(annualNet));
+    setText('eutax-res-net-monthly', fmt(annualNet / 12));
+
+    document.getElementById('eutax-results')?.classList.remove('hidden');
+  }
+
+  document.querySelectorAll('.eutax-input').forEach(inp => inp.addEventListener('input', calculate));
+  document.querySelectorAll('input[name="eutax-period"]').forEach(r => r.addEventListener('change', calculate));
+
+  const aowCheck = document.getElementById('nl-aow');
+  if (aowCheck) aowCheck.addEventListener('change', calculate);
 
   calculate();
 }

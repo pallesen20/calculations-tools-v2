@@ -27,6 +27,45 @@ export interface EUHealthOption {
   label: string;
 }
 
+export interface NLBrackets {
+  b1Top: number;
+  b1Rate: number;
+  b2Top: number;
+  b2Rate: number;
+  b3Rate: number;
+  b1RateAow: number;
+}
+
+export interface NLHeffingskorting {
+  max: number;
+  phaseFrom: number;
+  phaseRate: number;
+  phaseTo: number;
+  maxAow: number;
+  phaseRateAow: number;
+}
+
+export interface NLArbeidskorting {
+  s1Top: number;
+  s1Rate: number;
+  s2Top: number;
+  s2Base: number;
+  s2Rate: number;
+  s3Top: number;
+  s3Base: number;
+  s3Rate: number;
+  s4Top: number;
+  s4Base: number;
+  s4Rate: number;
+  s1RateAow: number;
+  s2BaseAow: number;
+  s2RateAow: number;
+  s3BaseAow: number;
+  s3RateAow: number;
+  s4BaseAow: number;
+  s4RateAow: number;
+}
+
 export interface EUCountryTax {
   name: string;
   slug: string;
@@ -62,6 +101,11 @@ export interface EUCountryTax {
   flag: string;
 
   hasChildlessField: boolean;
+  hasAowToggle: boolean;
+
+  nlBrackets?: NLBrackets;
+  nlHeffingskorting?: NLHeffingskorting;
+  nlArbeidskorting?: NLArbeidskorting;
 
   rvRate: number;
   rvCeiling: number;
@@ -81,11 +125,11 @@ export const GERMANY: EUCountryTax = {
   abbr: 'DE',
   flag: '🇩🇪',
   currency: 'EUR',
-  currencySymbol: '\u20ac',
+  currencySymbol: '€',
   locale: 'de-DE',
   topRate: 45,
   exampleIncome: 60000,
-  notes: 'Germany uses the \u00a732a EStG progressive formula - marginal rates rise continuously from 14% to 42%, with a 45% Reichensteuer above \u20ac277,825.',
+  notes: 'Germany uses the §32a EStG progressive formula - marginal rates rise continuously from 14% to 42%, with a 45% Reichensteuer above €277,825.',
 
   formula: 'german',
   germanZones: {
@@ -110,7 +154,7 @@ export const GERMANY: EUCountryTax = {
   hasTaxClass: true,
   taxClasses: [
     { value: '1', label: 'Class I', description: 'Single, divorced, widowed, or separated' },
-    { value: '2', label: 'Class II', description: 'Single parent eligible for lone-parent allowance (\u20ac4,260)' },
+    { value: '2', label: 'Class II', description: 'Single parent eligible for lone-parent allowance (€4,260)' },
     { value: '3', label: 'Class III', description: 'Higher-earning married spouse - splitting method applied' },
     { value: '4', label: 'Class IV', description: 'Married couples with similar income - same rates as Class I' },
     { value: '5', label: 'Class V', description: 'Lower-earning married spouse (paired with Class III) - no personal allowance' },
@@ -146,6 +190,7 @@ export const GERMANY: EUCountryTax = {
   ],
 
   hasChildlessField: true,
+  hasAowToggle: false,
 
   rvRate: 0.093,
   rvCeiling: 101400,
@@ -159,7 +204,80 @@ export const GERMANY: EUCountryTax = {
   avCeiling: 101400,
 };
 
-export const EU_INCOME_TAX: EUCountryTax[] = [GERMANY];
+export const NETHERLANDS: EUCountryTax = {
+  name: 'Netherlands',
+  slug: 'netherlands',
+  abbr: 'NL',
+  flag: '🇳🇱',
+  currency: 'EUR',
+  currencySymbol: '€',
+  locale: 'nl-NL',
+  topRate: 49.5,
+  exampleIncome: 60000,
+  notes: 'Netherlands uses Box 1 income tax with volksverzekeringen (social insurance) embedded in the first bracket rate. Tax credits (heffingskortingen) directly reduce the final tax owed.',
+
+  formula: 'brackets',
+
+  werbungskosten: 0,
+
+  hasSoli: false,
+  hasChurchTax: false,
+  hasTaxClass: false,
+  hasStateSelection: false,
+  hasHealthSelection: false,
+  hasChildlessField: false,
+  hasAowToggle: true,
+
+  nlBrackets: {
+    b1Top: 38883,
+    b1Rate: 0.3575,
+    b2Top: 78426,
+    b2Rate: 0.3756,
+    b3Rate: 0.4950,
+    b1RateAow: 0.1785,
+  },
+
+  nlHeffingskorting: {
+    max: 3115,
+    phaseFrom: 29736,
+    phaseRate: 0.06398,
+    phaseTo: 78426,
+    maxAow: 1556,
+    phaseRateAow: 0.03195,
+  },
+
+  nlArbeidskorting: {
+    s1Top: 11965,
+    s1Rate: 0.08324,
+    s2Top: 25845,
+    s2Base: 996,
+    s2Rate: 0.31009,
+    s3Top: 45592,
+    s3Base: 5300,
+    s3Rate: 0.01950,
+    s4Top: 132920,
+    s4Base: 5685,
+    s4Rate: 0.06510,
+    s1RateAow: 0.04156,
+    s2BaseAow: 498,
+    s2RateAow: 0.15483,
+    s3BaseAow: 2647,
+    s3RateAow: 0.00974,
+    s4BaseAow: 2840,
+    s4RateAow: 0.03250,
+  },
+
+  rvRate: 0,
+  rvCeiling: 0,
+  kvPublicRate: 0,
+  kvCeiling: 0,
+  pvRateWith: 0,
+  pvRateChildless: 0,
+  avRate: 0,
+  avCeiling: 0,
+};
+
+export const EU_INCOME_TAX: EUCountryTax[] = [GERMANY, NETHERLANDS];
 
 export const EU_INCOME_TAX_MAP: Record<string, EUCountryTax> = Object.fromEntries(
   EU_INCOME_TAX.map(c => [c.slug, c])

@@ -10,9 +10,11 @@ export function getStaticPaths() {
 }
 
 const { country } = Astro.props;
-const g = country.germanZones!;
+const isGermany = country.slug === 'germany';
+const isNetherlands = country.slug === 'netherlands';
+const g = country.germanZones;
 
-const zoneData = JSON.stringify(g);
+const zoneData = g ? JSON.stringify(g) : '{}';
 const socialData = JSON.stringify({
   rvRate: country.rvRate,
   rvCeiling: country.rvCeiling,
@@ -29,6 +31,9 @@ const soliData = JSON.stringify({
   threshSingle: country.soliThreshSingle || 0,
   threshMarried: country.soliThreshMarried || 0,
 });
+const nlBracketsData = country.nlBrackets ? JSON.stringify(country.nlBrackets) : '{}';
+const nlHeffingData = country.nlHeffingskorting ? JSON.stringify(country.nlHeffingskorting) : '{}';
+const nlArbeidData = country.nlArbeidskorting ? JSON.stringify(country.nlArbeidskorting) : '{}';
 ---
 
 <EmbedLayout title={`${country.name} Income Tax Calculator 2026 - calculations.tools`}>
@@ -40,6 +45,9 @@ const soliData = JSON.stringify({
     data-werbungskosten={country.werbungskosten}
     data-entlastungsbetrag={country.taxClass2Deduction || 0}
     data-currency-symbol={country.currencySymbol}
+    data-nl-brackets={nlBracketsData}
+    data-nl-heffingskorting={nlHeffingData}
+    data-nl-arbeidskorting={nlArbeidData}
   >
 
     <div class="itax-header">
@@ -47,7 +55,8 @@ const soliData = JSON.stringify({
       <div class="itax-header-info">
         <div class="itax-state-name">{country.name} Income Tax 2026</div>
         <div class="itax-rate-line">
-          <span class="itax-rate-pill">14% - {country.topRate}% progressive</span>
+          {isGermany && <span class="itax-rate-pill">14% - {country.topRate}% progressive</span>}
+          {isNetherlands && <span class="itax-rate-pill">35.75% - {country.topRate}% progressive</span>}
         </div>
       </div>
     </div>
@@ -132,71 +141,136 @@ const soliData = JSON.stringify({
       </div>
     )}
 
-    <div id="eutax-results" class="hidden">
-      <div class="itax-results-grid">
-
-        <div class="itax-results-section">
-          <div class="itax-section-label">Income taxes</div>
-          <div class="itax-result-row">
-            <span>Income tax (Lohnsteuer)</span>
-            <span id="eutax-res-est" class="itax-val itax-tax-val">-</span>
-          </div>
-          <div class="itax-result-row itax-nested">
-            <span>Eff. / Marginal</span>
-            <span id="eutax-res-est-rates" class="itax-val itax-rate-val">-</span>
-          </div>
-          <div class="itax-result-row" id="eutax-row-soli">
-            <span>Solidarity surcharge</span>
-            <span id="eutax-res-soli" class="itax-val itax-tax-val">-</span>
-          </div>
-          <div class="itax-result-row" id="eutax-row-kirche" style="display:none">
-            <span>Church tax</span>
-            <span id="eutax-res-kirche" class="itax-val itax-tax-val">-</span>
-          </div>
-        </div>
-
-        <div class="itax-results-section">
-          <div class="itax-section-label">Social contributions</div>
-          <div class="itax-result-row">
-            <span>Pension (RV 9.3%)</span>
-            <span id="eutax-res-rv" class="itax-val itax-tax-val">-</span>
-          </div>
-          <div class="itax-result-row">
-            <span>Health (KV 8.75%)</span>
-            <span id="eutax-res-kv" class="itax-val itax-tax-val">-</span>
-          </div>
-          <div class="itax-result-row">
-            <span id="eutax-pv-label">Long-term care (PV 1.8%)</span>
-            <span id="eutax-res-pv" class="itax-val itax-tax-val">-</span>
-          </div>
-          <div class="itax-result-row">
-            <span>Unemployment (AV 1.3%)</span>
-            <span id="eutax-res-av" class="itax-val itax-tax-val">-</span>
-          </div>
-        </div>
-
-        <div class="itax-results-section">
-          <div class="itax-section-label">Summary</div>
-          <div class="itax-result-row itax-row-highlight itax-row-tax-total">
-            <span>Total deductions</span>
-            <span id="eutax-res-total" class="itax-val">-</span>
-          </div>
-          <div class="itax-result-row itax-nested">
-            <span>Effective rate</span>
-            <span id="eutax-res-eff" class="itax-val itax-rate-val">-</span>
-          </div>
-          <div class="itax-result-row itax-row-highlight">
-            <span>Annual net</span>
-            <span id="eutax-res-net-annual" class="itax-val">-</span>
-          </div>
-          <div class="itax-result-row itax-row-last">
-            <span>Monthly net</span>
-            <span id="eutax-res-net-monthly" class="itax-val">-</span>
-          </div>
-        </div>
-
+    {country.hasAowToggle && (
+      <div class="bmi-field eutax-toggle-field">
+        <label class="bmi-label">State pension age (AOW)</label>
+        <label class="eutax-toggle">
+          <input type="checkbox" id="nl-aow" />
+          <span class="eutax-toggle-track"></span>
+          <span class="eutax-toggle-label">Receiving AOW throughout 2026</span>
+        </label>
       </div>
-    </div>
+    )}
+
+    {isGermany && (
+      <div id="eutax-results" class="hidden">
+        <div class="itax-results-grid">
+
+          <div class="itax-results-section">
+            <div class="itax-section-label">Income taxes</div>
+            <div class="itax-result-row">
+              <span>Income tax (Lohnsteuer)</span>
+              <span id="eutax-res-est" class="itax-val itax-tax-val">-</span>
+            </div>
+            <div class="itax-result-row itax-nested">
+              <span>Eff. / Marginal</span>
+              <span id="eutax-res-est-rates" class="itax-val itax-rate-val">-</span>
+            </div>
+            <div class="itax-result-row" id="eutax-row-soli">
+              <span>Solidarity surcharge</span>
+              <span id="eutax-res-soli" class="itax-val itax-tax-val">-</span>
+            </div>
+            <div class="itax-result-row" id="eutax-row-kirche" style="display:none">
+              <span>Church tax</span>
+              <span id="eutax-res-kirche" class="itax-val itax-tax-val">-</span>
+            </div>
+          </div>
+
+          <div class="itax-results-section">
+            <div class="itax-section-label">Social contributions</div>
+            <div class="itax-result-row">
+              <span>Pension (RV 9.3%)</span>
+              <span id="eutax-res-rv" class="itax-val itax-tax-val">-</span>
+            </div>
+            <div class="itax-result-row">
+              <span>Health (KV 8.75%)</span>
+              <span id="eutax-res-kv" class="itax-val itax-tax-val">-</span>
+            </div>
+            <div class="itax-result-row">
+              <span id="eutax-pv-label">Long-term care (PV 1.8%)</span>
+              <span id="eutax-res-pv" class="itax-val itax-tax-val">-</span>
+            </div>
+            <div class="itax-result-row">
+              <span>Unemployment (AV 1.3%)</span>
+              <span id="eutax-res-av" class="itax-val itax-tax-val">-</span>
+            </div>
+          </div>
+
+          <div class="itax-results-section">
+            <div class="itax-section-label">Summary</div>
+            <div class="itax-result-row itax-row-highlight itax-row-tax-total">
+              <span>Total deductions</span>
+              <span id="eutax-res-total" class="itax-val">-</span>
+            </div>
+            <div class="itax-result-row itax-nested">
+              <span>Effective rate</span>
+              <span id="eutax-res-eff" class="itax-val itax-rate-val">-</span>
+            </div>
+            <div class="itax-result-row itax-row-highlight">
+              <span>Annual net</span>
+              <span id="eutax-res-net-annual" class="itax-val">-</span>
+            </div>
+            <div class="itax-result-row itax-row-last">
+              <span>Monthly net</span>
+              <span id="eutax-res-net-monthly" class="itax-val">-</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    )}
+
+    {isNetherlands && (
+      <div id="eutax-results" class="hidden">
+        <div class="itax-results-grid">
+
+          <div class="itax-results-section">
+            <div class="itax-section-label">Box 1 income tax</div>
+            <div class="itax-result-row">
+              <span>Box 1 tax (before credits)</span>
+              <span id="eutax-res-est" class="itax-val itax-tax-val">-</span>
+            </div>
+            <div class="itax-result-row itax-nested">
+              <span>Eff. / Marginal</span>
+              <span id="eutax-res-est-rates" class="itax-val itax-rate-val">-</span>
+            </div>
+          </div>
+
+          <div class="itax-results-section">
+            <div class="itax-section-label">Tax credits</div>
+            <div class="itax-result-row">
+              <span>Algemene heffingskorting</span>
+              <span id="nl-res-ahk" class="itax-val itax-credit-val">-</span>
+            </div>
+            <div class="itax-result-row">
+              <span>Arbeidskorting</span>
+              <span id="nl-res-ak" class="itax-val itax-credit-val">-</span>
+            </div>
+          </div>
+
+          <div class="itax-results-section">
+            <div class="itax-section-label">Summary</div>
+            <div class="itax-result-row itax-row-highlight itax-row-tax-total">
+              <span>Net income tax</span>
+              <span id="eutax-res-total" class="itax-val">-</span>
+            </div>
+            <div class="itax-result-row itax-nested">
+              <span>Effective rate</span>
+              <span id="eutax-res-eff" class="itax-val itax-rate-val">-</span>
+            </div>
+            <div class="itax-result-row itax-row-highlight">
+              <span>Annual net</span>
+              <span id="eutax-res-net-annual" class="itax-val">-</span>
+            </div>
+            <div class="itax-result-row itax-row-last">
+              <span>Monthly net</span>
+              <span id="eutax-res-net-monthly" class="itax-val">-</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    )}
 
     <div class="embed-attribution">
       <a href={`https://calculations.tools/tax/income-tax-calculator/eu/${country.slug}`} target="_blank" rel="noopener">
@@ -236,5 +310,6 @@ const soliData = JSON.stringify({
     .eutax-toggle input:checked ~ .eutax-toggle-track { background: rgba(139,92,246,0.5); border-color: rgba(139,92,246,0.6); }
     .eutax-toggle input:checked ~ .eutax-toggle-track::after { transform: translateX(18px); background: white; }
     .eutax-toggle-label { font-size: 0.85rem; color: rgba(255,255,255,0.75); }
+    .itax-credit-val { color: rgba(52,211,153,0.9) !important; }
   </style>
 </EmbedLayout>

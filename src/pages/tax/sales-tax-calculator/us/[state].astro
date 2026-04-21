@@ -4,6 +4,7 @@ import FinanceDisclaimer from '../../../../components/FinanceDisclaimer.astro';
 import { US_SALES_TAX, NATIONAL_AVG_COMBINED } from '../../../../data/us-sales-tax';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import type { Source } from '../../components/Sources.astro';
 
 export function getStaticPaths() {
   return US_SALES_TAX.map(s => ({
@@ -11,6 +12,21 @@ export function getStaticPaths() {
     props: { state: s },
   }));
 }
+
+const sources: Source[] = [
+  {
+    author: 'Tax Foundation',
+    title: 'State and Local Sales Tax Rates, 2026',
+    year: 2026,
+    url: 'https://taxfoundation.org/data/all/state/sales-tax-rates/',
+  },
+  {
+    author: 'Avalara',
+    title: '2026 U.S. sales tax rates by state',
+    year: 2026,
+    url: 'https://www.avalara.com/taxrates/en/state-rates.html',
+  },
+];
 
 const { state } = Astro.props;
 
@@ -112,6 +128,7 @@ const schema = [
   canonical={`https://calculations.tools/tax/sales-tax-calculator/us/${state.slug}`}
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug={`sales-tax-calculator/us/${state.slug}`}
   ogFormula={noTax ? `${state.name}: No sales tax` : `Tax = Price × ${state.avgCombined}%`}
   ogExample={noTax ? `$100 × 0% = $0 tax` : `$100 × ${state.avgCombined}% = $${(100 * state.avgCombined / 100).toFixed(2)} tax`}
