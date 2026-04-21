@@ -1047,10 +1047,11 @@ export const US_SALES_TAX: StateSalesTax[] = [
     otcDrugs: 'Exempt',
     clothing: 'Exempt',
     cities: [
-      { name: 'Milwaukee', rate: 5.5 },
+      { name: 'Milwaukee', rate: 5.9 },
       { name: 'Madison', rate: 5.5 },
       { name: 'Green Bay', rate: 5.5 },
       { name: 'Racine', rate: 5.5 },
+      { name: 'Kenosha', rate: 5.5 },
     ],
     notes: 'Wisconsin is one of four states that exempts clothing year-round. Groceries, prescription drugs, and OTC medications are also all exempt, making it one of the most consumer-friendly tax states.',
     mapCol: 5, mapRow: 1,

@@ -49,7 +49,7 @@ const tocItems = [
   { id: 'how-to-use', label: `How to calculate ${state.name} sales tax` },
   { id: 'rates', label: `${state.name} sales tax rates 2026` },
   { id: 'exemptions', label: `What is exempt in ${state.name}?` },
-  { id: 'cities', label: `Sales tax by city in ${state.name}` },
+  { id: 'cities', label: `${state.name} sales tax rates by city 2026` },
   { id: 'reverse', label: 'Remove tax: find the pre-tax price' },
   { id: 'tips', label: `${state.name} shopper tips` },
   { id: 'faq', label: 'FAQs' },
@@ -387,7 +387,7 @@ const schema = [
         </>
       )}
 
-      <h2 id="cities">Sales tax by city in {state.name}</h2>
+      <h2 id="cities">{state.name} sales tax rates by city 2026</h2>
       {noTax ? (
         <p>There are no city or county sales taxes in {state.name}. All locations charge 0%.</p>
       ) : (
