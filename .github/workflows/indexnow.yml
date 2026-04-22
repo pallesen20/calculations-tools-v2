@@ -29,7 +29,7 @@ jobs:
           fi
 
           curl -s https://calculations.tools/sitemap-0.xml \
-            | grep -oP '(?<=<loc>)[^<]+' > sitemap_urls.txt
+            | grep -oP '(?<=<loc>)[^<]+' > sitemap_urls.txt || true
 
           FINAL_URLS=""
           while IFS= read -r file; do
@@ -45,7 +45,9 @@ jobs:
               MATCHES=$(grep -P "^https://calculations.tools${url_path}/?$" sitemap_urls.txt || true)
             fi
 
-            [ -n "$MATCHES" ] && FINAL_URLS+="$MATCHES"$'\n'
+            if [ -n "$MATCHES" ]; then
+              FINAL_URLS+="$MATCHES"$'\n'
+            fi
           done <<< "$CHANGED_FILES"
 
           FINAL_URLS=$(echo "$FINAL_URLS" | sort -u | sed '/^$/d')
