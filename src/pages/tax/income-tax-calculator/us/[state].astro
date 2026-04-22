@@ -23,6 +23,12 @@ const sources: Source[] = [
     year: 2026,
     url: 'https://www.irs.gov/taxtopics/tc751',
   },
+  {
+    author: 'Internal Revenue Service (IRS)',
+    title: 'IRS releases tax inflation adjustments for tax year 2026, including amendments from the One, Big, Beautiful Bill',
+    year: 2026,
+    url: 'https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill',
+  },
 ];
 
 const { state } = Astro.props;
@@ -450,7 +456,7 @@ const schema = [
 
           {state.mfj.brackets.length > 0 && JSON.stringify(state.mfj.brackets) !== JSON.stringify(fs.brackets) && (
             <>
-              <p>Married filing jointly brackets differ - the income thresholds are higher:</p>
+              <p><a href="/glossary/mfj">Married filing jointly</a> brackets differ - the income thresholds are higher:</p>
               <div class="responsive-table">
                 <table>
                   <thead><tr><th>Taxable income (MFJ, 2026)</th><th>Rate</th></tr></thead>
