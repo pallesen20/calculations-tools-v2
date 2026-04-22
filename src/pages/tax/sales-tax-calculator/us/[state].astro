@@ -31,6 +31,9 @@ const sources: Source[] = [
 const { state } = Astro.props;
 
 let exampleZip = '10001';
+let zipCounties: Array<{ name: string; rate: number }> = [];
+let zipCities: Array<{ name: string; rate: number }> | null = null;
+let zipLastUpdated = '';
 try {
   const zipJson = JSON.parse(readFileSync(resolve('public/data/zip-tax/' + state.abbr.toLowerCase() + '.json'), 'utf-8'));
   if (zipJson.example_zip) {
@@ -39,7 +42,12 @@ try {
     const first = Object.keys(zipJson.zips)[0];
     if (first) exampleZip = first;
   }
+  if (Array.isArray(zipJson.counties)) zipCounties = zipJson.counties;
+  if (Array.isArray(zipJson.cities) && zipJson.cities.length > 0) zipCities = zipJson.cities;
+  if (zipJson.lastUpdated) zipLastUpdated = zipJson.lastUpdated;
 } catch {}
+
+const displayCities = zipCities ?? state.cities;
 
 const noTax = state.noTax;
 const rateLabel = noTax ? 'No sales tax' : `${state.stateRate}% state rate`;
@@ -49,10 +57,11 @@ const tocItems = [
   { id: 'how-to-use', label: `How to calculate ${state.name} sales tax` },
   { id: 'rates', label: `${state.name} sales tax rates 2026` },
   { id: 'exemptions', label: `What is exempt in ${state.name}?` },
-  { id: 'cities', label: `${state.name} sales tax rates by city 2026` },
   { id: 'reverse', label: 'Remove tax: find the pre-tax price' },
   { id: 'tips', label: `${state.name} shopper tips` },
   { id: 'faq', label: 'FAQs' },
+  { id: 'cities', label: `${state.name} sales tax rates by city 2026` },
+  ...(!noTax && zipCounties.length > 0 ? [{ id: 'counties', label: `${state.name} sales tax rates by county 2026` }] : []),
   { id: 'related-tools', label: 'Related tools' },
 ];
 
@@ -241,6 +250,7 @@ const schema = [
 
     <FinanceDisclaimer />
     <script src="/js/sales-tax-calculator.js" is:inline></script>
+    <script src="/js/stax-table-collapse.js" is:inline></script>
   </div>
 
   <div slot="content">
@@ -386,45 +396,6 @@ const schema = [
           <p>Exemptions are set at the state level but may not override local taxes. When a category is "exempt" from the state rate, local taxes may still apply in some jurisdictions. Always confirm with your local tax authority for high-value purchases.</p>
         </>
       )}
-
-      <h2 id="cities">{state.name} sales tax rates by city 2026</h2>
-      {noTax ? (
-        <p>There are no city or county sales taxes in {state.name}. All locations charge 0%.</p>
-      ) : (
-        <>
-          <p>Combined sales tax rates vary significantly across {state.name}'s cities and counties. The figures below represent the total combined rate (state + county + city) as of 2024-2025. Use the rate override field in the calculator to apply your exact local rate.</p>
-
-          <div class="responsive-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>City</th>
-                  <th>Combined rate</th>
-                  <th>vs. state avg</th>
-                </tr>
-              </thead>
-              <tbody>
-                {state.cities.map(city => (
-                  <tr>
-                    <td>{city.name}</td>
-                    <td><strong>{city.rate}%</strong></td>
-                    <td>
-                      {city.rate > state.avgCombined
-                        ? <span class="stax-above">+{(city.rate - state.avgCombined).toFixed(2)}%</span>
-                        : city.rate < state.avgCombined
-                          ? <span class="stax-below">-{(state.avgCombined - city.rate).toFixed(2)}%</span>
-                          : <span>avg</span>
-                      }
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p>To find the combined rate for a specific address in {state.name}, use the <a href=`https://www.avalara.com/taxrates/en/state-rates/${state.slug}.html` target="_blank" rel="noopener noreferrer">Avalara rate lookup tool</a> or check your city or county government website.</p>
-        </>
-      )}
-
       <h2 id="reverse">Remove tax: find the pre-tax price</h2>
       <p>If you have a receipt and want to know what the item cost before tax, you need the reverse sales tax calculation. This is common when comparing advertised prices, calculating business expenses, or verifying a charge.</p>
 
@@ -487,7 +458,84 @@ const schema = [
       ) : (
         <p>{state.name}'s {state.avgCombined}% average combined rate is {state.avgCombined > NATIONAL_AVG_COMBINED ? `above` : `below`} the national average of {NATIONAL_AVG_COMBINED}%. See our <a href="/tax/sales-tax-calculator/us">US sales tax map</a> to compare all 50 states side by side.</p>
       )}
+      <h2 id="cities">{state.name} sales tax rates by city 2026</h2>
+      {noTax ? (
+        <p>There are no city or county sales taxes in {state.name}. All locations charge 0%.</p>
+      ) : (
+        <>
+          <p>Combined sales tax rates vary significantly across {state.name}'s cities and counties. The figures below represent the total combined rate (state + county + city) as of 2026. Use the rate override field in the calculator to apply your exact local rate.</p>
 
+          <div class="stax-filter-wrap">
+            <input type="text" id="stax-city-filter" class="stax-filter-input" placeholder={`Search ${displayCities.length} cities...`} aria-label="Filter cities" />
+          </div>
+          <div class="responsive-table city-table" id="stax-city-table-wrap" data-label="cities">
+            <table>
+              <thead>
+                <tr>
+                  <th>City</th>
+                  <th>Combined rate</th>
+                  <th>vs. state avg</th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayCities.map(city => (
+                  <tr>
+                    <td>{city.name}</td>
+                    <td><strong>{city.rate}%</strong></td>
+                    <td>
+                      {city.rate > state.avgCombined
+                        ? <span class="stax-above">+{(city.rate - state.avgCombined).toFixed(2)}%</span>
+                        : city.rate < state.avgCombined
+                          ? <span class="stax-below">-{(state.avgCombined - city.rate).toFixed(2)}%</span>
+                          : <span>avg</span>
+                      }
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>To find the combined rate for a specific address in {state.name}, use the <a href=`https://www.avalara.com/taxrates/en/state-rates/${state.slug}.html` target="_blank" rel="noopener noreferrer">Avalara rate lookup tool</a> or check your city or county government website.</p>
+        </>
+      )}
+
+      {!noTax && zipCounties.length > 0 && (
+        <>
+          <h2 id="counties">{state.name} sales tax rates by county 2026</h2>
+          <p>County-level combined rates across {state.name}, sourced from Avalara AvaTax{zipLastUpdated ? ` (updated ${zipLastUpdated})` : ''}. The combined rate shown is the median across ZIP codes in each county - individual addresses may vary by special district.</p>
+
+          <div class="stax-filter-wrap">
+            <input type="text" id="stax-county-filter" class="stax-filter-input" placeholder={`Search ${zipCounties.length} counties...`} aria-label="Filter counties" />
+          </div>
+          <div class="responsive-table county-table" id="stax-county-table-wrap" data-label="counties">
+            <table>
+              <thead>
+                <tr>
+                  <th>County</th>
+                  <th>Combined rate</th>
+                  <th>vs. state avg</th>
+                </tr>
+              </thead>
+              <tbody>
+                {zipCounties.map(county => (
+                  <tr>
+                    <td>{county.name}</td>
+                    <td><strong>{county.rate}%</strong></td>
+                    <td>
+                      {county.rate > state.avgCombined
+                        ? <span class="stax-above">+{(county.rate - state.avgCombined).toFixed(2)}%</span>
+                        : county.rate < state.avgCombined
+                          ? <span class="stax-below">-{(state.avgCombined - county.rate).toFixed(2)}%</span>
+                          : <span>avg</span>
+                      }
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -669,4 +717,42 @@ const schema = [
     text-decoration: underline !important;
   }
   .stax-zip-redirect:hover { color: rgba(255,255,255,0.4); }
+  .stax-filter-input {
+    width: 100%;
+    padding: 0.45rem 0.75rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.875rem;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .stax-filter-input::placeholder { color: rgba(255,255,255,0.35); }
+  .stax-filter-input:focus { border-color: rgba(139,92,246,0.5); background: rgba(255,255,255,0.08); }
+  .stax-show-all-btn {
+    display: block;
+    width: 100%;
+    margin: 0 0 1.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.82rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .stax-show-all-btn:hover {
+    background: rgba(139,92,246,0.12);
+    color: rgba(255,255,255,0.85);
+    border-color: rgba(139,92,246,0.3);
+  }
+  .stax-no-results {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.4);
+    padding: 0.5rem 0;
+    margin: 0;
+  }
 </style>
