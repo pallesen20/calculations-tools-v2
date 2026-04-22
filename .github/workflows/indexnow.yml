@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Gather and validate URLs
+      - name: Gather and submit URLs
         run: |
           CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- 'src/pages/**/*.astro' \
             | grep -v 'src/pages/embed/' \
@@ -52,16 +52,15 @@ jobs:
 
           FINAL_URLS=$(echo "$FINAL_URLS" | sort -u | sed '/^$/d')
 
-          if [ -n "$FINAL_URLS" ]; then
-            echo "CHANGED_URLS<<EOF" >> $GITHUB_ENV
-            echo "$FINAL_URLS" >> $GITHUB_ENV
-            echo "EOF" >> $GITHUB_ENV
+          if [ -z "$FINAL_URLS" ]; then
+            echo "No sitemap-validated URLs to submit."
+            exit 0
           fi
 
-      - name: Submit to IndexNow
-        if: env.CHANGED_URLS != ''
-        run: |
-          URL_JSON=$(echo "$CHANGED_URLS" | awk '{printf "\"%s\",", $0}' | sed 's/,$//')
+          echo "Submitting URLs:"
+          echo "$FINAL_URLS"
+
+          URL_JSON=$(echo "$FINAL_URLS" | awk '{printf "\"%s\",", $0}' | sed 's/,$//')
 
           curl -X POST "https://api.indexnow.org/indexnow" \
             -H "Content-Type: application/json" \
