@@ -37,6 +37,7 @@ const fs = state.single;
 const topRate = state.topRate;
 const noTax = state.noTax;
 const hasLocalTax = state.hasLocalTax;
+const hasExemptions = !noTax && !!(state.single.personalExemption || state.mfj.personalExemption || state.hoh.personalExemption || state.mfs.personalExemption);
 
 const tocItems = [
   { id: 'how-to-use', label: `How to calculate ${state.name} income tax` },
@@ -400,8 +401,8 @@ const schema = [
           {noTax ? (
             <>
               <li>No state income tax - residents keep 100% of their wages from state taxation</li>
-              <li>Federal income tax: 10-37% (2026 brackets). Standard deduction: $15,000 (single)</li>
-              <li>FICA: 6.2% Social Security (up to $176,100) + 1.45% Medicare = 7.65% total</li>
+              <li>Federal income tax: 10-37% (2026 brackets). Standard deduction: ${FEDERAL_STANDARD_DEDUCTIONS.single.toLocaleString()} (single)</li>
+              <li>FICA: 6.2% Social Security (up to ${FICA_2025.socialSecurityWageBase.toLocaleString()}) + 1.45% Medicare = 7.65% total</li>
               <li>{state.notes}</li>
             </>
           ) : (
@@ -421,7 +422,7 @@ const schema = [
       <ol>
         <li><strong>Start with gross income</strong> - your total wages or salary before any deductions</li>
         <li><strong>Subtract pre-tax deductions</strong> - 401(k) contributions, HSA, health insurance premiums paid pre-tax. This reduces both income tax and FICA</li>
-        <li><strong>Apply the federal standard deduction</strong> ($15,000 for single in 2026) or your itemized deductions, whichever is larger, to get federal taxable income</li>
+        <li><strong>Apply the federal standard deduction</strong> (${FEDERAL_STANDARD_DEDUCTIONS.single.toLocaleString()} for single in 2026) or your itemized deductions, whichever is larger, to get federal taxable income</li>
         <li><strong>Calculate federal income tax</strong> by applying the 2026 bracket rates (10-37%) to your federal taxable income</li>
         {!noTax && <li><strong>Calculate {state.name} state income tax</strong> - subtract the state standard deduction{(fs.personalExemption || 0) > 0 ? ` and personal exemption ($${(fs.personalExemption || 0).toLocaleString()})` : ''} from AGI, then apply the state brackets</li>}
         <li><strong>Add FICA taxes</strong> - 6.2% Social Security (capped at $176,100) + 1.45% Medicare (uncapped) + 0.9% additional Medicare above $200,000</li>
@@ -549,15 +550,16 @@ const schema = [
         </table>
         <p>Source: Internal Revenue Service (IRS): <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" target="_blank" rel="noopener noreferrer">IR-2025-103</a></p>
       </div>
-      <h3>Federal standard deductions 2026</h3>
+      <h3 id="fed-deductions">Federal standard deductions 2026</h3>
       <p>The standard deduction is subtracted from gross income (pre-taxes salary) before applying brackets.</p>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Filing status</th><th>Deduction amount</th></tr></thead>
           <tbody>
-            <tr><td>Single</td><td>$16,100</td></tr>
-            <tr><td>Married Filing Jointly</td><td>$32,200</td></tr>
-            <tr><td>Head of Household</td><td>$24,150</td></tr>
+            <tr><td>Single</td><td>${FEDERAL_STANDARD_DEDUCTIONS.single.toLocaleString()}</td></tr>
+            <tr><td>Married Filing Jointly (MFJ)</td><td>${FEDERAL_STANDARD_DEDUCTIONS.mfj.toLocaleString()}</td></tr>
+            <tr><td>Head of Household (HOH)</td><td>${FEDERAL_STANDARD_DEDUCTIONS.hoh.toLocaleString()}</td></tr>
+            <tr><td>Married Filing Separately (MFS)</td><td>${FEDERAL_STANDARD_DEDUCTIONS.mfs.toLocaleString()}</td></tr>
           </tbody>
         </table>
       <h2 id="fica">FICA: Social Security and Medicare (2026)</h2>
@@ -566,7 +568,7 @@ const schema = [
         <table>
           <thead><tr><th>Tax</th><th>Rate</th><th>Wage base</th></tr></thead>
           <tbody>
-            <tr><td>Social Security</td><td>6.2%</td><td>First $176,100 of wages</td></tr>
+            <tr><td>Social Security</td><td>6.2%</td><td>First ${FICA_2025.socialSecurityWageBase.toLocaleString()} of wages</td></tr>
             <tr><td>Medicare</td><td>1.45%</td><td>All wages (no cap)</td></tr>
             <tr><td>Additional Medicare surtax</td><td>0.9%</td><td>Wages over $200,000 (single) / $250,000 (MFJ)</td></tr>
           </tbody>
@@ -595,11 +597,46 @@ const schema = [
       )}
 
       <h2 id="deductions">Deductions and exemptions in {state.name}</h2>
-      <p><strong>Federal deductions (2026):</strong> The standard deduction is $15,000 for single filers ($30,000 MFJ). Itemize instead if your deductions (mortgage interest, state/local taxes capped at $10,000, charitable contributions, medical expenses over 7.5% of AGI) exceed the standard deduction.</p>
+      <p><strong>Federal standard deductions (2026):</strong> ${FEDERAL_STANDARD_DEDUCTIONS.single.toLocaleString()} single / ${FEDERAL_STANDARD_DEDUCTIONS.mfj.toLocaleString()} MFJ / ${FEDERAL_STANDARD_DEDUCTIONS.hoh.toLocaleString()} HOH / ${FEDERAL_STANDARD_DEDUCTIONS.mfs.toLocaleString()} MFS (see <a href="#fed-deductions"> standard deductions table above</a>). Itemize instead if mortgage interest, state/local taxes (capped at $10,000), charitable contributions, or medical expenses over 7.5% of AGI exceed your standard deduction.</p>
       {!noTax && (
-        <p><strong>{state.name} state deductions:</strong> The state standard deduction is ${fs.standardDeduction.toLocaleString()} for single filers{(fs.personalExemption || 0) > 0 ? `, plus a $${(fs.personalExemption || 0).toLocaleString()} personal exemption per filer` : ''}. {state.mfj.standardDeduction > 0 ? `Married filing jointly filers get a $${state.mfj.standardDeduction.toLocaleString()} state standard deduction.` : ''}</p>
+        <>
+        <h3>{state.name} standard deductions and exemptions (2026)</h3>
+          <div class="responsive-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Filing status</th>
+                  <th>Standard deduction</th>
+                  {hasExemptions && <th>Personal exemption</th>}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Single</td>
+                  <td>${state.single.standardDeduction.toLocaleString()}</td>
+                  {hasExemptions && <td>{state.single.personalExemption ? `$${state.single.personalExemption.toLocaleString()}` : '—'}</td>}
+                </tr>
+                <tr>
+                  <td>Married Filing Jointly (MFJ)</td>
+                  <td>${state.mfj.standardDeduction.toLocaleString()}</td>
+                  {hasExemptions && <td>{state.mfj.personalExemption ? `$${state.mfj.personalExemption.toLocaleString()}` : '—'}</td>}
+                </tr>
+                <tr>
+                  <td>Head of Household (HOH)</td>
+                  <td>${state.hoh.standardDeduction.toLocaleString()}</td>
+                  {hasExemptions && <td>{state.hoh.personalExemption ? `$${state.hoh.personalExemption.toLocaleString()}` : '—'}</td>}
+                </tr>
+                <tr>
+                  <td>Married Filing Separately (MFS)</td>
+                  <td>${state.mfs.standardDeduction.toLocaleString()}</td>
+                  {hasExemptions && <td>{state.mfs.personalExemption ? `$${state.mfs.personalExemption.toLocaleString()}` : '—'}</td>}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
-      <p><strong>Key pre-tax deductions that reduce both income tax and FICA taxable wages:</strong></p>
+      <h3>Key pre-tax deductions that reduce both income tax and FICA taxable wages</h3>
       <ul>
         <li>Traditional 401(k) or 403(b): up to $23,500 in 2026 ($31,000 if age 50+)</li>
         <li>Health Savings Account (HSA): up to $4,300 self-only / $8,550 family in 2026</li>
@@ -631,7 +668,7 @@ const schema = [
         {!noTax && <li>{state.name} state income tax: ${exampleStateTax.toLocaleString('en-US', { maximumFractionDigits: 0 })}</li>}
         <li>Social Security: ${exampleSS.toLocaleString('en-US', { maximumFractionDigits: 0 })}</li>
         <li>Medicare: ${exampleMed.toLocaleString('en-US', { maximumFractionDigits: 0 })}</li>
-        <li><strong>Take-home: ~${exampleTakeHome.toLocaleString('en-US', { maximumFractionDigits: 0 })} ({exampleEffective}% effective rate)</strong></li>
+        <li><strong>Take-home pay: ~${exampleTakeHome.toLocaleString('en-US', { maximumFractionDigits: 0 })} ({exampleEffective}% effective rate)</strong></li>
       </ul>
       <p>Use the calculator above for your exact income, filing status, and deductions.</p>
 

@@ -34,7 +34,7 @@ export interface StateIncomeTax {
   mapRow: number;
 }
 
-const FEDERAL_STD = { single: 15000, mfj: 30000, hoh: 22500, mfs: 15000 };
+const FEDERAL_STD = { single: 16100, mfj: 32200, hoh: 24200, mfs: 16100 };
 
 function flat(rate: number, std: { single: number; mfj: number; hoh: number; mfs: number }, exempt?: { single: number; mfj: number; hoh: number; mfs: number }): Pick<StateIncomeTax, 'single' | 'mfj' | 'hoh' | 'mfs'> {
   const b = (r: number): TaxBracket[] => r === 0 ? [] : [{ min: 0, max: null, rate: r }];
@@ -83,7 +83,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   },
   {
     name: 'Arizona', abbr: 'AZ', slug: 'arizona', noTax: false, topRate: 2.5,
-    ...flat(2.5, FEDERAL_STD),
+    ...flat(2.5, { single: 8350, mfj: 16700, hoh: 12525, mfs: 8350 }),
     hasLocalTax: false,
     notes: 'Arizona enacted a flat 2.5% income tax rate in 2023, making it one of the lowest flat-rate states in the country. The flat rate replaced a graduated structure with rates up to 4.5%.',
     mapCol: 1, mapRow: 4,
@@ -91,20 +91,20 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   {
     name: 'Arkansas', abbr: 'AR', slug: 'arkansas', noTax: false, topRate: 3.9,
     single: {
-      brackets: [{ min: 0, max: 4599, rate: 2 }, { min: 4599, max: null, rate: 3.9 }],
-      standardDeduction: 2340, personalExemption: 29,
+      brackets: [{ min: 0, max: 4600, rate: 2 }, { min: 4600, max: null, rate: 3.9 }],
+      standardDeduction: 2470, personalExemption: 29,
     },
     mfj: {
-      brackets: [{ min: 0, max: 4599, rate: 2 }, { min: 4599, max: null, rate: 3.9 }],
-      standardDeduction: 4680, personalExemption: 58,
+      brackets: [{ min: 0, max: 4600, rate: 2 }, { min: 4600, max: null, rate: 3.9 }],
+      standardDeduction: 4940, personalExemption: 58,
     },
     hoh: {
-      brackets: [{ min: 0, max: 4599, rate: 2 }, { min: 4599, max: null, rate: 3.9 }],
-      standardDeduction: 2340, personalExemption: 29,
+      brackets: [{ min: 0, max: 4600, rate: 2 }, { min: 4600, max: null, rate: 3.9 }],
+      standardDeduction: 2470, personalExemption: 29,
     },
     mfs: {
-      brackets: [{ min: 0, max: 4599, rate: 2 }, { min: 4599, max: null, rate: 3.9 }],
-      standardDeduction: 2340, personalExemption: 29,
+      brackets: [{ min: 0, max: 4600, rate: 2 }, { min: 4600, max: null, rate: 3.9 }],
+      standardDeduction: 2470, personalExemption: 29,
     },
     hasLocalTax: false,
     notes: 'Arkansas reduced its top income tax rate to 3.9% in 2026, down from 5.9% in 2021. The state simplified to two brackets: 2% on the first $4,599 and 3.9% on income above that.',
@@ -114,43 +114,43 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'California', abbr: 'CA', slug: 'california', noTax: false, topRate: 13.3,
     single: {
       brackets: [
-        { min: 0, max: 10756, rate: 1 }, { min: 10756, max: 25499, rate: 2 },
-        { min: 25499, max: 40245, rate: 4 }, { min: 40245, max: 55866, rate: 6 },
-        { min: 55866, max: 70606, rate: 8 }, { min: 70606, max: 360659, rate: 9.3 },
-        { min: 360659, max: 432787, rate: 10.3 }, { min: 432787, max: 721314, rate: 11.3 },
-        { min: 721314, max: 1000000, rate: 12.3 }, { min: 1000000, max: null, rate: 13.3 },
+        { min: 0, max: 11079, rate: 1 }, { min: 11079, max: 26264, rate: 2 },
+        { min: 26264, max: 41452, rate: 4 }, { min: 41452, max: 57542, rate: 6 },
+        { min: 57542, max: 72724, rate: 8 }, { min: 72724, max: 371479, rate: 9.3 },
+        { min: 371479, max: 445771, rate: 10.3 }, { min: 445771, max: 742953, rate: 11.3 },
+        { min: 742953, max: 1000000, rate: 12.3 }, { min: 1000000, max: null, rate: 13.3 },
       ],
-      standardDeduction: 5202,
+      standardDeduction: 5540,
     },
     mfj: {
       brackets: [
-        { min: 0, max: 21512, rate: 1 }, { min: 21512, max: 50998, rate: 2 },
-        { min: 50998, max: 80490, rate: 4 }, { min: 80490, max: 111732, rate: 6 },
-        { min: 111732, max: 141212, rate: 8 }, { min: 141212, max: 721318, rate: 9.3 },
-        { min: 721318, max: 865574, rate: 10.3 }, { min: 865574, max: 1442628, rate: 11.3 },
-        { min: 1442628, max: 1000000000, rate: 12.3 }, { min: 1000000000, max: null, rate: 13.3 },
+        { min: 0, max: 22158, rate: 1 }, { min: 22158, max: 52528, rate: 2 },
+        { min: 52528, max: 82904, rate: 4 }, { min: 82904, max: 115084, rate: 6 },
+        { min: 115084, max: 145448, rate: 8 }, { min: 145448, max: 742958, rate: 9.3 },
+        { min: 742958, max: 891542, rate: 10.3 }, { min: 891542, max: 1000000, rate: 11.3 },
+        { min: 1000000, max: 1485906, rate: 12.3 }, { min: 1485906, max: null, rate: 13.3 },
       ],
-      standardDeduction: 10404,
+      standardDeduction: 11080,
     },
     hoh: {
       brackets: [
-        { min: 0, max: 21527, rate: 1 }, { min: 21527, max: 51025, rate: 2 },
-        { min: 51025, max: 65744, rate: 4 }, { min: 65744, max: 81364, rate: 6 },
-        { min: 81364, max: 95105, rate: 8 }, { min: 95105, max: 491314, rate: 9.3 },
-        { min: 491314, max: 590746, rate: 10.3 }, { min: 590746, max: 1000000, rate: 11.3 },
+        { min: 0, max: 22158, rate: 1 }, { min: 22158, max: 52528, rate: 2 },
+        { min: 52528, max: 67626, rate: 4 }, { min: 67626, max: 83737, rate: 6 },
+        { min: 83737, max: 97796, rate: 8 }, { min: 97796, max: 505219, rate: 9.3 },
+        { min: 505219, max: 607271, rate: 10.3 }, { min: 607271, max: 1000000, rate: 11.3 },
         { min: 1000000, max: null, rate: 13.3 },
       ],
-      standardDeduction: 10404,
+      standardDeduction: 11080,
     },
     mfs: {
       brackets: [
-        { min: 0, max: 10756, rate: 1 }, { min: 10756, max: 25499, rate: 2 },
-        { min: 25499, max: 40245, rate: 4 }, { min: 40245, max: 55866, rate: 6 },
-        { min: 55866, max: 70606, rate: 8 }, { min: 70606, max: 360659, rate: 9.3 },
-        { min: 360659, max: 432787, rate: 10.3 }, { min: 432787, max: 721314, rate: 11.3 },
-        { min: 721314, max: null, rate: 12.3 },
+        { min: 0, max: 11079, rate: 1 }, { min: 11079, max: 26264, rate: 2 },
+        { min: 26264, max: 41452, rate: 4 }, { min: 41452, max: 57542, rate: 6 },
+        { min: 57542, max: 72724, rate: 8 }, { min: 72724, max: 371479, rate: 9.3 },
+        { min: 371479, max: 445771, rate: 10.3 }, { min: 445771, max: 742953, rate: 11.3 },
+        { min: 742953, max: null, rate: 12.3 },
       ],
-      standardDeduction: 5202,
+      standardDeduction: 5540,
     },
     hasLocalTax: false,
     notes: "California has the highest top income tax rate of any US state at 13.3% (including the 1% Mental Health Services Tax on income over $1 million). The 9-bracket structure phases rates from 1% to 12.3% before the millionaire surcharge.",
@@ -265,47 +265,47 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'Hawaii', abbr: 'HI', slug: 'hawaii', noTax: false, topRate: 11,
     single: {
       brackets: [
-        { min: 0, max: 2400, rate: 1.4 }, { min: 2400, max: 4800, rate: 3.2 },
-        { min: 4800, max: 9600, rate: 5.5 }, { min: 9600, max: 14400, rate: 6.4 },
-        { min: 14400, max: 19200, rate: 6.8 }, { min: 19200, max: 24000, rate: 7.2 },
-        { min: 24000, max: 36000, rate: 7.6 }, { min: 36000, max: 48000, rate: 7.9 },
-        { min: 48000, max: 150000, rate: 8.25 }, { min: 150000, max: 175000, rate: 9 },
-        { min: 175000, max: 200000, rate: 10 }, { min: 200000, max: null, rate: 11 },
+        { min: 0, max: 9600, rate: 1.4 }, { min: 9600, max: 14400, rate: 3.2 },
+        { min: 14400, max: 19200, rate: 5.5 }, { min: 19200, max: 24000, rate: 6.4 },
+        { min: 24000, max: 36000, rate: 6.8 }, { min: 36000, max: 48000, rate: 7.2 },
+        { min: 48000, max: 125000, rate: 7.6 }, { min: 125000, max: 175000, rate: 7.9 },
+        { min: 175000, max: 225000, rate: 8.25 }, { min: 225000, max: 275000, rate: 9 },
+        { min: 275000, max: 325000, rate: 10 }, { min: 325000, max: null, rate: 11 },
       ],
-      standardDeduction: 2200, personalExemption: 1144,
+      standardDeduction: 4400, personalExemption: 1144,
     },
     mfj: {
       brackets: [
-        { min: 0, max: 4800, rate: 1.4 }, { min: 4800, max: 9600, rate: 3.2 },
-        { min: 9600, max: 19200, rate: 5.5 }, { min: 19200, max: 28800, rate: 6.4 },
-        { min: 28800, max: 38400, rate: 6.8 }, { min: 38400, max: 48000, rate: 7.2 },
-        { min: 48000, max: 72000, rate: 7.6 }, { min: 72000, max: 96000, rate: 7.9 },
-        { min: 96000, max: 300000, rate: 8.25 }, { min: 300000, max: 350000, rate: 9 },
-        { min: 350000, max: 400000, rate: 10 }, { min: 400000, max: null, rate: 11 },
+        { min: 0, max: 19200, rate: 1.4 }, { min: 19200, max: 28800, rate: 3.2 },
+        { min: 28800, max: 38400, rate: 5.5 }, { min: 38400, max: 48000, rate: 6.4 },
+        { min: 48000, max: 72000, rate: 6.8 }, { min: 72000, max: 96000, rate: 7.2 },
+        { min: 96000, max: 250000, rate: 7.6 }, { min: 250000, max: 350000, rate: 7.9 },
+        { min: 350000, max: 450000, rate: 8.25 }, { min: 450000, max: 550000, rate: 9 },
+        { min: 550000, max: 650000, rate: 10 }, { min: 650000, max: null, rate: 11 },
       ],
-      standardDeduction: 4400, personalExemption: 2288,
+      standardDeduction: 8800, personalExemption: 2288,
     },
     hoh: {
       brackets: [
-        { min: 0, max: 3600, rate: 1.4 }, { min: 3600, max: 7200, rate: 3.2 },
-        { min: 7200, max: 14400, rate: 5.5 }, { min: 14400, max: 21600, rate: 6.4 },
-        { min: 21600, max: 28800, rate: 6.8 }, { min: 28800, max: 36000, rate: 7.2 },
-        { min: 36000, max: 54000, rate: 7.6 }, { min: 54000, max: 72000, rate: 7.9 },
-        { min: 72000, max: 225000, rate: 8.25 }, { min: 225000, max: 262500, rate: 9 },
-        { min: 262500, max: 300000, rate: 10 }, { min: 300000, max: null, rate: 11 },
+        { min: 0, max: 14400, rate: 1.4 }, { min: 14400, max: 21600, rate: 3.2 },
+        { min: 21600, max: 28800, rate: 5.5 }, { min: 28800, max: 36000, rate: 6.4 },
+        { min: 36000, max: 54000, rate: 6.8 }, { min: 54000, max: 72000, rate: 7.2 },
+        { min: 72000, max: 187500, rate: 7.6 }, { min: 187500, max: 262500, rate: 7.9 },
+        { min: 262500, max: 337500, rate: 8.25 }, { min: 337500, max: 412500, rate: 9 },
+        { min: 412500, max: 487500, rate: 10 }, { min: 487500, max: null, rate: 11 },
       ],
-      standardDeduction: 3212, personalExemption: 1144,
+      standardDeduction: 6600, personalExemption: 1144,
     },
     mfs: {
       brackets: [
-        { min: 0, max: 2400, rate: 1.4 }, { min: 2400, max: 4800, rate: 3.2 },
-        { min: 4800, max: 9600, rate: 5.5 }, { min: 9600, max: 14400, rate: 6.4 },
-        { min: 14400, max: 19200, rate: 6.8 }, { min: 19200, max: 24000, rate: 7.2 },
-        { min: 24000, max: 36000, rate: 7.6 }, { min: 36000, max: 48000, rate: 7.9 },
-        { min: 48000, max: 150000, rate: 8.25 }, { min: 150000, max: 175000, rate: 9 },
-        { min: 175000, max: 200000, rate: 10 }, { min: 200000, max: null, rate: 11 },
+        { min: 0, max: 9600, rate: 1.4 }, { min: 9600, max: 14400, rate: 3.2 },
+        { min: 14400, max: 19200, rate: 5.5 }, { min: 19200, max: 24000, rate: 6.4 },
+        { min: 24000, max: 36000, rate: 6.8 }, { min: 36000, max: 48000, rate: 7.2 },
+        { min: 48000, max: 125000, rate: 7.6 }, { min: 125000, max: 175000, rate: 7.9 },
+        { min: 175000, max: 225000, rate: 8.25 }, { min: 225000, max: 275000, rate: 9 },
+        { min: 275000, max: 325000, rate: 10 }, { min: 325000, max: null, rate: 11 },
       ],
-      standardDeduction: 2200, personalExemption: 1144,
+      standardDeduction: 4400, personalExemption: 1144,
     },
     hasLocalTax: false,
     notes: "Hawaii has the most income tax brackets of any US state (12) and the second-highest top rate at 11%. The state fully taxes pension income and has a relatively low standard deduction of $2,200 for single filers.",
@@ -335,7 +335,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   },
   {
     name: 'Illinois', abbr: 'IL', slug: 'illinois', noTax: false, topRate: 4.95,
-    ...flat(4.95, { single: 0, mfj: 0, hoh: 0, mfs: 0 }, { single: 2425, mfj: 4850, hoh: 2425, mfs: 2425 }),
+    ...flat(4.95, { single: 0, mfj: 0, hoh: 0, mfs: 0 }, { single: 2925, mfj: 5850, hoh: 2925, mfs: 2925 }),
     hasLocalTax: false,
     notes: "Illinois has a flat 4.95% income tax rate enshrined in the state constitution, which prohibits graduated rates. A 2020 referendum to allow graduated rates was rejected by voters. The state provides a $2,425 personal exemption per filer.",
     mapCol: 5, mapRow: 2,
@@ -382,29 +382,29 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     mapCol: 6, mapRow: 2,
   },
   {
-    name: 'Iowa', abbr: 'IA', slug: 'iowa', noTax: false, topRate: 3.9,
-    ...flat(3.9, FEDERAL_STD),
+    name: 'Iowa', abbr: 'IA', slug: 'iowa', noTax: false, topRate: 3.8,
+    ...flat(3.8, FEDERAL_STD, { single: 40, mfj: 80, hoh: 40, mfs: 40 }),
     hasLocalTax: false,
-    notes: 'Iowa transitioned to a flat 3.9% income tax rate in 2025, down from a complex 9-bracket system with rates up to 8.53%. The dramatic simplification and rate cut were triggered by Iowa exceeding revenue targets.',
+    notes: 'Iowa reduced its flat income tax rate to 3.8% for 2026, down from 3.9% in 2025 and a complex 9-bracket system previously. The rate is scheduled to decline further toward 3.5% contingent on revenue performance.',
     mapCol: 4, mapRow: 2,
   },
   {
     name: 'Kansas', abbr: 'KS', slug: 'kansas', noTax: false, topRate: 5.58,
     single: {
       brackets: [{ min: 0, max: 23000, rate: 5.2 }, { min: 23000, max: null, rate: 5.58 }],
-      standardDeduction: 3500, personalExemption: 2250,
+      standardDeduction: 3605, personalExemption: 9160,
     },
     mfj: {
       brackets: [{ min: 0, max: 46000, rate: 5.2 }, { min: 46000, max: null, rate: 5.58 }],
-      standardDeduction: 8000, personalExemption: 4500,
+      standardDeduction: 8240, personalExemption: 18320,
     },
     hoh: {
       brackets: [{ min: 0, max: 34500, rate: 5.2 }, { min: 34500, max: null, rate: 5.58 }],
-      standardDeduction: 6000, personalExemption: 2250,
+      standardDeduction: 6000, personalExemption: 9160,
     },
     mfs: {
       brackets: [{ min: 0, max: 23000, rate: 5.2 }, { min: 23000, max: null, rate: 5.58 }],
-      standardDeduction: 3500, personalExemption: 2250,
+      standardDeduction: 3605, personalExemption: 9160,
     },
     hasLocalTax: false,
     notes: 'Kansas restructured its income tax to two brackets for 2026: 5.2% on the first $23,000 (single) and 5.58% above that. Social Security income is exempt for all filers regardless of income.',
@@ -412,7 +412,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   },
   {
     name: 'Kentucky', abbr: 'KY', slug: 'kentucky', noTax: false, topRate: 3.5,
-    ...flat(3.5, { single: 3160, mfj: 6320, hoh: 3160, mfs: 3160 }),
+    ...flat(3.5, { single: 3360, mfj: 3360, hoh: 3360, mfs: 3360 }),
     hasLocalTax: true,
     localTaxLabel: 'City/County',
     localRates: [
@@ -427,7 +427,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   },
   {
     name: 'Louisiana', abbr: 'LA', slug: 'louisiana', noTax: false, topRate: 3.0,
-    ...flat(3.0, { single: 12500, mfj: 25000, hoh: 12500, mfs: 12500 }),
+    ...flat(3.0, { single: 12875, mfj: 25750, hoh: 12875, mfs: 12875 }),
     hasLocalTax: false,
     notes: "Louisiana enacted a flat 3% income tax rate effective January 1, 2025 - a dramatic simplification from the previous graduated structure. The reform was paired with a $12,500 income exemption for single filers and elimination of several deductions.",
     mapCol: 4, mapRow: 5,
@@ -435,20 +435,20 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   {
     name: 'Maine', abbr: 'ME', slug: 'maine', noTax: false, topRate: 7.15,
     single: {
-      brackets: [{ min: 0, max: 24500, rate: 5.8 }, { min: 24500, max: 58050, rate: 6.75 }, { min: 58050, max: null, rate: 7.15 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 27399, rate: 5.8 }, { min: 27399, max: 64849, rate: 6.75 }, { min: 64849, max: null, rate: 7.15 }],
+      standardDeduction: 8350, personalExemption: 5300,
     },
     mfj: {
-      brackets: [{ min: 0, max: 49050, rate: 5.8 }, { min: 49050, max: 116100, rate: 6.75 }, { min: 116100, max: null, rate: 7.15 }],
-      standardDeduction: 30000,
+      brackets: [{ min: 0, max: 54849, rate: 5.8 }, { min: 54849, max: 129749, rate: 6.75 }, { min: 129749, max: null, rate: 7.15 }],
+      standardDeduction: 16700, personalExemption: 10600,
     },
     hoh: {
-      brackets: [{ min: 0, max: 36750, rate: 5.8 }, { min: 36750, max: 87075, rate: 6.75 }, { min: 87075, max: null, rate: 7.15 }],
-      standardDeduction: 22500,
+      brackets: [{ min: 0, max: 41124, rate: 5.8 }, { min: 41124, max: 97299, rate: 6.75 }, { min: 97299, max: null, rate: 7.15 }],
+      standardDeduction: 12525, personalExemption: 5300,
     },
     mfs: {
-      brackets: [{ min: 0, max: 24500, rate: 5.8 }, { min: 24500, max: 58050, rate: 6.75 }, { min: 58050, max: null, rate: 7.15 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 27399, rate: 5.8 }, { min: 27399, max: 64849, rate: 6.75 }, { min: 64849, max: null, rate: 7.15 }],
+      standardDeduction: 8350, personalExemption: 5300,
     },
     hasLocalTax: false,
     notes: 'Maine has a 3-bracket income tax structure with a top rate of 7.15%. The state conforms to most federal deductions and exemptions. Social Security benefits are fully exempt from Maine income tax.',
@@ -463,7 +463,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
         { min: 100000, max: 125000, rate: 5 }, { min: 125000, max: 150000, rate: 5.25 },
         { min: 150000, max: 250000, rate: 5.5 }, { min: 250000, max: null, rate: 5.75 },
       ],
-      standardDeduction: 2500, personalExemption: 3200,
+      standardDeduction: 3350, personalExemption: 3200,
     },
     mfj: {
       brackets: [
@@ -472,7 +472,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
         { min: 150000, max: 175000, rate: 5 }, { min: 175000, max: 225000, rate: 5.25 },
         { min: 225000, max: 300000, rate: 5.5 }, { min: 300000, max: null, rate: 5.75 },
       ],
-      standardDeduction: 5000, personalExemption: 6400,
+      standardDeduction: 6700, personalExemption: 6400,
     },
     hoh: {
       brackets: [
@@ -481,7 +481,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
         { min: 150000, max: 175000, rate: 5 }, { min: 175000, max: 225000, rate: 5.25 },
         { min: 225000, max: 300000, rate: 5.5 }, { min: 300000, max: null, rate: 5.75 },
       ],
-      standardDeduction: 2500, personalExemption: 3200,
+      standardDeduction: 3350, personalExemption: 3200,
     },
     mfs: {
       brackets: [
@@ -490,7 +490,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
         { min: 100000, max: 125000, rate: 5 }, { min: 125000, max: 150000, rate: 5.25 },
         { min: 150000, max: 250000, rate: 5.5 }, { min: 250000, max: null, rate: 5.75 },
       ],
-      standardDeduction: 2500, personalExemption: 3200,
+      standardDeduction: 3350, personalExemption: 3200,
     },
     hasLocalTax: true,
     localTaxLabel: 'County',
@@ -520,7 +520,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   },
   {
     name: 'Michigan', abbr: 'MI', slug: 'michigan', noTax: false, topRate: 4.25,
-    ...flat(4.25, { single: 0, mfj: 0, hoh: 0, mfs: 0 }, { single: 5400, mfj: 10800, hoh: 5400, mfs: 5400 }),
+    ...flat(4.25, { single: 0, mfj: 0, hoh: 0, mfs: 0 }, { single: 5900, mfj: 11800, hoh: 5900, mfs: 5900 }),
     hasLocalTax: true,
     localTaxLabel: 'City',
     localRates: [
@@ -536,20 +536,20 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   {
     name: 'Minnesota', abbr: 'MN', slug: 'minnesota', noTax: false, topRate: 9.85,
     single: {
-      brackets: [{ min: 0, max: 30070, rate: 5.35 }, { min: 30070, max: 98760, rate: 6.8 }, { min: 98760, max: 183340, rate: 7.85 }, { min: 183340, max: null, rate: 9.85 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 33310, rate: 5.35 }, { min: 33310, max: 109430, rate: 6.8 }, { min: 109430, max: 203150, rate: 7.85 }, { min: 203150, max: null, rate: 9.85 }],
+      standardDeduction: 15300,
     },
     mfj: {
-      brackets: [{ min: 0, max: 43950, rate: 5.35 }, { min: 43950, max: 174610, rate: 6.8 }, { min: 174610, max: 304970, rate: 7.85 }, { min: 304970, max: null, rate: 9.85 }],
-      standardDeduction: 30000,
+      brackets: [{ min: 0, max: 48700, rate: 5.35 }, { min: 48700, max: 193480, rate: 6.8 }, { min: 193480, max: 337930, rate: 7.85 }, { min: 337930, max: null, rate: 9.85 }],
+      standardDeduction: 30600,
     },
     hoh: {
-      brackets: [{ min: 0, max: 37010, rate: 5.35 }, { min: 37010, max: 148730, rate: 6.8 }, { min: 148730, max: 244040, rate: 7.85 }, { min: 244040, max: null, rate: 9.85 }],
-      standardDeduction: 22500,
+      brackets: [{ min: 0, max: 41005, rate: 5.35 }, { min: 41005, max: 163280, rate: 6.8 }, { min: 163280, max: 270540, rate: 7.85 }, { min: 270540, max: null, rate: 9.85 }],
+      standardDeduction: 22950,
     },
     mfs: {
-      brackets: [{ min: 0, max: 21975, rate: 5.35 }, { min: 21975, max: 87305, rate: 6.8 }, { min: 87305, max: 152485, rate: 7.85 }, { min: 152485, max: null, rate: 9.85 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 24350, rate: 5.35 }, { min: 24350, max: 96740, rate: 6.8 }, { min: 96740, max: 168965, rate: 7.85 }, { min: 168965, max: null, rate: 9.85 }],
+      standardDeduction: 15300,
     },
     hasLocalTax: false,
     notes: 'Minnesota has a top income tax rate of 9.85%, one of the highest in the nation. The state provides full Social Security income deductions for lower-income retirees. It conforms to federal standard deduction amounts.',
@@ -581,39 +581,39 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'Missouri', abbr: 'MO', slug: 'missouri', noTax: false, topRate: 4.7,
     single: {
       brackets: [
-        { min: 0, max: 1207, rate: 1.5 }, { min: 1207, max: 2414, rate: 2.0 },
-        { min: 2414, max: 3621, rate: 2.5 }, { min: 3621, max: 4828, rate: 3.0 },
-        { min: 4828, max: 6035, rate: 3.5 }, { min: 6035, max: 7242, rate: 4.0 },
-        { min: 7242, max: 8449, rate: 4.5 }, { min: 8449, max: null, rate: 4.7 },
+        { min: 0, max: 1348, rate: 0 }, { min: 1348, max: 2696, rate: 2.0 },
+        { min: 2696, max: 4044, rate: 2.5 }, { min: 4044, max: 5392, rate: 3.0 },
+        { min: 5392, max: 6740, rate: 3.5 }, { min: 6740, max: 8088, rate: 4.0 },
+        { min: 8088, max: 9436, rate: 4.5 }, { min: 9436, max: null, rate: 4.7 },
       ],
-      standardDeduction: 15000,
+      standardDeduction: 16100,
     },
     mfj: {
       brackets: [
-        { min: 0, max: 1207, rate: 1.5 }, { min: 1207, max: 2414, rate: 2.0 },
-        { min: 2414, max: 3621, rate: 2.5 }, { min: 3621, max: 4828, rate: 3.0 },
-        { min: 4828, max: 6035, rate: 3.5 }, { min: 6035, max: 7242, rate: 4.0 },
-        { min: 7242, max: 8449, rate: 4.5 }, { min: 8449, max: null, rate: 4.7 },
+        { min: 0, max: 1348, rate: 0 }, { min: 1348, max: 2696, rate: 2.0 },
+        { min: 2696, max: 4044, rate: 2.5 }, { min: 4044, max: 5392, rate: 3.0 },
+        { min: 5392, max: 6740, rate: 3.5 }, { min: 6740, max: 8088, rate: 4.0 },
+        { min: 8088, max: 9436, rate: 4.5 }, { min: 9436, max: null, rate: 4.7 },
       ],
-      standardDeduction: 30000,
+      standardDeduction: 32200,
     },
     hoh: {
       brackets: [
-        { min: 0, max: 1207, rate: 1.5 }, { min: 1207, max: 2414, rate: 2.0 },
-        { min: 2414, max: 3621, rate: 2.5 }, { min: 3621, max: 4828, rate: 3.0 },
-        { min: 4828, max: 6035, rate: 3.5 }, { min: 6035, max: 7242, rate: 4.0 },
-        { min: 7242, max: 8449, rate: 4.5 }, { min: 8449, max: null, rate: 4.7 },
+        { min: 0, max: 1348, rate: 0 }, { min: 1348, max: 2696, rate: 2.0 },
+        { min: 2696, max: 4044, rate: 2.5 }, { min: 4044, max: 5392, rate: 3.0 },
+        { min: 5392, max: 6740, rate: 3.5 }, { min: 6740, max: 8088, rate: 4.0 },
+        { min: 8088, max: 9436, rate: 4.5 }, { min: 9436, max: null, rate: 4.7 },
       ],
-      standardDeduction: 22500,
+      standardDeduction: 24200,
     },
     mfs: {
       brackets: [
-        { min: 0, max: 1207, rate: 1.5 }, { min: 1207, max: 2414, rate: 2.0 },
-        { min: 2414, max: 3621, rate: 2.5 }, { min: 3621, max: 4828, rate: 3.0 },
-        { min: 4828, max: 6035, rate: 3.5 }, { min: 6035, max: 7242, rate: 4.0 },
-        { min: 7242, max: 8449, rate: 4.5 }, { min: 8449, max: null, rate: 4.7 },
+        { min: 0, max: 1348, rate: 0 }, { min: 1348, max: 2696, rate: 2.0 },
+        { min: 2696, max: 4044, rate: 2.5 }, { min: 4044, max: 5392, rate: 3.0 },
+        { min: 5392, max: 6740, rate: 3.5 }, { min: 6740, max: 8088, rate: 4.0 },
+        { min: 8088, max: 9436, rate: 4.5 }, { min: 9436, max: null, rate: 4.7 },
       ],
-      standardDeduction: 15000,
+      standardDeduction: 16100,
     },
     hasLocalTax: true,
     localTaxLabel: 'City',
@@ -625,47 +625,47 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     mapCol: 4, mapRow: 3,
   },
   {
-    name: 'Montana', abbr: 'MT', slug: 'montana', noTax: false, topRate: 5.9,
+    name: 'Montana', abbr: 'MT', slug: 'montana', noTax: false, topRate: 5.65,
     single: {
-      brackets: [{ min: 0, max: 20500, rate: 4.7 }, { min: 20500, max: null, rate: 5.9 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 47500, rate: 4.7 }, { min: 47500, max: null, rate: 5.65 }],
+      standardDeduction: 16100,
     },
     mfj: {
-      brackets: [{ min: 0, max: 41000, rate: 4.7 }, { min: 41000, max: null, rate: 5.9 }],
-      standardDeduction: 30000,
+      brackets: [{ min: 0, max: 95000, rate: 4.7 }, { min: 95000, max: null, rate: 5.65 }],
+      standardDeduction: 32200,
     },
     hoh: {
-      brackets: [{ min: 0, max: 30750, rate: 4.7 }, { min: 30750, max: null, rate: 5.9 }],
-      standardDeduction: 22500,
+      brackets: [{ min: 0, max: 71250, rate: 4.7 }, { min: 71250, max: null, rate: 5.65 }],
+      standardDeduction: 24200,
     },
     mfs: {
-      brackets: [{ min: 0, max: 20500, rate: 4.7 }, { min: 20500, max: null, rate: 5.9 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 47500, rate: 4.7 }, { min: 47500, max: null, rate: 5.65 }],
+      standardDeduction: 16100,
     },
     hasLocalTax: false,
-    notes: 'Montana simplified its income tax to two brackets - 4.7% and 5.9% - effective 2024. The previous 7-bracket system had rates from 1% to 6.9%. Montana has no sales tax, so income tax is a primary revenue source.',
+    notes: 'Montana reduced its top income tax rate to 5.65% for 2026 (from 5.9%) and increased the bracket threshold to $47,500 (single). The state has no sales tax, so income tax is a primary revenue source.',
     mapCol: 2, mapRow: 1,
   },
   {
-    name: 'Nebraska', abbr: 'NE', slug: 'nebraska', noTax: false, topRate: 5.2,
+    name: 'Nebraska', abbr: 'NE', slug: 'nebraska', noTax: false, topRate: 4.55,
     single: {
-      brackets: [{ min: 0, max: 3700, rate: 2.46 }, { min: 3700, max: 22170, rate: 3.51 }, { min: 22170, max: 35730, rate: 5.01 }, { min: 35730, max: null, rate: 5.2 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 4130, rate: 2.46 }, { min: 4130, max: 24760, rate: 3.51 }, { min: 24760, max: null, rate: 4.55 }],
+      standardDeduction: 8850, personalExemption: 176,
     },
     mfj: {
-      brackets: [{ min: 0, max: 7390, rate: 2.46 }, { min: 7390, max: 44350, rate: 3.51 }, { min: 44350, max: 71470, rate: 5.01 }, { min: 71470, max: null, rate: 5.2 }],
-      standardDeduction: 30000,
+      brackets: [{ min: 0, max: 8250, rate: 2.46 }, { min: 8250, max: 49530, rate: 3.51 }, { min: 49530, max: null, rate: 4.55 }],
+      standardDeduction: 17700, personalExemption: 352,
     },
     hoh: {
-      brackets: [{ min: 0, max: 5550, rate: 2.46 }, { min: 5550, max: 33260, rate: 3.51 }, { min: 33260, max: 53600, rate: 5.01 }, { min: 53600, max: null, rate: 5.2 }],
-      standardDeduction: 22500,
+      brackets: [{ min: 0, max: 6190, rate: 2.46 }, { min: 6190, max: 37145, rate: 3.51 }, { min: 37145, max: null, rate: 4.55 }],
+      standardDeduction: 13275, personalExemption: 176,
     },
     mfs: {
-      brackets: [{ min: 0, max: 3700, rate: 2.46 }, { min: 3700, max: 22170, rate: 3.51 }, { min: 22170, max: 35730, rate: 5.01 }, { min: 35730, max: null, rate: 5.2 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 4130, rate: 2.46 }, { min: 4130, max: 24760, rate: 3.51 }, { min: 24760, max: null, rate: 4.55 }],
+      standardDeduction: 8850, personalExemption: 176,
     },
     hasLocalTax: false,
-    notes: 'Nebraska is on a legislated path to reduce its top income tax rate to 3.99% by 2027. The top rate was 6.84% before LB 873 (2022) began the phase-down.',
+    notes: 'Nebraska reduced its top income tax rate to 4.55% for 2026, down from 5.2% in 2025. The state also simplified from 4 brackets to 3 as part of its legislated phase-down toward 3.99% by 2027.',
     mapCol: 3, mapRow: 3,
   },
   {
@@ -696,18 +696,18 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     mfj: {
       brackets: [
         { min: 0, max: 20000, rate: 1.4 }, { min: 20000, max: 50000, rate: 1.75 },
-        { min: 50000, max: 70000, rate: 3.5 }, { min: 70000, max: 80000, rate: 5.525 },
-        { min: 80000, max: 500000, rate: 6.37 }, { min: 500000, max: 1000000, rate: 8.97 },
-        { min: 1000000, max: null, rate: 10.75 },
+        { min: 50000, max: 70000, rate: 2.45 }, { min: 70000, max: 80000, rate: 3.5 },
+        { min: 80000, max: 150000, rate: 5.525 }, { min: 150000, max: 500000, rate: 6.37 },
+        { min: 500000, max: 1000000, rate: 8.97 }, { min: 1000000, max: null, rate: 10.75 },
       ],
       standardDeduction: 0, personalExemption: 2000,
     },
     hoh: {
       brackets: [
         { min: 0, max: 20000, rate: 1.4 }, { min: 20000, max: 50000, rate: 1.75 },
-        { min: 50000, max: 70000, rate: 3.5 }, { min: 70000, max: 80000, rate: 5.525 },
-        { min: 80000, max: 500000, rate: 6.37 }, { min: 500000, max: 1000000, rate: 8.97 },
-        { min: 1000000, max: null, rate: 10.75 },
+        { min: 50000, max: 70000, rate: 2.45 }, { min: 70000, max: 80000, rate: 3.5 },
+        { min: 80000, max: 150000, rate: 5.525 }, { min: 150000, max: 500000, rate: 6.37 },
+        { min: 500000, max: 1000000, rate: 8.97 }, { min: 1000000, max: null, rate: 10.75 },
       ],
       standardDeduction: 0, personalExemption: 1500,
     },
@@ -728,35 +728,35 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'New Mexico', abbr: 'NM', slug: 'new-mexico', noTax: false, topRate: 5.9,
     single: {
       brackets: [
-        { min: 0, max: 5500, rate: 1.7 }, { min: 5500, max: 11000, rate: 3.2 },
-        { min: 11000, max: 16000, rate: 4.7 }, { min: 16000, max: 210000, rate: 4.9 },
-        { min: 210000, max: null, rate: 5.9 },
+        { min: 0, max: 5500, rate: 1.5 }, { min: 5500, max: 16500, rate: 3.2 },
+        { min: 16500, max: 33500, rate: 4.3 }, { min: 33500, max: 66500, rate: 4.7 },
+        { min: 66500, max: 210000, rate: 4.9 }, { min: 210000, max: null, rate: 5.9 },
       ],
-      standardDeduction: 15000,
+      standardDeduction: 16100,
     },
     mfj: {
       brackets: [
-        { min: 0, max: 8000, rate: 1.7 }, { min: 8000, max: 16000, rate: 3.2 },
-        { min: 16000, max: 24000, rate: 4.7 }, { min: 24000, max: 315000, rate: 4.9 },
-        { min: 315000, max: null, rate: 5.9 },
+        { min: 0, max: 8000, rate: 1.5 }, { min: 8000, max: 25000, rate: 3.2 },
+        { min: 25000, max: 50000, rate: 4.3 }, { min: 50000, max: 100000, rate: 4.7 },
+        { min: 100000, max: 315000, rate: 4.9 }, { min: 315000, max: null, rate: 5.9 },
       ],
-      standardDeduction: 30000,
+      standardDeduction: 32200,
     },
     hoh: {
       brackets: [
-        { min: 0, max: 8000, rate: 1.7 }, { min: 8000, max: 16000, rate: 3.2 },
-        { min: 16000, max: 24000, rate: 4.7 }, { min: 24000, max: 315000, rate: 4.9 },
-        { min: 315000, max: null, rate: 5.9 },
+        { min: 0, max: 8000, rate: 1.5 }, { min: 8000, max: 25000, rate: 3.2 },
+        { min: 25000, max: 50000, rate: 4.3 }, { min: 50000, max: 100000, rate: 4.7 },
+        { min: 100000, max: 315000, rate: 4.9 }, { min: 315000, max: null, rate: 5.9 },
       ],
-      standardDeduction: 22500,
+      standardDeduction: 24200,
     },
     mfs: {
       brackets: [
-        { min: 0, max: 5500, rate: 1.7 }, { min: 5500, max: 11000, rate: 3.2 },
-        { min: 11000, max: 16000, rate: 4.7 }, { min: 16000, max: 210000, rate: 4.9 },
-        { min: 210000, max: null, rate: 5.9 },
+        { min: 0, max: 5500, rate: 1.5 }, { min: 5500, max: 16500, rate: 3.2 },
+        { min: 16500, max: 33500, rate: 4.3 }, { min: 33500, max: 66500, rate: 4.7 },
+        { min: 66500, max: 210000, rate: 4.9 }, { min: 210000, max: null, rate: 5.9 },
       ],
-      standardDeduction: 15000,
+      standardDeduction: 16100,
     },
     hasLocalTax: false,
     notes: 'New Mexico added a top bracket of 5.9% on income over $210,000 (single) in 2021. The state provides a low-income comprehensive tax rebate and military retirement income is fully exempt.',
@@ -766,28 +766,29 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'New York', abbr: 'NY', slug: 'new-york', noTax: false, topRate: 10.9,
     single: {
       brackets: [
-        { min: 0, max: 17150, rate: 4 }, { min: 17150, max: 23600, rate: 4.5 },
-        { min: 23600, max: 27900, rate: 5.25 }, { min: 27900, max: 161550, rate: 5.85 },
-        { min: 161550, max: 323200, rate: 6.25 }, { min: 323200, max: 2155350, rate: 6.85 },
-        { min: 2155350, max: 5000000, rate: 9.65 }, { min: 5000000, max: 25000000, rate: 10.3 },
+        { min: 0, max: 8500, rate: 3.9 }, { min: 8500, max: 11700, rate: 4.4 },
+        { min: 11700, max: 13900, rate: 5.15 }, { min: 13900, max: 80650, rate: 5.4 },
+        { min: 80650, max: 215400, rate: 5.9 }, { min: 215400, max: 1077550, rate: 6.85 },
+        { min: 1077550, max: 5000000, rate: 9.65 }, { min: 5000000, max: 25000000, rate: 10.3 },
         { min: 25000000, max: null, rate: 10.9 },
       ],
       standardDeduction: 8000,
     },
     mfj: {
       brackets: [
-        { min: 0, max: 27900, rate: 4 }, { min: 27900, max: 43000, rate: 4.5 },
-        { min: 43000, max: 161550, rate: 5.25 }, { min: 161550, max: 323200, rate: 5.85 },
-        { min: 323200, max: 2155350, rate: 6.25 }, { min: 2155350, max: 5000000, rate: 6.85 },
-        { min: 5000000, max: 25000000, rate: 9.65 }, { min: 25000000, max: null, rate: 10.9 },
+        { min: 0, max: 17150, rate: 3.9 }, { min: 17150, max: 23600, rate: 4.4 },
+        { min: 23600, max: 27900, rate: 5.15 }, { min: 27900, max: 161550, rate: 5.4 },
+        { min: 161550, max: 323200, rate: 5.9 }, { min: 323200, max: 2155350, rate: 6.85 },
+        { min: 2155350, max: 5000000, rate: 9.65 }, { min: 5000000, max: 25000000, rate: 10.3 },
+        { min: 25000000, max: null, rate: 10.9 },
       ],
       standardDeduction: 16050,
     },
     hoh: {
       brackets: [
-        { min: 0, max: 17650, rate: 4 }, { min: 17650, max: 23600, rate: 4.5 },
-        { min: 23600, max: 27900, rate: 5.25 }, { min: 27900, max: 161550, rate: 5.85 },
-        { min: 161550, max: 323200, rate: 6.25 }, { min: 323200, max: 2155350, rate: 6.85 },
+        { min: 0, max: 12800, rate: 3.9 }, { min: 12800, max: 17650, rate: 4.4 },
+        { min: 17650, max: 20900, rate: 5.15 }, { min: 20900, max: 161550, rate: 5.4 },
+        { min: 161550, max: 323200, rate: 5.9 }, { min: 323200, max: 2155350, rate: 6.85 },
         { min: 2155350, max: 5000000, rate: 9.65 }, { min: 5000000, max: 25000000, rate: 10.3 },
         { min: 25000000, max: null, rate: 10.9 },
       ],
@@ -795,10 +796,10 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     },
     mfs: {
       brackets: [
-        { min: 0, max: 17150, rate: 4 }, { min: 17150, max: 23600, rate: 4.5 },
-        { min: 23600, max: 27900, rate: 5.25 }, { min: 27900, max: 161550, rate: 5.85 },
-        { min: 161550, max: 323200, rate: 6.25 }, { min: 323200, max: 2155350, rate: 6.85 },
-        { min: 2155350, max: 5000000, rate: 9.65 }, { min: 5000000, max: 25000000, rate: 10.3 },
+        { min: 0, max: 8500, rate: 3.9 }, { min: 8500, max: 11700, rate: 4.4 },
+        { min: 11700, max: 13900, rate: 5.15 }, { min: 13900, max: 80650, rate: 5.4 },
+        { min: 80650, max: 215400, rate: 5.9 }, { min: 215400, max: 1077550, rate: 6.85 },
+        { min: 1077550, max: 5000000, rate: 9.65 }, { min: 5000000, max: 25000000, rate: 10.3 },
         { min: 25000000, max: null, rate: 10.9 },
       ],
       standardDeduction: 8000,
@@ -823,40 +824,40 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'North Dakota', abbr: 'ND', slug: 'north-dakota', noTax: false, topRate: 2.5,
     single: {
       brackets: [{ min: 0, max: 48475, rate: 0 }, { min: 48475, max: 244825, rate: 1.95 }, { min: 244825, max: null, rate: 2.5 }],
-      standardDeduction: 15000,
+      standardDeduction: 16100,
     },
     mfj: {
       brackets: [{ min: 0, max: 80975, rate: 0 }, { min: 80975, max: 298075, rate: 1.95 }, { min: 298075, max: null, rate: 2.5 }],
-      standardDeduction: 30000,
+      standardDeduction: 32200,
     },
     hoh: {
       brackets: [{ min: 0, max: 64700, rate: 0 }, { min: 64700, max: 238150, rate: 1.95 }, { min: 238150, max: null, rate: 2.5 }],
-      standardDeduction: 22500,
+      standardDeduction: 24200,
     },
     mfs: {
       brackets: [{ min: 0, max: 48475, rate: 0 }, { min: 48475, max: 244825, rate: 1.95 }, { min: 244825, max: null, rate: 2.5 }],
-      standardDeduction: 15000,
+      standardDeduction: 16100,
     },
     hasLocalTax: false,
     notes: 'North Dakota restructured its income tax for 2026: income below $48,475 (single) is taxed at 0%, income from $48,475 to $244,824 at 1.95%, and income above $244,825 at 2.5%. The reform effectively eliminates taxes for lower and middle-income earners.',
     mapCol: 3, mapRow: 1,
   },
   {
-    name: 'Ohio', abbr: 'OH', slug: 'ohio', noTax: false, topRate: 3.5,
+    name: 'Ohio', abbr: 'OH', slug: 'ohio', noTax: false, topRate: 2.75,
     single: {
-      brackets: [{ min: 0, max: 26050, rate: 0 }, { min: 26050, max: 100000, rate: 2.75 }, { min: 100000, max: null, rate: 3.5 }],
+      brackets: [{ min: 0, max: 26050, rate: 0 }, { min: 26050, max: null, rate: 2.75 }],
       standardDeduction: 0, personalExemption: 2400,
     },
     mfj: {
-      brackets: [{ min: 0, max: 26050, rate: 0 }, { min: 26050, max: 100000, rate: 2.75 }, { min: 100000, max: null, rate: 3.5 }],
+      brackets: [{ min: 0, max: 26050, rate: 0 }, { min: 26050, max: null, rate: 2.75 }],
       standardDeduction: 0, personalExemption: 4800,
     },
     hoh: {
-      brackets: [{ min: 0, max: 26050, rate: 0 }, { min: 26050, max: 100000, rate: 2.75 }, { min: 100000, max: null, rate: 3.5 }],
+      brackets: [{ min: 0, max: 26050, rate: 0 }, { min: 26050, max: null, rate: 2.75 }],
       standardDeduction: 0, personalExemption: 2400,
     },
     mfs: {
-      brackets: [{ min: 0, max: 26050, rate: 0 }, { min: 26050, max: 100000, rate: 2.75 }, { min: 100000, max: null, rate: 3.5 }],
+      brackets: [{ min: 0, max: 26050, rate: 0 }, { min: 26050, max: null, rate: 2.75 }],
       standardDeduction: 0, personalExemption: 2400,
     },
     hasLocalTax: true,
@@ -867,7 +868,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
       { name: 'Akron', rate: 2.5 }, { name: 'Dayton', rate: 2.5 },
     ],
     localTaxNote: 'Ohio municipalities levy their own income taxes, typically 1.5-3%. Columbus, Cleveland, Akron, and Toledo charge 2.5%. Over 600 Ohio cities have local income taxes.',
-    notes: 'Ohio exempts the first $26,050 of income from tax. The 3-bracket system was simplified from a previous 9-bracket structure. Most Ohio residents also pay a city income tax of 1.5-3%, which can exceed the state tax for many filers.',
+    notes: 'Ohio eliminated its top income tax bracket for 2026, simplifying to two tiers: 0% on the first $26,050 and a flat 2.75% on income above that. Most Ohio residents also pay a city income tax of 1.5-3%.',
     mapCol: 7, mapRow: 2,
   },
   {
@@ -907,20 +908,20 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   {
     name: 'Oregon', abbr: 'OR', slug: 'oregon', noTax: false, topRate: 9.9,
     single: {
-      brackets: [{ min: 0, max: 18400, rate: 4.75 }, { min: 18400, max: 46200, rate: 6.75 }, { min: 46200, max: 250000, rate: 8.75 }, { min: 250000, max: null, rate: 9.9 }],
-      standardDeduction: 2420,
+      brackets: [{ min: 0, max: 4550, rate: 4.75 }, { min: 4550, max: 11400, rate: 6.75 }, { min: 11400, max: 125000, rate: 8.75 }, { min: 125000, max: null, rate: 9.9 }],
+      standardDeduction: 2910,
     },
     mfj: {
-      brackets: [{ min: 0, max: 36800, rate: 4.75 }, { min: 36800, max: 92400, rate: 6.75 }, { min: 92400, max: 400000, rate: 8.75 }, { min: 400000, max: null, rate: 9.9 }],
-      standardDeduction: 4840,
+      brackets: [{ min: 0, max: 9100, rate: 4.75 }, { min: 9100, max: 22800, rate: 6.75 }, { min: 22800, max: 250000, rate: 8.75 }, { min: 250000, max: null, rate: 9.9 }],
+      standardDeduction: 5820,
     },
     hoh: {
-      brackets: [{ min: 0, max: 27600, rate: 4.75 }, { min: 27600, max: 69300, rate: 6.75 }, { min: 69300, max: 250000, rate: 8.75 }, { min: 250000, max: null, rate: 9.9 }],
-      standardDeduction: 3630,
+      brackets: [{ min: 0, max: 6825, rate: 4.75 }, { min: 6825, max: 17100, rate: 6.75 }, { min: 17100, max: 125000, rate: 8.75 }, { min: 125000, max: null, rate: 9.9 }],
+      standardDeduction: 4365,
     },
     mfs: {
-      brackets: [{ min: 0, max: 18400, rate: 4.75 }, { min: 18400, max: 46200, rate: 6.75 }, { min: 46200, max: 250000, rate: 8.75 }, { min: 250000, max: null, rate: 9.9 }],
-      standardDeduction: 2420,
+      brackets: [{ min: 0, max: 4550, rate: 4.75 }, { min: 4550, max: 11400, rate: 6.75 }, { min: 11400, max: 125000, rate: 8.75 }, { min: 125000, max: null, rate: 9.9 }],
+      standardDeduction: 2910,
     },
     hasLocalTax: true,
     localTaxLabel: 'City/District',
@@ -949,20 +950,20 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   {
     name: 'Rhode Island', abbr: 'RI', slug: 'rhode-island', noTax: false, topRate: 5.99,
     single: {
-      brackets: [{ min: 0, max: 73450, rate: 3.75 }, { min: 73450, max: 166950, rate: 4.75 }, { min: 166950, max: null, rate: 5.99 }],
-      standardDeduction: 10550, personalExemption: 4550,
+      brackets: [{ min: 0, max: 82050, rate: 3.75 }, { min: 82050, max: 186450, rate: 4.75 }, { min: 186450, max: null, rate: 5.99 }],
+      standardDeduction: 11200, personalExemption: 5250,
     },
     mfj: {
-      brackets: [{ min: 0, max: 146950, rate: 3.75 }, { min: 146950, max: 333750, rate: 4.75 }, { min: 333750, max: null, rate: 5.99 }],
-      standardDeduction: 21100, personalExemption: 9100,
+      brackets: [{ min: 0, max: 164100, rate: 3.75 }, { min: 164100, max: 372900, rate: 4.75 }, { min: 372900, max: null, rate: 5.99 }],
+      standardDeduction: 22400, personalExemption: 10500,
     },
     hoh: {
-      brackets: [{ min: 0, max: 110200, rate: 3.75 }, { min: 110200, max: 250360, rate: 4.75 }, { min: 250360, max: null, rate: 5.99 }],
-      standardDeduction: 15825, personalExemption: 4550,
+      brackets: [{ min: 0, max: 123075, rate: 3.75 }, { min: 123075, max: 279675, rate: 4.75 }, { min: 279675, max: null, rate: 5.99 }],
+      standardDeduction: 16800, personalExemption: 5250,
     },
     mfs: {
-      brackets: [{ min: 0, max: 73450, rate: 3.75 }, { min: 73450, max: 166950, rate: 4.75 }, { min: 166950, max: null, rate: 5.99 }],
-      standardDeduction: 10550, personalExemption: 4550,
+      brackets: [{ min: 0, max: 82050, rate: 3.75 }, { min: 82050, max: 186450, rate: 4.75 }, { min: 186450, max: null, rate: 5.99 }],
+      standardDeduction: 11200, personalExemption: 5250,
     },
     hasLocalTax: false,
     notes: 'Rhode Island has a 3-bracket income tax structure. The state conforms to federal definitions of income but has its own standard deduction amounts that differ from federal levels.',
@@ -972,19 +973,19 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'South Carolina', abbr: 'SC', slug: 'south-carolina', noTax: false, topRate: 6.0,
     single: {
       brackets: [{ min: 0, max: 3640, rate: 0 }, { min: 3640, max: 18230, rate: 3 }, { min: 18230, max: null, rate: 6.0 }],
-      standardDeduction: 15000,
+      standardDeduction: 8350,
     },
     mfj: {
       brackets: [{ min: 0, max: 7280, rate: 0 }, { min: 7280, max: 36460, rate: 3 }, { min: 36460, max: null, rate: 6.0 }],
-      standardDeduction: 30000,
+      standardDeduction: 16700,
     },
     hoh: {
       brackets: [{ min: 0, max: 5460, rate: 0 }, { min: 5460, max: 27345, rate: 3 }, { min: 27345, max: null, rate: 6.0 }],
-      standardDeduction: 22500,
+      standardDeduction: 12525,
     },
     mfs: {
       brackets: [{ min: 0, max: 3640, rate: 0 }, { min: 3640, max: 18230, rate: 3 }, { min: 18230, max: null, rate: 6.0 }],
-      standardDeduction: 15000,
+      standardDeduction: 8350,
     },
     hasLocalTax: false,
     notes: 'South Carolina reached its 6.0% target top rate for 2026, completing the phase-down from 7% (begun 2022). The first $3,640 of income is exempt. Social Security and military retirement income are exempt.',
@@ -1013,7 +1014,7 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   },
   {
     name: 'Utah', abbr: 'UT', slug: 'utah', noTax: false, topRate: 4.5,
-    ...flat(4.5, FEDERAL_STD, { single: 1803, mfj: 3607, hoh: 1803, mfs: 1803 }),
+    ...flat(4.5, FEDERAL_STD, { single: 966, mfj: 1932, hoh: 966, mfs: 966 }),
     hasLocalTax: false,
     notes: 'Utah has a flat 4.5% income tax for 2026, reduced from 4.65%. The state provides a personal exemption credit and conforms to federal standard deduction amounts.',
     mapCol: 1, mapRow: 3,
@@ -1021,20 +1022,20 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
   {
     name: 'Vermont', abbr: 'VT', slug: 'vermont', noTax: false, topRate: 8.75,
     single: {
-      brackets: [{ min: 0, max: 45400, rate: 3.35 }, { min: 45400, max: 110050, rate: 6.6 }, { min: 110050, max: 229550, rate: 7.6 }, { min: 229550, max: null, rate: 8.75 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 49400, rate: 3.35 }, { min: 49400, max: 119700, rate: 6.6 }, { min: 119700, max: 249700, rate: 7.6 }, { min: 249700, max: null, rate: 8.75 }],
+      standardDeduction: 7650, personalExemption: 5300,
     },
     mfj: {
-      brackets: [{ min: 0, max: 75850, rate: 3.35 }, { min: 75850, max: 183400, rate: 6.6 }, { min: 183400, max: 279450, rate: 7.6 }, { min: 279450, max: null, rate: 8.75 }],
-      standardDeduction: 30000,
+      brackets: [{ min: 0, max: 82500, rate: 3.35 }, { min: 82500, max: 199450, rate: 6.6 }, { min: 199450, max: 304000, rate: 7.6 }, { min: 304000, max: null, rate: 8.75 }],
+      standardDeduction: 15300, personalExemption: 10600,
     },
     hoh: {
-      brackets: [{ min: 0, max: 60625, rate: 3.35 }, { min: 60625, max: 146725, rate: 6.6 }, { min: 146725, max: 254500, rate: 7.6 }, { min: 254500, max: null, rate: 8.75 }],
-      standardDeduction: 22500,
+      brackets: [{ min: 0, max: 65950, rate: 3.35 }, { min: 65950, max: 159575, rate: 6.6 }, { min: 159575, max: 276850, rate: 7.6 }, { min: 276850, max: null, rate: 8.75 }],
+      standardDeduction: 11475, personalExemption: 5300,
     },
     mfs: {
-      brackets: [{ min: 0, max: 37925, rate: 3.35 }, { min: 37925, max: 91700, rate: 6.6 }, { min: 91700, max: 139725, rate: 7.6 }, { min: 139725, max: null, rate: 8.75 }],
-      standardDeduction: 15000,
+      brackets: [{ min: 0, max: 41250, rate: 3.35 }, { min: 41250, max: 99725, rate: 6.6 }, { min: 99725, max: 152000, rate: 7.6 }, { min: 152000, max: null, rate: 8.75 }],
+      standardDeduction: 7650, personalExemption: 5300,
     },
     hasLocalTax: false,
     notes: 'Vermont has a progressive income tax with a top rate of 8.75%. The state conforms to federal standard deduction amounts. Social Security income for lower-income filers is exempt.',
@@ -1044,19 +1045,19 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'Virginia', abbr: 'VA', slug: 'virginia', noTax: false, topRate: 5.75,
     single: {
       brackets: [{ min: 0, max: 3000, rate: 2 }, { min: 3000, max: 5000, rate: 3 }, { min: 5000, max: 17000, rate: 5 }, { min: 17000, max: null, rate: 5.75 }],
-      standardDeduction: 8000, personalExemption: 930,
+      standardDeduction: 8750, personalExemption: 930,
     },
     mfj: {
       brackets: [{ min: 0, max: 3000, rate: 2 }, { min: 3000, max: 5000, rate: 3 }, { min: 5000, max: 17000, rate: 5 }, { min: 17000, max: null, rate: 5.75 }],
-      standardDeduction: 16000, personalExemption: 1860,
+      standardDeduction: 17500, personalExemption: 1860,
     },
     hoh: {
       brackets: [{ min: 0, max: 3000, rate: 2 }, { min: 3000, max: 5000, rate: 3 }, { min: 5000, max: 17000, rate: 5 }, { min: 17000, max: null, rate: 5.75 }],
-      standardDeduction: 8000, personalExemption: 930,
+      standardDeduction: 8750, personalExemption: 930,
     },
     mfs: {
       brackets: [{ min: 0, max: 3000, rate: 2 }, { min: 3000, max: 5000, rate: 3 }, { min: 5000, max: 17000, rate: 5 }, { min: 17000, max: null, rate: 5.75 }],
-      standardDeduction: 8000, personalExemption: 930,
+      standardDeduction: 8750, personalExemption: 930,
     },
     hasLocalTax: false,
     notes: "Virginia's income tax has an unusual structure: the 5.75% top rate kicks in at just $17,000 of taxable income. The state raised its standard deduction substantially in recent years from $4,500 to $8,000 for single filers.",
@@ -1095,19 +1096,19 @@ export const US_INCOME_TAX: StateIncomeTax[] = [
     name: 'Wisconsin', abbr: 'WI', slug: 'wisconsin', noTax: false, topRate: 7.65,
     single: {
       brackets: [{ min: 0, max: 15110, rate: 3.5 }, { min: 15110, max: 51950, rate: 4.4 }, { min: 51950, max: 332720, rate: 5.3 }, { min: 332720, max: null, rate: 7.65 }],
-      standardDeduction: 11050,
+      standardDeduction: 13960,
     },
     mfj: {
       brackets: [{ min: 0, max: 20150, rate: 3.5 }, { min: 20150, max: 69260, rate: 4.4 }, { min: 69260, max: 443630, rate: 5.3 }, { min: 443630, max: null, rate: 7.65 }],
-      standardDeduction: 20470,
+      standardDeduction: 25840,
     },
     hoh: {
       brackets: [{ min: 0, max: 17630, rate: 3.5 }, { min: 17630, max: 60605, rate: 4.4 }, { min: 60605, max: 388175, rate: 5.3 }, { min: 388175, max: null, rate: 7.65 }],
-      standardDeduction: 15600,
+      standardDeduction: 19880,
     },
     mfs: {
       brackets: [{ min: 0, max: 10075, rate: 3.5 }, { min: 10075, max: 34630, rate: 4.4 }, { min: 34630, max: 221815, rate: 5.3 }, { min: 221815, max: null, rate: 7.65 }],
-      standardDeduction: 10235,
+      standardDeduction: 12920,
     },
     hasLocalTax: false,
     notes: "Wisconsin reduced its bottom two bracket rates to 3.5% and 4.4% for 2026 (from 3.54% and 4.65%), and raised the bracket thresholds. The top rate of 7.65% still applies only above $332,720 (single). Wisconsin exempts most Social Security income.",
@@ -1154,7 +1155,7 @@ export const FEDERAL_BRACKETS = {
 };
 
 export const FEDERAL_STANDARD_DEDUCTIONS = {
-  single: 15000, mfj: 30000, hoh: 22500, mfs: 15000,
+  single: 16100, mfj: 32200, hoh: 24150, mfs: 16100,
 };
 
 export const FICA_2025 = {
