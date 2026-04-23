@@ -1620,6 +1620,56 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'mfs': {
+    definition: [
+      'Married Filing Separately (MFS) is a US federal tax filing status that lets married couples file independent returns instead of a joint return. Each spouse reports only their own income, deductions, and credits. MFS uses the same bracket thresholds as single filers and the same $15,000 standard deduction. Because MFJ brackets are designed for two incomes and are roughly double the single thresholds, choosing MFS over MFJ almost always raises the combined tax bill for a couple.',
+      'MFS does, however, have specific strategic uses. For borrowers on income-driven student loan repayment plans (IBR, SAVE, PAYE), MFS excludes the other spouse\'s income from the repayment calculation, which can cut monthly loan payments significantly - sometimes enough to outweigh the higher tax cost. MFS can also reduce the AGI of the spouse with large medical expenses: since unreimbursed medical costs are only deductible above 7.5% of your own AGI, a lower individual AGI means a lower floor.',
+      'Several tax benefits are completely unavailable under MFS: the Earned Income Credit, the child and dependent care credit, the American Opportunity Tax Credit, the Lifetime Learning Credit, and most education deductions. The Roth IRA contribution limit phases out between $0 and $10,000 MAGI for MFS filers (versus $150,000-$165,000 for single filers in 2025). One additional restriction: if one spouse itemizes deductions, the other must also itemize - they cannot mix strategies.',
+    ],
+    whenToUse: 'Consider MFS when one spouse is on an income-driven student loan repayment plan and keeping their AGI low materially reduces monthly payments. Also consider it when one spouse has large unreimbursed medical expenses relative to their own income, or when there are legal or liability concerns about signing a joint return. In all other cases, compare the exact tax liability under both statuses before deciding - MFJ is usually lower.',
+    examples: {
+      headers: ['Scenario', 'Filing status', 'Annual income', 'Est. federal tax', 'Key tradeoff'],
+      rows: [
+        ['Equal earners, $80K each', 'MFS', '$80,000 each', '~$10,463 each = ~$20,926 total', 'No Earned Income Credit'],
+        ['Equal earners, $80K each', 'MFJ', '$160,000 combined', '~$20,405 total', 'Saves ~$521; gains all credits'],
+        ['$50K + $50K student loan debt', 'MFS', '$50,000 own income', 'Higher tax but loan payment ~$280/mo', 'SAVE plan based on $50K only'],
+        ['$50K + $50K student loan debt', 'MFJ', '$100,000 combined', 'Lower tax but loan payment ~$560/mo', 'SAVE plan based on $100K combined'],
+      ],
+    },
+    pitfalls: 'The biggest mistake with MFS is not running both scenarios side by side. Many filers assume MFS saves money because they want separate returns, without realising they lose the Earned Income Credit, child care credits, and Roth IRA access. The Roth IRA phase-out for MFS starts at $0 MAGI - meaning nearly all MFS filers earning any income are barred from contributing. Also, if your spouse itemises, you must too, even if the standard deduction would be larger for you individually.',
+    faqs: [
+      { q: 'When does Married Filing Separately actually save money?', a: 'The main scenario is income-driven student loan repayment. If one spouse has large federal student loans on an IBR or SAVE plan, filing separately keeps the other\'s income out of the payment calculation. The loan payment reduction sometimes exceeds the extra tax cost. A second scenario is when one spouse has unusually large unreimbursed medical expenses relative to their own income.' },
+      { q: 'Does filing separately hurt your credit score?', a: 'No. Filing status appears only on your tax return and is not reported to credit bureaus. Your credit score is based on debt repayment history, credit utilisation, and account age - none of which are affected by whether you file jointly or separately.' },
+      { q: 'Can I switch from MFS to MFJ after filing?', a: 'Yes. You can amend a separately filed return to a joint return by filing an amended return before the three-year statute of limitations expires. However, you cannot amend a joint return to two separate returns after the original filing deadline has passed.' },
+      { q: 'Does MFS affect Social Security benefits?', a: 'Indirectly. Social Security benefits become taxable once your combined income (AGI plus non-taxable interest plus half of Social Security) exceeds $25,000 for single or MFS filers - which is lower than the $32,000 MFJ threshold. Filing separately can result in more of your Social Security being taxable if your combined income would have been below the $32,000 MFJ threshold.' },
+    ],
+  },
+
+  'hoh': {
+    definition: [
+      'Head of Household (HOH) is a US federal tax filing status for unmarried taxpayers who financially support a qualifying person in their home. To qualify, you must be unmarried (or considered unmarried) on December 31, have paid more than half the cost of maintaining a home, and have a qualifying child or dependent who lived with you for more than half the year. A qualifying parent who does not live with you is also allowed.',
+      'HOH provides meaningfully better tax treatment than single filing. The 2025 standard deduction is $22,500 for HOH versus $15,000 for single - a $7,500 difference that alone saves $825 to $1,650 in tax depending on your bracket. HOH brackets are also wider: the 10% rate applies up to $17,000 (vs $11,925 for single) and the 12% bracket runs to $64,850 (vs $48,475 for single). For a single parent earning $55,000, filing HOH instead of single typically saves $1,500-$2,500 per year.',
+      'Married filers can qualify for HOH if they are considered unmarried - meaning they lived apart from their spouse for all of the last six months of the tax year, paid more than half the home costs, and had a qualifying child. This rule helps separated spouses who have not yet completed a divorce but are effectively living as single parents. Legal marital status alone does not prevent HOH if the considered-unmarried test is met.',
+    ],
+    whenToUse: 'Use HOH if you are unmarried (or considered unmarried), paid more than half the cost of your home, and a qualifying child lived with you for more than six months. It is the most advantageous status available to single parents. Always verify the qualifying-person requirements before claiming HOH - the IRS audits HOH claims regularly, and incorrect filing can trigger back taxes, penalties, and a two-year ban on claiming the status.',
+    examples: {
+      headers: ['Tax rate', 'Single (2025)', 'Head of Household (2025)', 'HOH advantage'],
+      rows: [
+        ['10%', '$0 - $11,925', '$0 - $17,000', 'Extra $5,075 taxed at 10% instead of 12%'],
+        ['12%', '$11,925 - $48,475', '$17,000 - $64,850', 'Extra $16,375 taxed at 12% instead of 22%'],
+        ['22%', '$48,475 - $103,350', '$64,850 - $103,350', 'Same upper threshold'],
+        ['Standard deduction', '$15,000', '$22,500', '$7,500 more deducted before any tax'],
+      ],
+    },
+    pitfalls: 'The most common error is claiming HOH without a qualifying person. Your sibling, parent, or adult child may qualify - but only if they meet specific residency, age, and support tests. A second pitfall involves divorced parents: only the custodial parent (the one with whom the child lives for more nights during the year) can claim HOH. The noncustodial parent may be able to claim the child as a dependent via Form 8332, but this does not transfer HOH status. Incorrectly claiming HOH can result in repayment of taxes, a 20% accuracy penalty, and a two-year ban from claiming the status.',
+    faqs: [
+      { q: 'Can I file as Head of Household if I am still legally married?', a: 'Yes, if you are considered unmarried. To qualify, you must have lived apart from your spouse for all of the last six months of the year, paid more than half the cost of maintaining a home, and have a qualifying child who lived with you for more than half the year. Legal separation or pending divorce is not required - physical separation is.' },
+      { q: 'Does my qualifying child need to be my biological child?', a: 'No. A qualifying child for HOH purposes can be your biological child, stepchild, adopted child, foster child, sibling, step-sibling, or a descendant of any of these. The key tests are age (under 19, or under 24 if a full-time student), residency (lived with you more than half the year), and support (the child did not provide more than half of their own support).' },
+      { q: 'What is the difference between HOH and single filing status?', a: 'HOH provides a $22,500 standard deduction versus $15,000 for single, and uses wider tax brackets. For a filer with $60,000 of taxable income before the deduction, HOH saves roughly $2,000-$3,000 in federal income tax compared to single filing. The trade-off is that HOH requires meeting strict qualifying-person and household cost tests.' },
+      { q: 'Can two parents in the same household both claim Head of Household?', a: 'Only if they have different qualifying children. Two unmarried parents living together can each file HOH if each claims a different child as their qualifying person and each independently paid more than half the cost of maintaining that child\'s home. They cannot both claim HOH using the same child.' },
+    ],
+  },
+
   'regular-rate-of-pay': {
     definition: [
       'The regular rate of pay is the baseline hourly rate used to calculate overtime compensation under the FLSA. For hourly workers it equals the standard hourly wage. For salaried workers it is calculated by dividing the weekly salary by the number of hours the salary is intended to cover.',

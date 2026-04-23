@@ -437,7 +437,7 @@ const schema = [
             ? `${state.name} uses a flat income tax rate of ${topRate}% applied to all taxable income. The state standard deduction for single filers is $${fs.standardDeduction.toLocaleString()}${(fs.personalExemption||0) > 0 ? `, plus a $${(fs.personalExemption||0).toLocaleString()} personal exemption` : ''}.`
             : `${state.name} uses ${fs.brackets.length} income tax brackets ranging from ${fs.brackets[0].rate}% to ${topRate}%. The single filer standard deduction is $${fs.standardDeduction.toLocaleString()}${(fs.personalExemption||0) > 0 ? ` plus a $${(fs.personalExemption||0).toLocaleString()} personal exemption` : ''}.`
           }</p>
-
+          <p><a href="/glossary/mfj">MFJ</a> = Married Filing Jointly<br><a href="/glossary/mfs">MFS</a> = Married Filing Separately<br><a href="/glossary/hoh">HOH</a> = Head of Household</p>
           <div class="responsive-table">
             <table>
               <thead>
@@ -473,28 +473,93 @@ const schema = [
             </>
           )}
 
+          {state.hoh.brackets.length > 0 && JSON.stringify(state.hoh.brackets) !== JSON.stringify(fs.brackets) && (
+            <>
+              <p><a href="/glossary/hoh">Head of household</a> brackets differ from single filers - thresholds are typically wider:</p>
+              <div class="responsive-table">
+                <table>
+                  <thead><tr><th>Taxable income (HOH, 2026)</th><th>Rate</th></tr></thead>
+                  <tbody>
+                    {state.hoh.brackets.map(b => (
+                      <tr>
+                        <td>{b.max === null ? `Over $${b.min.toLocaleString()}` : `$${b.min.toLocaleString()} - $${b.max.toLocaleString()}`}</td>
+                        <td><strong>{b.rate}%</strong></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
+          {state.mfs.brackets.length > 0 && JSON.stringify(state.mfs.brackets) !== JSON.stringify(fs.brackets) && (
+            <>
+              <p><a href="/glossary/mfs">Married filing separately</a> brackets differ from single filers:</p>
+              <div class="responsive-table">
+                <table>
+                  <thead><tr><th>Taxable income (MFS, 2026)</th><th>Rate</th></tr></thead>
+                  <tbody>
+                    {state.mfs.brackets.map(b => (
+                      <tr>
+                        <td>{b.max === null ? `Over $${b.min.toLocaleString()}` : `$${b.min.toLocaleString()} - $${b.max.toLocaleString()}`}</td>
+                        <td><strong>{b.rate}%</strong></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
           <p>Source: <a href="https://taxfoundation.org/data/all/state/state-income-tax-rates-2026/" target="_blank" rel="noopener noreferrer">Tax Foundation 2026</a>.</p>
         </>
       )}
 
       <h2 id="federal">Federal income tax brackets 2026</h2>
-      <p>Federal income tax applies to all US residents regardless of state. The 2026 brackets (<a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" target="_blank" rel="noopener noreferrer">IR-2025-103</a>) are:</p>
+      <p>Federal income tax applies to all US residents regardless of state. The 2026 brackets are sorted into tables with taxable income brackets and tax rates.</p>
+      <h3>Single & married filing jointly tax brackets</h3>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Taxable income (single)</th><th>Taxable income (MFJ)</th><th>Rate</th></tr></thead>
           <tbody>
-            <tr><td>$0 - $11,925</td><td>$0 - $23,850</td><td>10%</td></tr>
-            <tr><td>$11,926 - $48,475</td><td>$23,851 - $96,950</td><td>12%</td></tr>
-            <tr><td>$48,476 - $103,350</td><td>$96,951 - $206,700</td><td>22%</td></tr>
-            <tr><td>$103,351 - $197,300</td><td>$206,701 - $394,600</td><td>24%</td></tr>
-            <tr><td>$197,301 - $250,525</td><td>$394,601 - $501,050</td><td>32%</td></tr>
-            <tr><td>$250,526 - $626,350</td><td>$501,051 - $751,600</td><td>35%</td></tr>
-            <tr><td>Over $626,350</td><td>Over $751,600</td><td>37%</td></tr>
+            <tr><td>$0 - $12,400</td><td>$0 - $24,800</td><td>10%</td></tr>
+            <tr><td>$12,401 - $50,400</td><td>$24,801 - $100,800</td><td>12%</td></tr>
+            <tr><td>$50,401 - $105,700</td><td>$100,801 - $211,400</td><td>22%</td></tr>
+            <tr><td>$105,701 - $201,775</td><td>$211,401 - $403,550</td><td>24%</td></tr>
+            <tr><td>$201,776 - $256,225</td><td>$403,551 - $512,450</td><td>32%</td></tr>
+            <tr><td>$256,226 - $640,600</td><td>$512,451 - $768,700</td><td>35%</td></tr>
+            <tr><td>Over $640,600</td><td>Over $768,700</td><td>37%</td></tr>
           </tbody>
         </table>
+        <p>Source: Internal Revenue Service (IRS): <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" target="_blank" rel="noopener noreferrer">IR-2025-103</a></p>
       </div>
-      <p>Federal standard deductions: Single $15,000 | <a href="/glossary/mfj">MFJ</a> $30,000 | Head of Household $22,500. The standard deduction is subtracted from gross income before applying brackets.</p>
-
+      <h3>Married filing separately & head of household tax brackets</h3>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Taxable income (MFS)</th><th>Taxable income (HOH)</th><th>Rate</th></tr></thead>
+          <tbody>
+            <tr><td>$0 - $12,400</td><td>$0 - $17,700</td><td>10%</td></tr>
+            <tr><td>$12,401 - $50,400</td><td>$17,701 - $67,450</td><td>12%</td></tr>
+            <tr><td>$50,401 - $105,700</td><td>$67,451 - $105,700</td><td>22%</td></tr>
+            <tr><td>$105,701 - $201,775</td><td>$105,701 - $201,750</td><td>24%</td></tr>
+            <tr><td>$201,776 - $256,225</td><td>$201,751 - $256,200</td><td>32%</td></tr>
+            <tr><td>$256,226 - $384,350</td><td>$256,201 - $640,600</td><td>35%</td></tr>
+            <tr><td>Over $384,350</td><td>Over $640,600</td><td>37%</td></tr>
+          </tbody>
+        </table>
+        <p>Source: Internal Revenue Service (IRS): <a href="https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill" target="_blank" rel="noopener noreferrer">IR-2025-103</a></p>
+      </div>
+      <h3>Federal standard deductions 2026</h3>
+      <p>The standard deduction is subtracted from gross income (pre-taxes salary) before applying brackets.</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Filing status</th><th>Deduction amount</th></tr></thead>
+          <tbody>
+            <tr><td>Single</td><td>$16,100</td></tr>
+            <tr><td>Married Filing Jointly</td><td>$32,200</td></tr>
+            <tr><td>Head of Household</td><td>$24,150</td></tr>
+          </tbody>
+        </table>
       <h2 id="fica">FICA: Social Security and Medicare (2026)</h2>
       <p><a href="/glossary/fica">FICA taxes</a> are separate from income tax and fund Social Security and Medicare. Employees pay:</p>
       <div class="responsive-table">
