@@ -13,7 +13,7 @@ interface Props {
 const { title, metaTitle, description, canonical, schema, ogImage } = Astro.props;
 ---
 
-<BaseLayout {title} {metaTitle} {description} {canonical} {schema} {ogImage}>
+<BaseLayout {title} {metaTitle} {description} {canonical} {schema} {ogImage} usesKatex={true}>
   <main class="gl-main">
     <div class="gl-container seo-container no-underline">
       <slot />

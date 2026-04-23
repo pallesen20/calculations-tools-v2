@@ -41,6 +41,7 @@ interface Props {
   ogImage?: string;
   schema?: object | object[];
   noindex?: boolean;
+  usesKatex?: boolean;
 }
 
 const {
@@ -51,6 +52,7 @@ const {
   ogImage = 'https://calculations.tools/open-graph.webp',
   schema,
   noindex,
+  usesKatex = false,
 } = Astro.props;
 
 const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
@@ -83,7 +85,13 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
     <link rel="icon" type="image/webp" sizes="16x16" href="/favicon-512x512.webp" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="stylesheet" href="/base.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+    {usesKatex && (
+      <>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+        <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous" />
+      </>
+    )}
 
     <!-- GTM -->
     <script>
