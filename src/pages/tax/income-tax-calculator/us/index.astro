@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { US_INCOME_TAX } from '../../../../data/us-income-tax';
+import { US_INCOME_TAX, FEDERAL_BRACKETS, FEDERAL_STANDARD_DEDUCTIONS } from '../../../../data/us-income-tax';
 
 const CELL = 44;
 const GAP = 4;
@@ -243,15 +244,17 @@ const schema = {
       </div>
       <h3>Federal standard deductions 2026</h3>
       <p>The standard deduction is subtracted from gross income (pre-taxes salary) before applying brackets.</p>
-      <div class="responsive-table">
+        <div class="responsive-table">
         <table>
           <thead><tr><th>Filing status</th><th>Deduction amount</th></tr></thead>
           <tbody>
-            <tr><td>Single</td><td>$16,100</td></tr>
-            <tr><td>Married Filing Jointly</td><td>$32,200</td></tr>
-            <tr><td>Head of Household</td><td>$24,150</td></tr>
+            <tr><td>Single</td><td>${FEDERAL_STANDARD_DEDUCTIONS.single.toLocaleString()}</td></tr>
+            <tr><td>Married Filing Jointly (MFJ)</td><td>${FEDERAL_STANDARD_DEDUCTIONS.mfj.toLocaleString()}</td></tr>
+            <tr><td>Head of Household (HOH)</td><td>${FEDERAL_STANDARD_DEDUCTIONS.hoh.toLocaleString()}</td></tr>
+            <tr><td>Married Filing Separately (MFS)</td><td>${FEDERAL_STANDARD_DEDUCTIONS.mfs.toLocaleString()}</td></tr>
           </tbody>
         </table>
+      </div>
         <h2>Related tools</h2>
         <ul class="related-tools-list">
           <li>

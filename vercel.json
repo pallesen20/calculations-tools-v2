@@ -1,4 +1,23 @@
 {
   "trailingSlash": false,
   "installCommand": "git fetch --unshallow 2>/dev/null || true && npm install"
+},
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    }
+  ]
+},
+{
+  "redirects": [
+    { "source": "/percentage-calculator", "destination": "/math/percentage-calculator", "permanent": true },
+    { "source": "/bmi-calculator", "destination": "/health/bmi-calculator", "permanent": true }
+  ]
 }
