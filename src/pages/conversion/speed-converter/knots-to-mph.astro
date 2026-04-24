@@ -9,10 +9,12 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'what-is-a-knot',  label: 'What is a knot (and kts)?' },
   { id: 'formula',         label: 'How to convert knots to mph' },
   { id: 'reverse',         label: 'How to convert mph to knots' },
   { id: 'reference-table', label: 'Knots to mph reference table' },
   { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'knots-vs-mph',    label: 'Knots vs mph: key differences' },
   { id: 'faq',             label: 'FAQs' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
@@ -69,6 +71,16 @@ const schema = [
         "@type": "Question",
         "name": "What is wind speed of 50 knots in mph?",
         "acceptedAnswer": { "@type": "Answer", "text": "50 knots equals 57.5 mph or 92.6 km/h. On the Beaufort scale, 50 knots falls in Force 10 (storm). The Beaufort hurricane threshold starts at 64 knots (73.6 mph). Weather forecasters use knots for wind speed in aviation TAF reports and marine forecasts worldwide." }
+      },
+      {
+        "@type": "Question",
+        "name": "What does kts mean?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Kts is an abbreviation for knots - the plural shorthand most commonly seen in marine weather apps, vessel-tracking software, and sailing forecasts. The abbreviation varies by context: 'KT' is used in aviation METAR weather reports (e.g. WIND 270/15KT), 'kts' is the informal marine plural, and 'kn' is the SI-approved abbreviation. All three mean the same unit: one nautical mile per hour." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between knots and mph?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Knots and mph both measure speed, but use different reference distances. One knot equals one nautical mile per hour (1,852 m), while one mph equals one statute mile per hour (1,609.344 m). This makes 1 knot = 1.15078 mph. Knots are used in aviation and maritime navigation because the nautical mile has a geometric link to the Earth - 1 nautical mile equals 1 arcminute of latitude, simplifying chart navigation. mph is used for road transport in the US and UK." }
       }
     ]
   }
@@ -92,7 +104,7 @@ const schema = [
       <div class="calculator-container">
 
         <div class="calculator-header">
-          <h2>Instantly Convert Miles Per Hour to Knots</h2>
+          <h2>Convert Knots to Miles Per Hour Instantly</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
 
@@ -136,6 +148,11 @@ const schema = [
 
       <h2 id="how-to-use">How to Use This Converter</h2>
       <p>Enter a knots value and the mph equivalent appears instantly. You can also type in the mph field to convert back to knots - the converter is fully bidirectional. There's no submit button; results update as you type.</p>
+
+      <h2 id="what-is-a-knot">What Is a Knot - and What Does kts Mean?</h2>
+      <p>A knot is a unit of speed equal to one nautical mile per hour. The abbreviation differs by context: <strong>KT</strong> is used in METAR aviation weather reports (e.g. "WIND 270/15KT"), <strong>kts</strong> is the informal plural you see in marine weather apps and vessel trackers, and <strong>kn</strong> is the SI-approved symbol. All three mean identical values - one nautical mile (1,852 m) per hour.</p>
+      <p>The name comes from 16th-century seamanship. Sailors measured speed with a chip log: a wooden panel thrown overboard on a rope knotted at fixed intervals every 47 feet 3 inches. They counted how many knots passed through their hands in 28 seconds - that count directly equalled the ship's speed in nautical miles per hour because the interval and time were calibrated to match the ratio of 1 nm to 1 hour.</p>
+      <p>In everyday terms: 1 knot (1.15 mph) is about the pace of a relaxed walk. A 15-knot wind is a fresh breeze capable of extending a flag. A 490-knot airliner covers roughly 9 statute miles - or 8 nautical miles - every minute. The unit feels unfamiliar on land but is the global standard for anything that navigates by chart.</p>
 
       <h2 id="formula">How Do You Convert Knots to mph?</h2>
       <p>Multiply knots by 1852 ÷ 1609.344, which equals approximately 1.15078. The factor comes directly from the two unit definitions: a nautical mile is exactly 1,852 meters; a statute mile is exactly 1,609.344 meters. Dividing the first by the second gives the exact conversion ratio. ICAO (the International Civil Aviation Organisation) has used knots as the standard airspeed unit since the 1940s.</p>
@@ -185,6 +202,24 @@ const schema = [
         <li><strong>Flight simulation</strong> - simulator users frequently need to cross-reference knot speeds with real-world mph references.</li>
       </ul>
 
+      <h2 id="knots-vs-mph">Knots vs mph: Key Differences</h2>
+      <p>Knots and mph both measure speed - neither is "faster" than the other. The difference is the reference unit: a knot uses the nautical mile (1,852 m) while mph uses the statute mile (1,609.344 m). Because the nautical mile is longer, 1 knot is always greater than 1 mph: specifically 1.15078 mph.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Property</th><th>Knots (kt / kts)</th><th>mph</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Reference distance</td><td>Nautical mile (1,852 m)</td><td>Statute mile (1,609.344 m)</td></tr>
+            <tr><td>Primary use</td><td>Aviation, maritime, weather</td><td>Road transport (US, UK)</td></tr>
+            <tr><td>Global standard body</td><td>ICAO, IMO</td><td>No international mandate</td></tr>
+            <tr><td>Earth geometry link</td><td>1 nm = 1 arcminute latitude</td><td>None</td></tr>
+            <tr><td>Conversion to km/h</td><td>1 kn = 1.852 km/h exactly</td><td>1 mph = 1.60934 km/h</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The nautical mile's link to latitude is the core reason aviation and maritime industries adopted knots: on a chart, a distance of 60 nm equals exactly 1 degree of latitude, making mental dead-reckoning arithmetic straightforward. mph offers no equivalent geometric shortcut, which is why it never gained traction in navigation despite being common on land.</p>
+
       <h2 id="faq">Frequently Asked Questions</h2>
 
       <h3>How many mph is 1 knot?</h3>
@@ -201,6 +236,15 @@ const schema = [
 
       <h3>What is wind speed of 50 knots in mph?</h3>
       <p>50 knots = 57.54 mph (92.6 km/h). This is a strong storm wind (Beaufort Force 10). The Beaufort scale threshold for a hurricane starts at 64 knots = 73.7 mph. The US National Hurricane Center classifies Category 1 hurricanes from 64 knots (74 mph) upward.</p>
+
+      <h3>What does kts mean?</h3>
+      <p>Kts is an informal plural abbreviation for knots - the unit equal to one nautical mile per hour. You see "kts" most often in marine weather apps, sailing forecasts, and vessel-tracking displays. The abbreviation varies by standard: METAR aviation weather reports use "KT" (e.g. "15KT"), and the SI system uses "kn". All three - kts, kt, kn - mean the same thing.</p>
+
+      <h3>How fast is a knot in everyday terms?</h3>
+      <p>One knot (1.15 mph) is just above a casual walking pace. Ten knots (11.5 mph) is a fast cycling speed. Thirty knots (34.5 mph) is roughly highway merging speed. A commercial airliner at 490 knots (563 mph) covers the length of a football field every tenth of a second. The unit spans an enormous range: from drifting sea ice at under 1 knot to supersonic aircraft above 1,000 knots.</p>
+
+      <h3>What is the difference between speed in knots vs mph?</h3>
+      <p>Knots and mph measure the same thing (speed) using different reference miles. A knot uses the nautical mile (1,852 m), which is tied to Earth's geometry - 1 nautical mile equals 1 arcminute of latitude. A statute mile (1,609.344 m) has no equivalent geometric meaning. This is why knots dominate aviation and maritime navigation: chart-based distance calculations stay exact without unit conversion. On land, mph is more intuitive because road signs, speed limits, and speedometers use it.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
