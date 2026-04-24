@@ -21,9 +21,10 @@ interface Props {
   sources?: Source[];
   ogFormula?: string;
   ogExample?: string;
+  noindex?: boolean;
 }
 
-const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample } = Astro.props;
+const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample, noindex } = Astro.props;
 
 const _pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/index';
 const _filePath = `src/pages${_pathname}.astro`;
@@ -84,7 +85,7 @@ const iframeSnippet = embedUrl
   : null;
 ---
 
-<BaseLayout {title} {metaTitle} {description} {canonical} schema={augmentedSchema} {ogImage} usesKatex={true}>
+<BaseLayout {title} {metaTitle} {description} {canonical} schema={augmentedSchema} {ogImage} usesKatex={true} {noindex}>
   <main class="main-content" style="margin-top: 1rem;">
     <div class="container">
       <div class="calculator-page-container">

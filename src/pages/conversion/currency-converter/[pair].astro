@@ -1,6 +1,7 @@
 ---
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
-import { TOP_CURRENCIES, CURRENCY_NAMES, CURRENCY_PLURALS, TOP_PAIRINGS } from '../../../utils/getPages';
+import { TOP_CURRENCIES, CURRENCY_NAMES, CURRENCY_PLURALS, TOP_PAIRINGS, TOP_INDEXED_PAIRS } from '../../../utils/getPages';
+import { PAIR_INTROS } from '../../../data/currency-pair-intros';
 
 export async function getStaticPaths() {
   return TOP_CURRENCIES.flatMap(from =>
@@ -19,6 +20,8 @@ const fromPlural = CURRENCY_PLURALS[from] ?? fromName;
 const toPlural = CURRENCY_PLURALS[to] ?? toName;
 const swapPath = `/conversion/currency-converter/${to.toLowerCase()}-to-${from.toLowerCase()}`;
 
+const isTopPairing = TOP_INDEXED_PAIRS.has(`${from.toLowerCase()}-to-${to.toLowerCase()}`);
+const pairIntro = PAIR_INTROS[`${from.toLowerCase()}-to-${to.toLowerCase()}`] ?? null;
 const topPairings = (TOP_PAIRINGS[from] ?? []).filter(p => p !== to).slice(0, 8);
 const tablePresets = [from, to, ...topPairings.filter(p => p !== from && p !== to).slice(0, 3)];
 
@@ -100,14 +103,12 @@ const schema = [
   schema={schema}
   ogFormula={`1 ${from} in ${to}`}
   ogExample={`Live mid-market rate - updated daily`}
+  noindex={!isTopPairing}
 >
-
   <div slot="calculator">
-    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1100l100055" rel="sponsored" target="_blank"><img class="wise-above-the-fold" src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1100l100055" fetchpriority="high" loading="eager" style="width:100%;height:82.5px" alt="Wise mid-market rates banner"></a>
-
+    <!-- <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1100l100055" target="_blank"><img class="wise-above-the-fold" src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1100l100055" fetchpriority="high" loading="eager" style="width:100%;height:82.5px" alt="Wise mid-market rates banner"></a> -->
     <section class="calculator-interface" id="cp-calculator">
       <div class="calculator-container">
-
         <div class="cc-card" id="cp-card" data-from={from} data-to={to} data-presets={tablePresets.join(',')}>
           <h2 class="cc-title">{fromPlural} to {toPlural} Live Exchange Rates</h2>
           <div class="cc-live">
@@ -118,7 +119,6 @@ const schema = [
               <span class="cc-tooltip">The real exchange rate - midpoint between what banks buy and sell at. No markup added. Banks typically charge 2–12% above this when you exchange money.</span>
             </span>
           </div>
-
           <div class="cc-field">
             <label class="cc-label">Amount</label>
             <div class="cc-row">
@@ -126,7 +126,6 @@ const schema = [
               <select id="cp-from" class="cc-select"></select>
             </div>
           </div>
-
           <div class="cc-swap-wrap">
             <a href={swapPath} id="cp-swap" class="cc-swap" title={`Switch to ${to} to ${from}`} aria-label={`Switch to ${to} to ${from} converter`}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="18" height="18">
@@ -134,7 +133,6 @@ const schema = [
               </svg>
             </a>
           </div>
-
           <div class="cc-field">
             <label class="cc-label">Converted to</label>
             <div class="cc-row">
@@ -142,15 +140,13 @@ const schema = [
               <select id="cp-to" class="cc-select"></select>
             </div>
           </div>
-
           <div class="cc-result-box">
             <div class="cc-result-label">Exchange Rate</div>
             <div class="cc-result-rate" id="cp-rate">-</div>
             <div class="cc-result-rate" id="cp-rate-rev" style="font-size:0.8em;opacity:0.6;margin-top:0.2rem">-</div>
             <div class="cc-result-updated" id="cp-updated">Loading rates…</div>
           </div>
-
-          <div class="wise-banner">
+          <!-- <div class="wise-banner">
             <svg class="wise-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -159,9 +155,8 @@ const schema = [
               <p class="wise-msg">Sending <strong>{from} to {to}</strong>? Your bank is likely charging more than it shows. But not Wise!</p>
               <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener" class="wise-btn">Compare rates - takes 20 seconds</a>
             </div>
-          </div>
+          </div> -->
         </div>
-
         <div class="cc-table-card">
           <h2 class="cc-table-title">Currency Comparison Table</h2>
           <p class="cc-table-sub">Click any row to edit - all others update automatically</p>
@@ -170,12 +165,9 @@ const schema = [
             <option value="">Add a currency…</option>
           </select>
         </div>
-
       </div>
     </section>
-
-    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank" rel="sponsored"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width:-webkit-fill-available;display:block;margin:1rem 0" alt="Send money internationally banner"/></a>
-
+    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width:-webkit-fill-available;display:block;margin:1rem 0" alt="Send money internationally banner"/></a>
     <section class="cc-chart-section" id="cp-chart-section" style="display:none">
       <div class="cc-chart-header">
         <h2>{from} to {to} exchange rate history chart</h2>
@@ -191,7 +183,6 @@ const schema = [
       <div class="cc-chart-footer" id="cp-chart-footer"></div>
       <p class="cc-chart-note">A rising line means 1 {from} buys more {to} over time - the first currency is strengthening. A falling line means it buys less - it's weakening. Flat stretches are weekends or public holidays when currency markets are closed and no new rates are published.</p>
     </section>
-
     <section class="cc-ref-section">
       <h2 id="reference">{from} to {to} exchange rates today</h2>
       <div class="cc-ref-tables">
@@ -199,7 +190,6 @@ const schema = [
         <div class="cc-ref-table" id="cp-ref-rev"></div>
       </div>
     </section>
-
     <section class="cc-pairings-section">
       <h3 id="top-pairings">Top currency pairings for {fromName}</h3>
       <div class="cc-pairings-grid">
@@ -211,18 +201,14 @@ const schema = [
         ))}
       </div>
     </section>
-
     <script src="/js/currency-pair.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>This converter shows the <strong>live mid-market rate</strong> for {fromName} to {toName} - the real exchange rate without any bank markup. Enter your amount and the result appears instantly. Use the historical chart to track how the {from}/{to} rate has moved over time, and the reference table to see common amounts at a glance.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -231,32 +217,27 @@ const schema = [
           <li>The {from}/{to} rate is updated once per day from live forex data - for high-value transactions, always confirm with your payment provider.</li>
         </ul>
       </div>
-
       <h2 id="how-to-use">How to convert {from} to {to}</h2>
       <p>Enter the amount in {fromName} in the top field. The equivalent in {toName} appears instantly in the result field, along with the current exchange rate and its reverse. The swap button takes you to the <a href={swapPath}>{to} to {from} converter</a> so you can quickly see the rate in both directions without retyping.</p>
       <p>The <strong>Currency Comparison Table</strong> below the main converter lets you track multiple currencies at once. It starts with {from}, {to}, and three of the most common {from} pairings pre-loaded. Click any row to edit the amount and all other rows update automatically.</p>
-
       <h2 id="about">About {fromName} and {toName}</h2>
-      <p>The <strong>{fromName} ({from})</strong> and <strong>{toName} ({to})</strong> are both actively traded currencies with daily forex volume contributed by banks, institutions, and retail participants. The mid-market rate between them reflects real-time supply and demand in the global currency market and shifts continuously during trading hours.</p>
+      {pairIntro ? (
+        <p>{pairIntro}</p>
+      ) : (
+        <p>The <strong>{fromName} ({from})</strong> and <strong>{toName} ({to})</strong> are both actively traded currencies with daily forex volume contributed by banks, institutions, and retail participants. The mid-market rate between them reflects real-time supply and demand in the global currency market and shifts continuously during trading hours.</p>
+      )}
       <p>When you convert {fromPlural} to {toPlural} at a bank or exchange bureau, the provider's rate will be above the mid-market rate shown here. The difference - their markup - is typically 2–5% at a bank branch, and can reach 8–12% at airport exchange desks. Fintech services like Wise and Revolut typically come within 0.5% of mid-market for major currency pairs.</p>
-
       <h2 id="faq">FAQs</h2>
-
       <h3>What is the {from} to {to} exchange rate today?</h3>
       <p>The rate shown above is the mid-market rate - the midpoint between the buy and sell prices on the global forex market. It is updated once per day. It doesn't include any bank or broker markup, so it differs from the rate you would get at a bank branch or exchange desk.</p>
-
       <h3>How do I convert {fromPlural} to {toPlural}?</h3>
       <p>Enter the amount in {fromName} in the field above and the result in {toName} appears instantly. The rate used is the live mid-market rate updated daily. Use the swap button to navigate to the reverse converter if you need to convert from {to} to {from}.</p>
-
       <h3>Why does my bank charge a different rate?</h3>
       <p>Banks add a profit margin - typically 2 to 5% - on top of the mid-market rate for retail customers. Airport kiosks can charge 8 to 12% above mid-market. The rate here is the mid-market baseline, which lets you calculate exactly how much markup any provider is adding.</p>
-
       <h3>Is the {from}/{to} rate updated in real time?</h3>
       <p>Rates are updated once per day. The exact update time is shown below the exchange rate in the converter. For time-sensitive or high-value transactions, always confirm the current rate directly with your payment provider before committing to a transfer.</p>
-
       <h3>What is the cheapest way to convert {fromPlural} to {toPlural}?</h3>
       <p>Fintech services like Wise and Revolut typically offer the closest rates to mid-market with small flat fees - making them the most cost-effective option for most amounts. Bank wires and airport exchange desks tend to be the most expensive. Always compare the all-in cost, not just the headline rate.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -288,12 +269,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style>
   .cc-swap { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%; cursor: pointer; transition: background 0.18s; text-decoration: none; }
   .cc-swap:hover { background: rgba(255,255,255,0.2); }

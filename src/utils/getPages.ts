@@ -103,6 +103,39 @@ export const TOP_PAIRINGS: Record<string, string[]> = {
   ISK: ['EUR','GBP','USD','DKK','NOK','SEK','CHF','CAD'],
 };
 
+export const TOP_INDEXED_PAIRS = new Set([
+  'usd-to-eur', 'eur-to-usd',
+  'usd-to-gbp', 'gbp-to-usd',
+  'usd-to-jpy', 'jpy-to-usd',
+  'usd-to-cad', 'cad-to-usd',
+  'usd-to-aud', 'aud-to-usd',
+  'usd-to-chf', 'chf-to-usd',
+  'usd-to-nzd', 'nzd-to-usd',
+  'usd-to-inr', 'inr-to-usd',
+  'usd-to-cny', 'cny-to-usd',
+  'usd-to-hkd', 'hkd-to-usd',
+  'usd-to-sgd', 'sgd-to-usd',
+  'usd-to-mxn', 'mxn-to-usd',
+  'usd-to-krw', 'krw-to-usd',
+  'eur-to-gbp', 'gbp-to-eur',
+  'eur-to-jpy', 'jpy-to-eur',
+  'eur-to-chf', 'chf-to-eur',
+  'eur-to-cad', 'cad-to-eur',
+  'eur-to-aud', 'aud-to-eur',
+  'gbp-to-jpy', 'jpy-to-gbp',
+  'gbp-to-aud', 'aud-to-gbp',
+  'gbp-to-inr', 'inr-to-gbp',
+  'gbp-to-chf', 'chf-to-gbp',
+  'gbp-to-cad', 'cad-to-gbp',
+  'eur-to-dkk', 'dkk-to-eur',
+  'eur-to-sek', 'sek-to-eur',
+  'eur-to-nok', 'nok-to-eur',
+  'sgd-to-myr', 'myr-to-sgd',
+  'aud-to-nzd', 'nzd-to-aud',
+  'usd-to-brl', 'brl-to-usd',
+  'eur-to-pln', 'pln-to-eur',
+]);
+
 const entries: Entry[] = [
   {
     path: '/',
@@ -1514,7 +1547,7 @@ TOP_CURRENCIES.forEach(from => {
       title: `Convert ${from} to ${to} | ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
       description: `Convert ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]} with live mid-market rates. Includes reference amounts and top ${from} currency pairings.`,
       changefreq: 'daily' as const,
-      priority: 0.9,
+      priority: TOP_INDEXED_PAIRS.has(`${from.toLowerCase()}-to-${to.toLowerCase()}`) ? 0.9 : 0.3,
       icon: '💱',
       short: `${from} to ${to} · ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
     });

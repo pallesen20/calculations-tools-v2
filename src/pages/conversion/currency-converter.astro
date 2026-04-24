@@ -1,11 +1,29 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
-import { CURRENCY_NAMES, TOP_PAIRINGS } from '../../utils/getPages';
+import { CURRENCY_NAMES, TOP_PAIRINGS, TOP_INDEXED_PAIRS } from '../../utils/getPages';
 
 const POPULAR_PAIRS: [string, string][] = [
   ['EUR','USD'],['GBP','USD'],['USD','JPY'],['AUD','USD'],
   ['USD','CAD'],['USD','CHF'],['DKK','EUR'],['DKK','NOK'],
   ['NOK','SEK'],['GBP','EUR'],['INR','USD'],['CHF','EUR'],
+];
+
+const TOP_INDEXED_PAIRS: [string, string][] = [
+  ['USD','EUR'], ['EUR','USD'], ['USD','GBP'], ['GBP','USD'],
+  ['USD','JPY'], ['JPY','USD'], ['USD','CAD'], ['CAD','USD'],
+  ['USD','AUD'], ['AUD','USD'], ['USD','CHF'], ['CHF','USD'],
+  ['USD','NZD'], ['NZD','USD'], ['USD','INR'], ['INR','USD'],
+  ['USD','CNY'], ['CNY','USD'], ['USD','HKD'], ['HKD','USD'],
+  ['USD','SGD'], ['SGD','USD'], ['USD','MXN'], ['MXN','USD'],
+  ['USD','KRW'], ['KRW','USD'], ['EUR','GBP'], ['GBP','EUR'],
+  ['EUR','JPY'], ['JPY','EUR'], ['EUR','CHF'], ['CHF','EUR'],
+  ['EUR','CAD'], ['CAD','EUR'], ['EUR','AUD'], ['AUD','EUR'],
+  ['GBP','JPY'], ['JPY','GBP'], ['GBP','AUD'], ['AUD','GBP'],
+  ['GBP','INR'], ['INR','GBP'], ['GBP','CHF'], ['CHF','GBP'],
+  ['GBP','CAD'], ['CAD','GBP'], ['EUR','DKK'], ['DKK','EUR'],
+  ['EUR','SEK'], ['SEK','EUR'], ['EUR','NOK'], ['NOK','EUR'],
+  ['SGD','MYR'], ['MYR','SGD'], ['AUD','NZD'], ['NZD','AUD'],
+  ['USD','BRL'], ['BRL','USD'], ['EUR','PLN'], ['PLN','EUR']
 ];
 
 const tocItems = [
@@ -81,7 +99,7 @@ const schema = [
 >
 
   <div slot="calculator">
-    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1100l100055" rel="sponsored" target="_blank"><img class="wise-above-the-fold" src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1100l100055" fetchpriority="high" loading="eager" style="width:100%;height:82.5px" alt="Wise mid-market rates banner"></a>
+    <!-- <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1100l100055" target="_blank"><img class="wise-above-the-fold" src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1100l100055" fetchpriority="high" loading="eager" style="width:100%;height:82.5px" alt="Wise mid-market rates banner"></a> -->
     <section class="calculator-interface" id="cc-calculator">
       <div class="calculator-container">
         <div class="cc-card">
@@ -129,7 +147,7 @@ const schema = [
             </div>
           </div>
 
-          <div class="wise-banner">
+          <!-- <div class="wise-banner">
             <svg class="wise-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -138,7 +156,7 @@ const schema = [
               <p class="wise-msg" id="cp-wise-msg">Sending USD to EUR? Your bank is likely charging more than it shows. But not Wise!</p>
               <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener" class="wise-btn">Compare rates - takes 20 seconds</a>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="cc-table-card">
           <h2 class="cc-table-title">Currency Comparison Table</h2>
@@ -156,7 +174,7 @@ const schema = [
 
     <script src="/js/currency-converter-v2.js" is:inline></script>
 
-    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank" rel="sponsored"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width:-webkit-fill-available;display:block;margin:1rem 0" alt="Send money internationally banner"/></a>
+    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width:-webkit-fill-available;display:block;margin:1rem 0" alt="Send money internationally banner"/></a>
 
     <section class="cc-chart-section" id="cp-chart-section" style="display:none">
       <div class="cc-chart-header">
@@ -185,7 +203,7 @@ const schema = [
     <section class="cc-pairings-section">
       <h3>Popular currency pairs</h3>
       <div class="cc-pairings-grid">
-        {POPULAR_PAIRS.map(([from, to]) => (
+        {TOP_INDEXED_PAIRS.map(([from, to]) => (
           <a href={`/conversion/currency-converter/${from.toLowerCase()}-to-${to.toLowerCase()}`} class="cc-pairing-card">
             <span class="cc-pairing-code">{from} → {to}</span>
             <span class="cc-pairing-name">{CURRENCY_NAMES[from]} → {CURRENCY_NAMES[to]}</span>
@@ -196,7 +214,7 @@ const schema = [
   </div>
 
   <div slot="content">
-    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank" rel="sponsored"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width: -webkit-fill-available;" alt="Send money internationally banner"/></a>
+    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width: -webkit-fill-available;" alt="Send money internationally banner"/></a>
     <div class="seo-container">
 
       <div class="answer-box">
