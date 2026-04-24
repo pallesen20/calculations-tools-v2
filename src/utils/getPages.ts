@@ -140,7 +140,7 @@ const entries: Entry[] = [
   {
     path: '/',
     title: 'Calculations.tools - Free Online Calculators & Converters',
-    description: 'Free online calculators and converters for percentages, unit conversion, text analysis, currency, and more. No registration, no ads, instant results.',
+    description: 'Free online calculators and converters for percentages, unit conversion, text analysis, currency, and more. No registration, no paid content, instant results.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: '🏠',
