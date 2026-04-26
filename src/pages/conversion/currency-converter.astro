@@ -97,9 +97,7 @@ const schema = [
   embedSlug="currency-converter"
   schema={schema}
 >
-
   <div slot="calculator">
-    <!-- <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1100l100055" target="_blank"><img class="wise-above-the-fold" src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1100l100055" fetchpriority="high" loading="eager" style="width:100%;height:82.5px" alt="Wise mid-market rates banner"></a> -->
     <section class="calculator-interface" id="cc-calculator">
       <div class="calculator-container">
         <div class="cc-card">
@@ -112,7 +110,6 @@ const schema = [
               <span class="cc-tooltip">The real exchange rate - midpoint between what banks buy and sell at. No markup added. Banks typically charge 2–12% above this when you exchange money.</span>
             </span>
           </div>
-
           <div class="cc-field">
             <label class="cc-label">Amount</label>
             <div class="cc-row">
@@ -120,7 +117,6 @@ const schema = [
               <select id="cp-from" class="cc-select"></select>
             </div>
           </div>
-
           <div class="cc-swap-wrap">
             <button id="cp-swap" class="cc-swap" title="Swap currencies">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="18" height="18">
@@ -128,7 +124,6 @@ const schema = [
               </svg>
             </button>
           </div>
-
           <div class="cc-field">
             <label class="cc-label">Converted to</label>
             <div class="cc-row">
@@ -136,7 +131,6 @@ const schema = [
               <select id="cp-to" class="cc-select"></select>
             </div>
           </div>
-
           <div class="cc-result-box">
             <div class="cc-result-label">Exchange Rate</div>
             <div class="cc-result-rate" id="cp-rate">-</div>
@@ -146,36 +140,18 @@ const schema = [
               <a id="cc-pair-link-anchor" href="#" class="cc-pair-link-a"></a>
             </div>
           </div>
-
-          <!-- <div class="wise-banner">
-            <svg class="wise-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <div class="wise-body">
-              <p class="wise-msg" id="cp-wise-msg">Sending USD to EUR? Your bank is likely charging more than it shows. But not Wise!</p>
-              <a href="https://wise.prf.hn/l/jXG5210/" target="_blank" rel="noopener" class="wise-btn">Compare rates - takes 20 seconds</a>
-            </div>
-          </div> -->
         </div>
         <div class="cc-table-card">
           <h2 class="cc-table-title">Currency Comparison Table</h2>
           <p class="cc-table-sub">Click any row to edit the amount - all others update automatically</p>
-
           <div id="cp-table-body" class="cc-table-body"></div>
-
           <select id="cp-table-add" class="cc-table-add">
             <option value="">Add a currency…</option>
           </select>
         </div>
-
       </div>
     </section>
-
     <script src="/js/currency-converter-v2.js" is:inline></script>
-
-    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width:-webkit-fill-available;display:block;margin:1rem 0" alt="Send money internationally banner"/></a>
-
     <section class="cc-chart-section" id="cp-chart-section" style="display:none">
       <div class="cc-chart-header">
         <h2 id="cp-chart-title">Exchange rate history</h2>
@@ -212,24 +188,18 @@ const schema = [
       </div>
     </section>
   </div>
-
   <div slot="content">
-    <a href="https://wise.prf.hn/click/camref:1011lkBX5/creativeref:1101l100659" target="_blank"><img src="https://wise-creative.prf.hn/source/camref:1011lkBX5/creativeref:1101l100659" style="width: -webkit-fill-available;" alt="Send money internationally banner"/></a>
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>This converter uses the <strong>mid-market rate</strong> - the real exchange rate without any bank markup. To convert, enter your amount, choose your source currency and target currency, and read the result instantly. Banks and exchange bureaus typically charge 2-12% above this rate, so comparing the mid-market rate to what you are being offered tells you exactly how much a conversion is costing you.</p>
       </div>
-
       <h2 id="how-to-use">How to use this converter</h2>
       <p>Enter your amount in the top field, choose the currency you are converting from, then pick your target currency. The result and current exchange rate update instantly as you type. The swap button reverses the direction and uses the converted amount as the new starting value, so you can immediately see the conversion both ways without retyping.</p>
       <p>The Currency Comparison Table below the main converter lets you track multiple currencies at once. Click any row, type a new value, and all other rows update automatically to reflect that amount. You can add or remove currencies using the dropdown at the bottom of the table. Your settings are saved automatically for your next visit.</p>
-
       <h2 id="mid-market">The mid-market rate</h2>
       <p>The mid-market rate is the midpoint between the buy price (bid) and sell price (ask) for a currency pair on the global foreign exchange market. It is also called the interbank rate or spot rate. This is the rate banks use when trading large amounts with each other - it has no markup added.</p>
       <p>When you exchange money at a bank or exchange bureau, the provider buys your currency at the bid price (lower than mid-market) and sells the target currency at the ask price (higher than mid-market). The difference is their profit margin. The mid-market rate sits exactly halfway between the two, making it the fairest reference point for judging any exchange offer.</p>
-
       <h3>Bid, ask, and spread</h3>
       <p>The spread is the difference between the bid and ask price. On major currency pairs like EUR/USD, the interbank spread can be as low as 0.01-0.03% for large institutional trades. For retail customers at a bank branch, the effective spread is typically 2-5%. At airport exchange desks, it can reach 8-12%.</p>
       <div class="responsive-table">
@@ -245,10 +215,8 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="how-rates-work">How exchange rates work</h2>
       <p>Exchange rates are determined by supply and demand in the global foreign exchange (forex) market, which trades approximately $7.5 trillion per day - making it the largest financial market in the world. Most currencies float freely, meaning their value against other currencies shifts continuously based on trading activity.</p>
-
       <h3>What moves exchange rates</h3>
       <p>Several factors drive short and long-term rate movements:</p>
       <ul>
@@ -258,10 +226,8 @@ const schema = [
         <li><strong>Political stability:</strong> Political uncertainty increases currency risk. Investors tend to move out of currencies when a country faces instability or policy unpredictability.</li>
         <li><strong>Market sentiment:</strong> In risk-off environments (recessions, crises), investors move toward "safe haven" currencies such as USD, CHF, and JPY.</li>
       </ul>
-
       <h3>Fixed vs floating exchange rates</h3>
       <p>Most major currencies float freely against each other. Some currencies, however, are pegged to another currency - most commonly the USD. Examples include the UAE Dirham (AED), Saudi Riyal (SAR), and Hong Kong Dollar (HKD). Pegged currencies change rarely or not at all against their peg, while floating currencies move continuously.</p>
-
       <h2 id="provider-comparison">Comparing exchange providers</h2>
       <p>The exchange rate you get depends heavily on which provider you use. The mid-market rate shown in this converter is the baseline - every provider charges above it to varying degrees. The table below shows typical markup ranges for different provider types.</p>
       <div class="responsive-table">
@@ -281,7 +247,6 @@ const schema = [
       </table>
       </div>
       <p>These ranges are indicative. Actual rates vary by provider, currency pair, amount, and whether a promotional rate applies. Always check the all-in cost (markup plus fees) rather than comparing rates alone.</p>
-
       <h2 id="popular-pairs">Popular currency pairs</h2>
       <p>Seven currency pairs account for the vast majority of global forex trading volume. These are called major pairs - all include the US dollar and have the tightest spreads because of their high liquidity.</p>
       <div class="responsive-table">
@@ -301,7 +266,6 @@ const schema = [
       </table>
       </div>
       <p>Pairs that do not include the US dollar are called minor pairs or cross rates (for example EUR/GBP, EUR/JPY). These typically have wider spreads than majors because they are less liquid. When you convert between two non-USD currencies, most providers route the trade through USD intermediately - EUR to JPY is effectively EUR to USD, then USD to JPY.</p>
-
       <h2 id="all-pairs">All currency pair converters</h2>
       <p>Each link below opens a dedicated converter with live exchange rate data and a 30-day chart.</p>
       {Object.entries(TOP_PAIRINGS).map(([from, targets]) => (
@@ -316,61 +280,41 @@ const schema = [
           </div>
         </div>
       ))}
-
       <h2 id="travelers">Practical tips for travelers</h2>
-
       <h3>Use a no-fee card for most spending</h3>
       <p>A credit or debit card with no foreign transaction fee is usually the most cost-effective way to pay abroad. The card network (Visa or Mastercard) converts at a rate very close to mid-market, with a markup of around 0.5-1%. Cards like Wise, Revolut, Monzo, and Charles Schwab (US) are purpose-built for international use.</p>
-
       <h3>Always pay in the local currency</h3>
       <p>When a card terminal or ATM abroad asks "Pay in USD?" or "Pay in your home currency?", always decline and pay in the local currency. This is called Dynamic Currency Conversion (DCC). The merchant's conversion rate is typically 3-6% worse than your card's rate, and the cardholder has no upside from choosing DCC.</p>
-
       <h3>Withdraw cash at local ATMs, not airport kiosks</h3>
       <p>ATMs operated by local banks generally use rates much closer to mid-market than airport exchange desks. Use your card's app to check whether foreign ATM fees apply. When you do need cash before departure, ordering currency through an online bank service a few days in advance usually beats any airport or high-street exchange rate.</p>
-
       <h3>Check the all-in cost, not just the rate</h3>
       <p>A provider advertising "0% commission" may still apply a large markup on the rate itself. Compare by calculating how many units of the target currency you actually receive per unit of your home currency, then compare that to the mid-market rate shown here. The difference, as a percentage, is the true cost of the conversion.</p>
-
       <h2 id="common-mistakes">Common mistakes</h2>
-
       <h3>Confusing the rate with the amount</h3>
       <p>An exchange rate of 1.08 (EUR/USD) means 1 euro costs 1.08 US dollars. The rate and the converted amount are different things. If you convert 500 EUR to USD at 1.08, you receive 540 USD - the rate is 1.08, the amount is 540. Mixing these up leads to errors when calculating expected costs for travel budgets or invoices.</p>
-
       <h3>Ignoring fees when comparing providers</h3>
       <p>A provider offering a slightly better rate but charging a $30 flat transfer fee may still cost more than one charging 0.5% with no fixed fee - depending on the amount. For small amounts (under $500), flat fees dominate. For large amounts, the percentage markup dominates. Always calculate total cost for your specific amount.</p>
-
       <h3>Assuming the mid-market rate is available to you</h3>
       <p>The mid-market rate shown here is a reference rate - it is not a rate you can directly transact at unless you are a large institutional trader. It is the most useful benchmark for comparison, but you should expect to pay something above it regardless of which provider you use. The best retail providers (fintechs) typically get within 0.5% of mid-market.</p>
-
       <h3>Using the exchange rate from one date for a future transaction</h3>
       <p>Exchange rates move continuously. A rate quoted today may be significantly different in a week or a month. For future transactions, forward contracts (offered by specialist providers) allow you to lock in a rate today. For ordinary travel and shopping, the daily rate is fine - but don't budget a long trip based on a rate checked weeks in advance without allowing a buffer.</p>
-
       <h2 id="faq">FAQs</h2>
-
       <h3>What is the mid-market exchange rate?</h3>
       <p>The mid-market rate is the midpoint between the buy and sell prices for a currency pair on the global forex market. It is the benchmark rate used by banks when trading with each other and the fairest reference point for comparing any retail exchange offer. Banks and bureaus charge above it; this converter shows it.</p>
-
       <h3>Why is my bank's exchange rate different from what I see here?</h3>
       <p>Banks add a profit margin - typically 2 to 5% above mid-market for retail customers. Airport kiosks and high-street bureaus can charge 8-12% above mid-market. This page shows the mid-market rate so you can see the real value of your money and identify how much any provider is charging you above that baseline.</p>
-
       <h3>How often are exchange rates updated?</h3>
       <p>Once per day. The exact update time is shown below the exchange rate display in the converter. For high-value or time-sensitive transactions, always confirm with your actual payment provider before committing.</p>
-
       <h3>What is the cheapest way to send money internationally?</h3>
       <p>Fintech services like Wise and Revolut typically charge the lowest all-in cost: a small flat fee plus a margin of 0.35-0.6% on the mid-market rate for major pairs. This is significantly cheaper than bank wire transfers, which often combine a worse rate with fixed fees of $15-50.</p>
-
       <h3>What is a currency cross rate?</h3>
       <p>A cross rate is an exchange rate between two currencies where neither is the US dollar. EUR/GBP and EUR/JPY are examples. Most cross rates are calculated through USD as an intermediary. Cross pairs typically have wider spreads than major pairs because they are less liquid.</p>
-
       <h3>Can I use this for business invoicing?</h3>
       <p>It works well for estimating values and setting indicative prices. For actual invoicing, use your bank or payment provider's confirmed rate on the day of the transaction - their rate will differ from mid-market, and your invoice should reflect what you actually receive.</p>
-
       <h3>Why does the same currency pair show a different rate on different sites?</h3>
       <p>Mid-market rates vary slightly between data providers due to different sourcing methods and update times. A difference of 0.01-0.05% between sources is normal and not significant for most purposes. Larger discrepancies usually mean one source is showing a retail rate with markup applied.</p>
-
       <h3>Are cryptocurrency conversions supported?</h3>
       <p>No. This converter covers traditional fiat currencies only. Crypto markets operate 24/7 and price through different mechanisms, so they require purpose-built crypto tools.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -403,12 +347,9 @@ const schema = [
           </a>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .currency-pair-group { margin-bottom: 1.25rem; }
   .currency-pair-group h3 { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 0.4rem; font-weight: 500; }
