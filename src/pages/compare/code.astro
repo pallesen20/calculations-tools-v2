@@ -132,7 +132,7 @@ const schema = [
               <button class="diff-tbtn" onclick="copyDiff()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Diff</button>
             </div>
           </div>
-          <div class="ct-diff-container" id="ct-diff-container"></div>
+          <div class="ct-diff-wrap"><div class="ct-diff-container" id="ct-diff-container"></div><div class="ct-scroll-track" id="ct-scroll-track"></div></div>
         </div>
 
         <div class="cc-lang-cards">
@@ -269,15 +269,14 @@ const schema = [
   .ct-view-toggle button.active { background: rgba(255,255,255,0.18); color: white; }
   .ct-diff-container { background: rgba(0,0,0,0.28); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; overflow: auto; max-height: 480px; font-family: 'Courier New', monospace; font-size: 0.8rem; }
   .ct-diff-line { display: flex; line-height: 1.6; min-height: 1.6em; }
-  .ct-line-num { min-width: 2.75rem; text-align: right; padding: 0 0.5rem; color: #4a5568; user-select: none; flex-shrink: 0; }
-  .ct-line-content { padding: 0 0.75rem; white-space: pre-wrap; word-break: break-all; flex: 1; color: #94a3b8; }
+  .ct-line-content { padding: 0 0.75rem; white-space: pre-wrap; overflow-wrap: break-word; flex: 1; color: #94a3b8; }
   .ct-diff-line.added { background: rgba(74,222,128,0.08); }
   .ct-diff-line.added .ct-line-content { color: #4ade80; }
   .ct-diff-line.removed { background: rgba(248,113,113,0.08); }
   .ct-diff-line.removed .ct-line-content { color: #f87171; }
-  .ct-sbs { display: grid; grid-template-columns: 1fr 1fr; }
-  .ct-sbs-panel + .ct-sbs-panel { border-left: 1px solid rgba(255,255,255,0.08); }
-  @media (max-width: 640px) { .ct-sbs { grid-template-columns: 1fr; } .ct-sbs-panel + .ct-sbs-panel { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); } }
+  .ct-sbs-row { display: grid; grid-template-columns: 1fr 1fr; }
+  .ct-sbs-row .ct-diff-line + .ct-diff-line { border-left: 1px solid rgba(255,255,255,0.08); }
+  @media (max-width: 640px) { .ct-sbs-row { grid-template-columns: 1fr; } .ct-sbs-row .ct-diff-line + .ct-diff-line { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); } }
   .cc-lang-row { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.75rem; }
   .cc-lang-label { font-size: 0.82rem; color: rgba(255,255,255,0.5); white-space: nowrap; }
   .cc-lang-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; color: #e2e8f0; font-size: 0.82rem; padding: 0.3rem 0.6rem; cursor: pointer; outline: none; }

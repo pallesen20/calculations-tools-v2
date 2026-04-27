@@ -177,6 +177,30 @@ function setView(view) {
   renderDiff();
 }
 
+function buildScrollTrack() {
+  var container = document.getElementById('ct-diff-container');
+  var track = document.getElementById('ct-scroll-track');
+  if (!track || !container) return;
+  track.innerHTML = '';
+  var scrollH = container.scrollHeight;
+  if (scrollH === 0) return;
+  var containerRect = container.getBoundingClientRect();
+  var lines = container.querySelectorAll('.ct-diff-line.added, .ct-diff-line.removed');
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    var lineTop = line.getBoundingClientRect().top - containerRect.top + container.scrollTop;
+    var mark = document.createElement('div');
+    mark.className = 'ct-scroll-mark ' + (line.classList.contains('added') ? 'added' : 'removed');
+    mark.style.top = (lineTop / scrollH * 100) + '%';
+    (function(lt) {
+      mark.addEventListener('click', function() {
+        container.scrollTo({ top: lt - container.clientHeight / 2, behavior: 'smooth' });
+      });
+    })(lineTop);
+    track.appendChild(mark);
+  }
+}
+
 function renderDiff() {
   var container = document.getElementById('ct-diff-container');
   if (!lastDiff.length || lastDiff.every(function(d) { return d.type === 'unchanged'; })) {
@@ -184,6 +208,7 @@ function renderDiff() {
     return;
   }
   currentView === 'unified' ? renderUnified(container) : renderSideBySide(container);
+  requestAnimationFrame(buildScrollTrack);
 }
 
 function renderUnified(container) {
@@ -198,21 +223,27 @@ function renderUnified(container) {
 }
 
 function renderSideBySide(container) {
-  var left = '', right = '';
+  var rows = '';
   for (var i = 0; i < lastDiff.length; i++) {
     var d = lastDiff[i];
     if (d.type === 'unchanged') {
-      left  += '<div class="ct-diff-line unchanged"><span class="ct-line-num">' + d.lineOld + '</span><span class="ct-line-content">' + escapeHtml(d.text) + '</span></div>';
-      right += '<div class="ct-diff-line unchanged"><span class="ct-line-num">' + d.lineNew + '</span><span class="ct-line-content">' + escapeHtml(d.text) + '</span></div>';
+      rows += '<div class="ct-sbs-row">' +
+        '<div class="ct-diff-line unchanged"><span class="ct-line-num">' + d.lineOld + '</span><span class="ct-line-content">' + escapeHtml(d.text) + '</span></div>' +
+        '<div class="ct-diff-line unchanged"><span class="ct-line-num">' + d.lineNew + '</span><span class="ct-line-content">' + escapeHtml(d.text) + '</span></div>' +
+        '</div>';
     } else if (d.type === 'removed') {
-      left  += '<div class="ct-diff-line removed"><span class="ct-line-num">' + d.lineOld + '</span><span class="ct-line-content">− ' + escapeHtml(d.text) + '</span></div>';
-      right += '<div class="ct-diff-line empty"><span class="ct-line-num"></span><span class="ct-line-content"></span></div>';
+      rows += '<div class="ct-sbs-row">' +
+        '<div class="ct-diff-line removed"><span class="ct-line-num">' + d.lineOld + '</span><span class="ct-line-content">− ' + escapeHtml(d.text) + '</span></div>' +
+        '<div class="ct-diff-line empty"><span class="ct-line-num"></span><span class="ct-line-content"></span></div>' +
+        '</div>';
     } else {
-      left  += '<div class="ct-diff-line empty"><span class="ct-line-num"></span><span class="ct-line-content"></span></div>';
-      right += '<div class="ct-diff-line added"><span class="ct-line-num">' + d.lineNew + '</span><span class="ct-line-content">+ ' + escapeHtml(d.text) + '</span></div>';
+      rows += '<div class="ct-sbs-row">' +
+        '<div class="ct-diff-line empty"><span class="ct-line-num"></span><span class="ct-line-content"></span></div>' +
+        '<div class="ct-diff-line added"><span class="ct-line-num">' + d.lineNew + '</span><span class="ct-line-content">+ ' + escapeHtml(d.text) + '</span></div>' +
+        '</div>';
     }
   }
-  container.innerHTML = '<div class="ct-sbs"><div class="ct-sbs-panel">' + left + '</div><div class="ct-sbs-panel">' + right + '</div></div>';
+  container.innerHTML = '<div class="ct-sbs">' + rows + '</div>';
 }
 
 function copyDiff() {

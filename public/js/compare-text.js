@@ -168,6 +168,26 @@ function setView(view) {
   renderDiff();
 }
 
+function buildScrollTrack() {
+  const container = document.getElementById('ct-diff-container');
+  const track = document.getElementById('ct-scroll-track');
+  if (!track || !container) return;
+  track.innerHTML = '';
+  const scrollH = container.scrollHeight;
+  if (scrollH === 0) return;
+  const containerRect = container.getBoundingClientRect();
+  container.querySelectorAll('.ct-diff-line.added, .ct-diff-line.removed').forEach(line => {
+    const lineTop = line.getBoundingClientRect().top - containerRect.top + container.scrollTop;
+    const mark = document.createElement('div');
+    mark.className = 'ct-scroll-mark ' + (line.classList.contains('added') ? 'added' : 'removed');
+    mark.style.top = (lineTop / scrollH * 100) + '%';
+    mark.addEventListener('click', () => {
+      container.scrollTo({ top: lineTop - container.clientHeight / 2, behavior: 'smooth' });
+    });
+    track.appendChild(mark);
+  });
+}
+
 function renderDiff() {
   const container = document.getElementById('ct-diff-container');
   if (!lastDiff.length || lastDiff.every(d => d.type === 'unchanged')) {
@@ -175,6 +195,7 @@ function renderDiff() {
     return;
   }
   currentView === 'unified' ? renderUnified(container) : renderSideBySide(container);
+  requestAnimationFrame(buildScrollTrack);
 }
 
 function renderUnified(container) {
@@ -191,20 +212,26 @@ function renderUnified(container) {
 }
 
 function renderSideBySide(container) {
-  let left = '', right = '';
+  let rows = '';
   for (const d of lastDiff) {
     if (d.type === 'unchanged') {
-      left  += `<div class="ct-diff-line unchanged"><span class="ct-line-num">${d.lineOld}</span><span class="ct-line-content">${escapeHtml(d.text)}</span></div>`;
-      right += `<div class="ct-diff-line unchanged"><span class="ct-line-num">${d.lineNew}</span><span class="ct-line-content">${escapeHtml(d.text)}</span></div>`;
+      rows += `<div class="ct-sbs-row">` +
+        `<div class="ct-diff-line unchanged"><span class="ct-line-num">${d.lineOld}</span><span class="ct-line-content">${escapeHtml(d.text)}</span></div>` +
+        `<div class="ct-diff-line unchanged"><span class="ct-line-num">${d.lineNew}</span><span class="ct-line-content">${escapeHtml(d.text)}</span></div>` +
+        `</div>`;
     } else if (d.type === 'removed') {
-      left  += `<div class="ct-diff-line removed"><span class="ct-line-num">${d.lineOld}</span><span class="ct-line-content">− ${escapeHtml(d.text)}</span></div>`;
-      right += `<div class="ct-diff-line empty"><span class="ct-line-num"></span><span class="ct-line-content"></span></div>`;
+      rows += `<div class="ct-sbs-row">` +
+        `<div class="ct-diff-line removed"><span class="ct-line-num">${d.lineOld}</span><span class="ct-line-content">− ${escapeHtml(d.text)}</span></div>` +
+        `<div class="ct-diff-line empty"><span class="ct-line-num"></span><span class="ct-line-content"></span></div>` +
+        `</div>`;
     } else {
-      left  += `<div class="ct-diff-line empty"><span class="ct-line-num"></span><span class="ct-line-content"></span></div>`;
-      right += `<div class="ct-diff-line added"><span class="ct-line-num">${d.lineNew}</span><span class="ct-line-content">+ ${escapeHtml(d.text)}</span></div>`;
+      rows += `<div class="ct-sbs-row">` +
+        `<div class="ct-diff-line empty"><span class="ct-line-num"></span><span class="ct-line-content"></span></div>` +
+        `<div class="ct-diff-line added"><span class="ct-line-num">${d.lineNew}</span><span class="ct-line-content">+ ${escapeHtml(d.text)}</span></div>` +
+        `</div>`;
     }
   }
-  container.innerHTML = `<div class="ct-sbs"><div class="ct-sbs-panel">${left}</div><div class="ct-sbs-panel">${right}</div></div>`;
+  container.innerHTML = `<div class="ct-sbs">${rows}</div>`;
 }
 
 function copyDiff() {
