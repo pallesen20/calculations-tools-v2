@@ -146,22 +146,6 @@ const fullTitle = metaTitle ?? `${title} | Calculations.tools`;
       }, true);
     })();
     </script>
-    <!-- <script is:inline>
-    (function(){
-      var vp = document.querySelector('meta[name=viewport]');
-      if (!vp) return;
-      document.addEventListener('touchstart', function(e){
-        var t = e.target.tagName;
-        if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT')
-          vp.content = 'width=device-width,initial-scale=1,maximum-scale=1';
-      }, { passive: true, capture: true });
-      document.addEventListener('blur', function(e){
-        var t = e.target.tagName;
-        if (t === 'INPUT' || t === 'TEXTAREA' || t === 'SELECT')
-          setTimeout(function(){ vp.content = 'width=device-width,initial-scale=1'; }, 300);
-      }, true);
-    })();
-    </script> -->
     <!-- KaTeX JS - loads only on pages that contain .formula elements -->
     <script is:inline>
       (function () {

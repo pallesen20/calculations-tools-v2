@@ -1,0 +1,42 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  summary?: string;
+  uploadDate?: string;
+}
+const { id, title, summary, uploadDate } = Astro.props;
+
+const videoSchema: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": title,
+  "description": summary,
+  "thumbnailUrl": `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+  "embedUrl": `https://www.youtube.com/embed/${id}`,
+  "contentUrl": `https://www.youtube.com/watch?v=${id}`,
+};
+if (uploadDate) videoSchema["uploadDate"] = uploadDate;
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(videoSchema)} />
+<div class="yt-embed">
+  <div class="yt-embed-video" data-vid={id} data-title={title}>
+    <script is:inline>
+      (function() {
+        var wrap = document.currentScript.parentElement;
+        var vid = wrap.dataset.vid;
+        var t = wrap.dataset.title;
+        var load = window.innerWidth >= 900 ? 'eager' : 'lazy';
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + vid;
+        f.title = t;
+        f.loading = load;
+        f.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        f.allowFullscreen = true;
+        wrap.insertBefore(f, document.currentScript);
+      })();
+    </script>
+  </div>
+  {summary && <p class="yt-summary"><span>PRO TIP</span><br/>{summary}</p>}
+</div>

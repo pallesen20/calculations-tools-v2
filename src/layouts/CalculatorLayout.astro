@@ -4,6 +4,7 @@ import BaseLayout from './BaseLayout.astro';
 import Sources from '../components/Sources.astro';
 import type { Source } from '../components/Sources.astro';
 import { socials } from '../data/socials';
+import YouTubeEmbed from '../components/YouTubeEmbed.astro';
 
 interface TocItem {
   id: string;
@@ -22,9 +23,12 @@ interface Props {
   ogFormula?: string;
   ogExample?: string;
   noindex?: boolean;
+  youtubeId?: string;
+  youtubeSummary?: string;
+  youtubeUploadDate?: string;
 }
 
-const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample, noindex } = Astro.props;
+const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample, noindex, youtubeId, youtubeSummary, youtubeUploadDate } = Astro.props;
 
 const _pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/index';
 const _filePath = `src/pages${_pathname}.astro`;
@@ -95,6 +99,7 @@ const iframeSnippet = embedUrl
         </div>
         <div class="page-calculator">
           <slot name="calculator" />
+          {youtubeId && <YouTubeEmbed id={youtubeId} title={`${title} — Video Tutorial`} summary={youtubeSummary} uploadDate={youtubeUploadDate} />}
         </div>
         <aside class="page-sidebar">
           <div class="info-box">
@@ -110,7 +115,6 @@ const iframeSnippet = embedUrl
               </div>
             </aside>
           </div>
-
           {tocItems.length > 0 && (
             <nav class="toc" aria-label="Table of contents">
               <p class="toc-title">Table of contents</p>
@@ -121,7 +125,6 @@ const iframeSnippet = embedUrl
               </ul>
             </nav>
           )}
-
           {embedUrl && (
             <div class="embed-section">
               <button class="embed-button" id="embedToggle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.5rem"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Embed this tool
@@ -136,18 +139,15 @@ const iframeSnippet = embedUrl
               </div>
             </div>
           )}
-
           {sources && sources.length > 0 && <Sources sources={sources} />}
         </aside>
         <div class="page-content">
           <slot name="content" />
         </div>
-
       </div>
     </div>
   </main>
 </BaseLayout>
-
 <script>
   document.querySelectorAll('.toc-link').forEach(link => {
     link.addEventListener('click', (e) => {

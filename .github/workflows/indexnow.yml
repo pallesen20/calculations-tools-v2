@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Gather and submit URLs
+      - name: Submit changed URLs to IndexNow (streaming)
         run: |
           CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- 'src/pages/**/*.astro' \
             | grep -v 'src/pages/embed/' \
@@ -28,45 +28,22 @@ jobs:
             exit 0
           fi
 
-          curl -s https://calculations.tools/sitemap-0.xml \
-            | grep -oP '(?<=<loc>)[^<]+' > sitemap_urls.txt || true
+          KEY="2095e7971ef44da8bf52b45c356470bc"
+          BASE="https://calculations.tools"
 
-          FINAL_URLS=""
           while IFS= read -r file; do
+            if echo "$file" | grep -q '\['; then
+              echo "  skip (dynamic route): $file"
+              continue
+            fi
+
             url_path=$(echo "$file" \
               | sed 's|^src/pages||' \
               | sed 's|\.astro$||' \
               | sed 's|/index$||')
 
-            if echo "$url_path" | grep -q '\['; then
-              prefix=$(echo "$url_path" | sed 's|\[.*||')
-              MATCHES=$(grep "^https://calculations.tools${prefix}" sitemap_urls.txt || true)
-            else
-              MATCHES=$(grep -P "^https://calculations.tools${url_path}/?$" sitemap_urls.txt || true)
-            fi
-
-            if [ -n "$MATCHES" ]; then
-              FINAL_URLS+="$MATCHES"$'\n'
-            fi
+            url="${BASE}${url_path}"
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              "https://api.indexnow.org/indexnow?url=${url}&key=${KEY}")
+            echo "  ${url} → HTTP ${STATUS}"
           done <<< "$CHANGED_FILES"
-
-          FINAL_URLS=$(echo "$FINAL_URLS" | sort -u | sed '/^$/d')
-
-          if [ -z "$FINAL_URLS" ]; then
-            echo "No sitemap-validated URLs to submit."
-            exit 0
-          fi
-
-          echo "Submitting URLs:"
-          echo "$FINAL_URLS"
-
-          URL_JSON=$(echo "$FINAL_URLS" | awk '{printf "\"%s\",", $0}' | sed 's/,$//')
-
-          curl -X POST "https://api.indexnow.org/indexnow" \
-            -H "Content-Type: application/json" \
-            -d "{
-              \"host\": \"calculations.tools\",
-              \"key\": \"2095e7971ef44da8bf52b45c356470bc\",
-              \"keyLocation\": \"https://calculations.tools/2095e7971ef44da8bf52b45c356470bc.txt\",
-              \"urlList\": [${URL_JSON}]
-            }"
