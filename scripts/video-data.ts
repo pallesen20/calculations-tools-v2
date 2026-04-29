@@ -9,6 +9,7 @@ export interface ToolVideoData {
   notableFeature: string;
   proTipMistake: string;
   proTipFix: string;
+  unitNote?: string;
 }
 
 export const VIDEO_DATA: Record<string, ToolVideoData> = {
@@ -16,20 +17,21 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
   'bmi-calculator': {
     hookProblem: 'figure out whether your weight is healthy for your height, without any complicated math',
     character: 'Sarah, a 32-year-old nurse',
-    exampleSetup: "She's 168 cm tall and weighs 72 kg",
+    exampleSetup: "She's 168 cm tall and weighs 72 kg — that's roughly 5 feet 6 inches and 159 pounds in imperial",
     formulaPlain: 'weight in kilograms divided by height in metres squared',
     exampleWalkthrough: '72 divided by 1.68 squared — which is 2.8224 — gives us 25.5',
     exampleResult: "25.5 — that puts Sarah in the Overweight category",
     exampleImplication: "she's just above the healthy range of 18.5 to 25, suggesting modest weight management could help",
     notableFeature: 'a visual BMI chart showing exactly where you land across the full spectrum',
-    proTipMistake: 'entering height in centimetres without converting to metres first',
-    proTipFix: 'the tool accepts both cm and feet and inches, so just select your preferred unit before entering the value',
+    proTipMistake: 'entering height in centimetres without converting to metres first when using metric mode',
+    proTipFix: 'the tool accepts both metric and imperial — use the toggle at the top to switch. In metric enter cm and kg; in imperial enter feet, inches, and pounds. No manual conversion needed',
+    unitNote: 'If you prefer imperial, just hit the Imperial button at the top of the calculator — enter weight in pounds and height in feet and inches, and it gives you the exact same result.',
   },
 
   'body-fat-calculator': {
     hookProblem: 'measure your body fat percentage without an expensive lab test or DEXA scan',
     character: 'Alex, a 35-year-old office worker',
-    exampleSetup: "He's 180 cm tall, with a waist of 91 cm and neck of 38 cm",
+    exampleSetup: "He's 180 cm tall, with a waist of 91 cm and neck of 38 cm — that's about 5'11\", 35.8 inch waist, and 15 inch neck in imperial",
     formulaPlain: 'waist circumference minus neck circumference plus height, all run through a logarithmic equation developed by the U.S. Navy',
     exampleWalkthrough: 'plugging those numbers into the Navy formula gives 86.01 times log of 53, minus 70.04 times log of 180, plus 36.76',
     exampleResult: "21.3% — that's the Fitness category for men",
@@ -37,12 +39,13 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     notableFeature: 'a full breakdown showing fat mass, lean mass, and your body fat category',
     proTipMistake: 'measuring the waist at the belly button instead of the narrowest point',
     proTipFix: 'find the narrowest part of your torso — usually 2 to 3 cm above the navel — for an accurate reading',
+    unitNote: 'If your tape measure is in inches, switch to Imperial using the button at the top — enter waist, neck, and height in inches and the calculator handles everything else.',
   },
 
   'ffmi-calculator': {
     hookProblem: "know whether your muscle mass is genuinely impressive or within natural limits, without relying on bodyweight alone",
     character: 'Marcus, a 28-year-old who has been lifting for three years',
-    exampleSetup: "He weighs 85 kg, stands 180 cm tall, and has 15% body fat",
+    exampleSetup: "He weighs 85 kg, stands 180 cm tall, and has 15% body fat — that's 187 lbs at 5 feet 11 in imperial",
     formulaPlain: 'lean body mass in kilograms divided by height in metres squared, then normalised to a standard height of 1.8 metres',
     exampleWalkthrough: 'lean mass is 85 times 0.85, which is 72.25 kg. Divided by 1.8 squared gives an FFMI of 22.3',
     exampleResult: "22.3 — above average and approaching the Elite category",
@@ -50,32 +53,35 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     notableFeature: 'a category table showing average, above average, excellent, and elite thresholds with the natural ceiling clearly marked',
     proTipMistake: 'comparing FFMI scores without accounting for body fat first, which inflates the number',
     proTipFix: 'always input your most accurate body fat estimate — FFMI is calculated from lean mass, so a rough guess throws the result off',
+    unitNote: 'If your weight is in pounds and height in feet and inches, hit the Imperial toggle — the calculation is identical and the result is unit-independent.',
   },
 
   'ideal-weight-calculator': {
     hookProblem: 'find a target weight that is realistic for your height and frame, rather than relying on a single generic number',
     character: 'Emma, a 40-year-old woman who is 165 cm tall',
-    exampleSetup: "She's 165 cm and wants to know her ideal weight range",
+    exampleSetup: "She's 165 cm — that's 5 feet 5 inches — and wants to know her ideal weight range",
     formulaPlain: 'the Hamwi formula starts at 45.5 kg for 152 cm and adds 2.3 kg for every additional 2.5 cm of height',
     exampleWalkthrough: '165 minus 152 is 13 cm, roughly 5.2 inches. Times 2.3 gives 11.9, plus 45.5 equals 57.4 kg',
     exampleResult: '57 to 63 kg — the average across four well-known formulas',
     exampleImplication: 'the tool shows the Hamwi, Devine, Robinson, and Miller formulas side by side, giving a range rather than a single number',
-    notableFeature: 'a comparison of all four formula results alongside your current weight, so you see the full picture at once',
+    notableFeature: 'a comparison of all four formula results in both kilograms and pounds, so you see the full picture regardless of which system you use',
     proTipMistake: 'treating the result as a strict personal target',
     proTipFix: 'ideal weight formulas are guides, not goals. Your healthy weight depends on muscle mass, bone density, and body composition, not height alone',
+    unitNote: 'If you prefer feet and inches, hit the Imperial toggle — enter height in feet and inches and the results display in both pounds and kilograms.',
   },
 
   'lean-body-mass-calculator': {
     hookProblem: 'separate your muscle and bone mass from your fat mass, so you know what you are actually working with',
     character: 'David, a 45-year-old male who is 175 cm tall and weighs 88 kg with 22% body fat',
-    exampleSetup: "He's 175 cm, 88 kg, with 22% body fat",
+    exampleSetup: "He's 175 cm, 88 kg, with 22% body fat — that's 5 feet 9 inches and 194 pounds in imperial",
     formulaPlain: 'the Boer formula for men is 0.407 times weight plus 0.267 times height minus 19.2',
     exampleWalkthrough: '0.407 times 88 is 35.8. Plus 0.267 times 175 which is 46.7. Minus 19.2 equals 63.3 kg',
     exampleResult: '63.3 kg lean body mass — meaning roughly 24.7 kg of fat mass',
     exampleImplication: "knowing his lean mass helps David set a protein intake target, typically 1.6 to 2.2 grams per kilogram of lean body mass per day",
-    notableFeature: 'a breakdown of fat mass versus lean mass alongside your FFMI estimate',
+    notableFeature: 'a breakdown of fat mass versus lean mass alongside your FFMI estimate, shown in both kg and lbs',
     proTipMistake: 'confusing lean body mass with muscle mass — LBM includes organs, bones, blood, and water, not just muscle',
     proTipFix: 'think of LBM as everything that is not fat. Actual skeletal muscle is roughly 40 to 50 percent of your lean mass',
+    unitNote: 'If your measurements are in pounds and feet, hit the Imperial button — the Boer formula applies identically and the result displays in both kilograms and pounds.',
   },
 
   'loan-payment-calculator': {

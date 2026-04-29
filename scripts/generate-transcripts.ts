@@ -121,9 +121,11 @@ Let's make this concrete with a real example. ${data.character}. ${data.exampleS
     ? ' And this works exactly the same for code, CSS, JavaScript, Python, and HTML — just pick the right tool from the compare menu.'
     : '';
 
+  const unitNoteSuffix = data.unitNote ? ` ${data.unitNote}` : '';
+
   const demo =
 `[DEMO]
-You don't need to do any of that math by hand. On calculations.tools, go to ${tool.path}. I'll enter the values from our example and hit Calculate. You get the result instantly — ${data.exampleResult} — and you'll also see ${data.notableFeature} right there on the same page. No spreadsheet, no formula lookup, no manual steps.${demoSuffix}`;
+You don't need to do any of that math by hand. On calculations.tools, go to ${tool.path}. I'll enter the values from our example and hit Calculate. You get the result instantly — ${data.exampleResult} — and you'll also see ${data.notableFeature} right there on the same page. No spreadsheet, no formula lookup, no manual steps.${demoSuffix}${unitNoteSuffix}`;
 
   const proTip =
 `[PRO TIP]
