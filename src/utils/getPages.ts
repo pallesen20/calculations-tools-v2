@@ -148,7 +148,7 @@ const entries: Entry[] = [
   {
     path: '/about-us/jesper-pallesen',
     title: 'Jesper Pallesen - Founder of calculations.tools',
-    description: 'Jesper Pallesen is the founder of calculations.tools. SEO strategist and developer since 2017, former professional hockey player. Learn about his background and other projects.',
+    description: 'Jesper Pallesen is the founder of calculations.tools. Data analyst and developer since 2017, former professional hockey player. Learn about his background and other projects.',
     changefreq: 'monthly' as const,
     priority: 0.8,
     icon: '👤',
