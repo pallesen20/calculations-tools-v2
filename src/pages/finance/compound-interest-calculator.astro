@@ -14,6 +14,7 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
+  { id: 'what-is',       label: 'Compound interest explained' },
   { id: 'formula',       label: 'Compound interest formula' },
   { id: 'vs-simple',     label: 'Compound vs. simple interest' },
   { id: 'frequency',     label: 'Compounding frequency' },
@@ -119,6 +120,10 @@ const schema = [
         <div id="ci-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
+              <div class="lbm-card-val" id="ci-principal-out">-</div>
+              <div class="lbm-card-lbl">Principal</div>
+            </div>
+            <div class="lbm-card">
               <div class="lbm-card-val" id="ci-future-val">-</div>
               <div class="lbm-card-lbl">Future Value</div>
             </div>
@@ -127,8 +132,8 @@ const schema = [
               <div class="lbm-card-lbl">Interest Earned</div>
             </div>
             <div class="lbm-card">
-              <div class="lbm-card-val" id="ci-principal-out">-</div>
-              <div class="lbm-card-lbl">Principal</div>
+              <div class="lbm-card-val" id="ci-rule72">-</div>
+              <div class="lbm-card-lbl">Doubles in (Rule of 72)</div>
             </div>
           </div>
 
@@ -150,8 +155,10 @@ const schema = [
               <span class="pi-step-label">Compounding Bonus</span>
               <span class="pi-step-val" id="ci-step4">-</span>
             </div>
+            <div class="ci-bonus-note">
+              Simple interest only pays on the original principal. Compounding pays on the growing balance - so interest earns interest. The bonus is the difference: Total Interest minus <a href="#formula">(P x r x t)</a>.
+            </div>
           </div>
-
           <div style="margin-top:1rem;">
             <div class="pi-steps-title">Year-by-Year Growth</div>
             <div class="responsive-table" style="margin-top:0.5rem;">
@@ -169,18 +176,28 @@ const schema = [
     <script src="/js/compound-interest-calculator.js" is:inline></script>
   <FinanceDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>Compound interest formula: <strong>A = P(1 + r/n)^(nt)</strong>. Example: $10,000 at 8% compounded monthly for 10 years = <strong>$22,196</strong> - earning $12,196 in interest, more than doubling the original principal.</p>
+        <p>Compound interest formula: <strong><a href="#formula">A = P(1 + r/n)^(nt)</a></strong>. Example: $10,000 at 8% compounded monthly for 10 years = <strong>$22,196</strong> - earning $12,196 in interest, more than doubling the original principal.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <h2 id="how-to-use">How to use this compound interest calculator</h2>
       <p>Enter your <strong>Principal</strong> (starting amount), <strong>Annual Interest Rate</strong> as a percentage, and <strong>Time Period</strong> in years. The <strong>Compounding Frequency</strong> defaults to 12 (monthly) - change it to 1 for annual, 4 for quarterly, 365 for daily, or any other value. The calculator shows future value, total interest earned, and a year-by-year growth table (up to 20 years).</p>
-
+      <h2 id="what-is">How to understand compound interest?</h2>
+      <p>To understand compound interest, think of it as "interest on interest." While simple interest only grows based on your original deposit (the principal), compound interest allows your wealth to snowball because you earn returns on the money you've already earned.</p>
+      <h3>The core concept: The snowball effect</h3>
+      <p>Imagine you have $100 and earn 10% interest annually.</p>
+      <ul>
+        <li>Year 1: You earn $10. Your total is now $110.</li>
+        <li>Year 2: You don’t just earn 10% on your original $100; you earn 10% on the new total of $110. You earn $11, making your total $121.</li>
+        <li>Year 3: You earn 10% on $121, which is $12.10. Your total is now $133.10.</li>
+      </ul>
+      <p>Over time, the "interest" portion of your account becomes the primary driver of growth, rather than your initial contribution.</p>
+      <h3>The compound interest secret</h3>
+      <p>The biggest "secret" to compound interest is starting early. Because the growth is exponential, the curve starts slow and then shoots upward.</p>
+      <p>A person who saves a small amount starting at age 20 will often end up with more money than someone who saves a large amount starting at age 40, simply because the 20-year-old gave the "interest on interest" more time to work its magic.</p>
+      <img src="/understanding-compound-interest.webp" alt="Understanding the power of compound interest, graph showing the yearly exponential growth compared to simple interest. With explanation of the rule of 72." width="500" height="300" style="width: 100%; height:auto;"/>
       <h2 id="formula">Compound interest formula</h2>
       <p>The compound interest formula calculates the future value of a lump-sum investment growing at a constant rate:</p>
       <Formula expr={f.ci} />
@@ -295,10 +312,20 @@ const schema = [
         { path: '/math/percentage-calculator',            blurb: 'General percentage and percentage change calculator.' },
         { path: '/finance/net-profit-margin-calculator',  blurb: 'Net profit margin from net income and revenue.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/compound-interest-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>
+<style>
+  tbody#ci-table-body {
+    color: #cbd5e1;
+  }
+  .ci-bonus-note {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.55;
+    margin-top: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    border-left: 2px solid rgba(255,255,255,0.12);
+  }
+</style>

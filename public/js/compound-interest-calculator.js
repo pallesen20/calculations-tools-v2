@@ -41,9 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const simpleInt  = P * rDec * t;
     const compEffect = interest - simpleInt;
 
-    document.getElementById('ci-future-val').textContent  = fmtCard(A);
-    document.getElementById('ci-interest').textContent    = fmtCard(interest);
+    document.getElementById('ci-future-val').textContent    = fmtCard(A);
+    document.getElementById('ci-interest').textContent      = fmtCard(interest);
     document.getElementById('ci-principal-out').textContent = fmtCard(P);
+    document.getElementById('ci-rule72').textContent        = r > 0 ? '~' + (72 / r).toFixed(1) + ' yrs' : '-';
 
     document.getElementById('ci-step1').textContent = `${fmtFull(P)} × (1 + ${(rDec/n).toFixed(6)})^(${n}×${t})`;
     document.getElementById('ci-step2').textContent = `= ${fmtFull(A)}`;

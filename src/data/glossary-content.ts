@@ -1755,4 +1755,77 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'irr': {
+    definition: [
+      'The Internal Rate of Return (IRR) is the discount rate at which the net present value (NPV) of all cash flows from an investment equals exactly zero. Put simply: it is the implied annual return embedded in a project\'s cash flow schedule. If you invest $100,000 today and receive $40,000, $40,000, and $40,000 over the next three years, IRR is the single annual rate that makes those future receipts worth exactly $100,000 in present-value terms.',
+      'IRR has no closed-form algebraic solution for most real-world cash flow schedules - it must be found by numerical iteration. Spreadsheets (Excel IRR function) and financial calculators do this automatically by guessing a rate, computing NPV, and adjusting until NPV reaches zero. This iterative nature is why IRR cannot easily be back-of-envelope calculated for complex projects.',
+      'The decision rule is straightforward: if IRR exceeds the project\'s hurdle rate (the minimum required return, often the company\'s weighted average cost of capital), the investment creates value and should be accepted. If IRR falls below the hurdle rate, the project destroys value. When ranking competing projects, higher IRR is generally preferable - but this breaks down when projects differ significantly in scale, duration, or have unusual cash flow patterns.',
+    ],
+    whenToUse: 'Use IRR when evaluating a single project against a known hurdle rate, or comparing projects with similar scale and time horizon. It is the standard return language in private equity and venture capital: when a fund reports a "25% net IRR," it means that 25% annually is the rate at which the timing-adjusted value of all capital contributions and distributions break even. Pair IRR with MOIC to capture both the efficiency (IRR) and the magnitude (MOIC) of returns. Do not rely on IRR alone when comparing projects of very different sizes - a 40% IRR on $100K may generate far less value than a 20% IRR on $5M.',
+    examples: {
+      headers: ['Project', 'Initial Investment', 'CF Year 1', 'CF Year 2', 'CF Year 3', 'IRR'],
+      rows: [
+        ['Project A (steady)', '-$100,000', '$40,000', '$40,000', '$40,000', '9.7%'],
+        ['Project B (back-loaded)', '-$100,000', '$0', '$0', '$150,000', '14.5%'],
+        ['Project C (large)', '-$250,000', '$80,000', '$90,000', '$120,000', '12.8%'],
+        ['Project D (loss)', '-$100,000', '$20,000', '$20,000', '$20,000', '-22.9%'],
+      ],
+    },
+    pitfalls: 'IRR has two well-known failure modes. First, multiple IRRs: if a project has alternating positive and negative cash flows - for example a mine that generates cash for years, then requires expensive environmental remediation at closure - the underlying polynomial can have multiple solutions, making IRR ambiguous. Second, the reinvestment rate assumption: IRR implicitly assumes interim cash flows are reinvested at the IRR rate itself, which is unrealistic for high-IRR projects. In both cases, Modified IRR (MIRR) or NPV is more reliable.',
+    faqs: [
+      { q: 'What is the difference between IRR and NPV?', a: 'NPV expresses investment value as an absolute dollar figure at a chosen discount rate. IRR is the specific discount rate at which NPV equals zero - it is a percentage, not a dollar amount. For a standard project (cash out then cash in), the two methods agree: if IRR > hurdle rate, NPV at that hurdle rate is positive. They can disagree when ranking competing projects of different scale or timing - in those cases, NPV is more reliable.' },
+      { q: 'What is a good IRR?', a: 'It depends on the asset class and risk. Private equity funds typically target 20-30% gross IRR. Venture capital funds may target 30%+ to compensate for portfolio company failures. Corporate investment projects are often evaluated against the company\'s WACC, typically 8-15%. Real estate deals commonly target 12-20% IRR depending on risk profile. The only valid benchmark is the opportunity cost: what else can the capital earn at the same risk level?' },
+      { q: 'What is a hurdle rate?', a: 'A hurdle rate is the minimum acceptable IRR for an investment. In corporate finance it is typically the company\'s WACC plus a risk premium. In private equity it is a contractual threshold (commonly 8%) above which the fund manager earns carried interest. Any project with IRR below the hurdle rate is rejected because it earns less than the cost of the capital required to fund it.' },
+    ],
+  },
+
+  'npv': {
+    definition: [
+      'Net Present Value (NPV) is the sum of all cash flows from an investment - positive (inflows) and negative (outflows) - each discounted back to their present value using a chosen rate. A positive NPV means the investment generates more value in present-dollar terms than it costs, creating wealth. A negative NPV means it destroys value at the given discount rate.',
+      'The discount rate used in NPV analysis represents the investor\'s required return or the company\'s opportunity cost of capital. This rate reflects the time value of money: a dollar received in the future is worth less than a dollar today because the dollar today could be invested to earn a return. Discounting converts all future cash flows into a common "present-day dollar" basis, making cash flows from different time periods directly comparable.',
+      'NPV and IRR are the two dominant discounted cash flow (DCF) methods and are mathematically linked: IRR is the specific discount rate at which NPV equals exactly zero. For a standard project (cash out first, cash in later), NPV is positive whenever the actual discount rate is below the IRR, and negative whenever it exceeds the IRR. NPV is preferred by financial academics because it measures absolute value creation in dollars, not just a percentage rate.',
+    ],
+    whenToUse: 'Use NPV when comparing projects with different scales or very different cash flow timing, where IRR can mislead. NPV directly answers "how many dollars of value does this project create today?" and can be added across projects in a portfolio (IRR cannot be averaged). In capital budgeting, always pair NPV with a sensitivity analysis - known as an NPV profile - showing how the result changes as the discount rate varies. If NPV turns negative at only a small rate increase, the project is fragile.',
+    examples: {
+      headers: ['Project', 'CF Year 0', 'CF Year 1', 'CF Year 2', 'CF Year 3', 'Discount Rate', 'NPV'],
+      rows: [
+        ['Factory expansion', '-$500,000', '$150,000', '$200,000', '$250,000', '10%', '+$36,157'],
+        ['Equipment upgrade', '-$80,000', '$30,000', '$30,000', '$40,000', '8%', '+$6,427'],
+        ['Marketing campaign', '-$50,000', '$70,000', '$0', '$0', '12%', '+$12,500'],
+        ['Rejected project', '-$200,000', '$50,000', '$60,000', '$70,000', '15%', '-$30,812'],
+      ],
+    },
+    pitfalls: 'NPV is only as reliable as its two inputs: the discount rate and the cash flow forecasts. Small changes in the discount rate can flip NPV from positive to negative on long-duration projects. Cash flow forecasts beyond 3-5 years are often highly speculative. Most critically, terminal value - the assumed value at the end of the explicit forecast period - typically accounts for 60-80% of total NPV in DCF models, making it the single most important and most uncertain input. Always stress-test terminal value assumptions separately.',
+    faqs: [
+      { q: 'What is the difference between NPV and IRR?', a: 'NPV is an absolute dollar figure showing how much value a project creates at a chosen discount rate. IRR is the specific discount rate at which NPV = 0 - a percentage. Both are DCF methods and generally agree on accept/reject decisions. They can diverge when ranking competing projects of different scale or duration: NPV is academically preferred because it measures real dollar value added and is additive across a portfolio.' },
+      { q: 'What discount rate should I use for NPV?', a: 'For corporate projects, the standard choice is the company\'s Weighted Average Cost of Capital (WACC) - the blended required return across debt and equity. For personal investments, use your required return or opportunity cost (e.g., the return you could earn in an index fund at similar risk). For public sector projects, governments often use a social discount rate of 3-8%. The discount rate is the single most debated input in NPV analysis.' },
+      { q: 'Can NPV be negative and the investment still be worthwhile?', a: 'At a given discount rate, a negative NPV means the investment earns less than required and should be rejected. However, changing the discount rate can change the sign of NPV. If your actual cost of capital is lower than your initial assumption, the project may actually be positive-NPV. This is why IRR is useful alongside NPV: IRR tells you exactly what return the project earns, which you then compare to your actual cost of capital.' },
+    ],
+  },
+
+  'moic': {
+    definition: [
+      'Multiple on Invested Capital (MOIC) - also called Money-on-Money Multiple (MoM) or investment multiple - measures the total value returned by an investment relative to the total capital invested, expressed as a simple multiple. A 3.0x MOIC means every dollar invested returned three dollars in total (the original dollar plus two dollars of gain). MOIC is the primary return metric in private equity, venture capital, and real estate private markets.',
+      'MOIC is deliberately simple: it ignores time. A 3.0x MOIC realised in three years and the same 3.0x realised over ten years are reported identically as "3.0x" - despite representing dramatically different annualised returns (roughly 44% vs 12% IRR respectively). This is why MOIC and IRR are always presented together in private markets: MOIC shows how much capital was returned; IRR shows how quickly. Neither metric alone tells the full story.',
+      'MOIC is calculated as Total Value Received divided by Total Capital Invested. Total value includes all distributions (dividends, proceeds from partial sales, loan repayments) plus any residual unrealised value (the current estimated value of unsold assets). Capital invested is the sum of all capital drawdowns - the actual cash committed to the investment. On a fund level, MOIC is calculated across the entire portfolio.',
+    ],
+    whenToUse: 'Use MOIC as the primary return lens for private equity, venture capital, or real estate investments where timing is less predictable and liquidity events are discrete. It directly answers: "did we get our money back, and by how much?" A gross MOIC above 2.0x is generally considered the minimum acceptable return for a typical 5-year private equity hold (compensating for illiquidity and risk). 3.0x-5.0x gross MOIC is considered strong performance. Always combine MOIC with IRR to assess both the magnitude and the pace of returns.',
+    examples: {
+      headers: ['Investment', 'Capital In', 'Distributions', 'Residual Value', 'MOIC'],
+      rows: [
+        ['PE fund - portfolio company', '$10M', '$15M', '$20M', '3.5x'],
+        ['VC - early stage startup', '$5M', '$0', '$40M (paper)', '8.0x'],
+        ['Real estate - rental + sale', '$2M', '$0.5M (rent)', '$3.2M (sale)', '1.85x'],
+        ['Distressed debt', '$20M', '$25M', '$0', '1.25x'],
+        ['Failed investment', '$3M', '$0.5M', '$0', '0.17x'],
+      ],
+    },
+    pitfalls: 'A high MOIC with a long hold period can mask a mediocre IRR. A 3.0x MOIC over 12 years is only a ~9.6% IRR - below many institutional hurdle rates. Conversely, a fast 2.0x in two years is a 41% IRR. Always check both metrics together. MOIC also treats unrealised (paper) value identically to distributed cash - inflating reported returns for funds with large unsold portfolios. Always distinguish Gross MOIC (before management fees and carried interest) from Net MOIC (after fees). Fees typically reduce MOIC by 0.3x-0.7x over a 10-year fund life.',
+    faqs: [
+      { q: 'What is the difference between MOIC and IRR?', a: 'MOIC measures the total amount of capital returned relative to invested capital - a simple multiple, time-agnostic. IRR measures the annualised rate of return, accounting for the exact timing of every cash flow. A high MOIC with a slow realisation produces a lower IRR than the same MOIC realised quickly. In private equity, both are always reported together: MOIC for magnitude, IRR for efficiency.' },
+      { q: 'What is a good MOIC for private equity?', a: 'Industry benchmarks: below 1.0x means loss of capital; 1.0x-2.0x is below expectations for a standard 5-year PE hold; 2.0x-3.0x is considered adequate to good; 3.0x-5.0x is strong performance; above 5.0x is exceptional, typically reserved for early-stage venture investments in breakout companies. These are gross figures - net MOIC after fees runs 0.3x-0.7x lower.' },
+      { q: 'What is the difference between Gross MOIC and Net MOIC?', a: 'Gross MOIC is calculated before deducting management fees and carried interest. Net MOIC reflects what limited partners (investors) actually received after all fees. Management fees (typically 2% per year) reduce capital available for investment; carried interest (typically 20% of profits above the hurdle rate) reduces distributions. A fund with a 3.0x gross MOIC might deliver 2.3x-2.6x net MOIC to investors over a 10-year life.' },
+    ],
+  },
+
 };

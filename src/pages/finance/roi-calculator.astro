@@ -90,7 +90,7 @@ const schema = [
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
         <div class="calculator-header">
-          <h2>Calculate ROI Instantly</h2>
+          <h2>Calculate Return on Investment Instantly</h2>
           <p>Enter your initial investment and final value to see return, multiple, and annualized ROI</p>
         </div>
 
@@ -129,15 +129,11 @@ const schema = [
               <div class="lbm-card-val" id="roi-multiple">-</div>
               <div class="lbm-card-lbl">Multiple</div>
             </div>
-          </div>
-
-          <div id="roi-ann-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
-            <div class="lbm-card">
+            <div id="roi-ann-row" class="lbm-card hidden">
               <div class="lbm-card-val" id="roi-ann-val">-</div>
               <div class="lbm-card-lbl">Annualized ROI (CAGR)</div>
-            </div>
           </div>
-
+          </div>
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
@@ -168,8 +164,8 @@ const schema = [
         <p>ROI = <strong>(Final Value − Initial Investment) / Initial Investment × 100</strong>. Example: invest $10,000, receive $13,500 → Net Return $3,500, ROI = <strong>35%</strong>, Multiple = <strong>1.35x</strong>.</p>
       </div>
 
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter your <strong>Initial Investment</strong> (the amount you put in) and your <strong>Final Value</strong> (the amount you got back, including the original principal). The calculator instantly shows net return in currency, ROI as a percentage, and the investment multiple. Optionally enter the <strong>Holding Period in Years</strong> to see your annualized ROI (CAGR).</p>
+      <h2 id="how-to-use">How to use this ROI calculator</h2>
+      <p>Enter your <strong>Initial Investment</strong> (the amount you put in) and your <strong>Final Value</strong> (the amount you got back, including the original principal). The calculator instantly shows net return in currency, <a href="/glossary/roi">ROI</a> as a percentage, and the investment multiple. Optionally enter the <strong>Holding Period in Years</strong> to see your <a href="/glossary/cagr">annualized ROI (CAGR)</a>.</p>
       <p>Use consistent units - if your investment is in dollars, enter all values in dollars. The calculator handles any currency or denomination as long as both inputs use the same unit.</p>
 
       <h2 id="formula">Return on Investment formula</h2>
@@ -182,11 +178,11 @@ const schema = [
       <p>A 100% ROI equals a 2.0x multiple. A 200% ROI equals a 3.0x multiple. Venture capital investors typically express targets as multiples (e.g., "we need at least 3x") rather than percentages.</p>
 
       <h2 id="annualized">Annualized ROI (CAGR)</h2>
-      <p>Total ROI does not account for how long the investment was held. A 50% ROI over 10 years is far less impressive than 50% ROI over 1 year. <strong>Annualized ROI</strong> - also called CAGR (Compound Annual Growth Rate) - solves this by converting total return into a consistent annual rate:</p>
+      <p>Total ROI does not account for how long the investment was held. A 50% ROI over 10 years is far less impressive than 50% ROI over 1 year. <strong>Annualized ROI</strong> - also called <a href="/glossary/cagr">CAGR (Compound Annual Growth Rate)</a> - solves this by converting total return into a consistent annual rate:</p>
       <Formula expr={f.annualized} />
       <p>Where <em>n</em> is the number of years. This is the same as the geometric mean annual return. Use annualized ROI whenever comparing investments held for different lengths of time.</p>
 
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for return on investment</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -223,6 +219,7 @@ const schema = [
 
       <h2 id="vs-other">ROI vs. IRR vs. NPV</h2>
       <p>ROI is the simplest return metric, but it is not always the right one. Understanding when to use each metric is essential for sound investment analysis.</p>
+      <p>IRR: <a href="/glossary/irr">Internal Rate of Return</a><br>NPV: <a href="/glossary/npv">Net Present Value</a><br>MOIC: <a href="/glossary/moic">Multiple on Invested Capital</a></p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -237,7 +234,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>For a simple investment with a single cash outflow and one cash inflow, ROI and annualized ROI (CAGR) are the appropriate metrics. When cash flows occur at irregular intervals - rent, dividends, capital calls - use IRR.</p>
+      <p>For a simple investment with a single cash outflow and one cash inflow, ROI and annualized ROI (CAGR) are the appropriate metrics. When cash flows occur at irregular intervals - rent, dividends, capital calls - use <a href="/glossary/irr">IRR</a>.</p>
 
       <h2 id="mistakes">Common ROI mistakes</h2>
       <ul>
@@ -248,7 +245,7 @@ const schema = [
         <li><strong>Using non-comparable denominators:</strong> For business investments, the denominator should be the fully-loaded cost (including opportunity cost, staff time, overhead allocation) - not just the cash outlay.</li>
       </ul>
 
-      <h2 id="faq">Frequently asked questions</h2>
+      <h2 id="faq">Frequently asked questions about ROI</h2>
 
       <h3>What is ROI?</h3>
       <p>Return on Investment (ROI) measures the gain or loss generated by an investment relative to its cost. Expressed as a percentage, it answers: "for every dollar I put in, how many cents of profit did I earn?" ROI = (Final Value − Initial Investment) / Initial Investment × 100.</p>
