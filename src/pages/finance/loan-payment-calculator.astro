@@ -83,8 +83,45 @@ const schema = [
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
         <div class="calculator-header">
-          <h2>Calculate Any Type of Loan</h2>
+          <h2>Calculate Loan Payment & Total Interest</h2>
           <p>Monthly payment, total interest, and amortisation schedule</p>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="loan-currency">Currency</label>
+          <div class="bmi-input-wrap">
+            <select id="loan-currency" class="bmi-input loan-currency-select">
+              <option value="USD">USD - US Dollar</option>
+              <option value="AED">AED - UAE Dirham</option>
+              <option value="AUD">AUD - Australian Dollar</option>
+              <option value="BRL">BRL - Brazilian Real</option>
+              <option value="CAD">CAD - Canadian Dollar</option>
+              <option value="CHF">CHF - Swiss Franc</option>
+              <option value="CNY">CNY - Chinese Yuan</option>
+              <option value="CZK">CZK - Czech Koruna</option>
+              <option value="DKK">DKK - Danish Krone</option>
+              <option value="EUR">EUR - Euro</option>
+              <option value="GBP">GBP - British Pound</option>
+              <option value="HKD">HKD - Hong Kong Dollar</option>
+              <option value="HUF">HUF - Hungarian Forint</option>
+              <option value="IDR">IDR - Indonesian Rupiah</option>
+              <option value="INR">INR - Indian Rupee</option>
+              <option value="JPY">JPY - Japanese Yen</option>
+              <option value="KRW">KRW - South Korean Won</option>
+              <option value="MXN">MXN - Mexican Peso</option>
+              <option value="MYR">MYR - Malaysian Ringgit</option>
+              <option value="NOK">NOK - Norwegian Krone</option>
+              <option value="NZD">NZD - New Zealand Dollar</option>
+              <option value="PHP">PHP - Philippine Peso</option>
+              <option value="PLN">PLN - Polish Zloty</option>
+              <option value="SAR">SAR - Saudi Riyal</option>
+              <option value="SEK">SEK - Swedish Krona</option>
+              <option value="SGD">SGD - Singapore Dollar</option>
+              <option value="THB">THB - Thai Baht</option>
+              <option value="TRY">TRY - Turkish Lira</option>
+              <option value="ZAR">ZAR - South African Rand</option>
+            </select>
+          </div>
         </div>
 
         <div class="bmi-field">
@@ -122,6 +159,10 @@ const schema = [
               <div class="lbm-card-val" id="loan-total-interest">-</div>
               <div class="lbm-card-lbl">Total Interest</div>
             </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="loan-monthly-rate">-</div>
+              <div class="lbm-card-lbl">Monthly interest rate</div>
+            </div>
           </div>
 
           <div class="pi-steps" style="margin-top:0.75rem;">
@@ -153,7 +194,7 @@ const schema = [
             <div class="responsive-table" style="margin-top:0.5rem;">
               <table>
                 <thead>
-                  <tr><th>Year</th><th>Payment</th><th>Interest (last month)</th><th>Remaining Balance</th></tr>
+                  <tr><th>Year</th><th>Payment</th><th>Interest Paid (Year)</th><th>Remaining Balance</th></tr>
                 </thead>
                 <tbody id="loan-table-body"></tbody>
               </table>
@@ -171,11 +212,12 @@ const schema = [
 
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
+        <p>For demonstration purposes, examples are shown in USD ($). This does not affect the formulas, calculations, or resulting values.</p>
         <p>Monthly payment formula: <strong>M = P × r(1+r)^n / [(1+r)^n − 1]</strong>. Example: $200,000 loan at 6% for 30 years = <strong>$1,199/month</strong>, total interest paid = <strong>$231,676</strong>.</p>
       </div>
 
       <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the <strong>Loan Amount</strong> (principal borrowed, not including interest), the <strong>Annual Interest Rate</strong> as a percentage, and the <strong>Loan Term</strong> in years. The calculator shows your fixed monthly payment covering principal and interest, the total amount paid over the life of the loan, total interest paid, and a year-by-year amortisation table.</p>
+      <p>Enter the <strong>Loan Amount</strong> (principal borrowed, not including interest), the <strong>Annual Interest Rate</strong> as a percentage, and the <strong>Loan Term</strong> in years. The calculator shows your fixed monthly payment covering principal and interest (P&I), the total amount paid over the life of the loan, total interest paid, and a year-by-year amortisation table.</p>
       <p>For a mortgage, the loan amount is the purchase price minus your down payment. The calculator covers principal and interest only - property taxes, homeowner's insurance, and PMI are not included.</p>
 
       <h2 id="formula">Loan payment formula</h2>
@@ -263,16 +305,12 @@ const schema = [
 
       <h3>How do I calculate my monthly mortgage payment?</h3>
       <p>Enter the loan amount (purchase price minus down payment), the annual interest rate, and the term (usually 30 or 15 years). The result is your principal-and-interest payment. Add property taxes, insurance, and PMI separately to get your total monthly housing cost.</p>
-
       <h3>What is amortisation?</h3>
-      <p>Amortisation is the process of paying off a loan through regular payments. Each payment covers interest on the remaining balance and reduces the principal. Early payments are mostly interest; later payments are mostly principal. By the last payment, the balance is exactly zero.</p>
-
+      <p><a href="/glossary/depreciation-amortization">Amortisation</a> is the process of paying off a loan through regular payments. Each payment covers interest on the remaining balance and reduces the principal. Early payments are mostly interest; later payments are mostly principal. By the last payment, the balance is exactly zero.</p>
       <h3>How does the loan term affect total interest?</h3>
       <p>A longer term means lower monthly payments but much more total interest. A $300,000 loan at 6.5% costs $170,285 in interest over 15 years versus $382,574 over 30 years - a difference of $212,289. The shorter term is nearly always cheaper if you can afford the higher payment.</p>
-
       <h3>What happens if I pay extra each month?</h3>
       <p>Extra principal payments directly reduce the outstanding balance, which reduces future interest charges and shortens the loan term. On a $200,000 30-year mortgage at 6.5%, an extra $200/month saves roughly $73,000 in interest and eliminates about 6 years of payments. Most fixed-rate loans allow prepayment without penalty - check your loan agreement.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/compound-interest-calculator', blurb: 'See how an investment grows with compound interest over time.' },
@@ -280,10 +318,21 @@ const schema = [
         { path: '/finance/break-even-calculator',        blurb: 'Break-even units and revenue from fixed costs and margin.' },
         { path: '/math/percentage-calculator',           blurb: 'General percentage and percentage change calculator.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/loan-payment-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>
+<style>
+tbody#loan-table-body {
+    color: #cbd5e1;
+}
+.loan-currency-select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem !important;
+}
+</style>

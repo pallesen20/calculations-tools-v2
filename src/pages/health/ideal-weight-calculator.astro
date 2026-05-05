@@ -9,7 +9,8 @@ import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
 const f = {
   devine:   "$$\\text{IBW}_{\\text{male}} = 50.0 + 2.3 \\times (\\text{height (in)} - 60)$$",
   devineF:  "$$\\text{IBW}_{\\text{female}} = 45.5 + 2.3 \\times (\\text{height (in)} - 60)$$",
-  robinson: "$$\\text{IBW} = 52.0 + 1.9 \\times (\\text{height (in)} - 60) \\quad [\\text{male}]$$",
+  robinson: "$$\\text{IBW}_{\\text{male}} = 52.0 + 1.9 \\times (\\text{height (in)} - 60)$$",
+  robinsonF: "$$\\text{IBW}_{\\text{female}} = 49.0 + 1.7 \\times (\\text{height (in)} - 60)$$",
   miller: "$$\\text{IBW}_{\\text{male}} = 56.2 + 1.41 \\times (\\text{height (in)} - 60)$$",
   millerF: "$$\\text{IBW}_{\\text{female}} = 53.1 + 1.36 \\times (\\text{height (in)} - 60)$$",
   hamwi: "$$\\text{IBW}_{\\text{male}} = 48.0 + 2.7 \\times (\\text{height (in)} - 60)$$",
@@ -98,6 +99,7 @@ const schema = [
       { "@type": "Question", "name": "Do the IBW formulas work for heights under 5 feet (152 cm)?", "acceptedAnswer": { "@type": "Answer", "text": "The IBW formulas become less reliable below 5 feet (152.4 cm) because the 'inches over 5 feet' term turns negative, reducing the result by the coefficient per inch below 5 feet. All four formulas were derived from populations where most subjects were above 5 feet. For shorter individuals, the BMI healthy range (18.5–24.9) is a more defensible target." } },
       { "@type": "Question", "name": "Should I try to reach my ideal body weight?", "acceptedAnswer": { "@type": "Answer", "text": "IBW should be treated as a reference point, not a prescription. Athletes and muscular individuals may healthily exceed IBW because muscle weighs more than fat. Older adults benefit from a slightly higher BMI (23–27.5). If your weight is within the healthy BMI range (18.5–24.9), you are already in the evidence-based healthy zone regardless of what any IBW formula shows." } },
       { "@type": "Question", "name": "Why do the four IBW formulas give different results?", "acceptedAnswer": { "@type": "Answer", "text": "Each formula was derived independently from different patient populations using different regression methods. Devine (1974) was based on clinical observations. Robinson (1983) and Miller (1983) re-analysed existing datasets. Hamwi (1964) used a simple frame-size rule. The differences are typically 2–5 kg - all formulas give broadly similar results." } },
+      { "@type": "Question", "name": "How much should I weigh?", "acceptedAnswer": { "@type": "Answer", "text": "There is no single ideal weight that fits everyone. Health professionals generally view a healthy weight as a range rather than a specific target number. This is because factors like your body composition, muscle mass, age, and genetic makeup heavily influence what is healthy for your specific body. Calculators like these are helpful tools for finding a starting point or tracking progress, but they have limitations. For example, they often do not distinguish between body fat and muscle. An athlete with a high level of muscle mass might weigh more than these formulas predict, even while maintaining excellent health. The most effective approach is to focus on a weight that supports your daily life, allows you to maintain consistent energy levels, and is sustainable through healthy habits. If you have specific concerns about your weight or health, talking with a doctor or a registered dietitian is the best way to get personalized advice tailored to your needs." } },
     ]
   }
 ];
@@ -105,6 +107,9 @@ const schema = [
 
 <CalculatorLayout
   title="Ideal Weight Calculator"
+  youtubeId="JgEe-9qkv_s"
+  youtubeUploadDate="2026-05-05"
+  youtubeSummary="Do not treat the result as a strict personal target. The ideal weight formulas are guides, not goals. Your healthy weight depends on muscle mass, bone density, and body composition, not height alone."
   metaTitle="Ideal Weight Calculator | IBW by Height & Sex ᐅ"
   description="Calculate your ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO healthy BMI weight range - metric or imperial, instant results."
   canonical="https://calculations.tools/health/ideal-weight-calculator"
@@ -266,8 +271,18 @@ const schema = [
       <Formula expr={f.devineF} />
       <p>Where height is measured in inches and 60 represents 5 feet (the formula's baseline). At exactly 5'0" (152.4 cm), IBW equals the base weight: 50.0 kg for men and 45.5 kg for women.</p>
       <h3>The Robinson formula (1983)</h3>
-      <p>Robinson et al. re-analysed the same dataset used by Devine and derived sex-specific coefficients. The per-inch increment is lower (1.9 kg/in for men vs 2.3 kg/in in Devine), making Robinson give slightly lower IBW values for taller individuals.</p>
+      <p>The Robinson formula was an attempt to refine the Devine formula by applying a more rigorous statistical analysis to the same data. It is generally considered more accurate for people of average height, though it tends to underestimate weight for very tall men.</p><p>The per-inch increment is lower (1.9 kg/in for men vs 2.3 kg/in in Devine), making Robinson give slightly lower IBW values for taller individuals.</p>
+      <p>For men:</p>
       <Formula expr={f.robinson} />
+      <p>For women:</p>
+      <Formula expr={f.robinsonF} />
+      <h4>Key differences</h4>
+      <ul>
+        <li>The Starting Point: Robinson starts men at 52 kg and women at 49 kg for the first 5 feet.</li>
+        <li>The Scaling: For every inch over 5 feet, it adds 1.9 kg for men and 1.7 kg for women.</li>
+      </ul>
+      <h4>Robinson formula comparison</h4>
+      <p>Because these increments (1.9 and 1.7) are lower than Devine’s (2.3 for both), the Robinson formula will give you a "lighter" ideal weight the taller you get.</p>
       <h3>The Miller formula (1983)</h3>
       <p>The Miller formula was developed as an alternative to the Devine model by re-evaluating the same clinical data. It is unique because it sets a higher base weight for individuals at 5 feet tall but uses a much lower weight increase for every inch after that.</p>
       <p>For men:</p>
@@ -341,6 +356,10 @@ const schema = [
 
       <h3>How does ideal weight relate to BMI?</h3>
       <p>The Devine IBW corresponds to different BMIs at different heights. For a 170 cm male, Devine IBW of 67.7 kg gives BMI = 67.7 / 1.70² = 23.4 - squarely in the healthy range. For a 190 cm male, Devine IBW of 87.3 kg gives BMI = 87.3 / 1.90² = 24.2. The formulas are implicitly calibrated to keep IBW within the healthy BMI range for typical adult heights.</p>
+      <h3>How much should I weigh?</h3>
+      <p>There is no single "ideal" weight that fits everyone. Health professionals generally view a healthy weight as a range rather than a specific target number. This is because factors like your body composition, muscle mass, age, and genetic makeup heavily influence what is healthy for your specific body.</p>
+      <p>Calculators like these are helpful tools for finding a starting point or tracking progress, but they have limitations. For example, they often do not distinguish between body fat and muscle. An athlete with a high level of muscle mass might weigh more than these formulas predict, even while maintaining excellent health.</p>
+      <p>The most effective approach is to focus on a weight that supports your daily life, allows you to maintain consistent energy levels, and is sustainable through healthy habits. If you have specific concerns about your weight or health, talking with a doctor or a registered dietitian is the best way to get personalized advice tailored to your needs.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
