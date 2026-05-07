@@ -100,6 +100,9 @@ const schema = [
 
 <CalculatorLayout
   title="Pay Raise Calculator"
+  youtubeId="MZ4kEQXYopQ"
+  youtubeUploadDate="2026-05-07"
+  youtubeSummary="One thing most people get wrong when using this tool: comparing the raise percentage against inflation without adjusting - a 7% raise in a year with 6% inflation is only a 1% real gain. The correct approach is: subtract the current inflation rate from your raise percentage to find your real purchasing power increase."
   metaTitle="Pay Raise Calculator | New Salary Before & After Tax ᐅ"
   description="Calculate your new salary after a pay raise. Enter any pay period, choose % or flat raise, and add a tax rate to see your exact before-tax and after-tax increase across all pay periods."
   canonical="https://calculations.tools/finance/pay-raise-calculator"
@@ -251,11 +254,11 @@ const schema = [
       </div>
 
       <h2 id="how-to-use">How to Use This Pay Raise Calculator</h2>
-      <p>Enter your current salary and choose the matching <a href="/glossary/pay-period">pay period</a>: annual, monthly, bi-weekly, weekly, or hourly. Toggle between a percentage raise and a flat dollar amount, then type your raise figure. The calculator instantly shows your new salary across every pay period. Add your effective tax rate to see your after-tax take-home increase as well.</p>
+      <p>Enter your current salary and choose the matching <a href="/glossary/pay-period">pay period</a>: annual, monthly, bi-weekly, weekly, or hourly. Toggle between a percentage raise and a flat dollar amount, then type your raise figure. The calculator instantly shows your new salary across every pay period. Add your effective tax rate to see your <a href="/tax/income-tax-calculator">after-tax take-home</a> increase as well.</p>
       <p>The currency selector auto-detects your location. If your salary is quoted in a different currency, switch the selector - the math works identically regardless of currency. All results are <a href="/glossary/gross-pay">gross pay</a> figures unless a tax rate is entered.</p>
 
       <h2 id="how-to-calculate">How to Calculate a Pay Raise</h2>
-      <p>Three formulas cover every scenario. The Conference Board reported average salary budget increases of 3.4% in 2025 with a 3.5% median, and the same is expected for 2026 (The Conference Board, 2025). All three formulas below use the same annual-equivalent logic regardless of pay period.</p>
+      <p>Three formulas cover every scenario. The Conference Board reported average salary budget increases of 3.4% in 2025 with a 3.5% median, and the same is expected for 2026 <a href="https://www.conference-board.org/press/pay-raise-budgets" target="_blank">(The Conference Board, 2025)</a>. All three formulas below use the same annual-equivalent logic regardless of pay period.</p>
 
       <p>To find your new salary after a percentage raise:</p>
       <Formula expr={f.newSalary} />
@@ -269,7 +272,7 @@ const schema = [
       <p>Worked example: current salary $60,000, raise of 5%.</p>
       <ul>
         <li>Raise amount: $60,000 x (5/100) = <strong>$3,000</strong></li>
-        <li>New annual salary: $60,000 + $3,000 = <strong>$63,000</strong></li>
+        <li>New <a href="/finance/annual-income-calculator">annual salary</a>: $60,000 + $3,000 = <strong>$63,000</strong></li>
         <li>New monthly: $63,000 / 12 = <strong>$5,250</strong></li>
         <li>New bi-weekly: $63,000 / 26 = <strong>$2,423.08</strong></li>
         <li>New hourly (2,080 hrs): $63,000 / 2,080 = <strong>$30.29/hr</strong></li>
@@ -340,8 +343,7 @@ const schema = [
 
       <Formula expr={f.afterTax} />
 
-      <p>Your effective tax rate (total tax / total income) is always lower than your marginal rate. For most US workers earning $50,000-$100,000, the effective federal rate sits around 12-22%. State income tax, Social Security (6.2%), and Medicare (1.45%) all add to the total burden. Use the calculator's optional tax rate field with your actual effective rate for the most accurate after-tax estimate. A <a href="/finance/salary-to-hourly-calculator">salary to hourly conversion</a> can help you see the post-raise rate per hour too.</p>
-
+      <p>Your effective tax rate (total tax / total income) is always lower than your marginal rate. For most US workers earning $50,000-$100,000, the effective federal rate sits around 12-22%. <a href="/tax/income-tax-calculator/us">State income tax</a>, Social Security (6.2%), and Medicare (1.45%) all add to the total burden. Use the calculator's optional tax rate field with your actual effective rate for the most accurate after-tax estimate. A <a href="/finance/salary-to-hourly-calculator">salary to hourly conversion</a> can help you see the post-raise rate per hour too.</p>
       <h2 id="raise-examples">Pay Raise Examples Across Common Salaries</h2>
       <p>The table below shows the annual and monthly raise amounts for common salary levels at 3%, 5%, and 10% raise percentages. Use it as a quick reference when benchmarking an offer or preparing for a negotiation.</p>
 
