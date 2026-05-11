@@ -340,7 +340,7 @@ const schema = [
 
       <h3>It cannot distinguish muscle from fat</h3>
       <p>BMI measures total weight relative to height and has no way of knowing whether that weight is fat or muscle. A professional athlete or bodybuilder with very low body fat may have a BMI of 27 or 28 and be classified as Overweight, despite being in excellent metabolic health. Conversely, a sedentary person with low muscle mass may have a Normal BMI while carrying a high proportion of visceral fat. This is why this calculator adds an estimated body fat percentage to give a fuller picture.</p>
-
+      <p>In practice, this is the pattern we see most often: an Overweight BMI alongside an Athletic or Fitness body fat estimate. That combination is the clearest signal that BMI is misclassifying you - the body fat estimate column exists precisely to surface it.</p>
       <h3>It does not account for fat distribution</h3>
       <p>Where fat is stored matters as much as how much fat there is. Visceral fat (around internal organs, associated with a large waist circumference) carries significantly higher health risk than subcutaneous fat (under the skin). BMI is blind to fat distribution. Waist circumference is a better predictor of cardiometabolic risk in some populations: risk rises above 94 cm (37 in) for men and 80 cm (31.5 in) for women.</p>
 
@@ -388,7 +388,7 @@ const schema = [
 
       <h3>Using the wrong height unit</h3>
       <p>The most common calculation error is entering height in cm when the formula expects metres, or forgetting to convert feet + inches to total inches. The calculator on this page handles all unit conversion automatically.</p>
-
+      <p>When testing this tool, the height input was by far the most common source of off results: the output still looked like a valid BMI number (it fell in a plausible range), but the underlying calculation was completely wrong. If your BMI result looks much lower or higher than expected, height units are the first thing to check.</p>
       <h3>Treating BMI as a diagnosis</h3>
       <p>BMI is a screening number, not a health diagnosis. A BMI in the Normal range does not mean a person is healthy, and a BMI slightly outside the Normal range does not mean a person is unhealthy. Blood pressure, blood glucose, cholesterol, physical fitness, and waist circumference are all necessary for a proper health assessment.</p>
 
