@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
 
 const f = {
   roi:        "$$\\text{ROI} = \\frac{\\text{Final Value} - \\text{Initial Investment}}{\\text{Initial Investment}} \\times 100$$",
@@ -11,6 +12,23 @@ const f = {
   multiple:   "$$\\text{Multiple} = \\frac{\\text{Final Value}}{\\text{Initial Investment}}$$",
   annualized: "$$\\text{Annualized ROI} = \\left(\\frac{\\text{Final Value}}{\\text{Initial Investment}}\\right)^{\\frac{1}{n}} - 1$$",
 };
+
+const sources: Source[] = [
+  {
+    author: 'CFA Institute',
+    title: 'Capital Investments and Capital Allocation',
+    journal: 'CFA Institute Professional Learning',
+    year: 2026,
+    url: 'https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/capital-investments-and-capital-allocation',
+  },
+  {
+    author: 'U.S. Securities and Exchange Commission',
+    title: 'Annual Return',
+    journal: 'Investor.gov',
+    year: 2024,
+    url: 'https://www.investor.gov/introduction-investing/investing-basics/glossary/annual-return',
+  },
+];
 
 const tocItems = [
   { id: 'how-to-use',   label: 'How to use' },
@@ -85,6 +103,7 @@ const schema = [
   canonical="https://calculations.tools/finance/roi-calculator"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="roi-calculator"
   ogFormula="ROI = (Final Value − Initial Investment) / Initial Investment × 100"
   ogExample="$10,000 → $13,500 = 35% ROI, 1.35x multiple"

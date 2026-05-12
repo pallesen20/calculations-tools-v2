@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
 
 const f = {
   pe:           "$$\\text{P/E Ratio} = \\frac{\\text{Stock Price}}{\\text{Earnings Per Share (EPS)}}$$",
@@ -12,12 +13,23 @@ const f = {
   eps:          "$$\\text{EPS} = \\frac{\\text{Net Income} - \\text{Preferred Dividends}}{\\text{Weighted Avg. Shares Outstanding}}$$",
 };
 
+const sources: Source[] = [
+  {
+    author: 'CFA Institute',
+    title: 'Market-Based Valuation: Price and Enterprise Value Multiples',
+    journal: 'CFA Institute Professional Learning',
+    year: 2026,
+    url: 'https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/market-based-valuation-price-enterprise-value-multiples',
+  },
+];
+
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
   { id: 'formula',       label: 'P/E ratio formula' },
   { id: 'types',         label: 'Trailing vs. forward P/E' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'benchmarks',    label: 'P/E benchmarks by sector' },
+  { id: 'negative-pe',   label: 'Negative P/E ratio' },
   { id: 'limitations',   label: 'Limitations' },
   { id: 'faq',           label: 'FAQs' },
   { id: 'related-tools', label: 'Related tools' },
@@ -76,6 +88,7 @@ const schema = [
   canonical="https://calculations.tools/finance/pe-ratio-calculator"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="pe-ratio-calculator"
   ogFormula="P/E = Stock Price / Earnings Per Share"
   ogExample="$150 stock price ÷ $7.50 EPS = 20x P/E (5% earnings yield)"
@@ -210,7 +223,7 @@ const schema = [
       </div>
       <p>For a growing company, forward P/E will be lower than trailing P/E. If forward P/E exceeds trailing P/E, analysts expect earnings to decline - a warning signal worth investigating.</p>
 
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for price-to-earnings ratio</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -242,6 +255,47 @@ const schema = [
           </tbody>
         </table>
       </div>
+
+      <h2 id="negative-pe">Negative P/E ratio in stocks</h2>
+      <p>When a company reports negative earnings - a net loss - the P/E ratio becomes negative. Dividing a positive stock price by a negative EPS produces a mathematically valid negative number, but it carries no analytical meaning in the way a positive P/E does. A P/E of -25x cannot be compared to a P/E of 20x and does not indicate undervaluation.</p>
+
+      <h3>What causes a negative P/E</h3>
+      <p>Negative EPS comes from three distinct situations that require different investor responses:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Cause</th><th>Example</th><th>Implication</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Structural losses</td><td>Early-stage growth company spending aggressively to acquire users</td><td>No clear path to profitability; speculative; value on revenue or growth trajectory</td></tr>
+            <tr><td>One-time charge</td><td>Profitable retailer takes a large write-down on acquired assets</td><td>Underlying earnings power intact; forward P/E is still valid</td></tr>
+            <tr><td>Cyclical trough</td><td>Oil producer at a commodity price low; airline during a demand collapse</td><td>Temporary; normalised earnings or EV/EBITDA give a better anchor than trailing P/E</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Trailing vs. forward P/E when EPS is negative</h3>
+      <p>If trailing EPS is negative but the company is expected to turn profitable, forward P/E is still a usable metric. For example: a stock trading at $60 with a trailing EPS of -$2.50 has a meaningless trailing P/E, but if consensus forward EPS is $4.00, the forward P/E of 15x gives a real valuation anchor. In this case, skip the trailing figure entirely and anchor entirely on forward estimates - while discounting them appropriately for the uncertainty involved in an earnings turnaround.</p>
+
+      <h3>Alternative valuation metrics for loss-making companies</h3>
+      <p>When trailing P/E is negative and forward P/E is unreliable (no clear path to profit), practitioners use these alternatives:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Formula</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Price-to-Sales (P/S)</td><td>Market Cap / Revenue</td><td>Pre-profit companies with strong revenue growth</td></tr>
+            <tr><td>EV/Revenue</td><td>Enterprise Value / Revenue</td><td>Same, but capital-structure neutral - better for comparing levered companies</td></tr>
+            <tr><td>EV/Gross Profit</td><td>Enterprise Value / Gross Profit</td><td>SaaS and high-margin businesses where revenue alone understates economics</td></tr>
+            <tr><td>Price-to-Book (P/B)</td><td>Market Cap / Book Value</td><td>Asset-heavy businesses: banks, real estate, industrials</td></tr>
+            <tr><td>EV/EBITDA (forward)</td><td>EV / Next-year EBITDA estimate</td><td>Companies EBITDA-positive but not yet net-income positive due to D&A or interest</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>How this calculator handles negative EPS</h3>
+      <p>If you enter a negative EPS, the calculator will display a negative P/E. Treat that result as a flag, not a valuation figure - it signals that P/E is the wrong tool for this stock. Financial data providers typically show "N/A" or "N/M" (not meaningful) rather than a negative number; our calculator shows the raw result so you can see exactly what the formula produces. Switch to one of the alternative metrics above for any stock where trailing EPS is negative.</p>
 
       <h2 id="limitations">Limitations of the P/E ratio</h2>
       <ul>

@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
 
 const f = {
   ev:        "$$\\text{EV} = \\text{Market Cap} + \\text{Total Debt} - \\text{Cash \\& Equivalents}$$",
@@ -11,6 +12,23 @@ const f = {
   evRev:     "$$\\text{EV/Revenue} = \\frac{\\text{Enterprise Value}}{\\text{Revenue}}$$",
   implied:   "$$\\text{Implied EV} = \\text{EBITDA} \\times \\text{Industry Multiple}$$",
 };
+
+const sources: Source[] = [
+  {
+    author: 'Damodaran, Aswath',
+    title: 'Value/EBITDA Multiples',
+    journal: 'NYU Stern School of Business',
+    year: 2024,
+    url: 'https://pages.stern.nyu.edu/~adamodar/New_Home_Page/lectures/vebitnote.html',
+  },
+  {
+    author: 'CFA Institute',
+    title: 'Market-Based Valuation: Price and Enterprise Value Multiples',
+    journal: 'CFA Institute Professional Learning',
+    year: 2026,
+    url: 'https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/market-based-valuation-price-enterprise-value-multiples',
+  },
+];
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
@@ -76,6 +94,7 @@ const schema = [
   canonical="https://calculations.tools/finance/enterprise-value-calculator"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="enterprise-value-calculator"
   ogFormula="EV = Market Cap + Total Debt − Cash"
   ogExample="$500M market cap + $100M debt − $50M cash = $550M EV"

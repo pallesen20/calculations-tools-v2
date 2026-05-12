@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
 
 const f = {
   ci:       "$$A = P\\left(1 + \\frac{r}{n}\\right)^{nt}$$",
@@ -11,6 +12,23 @@ const f = {
   cont:     "$$A = Pe^{rt}$$",
   doubling: "$$t = \\frac{\\ln 2}{n \\cdot \\ln\\!\\left(1 + \\frac{r}{n}\\right)} \\approx \\frac{72}{r\\%}$$",
 };
+
+const sources: Source[] = [
+  {
+    author: 'U.S. Securities and Exchange Commission',
+    title: 'Compound Interest',
+    journal: 'Investor.gov',
+    year: 2024,
+    url: 'https://www.investor.gov/introduction-investing/investing-basics/glossary/compound-interest',
+  },
+  {
+    author: 'U.S. Securities and Exchange Commission',
+    title: 'What is Compound Interest?',
+    journal: 'Investor.gov',
+    year: 2024,
+    url: 'https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest',
+  },
+];
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
@@ -80,6 +98,7 @@ const schema = [
   canonical="https://calculations.tools/finance/compound-interest-calculator"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="compound-interest-calculator"
   ogFormula="A = P(1 + r/n)^(nt)"
   ogExample="$10,000 at 8% monthly for 10 yrs = $22,196"

@@ -538,6 +538,33 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'rnd': {
+    definition: [
+      'R&D expense covers all costs directly associated with research (generating new knowledge) and development (converting that knowledge into products or processes). Under US GAAP (ASC 730), nearly all R&D costs must be expensed as incurred - meaning they reduce profit in the period they occur rather than being capitalised as an asset. This treatment depresses reported earnings in the current period even when R&D spending generates long-lived competitive advantages.',
+      'R&D sits as a separate line item below Gross Profit on the income statement, alongside SG&A, and above Operating Profit (EBIT). Unlike COGS (which varies with production volume) and SG&A (which covers overhead and sales), R&D is a discretionary investment in future capability. A company can cut R&D to hit a short-term earnings target - but doing so sacrifices the product pipeline and long-term competitiveness.',
+      'R&D intensity (R&D as a percentage of revenue) varies enormously by industry. Pharmaceutical and biotech companies may spend 15-25% of revenue on R&D to advance drug pipelines. Semiconductor companies run at 15-20%. Enterprise software runs at 10-20%. By contrast, consumer staples and retail may spend under 2%. When comparing EBIT margins across companies, always check whether differences in R&D intensity explain part of the gap.',
+    ],
+    whenToUse: 'Compare R&D-to-revenue ratios across direct peers to assess investment intensity and strategic posture. When analysing EBIT, consider what profitability would look like at a lower R&D level - but recognise this would reduce future innovation. In valuation, some analysts use R&D capitalisation models to estimate the intangible asset value of accumulated R&D investment on the balance sheet.',
+    examples: {
+      headers: ['Sector', 'Typical R&D / Revenue', 'Primary R&D purpose'],
+      rows: [
+        ['Large pharma / biotech', '15-25%', 'Drug pipeline, clinical trials'],
+        ['Semiconductors', '15-20%', 'New chip architectures'],
+        ['Enterprise software (SaaS)', '10-20%', 'Product development'],
+        ['Automotive', '4-6%', 'Vehicle platforms, EV transition'],
+        ['Consumer staples', '1-3%', 'Formulation, packaging'],
+        ['Retail', '<1%', 'Process improvements'],
+      ],
+    },
+    pitfalls: 'The most common pitfall is confusing R&D expensing with software development capitalisation. Under ASC 350-40, internal-use software development costs in the application development stage are capitalised - not expensed. This creates an inconsistency: a company building internal tools capitalises the cost, while one developing a product to sell to customers expenses it immediately. Under IFRS (IAS 38), development costs (but not research costs) may be capitalised if six specific criteria are met, creating a further divergence between GAAP and IFRS-reporting peers.',
+    faqs: [
+      { q: 'Is R&D a capital expenditure or an operating expense?', a: 'Under US GAAP, nearly all R&D is an operating expense, expensed immediately (ASC 730). One exception is software development: internal-use software development costs are capitalised under ASC 350-40 once the application development stage begins. Under IFRS (IAS 38), development costs - as distinct from research costs - may be capitalised if six criteria are met, creating a divergence between GAAP and IFRS companies.' },
+      { q: 'Why do pharmaceutical companies have such high R&D?', a: 'Developing a new drug from discovery to FDA approval typically requires 10-15 years and over $2 billion in investment, with a high failure rate - roughly 90% of compounds that enter clinical trials never receive approval. Pharma companies must sustain continuous investment to replenish their pipeline as existing drugs lose patent protection. Blockbuster drugs can generate returns that justify the investment, but only a small fraction of R&D spending ever recovers its cost.' },
+      { q: 'How does R&D affect EBIT versus EBITDA?', a: 'R&D reduces both EBIT and EBITDA equally, since both metrics include R&D as a line-item operating cost. Unlike Depreciation & Amortization - which EBITDA adds back - there is no standard add-back for R&D. The only scenario where R&D has different impacts is if a company capitalises some R&D costs and amortises them; in that case EBITDA adds back the amortisation while EBIT does not.' },
+      { q: 'What is R&D capitalisation?', a: 'R&D capitalisation is the practice of treating R&D costs as a long-lived asset rather than an immediate expense - estimating the balance sheet value of accumulated R&D investment (minus amortisation). It is not standard GAAP practice, but is used by valuation researchers (notably Damodaran) to estimate the true intangible asset base of technology and pharma companies. It can significantly change calculated returns on capital (ROIC) for R&D-intensive businesses.' },
+    ],
+  },
+
   'working-capital': {
     definition: [
       'Working Capital is the difference between a company\'s current assets (cash, accounts receivable, inventory) and current liabilities (accounts payable, accrued expenses, short-term debt). It measures a company\'s short-term liquidity - the net financial resources available to fund the next 12 months of operations.',

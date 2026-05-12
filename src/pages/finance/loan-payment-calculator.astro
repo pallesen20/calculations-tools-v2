@@ -4,12 +4,30 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
 
 const f = {
   monthly:    "$$M = P \\cdot \\frac{r(1+r)^n}{(1+r)^n - 1}$$",
   totalPaid:  "$$\\text{Total Paid} = M \\times n$$",
   totalInt:   "$$\\text{Total Interest} = \\text{Total Paid} - P$$",
 };
+
+const sources: Source[] = [
+  {
+    author: 'Consumer Financial Protection Bureau',
+    title: 'How do mortgage lenders calculate monthly payments?',
+    journal: 'Consumer Financial Protection Bureau',
+    year: 2024,
+    url: 'https://www.consumerfinance.gov/ask-cfpb/how-do-mortgage-lenders-calculate-monthly-payments-en-1965/',
+  },
+  {
+    author: 'Consumer Financial Protection Bureau',
+    title: 'What is amortization and how could it affect my auto loan?',
+    journal: 'Consumer Financial Protection Bureau',
+    year: 2024,
+    url: 'https://www.consumerfinance.gov/ask-cfpb/what-is-amortization-and-how-could-it-affect-my-auto-loan-en-771/',
+  },
+];
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
@@ -78,6 +96,7 @@ const schema = [
   canonical="https://calculations.tools/finance/loan-payment-calculator"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="loan-payment-calculator"
   ogFormula="M = P × r(1+r)^n / [(1+r)^n − 1]"
   ogExample="$200K at 6% for 30 yrs = $1,199/month"

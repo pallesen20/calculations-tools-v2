@@ -47,7 +47,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Income Statement',
     siteCategory: 'Finance',
     shortDef: 'Cost of Goods Sold (COGS) is the total direct cost of producing the goods or services a company sells. It includes raw materials, direct labour, and manufacturing overhead, but not SG&A or R&D.',
-    relatedTools: ['/finance/gross-profit-margin-calculator'],
+    relatedTools: ['/finance/gross-profit-margin-calculator', '/finance/ebit-calculator'],
     relatedTerms: ['gross-profit', 'gross-profit-margin', 'operating-expenses', 'revenue'],
   },
   {
@@ -189,7 +189,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Income Statement',
     siteCategory: 'Finance',
     shortDef: 'Operating Expenses (OpEx) are the ongoing costs of running the business that are not directly tied to production. They include SG&A, R&D, and depreciation of operating assets - but not interest or tax.',
-    relatedTerms: ['sga', 'cogs', 'operating-profit', 'ebit'],
+    relatedTerms: ['sga', 'rnd', 'cogs', 'operating-profit', 'ebit'],
   },
   {
     slug: 'operating-profit',
@@ -224,13 +224,24 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['gross-profit', 'cogs', 'net-income', 'gross-profit-margin', 'ebitda-margin'],
   },
   {
+    slug: 'rnd',
+    term: 'R&D (Research and Development)',
+    letter: 'R',
+    category: 'Income Statement',
+    siteCategory: 'Finance',
+    shortDef: 'R&D (Research and Development) expense is the cost of activities aimed at discovering new products, processes, or technologies. Under US GAAP, nearly all R&D costs are expensed immediately - reducing reported profit even though the spending may generate competitive advantages for years.',
+    relatedTools: ['/finance/ebit-calculator'],
+    relatedTerms: ['sga', 'operating-expenses', 'ebit', 'capex'],
+  },
+  {
     slug: 'sga',
     term: 'SG&A',
     letter: 'S',
     category: 'Income Statement',
     siteCategory: 'Finance',
     shortDef: 'SG&A (Selling, General & Administrative expenses) are the overhead costs of running the business: sales force, marketing, executive salaries, rent, and back-office functions. SG&A is deducted from Gross Profit to arrive at Operating Profit.',
-    relatedTerms: ['operating-expenses', 'operating-profit', 'gross-profit', 'cogs'],
+    relatedTools: ['/finance/ebit-calculator'],
+    relatedTerms: ['rnd', 'operating-expenses', 'operating-profit', 'gross-profit', 'cogs'],
   },
   {
     slug: 'working-capital',

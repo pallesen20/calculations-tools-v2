@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../components/Sources.astro';
 
 const f = {
   roe:       "$$\\text{ROE} = \\frac{\\text{Net Income}}{\\text{Shareholders' Equity}} \\times 100$$",
@@ -11,6 +12,23 @@ const f = {
   roa:       "$$\\text{ROA} = \\frac{\\text{Net Income}}{\\text{Total Assets}} \\times 100$$",
   roce:      "$$\\text{ROCE} = \\frac{\\text{EBIT}}{\\text{Capital Employed}} \\times 100$$",
 };
+
+const sources: Source[] = [
+  {
+    author: 'Damodaran, Aswath',
+    title: 'Return on Capital (ROC), Return on Invested Capital (ROIC) and Return on Equity (ROE): Measurement and Implications',
+    journal: 'NYU Stern School of Business',
+    year: 2007,
+    url: 'https://pages.stern.nyu.edu/~adamodar/pdfiles/papers/returnmeasures.pdf',
+  },
+  {
+    author: 'CFA Institute',
+    title: 'How Alpha Hides in GAAP Accounting: Return on Equity',
+    journal: 'CFA Institute Enterprising Investor',
+    year: 2021,
+    url: 'https://blogs.cfainstitute.org/investor/2021/03/05/how-alpha-hides-in-gaap-accounting-return-on-equity/',
+  },
+];
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
@@ -76,6 +94,7 @@ const schema = [
   canonical="https://calculations.tools/finance/roe-calculator"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="roe-calculator"
   ogFormula="ROE = Net Income / Shareholders' Equity × 100"
   ogExample="$10M net income ÷ $50M equity = 20% ROE"

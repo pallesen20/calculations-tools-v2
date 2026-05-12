@@ -1,8 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
-  ['ebit-net-income', 'ebit-interest', 'ebit-tax', 'ebit-revenue'].forEach(id => {
+  let method = 'bottomup';
+
+  const bottomupFields = document.getElementById('ebit-bottomup-fields');
+  const topdownFields  = document.getElementById('ebit-topdown-fields');
+  const subtitleEl     = document.getElementById('ebit-subtitle');
+  const intermediateLbl = document.getElementById('ebit-intermediate-lbl');
+  const stepLabel1     = document.getElementById('ebit-step-label1');
+  const stepLabel2     = document.getElementById('ebit-step-label2');
+  const btnBottomup    = document.getElementById('ebit-method-bottomup');
+  const btnTopdown     = document.getElementById('ebit-method-topdown');
+
+  const allInputIds = [
+    'ebit-net-income', 'ebit-tax', 'ebit-interest', 'ebit-bu-revenue',
+    'ebit-td-revenue', 'ebit-cogs', 'ebit-opex',
+  ];
+  allInputIds.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', calculate);
   });
+
+  btnBottomup.addEventListener('click', () => setMethod('bottomup'));
+  btnTopdown.addEventListener('click',  () => setMethod('topdown'));
+
+  function setMethod(m) {
+    method = m;
+    btnBottomup.classList.toggle('active', m === 'bottomup');
+    btnTopdown.classList.toggle('active',  m === 'topdown');
+    bottomupFields.classList.toggle('hidden', m !== 'bottomup');
+    topdownFields.classList.toggle('hidden',  m !== 'topdown');
+    subtitleEl.textContent = m === 'bottomup'
+      ? 'Add back Interest and Tax to Net Income'
+      : 'Subtract COGS and Operating Expenses from Revenue';
+    document.getElementById('ebit-result').classList.add('hidden');
+    calculate();
+  }
 
   function parseVal(id, fallback) {
     const el = document.getElementById(id);
@@ -25,28 +56,41 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function calculate() {
-    const netIncome = parseVal('ebit-net-income');
-    if (isNaN(netIncome)) {
-      document.getElementById('ebit-result').classList.add('hidden');
-      return;
+    let intermediate, ebit, revenue = NaN;
+
+    if (method === 'bottomup') {
+      const netIncome = parseVal('ebit-net-income');
+      if (isNaN(netIncome)) { document.getElementById('ebit-result').classList.add('hidden'); return; }
+      const tax      = parseVal('ebit-tax', 0);
+      const interest = parseVal('ebit-interest', 0);
+      revenue        = parseVal('ebit-bu-revenue');
+      intermediate   = netIncome + tax;
+      ebit           = intermediate + interest;
+      intermediateLbl.textContent = 'EBT';
+      stepLabel1.textContent = 'Net Income + Tax = EBT';
+      stepLabel2.textContent = 'EBT + Interest = EBIT';
+      document.getElementById('ebit-step1').textContent = `${fmtFull(netIncome)} + ${fmtFull(tax)} = ${fmtFull(intermediate)}`;
+      document.getElementById('ebit-step2').textContent = `${fmtFull(intermediate)} + ${fmtFull(interest)} = ${fmtFull(ebit)}`;
+    } else {
+      revenue = parseVal('ebit-td-revenue');
+      if (isNaN(revenue)) { document.getElementById('ebit-result').classList.add('hidden'); return; }
+      const cogs   = parseVal('ebit-cogs', 0);
+      const opex   = parseVal('ebit-opex', 0);
+      intermediate = revenue - cogs;
+      ebit         = intermediate - opex;
+      intermediateLbl.textContent = 'Gross Profit';
+      stepLabel1.textContent = 'Revenue - COGS = Gross Profit';
+      stepLabel2.textContent = 'Gross Profit - OpEx = EBIT';
+      document.getElementById('ebit-step1').textContent = `${fmtFull(revenue)} - ${fmtFull(cogs)} = ${fmtFull(intermediate)}`;
+      document.getElementById('ebit-step2').textContent = `${fmtFull(intermediate)} - ${fmtFull(opex)} = ${fmtFull(ebit)}`;
     }
-    const interest = parseVal('ebit-interest', 0);
-    const tax      = parseVal('ebit-tax', 0);
-    const revenue  = parseVal('ebit-revenue');
 
-    const ebt  = netIncome + tax;
-    const ebit = ebt + interest;
-
-    document.getElementById('ebit-ebt-val').textContent  = fmtCard(ebt);
-    document.getElementById('ebit-ebit-val').textContent = fmtCard(ebit);
-
-    document.getElementById('ebit-step1').textContent = `${fmtFull(netIncome)} + ${fmtFull(tax)} = ${fmtFull(ebt)}`;
-    document.getElementById('ebit-step2').textContent = `${fmtFull(ebt)} + ${fmtFull(interest)} = ${fmtFull(ebit)}`;
+    document.getElementById('ebit-intermediate-val').textContent = fmtCard(intermediate);
+    document.getElementById('ebit-ebit-val').textContent         = fmtCard(ebit);
 
     const marginRow = document.getElementById('ebit-margin-row');
     if (!isNaN(revenue) && revenue !== 0) {
-      const margin = (ebit / revenue) * 100;
-      document.getElementById('ebit-margin-val').textContent = margin.toFixed(1) + '%';
+      document.getElementById('ebit-margin-val').textContent = ((ebit / revenue) * 100).toFixed(1) + '%';
       marginRow.classList.remove('hidden');
     } else {
       marginRow.classList.add('hidden');
