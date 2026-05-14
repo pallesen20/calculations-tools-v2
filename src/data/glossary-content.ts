@@ -5,6 +5,7 @@ export interface GlossaryExample {
 
 export interface GlossaryContent {
   definition: string[];
+  beginnerExplain?: string;
   whenToUse: string;
   examples?: GlossaryExample;
   pitfalls?: string;
@@ -1852,6 +1853,57 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between MOIC and IRR?', a: 'MOIC measures the total amount of capital returned relative to invested capital - a simple multiple, time-agnostic. IRR measures the annualised rate of return, accounting for the exact timing of every cash flow. A high MOIC with a slow realisation produces a lower IRR than the same MOIC realised quickly. In private equity, both are always reported together: MOIC for magnitude, IRR for efficiency.' },
       { q: 'What is a good MOIC for private equity?', a: 'Industry benchmarks: below 1.0x means loss of capital; 1.0x-2.0x is below expectations for a standard 5-year PE hold; 2.0x-3.0x is considered adequate to good; 3.0x-5.0x is strong performance; above 5.0x is exceptional, typically reserved for early-stage venture investments in breakout companies. These are gross figures - net MOIC after fees runs 0.3x-0.7x lower.' },
       { q: 'What is the difference between Gross MOIC and Net MOIC?', a: 'Gross MOIC is calculated before deducting management fees and carried interest. Net MOIC reflects what limited partners (investors) actually received after all fees. Management fees (typically 2% per year) reduce capital available for investment; carried interest (typically 20% of profits above the hurdle rate) reduces distributions. A fund with a 3.0x gross MOIC might deliver 2.3x-2.6x net MOIC to investors over a 10-year life.' },
+    ],
+  },
+
+  'interest-expense': {
+    definition: [
+      'Interest expense is the cost a company pays to lenders and bondholders for the use of borrowed capital. It accrues based on outstanding debt balances and the applicable interest rate. On the income statement it sits between EBIT (Earnings Before Interest and Tax) and EBT (Earnings Before Tax) - the only line that separates the two metrics.',
+      'Interest expense is the mechanism by which financial leverage affects reported earnings. A business with $2M EBIT will report very different EBT depending on whether it is debt-free ($2M EBT) or carrying $20M of debt at 8% ($400K interest expense, $1.6M EBT). Higher debt loads compress EBT and amplify the volatility of Net Income across the business cycle.',
+      'Interest expense should not be confused with interest paid. Under accrual accounting, interest expense is recognised as it accrues - regardless of when cash changes hands. A semi-annual coupon bond records monthly interest accruals even though the cash payment occurs twice a year. This timing difference between interest expense and cash interest paid can matter in cash flow analysis.',
+    ],
+    beginnerExplain: 'Imagine you borrow $10,000 from a bank to buy a car at a 6% annual interest rate. You owe $600 in interest for the year - that\'s your interest expense. For a company it works the same way: every loan, bond, or credit line has an interest rate, and the annual cost of those borrowings shows up on the income statement as interest expense. It comes out of profits before the tax bill is calculated.',
+    whenToUse: 'Focus on interest expense when comparing two companies that look similar at the EBIT level but diverge at EBT or Net Income. The difference is often debt. Track the interest coverage ratio (EBIT / Interest Expense) as the key stress indicator: above 3.0x is comfortable, below 2.0x is a warning, below 1.0x means the company cannot cover interest from operating profit alone.',
+    examples: {
+      headers: ['Company', 'EBIT', 'Interest Expense', 'EBT', 'Interest Coverage'],
+      rows: [
+        ['Debt-free SaaS', '$2,000,000', '$0', '$2,000,000', 'N/A'],
+        ['Moderately leveraged', '$2,000,000', '$300,000', '$1,700,000', '6.7x'],
+        ['Highly leveraged', '$2,000,000', '$1,200,000', '$800,000', '1.7x'],
+        ['Below coverage', '$2,000,000', '$2,500,000', '-$500,000', '0.8x'],
+      ],
+    },
+    pitfalls: 'Two traps are common. First, some companies capitalise interest on construction projects - adding it to the asset\'s cost rather than expensing it immediately - which flatters EBIT. Check the notes to financial statements for capitalised interest and add it back when comparing with peers who expense interest directly. Second, income statements sometimes show "net interest expense" (interest expense minus interest income), which understates the gross debt cost for companies holding large cash balances. Always review the gross interest expense and interest income lines separately.',
+    faqs: [
+      { q: 'What is the difference between interest expense and interest paid?', a: 'Interest expense is the accrued cost on the income statement for the period. Interest paid is the actual cash outflow on the cash flow statement. They differ when payment timing doesn\'t match the accrual period - as with semi-annual bond coupons that record monthly accruals. The cash flow statement reconciles the two.' },
+      { q: 'How does interest expense affect EBT?', a: 'EBT = EBIT - Interest Expense. Every dollar of interest reduces EBT by one dollar, which reduces tax and Net Income by less (the tax saving partially offsets the cost). This is why the after-tax cost of debt is lower than the stated rate: after-tax cost = rate × (1 - effective tax rate).' },
+      { q: 'What is the interest coverage ratio?', a: 'Interest coverage = EBIT / Interest Expense. It measures how many times over a company can pay its interest from operating profit. A ratio of 3.0x means three dollars of EBIT for every dollar of interest owed. Below 2.0x is a stress warning; below 1.0x means the company cannot service its debt from operations alone.' },
+    ],
+  },
+
+  'valuation-multiple': {
+    definition: [
+      'A valuation multiple is a ratio that expresses the price of a business as a multiple of a financial metric - most commonly EBITDA, revenue, earnings, or cash flow. The metric chosen depends on the nature of the business: EBITDA multiples suit profitable, mature companies where D&A is large; revenue multiples are used for high-growth, pre-profit businesses where no earnings yet exist to divide by.',
+      'Multiples fall into two families based on their numerator. Enterprise Value multiples (EV/EBITDA, EV/Revenue, EV/EBIT, EV/FCF) use total business value including debt and cash. Equity multiples (P/E, Price/Book, Price/FCF-to-equity) use only market capitalisation. The cardinal rule: always match numerator to denominator. EV against EBITDA (which belongs to all capital providers), market cap against net income (which belongs only to shareholders). Mixing the two - for example, dividing EV by Net Income - produces a meaningless ratio and is one of the most common errors in valuation practice.',
+      'Because multiples compress a complex business into a single number, they are most useful for relative valuation: screening whether one company appears cheap or expensive compared with peers. A 10x EV/EBITDA tells you nothing in isolation; it only becomes meaningful when you know the industry median is 8x (implying a premium) or 14x (implying a discount). Multiples are also highly sensitive to the interest rate environment - low rates inflate multiples, high rates compress them - so always anchor comparisons to a consistent time period.',
+    ],
+    beginnerExplain: 'Imagine your local bakery earns $50,000 profit a year. If a buyer offers $500,000 to purchase it, they\'re paying 10 times the annual profit - a "10x multiple." If a similar bakery sold last year for $700,000, that one went at 14x. Investors use multiples exactly like this: they level the playing field so you can compare whether one business is priced higher or lower than another relative to what it earns, regardless of the absolute size.',
+    whenToUse: 'Use multiples for quick comparable screening - to flag whether a company looks expensive or cheap versus peers - before doing deeper discounted cash flow analysis. Always compare companies in the same industry and at a similar stage of growth. Use EV multiples (EV/EBITDA, EV/Revenue) when the companies you are comparing have different capital structures; use equity multiples (P/E, P/Book) when you are specifically analysing returns to shareholders.',
+    examples: {
+      headers: ['Company type', 'Multiple used', 'Numerator', 'Denominator', 'Typical range'],
+      rows: [
+        ['Profitable SaaS', 'EV/Revenue', 'Enterprise Value', 'Revenue', '5x - 15x'],
+        ['Mature manufacturer', 'EV/EBITDA', 'Enterprise Value', 'EBITDA', '6x - 12x'],
+        ['Pre-profit biotech', 'EV/Revenue', 'Enterprise Value', 'Revenue', '3x - 8x'],
+        ['Large-cap equity', 'P/E', 'Market Cap', 'Net Income', '15x - 25x'],
+        ['Established bank', 'Price/Book', 'Market Cap', 'Book Value', '0.8x - 2.0x'],
+      ],
+    },
+    pitfalls: 'Cross-sector multiple comparisons are the most frequent mistake. A software company at 20x EBITDA and a retailer at 6x are not one overvalued and one cheap - they are structurally different businesses with different growth rates, capital intensity, and risk. Multiples also reflect the interest rate environment at the time of measurement: the same business will trade at a higher multiple when rates are low (future cash flows are discounted less) and a lower multiple when rates are high. Using pre-2022 benchmarks to value a 2025 business can overstate value by 30-50%. Always anchor your reference multiples to the current rate environment and recent comparable transactions.',
+    faqs: [
+      { q: 'What is the difference between an EV multiple and an equity multiple?', a: 'EV multiples use Enterprise Value (equity + net debt) in the numerator and a metric that belongs to all capital providers - EBITDA, EBIT, Revenue - in the denominator. Equity multiples use Market Capitalisation and metrics that belong only to shareholders - Net Income, Book Value, Free Cash Flow to Equity. Mixing numerators and denominators (e.g. EV / Net Income or Market Cap / EBITDA) produces a meaningless ratio and is a common analytical error.' },
+      { q: 'Why do high-growth companies trade at higher multiples?', a: 'A multiple is a simplified discounted cash flow. A faster-growing business will generate substantially more earnings in years 3-7 than it does today. Buyers pay for those future earnings now, driving up the current multiple. A SaaS company growing 30% per year commands 20x EV/Revenue because investors are pricing in the earnings it does not yet have. A business with 0% growth commands a lower multiple because future earnings will look much like current earnings.' },
+      { q: 'Are multiples useful for valuing private companies?', a: 'Yes - comparable company multiples are one of the three main methods for private business valuation (alongside DCF and precedent transactions). Apply the public market multiple for the closest peer group, then apply a private company discount of typically 15-30% to account for illiquidity and concentration risk. The discount narrows as the private company grows larger and more institutional in its operations.' },
     ],
   },
 

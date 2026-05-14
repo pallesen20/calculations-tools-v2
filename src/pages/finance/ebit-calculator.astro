@@ -23,16 +23,18 @@ const sources: Source[] = [
 ];
 
 const f = {
-  ebt:    "$$\\text{EBT} = \\text{Net Income} + \\text{Tax Expense}$$",
-  ebit:   "$$\\text{EBIT} = \\text{EBT} + \\text{Interest Expense}$$",
-  oneLine:"$$\\text{EBIT} = \\text{Net Income} + \\text{Interest Expense} + \\text{Tax Expense}$$",
-  margin: "$$\\text{EBIT Margin} = \\frac{\\text{EBIT}}{\\text{Revenue}} \\times 100$$",
+  ebt:     "$$\\text{EBT} = \\text{Net Income} + \\text{Tax Expense}$$",
+  ebit:    "$$\\text{EBIT} = \\text{EBT} + \\text{Interest Expense}$$",
+  oneLine: "$$\\text{EBIT} = \\text{Net Income} + \\text{Interest Expense} + \\text{Tax Expense}$$",
+  topDown: "$$\\text{EBIT} = \\text{Revenue} - \\text{COGS} - \\text{Operating Expenses (incl. D\\&A)}$$",
+  margin:  "$$\\text{EBIT Margin} = \\frac{\\text{EBIT}}{\\text{Revenue}} \\times 100$$",
 };
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
-  { id: 'what-is-ebit',  label: 'What is EBIT?' },
-  { id: 'formula',       label: 'EBIT formula' },
+  { id: 'what-is-ebit',         label: 'What is EBIT?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',               label: 'EBIT formula' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'ebit-vs',       label: 'EBIT vs EBITDA vs EBT' },
   { id: 'faq',           label: 'FAQs' },
@@ -168,6 +170,10 @@ const schema = [
               <div class="lbm-card-val" id="ebit-margin-val">-</div>
               <div class="lbm-card-lbl">EBIT Margin</div>
             </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="ebit-rating-val">-</div>
+              <div class="lbm-card-lbl">Margin Quality</div>
+            </div>
           </div>
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
@@ -194,20 +200,29 @@ const schema = [
       <h2 id="how-to-use">How to use this EBIT calculator</h2>
       <p>Choose your method with the toggle at the top of the calculator:</p>
       <ul>
-        <li><strong>From Net Income (bottom-up):</strong> enter Net Income, Tax Expense, and Interest Expense from the bottom of the income statement. The calculator adds them back to show EBT and EBIT. Enter Revenue optionally to also get EBIT Margin.</li>
+        <li><strong>From Net Income (bottom-up):</strong> enter Net Income, Tax Expense, and <a href="/glossary/interest-expense">Interest Expense</a> from the bottom of the income statement. The calculator adds them back to show EBT and EBIT. Enter Revenue optionally to also get EBIT Margin.</li>
         <li><strong>From Revenue (top-down):</strong> enter Revenue, <a href="/glossary/cogs">Cost of Goods Sold</a>, and <a href="/glossary/operating-expenses">Operating Expenses</a> from the top of the income statement. The calculator shows Gross Profit as an intermediate step, then EBIT and EBIT Margin automatically.</li>
       </ul>
       <p>Use any consistent currency unit - thousands, millions, or full figures. The displayed cards abbreviate large numbers automatically.</p>
       <h2 id="what-is-ebit">What is EBIT (Operating Income)?</h2>
       <p>EBIT stands for <strong>Earnings Before Interest and Taxes</strong>. It equals operating income: the profit a company generates from its core business before accounting for how the business is financed (interest) or what it pays to the government (taxes).</p>
-      <p>EBIT appears on the income statement between <a href="/glossary/gross-profit">Gross Profit</a> and Net Income. It is the standard measure of operating profitability and the starting point for several financial ratios used by analysts, lenders, and acquirers.</p>
+      <p>EBIT appears on the income statement between <a href="/glossary/gross-profit">Gross Profit</a> and <a href="/glossary/net-income">Net Income</a>. It is the standard measure of operating profitability and the starting point for several financial ratios used by analysts, lenders, and acquirers.</p>
       <p>Because it excludes interest, EBIT allows fair comparison between companies with very different debt levels. A highly leveraged company and a debt-free company may have the same operating efficiency but very different Net Income figures.</p>
-      <h2 id="formula">EBIT formula</h2>
-      <p>Starting from the bottom of the income statement (bottom-up method):</p>
+      <h3 id="explained-to-beginner">EBIT explained to a beginner</h3>
+      <p>Imagine you run a pizza restaurant. This year you earn $300,000 in sales. After paying for ingredients, staff, and rent you have $60,000 left - that's EBIT. It says nothing about your bank loan (interest) or your tax bill - it just answers: is this pizza business good at making money from making pizzas?</p>
+      <p>Now imagine your competitor also has $60,000 EBIT but borrowed heavily to buy a bigger oven, so their net income is only $10,000 after $50,000 in interest. Their pizzas are equally profitable - the financing is different, not the operations. EBIT strips the financing away so you can compare both restaurants on equal terms.</p>
+      <h2 id="formula">EBIT formulas</h2>
+      <p>There are two methods to calculating EBIT - both with the same result.</p>
+      <h3>Bottom-up (most common)</h3>
+      <p>This formula starts from Net Income and adds back the two removed items:</p>
       <Formula expr={f.ebt} />
       <Formula expr={f.ebit} />
       <p>Or in one expression:</p>
       <Formula expr={f.oneLine} />
+      <h3>Top-down</h3>
+      <p>Starts from Revenue and subtracts all operating costs including D&amp;A:</p>
+      <Formula expr={f.topDown} />
+      <p>Unlike the EBITDA top-down formula, operating expenses here <strong>include</strong> Depreciation &amp; Amortization. D&amp;A is a real operating cost in EBIT - it is only added back when calculating EBITDA. Both methods yield the same EBIT.</p>
       <p>EBIT Margin expresses EBIT as a percentage of revenue:</p>
       <Formula expr={f.margin} />
       <h2 id="examples">Worked examples for EBIT</h2>

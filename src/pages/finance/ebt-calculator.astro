@@ -3,17 +3,37 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const sources: Source[] = [
+  {
+    author: 'Internal Revenue Service',
+    title: 'Instructions for Form 1120: U.S. Corporation Income Tax Return',
+    journal: 'Internal Revenue Service',
+    year: 2025,
+    url: 'https://www.irs.gov/instructions/i1120',
+  },
+  {
+    author: 'Averkamp, Harold',
+    title: 'Income Statement: In-Depth Explanation with Examples',
+    journal: 'AccountingCoach',
+    year: 2026,
+    url: 'https://www.accountingcoach.com/income-statement/explanation',
+  },
+];
 
 const f = {
-  ebt:     "$$\\text{EBT} = \\text{Net Income} + \\text{Tax Expense}$$",
-  taxRate: "$$\\text{Effective Tax Rate} = \\frac{\\text{Tax Expense}}{\\text{EBT}} \\times 100$$",
-  margin:  "$$\\text{Pre-Tax Margin} = \\frac{\\text{EBT}}{\\text{Revenue}} \\times 100$$",
+  ebt:        "$$\\text{EBT} = \\text{Net Income} + \\text{Tax Expense}$$",
+  ebtTopDown: "$$\\text{EBT} = \\text{EBIT} - \\text{Interest Expense}$$",
+  taxRate:    "$$\\text{Effective Tax Rate} = \\frac{\\text{Tax Expense}}{\\text{EBT}} \\times 100$$",
+  margin:     "$$\\text{Pre-Tax Margin} = \\frac{\\text{EBT}}{\\text{Revenue}} \\times 100$$",
 };
 
 const tocItems = [
   { id: 'how-to-use',   label: 'How to use' },
   { id: 'what-is-ebt',  label: 'What is EBT?' },
-  { id: 'formula',      label: 'EBT formula' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',      label: 'EBT formulas' },
   { id: 'examples',     label: 'Worked examples' },
   { id: 'tax-rate',     label: 'Effective tax rate' },
   { id: 'faq',          label: 'FAQs' },
@@ -63,11 +83,15 @@ const schema = [
 
 <CalculatorLayout
   title="EBT Calculator"
+  youtubeId="wJ0Itm9MyR0"
+  youtubeUploadDate="2026-05-13"
+  youtubeSummary="Use EBT - not Net Income - when comparing two companies in the same country. Net Income is distorted by deferred tax assets, tax loss carryforwards, and one-time tax credits. EBT removes those distortions so you're comparing operational and financing performance on equal footing."
   metaTitle="EBT Calculator | Earnings Before Tax Formula"
   description="Calculate EBT (Earnings Before Tax) from Net Income and Tax Expense. Shows EBT, effective tax rate, and pre-tax margin with step-by-step workings."
   canonical="https://calculations.tools/finance/ebt-calculator"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="ebt-calculator"
   ogFormula="EBT = Net Income + Tax Expense"
   ogExample="$700K + $210K = EBT $910K (23.1% effective tax rate)"
@@ -76,57 +100,76 @@ const schema = [
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
         <div class="calculator-header">
-          <h2>Calculate EBT Instantly</h2>
-          <p>Add Tax Expense back to Net Income</p>
+          <h2>Calculate Earnings Before Tax Instantly</h2>
+          <p>Choose your calculation method</p>
         </div>
-
-        <div class="bmi-field">
-          <label class="bmi-label" for="ebt-net-income">Net Income</label>
-          <div class="bmi-input-wrap">
-            <input type="text" inputmode="decimal" id="ebt-net-income" class="bmi-input" placeholder="e.g. 700000" />
+        <div class="bmi-unit-toggle" style="margin-bottom:1.25rem;">
+          <button class="bmi-unit-btn active" id="ebt-mode-bottom">Bottom-up</button>
+          <button class="bmi-unit-btn" id="ebt-mode-top">Top-down</button>
+        </div>
+        <div id="ebt-bottom-fields">
+          <div class="bmi-field">
+            <label class="bmi-label" for="ebt-net-income">Net Income</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ebt-net-income" class="bmi-input" placeholder="e.g. 700000" />
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="ebt-tax">+ Tax Expense</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ebt-tax" class="bmi-input" placeholder="e.g. 210000" />
+            </div>
           </div>
         </div>
-
-        <div class="bmi-field">
-          <label class="bmi-label" for="ebt-tax">+ Tax Expense</label>
-          <div class="bmi-input-wrap">
-            <input type="text" inputmode="decimal" id="ebt-tax" class="bmi-input" placeholder="e.g. 210000" />
+        <div id="ebt-top-fields" class="hidden">
+          <div class="bmi-field">
+            <label class="bmi-label" for="ebt-ebit">EBIT</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ebt-ebit" class="bmi-input" placeholder="e.g. 1200000" />
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="ebt-interest">- Interest Expense</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ebt-interest" class="bmi-input" placeholder="e.g. 290000" />
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="ebt-tax-td">Tax Expense (optional - for effective rate)</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ebt-tax-td" class="bmi-input" placeholder="e.g. 210000" />
+            </div>
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ebt-revenue">Revenue (optional - for Pre-Tax Margin)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ebt-revenue" class="bmi-input" placeholder="e.g. 5000000" />
           </div>
         </div>
-
         <div id="ebt-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="ebt-ebt-val">-</div>
               <div class="lbm-card-lbl">EBT</div>
             </div>
-          </div>
-
-          <div id="ebt-taxrate-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
-            <div class="lbm-card">
+            <div class="lbm-card" id="ebt-taxrate-row">
               <div class="lbm-card-val" id="ebt-taxrate-val">-</div>
               <div class="lbm-card-lbl">Effective Tax Rate</div>
             </div>
-          </div>
-
-          <div id="ebt-margin-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
-            <div class="lbm-card">
+            <div class="lbm-card" id="ebt-margin-row">
               <div class="lbm-card-val" id="ebt-margin-val">-</div>
               <div class="lbm-card-lbl">Pre-Tax Margin</div>
             </div>
+            <div class="lbm-card" id="ebt-rating-row">
+              <div class="lbm-card-val" id="ebt-rating-val">-</div>
+              <div class="lbm-card-lbl">Margin Quality</div>
+            </div>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
-              <span class="pi-step-label">Net Income + Tax = EBT</span>
+              <span class="pi-step-label" id="ebt-step1-label">Net Income + Tax = EBT</span>
               <span class="pi-step-val" id="ebt-step1">-</span>
             </div>
             <div class="pi-step" id="ebt-step2-row">
@@ -139,37 +182,41 @@ const schema = [
     </section>
     <script src="/js/ebt-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>EBT = <strong>Net Income + Tax Expense</strong>. Example: Net Income $700K + Tax $210K = <strong>EBT $910K</strong>. Effective tax rate = Tax / EBT × 100 = <strong>23.1%</strong>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter Net Income and Tax Expense from the income statement. The calculator returns EBT and the effective tax rate (Tax / EBT × 100). Optionally enter Revenue to see Pre-Tax Margin as a percentage.</p>
-      <p>Tax Expense should be the income tax provision from the income statement - not total taxes paid (which includes payroll taxes, <a href="/tax/vat-calculator">VAT</a>, etc.).</p>
-
+      <h2 id="how-to-use">How to use this EBT calculator</h2>
+      <p>Enter <a href="/glossary/net-income">Net Income</a> and Tax Expense from the income statement. The calculator returns EBT and the effective tax rate (Tax / EBT × 100). Optionally enter Revenue to see Pre-Tax Margin as a percentage.</p>
+      <p>Tax Expense should be the <a href="/tax/income-tax-calculator">income tax provision</a> from the income statement - not total taxes paid (which includes payroll taxes, <a href="/tax/vat-calculator">VAT</a>, etc.).</p>
       <h2 id="what-is-ebt">What is EBT (Earnings Before Tax)?</h2>
       <p>EBT stands for <strong>Earnings Before Tax</strong>, also called Pre-Tax Income or Pre-Tax Profit. It is the line item on the income statement directly above Net Income, before the income tax provision is deducted.</p>
-      <p>EBT = EBIT minus Interest Expense. It represents profit after all operating and financing costs but before the tax bill. It is primarily used to:</p>
+      <p>EBT = <a href="/finance/ebit-calculator">EBIT</a> minus <a href="/glossary/interest-expense">Interest Expense</a>. It represents profit after all operating and financing costs but before the tax bill. It is primarily used to:</p>
       <ul>
         <li>Compare profitability across companies in different tax jurisdictions (different countries or tax regimes)</li>
-        <li>Calculate the <strong>effective tax rate</strong> - the actual percentage of pre-tax earnings paid in tax</li>
+        <li>Calculate the <a href="/glossary/effective-tax-rate">effective tax rate</a> - the actual percentage of pre-tax earnings paid in tax</li>
         <li>Isolate whether differences in Net Income are driven by operations, financing, or tax efficiency</li>
       </ul>
-
-      <h2 id="formula">EBT formula</h2>
+      <h3 id="explained-to-beginner">EBT explained to a beginner</h3>
+      <p>Imagine you run a food truck. In a month, you earn $10,000 in sales and spend $7,000 on ingredients, staff, and fuel - leaving $3,000 profit. Before you pay your income tax bill, that $3,000 is your EBT.</p>
+      <p>If your tax rate is 25%, you owe $750 in tax and take home $2,250 as net income. EBT is simply the profit figure the taxman starts from before calculating what you owe.</p>
+      <h2 id="formula">Earnings Before Tax formulas</h2>
+      <p>There are two ways to calculate EBT depending on which line items you have available. Both produce the same result.</p>
+      <h3>Bottom-up formula</h3>
+      <p>Start from Net Income and add back the tax provision:</p>
       <Formula expr={f.ebt} />
-      <p>You can also derive EBT from EBIT: EBT = EBIT minus Interest Expense. Both give the same result.</p>
+      <p>Use this when you're reading a published income statement and only have the bottom two lines (Net Income and Tax Expense) in front of you. It's the fastest path from a reported filing to EBT.</p>
+      <h3>Top-down formula</h3>
+      <p>Start from EBIT and subtract Interest Expense:</p>
+      <Formula expr={f.ebtTopDown} />
+      <p>Use this when you're building a financial model from scratch or when you want to understand how the capital structure (debt and interest) is reducing the taxable base. The top-down path makes the interest burden explicit rather than burying it inside the Net Income figure.</p>
       <p>Effective tax rate:</p>
       <Formula expr={f.taxRate} />
       <p>Pre-Tax Margin (when revenue is available):</p>
       <Formula expr={f.margin} />
-
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for EBT</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -183,11 +230,13 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>All four companies have the same EBT ($1M) but different Net Incomes due to varying effective tax rates. Comparing Net Income across these companies would be misleading; comparing EBT gives a level playing field.</p>
-
+      <p>All four companies have the same EBT ($1M) but different Net Incomes due to varying effective tax rates. Comparing <a href="/glossary/net-income">Net Income</a> across these companies would be misleading; comparing EBT gives a level playing field.</p>
+      <p>When I compare two companies across different jurisdictions, I start at EBT rather than Net Income - but I also check how each company gets to its EBT.</p>
+      <p>If one company's EBT is 40% below its <a href="/glossary/ebit">EBIT</a> because of a heavy interest load, the pre-tax earnings are structurally more fragile than an identical EBT generated by a debt-free competitor.</p>
+      <p>The level playing field that EBT creates on the tax side doesn't automatically extend to the financing side.</p>
       <h2 id="tax-rate">Effective tax rate vs statutory tax rate</h2>
       <p>The <strong>statutory tax rate</strong> is the published legal rate (e.g., 21% US federal corporate rate). The <strong>effective tax rate</strong> is the actual rate paid, calculated from Tax Expense / EBT.</p>
-      <p>They differ because of:</p>
+      <p>They differ because of the following factors:</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -203,21 +252,17 @@ const schema = [
         </table>
       </div>
       <p>A company with a much lower effective rate than its peers may be benefiting from tax credits, offshore structures, or timing differences. A higher effective rate may indicate non-deductible charges or one-time tax adjustments.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>An effective tax rate well below the statutory rate is worth unpacking before you accept the EBT number at face value. I've reviewed financials where a persistently low effective rate was driven by <a href="/glossary/rnd">R&amp;D</a> tax credits that were genuinely recurring - and others where it reflected a one-time deferred tax asset release that wouldn't repeat.</p>
+      <p>The distinction matters a lot if you're normalising earnings across several years: in the first case the low rate is structural, in the second it's noise.</p>
+      <h2 id="faq">Frequently asked questions about EBT</h2>
       <h3>What is EBT?</h3>
       <p>Earnings Before Tax - the profit a company earns before income tax is deducted. EBT = Net Income + Tax Expense. It is used to compare pre-tax profitability across companies in different tax environments.</p>
-
       <h3>What is the difference between EBT and Net Income?</h3>
       <p>Net Income = EBT minus Tax Expense. EBT is always higher than or equal to Net Income (a negative tax expense, meaning a tax refund or benefit, is unusual but possible).</p>
-
       <h3>What is the difference between EBT and EBIT?</h3>
       <p>EBIT = EBT + Interest Expense. EBIT removes both tax and financing costs; EBT removes only tax. EBIT is used when comparing companies with different debt levels; EBT is used when comparing companies in different tax regimes.</p>
-
       <h3>Can EBT be negative?</h3>
       <p>Yes. A company with pre-tax losses has negative EBT. In most jurisdictions, a loss generates a tax benefit (deferred tax asset), so Net Income may be less negative than EBT, or sometimes a small positive number despite a pre-tax loss.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/ebitda-calculator', blurb: 'Calculate EBITDA - adds back Interest, Tax, and D&A.' },
@@ -225,10 +270,7 @@ const schema = [
         { path: '/finance/ebitda-margin-calculator', blurb: 'EBITDA Margin = EBITDA / Revenue × 100.' },
         { path: '/math/percentage-calculator', blurb: 'General percentage calculator for financial ratios.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/ebt-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

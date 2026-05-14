@@ -55,6 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
     return n.toLocaleString('en-US', { maximumFractionDigits: 2 });
   }
 
+  function getMarginRating(margin) {
+    if (margin < 0)  return 'Operating loss';
+    if (margin < 3)  return 'Break-even';
+    if (margin < 10) return 'Thin margins';
+    if (margin < 20) return 'Healthy';
+    if (margin < 35) return 'Strong';
+    return 'Exceptional';
+  }
+
   function calculate() {
     let intermediate, ebit, revenue = NaN;
 
@@ -90,7 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const marginRow = document.getElementById('ebit-margin-row');
     if (!isNaN(revenue) && revenue !== 0) {
-      document.getElementById('ebit-margin-val').textContent = ((ebit / revenue) * 100).toFixed(1) + '%';
+      const margin = (ebit / revenue) * 100;
+      document.getElementById('ebit-margin-val').textContent = margin.toFixed(1) + '%';
+      document.getElementById('ebit-rating-val').textContent = getMarginRating(margin);
       marginRow.classList.remove('hidden');
     } else {
       marginRow.classList.add('hidden');

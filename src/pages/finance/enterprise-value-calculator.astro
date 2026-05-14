@@ -32,9 +32,11 @@ const sources: Source[] = [
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
-  { id: 'formula',       label: 'Enterprise Value formula' },
-  { id: 'ev-vs-mktcap',  label: 'EV vs. market cap' },
-  { id: 'multiples',     label: 'EV/EBITDA & EV/Revenue' },
+  { id: 'formula',              label: 'Enterprise Value formula' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'ev-vs-mktcap',         label: 'EV vs. market cap' },
+  { id: 'what-is-a-multiple', label: 'What is a valuation multiple?' },
+  { id: 'multiples',          label: 'EV/EBITDA & EV/Revenue' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'benchmarks',    label: 'Industry multiples' },
   { id: 'faq',           label: 'FAQs' },
@@ -89,6 +91,9 @@ const schema = [
 
 <CalculatorLayout
   title="Enterprise Value Calculator"
+  youtubeId="gZGvFI_5nKM"
+  youtubeUploadDate="2026-05-13"
+  youtubeSummary="A common mistake when calculating enterprise value is using the book value of debt instead of the market value. For publicly traded debt, the more accurate approach is to use the current trading price. For private companies where a market value isn't available, the book value is an acceptable approximation."
   metaTitle="Enterprise Value Calculator - EV/EBITDA & EV/Revenue"
   description="Calculate Enterprise Value (EV) from market cap, total debt, and cash. Instantly see EV/EBITDA and EV/Revenue multiples with industry benchmarks."
   canonical="https://calculations.tools/finance/enterprise-value-calculator"
@@ -106,42 +111,36 @@ const schema = [
           <h2>Calculate Enterprise Value (EV)</h2>
           <p>Total acquisition cost - equity plus net debt</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ev-market-cap">Market Capitalisation</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ev-market-cap" class="bmi-input" placeholder="e.g. 500000000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ev-debt">+ Total Debt (short-term + long-term)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ev-debt" class="bmi-input" placeholder="e.g. 100000000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ev-cash">− Cash &amp; Equivalents</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ev-cash" class="bmi-input" placeholder="e.g. 50000000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ev-ebitda">EBITDA (optional - for EV/EBITDA multiple)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ev-ebitda" class="bmi-input" placeholder="e.g. 40000000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ev-revenue">Revenue (optional - for EV/Revenue multiple)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ev-revenue" class="bmi-input" placeholder="e.g. 200000000" />
           </div>
         </div>
-
         <div id="ev-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -153,7 +152,6 @@ const schema = [
               <div class="lbm-card-lbl">Market Cap</div>
             </div>
           </div>
-
           <div class="lbm-cards" style="margin-top:0.5rem;">
             <div class="lbm-card">
               <div class="lbm-card-val" id="ev-debt-out">-</div>
@@ -164,7 +162,6 @@ const schema = [
               <div class="lbm-card-lbl">Cash</div>
             </div>
           </div>
-
           <div id="ev-multiples-row" class="lbm-cards" style="margin-top:0.5rem;">
             <div class="lbm-card">
               <div class="lbm-card-val" id="ev-ebitda-multiple">-</div>
@@ -175,7 +172,6 @@ const schema = [
               <div class="lbm-card-lbl">EV/Revenue</div>
             </div>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
@@ -197,28 +193,28 @@ const schema = [
     <script src="/js/enterprise-value-calculator.js" is:inline></script>
   <FinanceDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>Enterprise Value = <strong>Market Cap + Total Debt − Cash &amp; Equivalents</strong>. Example: $500M market cap + $100M debt − $50M cash = <strong>EV $550M</strong>. At $40M EBITDA: <strong>EV/EBITDA = 13.8x</strong>.</p>
+        <p><a href="/glossary/enterprise-value">Enterprise Value</a> = Market Cap + Total Debt − Cash &amp; Equivalents. Example: $500M market cap + $100M debt − $50M cash = EV $550M. At $40M EBITDA: EV/EBITDA = 13.8x.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter <strong>Market Capitalisation</strong> (share price × shares outstanding - find on any financial data site), <strong>Total Debt</strong> (short-term + long-term debt from the balance sheet), and <strong>Cash &amp; Equivalents</strong> (cash + short-term investments). Optionally enter <strong>EBITDA</strong> and <strong>Revenue</strong> to calculate the EV/EBITDA and EV/Revenue valuation multiples.</p>
+      <h2 id="how-to-use">How to use this EV calculator</h2>
+      <p>Enter <strong>Market Capitalisation</strong> (share price × shares outstanding - find on any financial data site), <strong>Total Debt</strong> (short-term + long-term debt from the balance sheet), and <strong>Cash &amp; Equivalents</strong> (cash + short-term investments). Optionally enter <strong><a href="/finance/ebitda-calculator">EBITDA</a></strong> and <strong>Revenue</strong> to calculate the <a href="/glossary/ev-ebitda">EV/EBITDA</a> and EV/Revenue valuation multiples.</p>
       <p>Use figures from the same date. For a valuation context, use the latest reported balance sheet data paired with last twelve months (LTM) EBITDA and revenue.</p>
-
       <h2 id="formula">Enterprise Value formula</h2>
       <p>Enterprise Value represents the theoretical total acquisition cost of a business - what an acquirer would pay to own 100% of the company, assuming they take on all debt but receive all cash:</p>
       <Formula expr={f.ev} />
       <p>The logic: an acquirer must pay market cap to equity holders, assume responsibility for all debt, but gains immediate access to the cash balance. Net debt (Total Debt − Cash) therefore adjusts the equity price to the true cost of taking over the business.</p>
+      <h3>Enterprise value multiples</h3>
       <p>EV multiples are derived by dividing enterprise value by an earnings or revenue metric:</p>
       <Formula expr={f.evEbitda} />
       <Formula expr={f.evRev} />
       <p>EV/EBITDA is the most widely used valuation multiple in M&amp;A and private equity because it is capital-structure-neutral and comparable across different geographies and tax jurisdictions.</p>
-
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Imagine you want to buy a house. The asking price is $500,000 - that's like market cap. But the house has a $200,000 mortgage attached to it (debt you must take on) and $50,000 cash sitting in a safe inside (which you immediately get).</p>
+      <p>To own the house outright, you need $500,000 + $200,000 - $50,000 = $650,000. That's Enterprise Value - the true all-in cost of taking over the property.</p>
+      <p>Enterprise Value does the same thing for a company: it adjusts the share price for the debt burden and cash balance, so two companies can be compared on equal terms regardless of how they're financed.</p>
       <h2 id="ev-vs-mktcap">Enterprise Value vs. market capitalisation</h2>
       <p>Market cap is the value of a company's equity - shares outstanding × share price. Enterprise Value is the total value of the business including all sources of capital:</p>
       <div class="responsive-table">
@@ -229,12 +225,21 @@ const schema = [
           <tbody>
             <tr><td>What it measures</td><td>Equity value only</td><td>Total business value (equity + net debt)</td></tr>
             <tr><td>Affected by capital structure</td><td>Yes</td><td>No - capital-structure-neutral</td></tr>
-            <tr><td>Use case</td><td>P/E ratio, shareholder returns</td><td>M&amp;A, LBO, cross-company comparisons</td></tr>
-            <tr><td>Paired metric</td><td>Earnings (EPS, net income)</td><td>EBITDA, Revenue, EBIT</td></tr>
+            <tr><td>Use case</td><td><a href="/finance/pe-ratio-calculator">P/E ratio</a>, shareholder returns</td><td>M&amp;A, LBO, cross-company comparisons</td></tr>
+            <tr><td>Paired metric</td><td>Earnings (<a href="/glossary/eps">EPS</a>, <a href="/glossary/net-income">net income</a>)</td><td>EBITDA, Revenue, EBIT</td></tr>
             <tr><td>Affected by leverage</td><td>Yes - debt raises risk, affects P/E</td><td>No - debt/cash is already in EV</td></tr>
           </tbody>
         </table>
       </div>
+
+      <h2 id="what-is-a-multiple">What is a valuation multiple?</h2>
+      <p>A <a href="/glossary/valuation-multiple">valuation multiple</a> expresses the price of a business as a ratio of a financial metric. When analysts say a company trades at "12x EBITDA," they mean its Enterprise Value equals 12 times its annual <a href="/glossary/ebitda">EBITDA</a>.</p>
+      <p>The multiple compresses the entire valuation into one number that can be compared across companies, sectors, and time periods - answering the question: is this business priced cheaply or expensively relative to what it earns?</p>
+      <h3>Enterprise Value multiples vs. Equity multiples</h3>
+      <p>Multiples fall into two families. Enterprise Value multiples (EV/EBITDA, EV/Revenue, EV/EBIT) put EV in the numerator and pair it with metrics that belong to all capital providers.</p>
+      <p>Equity multiples (<a href="/glossary/pe-ratio">P/E</a>, Price/Book) use market cap and pair it with metrics that belong only to shareholders.</p>
+      <p>The cardinal rule: always match numerator to denominator. EV against EBITDA - correct. Market cap against EBITDA - meaningless.</p>
+      <p>A multiple only tells you something when you compare it against a benchmark - the same industry, a similar stage of growth, and the same rate environment. A company at 15x EV/EBITDA might be cheap if its sector median is 20x, or expensive if the median is 8x.</p>
 
       <h2 id="multiples">EV/EBITDA and EV/Revenue multiples</h2>
       <p>EV multiples answer the question: "how many times earnings (or revenue) is the market valuing this business?" A lower multiple indicates a cheaper valuation relative to earnings; a higher multiple implies growth expectations are priced in.</p>
@@ -244,15 +249,15 @@ const schema = [
             <tr><th>Multiple</th><th>Measures</th><th>Best for</th><th>Limitation</th></tr>
           </thead>
           <tbody>
-            <tr><td>EV/EBITDA</td><td>Earnings-based valuation</td><td>Profitable businesses; M&amp;A; LBO screening</td><td>Ignores CapEx; unsuitable for loss-makers</td></tr>
+            <tr><td>EV/EBITDA</td><td>Earnings-based valuation</td><td>Profitable businesses; M&amp;A; LBO screening</td><td>Ignores <a href="/glossary/capex">CapEx</a>; unsuitable for loss-makers</td></tr>
             <tr><td>EV/Revenue</td><td>Revenue-based valuation</td><td>High-growth, pre-profit companies (SaaS, biotech)</td><td>Doesn't account for profitability differences</td></tr>
-            <tr><td>EV/EBIT</td><td>Operating income valuation</td><td>Capital-intensive businesses (D&amp;A is real cost)</td><td>More volatile than EBITDA</td></tr>
-            <tr><td>EV/FCF</td><td>Cash-flow-based valuation</td><td>Cash-generative mature businesses</td><td>FCF can be distorted by CapEx timing</td></tr>
+            <tr><td>EV/EBIT</td><td>Operating income valuation</td><td>Capital-intensive businesses (<a href="/glossary/depreciation-amortization">D&amp;A</a> is real cost)</td><td>More volatile than EBITDA</td></tr>
+            <tr><td>EV/FCF</td><td>Cash-flow-based valuation</td><td>Cash-generative mature businesses</td><td><a href="/glossary/free-cash-flow">FCF</a> can be distorted by CapEx timing</td></tr>
           </tbody>
         </table>
       </div>
 
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for enterprise value</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -267,6 +272,8 @@ const schema = [
         </table>
       </div>
       <p>Note the cash-heavy tech company: its market cap is $800M but EV is only $400M because $400M of the share price is just cash. The EV/EBITDA of 6.7x reflects the value of the operating business alone.</p>
+      <p>When I screen acquisition targets, the EV/EBITDA spread within a sector tells me more than the absolute multiple. In the table above, the SaaS startup at 22.5x and the manufacturing company at 7.2x are not necessarily mis-priced relative to each other - the market is pricing in very different growth runways.</p>
+      <p>I've found that comparing EV/EBITDA across growth stages almost always misleads; the multiple is most useful when comparing companies at a similar stage in their lifecycle with similar capital intensity.</p>
 
       <h2 id="benchmarks">EV/EBITDA benchmarks by industry</h2>
       <div class="responsive-table">
@@ -285,24 +292,19 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>When I use industry multiple benchmarks in practice, I always cross-reference against recent comparable transactions, not just published ranges. A sector that traded at 8x pre-2022 may now trade at 5x due to rate changes - using a stale benchmark would overvalue the target by 60%.</p>
+      <p>The ranges above are a reasonable orientation, but always calibrate against the most recent public comps and closed deal multiples in the same sub-sector.</p>
+      <h2 id="faq">Frequently asked questions about enterprise value</h2>
       <h3>What is Enterprise Value?</h3>
       <p>Enterprise Value (EV) is the total value of a business including both equity and net debt. It represents what an acquirer would theoretically pay to own 100% of the company: EV = Market Cap + Total Debt − Cash. It is the preferred starting point for valuation because it is capital-structure-neutral.</p>
-
       <h3>Why subtract cash from Enterprise Value?</h3>
       <p>In an acquisition, the buyer gains ownership of all the company's cash, which reduces their net cost. If you buy a company for its market cap but the company holds $50M in cash, your effective outlay for the operating business is market cap minus $50M. Enterprise Value normalises for this by treating net debt (debt minus cash) as the adjustment to equity value.</p>
-
       <h3>What is a good EV/EBITDA multiple?</h3>
       <p>Depends entirely on the industry and growth profile. SaaS companies: 15x–30x+. Healthcare: 10x–18x. Manufacturing: 6x–12x. Retail: 4x–8x. Compare against direct industry peers and historical averages, not cross-sector benchmarks.</p>
-
       <h3>Can Enterprise Value be negative?</h3>
       <p>Yes, when cash exceeds market cap plus debt. This means the stock trades below its net cash value - theoretically cheap, but usually signals the market is pricing in significant operational losses or risks that will consume the cash balance.</p>
-
       <h3>What debt should I include in the EV calculation?</h3>
-      <p>Include all interest-bearing financial debt: short-term bank debt, long-term bonds, term loans, revolving credit facilities, finance/capital leases, and the current portion of long-term debt. Exclude non-financial liabilities like accounts payable, deferred revenue, and accrued expenses - these are already captured in the EBITDA or cash flow metrics used alongside EV.</p>
-
+      <p>Include all interest-bearing financial debt: short-term bank debt, long-term bonds, term loans, revolving credit facilities, finance/capital leases, and the current portion of long-term debt. Exclude non-financial liabilities like accounts payable, deferred revenue, and accrued expenses - these are already captured in the EBITDA or <a href="/finance/free-cash-flow-calculator">cash flow</a> metrics used alongside EV.</p>
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/ebitda-calculator',          blurb: 'Calculate EBITDA - the most common denominator for EV multiples.' },
@@ -310,10 +312,7 @@ const schema = [
         { path: '/finance/pe-ratio-calculator',        blurb: 'Price-to-Earnings ratio from stock price and EPS.' },
         { path: '/finance/working-capital-calculator', blurb: 'Working Capital and Current Ratio from balance sheet data.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/enterprise-value-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

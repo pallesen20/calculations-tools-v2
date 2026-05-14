@@ -33,8 +33,9 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',      label: 'How to use' },
-  { id: 'what-is-ebitda',  label: 'What is EBITDA?' },
-  { id: 'formula',         label: 'EBITDA formula' },
+  { id: 'what-is-ebitda',        label: 'What is EBITDA?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',               label: 'EBITDA formula' },
   { id: 'examples',        label: 'Worked examples' },
   { id: 'valuation',       label: 'EBITDA in valuation' },
   { id: 'limitations',     label: 'Limitations' },
@@ -209,36 +210,38 @@ const schema = [
     <div class="seo-container">
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>EBITDA = <strong>Net Income + Interest + Tax + D&amp;A</strong>. Example: Net Income $5M + Tax $1.5M + Interest $500K + D&amp;A $800K = <strong>EBITDA $7.8M</strong>. EBITDA Margin = EBITDA / Revenue × 100.</p>
+        <p>EBITDA = <strong>Net Income + Interest + Tax + D&amp;A</strong>. Example: <a href="/glossary/net-income">Net Income</a> $5M + Tax $1.5M + Interest $500K + D&amp;A $800K = <strong>EBITDA $7.8M</strong>. EBITDA Margin = EBITDA / Revenue × 100.</p>
       </div>
-
       <h2 id="how-to-use">How to use this EBITDA calculator</h2>
       <p>Choose your method with the toggle at the top of the calculator:</p>
       <ul>
-        <li><strong>From Net Income (bottom-up):</strong> enter Net Income, Tax Expense, Interest Expense, and <a href="/glossary/dna">D&amp;A</a>. The calculator shows <a href="/finance/ebt-calculator">EBT</a> and <a href="/finance/ebit-calculator">EBIT</a> as intermediate steps, then EBITDA. Enter Revenue optionally to get EBITDA Margin.</li>
-        <li><strong>From Revenue (top-down):</strong> enter Revenue, <a href="/glossary/cogs">COGS</a>, and <a href="/glossary/operating-expenses">Operating Expenses</a> <strong>excluding D&amp;A</strong>. Because D&amp;A is excluded from OpEx, the result is already EBITDA - not EBIT. EBITDA Margin is shown automatically since Revenue is already entered.</li>
+        <li><strong>From Net Income (bottom-up):</strong> enter Net Income, Tax Expense, <a href="/glossary/interest-expense">Interest Expense</a>, and <a href="/glossary/depreciation-amortization">D&amp;A</a>. The calculator shows <a href="/finance/ebt-calculator">EBT</a> and <a href="/finance/ebit-calculator">EBIT</a> as intermediate steps, then EBITDA. Enter Revenue optionally to get EBITDA Margin.</li>
+        <li><strong>From Revenue (top-down):</strong> enter Revenue, <a href="/glossary/cogs">COGS</a>, and <a href="/glossary/operating-expenses">Operating Expenses</a> excluding D&amp;A. Because D&amp;A is excluded from OpEx, the result is already EBITDA - not EBIT. EBITDA Margin is shown automatically since Revenue is already entered.</li>
       </ul>
       <p>Enter all figures in the same currency unit (e.g., all in thousands, or all in millions). The result cards abbreviate large numbers for display.</p>
-
       <h2 id="what-is-ebitda">What is EBITDA?</h2>
       <p>EBITDA stands for <strong><a href="/glossary/ebitda">Earnings Before Interest, Taxes, Depreciation, and Amortization</a></strong>. It measures how much profit a business generates from its core operations, before the effects of how it is financed (interest), where it is taxed (taxes), and how it accounts for capital investment (D&amp;A).</p>
       <p>Because it strips out these financing and accounting variables, EBITDA allows you to compare the operational performance of two companies regardless of their capital structure or tax jurisdiction - a key requirement in M&amp;A (Mergers and Acquisitions) analysis, private equity valuation, and bank lending.</p>
       <p>EBITDA is not a GAAP metric. It does not appear on a standard income statement. You calculate it by starting from Net Income and adding back the four removed items.</p>
-
-      <h2 id="formula">EBITDA formula</h2>
+      <h3 id="explained-to-beginner">EBITDA explained to a beginner</h3>
+      <p>Imagine you own a bakery. This year you earned $200,000 in sales and spent $120,000 on ingredients and staff, leaving $80,000 <a href="/glossary/operating-profit">operating profit</a>. But you also paid $10,000 in interest on your oven loan, $15,000 in taxes, and your accountant wrote off $5,000 in equipment wear (depreciation). Your net income is $50,000.</p>
+      <p>EBITDA simply adds all four items back: $50,000 + $15,000 tax + $10,000 interest + $5,000 D&A = $80,000. That $80,000 is what the bakery earned from baking - before the bank, the taxman, and the accountant's write-offs got involved.</p>
+      <p>It lets you compare two bakeries on equal footing even if they borrowed different amounts or operate in different tax regions.</p>
+      <h2 id="formula">EBITDA formulas</h2>
       <p>There are two equivalent methods:</p>
-      <p><strong>Bottom-up (most common)</strong> - starts from Net Income on the income statement:</p>
+      <h3>Bottom-up (most common)</h3>
+      <p>This is the most frequently used formula for calculating EBITDA. It starts from Net Income on the income statement:</p>
       <Formula expr={f.ebt} />
       <Formula expr={f.ebit} />
       <Formula expr={f.ebitda} />
       <p>Or in one line:</p>
       <Formula expr={f.bottomUp} />
-      <p><strong>Top-down</strong> - starts from Revenue and works down to operating profit before D&amp;A:</p>
+      <h3>Top-down</h3>
+      <p>This formula starts from Revenue and works down to operating profit before D&amp;A:</p>
       <Formula expr={f.topDown} />
       <p>Both methods yield the same EBITDA. The bottom-up method is preferred in practice because all inputs are clearly labelled line items on the income statement. The top-down method is useful when you want to verify operating cost structure.</p>
       <p><a href="/finance/ebitda-margin-calculator">EBITDA Margin</a> converts EBITDA into a comparable percentage:</p>
       <Formula expr={f.margin} />
-
       <h2 id="examples">Worked examples for EBITDA</h2>
       <div class="responsive-table">
         <table>
@@ -254,9 +257,11 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>The telecom row in the table above illustrates why context matters when reading EBITDA. D&A of $65M adds back more than the net income itself, lifting EBITDA to $200M from an $80M net income base.</p>
+      <p>That 2.5x difference is not hidden profit - it reflects the physical infrastructure (towers, cables, switches) that telcos <a href="/glossary/depreciation-amortization">depreciate</a> over decades. Reading the EBITDA figure without understanding the CapEx required to maintain those assets gives a misleading picture of the cash economics.</p>
+      <p>For capital-intensive businesses, I always pair EBITDA with a CapEx intensity check before drawing any conclusions.</p>
       <h2 id="valuation">EBITDA in valuation</h2>
-      <p>EBITDA is the denominator in the most widely used valuation multiple in private markets: <strong><a href="/glossary/ev-ebitda">EV/EBITDA</a></strong> (Enterprise Value divided by EBITDA). It measures how many years of EBITDA it would take to pay back the <a href="/finance/enterprise-value-calculator">full enterprise value</a> of the business.</p>
+      <p>EBITDA is the denominator in the most widely used <a href="/glossary/valuation-multiple">valuation multiple</a> in private markets: <strong>EV/EBITDA</strong> (<a href="/glossary/ev-ebitda">Enterprise Value divided by EBITDA</a>). It measures how many years of EBITDA it would take to pay back the <a href="/finance/enterprise-value-calculator">full enterprise value</a> of the business.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -275,7 +280,6 @@ const schema = [
       <p>Lenders also use EBITDA in leverage covenants. A typical leveraged buyout covenant might require <em>Net Debt / EBITDA &le; 4.0x</em>. If EBITDA falls, the company may breach the covenant and trigger a renegotiation or accelerated repayment.</p>
       <p><strong>Adjusted EBITDA</strong> adds back non-recurring items (restructuring charges, one-time legal settlements, stock-based compensation) to produce a "normalised" figure. In M&amp;A, sellers typically present Adjusted EBITDA; buyers scrutinise each add-back carefully.</p>
       <p>When I review a seller's Adjusted EBITDA in a deal, the first thing I do is rebuild it from reported EBITDA line by line. If the same restructuring charge appears in two or three consecutive years of the reconciliation, it is not non-recurring - and accepting it as an add-back overstates the normalised earnings of the business.</p>
-
       <h2 id="limitations">Limitations of EBITDA</h2>
       <p>EBITDA has well-known critics. Charlie Munger called it "bullshit earnings" because it excludes depreciation - a real economic cost that reflects capital consumption. Warren Buffett noted that EBITDA ignores the <a href="/glossary/capex">CapEx</a> required to maintain and grow a business.</p>
       <p>Key limitations to understand:</p>
@@ -286,27 +290,19 @@ const schema = [
         <li><strong>Not cash flow:</strong> EBITDA ignores changes in working capital. A company with growing EBITDA but deteriorating receivables can still run out of cash.</li>
       </ul>
       <p>The CapEx blind spot is the one that bites acquirers most often. I've reviewed deals where a 10x EBITDA multiple looked reasonable on paper, until the maintenance CapEx requirements were pulled out - a business generating $20M EBITDA but spending $15M annually on capital to maintain operations is producing $5M of real cash, not $20M.</p>
-
       <h2 id="faq">Frequently asked questions about EBITDA</h2>
-
       <h3>What is EBITDA?</h3>
       <p>Earnings Before Interest, Taxes, Depreciation, and Amortization. It measures operating profitability by adding back four non-operating or non-cash items to Net Income, enabling comparisons across companies with different capital structures and tax situations.</p>
-
       <h3>What is the EBITDA formula?</h3>
       <p>EBITDA = Net Income + Interest Expense + Tax Expense + Depreciation + Amortization. Equivalently: Revenue minus COGS minus operating expenses (excluding D&amp;A).</p>
-
       <h3>What is a good EBITDA margin?</h3>
       <p>It depends heavily on the industry. SaaS typically targets 20–30%, telecom 30–40%, manufacturing 10–20%, retail 5–10%. Compare against sector peers, not an absolute threshold.</p>
-
       <h3>What is the difference between EBITDA and EBIT?</h3>
       <p><a href="/glossary/ebit">EBIT</a> stops at operating income - it includes D&amp;A as expenses. EBITDA adds D&amp;A back, making it higher and closer to operating cash flow. The difference matters most in capital-intensive industries with large D&amp;A charges.</p>
-
       <h3>What is Adjusted EBITDA?</h3>
       <p>Adjusted EBITDA further adds back non-recurring items: restructuring costs, M&amp;A expenses, one-time charges, or stock-based compensation. It aims to show "normal" operating profitability. Always scrutinise add-backs - some are genuinely one-time, others recur every year.</p>
-
       <h3>Can EBITDA be negative?</h3>
       <p>Yes. A company running operating losses will have negative EBITDA. This is common in early-stage startups and distressed businesses. Negative EBITDA means the core business is not yet profitable even before non-cash charges.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/ebit-calculator',          blurb: 'Calculate EBIT (Operating Income) - Net Income + Interest + Tax.' },
@@ -314,10 +310,7 @@ const schema = [
         { path: '/finance/ebitda-margin-calculator', blurb: 'EBITDA Margin = EBITDA / Revenue × 100.' },
         { path: '/math/percentage-calculator',       blurb: 'General percentage calculator for financial ratios.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/ebitda-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

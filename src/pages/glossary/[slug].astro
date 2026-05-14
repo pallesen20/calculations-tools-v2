@@ -75,6 +75,13 @@ const schema = [
     <h2 class="gl-what-is">What is {term.term}?</h2>
     {content?.definition.map(para => <p>{para}</p>)}
 
+    {content?.beginnerExplain && (
+      <>
+        <h3 id="explained-to-beginner">Explained to a beginner</h3>
+        <p>{content.beginnerExplain}</p>
+      </>
+    )}
+
     {content?.whenToUse && (
       <>
         <h2>When to use {term.term}</h2>

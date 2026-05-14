@@ -12,6 +12,7 @@ const f = {
 const tocItems = [
   { id: 'how-to-use',         label: 'How to use' },
   { id: 'what-is-margin',     label: 'What is EBITDA Margin?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'formula',            label: 'Formula' },
   { id: 'industry-benchmarks', label: 'Industry benchmarks' },
   { id: 'examples',           label: 'Worked examples' },
@@ -63,6 +64,9 @@ const schema = [
 
 <CalculatorLayout
   title="EBITDA Margin Calculator"
+  youtubeId="q34fDR0162k"
+  youtubeUploadDate="2026-05-13"
+  youtubeSummary="Be careful about comparing EBITDA margins across very different industries. A 15% margin is excellent for a grocery chain but weak for a software company. Always compare margins within the same industry vertical."
   metaTitle="EBITDA Margin Calculator | Formula & Benchmarks"
   description="Calculate EBITDA Margin as a percentage of revenue. See the interpretation and step-by-step workings. Compare against industry benchmarks by sector."
   canonical="https://calculations.tools/finance/ebitda-margin-calculator"
@@ -79,21 +83,18 @@ const schema = [
           <h2>Calculate EBITDA Margin Instantly</h2>
           <p>Divide EBITDA by Revenue to get the margin</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ebitdam-ebitda">EBITDA</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ebitdam-ebitda" class="bmi-input" placeholder="e.g. 7800000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ebitdam-revenue">Revenue</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ebitdam-revenue" class="bmi-input" placeholder="e.g. 40000000" />
           </div>
         </div>
-
         <div id="ebitdam-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -105,7 +106,6 @@ const schema = [
               <div class="lbm-card-lbl">Interpretation</div>
             </div>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
@@ -122,29 +122,28 @@ const schema = [
     </section>
     <script src="/js/ebitda-margin-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>EBITDA Margin = <strong>EBITDA / Revenue × 100</strong>. Example: EBITDA $7.8M on Revenue $40M = <strong>19.5% EBITDA Margin</strong>. A margin above 15% is generally considered healthy across most industries.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter EBITDA and Revenue in the same currency unit. The calculator returns the EBITDA Margin as a percentage with a general interpretation. Use the <a href="/finance/ebitda-calculator">EBITDA Calculator</a> first if you need to derive EBITDA from Net Income, Interest, Tax, and D&amp;A.</p>
-
+      <h2 id="how-to-use">How to use this EBITDA Margin calculator</h2>
+      <p>Enter EBITDA and Revenue in the same currency unit. The calculator returns the EBITDA Margin as a percentage with a general interpretation. Use the <a href="/finance/ebitda-calculator">EBITDA Calculator</a> first if you need to derive EBITDA from <a href="/glossary/net-income">Net Income</a>, Interest, Tax, and <a href="/glossary/depreciation-amortization">D&amp;A</a>.</p>
       <h2 id="what-is-margin">What is EBITDA Margin?</h2>
-      <p>EBITDA Margin measures how much of every dollar of revenue becomes EBITDA - operating profit before the effects of financing, taxes, and non-cash depreciation charges. It is a key measure of operational efficiency and is the primary profitability metric used in private equity, M&amp;A, and business valuations.</p>
+      <p>First of all, <a href="/glossary/ebitda">EBITDA</a> stands for Earnings Before Interest, Taxes, Depreciation, and Amortization. EBITDA Margin measures how much of every dollar of revenue becomes EBITDA - operating profit before the effects of financing, taxes, and non-cash depreciation charges. It is a key measure of operational efficiency and is the primary profitability metric used in private equity, M&amp;A, and business valuations.</p>
       <p>Unlike absolute EBITDA, the margin is scale-independent: a $10M EBITDA on $30M revenue (33% margin) represents a more profitable business than $20M EBITDA on $200M revenue (10% margin).</p>
       <p>Investors and acquirers use EBITDA Margin to benchmark a target company against sector peers. A significantly lower margin than peers suggests either a cost problem or a pricing problem; a significantly higher margin may indicate a competitive moat.</p>
+      <h3 id="explained-to-beginner">EBITDA Margin explained to a beginner</h3>
+      <p>Imagine you run a lemonade stand. You sell $100 worth of lemonade in a day. After paying for lemons, sugar, and cups, you have $30 left - before paying taxes or the loan on your stand. That $30 / $100 = a 30% EBITDA Margin.</p>
+      <p>It tells you: for every dollar of sales, 30 cents becomes raw operating profit before the taxman and the bank take their cut. The higher that percentage, the more efficiently your stand turns sales into profit.</p>
 
       <h2 id="formula">EBITDA Margin formula</h2>
       <Formula expr={f.margin} />
       <p>If you need to calculate EBITDA first, use the bottom-up formula:</p>
       <Formula expr={f.ebitda} />
 
-      <h2 id="industry-benchmarks">Industry benchmarks</h2>
+      <h2 id="industry-benchmarks">Industry benchmarks comparisons</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -165,8 +164,10 @@ const schema = [
         </table>
       </div>
       <p>These ranges are indicative. Individual company margins vary based on competitive position, business model, and geographic mix. Always benchmark against direct peers at the same stage of growth.</p>
+      <p>When I compare EBITDA margins across sectors, the gap between telecom (30-40%) and grocery (3-8%) isn't a sign of efficiency - it reflects structurally different business models.</p>
+      <p>Telecom's high margin is largely a D&A add-back from heavy network assets; the underlying cash economics look far more modest once you account for the capital intensity. Cross-sector comparisons using EBITDA Margin almost always mislead.</p>
 
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for EBITDA Margin</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -181,6 +182,10 @@ const schema = [
           </tbody>
         </table>
       </div>
+
+      <p>When I review acquisition targets, the margin trend matters just as much as the current figure.</p>
+      <p>A SaaS company moving from 10% to 20% over three years tells a different story than one holding flat at 25% - the expanding margin signals operating leverage kicking in, which typically supports a higher <a href="/glossary/valuation-multiple">valuation multiple</a>.</p>
+      <p>I usually look at rolling 12-month margins rather than single-period snapshots to smooth out seasonal distortion before drawing any conclusions.</p>
 
       <h2 id="improve">How to improve EBITDA Margin</h2>
       <p>EBITDA Margin = EBITDA / Revenue. It improves when EBITDA grows faster than revenue, or when costs fall while revenue is held constant.</p>
@@ -199,10 +204,10 @@ const schema = [
         </table>
       </div>
 
-      <h2 id="faq">Frequently asked questions</h2>
+      <h2 id="faq">Frequently asked questions about EBITDA Margin</h2>
 
       <h3>What is EBITDA Margin?</h3>
-      <p>EBITDA Margin = EBITDA / Revenue × 100. It measures what percentage of revenue becomes operating profit before interest, tax, and non-cash D&amp;A charges. It is the standard margin metric in private equity and M&amp;A analysis.</p>
+      <p>EBITDA Margin = EBITDA / Revenue × 100. It measures what percentage of revenue becomes operating profit before interest, tax, and non-cash D&amp;A charges. It is the standard margin metric in private equity and M&amp;A (Mergers and Acquisitions) analysis.</p>
 
       <h3>What is a good EBITDA Margin?</h3>
       <p>Above 15% is generally healthy across most industries. SaaS companies often target 20–30%; telecom 30–40%; retail 5–10%. Always benchmark against sector peers, not an absolute threshold.</p>
@@ -214,7 +219,7 @@ const schema = [
       <p>Yes. If EBITDA is negative (operating losses exceed D&amp;A add-backs), the EBITDA Margin is negative. This is common in pre-profitability startups or distressed businesses. Negative EBITDA Margin means the core business model is not yet generating operating profit.</p>
 
       <h3>Does a higher EBITDA Margin always mean a better business?</h3>
-      <p>Not always. Some high-margin businesses underinvest in growth. A company with a 40% EBITDA Margin but zero CapEx may be depreciating away a competitive asset base. Always consider EBITDA Margin alongside growth rate, return on invested capital, and free cash flow yield.</p>
+      <p>Not always. Some high-margin businesses underinvest in growth. A company with a 40% EBITDA Margin but zero <a href="/glossary/capex">CapEx</a> may be depreciating away a competitive asset base. Always consider EBITDA Margin alongside growth rate, return on invested capital, and <a href="/finance/free-cash-flow-calculator">free cash flow</a> yield.</p>
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[

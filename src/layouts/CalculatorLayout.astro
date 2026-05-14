@@ -114,7 +114,7 @@ const iframeSnippet = embedUrl
               <img src="/jesper.webp" height="50" width="50" alt="Jesper Pallesen" />
               <div class="author-box">
                 <span class="eyebrow">Created by</span>
-                <a class="author" href="/about-us/jesper-pallesen">Jesper Pallesen</a>
+                <a class="author" href="/about-us/jesper-pallesen" id="author-link">Jesper Pallesen</a>
               </div>
               <div class="last-updated">
                 <span class="eyebrow">Last updated</span>
@@ -122,6 +122,20 @@ const iframeSnippet = embedUrl
               </div>
             </aside>
             <span class="author-credential">{_credential}</span>
+            <div class="author-tooltip" id="author-tooltip" role="tooltip" aria-hidden="true">
+              <div class="at-header">
+                <img src="/jesper.webp" width="52" height="52" alt="Jesper Pallesen" class="at-photo" />
+                <div class="at-name-block">
+                  <div class="at-name">Jesper Pallesen</div>
+                  <a class="at-link" href="https://www.linkedin.com/in/jesperpallesen20/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
+              </div>
+              <p class="at-bio">Developer with a Business & Economics degree. Data analytics enthusiast and passionate stock investor. Founder of calculations.tools. Former professional hockey player.</p>
+              <div class="at-footer">
+                <a href="/about-us/jesper-pallesen" class="at-link">See author page</a>
+                <a href="/editorial-standards" class="at-link">See editorial standards</a>
+              </div>
+            </div>
           </div>
           {tocItems.length > 0 && (
             <nav class="toc" aria-label="Table of contents">
@@ -184,6 +198,31 @@ const iframeSnippet = embedUrl
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'embed_code_copied', method: 'keyboard' });
   });
+
+  const authorLink = document.getElementById('author-link');
+  const authorTooltip = document.getElementById('author-tooltip');
+  if (authorLink && authorTooltip) {
+    let hideTimer: ReturnType<typeof setTimeout>;
+    function showTooltip() {
+      if (window.innerWidth < 900) return;
+      const r = authorLink.getBoundingClientRect();
+      (authorTooltip as HTMLElement).style.top = (r.bottom + 8) + 'px';
+      (authorTooltip as HTMLElement).style.left = r.left + 'px';
+      authorTooltip.classList.add('visible');
+      authorTooltip.setAttribute('aria-hidden', 'false');
+      clearTimeout(hideTimer);
+    }
+    function hideTooltip() {
+      hideTimer = setTimeout(() => {
+        authorTooltip.classList.remove('visible');
+        authorTooltip.setAttribute('aria-hidden', 'true');
+      }, 150);
+    }
+    authorLink.addEventListener('mouseenter', showTooltip);
+    authorLink.addEventListener('mouseleave', hideTooltip);
+    authorTooltip.addEventListener('mouseenter', () => clearTimeout(hideTimer));
+    authorTooltip.addEventListener('mouseleave', hideTooltip);
+  }
 </script>
 <style>
   .calculator-page-container {
@@ -340,6 +379,41 @@ const iframeSnippet = embedUrl
     text-align: center;
   }
   .embed-attribution a { color: rgba(255,255,255,0.6); }
+  .author-tooltip {
+    position: fixed;
+    z-index: 1000;
+    width: 280px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 1px 4px rgba(0,0,0,0.08);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    color: #111;
+  }
+  .author-tooltip.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .at-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .at-photo {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    flex-shrink: 0;
+  }
+  .at-name-block { display: flex; flex-direction: column; gap: 0.2rem; }
+  .at-name { font-weight: 700; font-size: 0.95rem; color: #111; }
+  .at-link { font-size: 0.8rem; color: var(--brand-from); }
+  .at-link:hover { text-decoration: underline; }
+  .at-bio { font-size: 0.8rem; color: #555; line-height: 1.5; margin-bottom: 0.75rem; }
+  .at-footer { display: flex; flex-direction: column; gap: 0.3rem; }
   @media (max-width: 768px) {
     .calculator-page-container {
       grid-template-columns: 1fr;

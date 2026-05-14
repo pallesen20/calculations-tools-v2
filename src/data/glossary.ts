@@ -168,7 +168,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'Net Income is a company\'s bottom-line profit - revenue minus every expense including COGS, operating costs, interest, and tax. It is the figure reported as EPS (Earnings Per Share) for public companies.',
     formula: '$$\\text{Net Income} = \\text{Revenue} - \\text{COGS} - \\text{OpEx} - \\text{Interest} - \\text{Tax}$$',
-    relatedTools: ['/finance/ebitda-calculator', '/finance/net-profit-margin-calculator', '/finance/roe-calculator'],
+    relatedTools: ['/finance/ebitda-calculator', '/finance/net-profit-margin-calculator', '/finance/roe-calculator', '/finance/ebt-calculator'],
     relatedTerms: ['ebt', 'ebit', 'ebitda', 'net-profit-margin', 'revenue', 'eps', 'roe'],
   },
   {
@@ -807,6 +807,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['heffingskorting', 'arbeidskorting', 'effective-tax-rate'],
   },
   {
+    slug: 'interest-expense',
+    term: 'Interest Expense',
+    letter: 'I',
+    category: 'Income Statement',
+    siteCategory: 'Finance',
+    shortDef: 'Interest expense is the cost a company pays to lenders for borrowed capital. It sits between EBIT and EBT on the income statement and is the key driver of the gap between operating profit and pre-tax profit.',
+    formula: '$$\\text{Interest Expense} = \\text{Outstanding Debt} \\times \\text{Interest Rate}$$',
+    relatedTools: ['/finance/ebt-calculator', '/finance/ebit-calculator'],
+    relatedTerms: ['ebt', 'ebit', 'ebitda', 'net-income', 'enterprise-value'],
+  },
+  {
     slug: 'irr',
     term: 'Internal Rate of Return (IRR)',
     letter: 'I',
@@ -838,5 +849,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     formula: '$$\\text{MOIC} = \\frac{\\text{Total Value Received}}{\\text{Total Capital Invested}}$$',
     relatedTools: ['/finance/roi-calculator'],
     relatedTerms: ['irr', 'roi', 'cagr', 'roe'],
+  },
+  {
+    slug: 'valuation-multiple',
+    term: 'Valuation Multiple',
+    letter: 'V',
+    category: 'Valuation',
+    siteCategory: 'Finance',
+    shortDef: 'A valuation multiple expresses the price of a business as a ratio of a financial metric such as EBITDA, revenue, or earnings. It compresses a complex valuation into one comparable number - for example, "12x EV/EBITDA" means the Enterprise Value equals 12 times annual EBITDA.',
+    formula: '$$\\text{Multiple} = \\frac{\\text{Enterprise Value (or Market Cap)}}{\\text{Financial Metric}}$$',
+    relatedTools: ['/finance/enterprise-value-calculator', '/finance/pe-ratio-calculator'],
+    relatedTerms: ['enterprise-value', 'ebitda', 'ebitda-margin', 'pe-ratio', 'moic'],
   },
 ];
