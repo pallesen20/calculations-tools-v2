@@ -10,15 +10,15 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
         <p>Simplify and scale any ratio</p>
       </div>
 
-      <div class="ratio-row">
-        <div class="bmi-field" style="flex:1;">
+      <div class="input-row">
+        <div class="bmi-field">
           <label class="bmi-label" for="rc-a">First value (a)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="rc-a" class="bmi-input" placeholder="12" />
           </div>
         </div>
-        <div class="ratio-colon">:</div>
-        <div class="bmi-field" style="flex:1;">
+        <div class="math-colon">:</div>
+        <div class="bmi-field">
           <label class="bmi-label" for="rc-b">Second value (b)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="rc-b" class="bmi-input" placeholder="8" />
@@ -71,8 +71,6 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   </section>
 
   <style is:global>
-    .ratio-row   { display:flex; align-items:flex-end; gap:0.5rem; }
-    .ratio-colon { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); padding-bottom:0.75rem; }
   </style>
 
   <script src="/js/ratio-calculator.js" is:inline></script>

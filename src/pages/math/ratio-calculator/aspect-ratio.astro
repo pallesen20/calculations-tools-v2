@@ -76,15 +76,15 @@ const schema = [
           <p>Enter width and height to find the simplified ratio</p>
         </div>
 
-        <div class="ar-dims">
-          <div class="bmi-field" style="flex:1;">
+        <div class="input-row">
+          <div class="bmi-field">
             <label class="bmi-label" for="ar-w">Width</label>
             <div class="bmi-input-wrap">
               <input type="text" inputmode="decimal" id="ar-w" class="bmi-input" placeholder="e.g. 1920" />
             </div>
           </div>
           <div class="ar-x">×</div>
-          <div class="bmi-field" style="flex:1;">
+          <div class="bmi-field">
             <label class="bmi-label" for="ar-h">Height</label>
             <div class="bmi-input-wrap">
               <input type="text" inputmode="decimal" id="ar-h" class="bmi-input" placeholder="e.g. 1080" />
@@ -128,15 +128,15 @@ const schema = [
             <button class="ar-mode-btn active" data-mode="find">I know the new width</button>
             <button class="ar-mode-btn" data-mode="findw">I know the new height</button>
           </div>
-          <div class="ar-dims">
-            <div class="bmi-field" style="flex:1;">
+          <div class="input-row">
+            <div class="bmi-field">
               <label class="bmi-label" id="ar-target1-lbl" for="ar-target1">New width</label>
               <div class="bmi-input-wrap">
                 <input type="text" inputmode="decimal" id="ar-target1" class="bmi-input" placeholder="e.g. 1280" />
               </div>
             </div>
             <div class="ar-x">→</div>
-            <div class="bmi-field" style="flex:1;">
+            <div class="bmi-field">
               <label class="bmi-label" id="ar-target2-lbl" for="ar-target2">New height (calculated)</label>
               <div class="bmi-input-wrap">
                 <input type="text" inputmode="decimal" id="ar-target2" class="bmi-input" placeholder="-" readonly />
@@ -152,7 +152,6 @@ const schema = [
     </section>
 
     <style is:global>
-      .ar-dims { display:flex; align-items:flex-end; gap:0.5rem; }
       .ar-x { font-size:1.25rem; font-weight:700; color:rgba(255,255,255,0.5); padding-bottom:0.75rem; }
       .ar-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem; margin-top:0.35rem; }
       .ar-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }

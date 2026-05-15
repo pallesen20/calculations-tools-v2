@@ -10,22 +10,22 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
         <p>Split a quantity in an a:b:c ratio</p>
       </div>
 
-      <div class="tw-ratio-row">
-        <div class="bmi-field" style="flex:1;">
+      <div class="input-row">
+        <div class="bmi-field">
           <label class="bmi-label" for="tw-a">Part A</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="tw-a" class="bmi-input" placeholder="e.g. 2" />
           </div>
         </div>
-        <div class="tw-colon">:</div>
-        <div class="bmi-field" style="flex:1;">
+        <div class="math-colon">:</div>
+        <div class="bmi-field">
           <label class="bmi-label" for="tw-b">Part B</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="tw-b" class="bmi-input" placeholder="e.g. 3" />
           </div>
         </div>
-        <div class="tw-colon">:</div>
-        <div class="bmi-field" style="flex:1;">
+        <div class="math-colon">:</div>
+        <div class="bmi-field">
           <label class="bmi-label" for="tw-c">Part C</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="tw-c" class="bmi-input" placeholder="e.g. 5" />
@@ -91,8 +91,6 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   </section>
 
   <style is:global>
-    .tw-ratio-row { display:flex; align-items:flex-end; gap:0.4rem; }
-    .tw-colon { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); padding-bottom:0.75rem; }
   </style>
 
   <script src="/js/three-way-ratio-calculator.js" is:inline></script>
