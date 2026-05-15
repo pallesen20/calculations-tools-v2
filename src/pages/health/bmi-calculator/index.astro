@@ -15,8 +15,9 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',        label: 'How to use' },
-  { id: 'what-is-bmi',       label: 'What is BMI?' },
-  { id: 'bmi-categories',    label: 'BMI categories' },
+  { id: 'what-is-bmi',           label: 'What is BMI?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'bmi-categories',        label: 'BMI categories' },
   { id: 'bmi-by-age-sex',    label: 'BMI by age and sex' },
   { id: 'body-fat-estimate', label: 'Estimated body fat %' },
   { id: 'bmi-limitations',   label: 'Limitations of BMI' },
@@ -128,7 +129,6 @@ const schema = [
   ogFormula="BMI = weight (kg) / height² (m²)"
   ogExample="70 kg at 1.75 m: 70 / 1.75² = 22.9 (Normal weight)"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
@@ -136,12 +136,10 @@ const schema = [
           <h2>Calculate Your Body Mass Index</h2>
           <p>Body Mass Index by age and sex - metric or imperial</p>
         </div>
-
         <div class="bmi-unit-toggle">
           <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
           <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
         </div>
-
         <div class="bmi-shared-fields">
           <div class="bmi-field">
             <label class="bmi-label">Sex</label>
@@ -158,7 +156,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-metric" class="bmi-inputs active">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-weight-kg">Weight</label>
@@ -175,7 +172,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-imperial" class="bmi-inputs">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-weight-lb">Weight</label>
@@ -198,9 +194,7 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-age-redirect" class="bmi-k-redirect hidden"></div>
-
         <div id="bmi-result" class="bmi-result hidden">
           <div class="bmi-value-row">
             <div class="bmi-value" id="bmi-value">-</div>
@@ -229,28 +223,22 @@ const schema = [
             <div class="bmi-detail bmi-detail-note hidden" id="bmi-context-note"></div>
           </div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/bmi-calculator.js" is:inline></script>
   <HealthDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">BMI categories at a glance</div>
         <p>BMI below <strong>18.5</strong> is Underweight. <strong>18.5–24.9</strong> is Normal weight. <strong>25.0–29.9</strong> is Overweight. <strong>30.0–34.9</strong> is Obese Class I. <strong>35.0–39.9</strong> is Obese Class II. <strong>40.0+</strong> is Obese Class III. These ranges are defined by the WHO for adults aged 18 and over. Enter your age and sex above to also get an estimated body fat % and personalised context.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <h2 id="how-to-use">How to use this BMI calculator</h2>
       <p>Select <strong>Metric</strong> or <strong>Imperial</strong>, then choose your <strong>sex</strong> and enter your <strong>age</strong>. Finally, enter your weight and height - results appear instantly. The calculator shows your BMI, category, visual scale, healthy weight range, estimated body fat %, and a personalised context note based on your age and sex.</p>
       <p>Age and sex are optional for the basic BMI result but required for the body fat estimate and context notes. If you enter an age under 20, the calculator will direct you to the appropriate growth-chart-based tool for children or teenagers.</p>
-
       <h2 id="what-is-bmi">What is BMI?</h2>
-      <p>Body Mass Index (BMI) is a number derived from weight and height. It was developed by the Belgian statistician Adolphe Quetelet in the 1830s as a population-level measure of body size and was later adopted by the WHO as a simple screening tool for weight categories associated with health risks.</p>
+      <p><a href="/glossary/bmi">Body Mass Index (BMI)</a> is a number derived from weight and height. It was developed by the Belgian statistician Adolphe Quetelet in the 1830s as a population-level measure of body size and was later adopted by the WHO as a simple screening tool for weight categories associated with health risks.</p>
       <p>BMI does not directly measure body fat. Instead, it uses weight and height as a proxy, based on the observation that weight scales roughly with the square of height in populations. Because it requires only two easily measurable inputs and no equipment, it became the standard epidemiological tool for tracking obesity globally.</p>
       <p>The metric formula is:</p>
       <Formula expr={f.metric} />
@@ -258,7 +246,11 @@ const schema = [
       <Formula expr={f.imperial} />
       <p>Example - a person weighing 70 kg at 1.75 m:</p>
       <Formula expr={f.example} />
-
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Imagine two people who are exactly the same height - 175 cm (5'9"). One weighs 70 kg, the other weighs 95 kg. They share the same ruler (height), but one is carrying 25 kg more.</p>
+      <p>BMI turns that difference into a single number by dividing weight by height squared: 70 ÷ 1.75² = 22.9 (Normal weight); 95 ÷ 1.75² = 31.0 (Obese Class I).</p>
+      <p>The squaring matters because a taller body has more volume in all directions - doubling your height would mean roughly four times the frame, so weight has to scale with height squared rather than height alone.</p>
+      <p>The result is a number that, on average across large populations, tracks well with health risk - even if it cannot account for whether that weight is muscle or fat in any one individual.</p>
       <h2 id="bmi-categories">BMI categories</h2>
       <p>The WHO defines four primary categories for adults, with obesity further divided into three classes based on increasing health risk:</p>
       <div class="responsive-table">
@@ -277,14 +269,14 @@ const schema = [
       </table>
       </div>
       <p>Risk associations are statistical and population-based. An individual's health cannot be diagnosed from BMI alone.</p>
-
+      <p>The most practically significant boundary in this table is the step from Overweight to Obese Class I - the 30.0 threshold. Many people assume that crossing from 29 to 30 is an arbitrary line, but the <a href="https://www.bmj.com/content/353/bmj.i2156" target="_blank">2016 BMJ meta-analysis of 230 cohort studies</a> found that cardiometabolic risk accelerates noticeably at that point rather than increasing linearly. The jump from Class I to Class II is similarly non-linear.</p>
+      <p>Treating the categories as a smooth gradient understates what happens at the thresholds.</p>
       <h2 id="bmi-by-age-sex">BMI by age and sex</h2>
       <p>The standard WHO BMI thresholds (18.5, 25, 30) apply to all adults aged 18 and over and do not formally differ by age or sex. In practice, body composition changes across the lifespan and differs markedly between men and women in ways that a single number cannot capture.</p>
-
       <h3>BMI and sex</h3>
-      <p>Women naturally carry 3–5 percentage points more body fat than men at the same BMI. This is physiologically normal and related to reproductive function. A woman and a man with identical BMIs will typically have different body fat percentages. Some researchers have proposed sex-specific thresholds, but WHO guidelines use the same ranges for both sexes. This calculator notes this difference when you select Female and receive a Normal weight result.</p>
+      <p>Women naturally carry 3–5 percentage points more body fat than men at the same BMI. This is physiologically normal and related to reproductive function. A woman and a man with identical BMIs will typically have different body fat percentages.</p>
+      <p>Some researchers have proposed sex-specific thresholds, but WHO guidelines use the same ranges for both sexes. This calculator notes this difference when you select Female and receive a Normal weight result.</p>
       <p>Men tend to carry more muscle mass, which inflates BMI without increasing health risk. A muscular man with BMI 27 may have an excellent body composition. This calculator surfaces a context note for men in the Overweight range, highlighting waist circumference as a complementary check.</p>
-
       <h3>BMI and age</h3>
       <div class="responsive-table">
       <table>
@@ -298,7 +290,6 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h3>BMI and ethnicity</h3>
       <p>People of Asian descent tend to have higher body fat percentages and greater cardiometabolic risk at lower BMI values than people of European descent. The WHO recommends lower action points for Asian populations: BMI 23.0 as the overweight threshold (vs 25.0) and BMI 27.5 as the obese threshold (vs 30.0). These adjusted thresholds are used clinically in many Asian countries.</p>
       <div class="responsive-table">
@@ -313,7 +304,6 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="body-fat-estimate">Estimated body fat %</h2>
       <p>When you enter your age and sex, the calculator adds an estimated body fat percentage using the Deurenberg formula (1991), one of the most widely cited equations for estimating body fat from BMI:</p>
       <Formula expr={f.bfGeneral} />
@@ -334,19 +324,21 @@ const schema = [
       </table>
       </div>
       <p>Body fat categories above are based on ACE (American Council on Exercise) guidelines. Note that women in the Athletic and Fitness ranges are still well within a healthy body composition despite having higher absolute percentages than men - the sex difference is physiological, not pathological.</p>
-
+      <p>The Deurenberg formula was validated on a Dutch cohort in 1991, so its accuracy varies by ethnicity and body type.</p>
+      <p>In practice, the ±3-5% margin of error it carries means the estimate is most useful for ruling in or ruling out a category, not for tracking small changes over time.</p>
+      <p>If your estimated body fat places you solidly in one category, that categorisation is likely correct. If it lands right on the boundary between two, treat it as ambiguous and prioritise the direction of change rather than the absolute number.</p>
       <h2 id="bmi-limitations">Limitations of BMI</h2>
       <p>BMI is a population screening tool, not an individual diagnostic test. Its limitations are well-documented in medical literature.</p>
-
       <h3>It cannot distinguish muscle from fat</h3>
-      <p>BMI measures total weight relative to height and has no way of knowing whether that weight is fat or muscle. A professional athlete or bodybuilder with very low body fat may have a BMI of 27 or 28 and be classified as Overweight, despite being in excellent metabolic health. Conversely, a sedentary person with low muscle mass may have a Normal BMI while carrying a high proportion of visceral fat. This is why this calculator adds an estimated body fat percentage to give a fuller picture.</p>
+      <p>BMI measures total weight relative to height and has no way of knowing whether that weight is fat or muscle. A professional athlete or bodybuilder with very low body fat may have a BMI of 27 or 28 and be classified as Overweight, despite being in excellent metabolic health.</p>
+      <p>Conversely, a sedentary person with low muscle mass may have a Normal BMI while carrying a high proportion of visceral fat. This is why this calculator adds an estimated body fat percentage to give a fuller picture.</p>
       <p>In practice, this is the pattern we see most often: an Overweight BMI alongside an Athletic or Fitness body fat estimate. That combination is the clearest signal that BMI is misclassifying you - the body fat estimate column exists precisely to surface it.</p>
       <h3>It does not account for fat distribution</h3>
-      <p>Where fat is stored matters as much as how much fat there is. Visceral fat (around internal organs, associated with a large waist circumference) carries significantly higher health risk than subcutaneous fat (under the skin). BMI is blind to fat distribution. Waist circumference is a better predictor of cardiometabolic risk in some populations: risk rises above 94 cm (37 in) for men and 80 cm (31.5 in) for women.</p>
-
+      <p>Where fat is stored matters as much as how much fat there is. Visceral fat (around internal organs, associated with a large waist circumference) carries significantly higher health risk than subcutaneous fat (under the skin).</p>
+      <p>BMI is blind to fat distribution. Waist circumference is a better predictor of cardiometabolic risk in some populations: risk rises above 94 cm (37 in) for men and 80 cm (31.5 in) for women.</p>
       <h3>It was not designed for individuals</h3>
-      <p>Quetelet's original index was designed to describe the average person in a population, not to classify individuals. Despite this, it has been widely adopted as an individual health metric. For a more complete individual assessment, body fat percentage measurement (via DEXA scan, bioelectrical impedance, or skinfold calipers) combined with waist circumference provides a better picture than BMI alone.</p>
-
+      <p>Quetelet's original index was designed to describe the average person in a population, not to classify individuals. Despite this, it has been widely adopted as an individual health metric.</p>
+      <p>For a more complete individual assessment, body fat percentage measurement (via DEXA scan, bioelectrical impedance, or skinfold calipers) combined with waist circumference provides a better picture than BMI alone.</p>
       <h2 id="healthy-weight">Healthy weight range by height</h2>
       <p>The table below shows the BMI 18.5–24.9 weight range (Normal weight) for common heights. These are independent of age and sex.</p>
       <div class="responsive-table">

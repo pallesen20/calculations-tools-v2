@@ -573,7 +573,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'Body fat percentage is the proportion of total body weight that consists of fat tissue. It is a more accurate health marker than BMI because it distinguishes fat mass from lean mass.',
     formula: '$$\\text{Body Fat \\%} = \\frac{\\text{Fat Mass}}{\\text{Total Body Weight}} \\times 100$$',
     relatedTools: ['/health/body-fat-calculator', '/health/ffmi-calculator', '/health/lean-body-mass-calculator'],
-    relatedTerms: ['bmi', 'lean-body-mass', 'body-composition', 'ffmi'],
+    relatedTerms: ['bmi', 'lean-body-mass', 'body-composition', 'ffmi', 'bioelectrical-impedance-analysis'],
   },
   {
     slug: 'ffmi',
@@ -606,6 +606,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     formula: '$$\\text{LBM} = \\text{Total Body Weight} - \\text{Fat Mass}$$',
     relatedTools: ['/health/lean-body-mass-calculator', '/health/ffmi-calculator'],
     relatedTerms: ['body-fat-percentage', 'ffmi', 'body-composition', 'bmi'],
+  },
+  {
+    slug: 'bioelectrical-impedance-analysis',
+    term: 'Bioelectrical Impedance Analysis (BIA)',
+    letter: 'B',
+    category: 'Body Composition',
+    siteCategory: 'Health',
+    shortDef: 'Bioelectrical Impedance Analysis (BIA) estimates body fat and lean mass by passing a small electrical current through the body. Fat tissue resists the current more than muscle and water; the measured resistance is fed into prediction equations to derive body fat percentage.',
+    relatedTools: ['/health/body-fat-calculator'],
+    relatedTerms: ['body-fat-percentage', 'lean-body-mass', 'body-composition', 'bmi'],
   },
   {
     slug: 'gst',

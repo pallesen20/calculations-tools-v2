@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 import type { Source } from '../../components/Sources.astro';
 
 const sources: Source[] = [
@@ -40,8 +41,57 @@ const tocItems = [
   { id: 'valuation',       label: 'EBITDA in valuation' },
   { id: 'limitations',     label: 'Limitations' },
   { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: Test your knowledge' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does the acronym EBITDA stand for?',
+    options: [
+      'Earnings Before Income Tax, Dividends and Allowances',
+      'Earnings Before Interest, Taxes, Depreciation, and Amortization',
+      'Equity Before Interest, Transfer, Debt and Assets',
+      'Earnings Before Internal Tax, Depreciation and Accruals',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'EBITDA = Earnings Before Interest, Taxes, Depreciation, and Amortization. The four items added back to Net Income remove the effects of financing decisions (Interest), tax jurisdiction (Taxes), and non-cash accounting charges (D&A).',
+  },
+  {
+    q: 'A company reports: Net Income $5M, Tax Expense $1.5M, Interest Expense $500K, D&A $800K. What is EBITDA?',
+    options: ['$6.3M', '$7.0M', '$7.8M', '$8.5M'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'EBITDA = Net Income + Tax + Interest + D&A = $5M + $1.5M + $0.5M + $0.8M = $7.8M. You add all four items back to Net Income, working up from the bottom of the income statement.',
+  },
+  {
+    q: 'Why do M&A analysts prefer EBITDA over net income for cross-company comparisons?',
+    options: [
+      'EBITDA is a standardised GAAP metric with a fixed definition',
+      'EBITDA is always larger than net income, making valuations simpler',
+      'EBITDA removes the effects of capital structure and tax rates, enabling like-for-like comparison',
+      'Net income is not available in annual reports',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Two identical businesses can show very different net incomes if they carry different debt levels or operate in different tax jurisdictions. EBITDA strips out these variables so you can compare core operating performance directly.',
+  },
+  {
+    q: 'What is a typical EV/EBITDA multiple range for a SaaS company?',
+    options: ['4x – 8x', '6x – 10x', '10x – 14x', '15x – 30x'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'SaaS companies typically trade at 15x–30x EV/EBITDA, reflecting high growth rates, recurring revenue, and strong margins. Capital-heavy industries like manufacturing or retail trade at much lower multiples (5x–10x).',
+  },
+  {
+    q: 'Which of the following is the most significant limitation of EBITDA as a financial metric?',
+    options: [
+      'It overstates taxes paid by including deferred tax liabilities',
+      'It ignores capital expenditure required to maintain and grow the business',
+      'It penalises capital-light businesses by including depreciation',
+      'It can only be used to compare companies in the same industry',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'EBITDA ignores CapEx entirely. A business with $20M EBITDA that requires $15M in annual maintenance capital is generating $5M in real cash — not $20M. Warren Buffett and Charlie Munger have both criticised EBITDA on these grounds. Free Cash Flow is a more complete measure.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -303,6 +353,12 @@ const schema = [
       <p>Adjusted EBITDA further adds back non-recurring items: restructuring costs, M&amp;A expenses, one-time charges, or stock-based compensation. It aims to show "normal" operating profitability. Always scrutinise add-backs - some are genuinely one-time, others recur every year.</p>
       <h3>Can EBITDA be negative?</h3>
       <p>Yes. A company running operating losses will have negative EBITDA. This is common in early-stage startups and distressed businesses. Negative EBITDA means the core business is not yet profitable even before non-cash charges.</p>
+      <QuizBlock
+        topic="EBITDA"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/ebitda-calculator"
+      />
+
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/ebit-calculator',          blurb: 'Calculate EBIT (Operating Income) - Net Income + Interest + Tax.' },

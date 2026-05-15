@@ -1016,6 +1016,32 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'bioelectrical-impedance-analysis': {
+    definition: [
+      'Bioelectrical Impedance Analysis (BIA) estimates body composition by passing a low-level alternating electrical current - typically 50 kHz at 0.8 mA, far below the threshold of sensation - through the body. The core physics: fat tissue has high electrical resistance (low water content, poor conductor), while skeletal muscle and organs have low resistance (high water content, good conductors). The device measures the total impedance (Z) of the path the current travels, then applies validated regression equations to estimate total body water (TBW). From TBW, fat-free mass and body fat percentage are derived.',
+      'Consumer BIA devices fall into several categories based on electrode placement. Foot-to-foot devices (bathroom scales) pass current only through the lower body; hand-to-hand handhelds pass current through the upper body; hand-to-foot devices or 4-electrode segmental devices pass current through the full body and are considered more accurate. High-end clinical devices such as the InBody 770 use 8 electrodes at multiple frequencies (multi-frequency BIA) to separate intracellular water from extracellular water, achieving accuracy within ±2-3 percentage points of DEXA in controlled conditions.',
+      'The most significant limitation of BIA is its sensitivity to hydration. Because the method derives body fat from estimated body water, anything that shifts the body\'s water distribution - dehydration, recent exercise, a large meal, alcohol, or the menstrual cycle - directly alters the reading. On a typical consumer scale, measured body fat can vary by 2-4 percentage points between morning and evening on the same person without any actual change in fat tissue.',
+    ],
+    beginnerExplain: 'Think of your body as a pipe full of water. Electricity travels easily through water - and muscle is roughly 75% water - but travels slowly through fat, which has almost no water. A BIA device sends a tiny current from one electrode to another (you cannot feel it at all) and measures how much the body resists the flow. High resistance means more fat; low resistance means more muscle. The device then uses a formula to convert that resistance reading into a body fat percentage estimate. The catch: if you are dehydrated, there is less water in your tissues, resistance goes up, and the device will overestimate your body fat - even though nothing about your actual fat tissue has changed.',
+    whenToUse: 'BIA is best used for tracking directional trends over weeks or months, not for accurate one-off measurements. To minimise variability: always measure at the same time of day (ideally morning before eating, after using the toilet), under the same hydration conditions, and use the same device. Do not compare results between different BIA devices - each uses its own proprietary prediction equations and the absolute numbers are not comparable across brands. If you need a single accurate body fat measurement rather than a trend, the Navy tape method or a DEXA scan are more reliable.',
+    examples: {
+      headers: ['Device type', 'Typical accuracy vs DEXA', 'Electrode placement', 'Hydration sensitivity'],
+      rows: [
+        ['Consumer foot-to-foot scale', '±3 – 6%', 'Feet only (lower body)', 'High'],
+        ['Consumer handheld device', '±3 – 5%', 'Hands only (upper body)', 'High'],
+        ['4-electrode hand-to-foot', '±2.5 – 4%', 'Full body', 'Moderate to high'],
+        ['InBody / segmental multi-frequency', '±2 – 3%', '8-point full body', 'Moderate'],
+        ['Clinical multi-frequency BIA', '±1.5 – 2.5%', 'Controlled 4-electrode', 'Low (controlled conditions)'],
+      ],
+    },
+    pitfalls: 'The most common misuse of BIA is treating day-to-day readings as meaningful data. A 2-point swing from Tuesday to Wednesday almost certainly reflects hydration changes, not fat loss or muscle gain. Compare weekly or biweekly averages rather than individual readings. A second common error is switching between BIA devices mid-tracking - the absolute output numbers are not comparable between brands, even if the underlying physics is the same. A third: consumer BIA devices tend to overestimate body fat in athletes (because athletic muscle has higher water density than the population averages used in the device\'s regression equations).',
+    faqs: [
+      { q: 'How accurate is BIA for body fat measurement?', a: 'Consumer foot-to-foot bathroom scales typically carry ±3-6% error vs DEXA. Higher-end segmental or multi-frequency devices achieve ±2-3% under standardised conditions. The margin expands significantly outside standardised conditions - particularly with suboptimal hydration, recent exercise, or measurement at different times of day. For clinical accuracy in a single reading, a DEXA scan or the Navy tape method in the morning fasted state is more reliable.' },
+      { q: 'What is the best time to use a BIA scale?', a: 'First thing in the morning, before eating or drinking, after using the bathroom. At this point body water has equilibrated overnight, providing the most consistent baseline. Avoid measuring after exercise, after a large meal, after alcohol, or in the evening - all of these can shift BIA readings by 2-4 percentage points without any change in actual body composition.' },
+      { q: 'How does BIA compare to the Navy tape method?', a: 'Both methods have similar accuracy (±3-5% vs DEXA) for most people under typical conditions. The Navy tape method is not affected by hydration and produces the same result regardless of when you measure, making it more reliable for one-off readings. BIA is more convenient - no tape measure or measuring technique required - but requires consistent conditions to produce comparable readings over time. For trend tracking, both work well when used consistently; for a reliable single reading, the tape method is generally more stable.' },
+    ],
+  },
+
   'waist-circumference': {
     definition: [
       'Waist circumference is a direct measure of abdominal adiposity - the accumulation of fat in the trunk region. It is measured at the narrowest point of the torso, typically at or just above the navel, and is a strong independent predictor of metabolic disease risk beyond what BMI captures.',
