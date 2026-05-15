@@ -1540,19 +1540,34 @@ entries.push({
   icon: '📖',
 });
 
-TOP_CURRENCIES.forEach(from => {
-  TOP_CURRENCIES.filter(to => to !== from).forEach(to => {
-    entries.push({
-      path: `/conversion/currency-converter/${from.toLowerCase()}-to-${to.toLowerCase()}`,
-      title: `Convert ${from} to ${to} | ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
-      description: `Convert ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]} with live mid-market rates. Includes reference amounts and top ${from} currency pairings.`,
-      changefreq: 'daily' as const,
-      priority: TOP_INDEXED_PAIRS.has(`${from.toLowerCase()}-to-${to.toLowerCase()}`) ? 0.9 : 0.3,
-      icon: '💱',
-      short: `${from} to ${to} · ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
-    });
+TOP_INDEXED_PAIRS.forEach(pair => {
+  const [fromLower, toLower] = pair.split('-to-');
+  const from = fromLower.toUpperCase();
+  const to = toLower.toUpperCase();
+  entries.push({
+    path: `/conversion/currency-converter/${pair}`,
+    title: `Convert ${from} to ${to} | ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
+    description: `Convert ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]} with live mid-market rates. Includes reference amounts and top ${from} currency pairings.`,
+    changefreq: 'daily' as const,
+    priority: 0.9,
+    icon: '💱',
+    short: `${from} to ${to} · ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
   });
 });
+
+// TOP_CURRENCIES.forEach(from => {
+//   TOP_CURRENCIES.filter(to => to !== from).forEach(to => {
+//     entries.push({
+//       path: `/conversion/currency-converter/${from.toLowerCase()}-to-${to.toLowerCase()}`,
+//       title: `Convert ${from} to ${to} | ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
+//       description: `Convert ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]} with live mid-market rates. Includes reference amounts and top ${from} currency pairings.`,
+//       changefreq: 'daily' as const,
+//       priority: TOP_INDEXED_PAIRS.has(`${from.toLowerCase()}-to-${to.toLowerCase()}`) ? 0.9 : 0.3,
+//       icon: '💱',
+//       short: `${from} to ${to} · ${CURRENCY_NAMES[from]} to ${CURRENCY_NAMES[to]}`,
+//     });
+//   });
+// });
 
 entries.push({
   path: '/tax/income-tax-calculator',
