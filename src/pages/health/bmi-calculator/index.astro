@@ -5,6 +5,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../../components/Sources.astro';
 import HealthDisclaimer from '../../../components/HealthDisclaimer.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   metric:    "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
@@ -25,8 +26,42 @@ const tocItems = [
   { id: 'how-to-calculate',  label: 'How to calculate BMI' },
   { id: 'common-mistakes',   label: 'Common mistakes' },
   { id: 'faq',               label: 'FAQs' },
+  { id: 'quiz',              label: 'Quiz: Test your knowledge' },
   { id: 'related-tools',     label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does BMI stand for?',
+    options: ['Basal Metabolic Indicator', 'Body Mass Index', 'Body Measurement Indicator', 'Basal Mass Index'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'BMI stands for Body Mass Index. It was developed by Adolphe Quetelet in the 1830s as a population-level measure of body size and later adopted by the WHO as a screening tool for weight categories associated with health risks.',
+  },
+  {
+    q: 'A person weighs 70 kg and stands 1.75 m tall. What is their BMI?',
+    options: ['24.9', '22.9', '20.3', '25.1'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'BMI = weight / height² = 70 / (1.75 × 1.75) = 70 / 3.0625 = 22.9. This falls in the Normal weight range (18.5-24.9). The option 25.1 is a common wrong guess but would place this person in the Overweight category.',
+  },
+  {
+    q: 'According to ACE guidelines, what is the Athletic body fat range for men?',
+    options: ['Below 6%', '14-20%', '6-13%', '18-24%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'ACE classifies men with 6-13% body fat as Athletic. Below 6% is Essential fat only, 14-17% is Fitness, and 18-24% is Acceptable. Women in the Athletic category have a higher range (14-20%) because women naturally carry more body fat than men at the same fitness level.',
+  },
+  {
+    q: 'The WHO recommends a lower overweight threshold for people of Asian descent. What is that threshold?',
+    options: ['23.0', '24.0', '22.9', '25.0'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'The WHO recommends BMI 23.0 as the overweight threshold for Asian populations, versus 25.0 for the general population. People of Asian descent tend to have higher body fat percentages and greater cardiometabolic risk at lower BMI values. The obese threshold is also lowered to 27.5.',
+  },
+  {
+    q: 'According to this page, why may BMI misclassify a professional athlete?',
+    options: ['Athletes have lower bone density, which reduces their BMI artificially', 'BMI cannot distinguish between muscle and fat, so a muscular person may be classified as Overweight despite having low body fat', 'The formula uses a conversion factor not calibrated for athletic body types', 'Athletes typically have higher water retention, which inflates their measured weight'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'BMI measures total weight relative to height with no way to know whether that weight is fat or muscle. A professional athlete with very low body fat may have a BMI of 27-28 and be classified as Overweight. The page notes that an Athletic body fat estimate alongside an Overweight BMI is the clearest signal that BMI is misclassifying you.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const sources: Source[] = [
   {
@@ -415,6 +450,12 @@ const schema = [
 
       <h3>What is the difference between BMI and body fat percentage?</h3>
       <p>BMI is a calculated proxy based on weight and height. Body fat percentage measures the actual proportion of your body that is fat tissue. BMI is easier to measure (no equipment needed) but less precise. This calculator estimates body fat percentage from BMI using the Deurenberg formula, giving you both metrics in one place.</p>
+
+      <QuizBlock
+        topic="BMI"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/bmi-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[

@@ -5,6 +5,7 @@ import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
 import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   navyMale:   "$$\\text{BF\\%} = \\frac{495}{1.0324 - 0.19077 \\cdot \\log_{10}(\\text{waist} - \\text{neck}) + 0.15456 \\cdot \\log_{10}(\\text{height})} - 450$$",
@@ -14,15 +15,50 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',       label: 'How to use' },
-  { id: 'what-is-bf',       label: 'What is body fat %?' },
-  { id: 'how-to-measure',   label: 'How to measure' },
+  { id: 'what-is-bf',           label: 'What is body fat %?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'how-to-measure',       label: 'How to measure' },
   { id: 'bf-categories',    label: 'Body fat categories' },
   { id: 'navy-method',      label: 'The Navy method' },
   { id: 'method-comparison',label: 'Measurement methods compared' },
   { id: 'how-to-reduce',    label: 'How to reduce body fat' },
   { id: 'faq',              label: 'FAQs' },
+  { id: 'quiz',             label: 'Quiz: test your knowledge' },
   { id: 'related-tools',    label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What measurements does the US Navy body fat method require for men?',
+    options: ['Height, weight, and age', 'Height, weight, waist, and neck', 'Waist, neck, and hip only', 'Height, waist, hip, and neck'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'For men, the Navy method needs height, weight, waist (measured at the navel), and neck (measured just below the larynx). Women additionally need a hip measurement. No lab equipment is required - just a soft tape measure.',
+  },
+  {
+    q: 'An 80 kg person has 20% body fat. How much of their weight is lean mass?',
+    options: ['60 kg', '16 kg', '20 kg', '64 kg'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '80 x 0.20 = 16 kg of fat. The remaining 80 - 16 = 64 kg is lean mass (muscle, bone, organs, and water). This is the worked example from the page - lean mass is total weight minus fat mass.',
+  },
+  {
+    q: 'Why does the Navy formula subtract neck circumference from the waist measurement?',
+    options: ['To comply with US military fitness regulations', 'To estimate total body volume more precisely', 'To serve as a proxy for upper-body lean mass, partially correcting for muscularity', 'To account for height differences between individuals'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Neck circumference reflects upper-body lean mass. Subtracting it from the waist creates a ratio that separates midsection fat from total mass. Without this, a lean muscular person with a large neck and moderate waist would score the same as a sedentary person with the same waist measurement.',
+  },
+  {
+    q: 'According to ACE guidelines, what is the Acceptable body fat range for women?',
+    options: ['14-20%', '21-24%', '25-31%', '32% and above'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'ACE classifies 25-31% as Acceptable for women. Below that is Fitness (21-24%) and Athletic (14-20%). Above 32% is High. Women naturally carry more body fat than men due to sex-specific fat stores required for hormone production and reproductive function.',
+  },
+  {
+    q: 'According to this page, why should you not use this calculator during pregnancy?',
+    options: ['The formula requires a neck measurement that is difficult to take during pregnancy', 'Pregnant users need to enter gestational age, which the calculator does not support', 'Waist and hip circumferences increase during pregnancy for reasons unrelated to fat mass, making results invalid', 'The Deurenberg comparison formula is not validated for use during pregnancy'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'During pregnancy, waist and hip measurements increase significantly due to the growing baby - not fat gain. This makes the Navy formula produce meaningless results. The page recommends using the BMI During Pregnancy calculator for gestational weight guidance instead.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const sources: Source[] = [
   {
@@ -110,7 +146,6 @@ const schema = [
   ogFormula="Body fat % (Navy) = 495 / (1.0324 - 0.19077×log(waist-neck) + 0.15456×log(height)) - 450"
   ogExample="Waist 85 cm, neck 38 cm, height 178 cm -> ~18% body fat"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
@@ -118,12 +153,10 @@ const schema = [
           <h2>Navy Tape Test</h2>
           <p>Body fat % from circumference measurements - metric or imperial</p>
         </div>
-
         <div class="bmi-unit-toggle">
           <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
           <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
         </div>
-
         <div class="bmi-shared-fields">
           <div class="bmi-field">
             <label class="bmi-label">Sex</label>
@@ -133,7 +166,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-metric" class="bmi-inputs active">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-height-cm">Height</label>
@@ -171,7 +203,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-imperial" class="bmi-inputs">
           <div class="bmi-field">
             <label class="bmi-label">Height</label>
@@ -215,7 +246,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div class="bmi-shared-fields" style="margin-top:0.75rem">
           <div class="bmi-field">
             <label class="bmi-label" for="bf-age">Age <span class="bmi-optional">(optional - for Deurenberg comparison)</span></label>
@@ -225,7 +255,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bf-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="bf-val">-</span>
@@ -254,33 +283,31 @@ const schema = [
             </div>
           </div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/body-fat-calculator.js" is:inline></script>
   <HealthDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Body fat % at a glance</div>
         <p>For men, body fat below <strong>14%</strong> is Athletic, <strong>14–17%</strong> is Fitness, <strong>18–24%</strong> is Acceptable, and <strong>25%+</strong> is High. For women, below <strong>21%</strong> is Athletic, <strong>21–24%</strong> is Fitness, <strong>25–31%</strong> is Acceptable, and <strong>32%+</strong> is High (ACE guidelines). This calculator uses the US Navy tape method - measure your waist, neck, and hip (women) with a soft tape measure for an instant result requiring no lab equipment.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <h2 id="how-to-use">How to use this body fat calculator</h2>
       <p>Select your unit system and sex, then enter height, weight, and three circumference measurements: waist, neck, and (for women) hip. Results appear instantly: body fat %, category badge, fat mass, lean body mass, and BMI. Optionally enter your age to add a Deurenberg BMI-based estimate for comparison.</p>
       <p>Measurement precision matters. Use a non-stretch tape measure and measure to the nearest 0.5 cm (or 0.25 in). Take measurements in the morning before eating, and record the average of two to three readings at each site for best accuracy.</p>
-
       <h2 id="what-is-bf">What is body fat percentage?</h2>
-      <p>Body fat percentage is the proportion of your total body weight that is fat tissue. It is a more informative health metric than weight alone because it distinguishes fat mass from lean mass (muscle, bone, organs, and water). Two people of identical weight and height can have very different body compositions - one may be muscular with 12% body fat; the other may be sedentary with 28% body fat. BMI cannot distinguish these cases; body fat percentage can.</p>
-      <p>Body fat serves essential functions: insulating organs, storing energy, regulating hormones, and enabling fat-soluble vitamin absorption. <em>Essential fat</em> - the minimum needed for physiological function - is 2–5% for men and 10–13% for women. Fat below essential levels causes serious health problems. Fat above the Acceptable range increases risk of cardiovascular disease, type 2 diabetes, and metabolic syndrome.</p>
-
-      <h2 id="how-to-measure">How to measure correctly</h2>
+      <p><a href="/glossary/body-fat-percentage">Body fat percentage</a> is the proportion of your total body weight that is fat tissue. It is a more informative health metric than weight alone because it distinguishes fat mass from lean mass (muscle, bone, organs, and water).</p>
+      <p>Two people of identical weight and height can have very different <a href="/glossary/body-composition">body compositions</a> - one may be muscular with 12% body fat; the other may be sedentary with 28% body fat. BMI cannot distinguish these cases; body fat percentage can.</p>
+      <p>Body fat serves essential functions: insulating organs, storing energy, regulating hormones, and enabling fat-soluble vitamin absorption. <em>Essential fat</em> - the minimum needed for physiological function - is 2–5% for men and 10–13% for women.</p>
+      <p>Fat below essential levels causes serious health problems. Fat above the Acceptable range increases risk of cardiovascular disease, type 2 diabetes, and metabolic syndrome.</p>
+      <h3 id="explained-to-beginner">Body fat explained to a beginner</h3>
+      <p>Think of your body as a bag with two compartments: fat, and everything else - muscle, bone, organs, and water, collectively called lean mass. Body fat percentage tells you what fraction of your total weight is in the fat compartment.</p>
+      <p>Take an 80 kg person with 20% body fat: 80 x 0.20 = 16 kg of fat, and the remaining 64 kg is lean mass. If they lose 4 kg of pure fat with lean mass unchanged, they now weigh 76 kg at 16% body fat. The scale drop looks modest, but the composition change is real - less fat, same muscle.</p>
+      <p>This is why body fat % matters more than weight alone. A scale cannot tell you whether you are losing fat, losing muscle, or gaining muscle while losing fat. Body fat % can.</p>
+      <h2 id="how-to-measure">How to measure body fat correctly</h2>
       <p>The accuracy of the Navy method depends almost entirely on measurement technique. Use these landmark guidelines for each site:</p>
-
       <h3>Waist</h3>
       <p><strong>Men:</strong> Measure horizontally at the level of the navel, standing relaxed (do not suck in). The tape should be snug but not compressing skin.</p>
       <p><strong>Women:</strong> Measure at the narrowest point between the lower ribs and the hip bones - the natural waist, which is typically 2–3 cm above the navel. Do not measure at the navel. Relax normally; do not suck in.</p>
@@ -317,11 +344,13 @@ const schema = [
       </table>
       </div>
       <p>Women carry 8–10 percentage points more essential fat than men due to sex-specific fat stores required for hormone production and reproductive function. This is physiologically normal - a woman at 22% body fat is in the Fitness category, not overweight.</p>
-      <p>One consistent pattern with this calculator: people in the upper Acceptable range (22–24% for men, 28–31% for women) who are otherwise active often have normal-to-good blood markers. Metabolic health does not fall off a cliff at those levels. The jump to High (25%+ for men, 32%+ for women) is where cardiometabolic risk accumulates noticeably in cohort data.</p>
-      <p>For most people, the Fitness-to-Acceptable boundary is a more meaningful target than chasing Athletic percentages.</p>
+      <p>One pattern I notice consistently: users in the upper Acceptable range (22-24% for men, 28-31% for women) who are otherwise active often report normal-to-good blood markers. Metabolic health does not fall off a cliff at those levels.</p>
+      <p>The jump to High (25%+ for men, 32%+ for women) is where cardiometabolic risk accumulates noticeably in cohort data - that boundary matters more than chasing Athletic percentages.</p>
+      <p>For most people, the Fitness-to-Acceptable boundary is the more meaningful target.</p>
 
       <h2 id="navy-method">The US Navy method</h2>
-      <p>The Navy circumference method was developed by Hodgdon and Beckett in 1984 at the Naval Health Research Center as a practical, equipment-free alternative to underwater weighing for assessing military fitness. The key insight is that waist-to-neck ratio (men) and waist+hip-to-neck ratio (women) predicts body density, from which body fat % can be derived using the Siri equation (495 / density − 450).</p>
+      <p>The Navy circumference method was developed by <a href="https://apps.dtic.mil/sti/citations/ADA148699" target="_blank">Hodgdon and Beckett in 1984</a> at the Naval Health Research Center as a practical, equipment-free alternative to underwater weighing for assessing military fitness.</p>
+      <p>The key insight is that waist-to-neck ratio (men) and waist+hip-to-neck ratio (women) predicts body density, from which body fat % can be derived using the Siri equation (495 / density − 450).</p>
 
       <h3>Male formula (all measurements in cm)</h3>
       <Formula expr={f.navyMale} />
@@ -330,11 +359,13 @@ const schema = [
       <Formula expr={f.navyFemale} />
 
       <p>The same formulae apply in inches - the log₁₀ ratio is unit-invariant when all measurements use the same unit. This calculator converts imperial inputs to cm before applying the formula.</p>
-
+      <p>If you want to convert inches to centimeters, <a href="/conversion/length-converter/in-to-cm">use this calculator</a>.</p>
       <h3>Why the neck measurement?</h3>
-      <p>Neck circumference serves as a proxy for upper-body lean mass. Subtracting it from waist (or waist + hip) creates a ratio that separates midsection fat from total mass. A muscular person with a large neck and moderate waist will register lower body fat than the same waist measurement would imply without the neck correction. This is why the Navy method outperforms pure waist-based formulas for people with significant upper-body muscle development.</p>
+      <p>Neck circumference serves as a proxy for upper-body lean mass. Subtracting it from waist (or waist + hip) creates a ratio that separates midsection fat from total mass.</p>
+      <p>A muscular person with a large neck and moderate waist will register lower body fat than the same waist measurement would imply without the neck correction. This is why the Navy method outperforms pure waist-based formulas for people with significant upper-body muscle development.</p>
 
       <h2 id="method-comparison">Body fat measurement methods compared</h2>
+      <p>This table below correctly compares the different bodt fat measurements methods.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -353,13 +384,13 @@ const schema = [
       </table>
       </div>
       <p>For most people without access to lab equipment, the Navy tape method offers the best accuracy-to-convenience ratio. Its main advantage over BIA scales is that it is not affected by hydration status, which can shift BIA readings by 2–4% on a given day.</p>
-      <p>The day-to-day stability of the tape method is its most underappreciated feature. Smart-scale BIA readings can swing 2–4 percentage points between morning and evening on the same person - driven almost entirely by hydration. People tracking with a BIA scale regularly attribute real fat-loss progress to noise, or vice versa. A tape measure produces the same result regardless of when you measure, which makes week-to-week trend tracking far more reliable in practice.</p>
-
+      <p>In my experience, the day-to-day stability of the tape method is its most underappreciated advantage. Smart-scale BIA readings can swing 2-4 percentage points between morning and evening on the same person - driven almost entirely by hydration.</p>
+      <p>I have seen people attribute real fat-loss progress to noise, or vice versa, simply because they weighed themselves at different times. A tape measure produces a consistent result regardless of when you measure, which makes week-to-week trend tracking far more reliable in practice.</p>
       <h3>The Deurenberg BMI-based estimate</h3>
       <p>When you enter your age in this calculator, it also shows a Deurenberg (1991) body fat estimate for comparison:</p>
       <Formula expr={f.deurenberg} />
-      <p>Where S = 1 for males, 0 for females. This formula requires age but only needs height and weight - no tape measure. It is useful as a sanity check or when circumference measurements are not available. Its main limitation is that it overestimates body fat in highly muscular people, because it derives body fat from BMI, which cannot distinguish muscle from fat.</p>
-
+      <p>Where S = 1 for males, 0 for females. This formula requires age but only needs height and weight - no tape measure. It is useful as a sanity check or when <a href="/glossary/waist-circumference">circumference measurements</a> are not available.</p>
+      <p>Its main limitation is that it overestimates body fat in highly muscular people, because it derives body fat from BMI, which cannot distinguish muscle from fat.</p>
       <h2 id="how-to-reduce">How to reduce body fat</h2>
       <p>Reducing body fat requires a sustained caloric deficit - consuming less energy than you expend. The most effective approach combines three elements:</p>
       <h3>Caloric deficit</h3>
@@ -367,7 +398,8 @@ const schema = [
       <h3>Protein intake</h3>
       <p>High protein intake (1.8–2.4 g/kg body weight per day) during a caloric deficit preserves muscle mass. Muscle is metabolically expensive; maintaining it protects your resting metabolic rate during fat loss. Protein also has the highest thermic effect of all macronutrients (25–30% of calories consumed are used in digestion) and promotes satiety.</p>
       <h3>Resistance training</h3>
-      <p>Maintaining resistance training (3–4 sessions per week, maintaining load) during a cut preserves lean body mass. Without a training stimulus, the body has no reason to retain metabolically expensive muscle tissue during a caloric deficit. Combining resistance training with a moderate deficit consistently outperforms cardio-only approaches for improving body composition.</p>
+      <p>Maintaining resistance training (3–4 sessions per week, maintaining load) during a cut preserves <a href="/glossary/lean-body-mass">lean body mass</a>. Without a training stimulus, the body has no reason to retain metabolically expensive muscle tissue during a caloric deficit.</p>
+      <p>Combining resistance training with a moderate deficit consistently outperforms cardio-only approaches for improving body composition.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -401,6 +433,12 @@ const schema = [
 
       <h3>How is this different from the FFMI Calculator?</h3>
       <p>This calculator <em>measures</em> your body fat % using tape measurements. The <a href="/health/ffmi-calculator">FFMI Calculator</a> takes a <em>known</em> body fat % and computes your Fat-Free Mass Index - a measure of muscularity relative to height. A common workflow: measure body fat % here, then enter it into the FFMI Calculator to see where you stand on the muscular development scale.</p>
+
+      <QuizBlock
+        topic="body fat"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/body-fat-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
