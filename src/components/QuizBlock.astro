@@ -393,6 +393,7 @@ const KEYS = ['A', 'B', 'C', 'D'] as const;
   let current = 0;
   let score = 0;
   let answered = false;
+  let quizStarted = false;
 
   const bar      = document.getElementById('qz-bar') as HTMLElement;
   const stepEl   = document.getElementById('qz-step') as HTMLElement;
@@ -439,6 +440,17 @@ const KEYS = ['A', 'B', 'C', 'D'] as const;
     if (qi !== current) return;
 
     answered = true;
+
+    if (!quizStarted) {
+      quizStarted = true;
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'quiz_started',
+        quiz_topic: topic,
+        page_path: window.location.pathname,
+      });
+    }
+
     const correct = btn.dataset.correct === 'true';
     if (correct) score++;
 
