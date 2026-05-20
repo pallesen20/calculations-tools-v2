@@ -1907,6 +1907,32 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'principal-and-interest': {
+    definition: [
+      'Principal and Interest (P&I) are the two components of every fixed-rate amortising loan payment. Principal is the portion that reduces the outstanding loan balance - the amount originally borrowed. Interest is the lender\'s charge for extending credit, calculated as a percentage of the remaining balance at the start of each payment period. Together they make up the calculated monthly payment figure; they do not include property taxes, homeowner\'s insurance, or mortgage insurance, which are separate costs often collected alongside P&I.',
+      'The split between principal and interest is not fixed. Because interest is charged on the remaining balance, and that balance is at its maximum on day one, early payments are heavily weighted toward interest. As each payment is made, the balance falls slightly, reducing the next interest charge by a small amount. This compounds over time: in the final years of a 30-year mortgage, the interest portion is tiny because the balance has fallen so low. The process of gradually shifting from interest-heavy to principal-heavy payments is called amortisation.',
+      'For a standard 30-year fixed-rate mortgage at 7%, the monthly payment is fixed for all 360 months. But only $246 of Month 1\'s $1,996 payment (12%) reduces the balance; $1,750 (88%) is interest. By Month 180, roughly $696 goes to principal and $1,300 to interest. By Month 360, nearly the entire payment is principal. Over the life of the loan, $418,527 in total interest is paid on the original $300,000 - the lender earns 1.4 times the loan amount in interest charges alone.',
+    ],
+    beginnerExplain: 'Think of P&I like a restaurant tab that charges a daily fee for staying open. The tab itself is the principal - what you originally owe. The daily fee is interest - the cost of leaving the balance unpaid. Each payment covers that period\'s fee first, then whatever is left chips away at the tab. In Month 1 the tab is at its maximum, so the fee is at its maximum and very little of your payment actually reduces the debt. As months pass and the tab shrinks, the fee shrinks too, and more of each payment goes toward clearing the balance. The payment amount never changes - only the fee-to-balance split shifts, slowly at first, then faster as the balance falls.',
+    whenToUse: 'Analyse the P&I split when evaluating whether to choose a shorter loan term, make extra principal payments, or refinance. The amortisation schedule reveals how much equity is actually building in the early years - often far less than the total payment suggests. Use a 15-year vs 30-year comparison to quantify the interest saving against the higher monthly payment. Extra payments made in Years 1-5 reduce total interest significantly more than the same payment made in Year 20, because they lower the balance on which interest will compound for the remaining term.',
+    examples: {
+      headers: ['Month', 'Payment', 'Interest', 'Principal', 'Remaining balance'],
+      rows: [
+        ['1', '$1,996', '$1,750 (87.7%)', '$246 (12.3%)', '$299,754'],
+        ['60 (Year 5)', '$1,996', '$1,649 (82.6%)', '$347 (17.4%)', '$282,376'],
+        ['180 (Year 15)', '$1,996', '$1,300 (65.1%)', '$696 (34.9%)', '$222,766'],
+        ['300 (Year 25)', '$1,996', '$764 (38.3%)', '$1,232 (61.7%)', '$129,888'],
+        ['360 (Year 30)', '$1,996', '$12 (0.6%)', '$1,984 (99.4%)', '$0'],
+      ],
+    },
+    pitfalls: 'The most common misconception is treating early mortgage payments as equity-building. On a 30-year mortgage at 7%, only 12% of Month 1\'s payment reduces the balance. After 5 years of payments - $119,760 paid - the outstanding balance has only fallen by roughly $17,600. That means more than 85 cents of every early dollar paid went to interest, not ownership. This is not a feature of any specific lender - it is the mathematical structure of amortising loans. Anyone evaluating whether to sell or refinance within 5 years should calculate the actual principal repaid before assuming they have built meaningful equity.',
+    faqs: [
+      { q: 'What is the difference between P&I and PITI?', a: 'P&I (Principal and Interest) is the core repayment component determined by the loan amount, rate, and term. PITI extends this to include Property Taxes (T) and Homeowner\'s Insurance (I), which many lenders collect monthly and hold in escrow. Some loans also include PMI (private mortgage insurance) when the down payment is below 20%. The P&I portion is fixed for a fixed-rate loan; the T and I portions adjust annually as tax assessments and insurance premiums change.' },
+      { q: 'Why does most of the early mortgage payment go to interest?', a: 'Because interest is charged on the outstanding balance, and the balance starts at its maximum - the full loan amount. At 7%, a $300,000 balance generates $1,750 of interest in Month 1. After that payment, only $246 is applied to the balance. The next month\'s interest is calculated on $299,754 - a difference of just $1.43. The balance falls slowly at first, so the interest portion shrinks slowly. This accelerates as the balance compounds downward through the later years of the loan.' },
+      { q: 'Does paying extra principal change the monthly P&I payment?', a: 'No, for a standard amortising fixed-rate loan. Extra payments reduce the outstanding balance and shorten the remaining term, but the contractual monthly payment stays the same - the loan simply ends earlier. Some lenders offer loan recasting (re-amortising at the lower balance to produce a reduced monthly payment), but this typically requires a lump sum and a recast fee. A standard extra payment does not trigger recasting automatically.' },
+    ],
+  },
+
   'valuation-multiple': {
     definition: [
       'A valuation multiple is a ratio that expresses the price of a business as a multiple of a financial metric - most commonly EBITDA, revenue, earnings, or cash flow. The metric chosen depends on the nature of the business: EBITDA multiples suit profitable, mature companies where D&A is large; revenue multiples are used for high-growth, pre-profit businesses where no earnings yet exist to divide by.',

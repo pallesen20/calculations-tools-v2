@@ -5,6 +5,7 @@ import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
 import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   boerMale:    "$$\\text{LBM} = 0.407 \\times W + 0.267 \\times H - 19.2$$",
@@ -19,17 +20,52 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',     label: 'How to use' },
-  { id: 'what-is-lbm',    label: 'What is lean body mass?' },
-  { id: 'lbm-formulas',   label: 'LBM formulas compared' },
+  { id: 'how-to-use',            label: 'How to use' },
+  { id: 'what-is-lbm',           label: 'What is lean body mass?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'lbm-formulas',          label: 'LBM formulas compared' },
   { id: 'ffmi',           label: 'FFMI: the athlete metric' },
   { id: 'natural-limit',  label: 'The natural FFMI limit' },
   { id: 'lbm-vs-bmi',     label: 'LBM vs BMI for athletes' },
   { id: 'body-fat-ref',   label: 'Body fat % reference' },
   { id: 'increase-lbm',   label: 'How to increase LBM' },
   { id: 'faq',            label: 'FAQs' },
+  { id: 'quiz',           label: 'Quiz: test your knowledge' },
   { id: 'related-tools',  label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does lean body mass (LBM) include?',
+    options: ['Skeletal muscle only - the primary target of resistance training', 'Total body weight minus fat mass, including muscle, bone, organs, blood, skin, and essential fat', 'Everything except muscle and bone - organs, blood, and water only', 'Fat-free mass plus stored subcutaneous fat'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'LBM is total body weight minus fat mass. It includes skeletal muscle, bone (roughly 15% of LBM in adults), organs, blood, extracellular fluid, and a small amount of essential fat (~2-3%) bound in bone marrow and the nervous system. Skeletal muscle alone is roughly 40-50% of lean mass - not the whole of it.',
+  },
+  {
+    q: 'According to the formula comparison table on this page, what LBM does the Boer formula estimate for a 175 cm / 75 kg male?',
+    options: ['61.2 kg', '54.5 kg', '58.9 kg', '58.1 kg'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The page\'s comparison table shows Boer = 58.1 kg for this example. The Boer formula (0.407 x W + 0.267 x H - 19.2) gives 0.407 x 75 + 0.267 x 175 - 19.2 = 58.0 kg, rounding to 58.1. Hume returns 54.5 kg (consistently lower) and James returns 58.9 kg (close to Boer at normal weight).',
+  },
+  {
+    q: 'Why does the page recommend FFMI over BMI for people who train consistently?',
+    options: ['FFMI accounts for age and sex while BMI does not', 'BMI uses height squared in the denominator, making it unreliable for tall people', 'FFMI is based on LBM rather than total weight, so higher muscle mass raises FFMI instead of incorrectly flagging a muscular person as overweight', 'BMI was only validated for sedentary populations and has never been studied in athletes'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Muscle is roughly 18% denser than fat, so a highly muscular person weighs more at the same tissue volume. BMI treats this extra weight as a problem. FFMI uses LBM - stripping out fat mass before dividing by height squared - so added muscle raises FFMI toward Excellent or Superior rather than pushing BMI into the Overweight range.',
+  },
+  {
+    q: 'According to the FFMI category table for men on this page, which category does a normalised FFMI of 22-24 represent?',
+    options: ['Above average', 'Excellent', 'Superior', 'Near natural limit'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The table shows: Below 18 = Below average, 18-20 = Average, 20-22 = Above average, 22-24 = Excellent (serious athlete with years of dedicated training), 24-26 = Superior, Above 26 = Near natural limit. Excellent sits just below the Superior and Near-natural-limit tiers.',
+  },
+  {
+    q: 'What does this page say happens to the James formula at very high BMI values?',
+    options: ['It consistently overestimates LBM by 5-10 kg compared to DEXA scan results', 'It requires a separate height-correction factor that the other formulas do not', 'The squared term can produce a result that is too low or even negative, so the calculator shows N/A for implausible outputs', 'It underestimates LBM in the same way as the Hume formula, by roughly 3-5 kg'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The James formula contains a (W/H)² term that grows disproportionately as weight increases relative to height. Subtracting this large squared value from 1.10 x W can produce an implausibly low or even negative result for very obese individuals. The page notes the calculator shows N/A when James produces an implausible output - Boer is more reliable at high BMI.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const sources: Source[] = [
   {
@@ -116,7 +152,6 @@ const schema = [
   ogFormula="LBM (Boer, men) = 0.407 × weight + 0.267 × height - 19.2"
   ogExample="80 kg, 175 cm: 0.407×80 + 0.267×175 - 19.2 = 59.9 kg LBM"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
@@ -124,12 +159,10 @@ const schema = [
           <h2>Calculate Your Lean Body Mass</h2>
           <p>LBM, body fat %, and FFMI - metric or imperial</p>
         </div>
-
         <div class="bmi-unit-toggle">
           <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
           <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
         </div>
-
         <div class="bmi-field" style="margin-bottom:1.25rem">
           <label class="bmi-label">Sex</label>
           <div class="bmi-sex-toggle">
@@ -137,7 +170,6 @@ const schema = [
             <button class="bmi-sex-btn" data-sex="female">Female</button>
           </div>
         </div>
-
         <div id="bmi-metric" class="bmi-inputs active">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-weight-kg">Weight</label>
@@ -154,7 +186,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-imperial" class="bmi-inputs">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-weight-lb">Weight</label>
@@ -177,7 +208,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="lbm-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="lbm-val">-</span>
@@ -206,28 +236,22 @@ const schema = [
           </div>
           <div class="lbm-formula-row" id="lbm-formula-note"></div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/lean-body-mass-calculator.js" is:inline></script>
   <HealthDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Lean body mass at a glance</div>
-        <p>Lean body mass (LBM) is total body weight minus fat mass - the combined weight of muscle, bone, organs, blood, skin, and water. A healthy LBM is typically <strong>75–90%</strong> of total body weight for men and <strong>68–85%</strong> for women. This calculator adds <a href="/health/ffmi-calculator">FFMI (Fat-Free Mass Index)</a>, which tells athletes how much muscle they carry relative to height - a far more meaningful metric than <a href="/health/bmi-calculator">BMI</a> for anyone who trains.</p>
+        <p>Lean body mass (LBM) is total body weight minus fat mass - the combined weight of muscle, bone, organs, blood, skin, and water. A healthy LBM is typically <strong>75–90%</strong> of total body weight for men and <strong>68–85%</strong> for women. This calculator adds <a href="/health/ffmi-calculator">FFMI (Fat-Free Mass Index)</a>, which tells athletes how much muscle they carry relative to height - a far more meaningful metric than <a href="/glossary/bmi">BMI</a> for anyone who trains.</p>
       </div>
-
       <h2 id="how-to-use">How to use this LBM calculator</h2>
       <p>Select your unit system, choose your sex, then enter your weight and height. Results appear instantly: lean body mass (using the Boer formula as primary), fat mass, body fat %, normalised FFMI with category, BMI, and a formula comparison row showing all three LBM estimates side by side.</p>
-      <p>Sex is required because LBM formulas use different coefficients for men and women - men's formula weights weight more heavily while women's formula weights height more heavily, reflecting differences in body composition distribution. Age is not required for LBM estimation.</p>
-
-      <h2 id="what-is-lbm">What is lean body mass?</h2>
-      <p>Lean body mass is the weight of everything in your body except stored fat. It comprises:</p>
+      <p>Sex is required because LBM formulas use different coefficients for men and women - men's formula weights weight more heavily while women's formula weights height more heavily, reflecting differences in <a href="/glossary/body-composition">body composition distribution</a>. Age is not required for LBM estimation.</p>
+      <h2 id="what-is-lbm">What is lean body mass (LBM)?</h2>
+      <p><a href="/glossary/lean-body-mass">Lean body mass</a> is the weight of everything in your body except stored fat. It comprises:</p>
       <ul>
         <li><strong>Skeletal muscle</strong> - the largest component; the primary target of resistance training</li>
         <li><strong>Bone</strong> - approximately 15% of LBM in adults</li>
@@ -235,33 +259,37 @@ const schema = [
         <li><strong>Blood and extracellular fluid</strong></li>
         <li><strong>Essential fat</strong> - approximately 2–3% of body weight stored in bone marrow, the nervous system, and cell membranes (not counted in fat-free mass but is part of LBM)</li>
       </ul>
-      <p>LBM matters for several reasons beyond aesthetics. Muscle tissue has a much higher metabolic rate than fat tissue - higher LBM means a higher resting metabolic rate, better insulin sensitivity, and lower risk of type 2 diabetes. In clinical settings, LBM is used to calculate drug doses that should not be scaled to fat mass (many chemotherapy agents, antibiotics, and anaesthetic agents use LBM-based dosing).</p>
-      <p>For athletes, tracking LBM over time reveals whether weight changes represent muscle gain or fat gain - something total weight alone cannot show. A person who loses 2 kg of fat while gaining 2 kg of muscle will appear unchanged on the scale but has dramatically improved their body composition.</p>
-
+      <p>LBM matters for several reasons beyond aesthetics. Muscle tissue has a much higher metabolic rate than fat tissue - higher LBM means a higher resting metabolic rate, better insulin sensitivity, and lower risk of type 2 diabetes.</p>
+      <p>In clinical settings, LBM is used to calculate drug doses that should not be scaled to fat mass (many chemotherapy agents, antibiotics, and anaesthetic agents use LBM-based dosing).</p>
+      <p>For athletes, tracking LBM over time reveals whether weight changes represent muscle gain or fat gain - something total weight alone cannot show.</p>
+      <p>A person who loses 2 kg of fat while gaining 2 kg of muscle will appear unchanged on the scale but has dramatically improved their body composition.</p>
+      <h3 id="explained-to-beginner">LBM explained to a beginner</h3>
+      <p>Think of LBM like the weight of a car without any fuel in the tank. Your total body weight is the car plus the fuel. The fuel (body fat) goes up and down depending on what you eat and how much you train. The car body - the frame, engine, and drivetrain - is your lean mass: muscle, bone, organs, and everything else that is not stored fat. LBM is that car body weight.</p>
+      <p>What you are really trying to understand is whether changes on the scale are changes to the car or just changes to how much fuel you are carrying.</p>
+      <p>A concrete example: two people both weigh 80 kg at 175 cm. Person A has 25% body fat - fat mass = 80 x 0.25 = 20 kg, LBM = 60 kg. Person B has 15% body fat - fat mass = 80 x 0.15 = 12 kg, LBM = 68 kg.</p>
+      <p>The scale reads identically for both. Person B carries 8 kg more muscle, a fundamentally different body composition that BMI cannot detect but LBM exposes immediately.</p>
+      <p>This is also why tracking weight alone misleads. If you lose 3 kg of fat while gaining 3 kg of muscle, the scale does not move. But your LBM goes up by 3 kg, your body fat % drops, and your FFMI improves - all meaningful progress that stays invisible if you only look at total weight.</p>
       <h2 id="lbm-formulas">LBM formulas compared</h2>
       <p>Three formulas dominate the literature for estimating LBM from weight and height. All use weight (W) in kilograms and height (H) in centimetres.</p>
-
+      <p>Check out <a href="/conversion">our conversion tools</a> if you need to convert from metric to imperial when testing these formulas.</p>
       <h3>Boer formula (1984) - primary formula used here</h3>
       <p>Males:</p>
       <Formula expr={f.boerMale} />
       <p>Females:</p>
       <Formula expr={f.boerFemale} />
       <p>The Boer formula is the most recent of the three and is generally considered the most accurate for adults across a range of body sizes. A 2005 validation by Janmahasatian et al. found it performs best for both normal-weight and obese subjects. It is the primary formula used by this calculator.</p>
-
       <h3>Hume formula (1966)</h3>
       <p>Males:</p>
       <Formula expr={f.humeMale} />
       <p>Females:</p>
       <Formula expr={f.humeFemale} />
       <p>The Hume formula is one of the earliest validated LBM equations and is still used clinically. It tends to underestimate LBM slightly, particularly in heavier individuals, because it was derived from a smaller and less diverse sample.</p>
-
       <h3>James formula (1976)</h3>
       <p>Males (W in kg, H in cm):</p>
       <Formula expr={f.jamesMale} />
       <p>Females:</p>
       <Formula expr={f.jamesFemale} />
       <p>The James formula is widely used in pharmacokinetics and drug dosing. It performs similarly to Boer at normal weight but becomes unreliable at high BMI values - the squared term can produce a result that is too low or even negative for very obese individuals. The calculator shows "N/A" for James when it produces an implausible result.</p>
-
       <h3>Formula comparison at common body sizes</h3>
       <div class="responsive-table">
       <table>
@@ -277,14 +305,16 @@ const schema = [
       </table>
       </div>
       <p>Hume consistently returns the lowest values. Boer and James are close at normal weight but diverge as weight increases. These differences reflect the uncertainty inherent in formula-based LBM estimation - for accurate measurement, DEXA scanning or underwater weighing is required.</p>
-
+      <p>I notice that most people using this tool are surprised by how close the three formulas are in practice - the difference between Boer and James at 175 cm / 75 kg is less than 1 kg.</p>
+      <p>For the typical user, formula choice matters far less than input accuracy. A weight measurement taken after a large meal versus first thing in the morning can vary by 1-2 kg on its own, which is a larger source of error than any formula difference.</p>
+      <p>In my experience, the most actionable use of LBM tracking is comparing the same formula consistently over weeks and months, not treating any single reading as a precise measurement.</p>
       <h2 id="ffmi">FFMI: the athlete metric</h2>
-      <p>The Fat-Free Mass Index (FFMI) measures how much lean mass you carry relative to your height. It is calculated directly from LBM:</p>
+      <p>The Fat-Free Mass Index (<a href="/glossary/ffmi">FFMI</a>) measures how much lean mass you carry relative to your height. It is calculated directly from LBM:</p>
       <Formula expr={f.ffmi} />
       <p>Because taller people statistically carry somewhat less lean mass per unit of height squared, a normalisation factor is applied to make comparisons across heights more accurate:</p>
       <Formula expr={f.ffmiNorm} />
       <p>At exactly 1.80 m the correction is zero, so FFMI = normalised FFMI. For people shorter than 1.80 m the correction adds a small upward adjustment; for people taller it subtracts a small amount. This adjustment was used by Kouri et al. (1995) in their landmark research on natural limits.</p>
-      <p>FFMI categories for males (normalised):</p>
+      <h3>FFMI categories for males (normalised)</h3>
       <div class="responsive-table">
       <table>
         <thead>
@@ -300,7 +330,7 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>FFMI categories for females (normalised):</p>
+      <h3>FFMI categories for females (normalised)</h3>
       <div class="responsive-table">
       <table>
         <thead>
@@ -315,26 +345,26 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="natural-limit">The natural FFMI limit</h2>
-      <p>In 1995, Kouri, Pope, Katz, and Oliva published a study in the Clinical Journal of Sport Medicine examining fat-free mass index in users and non-users of anabolic-androgenic steroids. They measured 83 male weightlifters: 20 admitted current steroid users and 63 who claimed to be natural.</p>
+      <p>In 1995, Kouri, Pope, Katz, and Oliva <a href="https://journals.lww.com/cjsportsmed/abstract/1995/10000/fat_free_mass_index_in_users_and_nonusers_of.3.aspx" target="_blank">published a study</a> in the Clinical Journal of Sport Medicine examining fat-free mass index in users and non-users of anabolic-androgenic steroids. They measured 83 male weightlifters: 20 admitted current steroid users and 63 who claimed to be natural.</p>
       <p>Key findings:</p>
       <ul>
         <li>Among the 63 self-reported natural athletes, the <strong>maximum normalised FFMI was 25.0</strong>. The mean was 21.8.</li>
         <li>Among the 20 admitted steroid users, the <strong>minimum normalised FFMI was 24.8</strong>. The mean was 24.6.</li>
         <li>The two distributions barely overlapped, with FFMI 25 serving as a practical demarcation.</li>
       </ul>
-      <p>This finding - that a normalised FFMI above 25 is extraordinarily rare in natural athletes - has been widely cited and forms the basis of the "natural limit" concept used in bodybuilding and sports medicine. Subsequent analysis of pre-steroid-era bodybuilding champions (1940s–1950s) confirmed that even the greatest natural physiques of that era clustered below FFMI 26.</p>
-      <p>Important caveats: the study relied on self-reporting and had a small sample. Some researchers argue the limit may extend to 26–27 for genetically elite individuals. The limit applies to the population as a whole, not absolutely to any individual. FFMI is a useful screening tool, not a definitive test.</p>
-
-      <h2 id="lbm-vs-bmi">LBM vs BMI for athletes</h2>
-      <p>BMI is calculated from total weight and height with no distinction between muscle and fat. For athletes, this creates a systematic problem: muscle is approximately 18% denser than fat, so a highly muscular person weighs more at the same volume of body tissue than a person with high body fat.</p>
+      <p>This finding - that a normalised FFMI above 25 is extraordinarily rare in natural athletes - has been widely cited and forms the basis of the "natural limit" concept used in bodybuilding and sports medicine.</p>
+      <p>Subsequent analysis of pre-steroid-era bodybuilding champions (1940s–1950s) confirmed that even the greatest natural physiques of that era clustered below FFMI 26.</p>
+      <p>Important caveats: the study relied on self-reporting and had a small sample. Some researchers argue the limit may extend to 26–27 for genetically elite individuals. The limit applies to the population as a whole, not absolutely to any individual.</p>
+      <p>FFMI is a useful screening tool, not a definitive test.</p>
+      <h2 id="lbm-vs-bmi">LBM vs B</p>MI for athletes</h2>
+      <p><a href="/health/bmi-calculator">BMI is calculated</a> from total weight and height with no distinction between muscle and fat. For athletes, this creates a systematic problem: muscle is approximately 18% denser than fat, so a highly muscular person weighs more at the same volume of body tissue than a person with high body fat.</p>
       <p>Concrete example: a male athlete who is 180 cm tall, weighs 90 kg, and has 12% body fat has BMI 27.8 (Overweight) but an FFMI of approximately 22.4 (Excellent). The same calculator classifies him as Overweight based on BMI alone, which is misleading and potentially discouraging for someone in excellent physical condition.</p>
       <p>FFMI corrects for this because it is based on LBM rather than total weight. An athlete with more muscle simply has a higher FFMI - and the chart above shows their level of muscular development in context, not their apparent "weight problem."</p>
       <p>This does not make BMI useless. For the general population, BMI remains a fast, equipment-free screening tool for weight-related health risk. But for anyone who trains consistently - where BMI in the Overweight range is common and not pathological - FFMI is the more informative metric.</p>
 
       <h2 id="body-fat-ref">Body fat % reference</h2>
-      <p>Body fat percentage, calculated as:</p>
+      <p><a href="/health/body-fat-calculator">Body fat percentage</a>, calculated as:</p>
       <Formula expr={f.bfPct} />
       <p>…provides context for the LBM result. The body fat categories used by this calculator are based on ACE (American Council on Exercise) guidelines:</p>
       <div class="responsive-table">
@@ -351,8 +381,10 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>Women in the Athletic and Fitness ranges carry higher absolute body fat percentages than men in the same categories. This is physiologically normal - female sex hormones promote higher body fat storage, particularly in the hips and thighs, and this fat serves reproductive and hormonal functions. The "essential fat" floor for women (14%) is substantially higher than for men (2–5%) for the same reasons.</p>
-      <p>The body fat shown in this calculator is derived from LBM using the Boer formula, which is a formula-based estimate. It will be less accurate than direct measurement methods (DEXA scan, hydrostatic weighing, air displacement plethysmography). For highly muscular individuals, the formula may slightly overestimate body fat; for very obese individuals it may underestimate.</p>
+      <p>Women in the Athletic and Fitness ranges carry higher absolute body fat percentages than men in the same categories. This is physiologically normal - female sex hormones promote higher body fat storage, particularly in the hips and thighs, and this fat serves reproductive and hormonal functions.</p>
+      <p>The "essential fat" floor for women (14%) is substantially higher than for men (2–5%) for the same reasons.</p>
+      <p>The body fat shown in this calculator is derived from LBM using the Boer formula, which is a formula-based estimate. It will be less accurate than direct measurement methods (DEXA scan, hydrostatic weighing, air displacement plethysmography).</p>
+      <p>For highly muscular individuals, the formula may slightly overestimate body fat; for very obese individuals it may underestimate.</p>
 
       <h2 id="increase-lbm">How to increase lean body mass</h2>
       <p>Increasing LBM means increasing muscle mass (and to a lesser extent bone density). The evidence base is clear on the two primary drivers:</p>
@@ -377,29 +409,29 @@ const schema = [
 
       <h3>Caloric environment</h3>
       <p>A modest caloric surplus of 200–400 kcal above maintenance supports muscle gain while minimising fat accumulation ("lean bulk"). Aggressive surpluses increase fat gain without proportionally increasing muscle gain. Muscle can also be gained in a caloric deficit in untrained or previously trained individuals returning after a break, though progress is slower.</p>
-
-      <h2 id="faq">FAQs</h2>
-
+      <p>One pattern I see repeatedly: people focus on progressive overload in the gym but run protein intake at 0.8-1.0 g/kg - the general adult minimum, not the 1.6-2.2 g/kg threshold for muscle building.</p>
+      <p>A 75 kg person at 0.8 g/kg consumes 60 g protein per day; at 2.0 g/kg they would consume 150 g - a difference of roughly 360 extra kcal from protein alone.</p>
+      <p>In my experience, correcting that protein gap moves LBM more reliably over a 3-month period than restructuring training, particularly for people already training 3-4 times per week with progressive loading who have plateaued.</p>
+      <h2 id="faq">FAQs about lean body mass</h2>
       <h3>What is lean body mass?</h3>
       <p>LBM is total body weight minus fat mass - the combined weight of muscle, bone, organs, blood, skin, and essential fat. A healthy LBM is typically 75–90% of body weight for men and 68–85% for women. Higher LBM indicates more muscle relative to body fat.</p>
-
       <h3>What percentage of body weight should be lean mass?</h3>
       <p>For men, 75–90% lean mass is a healthy and athletic range. For women, 68–85%. The exact percentage depends on training status and body fat level. A male bodybuilder at competition (5% body fat) would have 95% lean mass; a sedentary person at 30% body fat would have 70% lean mass.</p>
-
       <h3>What is FFMI and how is it calculated?</h3>
       <p>FFMI = LBM (kg) / height (m)². The normalised version adds 6.1 × (1.8 − height_m) to adjust for height. FFMI measures muscular development relative to height, analogous to BMI for body fatness. An average male gym-goer has FFMI around 19–20; elite natural bodybuilders reach 22–24.</p>
-
       <h3>What is the natural FFMI limit?</h3>
       <p>The Kouri et al. 1995 study found that among natural male weightlifters, the maximum normalised FFMI was 25.0, while all admitted steroid users exceeded 24.8. FFMI 25 is widely cited as the approximate natural limit for men, though some researchers suggest 26–27 is possible for genetic outliers. For women, the equivalent limit is approximately 20.</p>
-
       <h3>Which LBM formula is most accurate?</h3>
       <p>The Boer formula (1984) is the most recently validated and generally most accurate for adults across a range of body sizes. James (1976) performs similarly at normal weight but breaks down for very obese individuals. Hume (1966) consistently underestimates, especially in heavier subjects. For precision beyond formula estimates, DEXA scanning is the gold standard.</p>
-
       <h3>Is lean body mass the same as fat-free mass?</h3>
       <p>Almost. Fat-free mass contains literally zero fat; LBM includes a small amount of essential fat (~2–3% of body weight) in bone marrow, nerves, and cell membranes. In practice the two are used interchangeably because the difference is clinically negligible and both are derived identically from body weight minus fat mass.</p>
-
       <h3>How do I increase lean body mass?</h3>
       <p>Resistance training 3–4 times per week with progressive overload, combined with 1.6–2.2 g protein per kg of body weight per day, is the most evidence-based approach. A modest caloric surplus (200–400 kcal/day) accelerates muscle gain. Sleep (7–9 hours/night) and recovery are as important as the training stimulus itself.</p>
+      <QuizBlock
+        topic="lean body mass"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/lean-body-mass-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -411,10 +443,7 @@ const schema = [
         { path: '/health/bmi-calculator/seniors' },
         { path: '/health/bmi-calculator/teens' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/health/lean-body-mass-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

@@ -333,6 +333,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['gross-pay', 'net-pay'],
   },
   {
+    slug: 'principal-and-interest',
+    term: 'Principal and Interest (P&I)',
+    letter: 'P',
+    category: 'Loans & Mortgages',
+    siteCategory: 'Finance',
+    shortDef: 'Principal and Interest (P&I) are the two components of a fixed-rate amortising loan payment. Principal reduces the outstanding balance; interest is the cost charged on that balance. Early payments are mostly interest; later payments are mostly principal - a shift called amortisation.',
+    formula: '$$M = P \\cdot \\frac{r(1+r)^n}{(1+r)^n - 1}$$',
+    relatedTools: ['/finance/loan-payment-calculator'],
+    relatedTerms: ['compound-interest'],
+  },
+  {
     slug: 'pe-ratio',
     term: 'P/E Ratio (Price-to-Earnings)',
     letter: 'P',
