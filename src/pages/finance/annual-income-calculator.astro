@@ -107,7 +107,6 @@ const schema = [
           <h2>Calculate Your Annual Income</h2>
           <p>Enter your pay and schedule to see your yearly earnings</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="aic-amount">Your Pay</label>
           <div class="aic-amount-row">
@@ -118,7 +117,6 @@ const schema = [
             <input type="text" inputmode="decimal" id="aic-amount" class="amount-input" placeholder="Enter amount" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="aic-period">Pay Period</label>
           <div class="bmi-input-wrap">
@@ -132,35 +130,30 @@ const schema = [
             </select>
           </div>
         </div>
-
         <div class="bmi-field" id="aic-hours-field">
           <label class="bmi-label" for="aic-hours">Hours per Week</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="aic-hours" class="bmi-input" value="40" placeholder="40" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="aic-weeks">Weeks per Year</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="aic-weeks" class="bmi-input" value="52" placeholder="52" />
           </div>
         </div>
-
         <div class="bmi-field aic-bonus-toggle-row">
           <label class="aic-toggle-label">
             <input type="checkbox" id="aic-bonus-toggle" class="aic-toggle-checkbox" />
             <span class="aic-toggle-text">Add bonus or extra income</span>
           </label>
         </div>
-
         <div class="bmi-field" id="aic-bonus-field" style="display:none">
           <label class="bmi-label" for="aic-bonus">Annual Bonus / Extra Income</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="aic-bonus" class="bmi-input" placeholder="e.g. 5000" />
           </div>
         </div>
-
         <div id="aic-result" class="lbm-result hidden">
           <div class="aic-results-grid">
             <div class="aic-result-row aic-row-highlight">
@@ -192,34 +185,29 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/annual-income-calculator.js" is:inline></script>
     <FinanceDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Annual income is your total gross earnings over 12 months before taxes. To calculate it from <a href="/finance/salary-to-hourly-calculator">hourly pay</a>, multiply your rate by hours per week and weeks per year. At $25/hour, 40 hours/week, and 52 weeks, that's $52,000/year. Enter any pay period above and the calculator converts it to an annual figure instantly.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
           <li>The US standard work year is 2,080 hours (40 hrs/week x 52 weeks), used by the BLS and IRS for all wage comparisons.</li>
-          <li>Median weekly earnings for US full-time workers reached $1,214 in Q3 2025, equal to $63,128 per year (Bureau of Labor Statistics, 2025).</li>
+          <li>Median weekly earnings for US full-time workers reached $1,214 in Q3 2025, equal to $63,128 per year (<a href="https://www.bls.gov/news.release/pdf/wkyeng.pdf" target="_blank">Bureau of Labor Statistics, 2025</a>).</li>
           <li>Gross annual income is always the pre-tax figure. Net annual income is typically 65-80% of gross for most US workers.</li>
           <li>Formula: Annual Income = Hourly Rate x Hours per Week x Weeks per Year.</li>
           <li>Lenders use gross annual income to assess loan eligibility - net income is used for monthly budget planning.</li>
         </ul>
       </div>
-
       <h2 id="how-to-use">How to Use This Annual Income Calculator</h2>
-      <p>Select your <a href="/glossary/pay-period">pay period</a> from the dropdown, enter your pay amount, and adjust hours per week and weeks per year if they differ from the standard 40/52. The calculator instantly shows your gross annual income plus every other pay period breakdown. Use the "Add bonus" toggle to include a one-time payment or any extra annual income on top of your regular pay.</p>
+      <p>Select your <a href="/glossary/pay-period">pay period</a> from the dropdown, enter your pay amount, and adjust hours per week and weeks per year if they differ from the standard 40/52. The calculator instantly shows your gross annual income plus every other pay period breakdown.</p>
+      <p>Use the "Add bonus" toggle to include a one-time payment or any extra annual income on top of your regular pay.</p>
       <p>The currency selector auto-detects your location and defaults to your local currency. If your pay is in a different currency, simply change the selector - the numbers work identically regardless of currency.</p>
-
       <h2 id="how-to-calculate">How to Calculate Annual Income</h2>
       <p>The calculation method depends on your pay structure. The US median full-time weekly earnings were $1,214 in Q3 2025, equal to $63,128 annualised <a href="https://www.bls.gov/news.release/pdf/wkyeng.pdf" target="_blank">(Bureau of Labor Statistics, 2025)</a>. Here are the four common starting points:</p>
       <ul>
@@ -229,30 +217,25 @@ const schema = [
         <li><strong>From monthly pay:</strong> Monthly pay x 12. $5,200 x 12 = $62,400/year.</li>
       </ul>
       <p>Include all income sources for a complete figure: base wages, <a href="/finance/overtime-calculator">overtime pay</a>, bonuses, commissions, and any side income. Lenders and landlords want your total <a href="/glossary/gross-pay">gross pay</a> from all sources combined.</p>
-
       <h2 id="formula">What Is the Annual Income Formula?</h2>
       <p>For hourly workers, the annual income formula multiplies the hourly rate by total annual hours. The standard US work year uses 2,080 hours (BLS, 2024), but you should adjust if your schedule differs.</p>
-
       <Formula expr={f.fromHourly} />
-
       <p>To convert in the other direction - from annual salary back to an hourly rate:</p>
-
       <Formula expr={f.toHourly} />
-
       <p>For monthly-paid workers, the formula is even simpler:</p>
-
       <Formula expr={f.fromMonthly} />
-
       <p>Worked example at $30/hour, 40 hours/week, 50 weeks/year (two weeks unpaid leave):</p>
       <ul>
         <li>Annual income: $30 x 40 x 50 = <strong>$60,000</strong></li>
         <li>vs. standard 52 weeks: $30 x 40 x 52 = <strong>$62,400</strong></li>
       </ul>
       <p>Those two unpaid weeks cost $2,400 in annual income. This is why weeks-per-year is an important input - not just hours-per-week.</p>
-
+      <p>I notice the weeks-per-year input gets overlooked most often when comparing two job offers.</p>
+      <p>People typically focus on the hourly rate and leave both roles defaulted to 52 weeks. But if one role offers four weeks of paid leave and the other offers two, the effective annual hours differ by 80 - worth $2,400/year at $30/hr.</p>
+      <p>Set weeks to 50 for the two-week leave role and 48 for the four-week leave role in the calculator above to get a like-for-like comparison before deciding.</p>
       <h2 id="gross-vs-net">What Is the Difference Between Gross and Net Annual Income?</h2>
-      <p>Gross annual income is what you earn before any deductions. Net annual income is what you take home after taxes and other deductions are removed. For most full-time US workers earning $50,000-$100,000, net pay is roughly 70-75% of gross (IRS, 2024). The gap widens in higher tax brackets.</p>
-
+      <p>Gross annual income is what you earn before any deductions. Net annual income is what you take home after taxes and other deductions are removed.</p>
+      <p>For most full-time US workers earning $50,000-$100,000, net pay is roughly 70-75% of gross (IRS, 2024). The gap widens in higher tax brackets.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -271,12 +254,9 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <p>This calculator shows gross annual income only - the pre-tax figure. When you need your <a href="/glossary/net-pay">net pay</a> for budgeting, apply your effective tax rate to the gross figure the calculator gives you. <a href="/tax/income-tax-calculator/us">State income tax</a>, Social Security (6.2%), and Medicare (1.45%) all reduce your <a href="/tax/income-tax-calculator">take-home pay</a> beyond just federal income tax.</p>
-
       <h2 id="reference-table">What Is My Annual Income From My Hourly Rate?</h2>
       <p>The table below converts common hourly rates to annual income at a standard 40-hour week and 52-week year (2,080 hours total). It's a quick reference for job comparison, loan applications, or benefit eligibility checks.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -304,7 +284,6 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="where-used">Where Is Annual Income Used?</h2>
       <p>You'll need your gross annual income figure in a surprising number of situations. Mortgage lenders typically require that your monthly debt payments don't exceed 28-36% of your gross monthly income (the "front-end DTI ratio"), so knowing your annual gross is step one for any home loan calculation.</p>
       <ul>
@@ -314,7 +293,6 @@ const schema = [
         <li><strong>Student loan repayment plans.</strong> Income-driven repayment plans (IDR) base monthly payments on your annual gross income and family size.</li>
         <li><strong>Tax filing.</strong> Your gross annual income determines which tax bracket you fall into and whether you owe estimated quarterly taxes.</li>
       </ul>
-
       <h2 id="mistakes">What Are Common Mistakes When Calculating Annual Income?</h2>
       <p>The most frequent error is using net pay (take-home) instead of gross pay when reporting annual income. Lenders and applications always want the gross figure - what you earn before taxes, not what lands in your bank account. Using net pay can make your income appear 20-35% lower than it actually is (IRS, 2024).</p>
       <p>Three other mistakes to avoid:</p>
@@ -323,24 +301,20 @@ const schema = [
         <li><strong>Omitting irregular income.</strong> Bonuses, commissions, and freelance payments count toward annual income. Lenders typically average the last two years of variable income. Use the bonus toggle in the calculator to include these.</li>
         <li><strong>Using monthly pay x 12 for bi-weekly workers.</strong> Workers paid bi-weekly receive 26 pay cheques per year, not 24 (which is semi-monthly). Multiplying the wrong bi-weekly figure by 12 instead of 26 creates an undercount. The calculator handles this automatically.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <p>One pattern I see repeatedly: the bi-weekly versus semi-monthly confusion causes the largest calculation error of any input in this tool.</p>
+      <p>A bi-weekly paycheck of $2,500 gives $65,000/year (x26). A semi-monthly paycheck of $2,500 gives $60,000/year (x24). That $5,000/year difference is large enough to affect mortgage pre-approval amounts and rental eligibility thresholds.</p>
+      <p>If your employer pays every two weeks - every other Friday, for example - select "Every two weeks (bi-weekly)" in the calculator. The 26-paycheck multiplier is applied automatically.</p>
+      <h2 id="faq">Frequently Asked Questions About Annual Income</h2>
       <h3>What is annual income?</h3>
       <p>Annual income is the total amount you earn over 12 months before taxes. It includes wages, salary, bonuses, commissions, freelance earnings, rental income, and investment income. When lenders and landlords ask for your annual income, they want the gross figure - everything you earn before deductions. It's the most widely used measure of financial capacity.</p>
-
       <h3>How do I calculate annual income from hourly pay?</h3>
       <p>Multiply your hourly rate by the hours you work each week, then multiply that result by the number of weeks you work per year. Standard formula: hourly rate x 40 hours x 52 weeks = $52,000 for $25/hour. If you work part-time or take unpaid leave, adjust both inputs. The calculator above handles all combinations and shows every pay period breakdown instantly.</p>
-
       <h3>What is the difference between gross and net annual income?</h3>
       <p>Gross annual income is your total earnings before any deductions: taxes, Social Security, Medicare, health insurance premiums, and retirement contributions. Net annual income is what you receive after all those deductions. For most US workers earning $50,000-$100,000, net pay is around 70-75% of gross. Use gross income for reporting purposes and net income for personal budgeting.</p>
-
       <h3>What is $25 an hour as annual income?</h3>
       <p>$25 an hour equals $52,000 per year at a standard 40-hour week and 52-week year (2,080 hours). Monthly that's $4,333; bi-weekly it's $2,000; weekly it's $1,000. If you work only 50 weeks per year, the annual figure drops to $50,000. Enter 25 in the calculator above, select "Per hour," and adjust the weeks field if you take unpaid time off.</p>
-
       <h3>What counts as annual income for a loan or rental application?</h3>
       <p>Most lenders and landlords count wages, salary, self-employment income, bonuses, commissions, rental income, alimony, child support, pension payments, and Social Security benefits. They use the gross figure before taxes. Proof is usually required: two years of tax returns, recent pay stubs, or three months of bank statements. Student loans, unemployment benefits, and cash gifts typically don't count.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>

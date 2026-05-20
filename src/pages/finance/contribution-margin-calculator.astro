@@ -13,8 +13,9 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',    label: 'How to use' },
-  { id: 'formula',       label: 'Contribution margin formula' },
+  { id: 'how-to-use',           label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',              label: 'Contribution margin formula' },
   { id: 'cm-ratio',      label: 'CM ratio & benchmarks' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'vs-gross',      label: 'CM vs. gross profit' },
@@ -68,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Contribution Margin Calculator"
   youtubeId="TGE_UzOlvdU"
@@ -90,21 +90,18 @@ const schema = [
           <h2>Calculate Contribution Margin and CM Ratio</h2>
           <p>Revenue minus variable costs - what's left to cover fixed costs and generate profit</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="cm-revenue">Total Revenue</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="cm-revenue" class="bmi-input" placeholder="e.g. 500000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="cm-variable">Total Variable Costs</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="cm-variable" class="bmi-input" placeholder="e.g. 300000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="cm-units">Units Sold (optional - for CM per unit)</label>
           <div class="bmi-input-wrap">
@@ -186,6 +183,11 @@ const schema = [
       <p>Enter <strong><a href="/glossary/revenue">Total Revenue</a></strong> and <strong>Total Variable Costs</strong> to see <a href="/glossary/contribution-margin">contribution margin and CM ratio</a>. Optionally add <strong>Units Sold</strong> to see contribution margin per unit, and <strong>Fixed Costs</strong> to see operating profit and operating margin. All inputs should be for the same period (month, quarter, or year).</p>
       <p>Variable costs include raw materials, direct labour paid per unit produced, packaging, shipping, and sales commissions. Do not include salaries, rent, or other fixed overheads in the variable cost field.</p>
 
+      <h3 id="explained-to-beginner">Contribution margin explained to a beginner</h3>
+      <p>Think of baking cookies to sell at a school fair. Each cookie sells for $3.00. The ingredients - flour, butter, chocolate - cost $0.90 per cookie. That is your variable cost. You paid $15 to rent the table for the day - that is your fixed cost, paid regardless of how many cookies you sell.</p>
+      <p>CM per unit = $3.00 - $0.90 = $2.10. That $2.10 "contributes" to paying off the $15 table rental first, and becomes profit only after the fixed cost is covered. Break-even: $15 / $2.10 = 8 cookies. Every cookie after the 8th puts $2.10 directly into your pocket.</p>
+      <p>The CM ratio is $2.10 / $3.00 = 70%. That means 70 cents of every dollar you earn is available for fixed costs and profit, while 30 cents is consumed by ingredients. A higher CM ratio means you reach break-even faster and keep more of each incremental dollar of revenue - which is why software businesses (low ingredient cost) have much higher CM ratios than manufacturers.</p>
+
       <h2 id="formula">Contribution margin formula</h2>
       <p>Contribution margin can be calculated in total, per unit, or as a ratio:</p>
       <Formula expr={f.cm} />
@@ -215,6 +217,8 @@ const schema = [
           </tbody>
         </table>
       </div>
+
+      <p>I notice the restaurant row in the benchmarks table surprises most people. At 60-75% CM ratio, restaurants outscore e-commerce and manufacturing by a wide margin - yet restaurants are widely described as low-margin businesses. The distinction is CM ratio versus operating margin. The restaurant in the worked examples table has a 70% CM ratio and $280,000 in contribution margin on $400,000 revenue. But $220,000 in fixed costs (rent, salaried staff, equipment) consume 79% of that CM, leaving only $60,000 in operating profit. The story is entirely in the fixed cost base. A restaurant with the same 70% CM ratio but $260,000 in fixed costs instead of $220,000 earns $20,000, not $60,000 - a 67% drop in profit from a 18% rise in fixed costs.</p>
 
       <h2 id="examples">Worked examples for CM calculation</h2>
       <div class="responsive-table">
@@ -264,6 +268,8 @@ const schema = [
         </table>
       </div>
       <p>Product B has the highest CM per unit ($150) but the lowest CM ratio (30%). If production capacity is constrained, Product C generates more CM per dollar of revenue. If sales time is the constraint, focus on which product generates the most CM per sales hour.</p>
+
+      <p>One pattern I see repeatedly: businesses rank their product line by revenue per unit or absolute CM per unit, and miss what the CM ratio is telling them. The product mix table above shows the gap clearly. Product B at $500/unit earns $150 CM per unit - the highest of the three. But at a 30% CM ratio, it generates only 30 cents per revenue dollar. Product C earns just $35 per unit, but at 70% CM ratio it generates 70 cents per revenue dollar. Whether Product B or Product C is the right priority depends on the actual constraint: if your sales team takes the same time to close each deal, Product B wins on absolute CM per call. If your warehouse has a fixed number of SKU slots, Product C wins - it converts more of its cost base into contribution per dollar of shelf space used. Identify the constraint first, then rank by CM per unit of that constraint.</p>
 
       <h2 id="faq">Frequently asked questions</h2>
 

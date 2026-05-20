@@ -5,6 +5,7 @@ import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
 import type { Source } from '../../components/Sources.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   ci:       "$$A = P\\left(1 + \\frac{r}{n}\\right)^{nt}$$",
@@ -40,8 +41,67 @@ const tocItems = [
   { id: 'examples',      label: 'Worked examples' },
   { id: 'rule-of-72',    label: 'Rule of 72' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: "What does the variable 'n' represent in the compound interest formula A = P(1 + r/n)^(nt)?",
+    options: [
+      'The total number of payment periods over the life of the investment',
+      'The nominal annual interest rate expressed as a whole number',
+      'The number of compounding periods per year',
+      'The number of years until the investment matures',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: "n is the compounding frequency - how many times per year interest is calculated and added to the balance. n=12 means monthly, n=4 quarterly, n=365 daily. It appears in both the base (r/n, making each period's rate smaller) and the exponent (nt, increasing the number of periods), so higher n produces a slightly higher effective annual rate.",
+  },
+  {
+    q: 'According to the worked examples table on this page, what is the future value of $50,000 invested at 7% compounded monthly for 30 years?',
+    options: [
+      '$272,261',
+      '$380,613',
+      '$330,613',
+      '$259,374',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The worked examples table shows $50,000 at 7% monthly for 30 years = $380,613 future value, earning $330,613 in interest. $330,613 is the interest earned, not the future value - a common mix-up. $259,374 is from a different row: $100,000 at 10% annual for 10 years.',
+  },
+  {
+    q: 'Why does the page conclude that time is a more powerful variable than compounding frequency?',
+    options: [
+      'Because compounding frequency only applies to savings accounts, not long-term investments',
+      'Because the difference between monthly and daily compounding is less than $5 per year on $10,000, while a 5-year delay in starting a $50,000 investment reduces the outcome by over $108,000',
+      'Because higher compounding frequency reduces the effective annual rate over periods longer than 20 years',
+      'Because the Rule of 72 becomes inaccurate when compounding is more frequent than monthly',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The frequency table shows monthly vs daily compounding differs by less than $5 per year on $10,000 - negligible. But the worked examples show $50,000 at 7% over 30 years = $380,613, while 25 years = $272,261, a $108,352 gap from one 5-year delay. The curve accelerates in the final years, so the last decade adds more than the first two decades combined.',
+  },
+  {
+    q: 'According to the compound vs simple interest comparison table on this page, what is the future value of $10,000 at 8% compounded monthly for 30 years?',
+    options: [
+      '$100,627',
+      '$49,268',
+      '$109,882',
+      '$34,000',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The table shows: simple interest = $34,000 (linear growth on original principal only), compound annually = $100,627, compound monthly = $109,882. Monthly compounding earns $9,255 more than annual over 30 years because each monthly period applies interest to a slightly larger balance. $34,000 is simple interest, not compound.',
+  },
+  {
+    q: 'What does the page identify as the most common input error on this calculator?',
+    options: [
+      'Entering the interest rate as a decimal (0.08) instead of a percentage (8)',
+      'Setting the compounding frequency to 1 (annual) when the account actually compounds monthly',
+      'Using a nominal rate from bank marketing material instead of the inflation-adjusted real rate',
+      'Forgetting to add regular contributions alongside the starting principal',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The page flags setting n=1 (annual) when most savings accounts compound monthly (n=12). A 4.5% account compounded monthly has an effective annual rate of 4.594%, and the gap widens across long timeframes. The page advises checking account terms for the actual compounding frequency - most banks state it explicitly in their product disclosures.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -287,7 +347,7 @@ const schema = [
       <Formula expr={f.cont} />
       <p>Where <em>e</em> ≈ 2.71828 is Euler's number. Continuous compounding is used in theoretical finance and derivatives pricing; it produces slightly more interest than daily compounding.</p>
       <h2 id="vs-simple">Compound vs. simple interest</h2>
-      <p>Simple interest applies only to the original principal. Compound interest applies to the principal <em>plus</em> all previously accumulated interest - creating exponential growth instead of linear growth.</p>
+      <p>Simple interest applies only to the original principal (original amount). Compound interest applies to the principal <em>plus</em> all previously accumulated interest - creating exponential growth instead of linear growth.</p>
       <Formula expr={f.simple} />
       <div class="responsive-table">
         <table>
@@ -375,6 +435,12 @@ const schema = [
       <p>Monthly compounding (n=12) means interest is calculated and added to the balance 12 times per year, at 1/12 of the annual rate each time. Annual compounding (n=1) adds interest once per year at the full annual rate. Monthly compounding produces a higher effective annual rate and a larger balance over time.</p>
       <h3>Can I compare two compound interest scenarios side by side?</h3>
       <p>Yes. Click <strong>Compare two scenarios</strong> below the main inputs. A Scenario B panel opens pre-filled from your current values - with the time period shortened automatically to make the "cost of starting later" comparison the default. Change any input in Scenario B (rate, years, principal, or compounding frequency) and both future values update instantly. A summary line shows which scenario comes out ahead and by how much in dollars and percentage. Click the button again to dismiss Scenario B and return to the standard view.</p>
+      <QuizBlock
+        topic="compound interest"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/compound-interest-calculator"
+      />
+
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/roi-calculator',                blurb: 'Calculate total ROI, investment multiple, and annualized return (CAGR).' },

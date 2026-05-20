@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   cm:         "$$\\text{Contribution Margin} = \\text{Selling Price} - \\text{Variable Cost per Unit}$$",
@@ -13,15 +14,70 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',    label: 'How to use' },
-  { id: 'formula',       label: 'Break-even formula' },
+  { id: 'how-to-use',           label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',              label: 'Break-even formula' },
   { id: 'cm',            label: 'Contribution margin' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'margin-safety', label: 'Margin of safety' },
   { id: 'applications',  label: 'Business applications' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does contribution margin measure, according to this page?',
+    options: [
+      'Total revenue minus all fixed costs for the period',
+      'The amount each unit sold contributes to covering fixed costs and generating profit',
+      'The percentage of revenue retained as net profit after all expenses',
+      'Annual sales volume required to recover the initial investment',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Contribution margin (CM) = Selling Price minus Variable Cost per Unit. It represents what each unit contributes first to covering fixed costs, and then to profit once fixed costs are fully covered.',
+  },
+  {
+    q: 'Using the coffee shop row in the worked examples table ($8,000/month fixed costs, $5.00 price, $1.50 variable cost), what is the break-even unit count?',
+    options: ['1,600', '4,000', '2,286', '5,333'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'CM = $5.00 - $1.50 = $3.50. Break-even units = $8,000 / $3.50 = 2,285.7, rounded up to 2,286. The CM ratio of 70% gives the same answer via the revenue formula: $8,000 / 0.70 = $11,429.',
+  },
+  {
+    q: 'Why does the SaaS product in the examples table break even at only 532 subscribers despite fixed costs more than six times higher than the coffee shop?',
+    options: [
+      'SaaS businesses receive government subsidies that reduce their effective fixed costs',
+      'The SaaS product has a 95% CM ratio, meaning nearly every dollar of revenue covers fixed costs',
+      'SaaS subscriber counts are measured differently from physical unit counts',
+      'The break-even figure excludes variable costs for software products',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'CM = $99 - $5 = $94, giving a 95% CM ratio. At that margin, fixed costs of $50,000 are covered by just 532 subscribers ($50,000 / $94 = 531.9). High fixed costs are viable when the margin per unit is high enough to absorb them quickly - this is operating leverage.',
+  },
+  {
+    q: 'According to the margin-of-safety section, if current revenue is $200,000 and break-even revenue is $125,000, what is the margin of safety, and what does the page say about it?',
+    options: [
+      '25% - considered vulnerable to demand fluctuations',
+      '37.5% - considered a healthy buffer above the 20% guideline',
+      '60% - the maximum safe operating range for most businesses',
+      '37.5% - below the healthy threshold, indicating high risk',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'MOS = ($200,000 - $125,000) / $200,000 x 100 = 37.5%. The page states a margin of safety above 20% is generally considered healthy; below 10% indicates vulnerability. At 37.5%, this business has a solid buffer.',
+  },
+  {
+    q: 'The page warns that treating break-even as a target rather than a floor is a common mistake. What specific example is given to illustrate the risk?',
+    options: [
+      'A business at exactly break-even cannot service any debt obligations',
+      'A business with $125,000 break-even and $150,000 actual revenue has only a 16.7% margin of safety, below the healthy 20% threshold',
+      'Fixed costs always increase by 10% per year, so any break-even calculation becomes outdated within 12 months',
+      'The contribution margin method understates risk by excluding semi-variable costs',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The page gives a specific example: $125,000 break-even revenue and $150,000 actual revenue gives a 16.7% margin of safety - below the 20% healthy threshold and exposed to a single bad quarter. Revenue needs to reach $160,000 to clear 20% (21.9%).',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -90,28 +146,30 @@ const schema = [
           <h2>Calculate Exact Break-Even Point</h2>
           <p>How many units do you need to sell to cover all costs?</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="be-fixed">Total Fixed Costs</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="be-fixed" class="bmi-input" placeholder="e.g. 50000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="be-price">Selling Price per Unit</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="be-price" class="bmi-input" placeholder="e.g. 100" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="be-variable">Variable Cost per Unit</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="be-variable" class="bmi-input" placeholder="e.g. 60" />
           </div>
         </div>
-
+        <div class="bmi-field">
+          <label class="bmi-label" for="be-actual">Actual or Target Revenue <span class="be-opt-label">(optional — for margin of safety)</span></label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="be-actual" class="bmi-input" placeholder="e.g. 200000" />
+          </div>
+        </div>
         <div id="be-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -123,7 +181,6 @@ const schema = [
               <div class="lbm-card-lbl">Break-Even Revenue</div>
             </div>
           </div>
-
           <div class="lbm-cards" style="margin-top:0.5rem;">
             <div class="lbm-card">
               <div class="lbm-card-val" id="be-cm">-</div>
@@ -134,7 +191,12 @@ const schema = [
               <div class="lbm-card-lbl">CM Ratio</div>
             </div>
           </div>
-
+          <div class="lbm-cards" style="margin-top:0.5rem;" id="be-mos-row">
+            <div class="lbm-card" style="flex:1">
+              <div class="lbm-card-val" id="be-mos">-</div>
+              <div class="lbm-card-lbl">Margin of Safety</div>
+            </div>
+          </div>
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
@@ -159,19 +221,19 @@ const schema = [
     </section>
     <script src="/js/break-even-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>Break-Even Units = <strong>Fixed Costs ÷ Contribution Margin per Unit</strong>. Example: $50,000 fixed costs, $100 selling price, $60 variable cost → CM = $40, break-even = <strong>1,250 units</strong> or <strong>$125,000 revenue</strong>.</p>
       </div>
-
       <h2 id="how-to-use">How to use this break-even calculator</h2>
       <p>Enter your <strong>Total Fixed Costs</strong> (costs that don't change with volume: rent, salaries, insurance), the <strong>Selling Price per Unit</strong>, and the <strong>Variable Cost per Unit</strong> (costs that scale with production: materials, direct labour, packaging). The calculator instantly shows break-even in units and revenue, plus contribution margin and CM ratio.</p>
       <p>Use the same currency for all inputs. If you sell multiple products, use a weighted average selling price and variable cost based on your expected sales mix.</p>
-
+      <h3 id="explained-to-beginner">Break-even explained to a beginner</h3>
+      <p>Think of a lemonade stand. You pay $10 to rent the table for the day regardless of how many cups you sell - that is your fixed cost. Each cup costs $0.50 in lemons and sugar (variable cost), and you charge $2.00 per cup.</p>
+      <p>Your contribution margin is $2.00 - $0.50 = $1.50 per cup. That $1.50 does not go into your pocket yet - it first goes toward paying off the $10 table rental. Break-even: $10 / $1.50 = 6.7 cups, so you need to sell at least 7 before you start making money.</p>
+      <p>At 6 cups: $12.00 revenue - $13.00 costs = $1.00 loss. At 7 cups: $14.00 revenue - $13.50 costs = $0.50 profit. Every cup after the 7th adds exactly $1.50 in pure profit because the fixed cost is now fully covered. Below break-even you lose money; above it, each additional unit earns exactly one contribution margin in profit - no more fixed cost to absorb.</p>
       <h2 id="formula">Break-even formula</h2>
       <p>The break-even calculation starts with <a href="/glossary/contribution-margin">contribution margin</a> - the amount each unit contributes to covering fixed costs:</p>
       <Formula expr={f.cm} />
@@ -180,7 +242,6 @@ const schema = [
       <Formula expr={f.beUnits} />
       <Formula expr={f.beRevenue} />
       <p>Both formulas give the same answer expressed differently. Use units when you produce a single product. Use revenue when you sell multiple products or services at varying prices - the CM ratio method averages across your product mix automatically.</p>
-
       <h2 id="cm">Contribution margin explained</h2>
       <p><a href="/glossary/contribution-margin">The contribution margin</a> is the profit engine of a business. Every unit sold contributes its CM to: (1) paying down fixed costs, and (2) generating profit after fixed costs are covered.</p>
       <div class="responsive-table">
@@ -198,7 +259,6 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="examples">Worked examples for break-even point</h2>
       <div class="responsive-table">
         <table>
@@ -213,12 +273,18 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>I notice the most instructive comparison in the examples table is the coffee shop versus the SaaS product.</p>
+      <p>The SaaS business carries fixed costs more than six times higher ($50,000 vs $8,000/month), yet it breaks even at just 532 subscribers because its CM ratio is 95% - nearly every dollar of revenue is contribution margin. The coffee shop, with a 70% CM ratio, needs 2,286 cups per month despite its much lower fixed base.</p>
+      <p>This is operating leverage in practice: high fixed costs are only viable when the margin per sale is high enough to absorb them quickly. If the SaaS CM ratio dropped to 47% (like the e-commerce row), break-even would jump from 532 to roughly 1,064 subscribers at the same cost base.</p>
       <h2 id="margin-safety">Margin of safety</h2>
       <p>The margin of safety measures how much sales can fall before the business hits break-even - it quantifies the buffer between current performance and the loss threshold:</p>
       <Formula expr={f.mos} />
-      <p>If your current revenue is $200,000 and break-even revenue is $125,000, your margin of safety is ($200,000 − $125,000) / $200,000 × 100 = <strong>37.5%</strong>. This means sales could drop 37.5% before you start losing money. A margin of safety above 20% is generally considered healthy; below 10% indicates vulnerability to demand fluctuations.</p>
-
+      <p>If your current revenue is $200,000 and break-even revenue is $125,000, your margin of safety is ($200,000 − $125,000) / $200,000 × 100 = <strong>37.5%</strong>. This means sales could drop 37.5% before you start losing money.</p>
+      <p>A margin of safety above 20% is generally considered healthy; below 10% indicates vulnerability to demand fluctuations.</p>
+      <p>One pattern I see repeatedly: business owners treat break-even as a target rather than a floor.</p>
+      <p>A business running exactly at break-even has zero buffer for a slow month, a lost client, or an unexpected cost. The 20% margin-of-safety guideline maps to roughly two to three months of revenue cushion.</p>
+      <p>A business with $125,000 break-even revenue and $150,000 actual monthly revenue has a 16.7% margin of safety - below the healthy threshold and exposed to a single bad quarter. Increasing actual revenue to $160,000 brings the margin of safety to 21.9%, a more defensible position.</p>
+      <p>Run the margin-of-safety calculation on your own numbers: enter your break-even revenue from the calculator above, then check whether your current revenue sits above or below the 20% buffer.</p>
       <h2 id="applications">Business applications</h2>
       <ul>
         <li><strong>Pricing decisions:</strong> If raw material costs rise, break-even analysis instantly shows what price increase is needed to maintain the same <a href="/glossary/break-even-point">break-even point</a>. It makes the trade-off between margin and volume explicit.</li>
@@ -245,6 +311,12 @@ const schema = [
       <h3>How is break-even different from profit?</h3>
       <p>Break-even is not profitability - it's the zero-profit threshold. Profit = (Units Sold − Break-Even Units) × Contribution Margin per Unit. If you sell 1,500 units when break-even is 1,250, profit = 250 × $40 = $10,000. Every unit above break-even adds exactly one contribution margin in profit.</p>
 
+      <QuizBlock
+        topic="break-even"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/break-even-calculator"
+      />
+
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/contribution-margin-calculator', blurb: 'Contribution margin, CM ratio, and profit at any sales volume.' },
@@ -259,3 +331,7 @@ const schema = [
   </div>
 
 </CalculatorLayout>
+
+<style is:global>
+  .be-opt-label { font-size: 0.75rem; color: rgba(255,255,255,0.35); font-weight: 400; }
+</style>

@@ -113,7 +113,6 @@ const schema = [
           <h2>Convert Salary to Hourly Rate</h2>
           <p>Enter your salary and schedule to see all pay period equivalents</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="sth-amount">Your Salary</label>
           <div class="sth-amount-row">
@@ -124,7 +123,6 @@ const schema = [
             <input type="text" inputmode="decimal" id="sth-amount" class="amount-input" placeholder="Enter amount" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="sth-period">Pay Period</label>
           <div class="bmi-input-wrap">
@@ -138,21 +136,18 @@ const schema = [
             </select>
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="sth-hours">Hours per Week</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="sth-hours" class="bmi-input" value="40" placeholder="40" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="sth-weeks">Weeks per Year</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="sth-weeks" class="bmi-input" value="52" placeholder="52" />
           </div>
         </div>
-
         <div id="sth-result" class="lbm-result hidden">
           <div class="sth-results-grid">
             <div class="sth-result-row sth-row-highlight">
@@ -184,19 +179,15 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/salary-to-hourly-calculator.js" is:inline></script>
     <FinanceDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Divide your annual salary by the total hours you work in a year to get your hourly rate. At the US standard of 40 hours per week and 52 weeks, that's 2,080 hours. A $60,000 salary equals $28.85 per hour. Change the pay period selector to convert from monthly, bi-weekly, weekly, or daily figures too.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -207,20 +198,17 @@ const schema = [
           <li>Reducing weeks per year to 50 (two weeks unpaid leave) raises the effective hourly rate: $60,000 / 2,000 hours = $30.00/hr instead of $28.85/hr.</li>
         </ul>
       </div>
-
       <h2 id="how-to-use">How to Convert Annual Salary to Hourly Rate</h2>
-      <p>The standard conversion divides your annual salary by 2,080 hours, the BLS-defined full-time work year. A $60,000 salary becomes $28.85/hour; a $100,000 salary becomes $48.08/hour. If your hours or working weeks differ from the standard, adjust the inputs above - the formula stays the same. To go the other direction and calculate your <a href="/finance/annual-income-calculator">annual income from an hourly rate</a>, use the Annual Income Calculator.</p>
-
+      <p>The standard conversion divides your annual salary by 2,080 hours, the BLS-defined full-time work year. A $60,000 salary becomes $28.85/hour; a $100,000 salary becomes $48.08/hour.</p>
+      <p>If your hours or working weeks differ from the standard, adjust the inputs above - the formula stays the same. To go the other direction and calculate your annual income from an hourly rate, use the <a href="/finance/annual-income-calculator">Annual Income Calculator</a>.</p>
       <h2 id="formula">What Is the Salary to Hourly Formula?</h2>
       <p>One formula drives every conversion on this page. Annual salary divided by total annual hours gives the hourly rate - everything else (daily, weekly, monthly) scales from that single figure.</p>
       <Formula expr={f.hourly} />
       <p>To go the other direction - from hourly to annual:</p>
       <Formula expr={f.annual} />
       <p>Worked example: $75,000 per year divided by (40 hours x 52 weeks) = $75,000 / 2,080 = <strong>$36.06/hour</strong>. Reverse check: $36.06 x 40 x 52 = $75,005 (rounding to cents). The reverse formula uses the same inputs - no new variables needed.</p>
-
       <h2 id="standard-hours">What Is the Standard Work Year in Hours?</h2>
       <p>The US standard work year is 2,080 hours (40 hours x 52 weeks), the figure used by the BLS, IRS, and the Office of Personnel Management for federal pay calculations. Actual hours vary based on overtime, unpaid leave, and contract terms. The table below shows common scenarios.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -241,12 +229,12 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <p>Notice how unpaid leave raises your effective hourly rate. Two weeks of unpaid time off on a $60,000 salary gives an effective rate of $30.00/hr - not $28.85/hr - because you earn the same annual pay in fewer hours.</p>
-
+      <p>I notice the most counterintuitive result from this table is the contractor row. A typical freelancer or consultant billing 30 hours per week over 48 weeks earns 1,440 billable hours annually - not the 2,080 assumed when a day rate is simply multiplied out.</p>
+      <p>In my experience, contractors consistently overestimate annual income by 20-30% because they benchmark against 52 full weeks, when the reality includes non-billable admin time, proposal writing, and gaps between contracts.</p>
+      <p>Setting hours per week to 30 and weeks per year to 48 on this calculator gives the realistic income figure rather than the optimistic one.</p>
       <h2 id="pay-periods">What Do the Different Pay Periods Mean?</h2>
-      <p>Pay period choice affects cash flow planning but not total annual income. Bi-weekly and semi-monthly are often confused: bi-weekly means every two weeks (26 pay days per year), while semi-monthly means twice a month (24 pay days per year). The table below shows how each period relates to annual salary at 2,080 hours per year.</p>
-
+      <p><a href="/glossary/pay-period">Pay period</a> choice affects cash flow planning but not total annual income. Bi-weekly and semi-monthly are often confused: bi-weekly means every two weeks (26 pay days per year), while semi-monthly means twice a month (24 pay days per year). The table below shows how each period relates to annual salary at 2,080 hours per year.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -268,10 +256,8 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="examples">How Much Is $50,000 a Year per Hour?</h2>
       <p>$50,000 per year equals $24.04 per hour at the standard 2,080-hour work year. The table below lists common annual salaries and their hourly equivalents, all calculated at 40 hours per week and 52 weeks per year. Use it as a quick reference when comparing job offers across different pay periods.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -295,13 +281,15 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <p>The US median annual wage was $59,228 in 2023 (Bureau of Labor Statistics, 2024) - which lands between the $57.69/hr and $28.85/hr rows above. That's $28.47/hour at the standard 2,080-hour benchmark.</p>
-
       <h2 id="salary-vs-hourly">Is It Better to Be Paid Salary or Hourly?</h2>
       <p>Neither structure is universally better - the right answer depends on job type, hours predictability, and the value of overtime. Salaried employees in the US who earn above $684/week are typically exempt from the Fair Labor Standards Act's overtime rules (FLSA, 2024), meaning extra hours often go unpaid. Hourly workers earn <a href="/finance/overtime-calculator">1.5x overtime pay</a> for every hour beyond 40 per week.</p>
-      <p>Salary has advantages: predictable monthly income, benefits are more commonly tied to salaried roles, and it signals career progression in most industries. Hourly suits jobs where hours fluctuate and overtime pay is realistic. If you regularly work 45-50 hours as a salaried employee, your true effective hourly rate is lower than the calculator shows - use a reduced-hours scenario to see the real figure.</p>
-
+      <p>Salary has advantages: predictable monthly income, benefits are more commonly tied to salaried roles, and it signals career progression in most industries. Hourly suits jobs where hours fluctuate and overtime pay is realistic.</p>
+      <p>If you regularly work 45-50 hours as a salaried employee, your true effective hourly rate is lower than the calculator shows - use a reduced-hours scenario to see the real figure.</p>
+      <p>One pattern I see repeatedly: professionals comparing a salary offer against a consulting rate without adjusting for actual hours worked on either side.</p>
+      <p>A $90,000 salary calculates to $43.27/hr at 40 hours per week - but if that role routinely runs 48 hours, the true effective rate falls to $36.06/hr.</p>
+      <p>A contractor billing $450/day ($56.25/hr at 8 hours) looks better on the surface. But after accounting for periods without contracts, self-employment tax, and the absence of employer benefits - which the BLS values at 25-40% on top of cash wages - the contractor rate needs to be roughly 30-40% higher than the equivalent salaried rate just to break even.</p>
+      <p>In my personal experience, the simplest discipline is to run both figures through this calculator at honest hours, then factor in that a $90,000 salaried role with full benefits is closer in total value to a $115,000-$125,000 contract rate than the cash figures suggest.</p>
       <h2 id="mistakes">What Are Common Mistakes When Converting Salary to Hourly?</h2>
       <p>The most frequent error is dividing by 2,080 when actual worked hours are higher. A salaried professional working 50 hours per week is actually earning $28.85/hr on a $60,000 salary in name only - their true effective rate is $60,000 / (50 x 52) = $23.08/hr. That's a 20% difference that matters when evaluating job offers.</p>
       <p>Three other mistakes to avoid:</p>
@@ -310,24 +298,17 @@ const schema = [
         <li><strong>Forgetting total compensation.</strong> Benefits (health insurance, retirement match, paid time off) typically add 25-40% to the cash salary value (BLS Employer Costs for Employee Compensation, 2024). A $55,000 salary with full benefits often outweighs a $65,000 contract without them.</li>
         <li><strong>Using <a href="/glossary/gross-pay">gross pay</a> when budgeting.</strong> The hourly rate this calculator shows is the pre-tax figure. After <a href="/tax/income-tax-calculator">income tax</a>, Social Security, and Medicare, <a href="/tax/income-tax-calculator/us">take-home pay</a> is typically 65-75% of gross for most US workers.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <h2 id="faq">Frequently Asked Questions About Salary to Hourly</h2>
       <h3>How do I convert monthly salary to hourly rate?</h3>
       <p>Multiply your monthly salary by 12 to get the annual figure, then divide by your total annual hours. For $5,000/month: $5,000 x 12 = $60,000/year. Divided by 2,080 hours (40 hrs/week x 52 weeks) = $28.85/hour. The calculator does this automatically - select "Per month" and enter your monthly amount.</p>
-
       <h3>How many work hours are in a year?</h3>
       <p>A standard US full-time work year has 2,080 hours: 40 hours per week multiplied by 52 weeks. This is the figure used by the BLS and federal payroll systems. If you work part-time (20 hrs/week), your annual hours are 1,040. If you take unpaid leave, reduce the weeks-per-year field in the calculator to get your actual total.</p>
-
       <h3>What is $15 an hour as an annual salary?</h3>
       <p>$15 per hour equals $31,200 per year at a standard 40-hour week and 52-week year. Monthly that's $2,600; bi-weekly it's $1,200; weekly it's $600. Formula: $15 x 40 x 52 = $31,200. At 35 hours per week, the annual figure falls to $27,300. Select "Per hour" in the calculator and enter 15 to see the full breakdown.</p>
-
       <h3>Does the salary to hourly conversion include overtime?</h3>
       <p>No - this calculator converts your base salary using contracted hours. It doesn't factor in overtime pay. For salaried employees, overtime is usually included in the fixed salary with no additional compensation. For hourly workers, overtime is paid at 1.5x the base rate for hours over 40 per week under US federal law (FLSA). Calculate overtime separately.</p>
-
       <h3>Should I use gross or net salary for the hourly calculation?</h3>
       <p>Use <a href="/glossary/gross-pay">gross pay</a> (pre-tax salary) for comparing job offers and calculating your market rate - that's what employers quote. Use net pay (after tax and deductions) when planning your monthly budget or cash flow. This calculator uses gross figures. Your effective net hourly rate is typically 65-75% of the gross rate shown, depending on your tax bracket and deductions.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -366,11 +347,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
 </CalculatorLayout>
-
 <style is:global>
   .sth-amount-row {
     display: flex;

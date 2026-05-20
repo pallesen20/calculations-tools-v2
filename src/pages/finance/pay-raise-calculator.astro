@@ -26,6 +26,13 @@ const sources: Source[] = [
     year: 2025,
     url: 'https://www.conference-board.org/press/pay-raise-budgets',
   },
+  {
+    author: 'LendingTree',
+    title: 'Survey: 82% of Workers Who Asked for a Raise Got One',
+    journal: 'LendingTree',
+    year: 2024,
+    url: 'https://www.lendingtree.com/debt-consolidation/pay-raises-survey/',
+  },
 ];
 
 const tocItems = [
@@ -91,7 +98,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "When should I ask for a pay raise?",
-        "acceptedAnswer": { "@type": "Answer", "text": "The best times to ask are during your annual performance review, after completing a major project, when taking on new responsibilities, or after six to twelve months of strong results. LinkedIn's Workforce Confidence Index found that 64% of early-career workers who asked for a raise received one, yet only 37% actually asked." }
+        "acceptedAnswer": { "@type": "Answer", "text": "The best times to ask are during your annual performance review, after completing a major project, when taking on new responsibilities, or after six to twelve months of strong results. A LendingTree survey (November 2024) found that 82% of full-time workers who asked for a raise received one - but only 35% of women and 49% of men actually asked." }
       }
     ]
   }
@@ -120,12 +127,10 @@ const schema = [
           <h2>Calculate New Salary Before & After Tax</h2>
           <p>See your new salary and after-tax raise across all pay periods</p>
         </div>
-
         <div class="pr-type-toggle">
           <button id="pr-type-pct" class="pr-type-btn pr-type-active">By percentage</button>
           <button id="pr-type-flat" class="pr-type-btn">By amount</button>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pr-current">Current salary</label>
           <div class="pr-amount-row">
@@ -136,7 +141,6 @@ const schema = [
             <input type="text" inputmode="decimal" id="pr-current" class="amount-input" placeholder="e.g. 60000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pr-period">Pay period</label>
           <div class="bmi-input-wrap">
@@ -149,7 +153,6 @@ const schema = [
             </select>
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" id="pr-raise-label" for="pr-raise">Raise percentage</label>
           <div class="bmi-input-wrap">
@@ -157,7 +160,6 @@ const schema = [
             <span class="bmi-unit-tag" id="pr-raise-suffix">%</span>
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pr-tax-rate">Effective tax rate (optional)</label>
           <div class="bmi-input-wrap">
@@ -165,13 +167,10 @@ const schema = [
             <span class="bmi-unit-tag">%</span>
           </div>
         </div>
-
         <div id="pr-result" class="lbm-result hidden">
-
           <div class="pr-raise-badge">
             Raise: <span id="pr-res-pct" class="pr-badge-val">-</span>
           </div>
-
           <div class="pr-section-label">New salary</div>
           <div class="pr-results-grid">
             <div class="pr-result-row pr-row-highlight">
@@ -195,7 +194,6 @@ const schema = [
               <span class="pr-period-val" id="pr-res-hourly">-</span>
             </div>
           </div>
-
           <div class="pr-section-label">Your raise (before tax)</div>
           <div class="pr-results-grid">
             <div class="pr-result-row">
@@ -211,7 +209,6 @@ const schema = [
               <span class="pr-period-val pr-green" id="pr-raise-weekly">-</span>
             </div>
           </div>
-
           <div id="pr-tax-section" class="hidden">
             <div class="pr-section-label">After-tax raise (estimated)</div>
             <div class="pr-results-grid">
@@ -225,23 +222,18 @@ const schema = [
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-
     <script src="/js/pay-raise-calculator.js" is:inline></script>
     <FinanceDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
-        <p>A pay raise calculator shows your new salary and the exact dollar increase across every pay period after you enter your current salary and raise percentage. Add your effective tax rate to see how much of the raise you actually take home. U.S. employers projected average salary increases of 3.5% for 2026 (Mercer, 2025).</p>
+        <p>A pay raise calculator shows your new salary and the exact dollar increase across every pay period after you enter your current salary and raise percentage. Add your effective tax rate to see how much of the raise you actually take home. U.S. employers projected average salary increases of 3.5% for 2026 (<a href="https://www.mercer.com/en-us/about/newsroom/most-us-employers-plan-to-keep-2026-salary-increases-flat/" target="_blank">Mercer, 2025</a>).</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -249,26 +241,20 @@ const schema = [
           <li>New Salary = Current Salary x (1 + Raise% / 100). A 5% raise on $60,000 gives $63,000.</li>
           <li>A raise below the current inflation rate is a real-terms pay cut, even when the dollar amount is higher.</li>
           <li>In the US progressive tax system, only the portion of income above each bracket threshold is taxed at the higher rate.</li>
-          <li>64% of early-career workers who asked for a raise received one, yet only 37% actually asked (LinkedIn, 2023).</li>
+          <li>82% of full-time workers who asked for a raise received one - yet only 35% of women and 49% of men actually asked (LendingTree, 2024).</li>
         </ul>
       </div>
-
       <h2 id="how-to-use">How to Use This Pay Raise Calculator</h2>
       <p>Enter your current salary and choose the matching <a href="/glossary/pay-period">pay period</a>: annual, monthly, bi-weekly, weekly, or hourly. Toggle between a percentage raise and a flat dollar amount, then type your raise figure. The calculator instantly shows your new salary across every pay period. Add your effective tax rate to see your <a href="/tax/income-tax-calculator">after-tax take-home</a> increase as well.</p>
       <p>The currency selector auto-detects your location. If your salary is quoted in a different currency, switch the selector - the math works identically regardless of currency. All results are <a href="/glossary/gross-pay">gross pay</a> figures unless a tax rate is entered.</p>
-
       <h2 id="how-to-calculate">How to Calculate a Pay Raise</h2>
       <p>Three formulas cover every scenario. The Conference Board reported average salary budget increases of 3.4% in 2025 with a 3.5% median, and the same is expected for 2026 <a href="https://www.conference-board.org/press/pay-raise-budgets" target="_blank">(The Conference Board, 2025)</a>. All three formulas below use the same annual-equivalent logic regardless of pay period.</p>
-
       <p>To find your new salary after a percentage raise:</p>
       <Formula expr={f.newSalary} />
-
       <p>To find the dollar value of a percentage raise:</p>
       <Formula expr={f.raiseAmt} />
-
       <p>To calculate what percentage raise you received from two salary figures:</p>
       <Formula expr={f.raisePct} />
-
       <p>Worked example: current salary $60,000, raise of 5%.</p>
       <ul>
         <li>Raise amount: $60,000 x (5/100) = <strong>$3,000</strong></li>
@@ -277,10 +263,8 @@ const schema = [
         <li>New bi-weekly: $63,000 / 26 = <strong>$2,423.08</strong></li>
         <li>New hourly (2,080 hrs): $63,000 / 2,080 = <strong>$30.29/hr</strong></li>
       </ul>
-
       <h2 id="average-raise">What Is the Average Pay Raise in 2026?</h2>
-      <p>U.S. employers planned average total salary increases of 3.5% for 2026, holding roughly flat from 2025 levels, according to Mercer's Compensation Planning Survey (2025). The Conference Board reported a 3.5% median salary budget for both 2025 and 2026, reflecting a mix of merit, cost-of-living, and promotional increases (The Conference Board, 2025).</p>
-
+      <p>U.S. employers planned average total salary increases of 3.5% for 2026, holding roughly flat from 2025 levels, according to Mercer's Compensation Planning Survey (2025). The Conference Board reported a 3.5% median salary budget for both 2025 and 2026, reflecting a mix of merit, cost-of-living, and promotional increases (<a href="https://www.conference-board.org/press/pay-raise-budgets" target="_blank">The Conference Board, 2025</a>).</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -299,12 +283,14 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <p>Industry matters too. Financial services and high-tech averaged total increases of 3.7% for 2026, while healthcare services and retail averaged 3.3-3.4% (Mercer, 2025). If your industry tends to lag, a job change is historically the fastest path to a large salary increase.</p>
-
+      <p>I notice the most practical use of this calculator before a salary review is to run it twice: once with what your employer is likely to offer (typically 3-3.5% based on the benchmarks above), and once with what you are targeting.</p>
+      <p>On a $75,000 salary, the gap between a 3.5% and a 5.5% raise is $1,500 per year - $125 per month.</p>
+      <p>In my experience negotiating salary, framing the ask around the monthly dollar difference lands more concretely than arguing over percentage points. "I am looking for an additional $125 per month" is specific and proportionate in a way that "1.5 percentage points more" is not.</p>
+      <p>The flat dollar toggle (by amount) in the calculator above makes it easy to reverse-engineer exactly what monthly amount your target percentage represents before you walk into the review.</p>
       <h2 id="good-raise">What Is a Good Pay Raise Percentage?</h2>
-      <p>A raise is "good" if it exceeds inflation, preserving your purchasing power. The US Consumer Price Index rose roughly 2.8% in 2025, making 3%+ the minimum for a real-terms increase. Anything below inflation is effectively a pay cut in real terms, even if the dollar amount is higher. The BLS median weekly earnings figure is useful for benchmarking your salary against the national median.</p>
-
+      <p>A raise is "good" if it exceeds inflation, preserving your purchasing power. The US Consumer Price Index rose roughly 2.8% in 2025, making 3%+ the minimum for a real-terms increase. Anything below inflation is effectively a pay cut in real terms, even if the dollar amount is higher.</p>
+      <p>The BLS median weekly earnings figure is useful for benchmarking your salary against the national median.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -323,10 +309,9 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="when-to-ask">When Should You Ask for a Pay Raise?</h2>
-      <p>Timing your raise request dramatically affects your success rate. LinkedIn's Workforce Confidence Index (2023) found that 64% of early-career workers who asked for a raise received one, but only 37% ever asked. The gap between asking and receiving is the single largest missed opportunity in salary negotiation.</p>
-
+      <p>Timing your raise request dramatically affects your success rate. A LendingTree survey (November 2024) found that 82% of full-time workers who asked for a raise received one - yet only 35% of women and 49% of men had actually asked in the past year <a href="https://www.lendingtree.com/debt-consolidation/pay-raises-survey/" target="_blank">(LendingTree, 2024)</a>.</p>
+      <p><em>The gap between asking and receiving is the single largest missed opportunity in salary negotiation.</em></p>
       <p>The strongest moments to request a raise:</p>
       <ul>
         <li><strong>Annual performance review.</strong> This is when budgets are already allocated and managers have formal authority to approve increases.</li>
@@ -335,18 +320,15 @@ const schema = [
         <li><strong>After six to twelve months in role.</strong> Asking within the first three to six months rarely succeeds. After a year with documented results, you have a track record.</li>
         <li><strong>When the company is doing well.</strong> Revenue growth, a new product launch, or a strong earnings quarter signals that budget exists for raises.</li>
       </ul>
-
       <p>Most HR professionals and career coaches recommend requesting a raise no more than once per year in the same role. Repeated asks signal that you're not managing expectations well - focus each request on specific, measurable contributions.</p>
-
       <h2 id="after-tax">How Does a Pay Raise Affect Taxes?</h2>
-      <p>In the US progressive tax system, a raise does not push your entire salary into a higher bracket - only the income above each threshold is taxed at the higher rate. The federal marginal rates run from 10% on income up to $11,925 (single, 2025) to 37% above $626,350. A $3,000 raise on a $60,000 salary at the 22% marginal rate costs roughly $660 in additional federal tax, leaving around $2,340 in after-tax benefit.</p>
-
+      <p>In the US progressive tax system, a raise does not push your entire salary into a higher bracket - only the income above each threshold is taxed at the higher rate.</p>
+      <p>The federal marginal rates run from 10% on income up to $11,925 (single, 2025) to 37% above $626,350. A $3,000 raise on a $60,000 salary at the 22% marginal rate costs roughly $660 in additional federal tax, leaving around $2,340 in after-tax benefit.</p>
       <Formula expr={f.afterTax} />
-
-      <p>Your effective tax rate (total tax / total income) is always lower than your marginal rate. For most US workers earning $50,000-$100,000, the effective federal rate sits around 12-22%. <a href="/tax/income-tax-calculator/us">State income tax</a>, Social Security (6.2%), and Medicare (1.45%) all add to the total burden. Use the calculator's optional tax rate field with your actual effective rate for the most accurate after-tax estimate. A <a href="/finance/salary-to-hourly-calculator">salary to hourly conversion</a> can help you see the post-raise rate per hour too.</p>
+      <p>Your effective tax rate (total tax / total income) is always lower than your marginal rate. For most US workers earning $50,000-$100,000, the effective federal rate sits around 12-22%. <a href="/tax/income-tax-calculator/us">State income tax</a>, Social Security (6.2%), and Medicare (1.45%) all add to the total burden.</p>
+      <p>Use the calculator's optional tax rate field with your actual effective rate for the most accurate after-tax estimate. A <a href="/finance/salary-to-hourly-calculator">salary to hourly conversion</a> can help you see the post-raise rate per hour too.</p>
       <h2 id="raise-examples">Pay Raise Examples Across Common Salaries</h2>
       <p>The table below shows the annual and monthly raise amounts for common salary levels at 3%, 5%, and 10% raise percentages. Use it as a quick reference when benchmarking an offer or preparing for a negotiation.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -367,26 +349,22 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <p>Notice that higher-earners see a much larger dollar difference even at the same percentage - a 5% raise on $150,000 is $7,500/year compared to $1,500 on $30,000. This asymmetry is why percentage-based raises benefit higher earners disproportionately over time. When comparing offers, always compare absolute dollar amounts across the same pay period using the calculator above.</p>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <p>Notice that higher-earners see a much larger dollar difference even at the same percentage - a 5% raise on $150,000 is $7,500/year compared to $1,500 on $30,000. This asymmetry is why percentage-based raises benefit higher earners disproportionately over time.</p>
+      <p>When comparing offers, always compare absolute dollar amounts across the same pay period using the calculator above.</p>
+      <p>One pattern I see repeatedly: employees accepting a raise just below inflation because the dollar amount feels like a real gain. $1,500 on a $60,000 salary (2.5%) looks positive until you register that inflation ran at 2.8% the same year.</p>
+      <p>What is harder to see is the compounding effect - over three consecutive years of 2.5% raises against 2.8% inflation, a $60,000 starting salary reaches $64,514 in nominal terms but needs $65,074 just to match inflation. The gap is $560 at this salary level, but on $100,000 it approaches $1,000 and widens further each year.</p>
+      <p>Personally for me, the most clarifying step is to enter your proposed raise into this calculator, note the annual figure, then check that percentage against the <a href="#good-raise">"good raise" table</a> above - that single comparison turns an abstract number into a concrete real-terms verdict.</p>
+      <h2 id="faq">Frequently Asked Questions About Pay Raise</h2>
       <h3>How do I calculate a pay raise percentage?</h3>
       <p>Subtract your old salary from your new salary, divide by your old salary, then multiply by 100. For $60,000 to $63,000: ($63,000 - $60,000) / $60,000 x 100 = 5%. To go the other direction and find the new salary from a given percentage, multiply current salary by (1 + raise/100). A <a href="/math/percentage-calculator/increase">percentage increase calculator</a> handles both directions instantly.</p>
-
       <h3>What is the average pay raise in 2026?</h3>
       <p>U.S. employers forecast average total salary increases of 3.5% for 2026, with a 3.4% mean and 3.5% median across budget surveys (Mercer and The Conference Board, 2025). Merit-only budgets averaged 3.2%. High performers typically receive 5-8%, and promotions generate 10-20%+ increases. Actual increases vary significantly by industry and company size.</p>
-
       <h3>Does a pay raise affect my tax bracket?</h3>
       <p>Yes, but only partially. The US federal tax system is progressive, so only the income above each bracket threshold is taxed at the higher rate. A $3,000 raise at the 22% marginal rate costs roughly $660 in additional federal tax, leaving ~$2,340 after-tax gain. Enter your effective rate in the calculator's optional tax field to see the precise after-tax increase for your situation.</p>
-
       <h3>What is a good pay raise percentage?</h3>
       <p>A raise that beats inflation preserves purchasing power. With US CPI around 2.8% in 2025, a raise of 3%+ is the baseline for a real gain. A merit increase of 5-7% reflects strong performance recognition. If your raise is below the inflation rate, your salary has effectively decreased in real terms even though the number is larger.</p>
-
       <h3>When should I ask for a pay raise?</h3>
-      <p>The best time is during your annual review, after a high-impact project, or when your responsibilities have grown beyond your original role. Wait at least six months in a new position before asking. LinkedIn data (2023) shows 64% of early-career workers who asked received a raise, but only 37% actually asked - the biggest barrier is simply not asking.</p>
-
+      <p>The best time is during your annual review, after a high-impact project, or when your responsibilities have grown beyond your original role. Wait at least six months in a new position before asking. A LendingTree survey (2024) found 82% of full-time workers who asked received a raise - but only 35% of women and 49% of men actually asked. The biggest barrier is simply not asking.</p>
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -425,12 +403,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pr-type-toggle {
     display: flex;

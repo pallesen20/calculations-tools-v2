@@ -5,6 +5,7 @@ import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
 import type { Source } from '../../components/Sources.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   roi:        "$$\\text{ROI} = \\frac{\\text{Final Value} - \\text{Initial Investment}}{\\text{Initial Investment}} \\times 100$$",
@@ -31,16 +32,76 @@ const sources: Source[] = [
 ];
 
 const tocItems = [
-  { id: 'how-to-use',   label: 'How to use' },
-  { id: 'formula',      label: 'ROI formula' },
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',             label: 'ROI formula' },
   { id: 'annualized',   label: 'Annualized ROI' },
   { id: 'examples',     label: 'Worked examples' },
   { id: 'benchmarks',   label: 'ROI benchmarks' },
   { id: 'vs-other',     label: 'ROI vs. IRR vs. NPV' },
   { id: 'mistakes',     label: 'Common mistakes' },
   { id: 'faq',          label: 'FAQs' },
+  { id: 'quiz',         label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does ROI measure, according to this page?',
+    options: [
+      'The gain or loss from an investment relative to its cost, expressed as a percentage',
+      'Annualized income relative to total asset value, adjusted for inflation',
+      'Total revenue generated divided by total capital deployed over the holding period',
+      'Performance measured against a benchmark index such as the S&P 500',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'ROI (Return on Investment) is defined on this page as the gain or loss from an investment relative to its cost. The formula is (Final Value - Initial Investment) / Initial Investment x 100. A positive result means profit; a negative result means a loss.',
+  },
+  {
+    q: 'According to the worked examples table on this page, what is the annualized ROI on a real estate flip: $250,000 purchase, $340,000 sale, held for 2 years?',
+    options: [
+      '36.0%',
+      '18.0%',
+      '14.0%',
+      '16.6%',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The annualized ROI formula is (Final/Initial)^(1/n) - 1. For $340,000/$250,000 over 2 years: 1.36^(0.5) - 1 = 16.6%. The 36% total ROI is the simple percentage gain; 16.6% is the equivalent annual rate over the 2-year hold. The worked examples table confirms this figure.',
+  },
+  {
+    q: 'According to the ROI vs. IRR vs. NPV comparison table on this page, which metric accounts for the timing of each individual cash flow throughout the investment period?',
+    options: [
+      'ROI',
+      'Annualized ROI / CAGR',
+      'IRR',
+      'MOIC',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The comparison table shows that IRR (Internal Rate of Return) is the only metric that fully accounts for the timing of each cash flow. ROI and MOIC ignore timing entirely; annualized ROI only partially accounts for duration. The page notes that for a single lump-sum investment with no interim cash flows, annualized ROI and IRR produce the same result.',
+  },
+  {
+    q: 'According to the ROI benchmarks table on this page, what is the typical annual ROI range for real estate (rental)?',
+    options: [
+      '2% - 5%',
+      '6% - 12%',
+      '15% - 25%',
+      '3% - 6%',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The benchmarks table shows real estate (rental) typically returns 6% - 12% annually, including rental income plus appreciation. This is classified as medium risk. By comparison, private equity targets 15% - 25% at high risk, and US Treasury bonds return 2% - 5% at very low risk.',
+  },
+  {
+    q: 'The Common mistakes section gives a specific comparison: 200% total ROI over 20 years vs 100% total ROI over 5 years. What does the page conclude?',
+    options: [
+      'The 200% total ROI is better because it represents a larger absolute gain',
+      'They are equivalent because both returns exceed the S&P 500 historical average',
+      'The 100% ROI over 5 years is better - it yields 14.9% per year versus only 5.6% per year for the 200% over 20 years',
+      'More information is needed because the result depends on the asset class and risk level',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Duration completely changes the picture. 200% total ROI over 20 years works out to only 5.6% annualized - below the S&P 500 historical average. 100% total ROI over 5 years is 14.9% annualized - well above it. The page concludes: always annualize before comparing.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -115,28 +176,24 @@ const schema = [
           <h2>Calculate Return on Investment Instantly</h2>
           <p>Enter your initial investment and final value to see return, multiple, and annualized ROI</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="roi-initial">Initial Investment</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="roi-initial" class="bmi-input" placeholder="e.g. 10000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="roi-final">Final Value</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="roi-final" class="bmi-input" placeholder="e.g. 13500" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="roi-years">Holding Period in Years (optional - for annualized ROI)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="roi-years" class="bmi-input" placeholder="e.g. 3" />
           </div>
         </div>
-
         <div id="roi-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -177,19 +234,22 @@ const schema = [
     <script src="/js/roi-calculator.js" is:inline></script>
   <FinanceDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>ROI = <strong>(Final Value − Initial Investment) / Initial Investment × 100</strong>. Example: invest $10,000, receive $13,500 → Net Return $3,500, ROI = <strong>35%</strong>, Multiple = <strong>1.35x</strong>.</p>
       </div>
-
       <h2 id="how-to-use">How to use this ROI calculator</h2>
       <p>Enter your <strong>Initial Investment</strong> (the amount you put in) and your <strong>Final Value</strong> (the amount you got back, including the original principal). The calculator instantly shows net return in currency, <a href="/glossary/roi">ROI</a> as a percentage, and the investment multiple. Optionally enter the <strong>Holding Period in Years</strong> to see your <a href="/glossary/cagr">annualized ROI (CAGR)</a>.</p>
       <p>Use consistent units - if your investment is in dollars, enter all values in dollars. The calculator handles any currency or denomination as long as both inputs use the same unit.</p>
-
+      <h3 id="explained-to-beginner">The term "ROI" explained to a beginner</h3>
+      <p>ROI stands for Return on Investment. Think of ROI like selling something you bought at a market. You pay $200 for a vintage lamp. Later you sell it for $300. Your profit (net return) is $100.</p>
+      <p>To find ROI: divide that profit by what you paid, then multiply by 100. $100 / $200 x 100 = 50% ROI. You earned 50 cents of profit for every dollar you invested.</p>
+      <p>The time element is where most people underestimate the calculation. A 50% ROI sounds the same whether it took 1 year or 10 years - but they are very different outcomes.</p>
+      <p>If the lamp sale took 10 years, your annualized ROI is only 4.1% per year - which a savings account could have matched. If it took 1 year, 50% annualized is exceptional. This calculator adds annualized ROI automatically when you enter a holding period, making these comparisons instant.</p>
+      <p>A practical rule: always fill in the holding period. The headline ROI tells you the total gain; the annualized ROI tells you whether the investment was actually worth the wait.</p>
+      <p>A startup investment returning 400% over 7 years sounds extraordinary - but that works out to 25.8% per year, which puts it in the private equity range rather than the "unicorn" category.</p>
       <h2 id="formula">Return on Investment formula</h2>
       <p>ROI measures how much profit you earned relative to what you invested. The standard formula is:</p>
       <Formula expr={f.roi} />
@@ -198,12 +258,10 @@ const schema = [
       <p>The investment multiple expresses the same information as a ratio rather than a percentage - useful for comparing large returns:</p>
       <Formula expr={f.multiple} />
       <p>A 100% ROI equals a 2.0x multiple. A 200% ROI equals a 3.0x multiple. Venture capital investors typically express targets as multiples (e.g., "we need at least 3x") rather than percentages.</p>
-
       <h2 id="annualized">Annualized ROI (CAGR)</h2>
       <p>Total ROI does not account for how long the investment was held. A 50% ROI over 10 years is far less impressive than 50% ROI over 1 year. <strong>Annualized ROI</strong> - also called <a href="/glossary/cagr">CAGR (Compound Annual Growth Rate)</a> - solves this by converting total return into a consistent annual rate:</p>
       <Formula expr={f.annualized} />
       <p>Where <em>n</em> is the number of years. This is the same as the geometric mean annual return. Use annualized ROI whenever comparing investments held for different lengths of time.</p>
-
       <h2 id="examples">Worked examples for return on investment</h2>
       <div class="responsive-table">
         <table>
@@ -219,7 +277,9 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>I notice the marketing campaign row in the worked examples ($5,000 in, $18,000 back, 260% ROI in 1 year) is often cited as an example of exceptional returns - and over one year it genuinely is. But context collapses when the time dimension is dropped.</p>
+      <p>In my experience, the single most useful discipline when using this calculator is to enter the holding period for every comparison. A 50% total ROI over 1 year is exceptional; the same 50% over 7 years is 5.9% annualized, which trails a basic index fund by roughly half.</p>
+      <p>The calculator surfaces this the moment you fill in the years field - that annualized number is the one worth sharing when making the case for or against an investment.</p>
       <h2 id="benchmarks">ROI benchmarks by asset class</h2>
       <p>What counts as a good ROI depends on the asset class, risk level, and time horizon. These historical benchmarks provide context:</p>
       <div class="responsive-table">
@@ -238,7 +298,9 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>One pattern I see repeatedly: investors compare headline ROI numbers across asset classes without accounting for the fully-loaded cost base.</p>
+      <p>The real estate flip example in the worked examples table above shows $250,000 in, $340,000 out, 36% ROI, 16.6% annualized. But if you add 5-6% realtor commissions on the sale ($18,700), closing costs on purchase and sale, and any renovation or carrying costs during the hold, the net ROI on the same trade can fall to 12-18%.</p>
+      <p>In my personal experience, the calculator's result is always the upper bound. If you are evaluating real estate or a <a href="/finance/ebitda-calculator">business acquisition</a>, the critical discipline is making sure the "Initial Investment" field captures the full cost - purchase price plus all transaction costs, improvement spend, and carrying costs throughout the hold - not just the sticker price.</p>
       <h2 id="vs-other">ROI vs. IRR vs. NPV</h2>
       <p>ROI is the simplest return metric, but it is not always the right one. Understanding when to use each metric is essential for sound investment analysis.</p>
       <p>IRR: <a href="/glossary/irr">Internal Rate of Return</a><br>NPV: <a href="/glossary/npv">Net Present Value</a><br>MOIC: <a href="/glossary/moic">Multiple on Invested Capital</a></p>
@@ -286,6 +348,12 @@ const schema = [
 
       <h3>Can ROI be negative?</h3>
       <p>Yes. Negative ROI means the final value is less than the initial investment. For example, $10,000 invested and $7,000 returned gives ROI = (7,000 − 10,000) / 10,000 × 100 = −30%. Negative ROI is common in failed startups, poorly timed trades, and distressed assets.</p>
+
+      <QuizBlock
+        topic="ROI"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/roi-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[

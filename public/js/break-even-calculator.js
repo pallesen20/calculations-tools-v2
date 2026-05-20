@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  ['be-fixed', 'be-price', 'be-variable'].forEach(id => {
+  ['be-fixed', 'be-price', 'be-variable', 'be-actual'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', calculate);
   });
@@ -53,6 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('be-step2').textContent = `CM ratio: ${fmtFull(cm)} / ${fmtFull(price)} × 100 = ${cmRatio.toFixed(1)}%`;
     document.getElementById('be-step3').textContent = `Break-even units: ${fmtFull(fixed)} / ${fmtFull(cm)} = ${beUnits.toFixed(1)} → ${Math.ceil(beUnits)} units`;
     document.getElementById('be-step4').textContent = `Break-even revenue: ${fmtFull(fixed)} / ${(cmRatio / 100).toFixed(4)} = ${fmtFull(beRevenue)}`;
+
+    const actual = parseVal('be-actual');
+    const mosEl = document.getElementById('be-mos');
+    if (!isNaN(actual) && actual > 0) {
+      const mos = ((actual - beRevenue) / actual) * 100;
+      mosEl.textContent = mos.toFixed(1) + '%';
+    } else {
+      mosEl.textContent = '-';
+    }
 
     document.getElementById('be-result').classList.remove('hidden');
   }
