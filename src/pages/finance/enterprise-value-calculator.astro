@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 import type { Source } from '../../components/Sources.astro';
 
 const f = {
@@ -40,8 +41,67 @@ const tocItems = [
   { id: 'examples',      label: 'Worked examples' },
   { id: 'benchmarks',    label: 'Industry multiples' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What is the correct formula for Enterprise Value?',
+    options: [
+      'Market Cap + Net Income − Cash & Equivalents',
+      'Market Cap + Total Debt − Cash & Equivalents',
+      'Share Price × Shares Outstanding only',
+      'EBITDA × Industry Multiple',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'EV = Market Cap + Total Debt − Cash & Equivalents. An acquirer pays market cap to equity holders and assumes all debt, but immediately gains the company\'s cash balance. Net debt (Debt − Cash) adjusts the equity price to the true all-in acquisition cost.',
+  },
+  {
+    q: 'A cash-heavy tech company has a market cap of $800M, zero debt, and $400M in cash. What is its Enterprise Value?',
+    options: [
+      '$800M - the same as market cap because there is no debt',
+      '$1,200M - market cap plus cash',
+      '$400M - market cap minus the cash balance',
+      '$360M - after applying a standard EV/EBITDA discount',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'EV = $800M + $0 − $400M = $400M. This is the cash-heavy tech row in the worked examples table. The buyer pays $800M for the shares but immediately receives $400M in cash, so the net cost for the operating business alone is $400M.',
+  },
+  {
+    q: 'Why is cash subtracted when calculating Enterprise Value?',
+    options: [
+      'Cash reduces operating profit and should be excluded from financial analysis',
+      'Accounting standards require cash to be excluded from enterprise valuations',
+      'Cash has no bearing on the total cost of acquiring a business',
+      'In an acquisition, the buyer gains the company\'s cash balance immediately, reducing the net purchase cost',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'If you buy a company for its market cap but the company holds $50M in cash, your effective outlay for the operating business is market cap minus $50M - because that cash is now yours. Enterprise Value normalises for this: net debt (Debt − Cash) is the adjustment from equity value to total business value.',
+  },
+  {
+    q: 'According to the industry benchmarks table, which sector typically commands the highest EV/EBITDA multiple range?',
+    options: [
+      'SaaS / Software (15x-30x+)',
+      'Healthcare / Pharma (10x-18x)',
+      'Consumer Staples (10x-15x)',
+      'Telecom (5x-9x)',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'SaaS and software companies trade at 15x-30x+ because the market prices in high expected growth and scalable cost structures. The next-highest sector in the table is Healthcare / Pharma at 10x-18x. At the low end, Retail and Oil & Gas both range from 4x-8x.',
+  },
+  {
+    q: 'The page warns about a specific pitfall when using published EV/EBITDA benchmark ranges for valuations. What is it?',
+    options: [
+      'EV/EBITDA multiples are always too high because sell-side analysts inflate them',
+      'Benchmark ranges from prior years can be significantly stale - a sector at 8x before 2022 might now trade at 5x due to interest rate changes',
+      'Industry benchmarks never apply to individual companies because every business is unique',
+      'EV/EBITDA can only be used for public companies listed on major stock exchanges',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The page notes that using a pre-2022 benchmark of 8x for a sector now trading at 5x would overvalue the target by 60%. The recommendation is to calibrate against the most recent comparable public company multiples and closed deal multiples in the same sub-sector, not stale published ranges.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -201,7 +261,7 @@ const schema = [
       </div>
       <h2 id="how-to-use">How to use this EV calculator</h2>
       <p>Enter <strong>Market Capitalisation</strong> (share price × shares outstanding - find on any financial data site), <strong>Total Debt</strong> (short-term + long-term debt from the balance sheet), and <strong>Cash &amp; Equivalents</strong> (cash + short-term investments). Optionally enter <strong><a href="/finance/ebitda-calculator">EBITDA</a></strong> and <strong>Revenue</strong> to calculate the <a href="/glossary/ev-ebitda">EV/EBITDA</a> and EV/Revenue valuation multiples.</p>
-      <p>Use figures from the same date. For a valuation context, use the latest reported balance sheet data paired with last twelve months (LTM) EBITDA and revenue.</p>
+      <p>Use figures from the same date. For a valuation context, use the latest reported balance sheet data paired with last twelve months (LTM) EBITDA and <a href="/glossary/revenue">revenue</a>.</p>
       <h2 id="formula">Enterprise Value formula</h2>
       <p>Enterprise Value represents the theoretical total acquisition cost of a business - what an acquirer would pay to own 100% of the company, assuming they take on all debt but receive all cash:</p>
       <Formula expr={f.ev} />
@@ -211,7 +271,7 @@ const schema = [
       <Formula expr={f.evEbitda} />
       <Formula expr={f.evRev} />
       <p>EV/EBITDA is the most widely used valuation multiple in M&amp;A and private equity because it is capital-structure-neutral and comparable across different geographies and tax jurisdictions.</p>
-      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <h3 id="explained-to-beginner">Enterprise value explained to a beginner</h3>
       <p>Imagine you want to buy a house. The asking price is $500,000 - that's like market cap. But the house has a $200,000 mortgage attached to it (debt you must take on) and $50,000 cash sitting in a safe inside (which you immediately get).</p>
       <p>To own the house outright, you need $500,000 + $200,000 - $50,000 = $650,000. That's Enterprise Value - the true all-in cost of taking over the property.</p>
       <p>Enterprise Value does the same thing for a company: it adjusts the share price for the debt burden and cash balance, so two companies can be compared on equal terms regardless of how they're financed.</p>
@@ -231,7 +291,6 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="what-is-a-multiple">What is a valuation multiple?</h2>
       <p>A <a href="/glossary/valuation-multiple">valuation multiple</a> expresses the price of a business as a ratio of a financial metric. When analysts say a company trades at "12x EBITDA," they mean its Enterprise Value equals 12 times its annual <a href="/glossary/ebitda">EBITDA</a>.</p>
       <p>The multiple compresses the entire valuation into one number that can be compared across companies, sectors, and time periods - answering the question: is this business priced cheaply or expensively relative to what it earns?</p>
@@ -305,6 +364,12 @@ const schema = [
       <p>Yes, when cash exceeds market cap plus debt. This means the stock trades below its net cash value - theoretically cheap, but usually signals the market is pricing in significant operational losses or risks that will consume the cash balance.</p>
       <h3>What debt should I include in the EV calculation?</h3>
       <p>Include all interest-bearing financial debt: short-term bank debt, long-term bonds, term loans, revolving credit facilities, finance/capital leases, and the current portion of long-term debt. Exclude non-financial liabilities like accounts payable, deferred revenue, and accrued expenses - these are already captured in the EBITDA or <a href="/finance/free-cash-flow-calculator">cash flow</a> metrics used alongside EV.</p>
+      <QuizBlock
+        topic="enterprise value"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/enterprise-value-calculator"
+      />
+
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/ebitda-calculator',          blurb: 'Calculate EBITDA - the most common denominator for EV multiples.' },

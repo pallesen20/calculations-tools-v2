@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   margin:  "$$\\text{EBITDA Margin} = \\frac{\\text{EBITDA}}{\\text{Revenue}} \\times 100$$",
@@ -18,8 +19,67 @@ const tocItems = [
   { id: 'examples',           label: 'Worked examples' },
   { id: 'improve',            label: 'How to improve EBITDA Margin' },
   { id: 'faq',                label: 'FAQs' },
+  { id: 'quiz',               label: 'Quiz: test your knowledge' },
   { id: 'related-tools',      label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does EBITDA Margin measure?',
+    options: [
+      'Net profit as a percentage of revenue after all deductions',
+      'Operating profit before interest, tax, and D&A as a percentage of revenue',
+      'Total gross profit expressed as a percentage of total assets',
+      'Revenue growth expressed as a percentage of prior-year earnings',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'EBITDA Margin = EBITDA / Revenue x 100. EBITDA is earnings before interest, taxes, depreciation, and amortization, so the margin shows what percentage of revenue becomes operating profit before those non-operating and non-cash charges.',
+  },
+  {
+    q: 'A telecom operator reports EBITDA of $400,000,000 and Revenue of $1,200,000,000. What is its EBITDA Margin?',
+    options: [
+      '33.3%',
+      '30.0%',
+      '40.0%',
+      '25.0%',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: '$400M / $1,200M x 100 = 33.3%. The worked examples table shows this as "Typical for telecom," consistent with the 30-40% benchmark range for telecom operators.',
+  },
+  {
+    q: 'Company A has $10M EBITDA on $30M revenue. Company B has $20M EBITDA on $200M revenue. Which is more operationally efficient?',
+    options: [
+      'Company B, because it generates more absolute EBITDA',
+      'They are equally efficient, just different sizes',
+      'Company A, because its EBITDA Margin of 33% exceeds Company B\'s 10%',
+      'Company B, because larger businesses always have better margins',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Company A\'s margin is 33.3%; Company B\'s is 10%. The page uses exactly this example to illustrate why EBITDA Margin is preferred over absolute EBITDA - it is scale-independent and allows fair comparison across companies of different sizes.',
+  },
+  {
+    q: 'According to the industry benchmarks table, which sector typically shows the highest EBITDA Margin range?',
+    options: [
+      'Telecom (30-40%)',
+      'Financial Services (25-45%)',
+      'SaaS / Cloud Software (15-30%)',
+      'Oil and Gas upstream (40-60%)',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Oil and Gas upstream shows a 40-60% range - the highest of all sectors listed. The table attributes this to high commodity prices and a large D&A add-back from the capital-intensive asset base.',
+  },
+  {
+    q: 'The page warns that a high EBITDA Margin does not always indicate a better business. What specific risk does it identify?',
+    options: [
+      'A high margin always means the company is overcharging customers',
+      'Some high-margin businesses underinvest in growth, depleting their competitive asset base',
+      'EBITDA Margin above 40% is automatically flagged as suspicious by auditors',
+      'High EBITDA Margin means the company is paying too little in taxes',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The FAQ notes that a company with 40% EBITDA Margin but zero CapEx may be depreciating away its asset base. Because EBITDA adds back depreciation, a high margin can mask underinvestment - the assets generating that income are shrinking. Always pair EBITDA Margin with CapEx, growth rate, and free cash flow.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -61,7 +121,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="EBITDA Margin Calculator"
   youtubeId="q34fDR0162k"
@@ -131,18 +190,17 @@ const schema = [
       <h2 id="how-to-use">How to use this EBITDA Margin calculator</h2>
       <p>Enter EBITDA and Revenue in the same currency unit. The calculator returns the EBITDA Margin as a percentage with a general interpretation. Use the <a href="/finance/ebitda-calculator">EBITDA Calculator</a> first if you need to derive EBITDA from <a href="/glossary/net-income">Net Income</a>, Interest, Tax, and <a href="/glossary/depreciation-amortization">D&amp;A</a>.</p>
       <h2 id="what-is-margin">What is EBITDA Margin?</h2>
-      <p>First of all, <a href="/glossary/ebitda">EBITDA</a> stands for Earnings Before Interest, Taxes, Depreciation, and Amortization. EBITDA Margin measures how much of every dollar of revenue becomes EBITDA - operating profit before the effects of financing, taxes, and non-cash depreciation charges. It is a key measure of operational efficiency and is the primary profitability metric used in private equity, M&amp;A, and business valuations.</p>
+      <p>First of all, <a href="/glossary/ebitda">EBITDA</a> stands for Earnings Before Interest, Taxes, Depreciation, and Amortization.</p>
+      <p>EBITDA Margin measures how much of every dollar of revenue becomes EBITDA - <a href="/glossary/operating-profit">operating profit</a> before the effects of financing, taxes, and non-cash depreciation charges. It is a key measure of operational efficiency and is the primary profitability metric used in private equity, M&amp;A (Mergers and Acquisitions), and <a href="/finance/enterprise-value-calculator">business valuations</a>.</p>
       <p>Unlike absolute EBITDA, the margin is scale-independent: a $10M EBITDA on $30M revenue (33% margin) represents a more profitable business than $20M EBITDA on $200M revenue (10% margin).</p>
       <p>Investors and acquirers use EBITDA Margin to benchmark a target company against sector peers. A significantly lower margin than peers suggests either a cost problem or a pricing problem; a significantly higher margin may indicate a competitive moat.</p>
       <h3 id="explained-to-beginner">EBITDA Margin explained to a beginner</h3>
       <p>Imagine you run a lemonade stand. You sell $100 worth of lemonade in a day. After paying for lemons, sugar, and cups, you have $30 left - before paying taxes or the loan on your stand. That $30 / $100 = a 30% EBITDA Margin.</p>
       <p>It tells you: for every dollar of sales, 30 cents becomes raw operating profit before the taxman and the bank take their cut. The higher that percentage, the more efficiently your stand turns sales into profit.</p>
-
       <h2 id="formula">EBITDA Margin formula</h2>
       <Formula expr={f.margin} />
       <p>If you need to calculate EBITDA first, use the bottom-up formula:</p>
       <Formula expr={f.ebitda} />
-
       <h2 id="industry-benchmarks">Industry benchmarks comparisons</h2>
       <div class="responsive-table">
         <table>
@@ -220,6 +278,12 @@ const schema = [
 
       <h3>Does a higher EBITDA Margin always mean a better business?</h3>
       <p>Not always. Some high-margin businesses underinvest in growth. A company with a 40% EBITDA Margin but zero <a href="/glossary/capex">CapEx</a> may be depreciating away a competitive asset base. Always consider EBITDA Margin alongside growth rate, return on invested capital, and <a href="/finance/free-cash-flow-calculator">free cash flow</a> yield.</p>
+
+      <QuizBlock
+        topic="EBITDA Margin"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/ebitda-margin-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[

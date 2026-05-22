@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const sources: Source[] = [
   {
@@ -38,8 +39,67 @@ const tocItems = [
   { id: 'examples',      label: 'Worked examples' },
   { id: 'ebit-vs',       label: 'EBIT vs EBITDA vs EBT' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does EBIT stand for, and what does it measure according to this page?',
+    options: [
+      'Earnings Before Income Tax - operating profit after interest but before tax',
+      'Earnings Before Interest and Taxes - profit from core operations before financing costs and taxes',
+      'Estimated Business Income Target - projected revenue after subtracting operating costs',
+      'Earnings Based on Incremental Turnover - profit attributed to new sales in the period',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'EBIT = Earnings Before Interest and Taxes. It equals operating income: profit from core business operations before accounting for how the business is financed (interest) or what it pays in taxes. It is calculated as Net Income + Interest Expense + Tax Expense.',
+  },
+  {
+    q: 'Using the highly leveraged company row in the worked examples table ($1,000,000 net income, $400,000 tax, $3,600,000 interest), what is the EBIT?',
+    options: [
+      '$5,000,000',
+      '$1,400,000',
+      '$4,600,000',
+      '$4,000,000',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'EBT = $1,000,000 + $400,000 = $1,400,000. EBIT = $1,400,000 + $3,600,000 = $5,000,000. Option B ($1,400,000) is the intermediate EBT figure, not EBIT. The page highlights this example to show how a large interest bill can make strong operational performance invisible in the Net Income line.',
+  },
+  {
+    q: 'According to this page, why does EBIT allow fairer comparison between companies with different debt levels?',
+    options: [
+      'EBIT includes tax expense, which normalizes for different corporate tax jurisdictions',
+      'EBIT uses a fixed D&A rate standardized across industries by accounting regulators',
+      'By excluding interest expense, EBIT removes the effect of how a company is financed and shows pure operational performance',
+      'EBIT caps COGS deductions to prevent manipulation of the gross profit line',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page states that because EBIT excludes interest, it allows fair comparison between highly leveraged and debt-free companies. Both may have the same operating efficiency but very different Net Income figures due to their financing choices - EBIT strips that financing effect away.',
+  },
+  {
+    q: 'According to the EBIT Margin benchmarks on this page, what margin do technology and software companies often report?',
+    options: [
+      '8% - 12%',
+      '3% - 8%',
+      '12% - 18%',
+      '20% - 30% or higher',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The page states technology and software companies often exceed 20-30% EBIT margin. The 3-8% range describes retail and grocery. The general healthy threshold is above 15%, but always benchmarked against industry peers.',
+  },
+  {
+    q: 'The page warns that an EBIT margin well above industry peers should be scrutinized. What does it say this sometimes indicates?',
+    options: [
+      'The company may be overstating revenue through aggressive accounting assumptions',
+      'Underinvestment in SG&A or R&D that will erode the growth pipeline in subsequent years',
+      'The company is using non-GAAP adjustments that inflate EBIT above true operating income',
+      'Currency translation gains are inflating reported EBIT relative to domestic peers',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The page says a margin well above peers "sometimes reflects genuine operational advantage, and sometimes reflects underinvestment in SG&A or R&D that will erode the growth pipeline in subsequent years." High margins are not automatically good news.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -81,7 +141,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="EBIT Calculator"
   youtubeId="UKDZl5GTTTE"
@@ -206,7 +265,7 @@ const schema = [
       <p>Use any consistent currency unit - thousands, millions, or full figures. The displayed cards abbreviate large numbers automatically.</p>
       <h2 id="what-is-ebit">What is EBIT (Operating Income)?</h2>
       <p>EBIT stands for <strong>Earnings Before Interest and Taxes</strong>. It equals operating income: the profit a company generates from its core business before accounting for how the business is financed (interest) or what it pays to the government (taxes).</p>
-      <p>EBIT appears on the income statement between <a href="/glossary/gross-profit">Gross Profit</a> and <a href="/glossary/net-income">Net Income</a>. It is the standard measure of operating profitability and the starting point for several financial ratios used by analysts, lenders, and acquirers.</p>
+      <p>EBIT appears on the income statement between <a href="/glossary/gross-profit">Gross Profit</a> and <a href="/glossary/net-income">Net Income</a>. It is the standard measure of <a href="/glossary/operating-profit">operating profitability</a> and the starting point for several financial ratios used by analysts, lenders, and acquirers.</p>
       <p>Because it excludes interest, EBIT allows fair comparison between companies with very different debt levels. A highly leveraged company and a debt-free company may have the same operating efficiency but very different Net Income figures.</p>
       <h3 id="explained-to-beginner">EBIT explained to a beginner</h3>
       <p>Imagine you run a pizza restaurant. This year you earn $300,000 in sales. After paying for ingredients, staff, and rent you have $60,000 left - that's EBIT. It says nothing about your bank loan (interest) or your tax bill - it just answers: is this pizza business good at making money from making pizzas?</p>
@@ -222,7 +281,7 @@ const schema = [
       <h3>Top-down</h3>
       <p>Starts from Revenue and subtracts all operating costs including D&amp;A:</p>
       <Formula expr={f.topDown} />
-      <p>Unlike the EBITDA top-down formula, operating expenses here <strong>include</strong> Depreciation &amp; Amortization. D&amp;A is a real operating cost in EBIT - it is only added back when calculating EBITDA. Both methods yield the same EBIT.</p>
+      <p>Unlike the EBITDA top-down formula, operating expenses here <strong>include</strong> Depreciation &amp; Amortization. <a href="/glossary/depreciation-amortization">D&amp;A</a> is a real operating cost in EBIT - it is only added back when calculating EBITDA. Both methods yield the same EBIT.</p>
       <p>EBIT Margin expresses EBIT as a percentage of revenue:</p>
       <Formula expr={f.margin} />
       <h2 id="examples">Worked examples for EBIT</h2>
@@ -241,7 +300,6 @@ const schema = [
       </div>
       <p>The highly leveraged company example shows why EBIT matters: Net Income is $1M, but EBIT is $5M - the large interest bill obscures strong operational performance.</p>
       <p>When I see a company where Net Income is only a fraction of EBIT, I treat that gap as a question, not just a number. A $4M interest bill on a $5M EBIT business tells a very different story depending on whether that debt funded a strategic acquisition or is legacy distress financing.</p>
-
       <h2 id="ebit-vs">EBIT vs EBITDA vs EBT</h2>
       <div class="responsive-table">
         <table>
@@ -256,21 +314,21 @@ const schema = [
         </table>
       </div>
       <p>Use EBIT when you want to assess pure operating efficiency without the distortion of capital structure. Use <a href="/finance/ebitda-calculator">EBITDA</a> when comparing businesses with materially different D&amp;A (<a href="/glossary/depreciation-amortization">Depreciation & Amortization</a>) profiles or when using <a href="/glossary/ev-ebitda">EV/EBITDA</a> for valuation. Use <a href="/finance/ebt-calculator">EBT</a> when comparing companies across different tax jurisdictions.</p>
-
       <h2 id="faq">Frequently asked questions about EBIT</h2>
-
       <h3>What is EBIT?</h3>
       <p>EBIT (Earnings Before Interest and Taxes) is operating income - the profit from core operations before financing costs and taxes. It equals Net Income + Interest Expense + Tax Expense.</p>
-
       <h3>Is EBIT the same as operating income?</h3>
       <p>In most cases, yes. Both measure profitability before interest and taxes. A small difference can arise if a company has non-operating income (e.g., investment income) that is included in EBIT but excluded from operating income as reported on the income statement. For most businesses, the two are identical.</p>
-
       <h3>What is a good EBIT Margin?</h3>
       <p>EBIT Margin above 15% is generally considered healthy, but it varies widely. Technology and software companies often exceed 20–30%. Retail and grocery typically run 3–8%. Always benchmark against industry peers.</p>
       <p>Sector benchmarks are a starting point, not an answer. A margin well above peers deserves scrutiny before being celebrated - it sometimes reflects genuine operational advantage, and sometimes reflects underinvestment in SG&A or R&D that will erode the growth pipeline in subsequent years.</p>
-
       <h3>Can EBIT be negative?</h3>
       <p>Yes. Negative EBIT means operating costs exceed operating revenue - the company is losing money from its core business before any financing charges. This is common in early-stage or distressed companies.</p>
+      <QuizBlock
+        topic="EBIT"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/ebit-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -280,10 +338,7 @@ const schema = [
         { path: '/finance/gross-profit-margin-calculator',       blurb: 'Calculate gross profit margin from revenue and COGS.' },
         { path: '/math/percentage-calculator',       blurb: 'General percentage calculator for financial ratios.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/ebit-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 import type { Source } from '../../components/Sources.astro';
 
 const sources: Source[] = [
@@ -37,8 +38,67 @@ const tocItems = [
   { id: 'examples',     label: 'Worked examples' },
   { id: 'tax-rate',     label: 'Effective tax rate' },
   { id: 'faq',          label: 'FAQs' },
+  { id: 'quiz',         label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does EBT stand for, and what is the bottom-up formula to calculate it?',
+    options: [
+      'Earnings Before Tax: Net Income + Tax Expense',
+      'Earnings Before Tax: EBIT + Interest Expense',
+      'Estimated Business Tax: Revenue minus Operating Expenses',
+      'Earnings Before Total Deductions: Gross Profit minus SG&A',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'EBT stands for Earnings Before Tax. The bottom-up formula adds Tax Expense back to Net Income: EBT = Net Income + Tax Expense. It is the line item on the income statement directly above Net Income, before the income tax provision is deducted.',
+  },
+  {
+    q: 'A company reports Net Income of $770,000 and Tax Expense of $230,000. What is its EBT and effective tax rate?',
+    options: [
+      '$1,000,000 EBT and 23.0% effective tax rate',
+      '$540,000 EBT and 29.8% effective tax rate',
+      '$1,000,000 EBT and 30.0% effective tax rate',
+      '$770,000 EBT and 23.0% effective tax rate',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'EBT = $770,000 + $230,000 = $1,000,000. Effective tax rate = $230,000 / $1,000,000 x 100 = 23.0%. This is the Standard US corp row in the worked examples table on the page.',
+  },
+  {
+    q: 'Why is EBT a better comparison metric than Net Income when analysing two companies in different countries?',
+    options: [
+      'EBT includes depreciation, giving a more complete picture of total costs',
+      'EBT removes the distortion caused by different tax rates across jurisdictions',
+      'EBT is always larger than Net Income, making numerical comparisons easier to read',
+      'EBT excludes interest expense, isolating only operating performance',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Different countries have different statutory and effective corporate tax rates. The worked examples table shows four companies with identical EBT of $1M but Net Incomes ranging from $680K to $900K depending on their tax environment. Comparing Net Income across those companies would be misleading; comparing EBT gives a tax-neutral baseline.',
+  },
+  {
+    q: 'According to the effective tax rate table on the page, which factor raises a company\'s effective tax rate ABOVE its statutory rate?',
+    options: [
+      'R&D tax credits',
+      'International income earned in low-tax jurisdictions',
+      'Deferred tax asset releases',
+      'Non-deductible expenses',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Non-deductible expenses increase the taxable base beyond accounting profit, pushing the effective rate above the statutory rate. R&D credits, low-tax jurisdiction income, and deferred tax releases all work in the opposite direction, reducing the effective rate below statutory.',
+  },
+  {
+    q: 'The page warns about a specific risk when a company\'s effective tax rate is persistently lower than peers. What is it?',
+    options: [
+      'A low effective rate always signals tax avoidance that regulators will eventually reverse',
+      'Companies with low effective rates always overstate their EBIT figure',
+      'A low rate might reflect a one-time deferred tax asset release that will not repeat, not a structural advantage',
+      'A low effective rate means the company\'s EBT is understated and must be adjusted upward',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page specifically distinguishes between a persistently low effective rate from recurring R&D credits (structural, repeatable) and one from a one-time deferred tax asset release (non-recurring noise). When normalising earnings across several years that distinction materially changes the adjusted EBT figure.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -192,7 +252,7 @@ const schema = [
       <p>Enter <a href="/glossary/net-income">Net Income</a> and Tax Expense from the income statement. The calculator returns EBT and the effective tax rate (Tax / EBT × 100). Optionally enter Revenue to see Pre-Tax Margin as a percentage.</p>
       <p>Tax Expense should be the <a href="/tax/income-tax-calculator">income tax provision</a> from the income statement - not total taxes paid (which includes payroll taxes, <a href="/tax/vat-calculator">VAT</a>, etc.).</p>
       <h2 id="what-is-ebt">What is EBT (Earnings Before Tax)?</h2>
-      <p>EBT stands for <strong>Earnings Before Tax</strong>, also called Pre-Tax Income or Pre-Tax Profit. It is the line item on the income statement directly above Net Income, before the income tax provision is deducted.</p>
+      <p>EBT stands for <a href="/glossary/ebt">Earnings Before Tax</a>, also called Pre-Tax Income or Pre-Tax Profit. It is the line item on the income statement directly above Net Income, before the income tax provision is deducted.</p>
       <p>EBT = <a href="/finance/ebit-calculator">EBIT</a> minus <a href="/glossary/interest-expense">Interest Expense</a>. It represents profit after all operating and financing costs but before the tax bill. It is primarily used to:</p>
       <ul>
         <li>Compare profitability across companies in different tax jurisdictions (different countries or tax regimes)</li>
@@ -263,6 +323,12 @@ const schema = [
       <p>EBIT = EBT + Interest Expense. EBIT removes both tax and financing costs; EBT removes only tax. EBIT is used when comparing companies with different debt levels; EBT is used when comparing companies in different tax regimes.</p>
       <h3>Can EBT be negative?</h3>
       <p>Yes. A company with pre-tax losses has negative EBT. In most jurisdictions, a loss generates a tax benefit (deferred tax asset), so Net Income may be less negative than EBT, or sometimes a small positive number despite a pre-tax loss.</p>
+      <QuizBlock
+        topic="EBT"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/ebt-calculator"
+      />
+
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/finance/ebitda-calculator', blurb: 'Calculate EBITDA - adds back Interest, Tax, and D&A.' },
