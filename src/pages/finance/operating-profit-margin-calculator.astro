@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   margin: "$$\\text{Operating Profit Margin} = \\frac{\\text{Operating Profit (EBIT)}}{\\text{Revenue}} \\times 100$$",
@@ -12,13 +13,48 @@ const f = {
 const tocItems = [
   { id: 'how-to-use',          label: 'How to use' },
   { id: 'what-is-opm',         label: 'What is Operating Profit Margin?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'formula',             label: 'Formula' },
   { id: 'industry-benchmarks', label: 'Industry benchmarks' },
   { id: 'examples',            label: 'Worked examples' },
   { id: 'opm-vs-ebitda',       label: 'Operating Margin vs EBITDA Margin' },
   { id: 'faq',                 label: 'FAQs' },
+  { id: 'quiz',                label: 'Quiz: test your knowledge' },
   { id: 'related-tools',       label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What distinguishes Operating Profit Margin from Net Profit Margin?',
+    options: ['Operating Profit Margin deducts COGS only; Net Profit Margin also deducts SG&A', 'Operating Profit Margin excludes interest and tax; Net Profit Margin deducts all costs including interest and tax', 'Operating Profit Margin is expressed as a ratio; Net Profit Margin is expressed as a percentage', 'Operating Profit Margin excludes depreciation; Net Profit Margin includes it'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Operating Profit Margin stops at EBIT - after COGS and operating expenses but before interest and tax. Net Profit Margin deducts everything. This means two companies with identical operations but different debt levels will show the same Operating Margin but different Net Margins.',
+  },
+  {
+    q: 'A SaaS company has Operating Profit (EBIT) of $3,500,000 and Revenue of $14,000,000. What is its Operating Profit Margin?',
+    options: ['20.0%', '30.0%', '28.0%', '25.0%'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '$3,500,000 / $14,000,000 x 100 = 25%. The page rates this as "Strong for SaaS", consistent with the 20-35% benchmark range for that sector.',
+  },
+  {
+    q: 'Why is Operating Profit Margin preferred over Net Profit Margin for comparing operational efficiency across companies?',
+    options: ['Because it excludes interest and tax, which reflect financing choices and tax jurisdiction rather than how well the operations are run', 'Because it always produces a higher number, making differences between companies more visible', 'Because regulators require it to be disclosed while Net Profit Margin is optional', 'Because it removes the effect of depreciation, which varies by accounting policy'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'A highly leveraged company and a debt-free company with identical operations will show the same Operating Profit Margin but very different Net Profit Margins. OPM isolates management\'s operational decisions from financing structure and tax jurisdiction.',
+  },
+  {
+    q: 'According to the industry benchmarks table, which sector has the highest typical Operating Profit Margin?',
+    options: ['SaaS / Cloud Software (20% - 35%)', 'Pharmaceuticals (20% - 30%)', 'Financial Services (30% - 45%)', 'Media & Entertainment (15% - 25%)'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Financial Services tops the benchmarks at 30-45%, driven by fee and interest income with low direct production costs. SaaS is next at 20-35%, benefiting from high gross margins and a scalable cost base.',
+  },
+  {
+    q: 'Why is a negative Operating Profit Margin considered a more serious warning sign than a negative Net Profit Margin?',
+    options: ['Because operating losses always lead to immediate insolvency', 'Because negative operating margin increases a company\'s tax liability', 'Because it cannot be reported under standard accounting rules', 'Because it indicates the core business operations generate a loss before interest and tax, meaning the underlying business model is not yet economically viable'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'A negative Net Profit Margin can be caused by high interest costs on debt - a financing problem, not an operational one. A negative Operating Margin means the business itself loses money before financing is even considered, which is a more fundamental concern.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -60,7 +96,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Operating Profit Margin Calculator"
   metaTitle="Operating Profit Margin Calculator | Formula & Benchmarks"
@@ -79,21 +114,18 @@ const schema = [
           <h2>Calculate EBIT Margin Instantly</h2>
           <p>Divide Operating Profit (EBIT) by Revenue to get the margin</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="opm-ebit">Operating Profit (EBIT)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="opm-ebit" class="bmi-input" placeholder="e.g. 800000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="opm-revenue">Revenue</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="opm-revenue" class="bmi-input" placeholder="e.g. 5000000" />
           </div>
         </div>
-
         <div id="opm-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -105,7 +137,6 @@ const schema = [
               <div class="lbm-card-lbl">Interpretation</div>
             </div>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
@@ -122,29 +153,27 @@ const schema = [
     </section>
     <script src="/js/operating-profit-margin-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>Operating Profit Margin = <strong>Operating Profit (EBIT) / Revenue × 100</strong>. Example: EBIT $800K on Revenue $5M = <strong>16% Operating Profit Margin</strong>. A margin above 15% is generally considered strong operational efficiency across most sectors.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter Operating Profit (also called EBIT - Earnings Before Interest and Tax) and Revenue in the same currency unit and time period. If you only have Net Income, use the <a href="/finance/ebit-calculator">EBIT Calculator</a> first to derive EBIT by adding back interest and tax expenses. Operating Profit Margin and EBIT Margin are the same metric - the terms are interchangeable.</p>
-
+      <h2 id="how-to-use">How to use this EBIT margin calculator</h2>
+      <p>Enter Operating Profit (also called EBIT - <a href="/glossary/ebit">Earnings Before Interest and Tax</a>) and <a href="/glossary/revenue">Revenue</a> in the same currency unit and time period. If you only have <a href="/glossary/net-income">Net Income</a>, use the <a href="/finance/ebit-calculator">EBIT Calculator</a> first to derive EBIT by adding back interest and tax expenses. <a href="/glossary/operating-profit-margin">Operating Profit Margin</a> and EBIT Margin are the same metric - the terms are interchangeable.</p>
       <h2 id="what-is-opm">What is Operating Profit Margin?</h2>
-      <p>Operating Profit Margin measures how much of every dollar of revenue becomes operating profit - profit from core business operations after deducting COGS and all operating expenses (<a href="/glossary/sga">SG&amp;A</a>, <a href="/glossary/rnd">R&amp;D</a>, depreciation, amortization), but before the effects of how the business is financed (interest) or taxed.</p>
-      <p>This makes it an ideal metric for comparing operational efficiency across companies with different capital structures or tax jurisdictions. A highly leveraged company and a debt-free company with identical operations will show the same Operating Profit Margin but very different Net Profit Margins.</p>
-      <p>Private equity firms, investment analysts, and management teams track Operating Profit Margin closely because it reflects what management actually controls. Interest rates and tax rates are often outside management's direct influence; COGS and operating expense ratios are not.</p>
-
+      <p>Operating Profit Margin measures how much of every dollar of revenue becomes operating profit - profit from core business operations after deducting <a href="/glossary/cogs">COGS</a> and all operating expenses (<a href="/glossary/sga">SG&amp;A</a>, <a href="/glossary/rnd">R&amp;D</a>, <a href="/glossary/depreciation-amortization">depreciation and amortization</a>), but before the effects of how the business is financed (interest) or taxed.</p>
+      <p>This makes it an ideal metric for comparing operational efficiency across companies with different capital structures or tax jurisdictions. A highly leveraged company and a debt-free company with identical operations will show the same Operating Profit Margin but very different <a href="/glossary/net-profit-margin">Net Profit Margins</a>.</p>
+      <p>Private equity firms, investment analysts, and management teams track Operating Profit Margin closely because it reflects what management actually controls. <a href="/glossary/interest-expense">Interest rates</a> and tax rates are often outside management's direct influence; COGS and <a href="/glossary/operating-expenses">operating expense</a> ratios are not.</p>
+      <h3 id="explained-to-beginner">Operating Profit Margin explained to a beginner</h3>
+      <p>Imagine a food truck that takes in $200,000 in revenue per year. Ingredients and packaging cost $80,000, leaving $120,000 gross profit. Then comes the operating layer: staff wages, fuel, truck rental, permits, and insurance add up to $80,000. What remains is $40,000 - the operating profit. Operating profit margin = $40,000 / $200,000 = 20%.</p>
+      <p>Now suppose the owner took out a loan to buy the truck (interest: $10,000) and owes $6,000 in tax. Net income drops to $24,000 - a 12% net margin. But if a second truck owner ran the exact same food operation with no debt and in a lower-tax region, their net margin would look very different even though both trucks are equally efficient at the core job.</p>
+      <p>Operating profit margin strips those financing and tax differences away. It answers one question: how well does this business generate profit from its operations, regardless of how it is funded?</p>
       <h2 id="formula">Operating Profit Margin formula</h2>
       <Formula expr={f.margin} />
       <p>Operating Profit (EBIT) is derived from the income statement:</p>
       <Formula expr={f.ebit} />
-      <p>Operating Expenses include SG&amp;A (selling, general and administrative), R&amp;D, and depreciation/amortization of operating assets. They exclude interest expense and income tax, which appear below the operating profit line.</p>
-
+      <p>Operating Expenses include SG&amp;A (selling, general and administrative), R&amp;D, and depreciation/amortization of operating assets. They exclude interest expense and <a href="/tax/income-tax-calculator">income tax</a>, which appear below the operating profit line.</p>
       <h2 id="industry-benchmarks">Industry benchmarks</h2>
       <div class="responsive-table">
         <table>
@@ -165,8 +194,10 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="examples">Worked examples</h2>
+      <p>To give my personal view on it: Benchmarking operating margin without checking the EBITDA-to-EBIT gap leads to systematic errors in capital-intensive sectors.</p>
+      <p>A telecom company with a 12% operating margin sounds reasonable until you see that <a href="/glossary/depreciation-amortization">D&amp;A</a> is 18% of revenue - implying a 30% EBITDA margin and an asset base requiring constant heavy reinvestment.</p>
+      <p>The 12% EBIT margin is the economically honest number after accounting for the cost of using those assets. EBITDA margin can make underlying profitability look far healthier than it is when asset intensity is high.</p>
+      <h2 id="examples">Worked examples for operating profit margin</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -181,9 +212,8 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="opm-vs-ebitda">Operating Margin vs EBITDA Margin</h2>
-      <p>Operating Profit Margin and EBITDA Margin are closely related - the only difference is whether depreciation and amortization (D&amp;A) are deducted.</p>
+      <p><a href="/glossary/operating-profit-margin">Operating Profit Margin</a> and <a href="/glossary/ebitda-margin">EBITDA Margin</a> are closely related - the only difference is whether depreciation and amortization (D&amp;A) are deducted.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -195,25 +225,27 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>The gap between EBITDA Margin and EBIT Margin equals D&amp;A as a percentage of revenue. Asset-heavy businesses (telecom, manufacturing, oil &amp; gas) have large D&amp;A charges and therefore a large gap. Asset-light businesses (SaaS, financial services) have minimal D&amp;A and nearly identical EBIT and EBITDA Margins.</p>
-      <p>When comparing a capital-intensive company against an asset-light one, EBITDA Margin is often preferred for valuation because it removes the distortion of different depreciation policies. When comparing two companies with similar asset bases, EBIT Margin is more meaningful because it reflects the true cost of using those assets.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>The gap between EBITDA Margin and EBIT Margin equals D&amp;A as a percentage of revenue.</p>
+      <p>Asset-heavy businesses (telecom, manufacturing, oil &amp; gas) have large D&amp;A charges and therefore a large gap. Asset-light businesses (SaaS, financial services) have minimal D&amp;A and nearly identical EBIT and EBITDA Margins.</p>
+      <p>When comparing a capital-intensive company against an asset-light one, EBITDA Margin is often preferred for valuation because it removes the distortion of different depreciation policies. When comparing two companies with similar asset bases, <a href="/finance/ebit-calculator">EBIT Margin</a> is more meaningful because it reflects the true cost of using those assets.</p>
+      <p>One pattern I see repeated again and again: management teams target SG&A cuts first because the line item is visible and the savings are politically easier to achieve. But for a business where COGS is 60% of revenue and SG&A is 15%, cutting SG&A by 10% improves operating margin by only 1.5 percentage points. A 5% reduction in COGS moves it by 3 percentage points.</p>
+      <p>Understanding which cost lines are largest as a share of revenue is the prerequisite for knowing where margin improvement efforts will actually have material impact.</p>
+      <h2 id="faq">FAQs about operating profit margin</h2>
       <h3>What is Operating Profit Margin?</h3>
       <p>Operating Profit Margin = Operating Profit (EBIT) / Revenue × 100. It measures what percentage of revenue becomes operating profit after COGS and all operating expenses - but before interest and tax. It is also called EBIT Margin.</p>
-
       <h3>Is Operating Profit Margin the same as EBIT Margin?</h3>
       <p>Yes. Operating Profit = EBIT (Earnings Before Interest and Tax). The terms Operating Profit Margin and EBIT Margin are used interchangeably and produce identical results.</p>
-
       <h3>What is a good Operating Profit Margin?</h3>
       <p>Above 15% is generally strong for most sectors. Software companies often reach 20–35%; retail operates at 5–12%; manufacturing at 8–15%. Always benchmark against direct industry peers rather than a universal target.</p>
-
       <h3>How is Operating Margin different from EBITDA Margin?</h3>
       <p>Operating Margin deducts depreciation and amortization; EBITDA Margin adds D&amp;A back. EBITDA Margin is always higher. The gap between them reflects capital intensity - the more assets a business depreciates, the wider the gap.</p>
-
       <h3>Can Operating Profit Margin be negative?</h3>
       <p>Yes. A negative operating margin means the core business operations generate a loss before accounting for interest and tax. This is a more serious warning sign than a negative net margin caused solely by interest costs - it indicates the business model itself is not yet economically viable.</p>
+      <QuizBlock
+        topic="operating margin"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/operating-profit-margin-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -222,10 +254,7 @@ const schema = [
         { path: '/finance/net-profit-margin-calculator',       blurb: 'Calculate net profit margin from Net Income and Revenue.' },
         { path: '/finance/ebitda-margin-calculator',           blurb: 'Calculate EBITDA Margin against industry benchmarks.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/operating-profit-margin-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>
