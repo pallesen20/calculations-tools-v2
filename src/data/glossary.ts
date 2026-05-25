@@ -286,7 +286,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'CAGR (Compound Annual Growth Rate) is the annualised rate at which an investment would have grown if it compounded at a steady pace each year. It smooths out year-to-year volatility to give a single comparable growth rate.',
     formula: '$$\\text{CAGR} = \\left(\\frac{\\text{End Value}}{\\text{Start Value}}\\right)^{\\frac{1}{n}} - 1$$',
-    relatedTools: ['/finance/roi-calculator', '/finance/compound-interest-calculator'],
+    relatedTools: ['/finance/roi-calculator', '/finance/compound-interest-calculator', '/finance/pe-ratio-calculator'],
     relatedTerms: ['roi', 'compound-interest'],
   },
   {
@@ -743,7 +743,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'Overtime pay is the additional compensation earned for hours worked beyond a set threshold - typically 40 hours per week in the US. Under the FLSA, non-exempt employees must receive at least 1.5 times their regular rate for overtime hours.',
     formula: '$$\\text{OT Pay} = \\text{Hourly Rate} \\times \\text{Multiplier} \\times \\text{OT Hours}$$',
     relatedTools: ['/finance/overtime-calculator'],
-    relatedTerms: ['time-and-a-half', 'gross-pay', 'regular-rate-of-pay'],
+    relatedTerms: ['time-and-a-half', 'gross-pay', 'regular-rate-of-pay', 'flsa-duties-test'],
   },
   {
     slug: 'time-and-a-half',
@@ -754,7 +754,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'Time and a half is an overtime rate equal to 1.5 times an employee\'s regular hourly pay. It is the minimum overtime rate required by the US Fair Labor Standards Act for hours worked beyond 40 in a workweek.',
     formula: '$$\\text{Time-and-a-Half Rate} = \\text{Hourly Rate} \\times 1.5$$',
     relatedTools: ['/finance/overtime-calculator'],
-    relatedTerms: ['overtime-pay', 'regular-rate-of-pay', 'gross-pay'],
+    relatedTerms: ['overtime-pay', 'regular-rate-of-pay', 'gross-pay', 'flsa-duties-test'],
   },
   {
     slug: 'regular-rate-of-pay',
@@ -764,7 +764,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'The regular rate of pay is the baseline hourly rate used to calculate overtime under the FLSA. For hourly workers it equals the standard wage; for salaried workers it is the weekly salary divided by hours the salary is intended to cover.',
     relatedTools: ['/finance/overtime-calculator', '/finance/salary-to-hourly-calculator'],
-    relatedTerms: ['overtime-pay', 'time-and-a-half', 'gross-pay'],
+    relatedTerms: ['overtime-pay', 'time-and-a-half', 'gross-pay', 'flsa-duties-test'],
+  },
+  {
+    slug: 'flsa-duties-test',
+    term: 'FLSA Duties Test',
+    letter: 'F',
+    category: 'Personal Finance',
+    siteCategory: 'Finance',
+    shortDef: 'The FLSA Duties Test is the legal analysis that determines whether a salaried employee earning above the $684/week salary threshold qualifies for one of five white-collar overtime exemptions. Both the salary test and the duties test must be satisfied - passing only one is not enough to establish exempt status.',
+    relatedTools: ['/finance/overtime-calculator', '/finance/salary-to-hourly-calculator'],
+    relatedTerms: ['overtime-pay', 'time-and-a-half', 'regular-rate-of-pay', 'gross-pay'],
   },
   {
     slug: 'fica',

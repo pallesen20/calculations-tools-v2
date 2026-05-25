@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  ['pe-price', 'pe-eps', 'pe-forward-eps', 'pe-target-pe'].forEach(id => {
+  ['pe-price', 'pe-eps', 'pe-forward-eps', 'pe-target-pe', 'pe-growth-rate'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', calculate);
   });
@@ -55,6 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
       impliedRow.classList.remove('hidden');
     } else {
       impliedRow.classList.add('hidden');
+    }
+
+    const pegRow = document.getElementById('pe-peg-row');
+    const growthRate = parseVal('pe-growth-rate');
+    if (!isNaN(growthRate) && growthRate > 0) {
+      const peg = pe / growthRate;
+      const pegInterp = peg < 1 ? 'Undervalued' : peg <= 2 ? 'Fair value' : 'Growth priced in';
+      document.getElementById('pe-peg-val').textContent = fmtCard(peg) + 'x';
+      document.getElementById('pe-peg-interp').textContent = pegInterp;
+      document.getElementById('pe-step5').textContent = `${pe.toFixed(2)}x ÷ ${fmtCard(growthRate)}% = ${fmtCard(peg)}x`;
+      pegRow.classList.remove('hidden');
+    } else {
+      pegRow.classList.add('hidden');
     }
 
     document.getElementById('pe-result').classList.remove('hidden');

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function fmt(num, currency) {
-    const sym = CURRENCY_SYMBOLS[currency] || currency + ' ';
+    const sym = CURRENCY_SYMBOLS[currency] + ' ' || currency + ' ';
     return sym + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 

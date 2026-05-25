@@ -5,11 +5,13 @@ import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
 import type { Source } from '../../components/Sources.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   pe:           "$$\\text{P/E Ratio} = \\frac{\\text{Stock Price}}{\\text{Earnings Per Share (EPS)}}$$",
   earningsYield:"$$\\text{Earnings Yield} = \\frac{\\text{EPS}}{\\text{Stock Price}} \\times 100$$",
   impliedPrice: "$$\\text{Implied Price} = \\text{EPS} \\times \\text{Target P/E}$$",
+  peg:          "$$\\text{PEG Ratio} = \\frac{\\text{Trailing P/E}}{\\text{Annual EPS Growth Rate (\\%)}}$$",
   eps:          "$$\\text{EPS} = \\frac{\\text{Net Income} - \\text{Preferred Dividends}}{\\text{Weighted Avg. Shares Outstanding}}$$",
 };
 
@@ -26,14 +28,50 @@ const sources: Source[] = [
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
   { id: 'formula',       label: 'P/E ratio formula' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'types',         label: 'Trailing vs. forward P/E' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'benchmarks',    label: 'P/E benchmarks by sector' },
+  { id: 'peg-ratio',     label: 'PEG ratio' },
   { id: 'negative-pe',   label: 'Negative P/E ratio' },
   { id: 'limitations',   label: 'Limitations' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does a P/E ratio of 20x mean for an investor?',
+    options: ['The company has grown earnings 20x over 5 years', 'You are paying $20 for every $1 of annual earnings per share', 'The stock will double in price within 20 months', 'You earn a 20% annual return on the stock'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'P/E = Stock Price / EPS. A P/E of 20 means investors pay $20 for each $1 of annual earnings. Equivalently, the earnings yield is 1/20 x 100 = 5% - not a 20% return.',
+  },
+  {
+    q: 'A growth tech stock trades at $250 with trailing EPS of $5.00 and forward EPS of $8.00. What is the forward P/E?',
+    options: ['50.0x', '40.0x', '25.0x', '31.3x'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Forward P/E = Stock Price / Forward EPS = $250 / $8.00 = 31.25x. The trailing P/E is $250 / $5.00 = 50x. The lower forward P/E reflects expected earnings growth - the classic pattern for a growing company.',
+  },
+  {
+    q: 'A company has a P/E of 30x and grows EPS at 30% per year. What is its PEG ratio, and how does Peter Lynch interpret it?',
+    options: ['1.0 - fair value by the Lynch benchmark', '0.5 - undervalued relative to its growth', '3.0 - expensive relative to growth', '2.0 - growth is priced in at a premium'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'PEG = Trailing P/E / Annual EPS Growth Rate = 30 / 30 = 1.0. Peter Lynch argued that a fairly-valued stock should have a PEG of roughly 1.0 - you pay one dollar of P/E for every one percentage point of annual earnings growth.',
+  },
+  {
+    q: 'According to the sector benchmarks table on this page, which sector typically trades at the highest P/E multiple?',
+    options: ['Consumer Staples (18x - 25x)', 'Healthcare / Biotech (18x - 35x)', 'Technology / Software (25x - 60x+)', 'Consumer Discretionary (15x - 30x)'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Technology / Software trades at 25x to 60x+ because of high growth, scalable margins, and recurring revenue. The next highest is Healthcare / Biotech at 18x - 35x. Financials and Energy/Utilities sit at the low end at 8x - 15x.',
+  },
+  {
+    q: 'Share buybacks can distort the trailing P/E ratio. What is the mechanism?',
+    options: ['They increase the stock price by 1.5x, pushing P/E higher', 'They reduce cash reserves, which lowers reported EPS', 'They add one-time gains to net income, temporarily inflating EPS', 'They reduce shares outstanding, increasing EPS without any improvement in underlying profits'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Buybacks retire shares, so EPS (Net Income / Shares Outstanding) rises even if net income is flat. The P/E appears to fall - making the stock look cheaper - but no actual earnings improvement occurred. Always check whether EPS growth is driven by real profit growth or just share count reduction.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -80,7 +118,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="P/E Ratio Calculator"
   metaTitle="P/E Ratio Calculator - Earnings Yield & Fair Value"
@@ -100,35 +137,36 @@ const schema = [
           <h2>Calculate Price to Earnings Ratio</h2>
           <p>Price-to-Earnings multiple, earnings yield, and implied fair value</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pe-price">Stock Price</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="pe-price" class="bmi-input" placeholder="e.g. 150" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pe-eps">Earnings Per Share - EPS (trailing / LTM)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="pe-eps" class="bmi-input" placeholder="e.g. 7.50" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pe-forward-eps">Forward EPS (optional - for Forward P/E)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="pe-forward-eps" class="bmi-input" placeholder="e.g. 9.00" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pe-target-pe">Target P/E Multiple (optional - for implied price)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="pe-target-pe" class="bmi-input" placeholder="e.g. 18" />
           </div>
         </div>
-
+        <div class="bmi-field">
+          <label class="bmi-label" for="pe-growth-rate">Annual EPS Growth Rate % (optional - for PEG ratio)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="pe-growth-rate" class="bmi-input" placeholder="e.g. 15" />
+          </div>
+        </div>
         <div id="pe-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -139,26 +177,27 @@ const schema = [
               <div class="lbm-card-val" id="pe-earnings-yield">-</div>
               <div class="lbm-card-lbl">Earnings Yield</div>
             </div>
-          </div>
-
-          <div id="pe-forward-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
-            <div class="lbm-card">
+            <div class="lbm-card" id="pe-forward-row">
               <div class="lbm-card-val" id="pe-forward-val">-</div>
               <div class="lbm-card-lbl">Forward P/E</div>
             </div>
-          </div>
-
-          <div id="pe-implied-row" class="lbm-cards hidden" style="margin-top:0.5rem;">
+            <div class="lbm-card" id="pe-peg-row">
+              <div class="lbm-card-val" id="pe-peg-val">-</div>
+              <div class="lbm-card-lbl">PEG Ratio</div>
+            </div>
             <div class="lbm-card">
+              <div class="lbm-card-val" id="pe-peg-interp">-</div>
+              <div class="lbm-card-lbl">Growth Signal</div>
+            </div>
+            <div class="lbm-card" id="pe-implied-row">
               <div class="lbm-card-val" id="pe-implied-price">-</div>
               <div class="lbm-card-lbl">Implied Fair Value</div>
             </div>
-            <div class="lbm-card">
+            <div class="lbm-card" id="pe-implied-row">
               <div class="lbm-card-val" id="pe-updownside">-</div>
               <div class="lbm-card-lbl">Upside / Downside</div>
             </div>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
@@ -177,6 +216,10 @@ const schema = [
               <span class="pi-step-label">EPS × Target P/E = Implied Price</span>
               <span class="pi-step-val" id="pe-step4">-</span>
             </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Trailing P/E ÷ Growth Rate % = PEG Ratio</span>
+              <span class="pi-step-val" id="pe-step5">-</span>
+            </div>
           </div>
         </div>
       </div>
@@ -184,18 +227,19 @@ const schema = [
     <script src="/js/pe-ratio-calculator.js" is:inline></script>
   <FinanceDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>P/E Ratio = <strong>Stock Price / <a href="/glossary/eps">Earnings Per Share (EPS)</a></strong>. Example: $150 stock price ÷ $7.50 EPS = <strong>P/E of 20x</strong> (earnings yield: 5%). The historical S&amp;P 500 average P/E is 15–17x; high-growth tech typically trades at 30–60x+.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the <strong>Stock Price</strong> (current market price per share) and <strong>EPS</strong> (trailing twelve months earnings per share - found on any financial data site or calculated from the income statement). The calculator shows the trailing P/E ratio and earnings yield. Optionally enter <strong>Forward EPS</strong> (analyst consensus estimate for the next 12 months) for the forward P/E, and a <strong>Target P/E Multiple</strong> to see what the stock would be worth at that multiple.</p>
-
+      <h2 id="how-to-use">How to use this P/E ratio calculator</h2>
+      <p>Enter the <strong>Stock Price</strong> (current market price per share) and <strong>EPS</strong> (trailing twelve months earnings per share - found on any financial data site or calculated from the income statement). The calculator shows the trailing P/E ratio and earnings yield. Three optional fields unlock additional metrics:</p>
+      <ul>
+        <li><strong>Forward EPS</strong> - analyst consensus estimate for the next 12 months; unlocks the forward P/E.</li>
+        <li><strong>Target P/E Multiple</strong> - any benchmark multiple you want to value against; unlocks implied fair value and upside/downside vs. current price.</li>
+        <li><strong>Annual EPS Growth Rate %</strong> - the expected annual EPS growth rate (use the 3-5 year analyst consensus <a href="/glossary/cagr">CAGR</a> for best results); unlocks the <a href="#peg-ratio">PEG ratio</a> and a growth signal (Undervalued / Fair value / Growth priced in).</li>
+      </ul>
       <h2 id="formula">P/E ratio formula</h2>
       <p>The <a href="/glossary/pe-ratio">Price-to-Earnings ratio</a> divides the current share price by earnings per share:</p>
       <Formula expr={f.pe} />
@@ -205,8 +249,11 @@ const schema = [
       <Formula expr={f.earningsYield} />
       <p>Implied fair value at a target P/E multiple:</p>
       <Formula expr={f.impliedPrice} />
-
-      <h2 id="types">Trailing P/E vs. forward P/E</h2>
+      <h3 id="explained-to-beginner">P/E ratio explained to a beginner</h3>
+      <p>Think of a company as a machine that prints dollar bills. The stock price is what you pay to own one share of that machine. EPS is how many dollars per share the machine prints each year. The P/E ratio tells you: for every dollar the machine prints annually, how much are you paying upfront?</p>
+      <p><strong>Example:</strong> a stock costs $120 and earns $6 per share per year. P/E = 120 / 6 = 20x. You are paying $20 for every $1 of annual earnings. If earnings stayed flat forever, it would take 20 years of earnings to recover your purchase price. A P/E of 10x = 10-year payback. A P/E of 40x = 40-year payback.</p>
+      <p><strong>The catch:</strong> a low P/E can mean the market expects earnings to shrink, and a high P/E can be justified if earnings are growing fast - which is exactly why the <a href="#peg-ratio">PEG ratio</a> exists.</p>
+      <h2 id="types">Comparison: trailing P/E vs. forward P/E</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -221,8 +268,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>For a growing company, forward P/E will be lower than trailing P/E. If forward P/E exceeds trailing P/E, analysts expect earnings to decline - a warning signal worth investigating.</p>
-
+      <p>For a growing company, forward P/E will be lower than <a href="/glossary/pe-ratio">trailing P/E</a>. If forward P/E exceeds trailing P/E, analysts expect earnings to decline - a warning signal worth investigating.</p>
       <h2 id="examples">Worked examples for price-to-earnings ratio</h2>
       <div class="responsive-table">
         <table>
@@ -237,7 +283,25 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>The first thing I do with any P/E is compare it against the same company's own 5-year historical range, not against a sector average. A P/E of 25x looks expensive in isolation - until you see the stock has consistently traded between 28x and 45x for five years.</p>
+      <p>Current P/E relative to a company's own history often tells you more than any cross-sector benchmark.</p>
+      <p>Apple (AAPL) is a good example of why this matters. AAPL's approximate trailing P/E history over the past five years:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Year</th><th>Approx. P/E range</th><th>What drove it</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2021</td><td>27x – 32x</td><td>Strong iPhone cycle; services revenue accelerating</td></tr>
+            <tr><td>2022</td><td>20x – 24x</td><td>Rate-hike selloff; share price fell, EPS held up - stock became cheap by Apple's own standards</td></tr>
+            <tr><td>2023</td><td>27x – 32x</td><td>Market re-rated tech higher; EPS grew modestly</td></tr>
+            <tr><td>2024</td><td>30x – 35x</td><td>AI narrative, aggressive share buybacks reducing share count</td></tr>
+            <tr><td>2025</td><td>28x – 34x</td><td>Macro uncertainty and China revenue headwinds kept a lid on multiple expansion</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Now suppose you are looking at AAPL today and the trailing P/E is 30x. Compared to the S&P 500 average of ~17x it looks expensive. But compared to Apple's own 5-year band of 20x – 35x, a P/E of 30x sits in the middle - not cheap, but not at a historical premium either.</p>
+      <p>The 2022 window at 20-24x was genuinely cheap by Apple's own standards; 30x is business as usual. That is the context a sector benchmark cannot give you.</p>
       <h2 id="benchmarks">P/E benchmarks by sector</h2>
       <div class="responsive-table">
         <table>
@@ -255,10 +319,38 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>One mistake I personally see consistently: investors anchor to P/E thresholds from the wrong sector. A bank trading at 20x looks expensive by financial-sector standards, but an investor more familiar with tech labels it cheap.</p>
+      <p>Sector context is the first filter every time - absolute P/E levels carry almost no meaning without it. When in doubt, compare a stock's P/E only against direct competitors with similar business models and growth profiles.</p>
+      <h2 id="peg-ratio">PEG ratio: P/E adjusted for growth</h2>
+      <p>The PEG ratio solves the single biggest weakness of P/E: it treats all earnings the same, regardless of how fast they are growing. A company with a P/E of 30x growing at 30% per year is priced identically to a company with a P/E of 30x growing at 5% per year - but the first is arguably cheap and the second is expensive.</p>
+      <p>The PEG ratio normalises for growth rate so you can compare them on the same footing.</p>
+      <Formula expr={f.peg} />
+      <p>Peter Lynch popularised the PEG ratio in <em><a href="https://en.wikipedia.org/wiki/One_Up_on_Wall_Street" target="_blank">One Up on Wall Street (1989)</a></em>, where he argued that a fairly-valued stock should have a PEG of roughly 1.0 - meaning investors pay one dollar of P/E for every one percentage point of annual earnings growth.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>PEG range</th><th>Signal</th><th>Interpretation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Below 0.5</td><td>Potentially undervalued</td><td>Growth rate well exceeds what the market is pricing in; worth investigating for value</td></tr>
+            <tr><td>0.5 - 1.0</td><td>Undervalued to fair</td><td>Growth supports or exceeds the current multiple; generally considered attractive</td></tr>
+            <tr><td>1.0 - 2.0</td><td>Fair value range</td><td>Market is roughly paying one dollar of P/E per point of growth; the Lynch baseline</td></tr>
+            <tr><td>Above 2.0</td><td>Growth priced in</td><td>Investors are paying a premium above the growth rate; execution risk rises</td></tr>
+            <tr><td>Negative</td><td>Not meaningful</td><td>Negative EPS or negative growth; PEG is not applicable in either case</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>PEG in practice: two stocks compared</h3>
+      <p><strong>Stock A:</strong> price $200, EPS $5.00, trailing P/E = 40x, EPS growth rate = 40%/yr. PEG = 40 / 40 = 1.0 - fairly valued despite the high headline multiple.</p>
+      <p><strong>Stock B:</strong> price $90, EPS $9.00, trailing P/E = 10x, EPS growth rate = 3%/yr. PEG = 10 / 3 = 3.3 - expensive relative to its growth, despite looking cheap on P/E alone.</p>
+      <p>This is the PEG effect: a high P/E can be justified, and a low P/E can be expensive, depending on the growth rate behind it.</p>
+      <h3>Limitations of PEG</h3>
+      <p>PEG inherits P/E's weaknesses and adds one of its own: the growth rate input. If you use trailing growth (last 12 months), a one-time earnings spike or trough will distort the denominator. If you use forward analyst consensus, you are trusting estimates that can be significantly wrong.</p>
+      <p>For the most reliable PEG, use a multi-year <a href="/glossary/cagr">average growth rate</a> - typically the 3-5 year CAGR from analyst consensus or a conservative internal estimate.</p>
+      <p>PEG is also unreliable for cyclical industries (energy, mining, autos) where earnings swing sharply, for early-stage companies with no stable earnings base, and any time EPS is negative.</p>
       <h2 id="negative-pe">Negative P/E ratio in stocks</h2>
-      <p>When a company reports negative earnings - a net loss - the P/E ratio becomes negative. Dividing a positive stock price by a negative EPS produces a mathematically valid negative number, but it carries no analytical meaning in the way a positive P/E does. A P/E of -25x cannot be compared to a P/E of 20x and does not indicate undervaluation.</p>
-
+      <p>When a company reports negative earnings - a net loss - the P/E ratio becomes negative.</p>
+      <p>Dividing a positive stock price by a negative EPS produces a mathematically valid negative number, but it carries no analytical meaning in the way a positive P/E does. A P/E of -25x cannot be compared to a P/E of 20x and does not indicate undervaluation.</p>
       <h3>What causes a negative P/E</h3>
       <p>Negative EPS comes from three distinct situations that require different investor responses:</p>
       <div class="responsive-table">
@@ -273,12 +365,12 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h3>Trailing vs. forward P/E when EPS is negative</h3>
-      <p>If trailing EPS is negative but the company is expected to turn profitable, forward P/E is still a usable metric. For example: a stock trading at $60 with a trailing EPS of -$2.50 has a meaningless trailing P/E, but if consensus forward EPS is $4.00, the forward P/E of 15x gives a real valuation anchor. In this case, skip the trailing figure entirely and anchor entirely on forward estimates - while discounting them appropriately for the uncertainty involved in an earnings turnaround.</p>
-
+      <p>If trailing EPS is negative but the company is expected to turn profitable, forward P/E is still a usable metric.</p>
+      <p><strong>For example:</strong> a stock trading at $60 with a trailing EPS of -$2.50 has a meaningless trailing P/E, but if consensus forward EPS is $4.00, the forward P/E of 15x gives a real valuation anchor.</p>
+      <p>In this case, skip the trailing figure entirely and anchor entirely on forward estimates - while discounting them appropriately for the uncertainty involved in an earnings turnaround.</p>
       <h3>Alternative valuation metrics for loss-making companies</h3>
-      <p>When trailing P/E is negative and forward P/E is unreliable (no clear path to profit), practitioners use these alternatives:</p>
+      <p>When trailing P/E is negative and forward P/E is unreliable (no clear path to profit), practitioners (including myself) use these alternatives:</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -293,35 +385,33 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h3>How this calculator handles negative EPS</h3>
-      <p>If you enter a negative EPS, the calculator will display a negative P/E. Treat that result as a flag, not a valuation figure - it signals that P/E is the wrong tool for this stock. Financial data providers typically show "N/A" or "N/M" (not meaningful) rather than a negative number; our calculator shows the raw result so you can see exactly what the formula produces. Switch to one of the alternative metrics above for any stock where trailing EPS is negative.</p>
-
+      <p>If you enter a negative EPS, the calculator will display a negative P/E. Treat that result as a flag, not a valuation figure - it signals that P/E is the wrong tool for this stock.</p>
+      <p>Financial data providers typically show "N/A" or "N/M" (not meaningful) rather than a negative number; our P/E calculator shows the raw result so you can see exactly what the formula produces. Switch to one of the alternative metrics above for any stock where trailing EPS is negative.</p>
       <h2 id="limitations">Limitations of the P/E ratio</h2>
       <ul>
         <li><strong>Meaningless for loss-making companies:</strong> A company with negative EPS has no P/E ratio. Use EV/Revenue or Price-to-Sales for pre-profit businesses.</li>
         <li><strong>EPS can be manipulated:</strong> Share buybacks reduce shares outstanding and inflate EPS without improving underlying profitability. One-time gains or losses distort reported EPS. Use adjusted or normalised EPS where possible.</li>
-        <li><strong>Doesn't account for debt:</strong> Two companies with identical P/E ratios but different leverage profiles carry very different risk. A highly leveraged company's P/E will appear low because debt amplifies equity returns - until it doesn't. EV/EBITDA is a better apples-to-apples comparison.</li>
+        <li><strong>Doesn't account for debt:</strong> Two companies with identical P/E ratios but different leverage profiles carry very different risk. A highly leveraged company's P/E will appear low because debt amplifies equity returns - until it doesn't. <a href="/glossary/ev-ebitda">EV/EBITDA</a> is a better apples-to-apples comparison.</li>
         <li><strong>Not comparable across industries:</strong> Comparing a utility's P/E of 12x to a tech company's 40x is meaningless. Compare only against direct sector peers with similar growth rates.</li>
-        <li><strong>Ignores growth rate:</strong> The PEG ratio (P/E divided by EPS growth rate) adjusts for growth and enables fairer comparison between companies growing at different rates. A P/E of 30x for a company growing at 30%/year (PEG = 1.0) may be cheaper than a P/E of 15x for a company growing at 5%/year (PEG = 3.0).</li>
+        <li><strong>Ignores growth rate:</strong> The <a href="#peg-ratio">PEG ratio</a> (P/E divided by annual EPS growth rate) adjusts for this and enables fairer comparison between companies growing at different rates. A P/E of 30x for a company growing at 30%/year (PEG = 1.0) may be cheaper than a P/E of 15x for a company growing at 5%/year (PEG = 3.0). See the PEG section above for the full framework.</li>
       </ul>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">Frequently asked questions about P/E ratio</h2>
       <h3>What is the P/E ratio?</h3>
       <p>The Price-to-Earnings ratio measures how much investors pay per dollar of annual earnings. P/E = Stock Price / EPS. A P/E of 20 means the stock costs 20 times its annual earnings per share. It is the most commonly cited equity valuation multiple.</p>
-
       <h3>What is a good P/E ratio?</h3>
       <p>Depends on the sector and growth rate. The long-run S&P 500 average is ~15–17x. High-growth tech: 30–60x+. Mature value stocks: 8–15x. A "good" P/E is one that is reasonable relative to peers and justified by the company's growth rate, quality of earnings, and competitive position.</p>
-
       <h3>What is the difference between trailing and forward P/E?</h3>
       <p>Trailing P/E uses actual reported EPS from the last 12 months. Forward P/E uses estimated EPS for the next 12 months. Forward P/E is lower for growing companies (future earnings are higher). If forward P/E &gt; trailing P/E, earnings are expected to decline.</p>
-
       <h3>What is earnings yield?</h3>
       <p>Earnings yield = EPS / Stock Price × 100 = 1 / P/E × 100. A P/E of 20x = 5% earnings yield. Analysts compare earnings yield to 10-year Treasury yields to assess equity attractiveness. When earnings yield is close to or below risk-free rates, equities may be expensive.</p>
-
       <h3>Why can P/E be misleading?</h3>
       <p>P/E is distorted by share buybacks (which reduce share count and inflate EPS), one-time items (which inflate or deflate reported earnings), high debt (which amplifies returns but also risk), and differences in accounting between companies. Always supplement P/E with other metrics: EV/EBITDA, P/FCF, Price-to-Book, and PEG ratio.</p>
+      <QuizBlock
+        topic="P/E ratio"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/pe-ratio-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -330,10 +420,7 @@ const schema = [
         { path: '/finance/roi-calculator',               blurb: 'Calculate ROI, investment multiple, and annualized return.' },
         { path: '/finance/ebitda-calculator',            blurb: 'EBITDA from Net Income, Interest, Tax, and D&A.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/pe-ratio-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>
