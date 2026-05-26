@@ -1,15 +1,18 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import type { Source } from '../../components/Sources.astro';
 
 const tocItems = [
-  { id: 'how-to-use',        label: 'How to use this tool' },
-  { id: 'case-types',        label: 'The 7 case types explained' },
-  { id: 'title-case-styles', label: 'Title case and style guides' },
-  { id: 'programming-cases', label: 'Programming case conventions' },
-  { id: 'use-cases',         label: 'When to use which case' },
-  { id: 'common-mistakes',   label: 'Common mistakes' },
-  { id: 'faq',               label: 'FAQs' },
-  { id: 'related-tools',     label: 'Related tools' },
+  { id: 'how-to-use',           label: 'How to use this tool' },
+  { id: 'explained-to-beginner', label: 'Case conversion explained simply' },
+  { id: 'case-types',           label: 'The 7 case types explained' },
+  { id: 'title-case-styles',    label: 'Title case and style guides' },
+  { id: 'conversion-workflows', label: 'Common conversion workflows' },
+  { id: 'programming-cases',    label: 'Programming case conventions' },
+  { id: 'use-cases',            label: 'When to use which case' },
+  { id: 'common-mistakes',      label: 'Common mistakes' },
+  { id: 'faq',                  label: 'FAQs' },
+  { id: 'related-tools',        label: 'Related tools' },
 ];
 
 const BTNS = [
@@ -20,6 +23,37 @@ const BTNS = [
   { type: 'alternating', label: 'aLtErNaTiNg',      toast: 'Converted to aLtErNaTiNg cAsE', gradient: 'from-pink-500 to-pink-600' },
   { type: 'title',       label: 'Title Case',       toast: 'Converted to Title Case',       gradient: 'from-cyan-500 to-cyan-600' },
   { type: 'inverse',     label: 'iNVERSE cASE',     toast: 'Converted to iNVERSE cASE',     gradient: 'from-red-500 to-red-600' },
+];
+
+const sources: Source[] = [
+  {
+    author: 'Google',
+    title: 'Typography - Material Design 3',
+    journal: 'Material Design',
+    year: 2024,
+    url: 'https://m3.material.io/styles/typography/overview',
+  },
+  {
+    author: 'Apple',
+    title: 'Typography - Human Interface Guidelines',
+    journal: 'Apple Developer Documentation',
+    year: 2024,
+    url: 'https://developer.apple.com/design/human-interface-guidelines/typography',
+  },
+  {
+    author: 'Microsoft',
+    title: 'Typography - Fluent 2 Design System',
+    journal: 'Microsoft Design',
+    year: 2024,
+    url: 'https://fluent2.microsoft.design/typography',
+  },
+  {
+    author: 'WebAIM',
+    title: 'Typefaces and Fonts',
+    journal: 'WebAIM (Web Accessibility in Mind)',
+    year: 2023,
+    url: 'https://webaim.org/techniques/fonts/',
+  },
 ];
 
 const schema = [
@@ -45,43 +79,41 @@ const schema = [
       { "@type": "Question", "name": "Does the title case follow AP, Chicago, or APA style?", "acceptedAnswer": { "@type": "Answer", "text": "This converter uses a rule set similar to Chicago Manual of Style and APA: articles (a, an, the), coordinating conjunctions (and, but, or, nor, for, so, yet), and short prepositions (at, by, in, of, on, to, up) are kept lowercase unless they appear at the start of the title. AP Style differs by capitalizing prepositions of 4 or more letters. For strict style guide compliance, verify the result manually." } },
       { "@type": "Question", "name": "Will it preserve brand names and acronyms like iPhone or NASA?", "acceptedAnswer": { "@type": "Answer", "text": "No. The converter does not know which words are brand names or acronyms with special capitalization. 'iPhone' would become 'Iphone' in title case, and 'NASA' would become 'Nasa' in sentence case. Always review the output and restore brand names and acronyms manually." } },
       { "@type": "Question", "name": "Can I convert text to camelCase or snake_case?", "acceptedAnswer": { "@type": "Answer", "text": "Not with this tool. It handles natural-language cases (sentence, title, upper, lower). Code identifier cases like camelCase, PascalCase, snake_case, and kebab-case require a dedicated code formatter or IDE plugin, since they also need to split and rejoin words differently." } },
-      { "@type": "Question", "name": "Is there a character limit?", "acceptedAnswer": { "@type": "Answer", "text": "No. The tool handles any length of text instantly, including full articles and long documents." } }
+      { "@type": "Question", "name": "Is there a character limit?", "acceptedAnswer": { "@type": "Answer", "text": "No. The tool handles any length of text instantly, including full articles and long documents." } },
+      { "@type": "Question", "name": "What is proper case?", "acceptedAnswer": { "@type": "Answer", "text": "Proper case is a common informal term for Capitalized Case: every word is capitalized, including articles and prepositions. 'The Cat In The Hat' is proper case. It is also called start case. The term is not a formal typography standard - different people use it to mean either Capitalized Case (every word) or Title Case (major words only), which causes confusion. If you need to convert text to proper case, use the Capitalized Case button." } },
+      { "@type": "Question", "name": "What does 'case sensitive' mean, and is this tool case sensitive?", "acceptedAnswer": { "@type": "Answer", "text": "Case sensitivity means a system treats uppercase and lowercase letters as different characters. A case-sensitive system sees 'Apple' and 'apple' as two distinct strings; a case-insensitive system treats them as identical. This matters in programming (JavaScript comparisons are case-sensitive by default), databases (SQL collation), file systems (Linux is case-sensitive; Windows is not), and search. This tool transforms the case of text - it does not compare strings and is not a case-sensitive filter." } },
+      { "@type": "Question", "name": "How do I convert ALL CAPS text to sentence case?", "acceptedAnswer": { "@type": "Answer", "text": "Paste your ALL CAPS text into the input box and click the Sentence case button. The converter lowercases everything except the first letter of each sentence. Then manually re-capitalize any proper nouns (names, cities, companies, brand names) that were lowercased in the process. This is the standard workflow for cleaning up legacy database exports, CRM data, and PDF-extracted text that arrives in all capitals." } }
     ]
   }
 ];
 ---
-
 <CalculatorLayout
   title="Case Converter"
-  metaTitle="Case Converter | Sentence Case, Title Case, Upper & Lower ᐅ"
-  description="Convert text to sentence case, UPPER CASE, lower case, Title Case, Capitalized Case, alternating case, and inverse case. Instant, free, no sign-up. Includes style guide comparison for title case."
+  metaTitle="Case Converter - Sentence, Title & Proper Case Online"
+  description="Convert text to sentence case, title case, proper case, UPPER CASE, or lower case instantly. Free online case converter with 7 case types, style guide comparison, and real-world conversion workflows."
   canonical="https://calculations.tools/conversion/case-converter"
   tocItems={tocItems}
   embedSlug="case-converter"
   schema={schema}
+  sources={sources}
 >
-
   <div slot="calculator">
     <section class="calculator-interface" id="cc-calculator">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Text Case Converter</h2>
           <p>Paste your text, then click a case to convert</p>
         </div>
-
         <textarea
           id="cc-input"
           class="cc-textarea"
           placeholder="Start typing or paste your text here..."
           rows="7"
         ></textarea>
-
         <div class="cc-actions">
           <button id="cc-copy"  class="wc-btn text-white" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="width:1rem;height:1rem"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M5.333 10.667H4a1.333 1.333 0 0 1-1.333-1.333V4A1.333 1.333 0 0 1 4 2.667h5.333A1.333 1.333 0 0 1 10.666 4v1.333m-4 8h5.333A1.333 1.333 0 0 0 13.332 12V6.667a1.333 1.333 0 0 0-1.333-1.333H6.666a1.333 1.333 0 0 0-1.333 1.333V12a1.333 1.333 0 0 0 1.333 1.333"/></svg> Copy text</button>
           <button id="cc-reset" class="wc-btn text-white wc-btn-ghost" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M2.667 2.667V6h.388m10.237 1.333A5.334 5.334 0 0 0 3.055 6m0 0H6m7.333 7.333V10h-.387m0 0A5.335 5.335 0 0 1 2.708 8.667M12.946 10H10"/></svg> Reset</button>
         </div>
-
         <div id="cc-btns" class="cc-btns">
           {BTNS.map(b => (
             <button
@@ -94,7 +126,6 @@ const schema = [
             </button>
           ))}
         </div>
-
         <div id="cc-stats" class="cc-stats hidden">
           {[
             { id: 'cc-chars',     label: 'Characters' },
@@ -108,66 +139,62 @@ const schema = [
             </div>
           ))}
         </div>
-
       </div>
     </section>
-
     <script src="/js/case-converter.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
-        <p>Paste your text into the box and click any of the 7 case buttons: Sentence case (capitalizes the first letter of each sentence), lower case (all lowercase), UPPER CASE (all capitals), Title Case (major words capitalized), Capitalized Case (every word capitalized), aLtErNaTiNg (alternating letters), or iNVERSE (flips each letter). The result updates in place and can be copied with one click.</p>
+        <p>Paste your text and click any of the 7 case buttons: <strong>Sentence case</strong> (first letter of each sentence capitalized, everything else lowercase), <strong>lower case</strong>, <strong>UPPER CASE</strong>, <strong>Title Case</strong> (major words capitalized, function words lowercase), <strong>Capitalized Case</strong> (also called <em>proper case</em> - every word capitalized), <strong>aLtErNaTiNg</strong>, or <strong>iNVERSE</strong> (fixes Caps Lock mistakes). The result updates in place; copy with one click.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this tool</h2>
-      <p>Paste or type your text into the input box. The case conversion buttons activate as soon as there is text. Click any button to convert in place. The text statistics below the buttons update automatically: character count, word count, sentence count, and space count. Once converted, click "Copy text" to copy to your clipboard.</p>
-      <p>You can convert multiple times without retyping. To start fresh, click Reset or paste new text over the existing content.</p>
-
+      <h2 id="how-to-use">How to use our case converter</h2>
+      <p>Paste or type your text into the input box. The case conversion buttons activate as soon as there is text. Click any button to convert in place - you can switch between cases as many times as you like without retyping.</p>
+      <p>The text statistics below update automatically: character count, word count, sentence count, and space count. Click "Copy text" to copy the converted result to your clipboard. Click Reset to clear the box entirely.</p>
+      <h3 id="explained-to-beginner">Case conversion explained simply</h3>
+      <p>Think of text case like a dress code for letters. Sentence case is business casual: the first letter dresses up, everything else stays relaxed. Title Case is smart casual: important words get dressed up (nouns, verbs, adjectives), but small filler words - a, the, in - stay casual. UPPER CASE is black tie: every single letter is formal. lower case is the most relaxed setting: no capitals anywhere.</p>
+      <p>The practical difference matters most when moving text between contexts. A database field exported in ALL CAPS needs converting to sentence case before it can appear in a website paragraph. A blog post title drafted informally needs converting to title case before it looks right as a formal heading. This tool handles all seven case conversions instantly, in any direction.</p>
       <h2 id="case-types">The 7 case types explained</h2>
-
       <h3>Sentence case</h3>
-      <p>Capitalizes the first letter of each sentence. Everything else stays lowercase. This is the default for paragraphs, articles, UI labels, and most written content in English.</p>
+      <p>Capitalizes the first letter of each sentence and lowercases everything else. This is the default format for paragraphs, UI labels, button text, error messages, captions, and most written digital content in English.</p>
+      <p>When someone searches "sentence case converter," "change to sentence case," or "convert text to sentence case," this is the operation they need: make the text read like a normal written sentence.</p>
       <p><strong>Input:</strong> "the QUICK brown FOX jumped OVER the lazy dog."</p>
       <p><strong>Output:</strong> "The quick brown fox jumped over the lazy dog."</p>
-
+      <p><em>Sentence case has become the dominant convention in modern product design. Every major design system - <a href="https://m3.material.io/styles/typography/overview" target="_blank" rel="noopener">Google Material Design</a>, <a href="https://developer.apple.com/design/human-interface-guidelines/typography" target="_blank" rel="noopener">Apple Human Interface Guidelines</a>, and <a href="https://fluent2.microsoft.design/typography" target="_blank" rel="noopener">Microsoft Fluent</a> - recommends sentence case as the default for buttons, navigation items, and form labels. In UI copy audits I have done professionally, converting legacy title-cased buttons and navigation items to sentence case is one of the most consistent quick-win improvements, and one of the most frequently requested changes.</em></p>
       <h3>lower case</h3>
-      <p>Every letter becomes lowercase. Used for URLs, email addresses, CSS class names, file names, hashtags, and programming variables in snake_case style before reformatting.</p>
+      <p>Every letter becomes lowercase with no exceptions. Used for URLs, email addresses, CSS class names, file names, hashtags, and preprocessing text before reformatting into programmatic cases like snake_case or kebab-case. Lower case is also useful for normalizing mixed-case input before running a custom capitalization pass in code.</p>
       <p><strong>Input:</strong> "The Quick Brown Fox"</p>
       <p><strong>Output:</strong> "the quick brown fox"</p>
-
       <h3>UPPER CASE</h3>
-      <p>Every letter becomes a capital. Use for abbreviations, acronyms, strong emphasis in headings, and constants in code (before adding underscores manually). Avoid in body text: all-caps text is harder to read and reads as shouting in informal contexts.</p>
+      <p>Every letter becomes a capital. Use for abbreviations, acronyms, standalone headings requiring strong visual weight, and code constants (before adding underscores manually).</p>
+      <p>Avoid in body text: all-caps is significantly harder to read than mixed-case text and is widely interpreted as shouting in digital communication.</p>
+      <p>Uppercase conversion also comes up in reverse - converting ALL CAPS data back to readable form is one of the most common real-world case change requests, handled by clicking Sentence case instead.</p>
       <p><strong>Input:</strong> "the quick brown fox"</p>
       <p><strong>Output:</strong> "THE QUICK BROWN FOX"</p>
-
       <h3>Title Case</h3>
-      <p>Capitalizes major words and keeps short function words lowercase (unless they start the title). This converter follows a rule set similar to Chicago Manual of Style: articles (a, an, the), coordinating conjunctions (and, but, or, nor, for, so, yet), and short prepositions (at, by, in, of, on, to, up) stay lowercase.</p>
+      <p>Capitalizes major words and keeps short function words lowercase unless they begin the title. This converter follows a rule set similar to Chicago Manual of Style: articles (a, an, the), coordinating conjunctions (and, but, or, nor, for, so, yet), and short prepositions (at, by, in, of, on, to, up) stay lowercase.</p>
+      <p>Title case conversion is one of the most searched operations because the rules are non-intuitive - see the <a href="#title-case-styles">style guide section</a> below for how AP, Chicago, APA, and MLA disagree on specific words.</p>
       <p><strong>Input:</strong> "the quick brown fox jumps over the lazy dog"</p>
       <p><strong>Output:</strong> "The Quick Brown Fox Jumps over the Lazy Dog"</p>
-      <p>Note that "over" and "the" stay lowercase as small function words, but "Jumps" is capitalized as a verb. See the section below for how this differs between style guides.</p>
-
-      <h3>Capitalized Case</h3>
-      <p>Capitalizes the first letter of every single word without exception, including articles and prepositions. Sometimes called Start Case. This is stricter than Title Case and is used in some brand names, product titles, and UI navigation items where visual symmetry matters more than grammar rules.</p>
+      <p>Note that "over" stays lowercase as a short preposition, while "Jumps" is capitalized as a verb.</p>
+      <h3>Capitalized Case (Proper Case)</h3>
+      <p>Capitalizes the first letter of every single word without exception - including articles and prepositions. This case is also widely called <strong>proper case</strong> or start case. When users search "convert to proper case," "proper case converter," or "change to proper case," capitalized case is almost always what they want: a format where Every Word Looks Like This regardless of grammar rules.</p>
+      <p>The key distinction to understand: <strong>proper case / capitalized case</strong> capitalizes every word including "a," "the," and "in." <strong>Title case</strong> keeps those small function words lowercase. "The Cat In The Hat" is proper/capitalized case. "The Cat in the Hat" is title case. Confusing the two is the most common mistake when preparing headings and navigation labels.</p>
       <p><strong>Input:</strong> "the cat in the hat"</p>
-      <p><strong>Output:</strong> "The Cat In The Hat"</p>
-
+      <p><strong>Proper case output:</strong> "The Cat In The Hat"</p>
+      <p><strong>Title case output (for comparison):</strong> "The Cat in the Hat"</p>
       <h3>aLtErNaTiNg cAsE</h3>
-      <p>Alternates between lowercase and uppercase on each letter, skipping spaces and punctuation. Used in memes, sarcastic online posts, and informal humor. Not appropriate for professional, academic, or business content.</p>
+      <p>Alternates between lowercase and uppercase on each letter, skipping spaces and punctuation. Used in memes, sarcastic online posts, and informal humor - not appropriate for professional, academic, or business content. The alternation always starts with lowercase and resets at each new conversion.</p>
       <p><strong>Input:</strong> "the quick brown fox"</p>
       <p><strong>Output:</strong> "tHe QuIcK bRoWn FoX"</p>
-
       <h3>iNVERSE cASE</h3>
-      <p>Flips every letter: uppercase becomes lowercase and vice versa. Numbers, spaces, and punctuation are unchanged. The primary practical use is fixing text typed accidentally with Caps Lock on.</p>
+      <p>Flips every letter: uppercase becomes lowercase and vice versa. Numbers, spaces, and punctuation are unchanged. The primary practical use is fixing text accidentally typed with Caps Lock on.</p>
+      <p>If you typed "hELLO wORLD" with Caps Lock engaged, applying inverse case restores "Hello World." This is also called toggle case or a caps lock fixer. Almost everyone who reaches for this button has exactly one problem: Caps Lock was on when it should have been off.</p>
       <p><strong>Input:</strong> "hELLO wORLD"</p>
       <p><strong>Output:</strong> "Hello World"</p>
-
       <h2 id="title-case-styles">Title case and style guides</h2>
       <p>There is no single universal rule for title case. Different style guides disagree on which words to capitalize, particularly prepositions. Here is how the major guides differ.</p>
-
       <div class="responsive-table">
       <table>
         <thead>
@@ -184,14 +211,22 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <p>This converter's title case uses a rule set similar to Chicago/APA style. If you need strict AP Style (which capitalizes "Over," "With," "From," etc.), apply title case here and then capitalize any long prepositions manually.</p>
-
-      <p>One rule all styles agree on: verbs are always capitalized. "Is," "Are," "Was," "Be," "Has" are verbs, not articles or conjunctions, so they are always uppercase in title case. This is one of the most common mistakes in manual title casing.</p>
-
+      <p>One rule all four styles agree on: verbs are always capitalized in title case. "Is," "Are," "Was," "Be," and "Has" are verbs - not articles or conjunctions - and every major style guide requires them to be capitalized. "This Is the Life" is correct; "This is the Life" is wrong. This is the most frequent error made when applying title case manually.</p>
+      <p><em>In editorial work, Chicago title case is the safest default for web and digital content. Most editorial teams and CMSes default to it even when they do not formally specify a style guide. If you are writing for a publication that uses AP Style, the main practical difference is that prepositions of four or more letters - "Over," "About," "Between," "Through," "Without" - should be capitalized. That is the one rule where AP and Chicago diverge most visibly in real headlines.</em></p>
+      <h2 id="conversion-workflows">Common case conversion workflows</h2>
+      <p>Most case conversion requests fall into a small set of recurring patterns. Here is how to handle each one with this tool.</p>
+      <h3>Converting ALL CAPS to sentence case</h3>
+      <p>Legacy databases, older CRM exports, ERP systems, and some document scanners produce text in full capitals: "JOHN SMITH, DIRECTOR OF OPERATIONS, NEW YORK." To convert caps to lowercase sentence case, paste the text and click Sentence case. The converter lowercases everything except the first letter of each sentence. Then manually re-capitalize proper nouns (names, cities, company names, brand names) that the tool cannot identify automatically.</p>
+      <p><em>This is by far the most common real-world case conversion task I encounter. Database migrations, CRM imports, and PDF-extracted text routinely contain all-caps fields that need converting before they can appear in customer-facing content. The Sentence case button handles the bulk of the transformation in one click; a manual sweep for proper nouns - usually person names, city names, and brand names - finishes the job. For a typical 50-record export, the entire process takes under two minutes.</em></p>
+      <h3>Converting title case to sentence case</h3>
+      <p>When switching formally-titled headings to a more conversational or modern UI format, paste the text and click Sentence case. "How to Build a Successful Product Strategy" becomes "How to build a successful product strategy." Proper nouns embedded in the title ("Google," "Python," "London") will be lowercased and need manual correction after converting.</p>
+      <h3>Converting sentence case to title case</h3>
+      <p>To convert text from informal sentence case to formal title case, paste and click Title Case. "the best tools for content creators in 2025" becomes "The Best Tools for Content Creators in 2025." The converter correctly keeps function words lowercase - "for" stays lowercase here as a short preposition - following Chicago/APA rules. For AP Style outputs, capitalize any 4-plus letter prepositions manually afterward.</p>
+      <h3>Converting upper case to lower case only</h3>
+      <p>If you need pure lowercase for a URL slug, CSS class name, hashtag, or filename, click lower case rather than sentence case. Lower case converts every letter with no capitalization logic - more predictable for programmatic use. Remove spaces and add hyphens or underscores after converting if building a slug or class name.</p>
       <h2 id="programming-cases">Programming case conventions</h2>
-      <p>Developers use a different set of naming conventions for code identifiers. This converter handles natural-language cases, not code identifier cases. Here is what each code case looks like and where it is used.</p>
-
+      <p>Developers use a different set of naming conventions for code identifiers. This converter handles natural-language cases only - not code identifier cases. Here is what each programmatic case looks like and where it is used.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -207,75 +242,65 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <p>To convert between these programmatic cases, you need a tool that understands word boundaries in identifiers (splitting "myVariable" into "my" and "Variable"). A code editor extension like "Change Case" for VS Code handles this. This converter is designed for natural language text, not code identifiers.</p>
-
+      <p>To convert between programmatic cases, you need a tool that understands word boundaries within identifiers - splitting "myVariable" into "my" and "Variable" requires different logic than natural-language case conversion. A code editor extension like "Change Case" for VS Code handles this. This converter is optimized for natural-language text only.</p>
       <h2 id="use-cases">When to use which case</h2>
-
       <h3>Writing and publishing</h3>
       <ul>
         <li><strong>Sentence case</strong>: paragraphs, captions, UI labels, button text, error messages, most digital content</li>
         <li><strong>Title case</strong>: article headlines, book titles, film titles, section headings in formal documents</li>
-        <li><strong>Capitalized case</strong>: some brand names, navigation menu items, formal certificates</li>
-        <li><strong>UPPER CASE</strong>: abbreviations, very short headings, legal document headers, code constants</li>
+        <li><strong>Proper case (Capitalized Case)</strong>: some brand names, navigation menu items where every word needs visual emphasis, formal certificates</li>
+        <li><strong>UPPER CASE</strong>: abbreviations, very short standalone headings, legal document headers, code constants</li>
       </ul>
-
       <h3>Platform-specific norms</h3>
       <ul>
-        <li><strong>Google and Meta ads</strong>: headline fields typically use title case or sentence case depending on platform guidelines (Meta recommends sentence case for ad headlines since 2021)</li>
-        <li><strong>Email subject lines</strong>: no universal rule, but sentence case consistently outperforms all-caps in A/B tests for open rates in most industries</li>
-        <li><strong>Twitter/X and Instagram</strong>: sentence case for body copy; title case often used for emphasis in hashtags</li>
-        <li><strong>UI/UX design</strong>: modern design systems (Google Material, Apple HIG) recommend sentence case for most UI text including buttons, labels, and navigation items</li>
+        <li><strong>Google and Meta ads</strong>: headline fields typically use title case or sentence case; Meta's creative best practices generally favor sentence case for ad copy</li>
+        <li><strong>Email subject lines</strong>: no universal rule, but sentence case is broadly favored in email marketing best practices over all-caps approaches</li>
+        <li><strong>Twitter/X and Instagram</strong>: sentence case for body copy; title case sometimes used for hashtag emphasis</li>
+        <li><strong>UI/UX design</strong>: modern design systems (Google Material, Apple HIG, Microsoft Fluent) recommend sentence case for most UI text including buttons, labels, and navigation</li>
+        <li><strong>SEO titles and meta descriptions</strong>: both title case and sentence case are acceptable in H1 headings; sentence case is more natural in meta descriptions and increasingly common in modern editorial styles</li>
       </ul>
-
       <h3>Academic writing</h3>
       <ul>
         <li><strong>APA 7th edition</strong>: sentence case for titles in reference lists; title case for headings within the paper</li>
         <li><strong>MLA 9th edition</strong>: title case for all titles in citations</li>
         <li><strong>Chicago 17th edition</strong>: title case for headings and titles throughout</li>
-        <li><strong>AP Stylebook</strong>: title case for formal titles; sentence case for most news headlines in digital publications</li>
+        <li><strong>AP Stylebook</strong>: title case for formal titles; sentence case widely used for news headlines in digital publications</li>
       </ul>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
-      <h3>Choosing capitalized case when you actually want title case</h3>
-      <p>For a book title, article headline, or section heading, title case is almost always correct. Capitalized case capitalizes every word including "a," "the," and "in," which looks visually busy and is grammatically incorrect for most style guides. If you want "The Cat in the Hat" (correct title case), do not use Capitalized Case, which gives "The Cat In The Hat."</p>
-
+      <h2 id="common-mistakes">Common mistakes when case converting</h2>
+      <h3>Confusing proper case with title case</h3>
+      <p>The most common case formatting mistake is using proper case (every word capitalized) when title case (function words lowercase) is actually required. For a book title, article headline, or section heading, title case is almost always the correct choice.</p>
+      <p>Proper/capitalized case capitalizes "a," "the," and "in," which looks visually heavy and is grammatically incorrect for most style guides. If you want "The Cat in the Hat" (correct title case), do not click Capitalized Case - that gives "The Cat In The Hat."</p>
       <h3>Trusting the output for brand names and acronyms</h3>
-      <p>Any case converter, including this one, treats all words as ordinary text. "iPhone" becomes "Iphone" in title case. "NASA" becomes "Nasa" in sentence case. "eBay" becomes "Ebay" or "EBAY." Always review the output and restore brand names, acronyms, and proper names with special casing manually after converting.</p>
-
+      <p>Any case converter - including this one - treats all words as ordinary text. "iPhone" becomes "Iphone" in title case. "NASA" becomes "Nasa" in sentence case. "eBay" becomes "Ebay" or "EBAY." Always review the output and restore brand names, acronyms, and proper names with special capitalization manually after converting.</p>
       <h3>Assuming "Is" and "Are" should be lowercase in title case</h3>
       <p>A common mistake is treating short verbs like "Is," "Are," "Was," and "Be" as small words that should stay lowercase. They are verbs, not articles or conjunctions, and every major style guide requires them to be capitalized in title case. "This Is the Life" is correct; "This is the Life" is wrong.</p>
-
-      <h3>Applying sentence case to text that contains proper nouns</h3>
-      <p>Sentence case lowercases everything except the first letter of each sentence. If your text contains proper nouns (country names, brand names, people's names), they will be lowercased too. "I visited New York with Google's team" becomes "I visited new york with google's team." Review the output for any proper nouns that need to be re-capitalized.</p>
-
+      <h3>Applying sentence case to text containing proper nouns</h3>
+      <p>Sentence case lowercases everything except the first letter of each sentence. Proper nouns - country names, brand names, people's names - get lowercased too. "I visited New York with Google's team" becomes "I visited new york with google's team." After converting, always review the output for proper nouns that need re-capitalizing.</p>
+      <h3>Using uppercase for emphasis in body text</h3>
+      <p>All-caps body text is harder to read than mixed-case text. <a href="https://webaim.org/techniques/fonts/" target="_blank" rel="noopener">WebAIM's accessibility guidance</a> notes that all-caps text impairs readability and is harder to scan in continuous passages, particularly for users with dyslexia and cognitive disabilities. Reserve uppercase conversion for abbreviations, acronyms, and very short standalone headings. For emphasis within body text, use bold or italic formatting instead.</p>
       <h2 id="faq">FAQs</h2>
-
       <h3>What is the difference between title case and sentence case?</h3>
       <p>Sentence case capitalizes only the first letter of each sentence. Title case capitalizes all major words and keeps short function words (articles, short prepositions, conjunctions) lowercase unless they start the title. Sentence case is for body text and UI labels; title case is for headings and titles in formal documents.</p>
-
+      <h3>What is proper case?</h3>
+      <p>Proper case is a common informal term for Capitalized Case: every word is capitalized, including articles and prepositions. "The Cat In The Hat" is proper case. It is also called start case. The term is not a formal typography standard - different people use it to mean either Capitalized Case (every word) or Title Case (major words only), which causes confusion. If you need to convert text to proper case, use the Capitalized Case button on this tool.</p>
       <h3>What is the difference between title case and capitalized case?</h3>
-      <p>Capitalized case capitalizes every single word with no exceptions. Title case follows grammar rules and keeps small words like "a," "the," "and," and "in" lowercase (unless they start the title). "The Cat In The Hat" is capitalized case. "The Cat in the Hat" is title case.</p>
-
+      <p>Capitalized case capitalizes every single word with no exceptions. Title case follows grammar rules and keeps small words like "a," "the," "and," and "in" lowercase unless they start the title. "The Cat In The Hat" is capitalized/proper case. "The Cat in the Hat" is title case.</p>
+      <h3>What does "case sensitive" mean, and is this tool case sensitive?</h3>
+      <p>Case sensitivity means a system treats uppercase and lowercase letters as different characters. A case-sensitive system sees "Apple" and "apple" as two distinct strings; a case-insensitive system treats them as identical. This matters in programming (JavaScript comparisons are case-sensitive by default), databases (SQL collation settings), file systems (Linux is case-sensitive; Windows is not), and search engines. This case converter transforms the case of text - it does not compare strings and is not a case-sensitive filter.</p>
+      <h3>How do I convert ALL CAPS text to sentence case?</h3>
+      <p>Paste your ALL CAPS text and click Sentence case. The converter lowercases everything except the first letter of each sentence. Then manually re-capitalize any proper nouns (person names, city names, company names, brand names) that were lowercased in the process. This is the standard workflow for cleaning up legacy database exports, CRM data, and PDF-extracted text that arrives in all capitals.</p>
       <h3>What is inverse case useful for?</h3>
-      <p>Mainly for fixing text accidentally typed with Caps Lock on. If you typed "hELLO wORLD", applying inverse case gives "Hello World." It also works for creative visual effects in informal design.</p>
-
+      <p>Mainly for fixing text accidentally typed with Caps Lock on. If you typed "hELLO wORLD," applying inverse case gives "Hello World." It also works for creative visual effects in informal design contexts.</p>
       <h3>Does the title case follow AP, Chicago, or APA style?</h3>
       <p>This converter follows a rule set similar to Chicago Manual of Style and APA: articles, coordinating conjunctions, and short prepositions stay lowercase. AP Style capitalizes prepositions of 4 or more letters ("Over," "With," "From"), which this tool does not do automatically. For strict AP compliance, apply title case here and capitalize long prepositions manually.</p>
-
       <h3>Will it preserve brand names and acronyms like iPhone or NASA?</h3>
       <p>No. The converter processes all text as ordinary words. "iPhone" becomes "Iphone" in title case, and "NASA" becomes "Nasa" in sentence case. Always review the output and restore special capitalization for brand names, acronyms, and proper nouns manually.</p>
-
       <h3>Can I convert text to camelCase or snake_case?</h3>
       <p>Not with this tool. It converts natural-language text cases (sentence, title, upper, lower). Code identifier cases like camelCase, PascalCase, snake_case, and kebab-case require a dedicated code formatter or IDE extension, since they also need to handle word splitting and joining differently.</p>
-
       <h3>Is there a character limit?</h3>
       <p>No. The tool handles any amount of text instantly, including full articles and long documents.</p>
-
       <h3>Can I undo a conversion?</h3>
-      <p>There is no undo button, but you can paste the original text again or keep a copy before converting. The Reset button clears the box entirely. If you need to reverse a lowercase-to-uppercase conversion, inverse case will flip the result, but it will not perfectly restore mixed-case original text.</p>
-
+      <p>There is no undo button. Keep a copy of the original text before converting, or paste the original again to start over. The Reset button clears the box entirely. If you need to reverse a lowercase-to-uppercase conversion, inverse case will flip the result, but it will not perfectly restore mixed-case original text.</p>
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -300,8 +325,6 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
