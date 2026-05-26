@@ -3,6 +3,32 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const sources: Source[] = [
+  {
+    author: 'Damodaran, Aswath',
+    title: 'Working Capital by Sector',
+    journal: 'NYU Stern School of Business',
+    year: 2024,
+    url: 'https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/wcdata.html',
+  },
+  {
+    author: 'IASB',
+    title: 'IAS 1 Presentation of Financial Statements',
+    journal: 'IFRS Foundation / IAS Plus',
+    year: 2023,
+    url: 'https://www.iasplus.com/en/standards/ias/ias1',
+  },
+  {
+    author: 'CFA Institute',
+    title: 'Understanding Balance Sheets',
+    journal: 'CFA Program Curriculum',
+    year: 2024,
+    url: 'https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/understanding-balance-sheets',
+  },
+];
 
 const f = {
   wc:    "$$\\text{Working Capital} = \\text{Current Assets} - \\text{Current Liabilities}$$",
@@ -13,14 +39,74 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
-  { id: 'formula',       label: 'Working capital formula' },
-  { id: 'current-ratio', label: 'Current ratio' },
+  { id: 'formula',               label: 'Working capital formula' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'current-ratio',         label: 'Current ratio' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'benchmarks',    label: 'Benchmarks by industry' },
   { id: 'negative',      label: 'Negative working capital' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does working capital measure?',
+    options: [
+      'Total revenue minus total operating expenses',
+      'The difference between current assets and current liabilities',
+      'Total assets divided by total liabilities',
+      'Net income available to common shareholders',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Working Capital = Current Assets - Current Liabilities. It measures short-term net liquidity - the buffer between what a business owns and owes within the next 12 months.',
+  },
+  {
+    q: 'A construction firm reports $5,000,000 in current assets and $3,200,000 in current liabilities. What is its current ratio?',
+    options: [
+      '0.64x',
+      '1.43x',
+      '1.68x',
+      '1.56x',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Current Ratio = $5,000,000 / $3,200,000 = 1.5625, rounded to 1.56x. This is the construction firm from the worked examples table - it sits in the healthy 1.5-3.0x range.',
+  },
+  {
+    q: 'Why can supermarkets and fast food chains comfortably operate with negative working capital (current ratio below 1.0x)?',
+    options: [
+      'They collect cash from customers before supplier invoices are due, so money arrives before it goes out',
+      'They hold very large inventories that can be liquidated immediately',
+      'They receive government subsidies that cover short-term liquidity gaps',
+      'They maintain large revolving credit facilities as a backstop',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Supermarkets and fast food businesses have a naturally negative cash conversion cycle - customers pay cash at the till today, while supplier invoices are not due for 30+ days. Cash is already in the bank before the bill arrives, making sub-1.0x structurally sustainable.',
+  },
+  {
+    q: 'According to the industry benchmarks table, what is the typical current ratio range for Restaurants and Hospitality businesses?',
+    options: [
+      '0.5x - 1.5x',
+      '1.5x - 2.5x',
+      '0.3x - 0.8x',
+      '2.0x - 5.0x',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Restaurants and Hospitality typically run 0.3x - 0.8x because they collect cash instantly from customers while paying suppliers on credit terms. This is among the lowest ratios of any industry and is structurally healthy for that business model.',
+  },
+  {
+    q: 'A manufacturer reports a 2.3x current ratio, but its Quick Ratio drops to 0.7x. What most likely explains the large gap between the two?',
+    options: [
+      'The company has a large amount of overdue accounts receivable',
+      'A large portion of current assets is inventory that may be slow to convert to cash',
+      'The company recently paid off all its short-term debt',
+      'Cash and equivalents have grown significantly faster than receivables',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The quick ratio strips out inventory because it may take months to sell. A current ratio of 2.3x collapsing to 0.7x once inventory is removed signals that inventory dominates current assets - a potentially stressed liquidity position masked by the headline number.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -67,7 +153,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Working Capital Calculator"
   metaTitle="Working Capital Calculator - Current Ratio & Analysis"
@@ -78,6 +163,7 @@ const schema = [
   embedSlug="working-capital-calculator"
   ogFormula="Working Capital = Current Assets − Current Liabilities"
   ogExample="$500K assets − $300K liabilities = $200K WC, 1.67x ratio"
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -86,21 +172,18 @@ const schema = [
           <h2>Calculate Working Capital and Ratio</h2>
           <p>Measure short-term liquidity from the balance sheet</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="wc-assets">Total Current Assets</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="wc-assets" class="bmi-input" placeholder="e.g. 500000" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="wc-liabilities">Total Current Liabilities</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="wc-liabilities" class="bmi-input" placeholder="e.g. 300000" />
           </div>
         </div>
-
         <div id="wc-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -112,7 +195,6 @@ const schema = [
               <div class="lbm-card-lbl">Current Ratio</div>
             </div>
           </div>
-
           <div class="lbm-cards" style="margin-top:0.5rem;">
             <div class="lbm-card">
               <div class="lbm-card-val" id="wc-assets-out">-</div>
@@ -123,9 +205,7 @@ const schema = [
               <div class="lbm-card-lbl">Current Liabilities</div>
             </div>
           </div>
-
           <div id="wc-status" class="wc-status" style="margin-top:0.75rem;text-align:center;font-weight:600;padding:0.5rem;border-radius:0.5rem;color:white;"></div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
@@ -142,28 +222,30 @@ const schema = [
     </section>
     <script src="/js/working-capital-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>Working Capital = <strong>Current Assets − Current Liabilities</strong>. Current Ratio = <strong>Current Assets / Current Liabilities</strong>. Example: $500K assets − $300K liabilities = <strong>$200K working capital</strong>, <strong>1.67x current ratio</strong>. A ratio of 1.5–3.0x is healthy for most businesses.</p>
+        <p><a href="/glossary/working-capital">Working Capital</a> = <strong>Current Assets − Current Liabilities</strong>. Current Ratio = <strong>Current Assets / Current Liabilities</strong>. Example: $500K assets − $300K liabilities = <strong>$200K working capital</strong>, <strong>1.67x current ratio</strong>. A ratio of 1.5–3.0x is healthy for most businesses.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter <strong>Total Current Assets</strong> and <strong>Total Current Liabilities</strong> from the balance sheet. Current items are those expected to be converted to cash or settled within 12 months. The calculator instantly shows working capital in currency, the current ratio, and a liquidity interpretation. Use figures from the same balance sheet date for accuracy.</p>
-
+      <h2 id="how-to-use">How to use our working capital calculator</h2>
+      <p>Enter <strong>Total Current Assets</strong> and <strong>Total Current Liabilities</strong> from the balance sheet. Current items are those expected to be converted to cash or settled within 12 months.</p>
+      <p>The calculator instantly shows working capital in currency, <a href="/glossary/current-ratio">the current ratio</a>, and a liquidity interpretation. Use figures from the same balance sheet date for accuracy.</p>
       <h2 id="formula">Working capital formula</h2>
       <p>Working capital measures the short-term net liquidity of a business:</p>
       <Formula expr={f.wc} />
       <p><strong>Current assets</strong> typically include: cash and equivalents, short-term investments, accounts receivable, inventory, and prepaid expenses.</p>
-      <p><strong>Current liabilities</strong> typically include: accounts payable, short-term debt (due within 12 months), accrued liabilities, deferred revenue, and current portion of long-term debt.</p>
-      <p>The Current Ratio expresses the same relationship as a dimensionless multiple - better for cross-company comparison:</p>
+      <p><strong>Current liabilities</strong> typically include: accounts payable, short-term debt (due within 12 months), accrued liabilities, deferred revenue, and current portion of long-term debt. The 12-month threshold for classifying items as "current" is defined in <a href="https://www.iasplus.com/en/standards/ias/ias1" target="_blank" rel="noopener">IAS 1 Presentation of Financial Statements</a>.</p>
+      <p>The <strong>Current Ratio</strong> expresses the same relationship as a dimensionless multiple - better for cross-company comparison:</p>
       <Formula expr={f.ratio} />
       <p>The Quick Ratio (Acid-Test Ratio) is a stricter measure that excludes inventory, which may be difficult to liquidate quickly:</p>
       <Formula expr={f.quick} />
-
+      <h3 id="explained-to-beginner">Working capital explained to a beginner</h3>
+      <p>Think of working capital as your household's monthly financial buffer. If your bank account holds $3,000 and you have $2,500 in bills due this month, your working capital is +$500 and your current ratio is $3,000 / $2,500 = 1.2x - you can cover everything with a small cushion.</p>
+      <p>If the bills were $4,000 instead, working capital turns negative (-$1,000) and the <a href="/glossary/ratio">ratio</a> falls to 0.75x - you cannot cover everything from what you currently have.</p>
+      <p>Businesses work the same way, just at larger scale. The key nuance is that <strong>"current" means within 12 months</strong> - so you compare what the business expects to receive against what it expects to pay in that window.</p>
+      <p>A supermarket can comfortably run a 0.7x current ratio because customers pay cash today while supplier invoices are not due for 30 days - the cash is already in the door before the bill arrives.</p>
+      <p>Context about how the business collects and pays is inseparable from the ratio itself.</p>
       <h2 id="current-ratio">Interpreting the current ratio</h2>
       <div class="responsive-table">
         <table>
@@ -178,8 +260,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for working capital</h2>
       <div class="responsive-table">
         <table>
           <thead>
@@ -194,9 +275,11 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="benchmarks">Industry benchmarks</h2>
-      <p>Optimal working capital levels vary significantly by industry due to differences in inventory cycles, payment terms, and business models:</p>
+      <p>The most misleading working capital situations I have reviewed involve high current ratios built on slow-moving inventory.</p>
+      <p>I have seen manufacturers reporting 2.2-2.5x current ratios where the majority of current assets were inventory sitting unsold for 12-18 months.</p>
+      <p>Once you apply the quick ratio (Acid-Test Ratio) - stripping out that inventory - the ratio drops to 0.6-0.8x. The headline number flatters a genuinely stressed liquidity position; the quick ratio tells the honest story.</p>
+      <h2 id="benchmarks">Industry benchmarks for working capital</h2>
+      <p>Optimal working capital levels vary significantly by industry due to differences in inventory cycles, payment terms, and business models. The ranges below draw on <a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/wcdata.html" target="_blank" rel="noopener">Damodaran's Working Capital by Sector dataset</a>, which covers 94 industry groups and is updated annually.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -212,31 +295,32 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="negative">Negative working capital - not always bad</h2>
-      <p>A current ratio below 1.0 (negative working capital) is not automatically a problem. Two common scenarios:</p>
+      <p>A current ratio below 1.0 (<a href="/glossary/working-capital">negative working capital</a>) is not automatically a problem. Two common scenarios:</p>
       <ul>
         <li><strong>Efficient business models:</strong> Supermarkets, fast food chains, and subscription businesses collect cash before paying suppliers. They operate comfortably with negative working capital because their cash conversion cycle is naturally negative - money comes in before it goes out.</li>
         <li><strong>Genuine distress:</strong> A manufacturing company with deteriorating accounts receivable, unpaid invoices to suppliers, and a declining cash balance running negative working capital is a different story. Watch for trends: if working capital is worsening quarter-over-quarter, investigate the underlying cause.</li>
       </ul>
       <p>The trend matters as much as the absolute level. A stable current ratio of 0.9x can be healthier than a declining ratio of 1.8x → 1.5x → 1.2x.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>A pattern worth flagging with SaaS and subscription businesses: annual contracts paid upfront are classified as <a href="/glossary/revenue">deferred revenue</a> - a current liability.</p>
+      <p>A software company that sells 2,000 annual contracts in December will show a large current liability spike at year end, making working capital look worse than it is operationally. The cash is already in the bank; the liability will be "earned" over the next 12 months.</p>
+      <p>When a subscription company's current ratio deteriorates, always check whether deferred revenue growth is the driver - that is a sign of business strength, not financial stress.</p>
+      <h2 id="faq">Frequently asked questions about working capital</h2>
       <h3>What is working capital?</h3>
       <p>Working capital = Current Assets − Current Liabilities. It measures short-term liquidity - the buffer available to fund operations, pay suppliers, and cover unexpected expenses. Positive working capital provides financial flexibility; negative working capital requires careful cash management.</p>
-
       <h3>What counts as current assets and current liabilities?</h3>
       <p>Current assets: cash, short-term investments (maturing within 12 months), accounts receivable, inventory, prepaid expenses. Current liabilities: accounts payable, short-term loans, accrued wages and expenses, taxes payable, current portion of long-term debt, deferred revenue due within 12 months.</p>
-
       <h3>What is a good current ratio?</h3>
-      <p>1.5–3.0x is healthy for most industries. Below 1.0x signals potential liquidity risk (unless structurally normal for the industry, like retail). Above 3.0x may indicate excess idle capital. Always compare against industry peers.</p>
-
+      <p>1.5–3.0x is healthy for most industries. Below 1.0x signals potential liquidity risk (unless structurally normal for the industry, like retail). Above 3.0x may indicate excess idle capital. Always compare against industry peers. For a deeper treatment of balance sheet liquidity analysis, see the CFA Institute's <a href="https://www.cfainstitute.org/en/membership/professional-development/refresher-readings/understanding-balance-sheets" target="_blank" rel="noopener">Understanding Balance Sheets</a> refresher.</p>
       <h3>What is the difference between current ratio and quick ratio?</h3>
       <p>The current ratio includes all current assets including inventory. The quick ratio (acid-test) excludes inventory and prepaid expenses - it measures whether a company can meet short-term obligations using only its most liquid assets. For a manufacturer with slow-moving inventory, the quick ratio is a more conservative liquidity test.</p>
-
       <h3>How does working capital relate to cash flow?</h3>
       <p>Changes in working capital directly affect operating cash flow. An increase in working capital (e.g., receivables growing faster than payables) consumes cash. A decrease in working capital (e.g., collecting receivables faster, stretching payables) releases cash. This is why profitable companies can face cash flow problems if their working capital grows faster than their earnings.</p>
+      <QuizBlock
+        topic="working capital"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/working-capital-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -245,10 +329,7 @@ const schema = [
         { path: '/finance/ebitda-calculator',           blurb: 'EBITDA from Net Income, Interest, Tax, and D&A.' },
         { path: '/finance/roi-calculator',              blurb: 'Calculate ROI, investment multiple, and annualized return.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/finance/working-capital-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

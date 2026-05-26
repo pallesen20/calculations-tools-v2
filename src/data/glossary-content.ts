@@ -1285,6 +1285,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
   },
 
   'roe': {
+    beginnerExplain: 'Think of shareholders\' equity as your personal down payment on a business. If you invest $100,000 of your own money to buy a franchise (with a $400,000 bank loan covering the rest), and the franchise earns $20,000 in net profit that year, your ROE is 20%. The $20,000 is divided by your $100,000 contribution - the bank\'s portion is not in the denominator. This is why two businesses can show the same ROE for very different reasons: one earned it through a high-margin product, the other by borrowing heavily to amplify a thin-margin operation.',
     definition: [
       'Return on Equity (ROE) measures how many dollars of net income a company generates for each dollar of shareholders\' equity. Shareholders\' equity - also called book value - is the accounting value of assets minus liabilities: what would be left for equity holders if all assets were liquidated at book value and all debts paid. ROE converts this ownership stake into an efficiency ratio.',
       'ROE is best understood through the DuPont decomposition, which breaks it into three multiplicative components: Net Profit Margin × Asset Turnover × Equity Multiplier. Net Profit Margin (Net Income / Revenue) shows profitability efficiency. Asset Turnover (Revenue / Total Assets) shows how productively assets generate revenue. The Equity Multiplier (Total Assets / Equity) reflects financial leverage - how much of the asset base is funded by debt.',
@@ -1308,6 +1309,56 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+
+  'roa': {
+    definition: [
+      'Return on Assets (ROA) measures how much net income a company earns per dollar of total assets on its balance sheet. Total assets include everything the business owns or controls - property, equipment, inventory, receivables, cash - regardless of whether those assets were funded by equity or debt. This is what makes ROA fundamentally different from ROE: because both equity holders and debt holders\' contributions are in the denominator, ROA is not inflated by borrowing.',
+      'The relationship between ROA and ROE is direct: ROE = ROA x Equity Multiplier. The equity multiplier (Total Assets / Equity) is the leverage factor. A company with ROA of 5% and an equity multiplier of 4x reports ROE of 20%. Two companies with identical ROA can show very different ROE simply because one uses more debt financing than the other.',
+      'ROA is most useful when comparing companies within the same industry that carry different debt levels, or when tracking a single company\'s operational efficiency over time while abstracting away changes in its capital structure.',
+    ],
+    beginnerExplain: 'Imagine you run a delivery business. You have a van worth $50,000 bought with $10,000 of your own savings and a $40,000 bank loan. At year end the business earned $5,000 net profit. ROA = $5,000 / $50,000 = 10% - the van earned 10 cents for every dollar of asset, regardless of who funded it. ROE = $5,000 / $10,000 = 50% - but that 50% is partly because you borrowed most of the van\'s cost. ROA strips out that borrowing effect and tells you how hard the actual asset is working.',
+    whenToUse: 'Use ROA when comparing companies with different capital structures - for example two banks, two retailers, or two airlines - where ROE comparisons are distorted by different leverage levels. ROA is also useful for tracking whether a company is becoming more or less efficient at deploying its asset base over time, independent of debt decisions made by management.',
+    examples: {
+      headers: ['Company', 'Net Income', 'Total Assets', 'ROA', 'ROE (for comparison)'],
+      rows: [
+        ['Asset-light SaaS', '$20M', '$80M', '25%', '25% (equity multiplier ~1x)'],
+        ['Consumer brand', '$500M', '$3,500M', '14.3%', '25% (equity multiplier ~1.7x)'],
+        ['Retailer', '$150M', '$2,000M', '7.5%', '25% (equity multiplier ~3.3x)'],
+        ['Bank', '$1,000M', '$100,000M', '1.0%', '12.5% (equity multiplier ~12x)'],
+      ],
+    },
+    pitfalls: 'ROA can be misleading for companies that use operating leases heavily. Under IFRS 16 and ASC 842, lease assets are now capitalised on the balance sheet, inflating total assets and therefore depressing ROA relative to pre-2019 figures or companies that own rather than lease. When comparing a capital-heavy lessee to a capital-light owner, adjust total assets consistently. ROA is also distorted by intangible assets: a company that grew through acquisitions will have large goodwill on its balance sheet, inflating total assets and depressing ROA even if operational efficiency is identical to an organically-built competitor.',
+    faqs: [
+      { q: 'What is a good ROA?', a: 'ROA benchmarks vary significantly by industry. Asset-light businesses (software, professional services) can achieve ROA of 15-30%+. Capital-intensive manufacturers typically earn 5-10%. Retailers often sit at 5-8%. Banks are structurally different - a well-run bank achieving 1.0-1.5% ROA is excellent; below 0.5% is weak. Always benchmark against direct industry peers.' },
+      { q: 'What is the difference between ROA and ROE?', a: 'ROA uses total assets (debt + equity) as the denominator; ROE uses only shareholders\' equity. Because debt is included in total assets, ROA is unaffected by how the business is financed - it measures pure operational efficiency. ROE is amplified by leverage: a company with ROA of 5% and 4x leverage shows 20% ROE. The gap between a company\'s ROE and ROA directly reflects the impact of its financial leverage.' },
+      { q: 'Why do banks have such low ROA compared to other industries?', a: 'Banks\' business model requires holding large asset bases - loans, securities, reserves - to generate their income. A bank might hold $100 of assets (mostly loans) for every $1 of equity. Net income of $1 on $100 of assets is 1% ROA, but against $8 of equity it is 12.5% ROE. The low ROA is structural and expected; it does not indicate poor performance. This is why bank analysts focus on ROE and Net Interest Margin rather than ROA.' },
+    ],
+  },
+
+  'roce': {
+    definition: [
+      'Return on Capital Employed (ROCE) measures how much EBIT (operating profit before interest and tax) a business generates per dollar of long-term capital committed to it. Capital Employed is defined as Total Assets minus Current Liabilities, which equals Shareholders\' Equity plus Long-term Debt. Using EBIT rather than net income makes ROCE independent of how the business is financed and which tax jurisdiction it operates in.',
+      'ROCE is the preferred profitability metric for capital-intensive industries - utilities, oil & gas, mining, manufacturing, and infrastructure - where businesses routinely hold billions in fixed assets financed by a mixture of debt and equity. For these businesses, ROE is distorted by leverage variation; ROCE provides a clean comparison of how productively the core asset base is working.',
+      'A useful benchmark is to compare ROCE to the Weighted Average Cost of Capital (WACC). If ROCE exceeds WACC, the business is creating economic value; if ROCE falls below WACC, it is destroying value even if accounting profits look positive. This relationship is the foundation of Economic Value Added (EVA) analysis.',
+    ],
+    beginnerExplain: 'Think of ROCE as the yield on the total capital a business controls - like working out the interest rate your savings account is effectively earning, but for an entire company. If a factory costs $10 million to build and run (funded by $6M of your own money and $4M of bank debt), and it generates $1.5M in operating profit before paying the bank\'s interest, your ROCE is 15%. That 15% is the raw productivity of the factory, before anyone - shareholders or lenders - takes their cut.',
+    whenToUse: 'Use ROCE when comparing capital-intensive businesses where debt levels vary significantly - two utilities or two mining companies may have very different leverage, but a ROCE comparison tells you which one extracts more value from its asset base. ROCE is also useful for internal capital allocation decisions: which business unit or project earns the highest return on the capital it consumes?',
+    examples: {
+      headers: ['Business', 'EBIT', 'Capital Employed', 'ROCE', 'Interpretation'],
+      rows: [
+        ['Utility A', '$800M', '$8,000M', '10%', 'Typical regulated utility; WACC ~6-7% - value-creating'],
+        ['Utility B', '$600M', '$8,000M', '7.5%', 'Thin margin above WACC; limited reinvestment case'],
+        ['Industrial', '$300M', '$1,500M', '20%', 'Above-average for sector; competitive moat likely'],
+        ['Retailer', '$120M', '$400M', '30%', 'Asset-light retailer; low fixed capital base'],
+      ],
+    },
+    pitfalls: 'ROCE is sensitive to asset age. A company with old, fully depreciated assets will show very high ROCE because the denominator has shrunk through years of depreciation - without any improvement in operating efficiency. Conversely, a company mid-way through a major capex cycle will show depressed ROCE as capital employed spikes before new assets generate revenue. Compare ROCE to peers at similar stages of their capex cycle, and track the trend over time rather than relying on a single year\'s figure.',
+    faqs: [
+      { q: 'What is capital employed?', a: 'Capital Employed = Total Assets - Current Liabilities. This equals Non-current Assets + Working Capital, or equivalently Shareholders\' Equity + Long-term Debt. It represents the long-term capital the business has committed to operations. Current liabilities are excluded because they are short-term funding (supplier credit, short-term overdrafts) rather than invested capital.' },
+      { q: 'What is a good ROCE?', a: 'ROCE should exceed the company\'s WACC (Weighted Average Cost of Capital) to be value-creating. For capital-intensive regulated industries (utilities, toll roads), ROCE of 8-12% may be excellent. For asset-light businesses, ROCE of 25-40%+ is achievable. A commonly cited rule of thumb is ROCE above 15% is strong for most non-financial industries. Always benchmark within the same sector and stage of the capex cycle.' },
+      { q: 'What is the difference between ROCE and ROE?', a: 'ROCE uses EBIT (pre-interest, pre-tax) and includes long-term debt in the denominator - giving a leverage-neutral view of operating efficiency. ROE uses net income (after interest and tax) and uses only equity in the denominator - showing the return to shareholders after the cost of debt has been paid. ROCE is better for operational comparison across businesses with different capital structures; ROE is better for evaluating returns from a shareholder perspective.' },
+    ],
+  },
 
   'knot': {
     definition: [
