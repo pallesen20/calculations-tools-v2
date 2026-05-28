@@ -26,9 +26,10 @@ interface Props {
   youtubeId?: string;
   youtubeSummary?: string;
   youtubeUploadDate?: string;
+  credential?: string;
 }
 
-const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample, noindex, youtubeId, youtubeSummary, youtubeUploadDate } = Astro.props;
+const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample, noindex, youtubeId, youtubeSummary, youtubeUploadDate, credential: credentialOverride } = Astro.props;
 
 const _pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/index';
 const _filePath = `src/pages${_pathname}.astro`;
@@ -37,13 +38,14 @@ const _category = _pathname.startsWith('/math') ? 'Math'
   : _pathname.startsWith('/conversion') ? 'Conversion'
   : _pathname.startsWith('/finance') ? 'Finance'
   : 'Tools';
-const _credential = _category === 'Health'
+const _credential = credentialOverride
+  ?? (_category === 'Health'
   ? 'Formulas sourced from WHO & peer-reviewed research'
   : _category === 'Finance'
   ? 'Formulas follow CFA Institute & GAAP standards'
   : _category === 'Conversion' || _category === 'Math'
   ? 'Verified against NIST & ISO reference values'
-  : 'Verified against primary reference sources';
+  : 'Verified against primary reference sources');
 const ogImage = (ogFormula && ogExample)
   ? `https://calculations-image-generator.vercel.app/api/og-web?category=${encodeURIComponent(_category)}&calculator=${encodeURIComponent(title)}&formula=${encodeURIComponent(ogFormula)}&example=${encodeURIComponent(ogExample)}`
   : undefined;

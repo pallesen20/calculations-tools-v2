@@ -2,6 +2,40 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import { TOP_CURRENCIES, CURRENCY_NAMES, CURRENCY_PLURALS, TOP_PAIRINGS, TOP_INDEXED_PAIRS } from '../../../utils/getPages';
 import { PAIR_INTROS } from '../../../data/currency-pair-intros';
+import type { Source } from '../../../components/Sources.astro';
+
+const CURRENCY_SOURCES: Record<string, Source> = {
+  USD: { author: 'Federal Reserve', title: 'H.10 Foreign Exchange Rates', url: 'https://www.federalreserve.gov/releases/h10/', year: 2024 },
+  EUR: { author: 'European Central Bank', title: 'Euro Foreign Exchange Reference Rates', url: 'https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html', year: 2024 },
+  GBP: { author: 'Bank of England', title: 'Exchange Rates Statistics', url: 'https://www.bankofengland.co.uk/statistics/exchange-rates', year: 2024 },
+  JPY: { author: 'Bank of Japan', title: 'Exchange Rates and Interest Rates', url: 'https://www.boj.or.jp/en/statistics/boj/other/exrate/index.htm', year: 2024 },
+  CHF: { author: 'Swiss National Bank', title: 'Current Interest Rates and Exchange Rates', url: 'https://www.snb.ch/en/the-snb/mandates-goals/statistics/statistics-pub/current_interest_exchange_rates', year: 2024 },
+  AUD: { author: 'Reserve Bank of Australia', title: 'Exchange Rates', url: 'https://www.rba.gov.au/statistics/frequency/exchange-rates.html', year: 2024 },
+  CAD: { author: 'Bank of Canada', title: 'Exchange Rates', url: 'https://www.bankofcanada.ca/rates/exchange/', year: 2024 },
+  DKK: { author: 'Danmarks Nationalbank', title: 'Foreign Exchange Rates', url: 'https://www.nationalbanken.dk/en/statistics/exchange_rates', year: 2024 },
+  NOK: { author: 'Norges Bank', title: 'Exchange Rates', url: 'https://www.norges-bank.no/en/topics/Statistics/exchange_rates/', year: 2024 },
+  SEK: { author: 'Sveriges Riksbank', title: 'Exchange Rates', url: 'https://www.riksbank.se/en-gb/statistics/search-interest--exchange-rates/exchange-rates/', year: 2024 },
+  NZD: { author: 'Reserve Bank of New Zealand', title: 'Exchange Rate Data', url: 'https://www.rbnz.govt.nz/statistics/series/exchange-and-interest-rates/exchange-rates-and-the-twi', year: 2024 },
+  CNY: { author: "People's Bank of China", title: 'RMB Exchange Rate', url: 'http://www.pbc.gov.cn/en/3688229/3688335/3730811/index.html', year: 2024 },
+  INR: { author: 'Reserve Bank of India', title: 'Reference Rate Archive', url: 'https://www.rbi.org.in/Scripts/ReferenceRateArchive.aspx', year: 2024 },
+  HKD: { author: 'Hong Kong Monetary Authority', title: 'Linked Exchange Rate System', url: 'https://www.hkma.gov.hk/eng/key-functions/money/linked-exchange-rate-system/', year: 2024 },
+  SGD: { author: 'Monetary Authority of Singapore', title: 'Exchange Rates', url: 'https://www.mas.gov.sg/statistics/exchange-rates', year: 2024 },
+  BRL: { author: 'Banco Central do Brasil', title: 'Exchange Policy', url: 'https://www.bcb.gov.br/en/exchangepolicy', year: 2024 },
+  MXN: { author: 'Banco de Mexico', title: 'Exchange Rate', url: 'https://www.banxico.org.mx/tipcamb/tipCamIng.html', year: 2024 },
+  KRW: { author: 'Bank of Korea', title: 'Economic Statistics System - Exchange Rates', url: 'https://ecos.bok.or.kr/#/EasySearch/020Y014', year: 2024 },
+  MYR: { author: 'Bank Negara Malaysia', title: 'Exchange Rates', url: 'https://www.bnm.gov.my/exchange-rates', year: 2024 },
+  THB: { author: 'Bank of Thailand', title: 'Exchange Rate Statistics', url: 'https://www.bot.or.th/en/financial-innovation/market-and-reserve/exchange-rate.html', year: 2024 },
+  IDR: { author: 'Bank Indonesia', title: 'BI Exchange Rate', url: 'https://www.bi.go.id/en/statistik/informasi-kurs/transaksi-bi/default.aspx', year: 2024 },
+  ZAR: { author: 'South African Reserve Bank', title: 'Exchange Rates', url: 'https://www.resbank.co.za/en/home/what-we-do/financial-markets/dealing-room-activities/exchange-rates', year: 2024 },
+  TRY: { author: 'Central Bank of the Republic of Turkiye', title: 'Exchange Rate Statistics', url: 'https://www.tcmb.gov.tr/wps/wcm/connect/en/tcmb+en/main+menu/statistics/exchange+rates', year: 2024 },
+  PLN: { author: 'Narodowy Bank Polski', title: 'Exchange Rates', url: 'https://www.nbp.pl/homen.aspx?f=/kursy/kursyen.htm', year: 2024 },
+  CZK: { author: 'Czech National Bank', title: 'Foreign Exchange Market', url: 'https://www.cnb.cz/en/financial-markets/foreign-exchange-market/', year: 2024 },
+  HUF: { author: 'Magyar Nemzeti Bank', title: 'Official Exchange Rates', url: 'https://www.mnb.hu/en/arfolyam-lekerdezes', year: 2024 },
+  ILS: { author: 'Bank of Israel', title: 'Exchange Rates', url: 'https://www.boi.org.il/en/economic-roles/financial-markets/exchange-rates/', year: 2024 },
+  PHP: { author: 'Bangko Sentral ng Pilipinas', title: 'Reference Exchange Rate Bulletin', url: 'https://www.bsp.gov.ph/SitePages/Statistics/exchangerate.aspx', year: 2024 },
+  RON: { author: 'National Bank of Romania', title: 'Exchange Rates', url: 'https://www.bnr.ro/Exchange-rates-15.aspx', year: 2024 },
+  ISK: { author: 'Central Bank of Iceland', title: 'Exchange Rate Statistics', url: 'https://www.cb.is/statistics/exchange-rate/', year: 2024 },
+};
 
 export async function getStaticPaths() {
   return TOP_CURRENCIES.flatMap(from =>
@@ -24,12 +58,14 @@ const isTopPairing = TOP_INDEXED_PAIRS.has(`${from.toLowerCase()}-to-${to.toLowe
 const pairIntro = PAIR_INTROS[`${from.toLowerCase()}-to-${to.toLowerCase()}`] ?? null;
 const topPairings = (TOP_PAIRINGS[from] ?? []).filter(p => p !== to).slice(0, 8);
 const tablePresets = [from, to, ...topPairings.filter(p => p !== from && p !== to).slice(0, 3)];
+const pairSources = [CURRENCY_SOURCES[from], CURRENCY_SOURCES[to]].filter((s): s is Source => !!s);
 
 const tocItems = [
   { id: 'how-to-use',   label: `How to convert ${from} to ${to}` },
   { id: 'about',        label: `About ${fromName} and ${toName}` },
   { id: 'reference',    label: `${from} to ${to} exchange rates today` },
   { id: 'top-pairings', label: `Top ${from} pairings` },
+  { id: 'rate-history', label: `${from}/${to} rate history` },
   { id: 'faq',          label: 'FAQs' },
   { id: 'related-tools', label: 'Related tools' },
 ];
@@ -104,6 +140,8 @@ const schema = [
   ogFormula={`1 ${from} in ${to}`}
   ogExample={`Live mid-market rate - updated daily`}
   noindex={!isTopPairing}
+  credential="Live rates sourced from ECB via Frankfurter"
+  sources={pairSources}
 >
   <div slot="calculator">
     <section class="calculator-interface" id="cp-calculator">
@@ -112,10 +150,10 @@ const schema = [
           <h2 class="cc-title">{fromPlural} to {toPlural} Live Exchange Rates</h2>
           <div class="cc-live">
             <span class="cc-dot"></span>
-            <span>Mid-market exchange rate</span>
+            <a href="/glossary/mid-market-rate"><span>Mid-market exchange rate</span></a>
             <span class="cc-info" tabindex="0" aria-label="What is the mid-market rate?">
               <svg class="cc-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              <span class="cc-tooltip">The real exchange rate - midpoint between what banks buy and sell at. No markup added. Banks typically charge 2–12% above this when you exchange money.</span>
+              <span class="cc-tooltip">The real exchange rate - midpoint between what banks buy and sell at. No markup added. Banks typically charge 2–12% above this when you exchange money. <a href="/glossary/mid-market-rate">Learn more</a></span>
             </span>
           </div>
           <div class="cc-field">
@@ -156,15 +194,46 @@ const schema = [
         </div>
       </div>
     </section>
+    <section id="cp-history-section" class="cc-hist-section" style="display:none">
+      <div class="cc-card">
+        <h2 class="cc-title">Historical {from} to {to} Exchange Rate Lookup</h2>
+        <div class="cc-live">
+          <span class="cc-dot"></span>
+          <span>ECB reference rates - daily data back to 1999</span>
+        </div>
+        <p class="cc-hist-intro">Enter an amount and pick any date to see the exact {from}/{to} mid-market rate on that day.</p>
+        <div class="cc-field">
+          <label class="cc-label" for="cp-hist-amount">Amount</label>
+            <input id="cp-hist-amount" class="cc-input" type="text" inputmode="decimal" placeholder="1,000" />
+        </div>
+        <div class="cc-field">
+          <label class="cc-label" for="cp-hist-date">Select a date</label>
+          <input id="cp-hist-date" class="cc-input cc-input--date" type="date" min="1999-01-04" />
+        </div>
+        <div class="cc-result-box" id="cp-hist-result" style="display:none">
+          <div class="cc-result-label">On <span id="cp-hist-date-label"></span></div>
+          <div class="cc-result-rate" id="cp-hist-converted">-</div>
+          <div class="cc-result-rate cc-result-rate--sub" id="cp-hist-rate">-</div>
+          <div class="cc-result-updated" id="cp-hist-vs-today"></div>
+        </div>
+        <div id="cp-hist-loading" class="cc-hist-loading" style="display:none">Loading historical rate...</div>
+        <div id="cp-hist-error" class="cc-hist-error" style="display:none">Could not load rate for that date. Try a different date.</div>
+      <p class="cc-hist-intro">Looking for the exact {from}/{to} exchange rate on a past date? This tool will show you the historical performance of {fromName} to {toName}.</p>
+      </div>
+    </section>
     <section class="cc-chart-section" id="cp-chart-section" style="display:none">
       <div class="cc-chart-header">
         <h2>{from} to {to} exchange rate history chart</h2>
+        <p class="cc-hist-intro">This {fromName} to {toName} historical currency exchange rate chart shows the past performance of the two currencies, covering everything from the past week to the last ten years.</p>
         <div class="cc-chart-btns">
           <button class="cc-chart-btn" data-days="7">1W</button>
           <button class="cc-chart-btn active" data-days="30">1M</button>
           <button class="cc-chart-btn" data-days="90">3M</button>
           <button class="cc-chart-btn" data-days="180">6M</button>
           <button class="cc-chart-btn" data-days="365">1Y</button>
+          <button class="cc-chart-btn" data-days="730">2Y</button>
+          <button class="cc-chart-btn" data-days="1825">5Y</button>
+          <button class="cc-chart-btn" data-days="3650">10Y</button>
         </div>
       </div>
       <canvas id="cp-chart-canvas"></canvas>
@@ -195,7 +264,7 @@ const schema = [
     <div class="seo-container">
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
-        <p>This converter shows the <strong>live mid-market rate</strong> for {fromName} to {toName} - the real exchange rate without any bank markup. Enter your amount and the result appears instantly. Use the historical chart to track how the {from}/{to} rate has moved over time, and the reference table to see common amounts at a glance.</p>
+        <p>This converter shows the <strong><a href="/glossary/mid-market-rate">live mid-market rate</a></strong> for {fromName} to {toName} - the real exchange rate without any bank markup. Enter your amount and the result appears instantly. Use the historical chart to track how the {from}/{to} rate has moved over time, and the reference table to see common amounts at a glance.</p>
       </div>
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
@@ -215,6 +284,46 @@ const schema = [
         <p>The <strong>{fromName} ({from})</strong> and <strong>{toName} ({to})</strong> are both actively traded currencies with daily forex volume contributed by banks, institutions, and retail participants. The mid-market rate between them reflects real-time supply and demand in the global currency market and shifts continuously during trading hours.</p>
       )}
       <p>When you convert {fromPlural} to {toPlural} at a bank or exchange bureau, the provider's rate will be above the mid-market rate shown here. The difference - their markup - is typically 2–5% at a bank branch, and can reach 8–12% at airport exchange desks. Fintech services like Wise and Revolut typically come within 0.5% of mid-market for major currency pairs.</p>
+      {CURRENCY_SOURCES[from] && (
+        <p>For official {fromName} exchange rate data and monetary policy, see the <a href={CURRENCY_SOURCES[from].url} target="_blank" rel="noopener noreferrer">{CURRENCY_SOURCES[from].author}</a>.</p>
+      )}
+      <h2 id="rate-history">{from} to {to} Exchange Rate History</h2>
+      <p>Key statistics and monthly averages for the {from}/{to} rate over the past 12 months, based on ECB daily reference rates.</p>
+      <div class="hist-stats-grid" id="hist-stats-grid">
+        <div class="hist-stat-card">
+          <span class="hist-stat-label">52-week high</span>
+          <span class="hist-stat-value" id="hist-high">--</span>
+        </div>
+        <div class="hist-stat-card">
+          <span class="hist-stat-label">52-week low</span>
+          <span class="hist-stat-value" id="hist-low">--</span>
+        </div>
+        <div class="hist-stat-card">
+          <span class="hist-stat-label">52-week average</span>
+          <span class="hist-stat-value" id="hist-avg">--</span>
+        </div>
+        <div class="hist-stat-card">
+          <span class="hist-stat-label">12-month change</span>
+          <span class="hist-stat-value" id="hist-change">--</span>
+        </div>
+      </div>
+      <div class="responsive-table">
+        <table id="hist-monthly-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Avg rate</th>
+              <th>High</th>
+              <th>Low</th>
+              <th>Change</th>
+            </tr>
+          </thead>
+          <tbody id="hist-monthly-tbody">
+            <tr><td colspan="5" class="hist-loading-row">Loading 12-month rate history...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hist-source-note">Source: ECB reference rates via <a href="https://www.frankfurter.dev" target="_blank" rel="noopener">Frankfurter</a>. Mid-market rates updated daily. Weekends and public holidays carry forward the preceding business day rate.</p>
       <h2 id="faq">FAQs</h2>
       <h3>What is the {from} to {to} exchange rate today?</h3>
       <p>The rate shown above is the mid-market rate - the midpoint between the buy and sell prices on the global forex market. It is updated once per day. It doesn't include any bank or broker markup, so it differs from the rate you would get at a bank branch or exchange desk.</p>
@@ -261,6 +370,6 @@ const schema = [
   </div>
 </CalculatorLayout>
 <style>
-  .cc-swap { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%; cursor: pointer; transition: background 0.18s; text-decoration: none; }
-  .cc-swap:hover { background: rgba(255,255,255,0.2); }
+  .cc-swap { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; background: rgba(255,255,255,0.1); border-radius: 50%; cursor: pointer; transition: background 0.2s, transform 0.35s; text-decoration: none; }
+  .cc-swap:hover { background: rgba(255,255,255,0.22); transform: rotate(180deg); }
 </style>

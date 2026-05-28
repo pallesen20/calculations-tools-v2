@@ -196,14 +196,38 @@ function renderPairingsGrid() {
     </a>`).join('');
 }
 
-function renderChart(points, from, to) {
+function downsample(points, mode) {
+  const groups = {};
+  points.forEach(p => {
+    let key;
+    if (mode === 'monthly') {
+      key = p.date.slice(0, 7);
+    } else {
+      const d = new Date(p.date);
+      const offset = d.getDay() === 0 ? 6 : d.getDay() - 1;
+      const mon = new Date(d);
+      mon.setDate(d.getDate() - offset);
+      key = mon.toISOString().slice(0, 10);
+    }
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(p);
+  });
+  return Object.keys(groups).sort().map(key => {
+    const pts = groups[key];
+    const avg = pts.reduce((s, p) => s + p.value, 0) / pts.length;
+    return { date: pts[Math.floor(pts.length / 2)].date, value: avg };
+  });
+}
+
+function renderChart(points, from, to, days = 30) {
   const canvas = document.getElementById('cp-chart-canvas');
   const footer = document.getElementById('cp-chart-footer');
   if (!canvas || !points.length) return;
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
-  const W = rect.width || canvas.offsetWidth || 600;
-  const H = 200;
+  const noteEl = document.querySelector('.cc-chart-note');
+  const W = noteEl ? noteEl.getBoundingClientRect().width : (rect.width || canvas.offsetWidth || 600);
+  const H = Math.max(160, Math.min(280, Math.round(W / 4)));
   canvas.width = W * dpr;
   canvas.height = H * dpr;
   canvas.style.width = W + 'px';
@@ -255,9 +279,14 @@ function renderChart(points, from, to) {
   const labelStep = Math.max(1, Math.floor(points.length / 5));
   ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  const labelFmt = days >= 3650
+    ? { year: 'numeric', month: 'short' }
+    : days >= 730
+      ? { month: 'short', year: '2-digit' }
+      : { month: 'short', day: 'numeric' };
   for (let i = 0; i < points.length; i += labelStep) {
-    const d = new Date(points[i].date);
-    ctx.fillText(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), xPos(i), H - pad.bottom + 16);
+    const d = new Date(points[i].date + 'T12:00:00');
+    ctx.fillText(d.toLocaleDateString('en-US', labelFmt), xPos(i), H - pad.bottom + 16);
   }
   if (footer) {
     const first = fmtRef(points[0].value);
@@ -298,7 +327,9 @@ async function loadChart(from, to, days) {
   const section = document.getElementById('cp-chart-section');
   if (section) section.style.display = '';
   const titleEl = document.getElementById('cp-chart-title');
-  if (titleEl) titleEl.textContent = `${from} to ${to} exchange rate history`;
+  if (titleEl) titleEl.textContent = `${from} to ${to} historical exchange rate chart`;
+  const histIntro = document.querySelector('.cc-hist-intro');
+  if (histIntro) histIntro.textContent = `You can use this chart to track how the ${from} has performed against the ${to}, looking at anything from the last week back to the last decade.`;
   const end = new Date().toISOString().slice(0, 10);
   const start = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
   const base = from === 'EUR' ? from : to === 'EUR' ? to : from;
@@ -308,7 +339,9 @@ async function loadChart(from, to, days) {
     const data = await res.json();
     let points = Object.entries(data.rates).map(([date, r]) => ({ date, value: r[quote] }));
     if (base !== from) points = points.map(p => ({ date: p.date, value: 1 / p.value }));
-    renderChart(points, from, to);
+    if (days >= 3650) points = downsample(points, 'monthly');
+    else if (days >= 730) points = downsample(points, 'weekly');
+    renderChart(points, from, to, days);
   } catch(e) {
     const section = document.getElementById('cp-chart-section');
     if (section) section.style.display = 'none';

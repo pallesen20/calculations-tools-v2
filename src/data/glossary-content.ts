@@ -2079,4 +2079,31 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'mid-market-rate': {
+    definition: [
+      'The mid-market rate - also called the interbank rate or spot rate - is the midpoint between the bid price and the ask price for a currency pair on the global foreign exchange market. It is calculated as (bid + ask) / 2. This is the rate at which major banks and financial institutions trade currencies with each other in the wholesale FX market, with no retail markup included.',
+      'When a consumer or business exchanges money, the provider sources currency at or near the mid-market rate and sells it at a marked-up rate to cover costs and earn a profit. The bid price is what the market maker pays to buy a currency from you; the ask price is what they charge to sell it to you. The mid-market sits exactly between these two - which is why it is the fairest and most neutral benchmark for comparing any exchange offer.',
+      'The mid-market rate fluctuates continuously during trading hours - Monday through Friday, 24 hours a day - as supply and demand for each currency shifts in response to economic data, central bank decisions, and market sentiment. The ECB publishes daily euro reference rates at around 16:00 CET based on a concertation of rates from major market participants. Bloomberg and Reuters publish continuously updated mid-market rates throughout the trading day.',
+    ],
+    beginnerExplain: 'Think of buying and selling used cars. A dealer buys your car at one price (bid) and sells it to the next buyer at a higher price (ask). The mid-market rate is the midpoint between these two prices - what the car is "really worth" before the dealer takes their cut. In currency markets, the dealer is the bank or exchange bureau. When you swap dollars for euros, the bank is acting as that dealer: buying your dollars cheaply and selling euros to you at a markup. Knowing the mid-market rate tells you exactly what a dollar is worth in euros before any fee - so you can calculate precisely how much any exchange is costing you. If mid-market is 1.10 and your bank gives you 1.07, the cost is (1.10 - 1.07) / 1.10 = 2.7% of the amount converted.',
+    whenToUse: 'Use the mid-market rate as a benchmark whenever you are comparing exchange providers, estimating the true cost of a currency conversion, or setting indicative prices for international invoices. It is not a rate you can transact at directly - every retail provider adds a margin above it - but it is the single most useful reference point for calculating what a conversion is actually costing you. For high-value transactions, convert the mid-market rate cost difference into a cash amount: 1% on a $50,000 transfer is $500.',
+    examples: {
+      headers: ['Exchange provider', 'EUR 1,000 converted to USD', 'Effective rate', 'USD received', 'Cost vs mid-market'],
+      rows: [
+        ['Mid-market (reference)', '-', '1.1000', '$1,100.00', '$0 (0%)'],
+        ['Fintech service (e.g. Wise)', 'small flat fee + margin', '1.0950', '$1,095.00', '~$5 (0.45%)'],
+        ['Credit card (no FX fee)', 'no fee', '1.0930', '$1,093.00', '~$7 (0.64%)'],
+        ['High-street bank', 'sometimes flat fee too', '1.0670', '$1,067.00', '~$33 (3.0%)'],
+        ['Airport exchange desk', 'sometimes service charge too', '0.9900', '$990.00', '~$110 (10.0%)'],
+      ],
+    },
+    pitfalls: 'The most common mistake is confusing the mid-market rate with the rate a provider will actually offer. No retail provider transacts at mid-market - even the best fintech services charge a small markup. A second frequent error is applying the mid-market rate you checked on one day to a transaction settling days or weeks later. Exchange rates move continuously, and a 2-3% shift over a fortnight is entirely normal for major pairs. Always use the rate confirmed by your provider at settlement for accounting and invoicing purposes, not the reference rate you checked earlier.',
+    faqs: [
+      { q: 'Is the mid-market rate the same as the real exchange rate?', a: 'Yes, in practice. The mid-market rate is the rate that would prevail if you could trade directly in the interbank market with zero profit margin. It is the global benchmark that all retail rates are priced off. Financial professionals refer to it interchangeably as the spot rate, interbank rate, or real exchange rate. It is the most accurate measure of what one currency is genuinely worth in another.' },
+      { q: 'Why can\'t consumers exchange at the mid-market rate?', a: 'The interbank market requires trading in minimum lots of $1 million or more and is open only to licensed financial institutions. Retail customers access currency through banks or brokers that source it near mid-market and apply a markup to cover their spread, hedging costs, and profit. The best fintech services apply markups of 0.35-0.6% on major pairs, getting closer to mid-market than any other retail channel.' },
+      { q: 'Does the mid-market rate change on weekends?', a: 'Not materially. The forex market is closed on Saturdays and Sundays, so the rate displayed on the weekend reflects Friday\'s closing price. Rates resume updating when Asian markets open on Monday morning (around midnight UTC). This is why exchange rates sometimes open noticeably higher or lower on Monday - any news over the weekend is priced in at the market open rather than gradually throughout the weekend.' },
+      { q: 'How is the mid-market rate different from the official rate in some countries?', a: 'Most major economies allow their currency to float freely, so the mid-market rate is the market-clearing price with no government intervention. Some countries - particularly those with currency controls or managed pegs - publish an official exchange rate set by the central bank that may diverge significantly from the market mid-market rate. In these cases, the official rate is a legal or administrative price rather than a genuine market rate.' },
+    ],
+  },
+
 };

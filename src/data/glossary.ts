@@ -925,4 +925,15 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTools: ['/finance/enterprise-value-calculator', '/finance/pe-ratio-calculator', '/finance/ebitda-margin-calculator'],
     relatedTerms: ['enterprise-value', 'ebitda', 'ebitda-margin', 'pe-ratio', 'moic'],
   },
+  {
+    slug: 'mid-market-rate',
+    term: 'Mid-Market Rate',
+    letter: 'M',
+    category: 'Currency Exchange',
+    siteCategory: 'Finance',
+    shortDef: 'The mid-market rate is the midpoint between the buy (bid) and sell (ask) prices for a currency pair on the global foreign exchange market. Also called the interbank rate or spot rate, it is the rate banks use when trading with each other - with no retail markup added.',
+    formula: '$$\\text{Mid-Market Rate} = \\frac{\\text{Bid Price} + \\text{Ask Price}}{2}$$',
+    relatedTools: ['/conversion/currency-converter'],
+    relatedTerms: [],
+  },
 ];

@@ -28,6 +28,7 @@ let rates = {};
 let cpFrom = '';
 let cpTo = '';
 let cpSwapPath = '';
+let lastHistData = null;
 
 function fmt(num, decimals) {
   if (decimals === undefined) {
@@ -130,15 +131,38 @@ function renderCompTable(presets) {
   });
 }
 
-function renderChart(points, from, to) {
+function downsample(points, mode) {
+  const groups = {};
+  points.forEach(p => {
+    let key;
+    if (mode === 'monthly') {
+      key = p.date.slice(0, 7);
+    } else {
+      const d = new Date(p.date);
+      const offset = d.getDay() === 0 ? 6 : d.getDay() - 1;
+      const mon = new Date(d);
+      mon.setDate(d.getDate() - offset);
+      key = mon.toISOString().slice(0, 10);
+    }
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(p);
+  });
+  return Object.keys(groups).sort().map(key => {
+    const pts = groups[key];
+    const avg = pts.reduce((s, p) => s + p.value, 0) / pts.length;
+    return { date: pts[Math.floor(pts.length / 2)].date, value: avg };
+  });
+}
+
+function renderChart(points, from, to, days = 30) {
   const canvas = document.getElementById('cp-chart-canvas');
   const footer = document.getElementById('cp-chart-footer');
   if (!canvas || !points.length) return;
-
   const dpr = window.devicePixelRatio || 1;
   const rect = canvas.getBoundingClientRect();
-  const W = rect.width || canvas.offsetWidth || 600;
-  const H = 200;
+  const noteEl = document.querySelector('.cc-chart-note');
+  const W = noteEl ? noteEl.getBoundingClientRect().width : (rect.width || canvas.offsetWidth || 600);
+  const H = Math.max(160, Math.min(280, Math.round(W / 4)));
   canvas.width = W * dpr;
   canvas.height = H * dpr;
   canvas.style.width = W + 'px';
@@ -196,12 +220,16 @@ function renderChart(points, from, to) {
   }
 
   const labelStep = Math.max(1, Math.floor(points.length / 5));
+  const labelFmt = days >= 3650
+    ? { year: 'numeric', month: 'short' }
+    : days >= 730
+      ? { month: 'short', year: '2-digit' }
+      : { month: 'short', day: 'numeric' };
   ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(255,255,255,0.3)';
   for (let i = 0; i < points.length; i += labelStep) {
-    const d = new Date(points[i].date);
-    const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    ctx.fillText(label, xPos(i), H - pad.bottom + 16);
+    const d = new Date(points[i].date + 'T12:00:00');
+    ctx.fillText(d.toLocaleDateString('en-US', labelFmt), xPos(i), H - pad.bottom + 16);
   }
 
   if (footer) {
@@ -236,6 +264,91 @@ function renderChart(points, from, to) {
   canvas.onmouseleave = () => { tooltipEl.style.display = 'none'; };
 }
 
+function renderHistResult(amount, rate, actualDate) {
+  const result = amount * rate;
+  const dateLabel = new Date(actualDate + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  document.getElementById('cp-hist-date-label').textContent = dateLabel;
+  document.getElementById('cp-hist-converted').textContent = `${fmt(amount, 2)} ${cpFrom} = ${fmt(result, 2)} ${cpTo}`;
+  document.getElementById('cp-hist-rate').textContent = `Rate: 1 ${cpFrom} = ${fmt(rate)} ${cpTo}`;
+  const vsEl = document.getElementById('cp-hist-vs-today');
+  if (vsEl && Object.keys(rates).length) {
+    const liveRate = convertRate(cpFrom, cpTo);
+    const pct = ((rate - liveRate) / liveRate * 100).toFixed(2);
+    const sign = pct >= 0 ? '+' : '';
+    vsEl.textContent = `${sign}${pct}% vs today's mid-market rate of ${fmt(liveRate)} ${cpTo}`;
+  }
+  const resultBox = document.getElementById('cp-hist-result');
+  const loadingEl = document.getElementById('cp-hist-loading');
+  if (loadingEl) loadingEl.style.display = 'none';
+  if (resultBox) resultBox.style.display = '';
+}
+
+async function loadHistStats(from, to) {
+  if (!FRANKFURTER.has(from) || !FRANKFURTER.has(to)) return;
+  const highEl = document.getElementById('hist-high');
+  const lowEl = document.getElementById('hist-low');
+  const avgEl = document.getElementById('hist-avg');
+  const changeEl = document.getElementById('hist-change');
+  const tbody = document.getElementById('hist-monthly-tbody');
+  if (!highEl || !tbody) return;
+
+  try {
+    const end = new Date().toISOString().slice(0, 10);
+    const start = new Date(Date.now() - 365 * 86400000).toISOString().slice(0, 10);
+    const base = from === 'EUR' ? from : to === 'EUR' ? to : from;
+    const quote = base === from ? to : from;
+    const res = await fetch(`https://api.frankfurter.dev/v1/${start}..${end}?from=${base}&to=${quote}`);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+
+    let points = Object.entries(data.rates).map(([date, r]) => ({ date, value: r[quote] }));
+    if (base !== from) points = points.map(p => ({ date: p.date, value: 1 / p.value }));
+
+    const vals = points.map(p => p.value);
+    const high = Math.max(...vals);
+    const low = Math.min(...vals);
+    const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+    const firstVal = points[0].value;
+    const lastVal = points[points.length - 1].value;
+    const changePct = ((lastVal - firstVal) / firstVal * 100).toFixed(2);
+    const changeSign = changePct >= 0 ? '+' : '';
+
+    highEl.textContent = fmtRef(high);
+    lowEl.textContent = fmtRef(low);
+    avgEl.textContent = fmtRef(avg);
+    changeEl.textContent = `${changeSign}${changePct}%`;
+    changeEl.style.color = changePct >= 0 ? '#22c55e' : '#ef4444';
+
+    const months = {};
+    points.forEach(p => {
+      const key = p.date.slice(0, 7);
+      if (!months[key]) months[key] = [];
+      months[key].push(p.value);
+    });
+
+    const monthKeys = Object.keys(months).sort().reverse();
+    let prevAvg = null;
+    const rows = monthKeys.map(key => {
+      const mv = months[key];
+      const mAvg = mv.reduce((a, b) => a + b, 0) / mv.length;
+      const mHigh = Math.max(...mv);
+      const mLow = Math.min(...mv);
+      const mChange = prevAvg !== null ? ((mAvg - prevAvg) / prevAvg * 100).toFixed(2) : null;
+      const changeCell = mChange !== null
+        ? `<span style="color:${mChange >= 0 ? '#22c55e' : '#ef4444'}">${mChange >= 0 ? '+' : ''}${mChange}%</span>`
+        : '-';
+      prevAvg = mAvg;
+      const label = new Date(key + '-15').toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      return `<tr><td>${label}</td><td>${fmtRef(mAvg)}</td><td>${fmtRef(mHigh)}</td><td>${fmtRef(mLow)}</td><td>${changeCell}</td></tr>`;
+    });
+    tbody.innerHTML = rows.join('');
+  } catch {
+    const statsGrid = document.getElementById('hist-stats-grid');
+    if (statsGrid) statsGrid.style.display = 'none';
+    if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="hist-loading-row">Historical data unavailable for this pair.</td></tr>';
+  }
+}
+
 async function loadChart(from, to, days) {
   if (!FRANKFURTER.has(from) || !FRANKFURTER.has(to)) return;
   const section = document.getElementById('cp-chart-section');
@@ -249,7 +362,9 @@ async function loadChart(from, to, days) {
     const data = await res.json();
     let points = Object.entries(data.rates).map(([date, r]) => ({ date, value: r[quote] }));
     if (base !== from) points = points.map(p => ({ date: p.date, value: 1 / p.value }));
-    renderChart(points, from, to);
+    if (days >= 3650) points = downsample(points, 'monthly');
+    else if (days >= 730) points = downsample(points, 'weekly');
+    renderChart(points, from, to, days);
   } catch(e) {
     const section = document.getElementById('cp-chart-section');
     if (section) section.style.display = 'none';
@@ -337,6 +452,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
       loadChart(cpFrom, cpTo, 30);
+      if (FRANKFURTER.has(cpFrom) && FRANKFURTER.has(cpTo)) {
+        const histSection = document.getElementById('cp-history-section');
+        if (histSection) histSection.style.display = '';
+        const mainAmount = document.getElementById('cp-amount');
+        const histAmount = document.getElementById('cp-hist-amount');
+        if (mainAmount && histAmount) histAmount.value = mainAmount.value;
+        loadHistStats(cpFrom, cpTo);
+      }
     })
     .catch(() => {
       const el = document.getElementById('cp-updated');
@@ -350,4 +473,50 @@ document.addEventListener('DOMContentLoaded', () => {
       loadChart(cpFrom, cpTo, parseInt(this.dataset.days));
     });
   });
+
+  const histDateInput = document.getElementById('cp-hist-date');
+  const histAmountInput = document.getElementById('cp-hist-amount');
+  if (histDateInput) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    histDateInput.max = yesterday.toISOString().split('T')[0];
+
+    histDateInput.addEventListener('change', async () => {
+      const date = histDateInput.value;
+      if (!date) return;
+      const resultBox = document.getElementById('cp-hist-result');
+      const loadingEl = document.getElementById('cp-hist-loading');
+      const errorEl = document.getElementById('cp-hist-error');
+      if (resultBox) resultBox.style.display = 'none';
+      if (errorEl) errorEl.style.display = 'none';
+      if (loadingEl) loadingEl.style.display = '';
+
+      try {
+        const base = cpFrom === 'EUR' ? cpFrom : cpTo === 'EUR' ? cpTo : cpFrom;
+        const quote = base === cpFrom ? cpTo : cpFrom;
+        const res = await fetch(`https://api.frankfurter.dev/v1/${date}?from=${base}&to=${quote}`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+
+        let histRate = data.rates[quote];
+        if (base !== cpFrom) histRate = 1 / histRate;
+        lastHistData = { rate: histRate, actualDate: data.date };
+
+        const amount = parseLocaleNumber(histAmountInput ? histAmountInput.value : '1') || 1;
+        renderHistResult(amount, histRate, data.date);
+      } catch {
+        lastHistData = null;
+        if (document.getElementById('cp-hist-loading')) document.getElementById('cp-hist-loading').style.display = 'none';
+        if (document.getElementById('cp-hist-error')) document.getElementById('cp-hist-error').style.display = '';
+      }
+    });
+  }
+
+  if (histAmountInput) {
+    histAmountInput.addEventListener('input', () => {
+      if (!lastHistData) return;
+      const amount = parseLocaleNumber(histAmountInput.value) || 1;
+      renderHistResult(amount, lastHistData.rate, lastHistData.actualDate);
+    });
+  }
 });
