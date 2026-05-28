@@ -20,7 +20,7 @@ const KEYS = ['A', 'B', 'C', 'D'] as const;
   <div class="quiz-header">
     <span class="quiz-eyebrow">Test your knowledge</span>
     <h2 class="quiz-title">Quiz: how well do you know {topic}?</h2>
-    <p class="quiz-meta">5 questions &middot; ~2 min</p>
+    <p class="quiz-meta">{questions.length} questions &middot; ~{Math.max(1, Math.round(questions.length * 0.4))} min</p>
   </div>
   <div class="quiz-prog-wrap" aria-hidden="true">
     <div class="quiz-prog-track">
@@ -489,7 +489,7 @@ const KEYS = ['A', 'B', 'C', 'D'] as const;
   }
 
   shareBtn.addEventListener('click', () => {
-    shareText = `I scored ${score}/5 on the ${topic} quiz on calculations.tools - can you beat me?`;
+    shareText = `I scored ${score}/${total} on the ${topic} quiz on calculations.tools - can you beat me?`;
     const enc = encodeURIComponent;
     shX.href  = `https://twitter.com/intent/tweet?text=${enc(shareText)}&url=${enc(pageUrl)}`;
     shLi.href = `https://www.linkedin.com/sharing/share-offsite/?url=${enc(pageUrl)}`;

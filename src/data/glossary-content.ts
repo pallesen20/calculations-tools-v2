@@ -3,13 +3,21 @@ export interface GlossaryExample {
   rows: string[][];
 }
 
+export interface QuizQuestion {
+  q: string;
+  options: [string, string, string, string];
+  correct: 0 | 1 | 2 | 3;
+  explanation: string;
+}
+
 export interface GlossaryContent {
   definition: string[];
-  beginnerExplain?: string;
+  beginnerExplain?: string[];
   whenToUse: string;
   examples?: GlossaryExample;
   pitfalls?: string;
   faqs: { q: string; a: string }[];
+  quiz?: { topic: string; questions: QuizQuestion[] };
 }
 
 export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
@@ -622,7 +630,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The core equation is OCF = Net Income + Depreciation & Amortisation - Increase in Working Capital. Working capital changes are the most variable and often misunderstood component. When receivables grow (more sales on credit, not yet collected), cash is consumed even though revenue is already booked - OCF falls below net income. When a company collects subscriptions in advance, deferred revenue (a liability) rises and OCF exceeds net income. Inventory build, payables stretch, and prepaid expenses all affect OCF without appearing on the income statement.',
       'OCF is the input for Free Cash Flow: FCF = OCF - CapEx. It is also used independently to test quality of earnings. An OCF-to-Net Income ratio consistently above 1.0x indicates cash earnings are exceeding accrual earnings - a mark of financial quality. A ratio persistently below 0.8x in a mature business signals that accrual profits may be overstated relative to actual cash generation.',
     ],
-    beginnerExplain: 'Think of OCF as the cash that actually lands in your business bank account from running the business, before you buy any equipment. Your income statement might show a $50,000 profit for the month, but if $30,000 of that is sitting in unpaid customer invoices, only $20,000 arrived as actual cash. OCF captures that difference: it adjusts accounting profit for items that were counted as income or cost but did not yet move as cash.',
+    beginnerExplain: ['Think of OCF as the cash that actually lands in your business bank account from running the business, before you buy any equipment. Your income statement might show a $50,000 profit for the month, but if $30,000 of that is sitting in unpaid customer invoices, only $20,000 arrived as actual cash. OCF captures that difference: it adjusts accounting profit for items that were counted as income or cost but did not yet move as cash.'],
     whenToUse: 'Use OCF to verify that reported net income is backed by real cash generation - the OCF-to-Net Income ratio is the simplest quality-of-earnings check available from public financials. Use it as the starting point for FCF analysis: once you know how much cash operations produce, subtract CapEx to find what is truly free. Compare OCF trends over time against EBITDA trends: if EBITDA grows but OCF does not, working capital is absorbing the earnings growth - often a warning sign in fast-growing businesses.',
     examples: {
       headers: ['Company', 'Net Income', 'D&A add-back', 'Working capital effect', 'OCF', 'OCF / Net Income'],
@@ -1047,7 +1055,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Consumer BIA devices fall into several categories based on electrode placement. Foot-to-foot devices (bathroom scales) pass current only through the lower body; hand-to-hand handhelds pass current through the upper body; hand-to-foot devices or 4-electrode segmental devices pass current through the full body and are considered more accurate. High-end clinical devices such as the InBody 770 use 8 electrodes at multiple frequencies (multi-frequency BIA) to separate intracellular water from extracellular water, achieving accuracy within ±2-3 percentage points of DEXA in controlled conditions.',
       'The most significant limitation of BIA is its sensitivity to hydration. Because the method derives body fat from estimated body water, anything that shifts the body\'s water distribution - dehydration, recent exercise, a large meal, alcohol, or the menstrual cycle - directly alters the reading. On a typical consumer scale, measured body fat can vary by 2-4 percentage points between morning and evening on the same person without any actual change in fat tissue.',
     ],
-    beginnerExplain: 'Think of your body as a pipe full of water. Electricity travels easily through water - and muscle is roughly 75% water - but travels slowly through fat, which has almost no water. A BIA device sends a tiny current from one electrode to another (you cannot feel it at all) and measures how much the body resists the flow. High resistance means more fat; low resistance means more muscle. The device then uses a formula to convert that resistance reading into a body fat percentage estimate. The catch: if you are dehydrated, there is less water in your tissues, resistance goes up, and the device will overestimate your body fat - even though nothing about your actual fat tissue has changed.',
+    beginnerExplain: ['Think of your body as a pipe full of water. Electricity travels easily through water - and muscle is roughly 75% water - but travels slowly through fat, which has almost no water. A BIA device sends a tiny current from one electrode to another (you cannot feel it at all) and measures how much the body resists the flow. High resistance means more fat; low resistance means more muscle. The device then uses a formula to convert that resistance reading into a body fat percentage estimate. The catch: if you are dehydrated, there is less water in your tissues, resistance goes up, and the device will overestimate your body fat - even though nothing about your actual fat tissue has changed.'],
     whenToUse: 'BIA is best used for tracking directional trends over weeks or months, not for accurate one-off measurements. To minimise variability: always measure at the same time of day (ideally morning before eating, after using the toilet), under the same hydration conditions, and use the same device. Do not compare results between different BIA devices - each uses its own proprietary prediction equations and the absolute numbers are not comparable across brands. If you need a single accurate body fat measurement rather than a trend, the Navy tape method or a DEXA scan are more reliable.',
     examples: {
       headers: ['Device type', 'Typical accuracy vs DEXA', 'Electrode placement', 'Hydration sensitivity'],
@@ -1285,7 +1293,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
   },
 
   'roe': {
-    beginnerExplain: 'Think of shareholders\' equity as your personal down payment on a business. If you invest $100,000 of your own money to buy a franchise (with a $400,000 bank loan covering the rest), and the franchise earns $20,000 in net profit that year, your ROE is 20%. The $20,000 is divided by your $100,000 contribution - the bank\'s portion is not in the denominator. This is why two businesses can show the same ROE for very different reasons: one earned it through a high-margin product, the other by borrowing heavily to amplify a thin-margin operation.',
+    beginnerExplain: ['Think of shareholders\' equity as your personal down payment on a business. If you invest $100,000 of your own money to buy a franchise (with a $400,000 bank loan covering the rest), and the franchise earns $20,000 in net profit that year, your ROE is 20%. The $20,000 is divided by your $100,000 contribution - the bank\'s portion is not in the denominator. This is why two businesses can show the same ROE for very different reasons: one earned it through a high-margin product, the other by borrowing heavily to amplify a thin-margin operation.'],
     definition: [
       'Return on Equity (ROE) measures how many dollars of net income a company generates for each dollar of shareholders\' equity. Shareholders\' equity - also called book value - is the accounting value of assets minus liabilities: what would be left for equity holders if all assets were liquidated at book value and all debts paid. ROE converts this ownership stake into an efficiency ratio.',
       'ROE is best understood through the DuPont decomposition, which breaks it into three multiplicative components: Net Profit Margin × Asset Turnover × Equity Multiplier. Net Profit Margin (Net Income / Revenue) shows profitability efficiency. Asset Turnover (Revenue / Total Assets) shows how productively assets generate revenue. The Equity Multiplier (Total Assets / Equity) reflects financial leverage - how much of the asset base is funded by debt.',
@@ -1316,7 +1324,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The relationship between ROA and ROE is direct: ROE = ROA x Equity Multiplier. The equity multiplier (Total Assets / Equity) is the leverage factor. A company with ROA of 5% and an equity multiplier of 4x reports ROE of 20%. Two companies with identical ROA can show very different ROE simply because one uses more debt financing than the other.',
       'ROA is most useful when comparing companies within the same industry that carry different debt levels, or when tracking a single company\'s operational efficiency over time while abstracting away changes in its capital structure.',
     ],
-    beginnerExplain: 'Imagine you run a delivery business. You have a van worth $50,000 bought with $10,000 of your own savings and a $40,000 bank loan. At year end the business earned $5,000 net profit. ROA = $5,000 / $50,000 = 10% - the van earned 10 cents for every dollar of asset, regardless of who funded it. ROE = $5,000 / $10,000 = 50% - but that 50% is partly because you borrowed most of the van\'s cost. ROA strips out that borrowing effect and tells you how hard the actual asset is working.',
+    beginnerExplain: ['Imagine you run a delivery business. You have a van worth $50,000 bought with $10,000 of your own savings and a $40,000 bank loan. At year end the business earned $5,000 net profit. ROA = $5,000 / $50,000 = 10% - the van earned 10 cents for every dollar of asset, regardless of who funded it. ROE = $5,000 / $10,000 = 50% - but that 50% is partly because you borrowed most of the van\'s cost. ROA strips out that borrowing effect and tells you how hard the actual asset is working.'],
     whenToUse: 'Use ROA when comparing companies with different capital structures - for example two banks, two retailers, or two airlines - where ROE comparisons are distorted by different leverage levels. ROA is also useful for tracking whether a company is becoming more or less efficient at deploying its asset base over time, independent of debt decisions made by management.',
     examples: {
       headers: ['Company', 'Net Income', 'Total Assets', 'ROA', 'ROE (for comparison)'],
@@ -1341,7 +1349,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'ROCE is the preferred profitability metric for capital-intensive industries - utilities, oil & gas, mining, manufacturing, and infrastructure - where businesses routinely hold billions in fixed assets financed by a mixture of debt and equity. For these businesses, ROE is distorted by leverage variation; ROCE provides a clean comparison of how productively the core asset base is working.',
       'A useful benchmark is to compare ROCE to the Weighted Average Cost of Capital (WACC). If ROCE exceeds WACC, the business is creating economic value; if ROCE falls below WACC, it is destroying value even if accounting profits look positive. This relationship is the foundation of Economic Value Added (EVA) analysis.',
     ],
-    beginnerExplain: 'Think of ROCE as the yield on the total capital a business controls - like working out the interest rate your savings account is effectively earning, but for an entire company. If a factory costs $10 million to build and run (funded by $6M of your own money and $4M of bank debt), and it generates $1.5M in operating profit before paying the bank\'s interest, your ROCE is 15%. That 15% is the raw productivity of the factory, before anyone - shareholders or lenders - takes their cut.',
+    beginnerExplain: ['Think of ROCE as the yield on the total capital a business controls - like working out the interest rate your savings account is effectively earning, but for an entire company. If a factory costs $10 million to build and run (funded by $6M of your own money and $4M of bank debt), and it generates $1.5M in operating profit before paying the bank\'s interest, your ROCE is 15%. That 15% is the raw productivity of the factory, before anyone - shareholders or lenders - takes their cut.'],
     whenToUse: 'Use ROCE when comparing capital-intensive businesses where debt levels vary significantly - two utilities or two mining companies may have very different leverage, but a ROCE comparison tells you which one extracts more value from its asset base. ROCE is also useful for internal capital allocation decisions: which business unit or project earns the highest return on the capital it consumes?',
     examples: {
       headers: ['Business', 'EBIT', 'Capital Employed', 'ROCE', 'Interpretation'],
@@ -1964,7 +1972,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Interest expense is the mechanism by which financial leverage affects reported earnings. A business with $2M EBIT will report very different EBT depending on whether it is debt-free ($2M EBT) or carrying $20M of debt at 8% ($400K interest expense, $1.6M EBT). Higher debt loads compress EBT and amplify the volatility of Net Income across the business cycle.',
       'Interest expense should not be confused with interest paid. Under accrual accounting, interest expense is recognised as it accrues - regardless of when cash changes hands. A semi-annual coupon bond records monthly interest accruals even though the cash payment occurs twice a year. This timing difference between interest expense and cash interest paid can matter in cash flow analysis.',
     ],
-    beginnerExplain: 'Imagine you borrow $10,000 from a bank to buy a car at a 6% annual interest rate. You owe $600 in interest for the year - that\'s your interest expense. For a company it works the same way: every loan, bond, or credit line has an interest rate, and the annual cost of those borrowings shows up on the income statement as interest expense. It comes out of profits before the tax bill is calculated.',
+    beginnerExplain: ['Imagine you borrow $10,000 from a bank to buy a car at a 6% annual interest rate. You owe $600 in interest for the year - that\'s your interest expense. For a company it works the same way: every loan, bond, or credit line has an interest rate, and the annual cost of those borrowings shows up on the income statement as interest expense. It comes out of profits before the tax bill is calculated.'],
     whenToUse: 'Focus on interest expense when comparing two companies that look similar at the EBIT level but diverge at EBT or Net Income. The difference is often debt. Track the interest coverage ratio (EBIT / Interest Expense) as the key stress indicator: above 3.0x is comfortable, below 2.0x is a warning, below 1.0x means the company cannot cover interest from operating profit alone.',
     examples: {
       headers: ['Company', 'EBIT', 'Interest Expense', 'EBT', 'Interest Coverage'],
@@ -1989,7 +1997,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The split between principal and interest is not fixed. Because interest is charged on the remaining balance, and that balance is at its maximum on day one, early payments are heavily weighted toward interest. As each payment is made, the balance falls slightly, reducing the next interest charge by a small amount. This compounds over time: in the final years of a 30-year mortgage, the interest portion is tiny because the balance has fallen so low. The process of gradually shifting from interest-heavy to principal-heavy payments is called amortisation.',
       'For a standard 30-year fixed-rate mortgage at 7%, the monthly payment is fixed for all 360 months. But only $246 of Month 1\'s $1,996 payment (12%) reduces the balance; $1,750 (88%) is interest. By Month 180, roughly $696 goes to principal and $1,300 to interest. By Month 360, nearly the entire payment is principal. Over the life of the loan, $418,527 in total interest is paid on the original $300,000 - the lender earns 1.4 times the loan amount in interest charges alone.',
     ],
-    beginnerExplain: 'Think of P&I like a restaurant tab that charges a daily fee for staying open. The tab itself is the principal - what you originally owe. The daily fee is interest - the cost of leaving the balance unpaid. Each payment covers that period\'s fee first, then whatever is left chips away at the tab. In Month 1 the tab is at its maximum, so the fee is at its maximum and very little of your payment actually reduces the debt. As months pass and the tab shrinks, the fee shrinks too, and more of each payment goes toward clearing the balance. The payment amount never changes - only the fee-to-balance split shifts, slowly at first, then faster as the balance falls.',
+    beginnerExplain: ['Think of P&I like a restaurant tab that charges a daily fee for staying open. The tab itself is the principal - what you originally owe. The daily fee is interest - the cost of leaving the balance unpaid. Each payment covers that period\'s fee first, then whatever is left chips away at the tab. In Month 1 the tab is at its maximum, so the fee is at its maximum and very little of your payment actually reduces the debt. As months pass and the tab shrinks, the fee shrinks too, and more of each payment goes toward clearing the balance. The payment amount never changes - only the fee-to-balance split shifts, slowly at first, then faster as the balance falls.'],
     whenToUse: 'Analyse the P&I split when evaluating whether to choose a shorter loan term, make extra principal payments, or refinance. The amortisation schedule reveals how much equity is actually building in the early years - often far less than the total payment suggests. Use a 15-year vs 30-year comparison to quantify the interest saving against the higher monthly payment. Extra payments made in Years 1-5 reduce total interest significantly more than the same payment made in Year 20, because they lower the balance on which interest will compound for the remaining term.',
     examples: {
       headers: ['Month', 'Payment', 'Interest', 'Principal', 'Remaining balance'],
@@ -2016,7 +2024,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The "primary duty" standard governs which tasks count toward exemption. Under 29 CFR 541.700, primary duty means the principal, main, major, or most important duty the employee performs - not necessarily the one that consumes the most hours. A store manager who spends 70% of their shift stocking shelves alongside staff can still have a primary duty of management if that management function is what drives the department\'s operation. This is the "concurrent duties" doctrine, and it is why a time-and-motion study alone does not determine exempt status.',
       'The Highly Compensated Employee (HCE) shortcut applies to employees earning at least $107,432 per year in total annual compensation (with at least $684/week paid on salary or fee basis). HCE employees only need to "customarily and regularly" perform at least one executive, administrative, or professional duty - a significantly lighter standard than the full duties test. The HCE threshold is indexed and reviewed periodically by the Department of Labor.',
     ],
-    beginnerExplain: 'Think of the duties test as a two-lock system. Your employer claims you do not need overtime pay because you are a salaried employee. To legally make that claim, they must open two locks: first, your salary must be at least $684 per week on a guaranteed basis (the salary lock). Second, your actual day-to-day work - not your job title, but what you genuinely do - must match one of five government-defined categories (the duties lock). An employee titled "Manager" who never manages anyone fails the duties lock. An employee titled "Associate" who genuinely runs a team, approves hires, and sets department priorities may pass it. If either lock fails, overtime applies regardless of what the business card says.',
+    beginnerExplain: ['Think of the duties test as a two-lock system. Your employer claims you do not need overtime pay because you are a salaried employee. To legally make that claim, they must open two locks: first, your salary must be at least $684 per week on a guaranteed basis (the salary lock). Second, your actual day-to-day work - not your job title, but what you genuinely do - must match one of five government-defined categories (the duties lock). An employee titled "Manager" who never manages anyone fails the duties lock. An employee titled "Associate" who genuinely runs a team, approves hires, and sets department priorities may pass it. If either lock fails, overtime applies regardless of what the business card says.'],
     whenToUse: 'Use the duties test framework whenever a salaried employee regularly works more than 40 hours per week without receiving overtime pay. If you are an employee, check your own classification: does your current salary clear $684/week on a guaranteed basis, and do your actual responsibilities genuinely match one of the five exemption categories? Employers use the test when structuring new roles, reclassifying existing ones, or responding to a DOL audit. HR professionals and employment attorneys use it when reviewing misclassification risk across a workforce - particularly in industries such as retail, banking, insurance, and professional services where the administrative exemption is frequently over-applied.',
     examples: {
       headers: ['Exemption', 'Core requirement', 'Typically qualifies', 'Typically does not qualify'],
@@ -2059,7 +2067,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Multiples fall into two families based on their numerator. Enterprise Value multiples (EV/EBITDA, EV/Revenue, EV/EBIT, EV/FCF) use total business value including debt and cash. Equity multiples (P/E, Price/Book, Price/FCF-to-equity) use only market capitalisation. The cardinal rule: always match numerator to denominator. EV against EBITDA (which belongs to all capital providers), market cap against net income (which belongs only to shareholders). Mixing the two - for example, dividing EV by Net Income - produces a meaningless ratio and is one of the most common errors in valuation practice.',
       'Because multiples compress a complex business into a single number, they are most useful for relative valuation: screening whether one company appears cheap or expensive compared with peers. A 10x EV/EBITDA tells you nothing in isolation; it only becomes meaningful when you know the industry median is 8x (implying a premium) or 14x (implying a discount). Multiples are also highly sensitive to the interest rate environment - low rates inflate multiples, high rates compress them - so always anchor comparisons to a consistent time period.',
     ],
-    beginnerExplain: 'Imagine your local bakery earns $50,000 profit a year. If a buyer offers $500,000 to purchase it, they\'re paying 10 times the annual profit - a "10x multiple." If a similar bakery sold last year for $700,000, that one went at 14x. Investors use multiples exactly like this: they level the playing field so you can compare whether one business is priced higher or lower than another relative to what it earns, regardless of the absolute size.',
+    beginnerExplain: ['Imagine your local bakery earns $50,000 profit a year. If a buyer offers $500,000 to purchase it, they\'re paying 10 times the annual profit - a "10x multiple." If a similar bakery sold last year for $700,000, that one went at 14x. Investors use multiples exactly like this: they level the playing field so you can compare whether one business is priced higher or lower than another relative to what it earns, regardless of the absolute size.'],
     whenToUse: 'Use multiples for quick comparable screening - to flag whether a company looks expensive or cheap versus peers - before doing deeper discounted cash flow analysis. Always compare companies in the same industry and at a similar stage of growth. Use EV multiples (EV/EBITDA, EV/Revenue) when the companies you are comparing have different capital structures; use equity multiples (P/E, P/Book) when you are specifically analysing returns to shareholders.',
     examples: {
       headers: ['Company type', 'Multiple used', 'Numerator', 'Denominator', 'Typical range'],
@@ -2085,7 +2093,11 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'When a consumer or business exchanges money, the provider sources currency at or near the mid-market rate and sells it at a marked-up rate to cover costs and earn a profit. The bid price is what the market maker pays to buy a currency from you; the ask price is what they charge to sell it to you. The mid-market sits exactly between these two - which is why it is the fairest and most neutral benchmark for comparing any exchange offer.',
       'The mid-market rate fluctuates continuously during trading hours - Monday through Friday, 24 hours a day - as supply and demand for each currency shifts in response to economic data, central bank decisions, and market sentiment. The ECB publishes daily euro reference rates at around 16:00 CET based on a concertation of rates from major market participants. Bloomberg and Reuters publish continuously updated mid-market rates throughout the trading day.',
     ],
-    beginnerExplain: 'Think of buying and selling used cars. A dealer buys your car at one price (bid) and sells it to the next buyer at a higher price (ask). The mid-market rate is the midpoint between these two prices - what the car is "really worth" before the dealer takes their cut. In currency markets, the dealer is the bank or exchange bureau. When you swap dollars for euros, the bank is acting as that dealer: buying your dollars cheaply and selling euros to you at a markup. Knowing the mid-market rate tells you exactly what a dollar is worth in euros before any fee - so you can calculate precisely how much any exchange is costing you. If mid-market is 1.10 and your bank gives you 1.07, the cost is (1.10 - 1.07) / 1.10 = 2.7% of the amount converted.',
+    beginnerExplain: [
+      'Think of buying and selling used cars. A dealer buys your car at one price (bid) and sells it to the next buyer at a higher price (ask). The mid-market rate is the midpoint between these two prices - what the car is "really worth" before the dealer takes their cut.',
+      'In currency markets, the dealer is the bank or exchange bureau. When you swap dollars for euros, the bank is acting as that dealer: buying your dollars cheaply and selling euros to you at a markup.',
+      'Knowing the mid-market rate tells you exactly what a dollar is worth in euros before any fee - so you can calculate precisely how much any exchange is costing you. If mid-market is 1.10 and your bank gives you 1.07, the cost is (1.10 - 1.07) / 1.10 = 2.7% of the amount converted.',
+    ],
     whenToUse: 'Use the mid-market rate as a benchmark whenever you are comparing exchange providers, estimating the true cost of a currency conversion, or setting indicative prices for international invoices. It is not a rate you can transact at directly - every retail provider adds a margin above it - but it is the single most useful reference point for calculating what a conversion is actually costing you. For high-value transactions, convert the mid-market rate cost difference into a cash amount: 1% on a $50,000 transfer is $500.',
     examples: {
       headers: ['Exchange provider', 'EUR 1,000 converted to USD', 'Effective rate', 'USD received', 'Cost vs mid-market'],
@@ -2104,6 +2116,66 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Does the mid-market rate change on weekends?', a: 'Not materially. The forex market is closed on Saturdays and Sundays, so the rate displayed on the weekend reflects Friday\'s closing price. Rates resume updating when Asian markets open on Monday morning (around midnight UTC). This is why exchange rates sometimes open noticeably higher or lower on Monday - any news over the weekend is priced in at the market open rather than gradually throughout the weekend.' },
       { q: 'How is the mid-market rate different from the official rate in some countries?', a: 'Most major economies allow their currency to float freely, so the mid-market rate is the market-clearing price with no government intervention. Some countries - particularly those with currency controls or managed pegs - publish an official exchange rate set by the central bank that may diverge significantly from the market mid-market rate. In these cases, the official rate is a legal or administrative price rather than a genuine market rate.' },
     ],
+    quiz: {
+      topic: 'mid-market rates',
+      questions: [
+        {
+          q: 'How is the mid-market rate calculated?',
+          options: [
+            'The bid price alone, before any markup is added',
+            'The weighted average of all currency trades in the past 24 hours',
+            'The midpoint between the bid price and the ask price for a currency pair',
+            'The official rate set by the central bank each morning',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The mid-market rate = (bid + ask) / 2. It sits exactly between what a market maker pays to buy a currency and what they charge to sell it, making it the neutral benchmark with no markup included.',
+        },
+        {
+          q: 'What makes the mid-market rate the fairest benchmark for comparing exchange offers?',
+          options: [
+            'It is updated only once per day so it stays stable for comparison',
+            'It includes no retail markup - it is the rate banks use when trading with each other',
+            'It is set by central banks to protect consumers from excessive fees',
+            'It is the rate all retail providers are legally required to offer',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The mid-market rate is the wholesale interbank rate with no retail margin added. Every retail provider prices off this rate and adds a markup above it, which is why mid-market is the single most useful reference point.',
+        },
+        {
+          q: 'Based on the comparison table, which provider offers the closest rate to mid-market when converting EUR 1,000 to USD?',
+          options: [
+            'A high-street bank',
+            'An airport exchange desk',
+            'A credit card with no FX fee',
+            'A fintech service',
+          ] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The fintech service applies only a small flat fee and a tight margin, giving a cost of around 0.45% vs mid-market. A high-street bank costs roughly 3% and an airport desk around 10%.',
+        },
+        {
+          q: 'What is the risk of applying the mid-market rate you checked today to a payment settling several weeks later?',
+          options: [
+            'You may use an inaccurate rate - exchange rates can shift 2-3% over a fortnight',
+            'The rate automatically adjusts to the settlement date',
+            'Most providers lock in the rate at the time of your initial quote',
+            'The difference is negligible because major currencies are stable short-term',
+          ] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Exchange rates move continuously. A 2-3% shift over a fortnight is entirely normal for major pairs. Always use the rate confirmed by your provider at settlement, not a reference rate checked days earlier.',
+        },
+        {
+          q: 'What happens to the mid-market rate on weekends?',
+          options: [
+            'The ECB publishes a weekend rate at 16:00 CET each Saturday',
+            'Major banks update it twice per day on Saturday and Sunday',
+            'The forex market is closed, so the displayed rate reflects Friday\'s closing price',
+            'The rate is frozen at the IMF\'s published weekly average',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The forex market does not operate on weekends. The rate shown on Saturday and Sunday is Friday\'s closing price. Any news that breaks over the weekend is priced in when Asian markets open on Monday.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
 };

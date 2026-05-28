@@ -2,6 +2,7 @@
 import GlossaryLayout from '../../layouts/GlossaryLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 import { GLOSSARY_TERMS } from '../../data/glossary';
 import { GLOSSARY_CONTENT } from '../../data/glossary-content';
 
@@ -72,13 +73,17 @@ const schema = [
       <a href={(term.relatedTools ?? [])[0]} class="glossary-tool-cta">Use the {term.term} Calculator →</a>
     )}
 
+    {content?.quiz && (
+      <a href="#quiz" class="glossary-quiz-cta">Try the {term.term} Quiz →</a>
+    )}
+
     <h2 class="gl-what-is">What is {term.term}?</h2>
     {content?.definition.map(para => <p>{para}</p>)}
 
     {content?.beginnerExplain && (
       <>
         <h3 id="explained-to-beginner">{term.term} explained to a beginner</h3>
-        <p>{content.beginnerExplain}</p>
+        {content?.beginnerExplain.map(para => <p>{para}</p>)}
       </>
     )}
 
@@ -125,6 +130,14 @@ const schema = [
           </>
         ))}
       </>
+    )}
+
+    {content?.quiz && (
+      <QuizBlock
+        topic={content.quiz.topic}
+        questions={content.quiz.questions}
+        pageUrl={`https://calculations.tools/glossary/${slug}`}
+      />
     )}
 
     {relatedTermObjects.length > 0 && (
@@ -202,5 +215,24 @@ const schema = [
     margin-top: 3rem;
     padding-top: 1.5rem;
     border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .glossary-tool-cta { display: block; width: 100%; text-align: center; padding: 0.7rem 1rem; border-radius: 10px; background: linear-gradient(135deg, rgba(99,102,241,0.8), rgba(139,92,246,0.8)); color: white; font-size: 0.875rem; font-weight: 600; text-decoration: none; margin-top: 1.25rem; transition: opacity 0.3s; }
+  .glossary-tool-cta:hover { opacity: 0.85; }
+  a.glossary-quiz-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.7rem 1rem;
+    border: 2px solid;
+    border-color: var(--brand-to);
+    border-radius: 10px;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: .75rem;
+    transition: background 0.3s;
+}
+  a.glossary-quiz-cta:hover {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(139, 92, 246, 0.8));
   }
 </style>
