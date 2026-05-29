@@ -8,7 +8,7 @@ const CURRENCY_SOURCES: Record<string, Source> = {
   USD: { author: 'Federal Reserve', title: 'H.10 Foreign Exchange Rates', url: 'https://www.federalreserve.gov/releases/h10/', year: 2026 },
   EUR: { author: 'European Central Bank', title: 'Euro Foreign Exchange Reference Rates', url: 'https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html', year: 2026 },
   GBP: { author: 'Bank of England', title: 'Exchange Rates Statistics', url: 'https://www.bankofengland.co.uk/statistics/exchange-rates', year: 2026 },
-  JPY: { author: 'Bank of Japan', title: 'Exchange Rates and Interest Rates', url: 'https://www.boj.or.jp/en/statistics/market/forex/fxdaily/index.htm' },
+  JPY: { author: 'Bank of Japan', title: 'Exchange Rates and Interest Rates', url: 'https://www.boj.or.jp/en/statistics/market/forex/fxdaily/index.htm', year: 2026 },
   CHF: { author: 'Swiss National Bank', title: 'Current Interest Rates and Exchange Rates', url: 'https://www.snb.ch/en/the-snb/mandates-goals/statistics/statistics-pub/current_interest_exchange_rates', year: 2026 },
   AUD: { author: 'Reserve Bank of Australia', title: 'Exchange Rates', url: 'https://www.rba.gov.au/statistics/frequency/exchange-rates.html', year: 2026 },
   CAD: { author: 'Bank of Canada', title: 'Exchange Rates', url: 'https://www.bankofcanada.ca/rates/exchange/', year: 2026 },
@@ -208,7 +208,7 @@ const schema = [
         </div>
         <div class="cc-field">
           <label class="cc-label" for="cp-hist-date">Select a date</label>
-          <input id="cp-hist-date" class="cc-input cc-input--date" type="date" min="1999-01-04" placeholder="YYYY-MM-DD" />
+          <input id="cp-hist-date" class="cc-input cc-input--date" type="date" min="1999-01-04" />
         </div>
         <div class="cc-result-box" id="cp-hist-result" style="display:none">
           <div class="cc-result-label">On <span id="cp-hist-date-label"></span></div>
