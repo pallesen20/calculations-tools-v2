@@ -458,6 +458,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const mainAmount = document.getElementById('cp-amount');
         const histAmount = document.getElementById('cp-hist-amount');
         if (mainAmount && histAmount) histAmount.value = mainAmount.value;
+        const dateInput = document.getElementById('cp-hist-date');
+        if (histAmount && dateInput) {
+          const r = histAmount.getBoundingClientRect();
+          dateInput.style.width = r.width + 'px';
+          dateInput.style.height = r.height + 'px';
+          dateInput.style.boxSizing = 'border-box';
+        }
         loadHistStats(cpFrom, cpTo);
       }
     })
