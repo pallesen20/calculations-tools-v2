@@ -1,16 +1,55 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import type { Source } from '../../components/Sources.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const tocItems = [
   { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'explained-to-beginner', label: 'Height conversion explained to a beginner' },
   { id: 'cm-to-feet',      label: 'cm to feet and inches' },
   { id: 'feet-to-cm',      label: 'feet and inches to cm' },
   { id: 'height-formats',  label: 'Height formats explained' },
+  { id: 'cm-spelling',     label: 'Centimetres vs centimeters' },
   { id: 'reference',       label: 'Common height reference table' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'How many centimeters are in exactly one inch?',
+    options: ['2.50 cm', '2.54 cm', '2.58 cm', '30.48 cm'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '1 inch = exactly 2.54 cm, a fixed international standard defined in 1959. This is precise, not an approximation, so all inch-to-cm conversions are exact.',
+  },
+  {
+    q: 'What is 180 cm converted to feet and inches?',
+    options: ['5 ft 9.0 in', '5 ft 11.0 in', '5 ft 10.9 in', '6 ft 0.0 in'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '180 / 2.54 = 70.866 total inches. That is 5 feet (60 in) plus 10.866 remaining inches, giving 5 ft 10.9 in.',
+  },
+  {
+    q: 'What is the correct first step when converting 5 ft 11 in to centimeters?',
+    options: ['Multiply 5.11 by 30.48', 'Multiply 5 by 2.54 and 11 by 2.54 separately', 'Convert to total inches: (5 x 12) + 11 = 71 inches', 'Divide 5.11 by 0.394'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'You must first convert to total inches: (5 x 12) + 11 = 71, then multiply by 2.54 to get 180.34 cm. Entering 5.11 as decimal feet gives a completely different result.',
+  },
+  {
+    q: 'According to the reference table, which value in cm corresponds to exactly 6 feet 0 inches?',
+    options: ['180.3 cm', '182.9 cm', '185.4 cm', '187.9 cm'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '6 ft 0 in = 6 x 30.48 = 182.88 cm, shown as 182.9 cm in the table. Each foot is exactly 30.48 cm.',
+  },
+  {
+    q: 'Someone types 5.11 into a decimal feet field. What height have they actually entered?',
+    options: ['5 ft 11 in (180.34 cm)', '5 ft 1.32 in (155.8 cm)', '5 ft 10.9 in (180 cm)', '5 ft 5 in (165.1 cm)'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '5.11 decimal feet means 5 feet and 0.11 x 12 = 1.32 inches, giving 155.8 cm. The page flags this as the most common height conversion error, producing a 24 cm gap from the intended 5 ft 11 in.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -46,12 +85,40 @@ const schema = [
       { "@type": "Question", "name": "How many cm is one inch?", "acceptedAnswer": { "@type": "Answer", "text": "One inch equals exactly 2.54 cm. This is an exact international standard set in 1959, so all inch-to-cm conversions are precise rather than approximate." } },
       { "@type": "Question", "name": "What is the average height for men and women?", "acceptedAnswer": { "@type": "Answer", "text": "The global average adult male height is approximately 171 cm (5 ft 7 in) and the average adult female is approximately 159 cm (5 ft 2.5 in). These vary significantly by country: Dutch men average around 183 cm, while South Asian averages are closer to 165 cm for men." } },
       { "@type": "Question", "name": "How do I convert 5'11\" to cm?", "acceptedAnswer": { "@type": "Answer", "text": "5 feet 11 inches equals 180.34 cm. Calculation: (5 x 12 + 11) x 2.54 = 71 x 2.54 = 180.34 cm." } },
-      { "@type": "Question", "name": "What is 175 cm in feet and inches?", "acceptedAnswer": { "@type": "Answer", "text": "175 cm equals 5 feet 8.9 inches. Calculation: 175 / 2.54 = 68.898 total inches = 5 feet and 8.898 inches." } }
+      { "@type": "Question", "name": "What is 175 cm in feet and inches?", "acceptedAnswer": { "@type": "Answer", "text": "175 cm equals 5 feet 8.9 inches. Calculation: 175 / 2.54 = 68.898 total inches = 5 feet and 8.898 inches." } },
+      { "@type": "Question", "name": "How tall is 5'9\" in cm?", "acceptedAnswer": { "@type": "Answer", "text": "5 feet 9 inches equals 175.3 cm. Calculation: (5 x 12 + 9) x 2.54 = 69 x 2.54 = 175.26 cm." } },
+      { "@type": "Question", "name": "What is 180 cm in feet and inches?", "acceptedAnswer": { "@type": "Answer", "text": "180 cm equals 5 feet 10.9 inches. Calculation: 180 / 2.54 = 70.866 total inches = 5 feet (60 in) plus 10.866 inches." } },
+      { "@type": "Question", "name": "What is 160 cm in feet and inches?", "acceptedAnswer": { "@type": "Answer", "text": "160 cm equals 5 feet 3.0 inches. Calculation: 160 / 2.54 = 62.992 total inches = 5 feet (60 in) plus 2.992 inches." } },
+      { "@type": "Question", "name": "How tall is 5'6\" in cm?", "acceptedAnswer": { "@type": "Answer", "text": "5 feet 6 inches equals 167.6 cm. Calculation: (5 x 12 + 6) x 2.54 = 66 x 2.54 = 167.64 cm." } },
+      { "@type": "Question", "name": "How tall is 6'2\" in cm?", "acceptedAnswer": { "@type": "Answer", "text": "6 feet 2 inches equals 187.96 cm. Calculation: (6 x 12 + 2) x 2.54 = 74 x 2.54 = 187.96 cm." } }
     ]
   }
 ];
----
 
+const sources: Source[] = [
+  {
+    author: 'International Bureau of Weights and Measures (BIPM)',
+    title: 'The metre - SI base units',
+    journal: 'bipm.org',
+    year: 2019,
+    url: 'https://www.bipm.org/en/si-base-units/metre',
+  },
+  {
+    author: 'National Institute of Standards and Technology (NIST)',
+    title: 'SI Units - Length',
+    journal: 'nist.gov',
+    year: 2023,
+    url: 'https://www.nist.gov/pml/owm/si-units-length',
+  },
+  {
+    author: 'NCD Risk Factor Collaboration',
+    title: 'A century of trends in adult human height',
+    journal: 'eLife',
+    year: 2016,
+    url: 'https://elifesciences.org/articles/13410',
+  },
+];
+---
 <CalculatorLayout
   title="Height Converter"
   metaTitle="Fast Height Converter | Convert cm, meters, feet & inches ᐅ"
@@ -60,25 +127,19 @@ const schema = [
   tocItems={tocItems}
   embedSlug="height-converter"
   schema={schema}
+  sources={sources}
   ogFormula="1 foot = 30.48 cm; 1 inch = 2.54 cm; cm = ft × 30.48 + in × 2.54"
   ogExample="5 ft 10 in = (5 × 30.48) + (10 × 2.54) = 177.8 cm"
 >
-
-  <!-- CALCULATOR WIDGET -->
   <div slot="calculator">
     <section class="calculator-interface" id="hc-calculator">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Height Conversion Calculator</h2>
           <p>Enter a value and select units - result updates instantly</p>
         </div>
-
-        <!-- Quick conversions -->
-        <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
+        <h3 class="font-semibold text-white text-center mb-6">Quick Height Conversions</h3>
         <div id="hc-quick" class="lc-quick"></div>
-
-        <!-- Inputs -->
         <div class="lc-inputs">
           <div class="input-group">
             <label for="hc-value">Value</label>
@@ -103,41 +164,33 @@ const schema = [
             <select id="hc-to"></select>
           </div>
         </div>
-
-        <!-- Result -->
         <div class="lc-result-box">
           <div class="result-label">Result</div>
           <div class="lc-result" id="hc-result">-</div>
           <div class="lc-result-desc" id="hc-result-desc"></div>
         </div>
-
-        <!-- Common conversions -->
         <div class="lc-common-section">
           <h3 id="hc-common-title" class="lc-common-title"></h3>
           <div id="hc-common" class="lc-common-grid"></div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/height-converter.js" is:inline></script>
   </div>
-
-  <!-- LONG-FORM CONTENT -->
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert cm to feet and inches: divide cm by 2.54 to get total inches, then divide by 12. The whole number is feet, the remainder is inches. Example: 180 cm / 2.54 = 70.87 in = 5 ft 10.9 in. To go the other way, multiply feet by 30.48 and inches by 2.54, then add them together.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use this height converter</h2>
       <p>Select the unit you are converting from and the unit you want in the two dropdowns, then type your height. The result updates as you type. When "Feet &amp; Inches" is selected as the source unit, a second input appears for the inches portion: enter feet in the first box and inches in the second. The swap button reverses direction without retyping.</p>
       <p>All calculations use the exact definition of 1 inch = 2.54 cm and run locally in your browser.</p>
-
-      <h2 id="cm-to-feet">cm to feet and inches</h2>
-      <p>Converting centimetres to feet and inches requires three steps. Here is a worked example using 180 cm:</p>
+      <h3 id="explained-to-beginner">Height conversion explained to a beginner</h3>
+      <p>Think of a centimeter and an inch as two different-sized tick marks on a ruler. The US and UK historically marked their rulers in feet and inches; most of the rest of the world standardized on centimeters. The bridge between the two systems is one exact number: 1 inch = 2.54 cm.</p>
+      <p>A worked example makes this concrete. If you are 170 cm tall and need to fill in a US form asking for feet and inches: divide 170 by 2.54 to get 66.93 total inches, then divide by 12 to get 5 feet with 6.93 inches left over, giving 5 ft 6.9 in. Going the other direction is simpler: 5 ft 9 in = (5 x 12 + 9) x 2.54 = 69 x 2.54 = 175.3 cm.</p>
+      <h2 id="cm-to-feet">Centimeters to feet and inches</h2>
+      <p>Converting centimeters to feet and inches requires three steps. Here is a worked example using 180 cm:</p>
       <ol>
         <li><strong>Divide by 2.54</strong> to get total inches: 180 / 2.54 = 70.866 inches</li>
         <li><strong>Divide total inches by 12</strong> to find feet: 70.866 / 12 = 5 feet with a remainder of 0.866</li>
@@ -145,37 +198,36 @@ const schema = [
       </ol>
       <p><strong>Result: 180 cm = 5 ft 10.4 in</strong></p>
       <p>The key relationship: 1 inch = 2.54 cm exactly, and 1 foot = 12 inches = 30.48 cm exactly.</p>
-
-      <h2 id="feet-to-cm">feet and inches to cm</h2>
-      <p>Converting feet and inches to centimetres is two steps. Worked example using 5'11":</p>
+      <p>Also see our dedicated <a href="/conversion/length-converter/cm-to-ft">cm to ft converter</a>.</p>
+      <h2 id="feet-to-cm">Feet and inches to centimeters</h2>
+      <p>Converting feet and inches to centimeters is two steps. Worked example using 5'11":</p>
       <ol>
         <li><strong>Convert feet to total inches:</strong> 5 × 12 = 60 inches, then add the remaining inches: 60 + 11 = 71 total inches</li>
         <li><strong>Multiply by 2.54:</strong> 71 × 2.54 = 180.34 cm</li>
       </ol>
       <p><strong>Result: 5'11" = 180.34 cm</strong></p>
       <p>Alternatively: multiply feet by 30.48 and inches by 2.54, then add. So 5'11" = (5 × 30.48) + (11 × 2.54) = 152.4 + 27.94 = 180.34 cm. Both methods give the same result.</p>
-
+      <p>For a dedicated tool, see our <a href="/conversion/length-converter/ft-to-cm">ft to cm converter</a>.</p>
       <h2 id="height-formats">Height formats explained</h2>
       <p>Height is recorded in different formats depending on context, and switching between them is one of the most common sources of confusion.</p>
-
       <h3>Feet and inches (ft+in)</h3>
-      <p>This is the format used for personal height in the United States and informally in the UK. You say "five foot eleven" and write it as 5'11" or 5 ft 11 in. The feet and inches are separate values: 5'11" is not the same as 5.11 feet (see the common mistakes section below).</p>
-
+      <p>This is the format used for personal height in the United States and informally in the UK. You say "five foot eleven" and write it as 5'11" or 5 ft 11 in. The feet and inches are separate values: 5'11" is not the same as 5.11 feet (see the <a href="#common-mistakes">common mistakes section</a> below).</p>
       <h3>Decimal feet</h3>
       <p>This format expresses the entire height as a decimal number of feet, for example 5.917 ft for 5'11". It is used in surveying, construction drawings, and some aviation contexts. It is not how people state their personal height, but it is common in technical fields. 5.917 ft × 30.48 = 180.34 cm, which confirms it matches 5'11".</p>
-
       <h3>Centimeters and meters</h3>
       <p>Centimeters are the standard for personal height everywhere outside the US and UK. Medical forms, driver's licences, and passport applications in Europe, Asia, South America, and most of the world use centimeters. Meters are used in scientific and technical contexts: a person who is 175 cm tall is 1.75 m tall.</p>
-
       <h3>Which format to use</h3>
       <p>For personal height on international medical forms, use centimeters. For US medical forms or US databases, use feet and inches. If you are doing any calculation that involves your height (BMI, surface area, proportions), convert to meters first since most formulas use SI units.</p>
-
+      <h2 id="cm-spelling">Centimetres or centimeters? Metres or meters?</h2>
+      <p>Both spellings refer to exactly the same unit. "Centimetre" and "metre" are the British and Commonwealth spellings, used in the UK, Australia, New Zealand, Canada, and most countries that follow British English conventions. "Centimeter" and "meter" are the American spellings.</p>
+      <p>The International Bureau of Weights and Measures (BIPM), which maintains the SI system, uses "metre" in its official publications. Both spellings are universally accepted in scientific and everyday use, and no conversion is needed between them.</p>
+      <p>For height conversion, the spelling makes no difference to the numbers. 175 centimetres and 175 centimeters are the same height. Whether you search for "cm to feet," "centimetres to feet," or "centimeters to feet," the conversion factor is identical: divide by 2.54 to get total inches.</p>
       <h2 id="reference">Common height reference table</h2>
-      <p>This table covers typical adult heights from 4'11" to 6'4", with values in both centimetres and meters.</p>
+      <p>This table covers typical adult heights from 4'11" to 6'4", with values in both centimeters and meters.</p>
       <div class="responsive-table">
       <table>
         <thead>
-          <tr><th>Feet &amp; Inches</th><th>Centimetres</th><th>Meters</th></tr>
+          <tr><th>Feet &amp; Inches</th><th>Centimeters</th><th>Meters</th></tr>
         </thead>
         <tbody>
           <tr><td>4'11"</td><td>149.9 cm</td><td>1.499 m</td></tr>
@@ -199,48 +251,53 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <p>When I encounter height fields in US software that accept a single decimal number, the most common error I see is entering 5.9 to mean "5 feet 9 inches." That reads as 5 feet and 0.9 x 12 = 10.8 inches (175.0 cm), not 5 ft 9 in (175.3 cm).</p>
+      <p>The difference is small at this height, but the same mistake on a 6-footer produces a 24 cm gap. If a field just says "Height (ft)", check whether it expects decimal feet or two separate fields before entering anything.</p>
+      <p>For international forms requiring cm, I use 5 ft as a mental anchor: 5 ft = 152.4 cm exactly, and every additional inch adds exactly 2.54 cm. So 5 ft 8 in = 152.4 + (8 x 2.54) = 172.7 cm without needing a calculator for most common heights in that range.</p>
+      <h2 id="common-mistakes">Common mistakes when converting height</h2>
       <h3>Entering 5.11 instead of 5 ft 11 in</h3>
       <p>This is the most common height conversion error. If you type "5.11" into a decimal feet field, the converter reads it as 5.11 feet, which is 5 feet and 0.11 × 12 = 1.32 inches, giving 155.8 cm. The correct value for 5'11" is 5.917 ft (or entered as 5 ft and 11 in separately), which gives 180.34 cm. The difference is over 24 cm. When using "Feet &amp; Inches" mode, always use the two separate input fields provided.</p>
-
       <h3>Confusing decimal feet with feet+inches on forms</h3>
       <p>If a form asks for height in feet and you enter 5.9, that means 5 feet and 0.9 × 12 = 10.8 inches (175.0 cm). But many people think 5.9 means 5 feet 9 inches (175.3 cm). These are nearly the same, but for a form asking for two separate fields (feet: 5, inches: 9), entering 5.9 in the feet field is wrong. Read the form carefully to understand whether it wants a decimal or two separate values.</p>
-
       <h3>Rounding 30.5 instead of using 30.48 for cm per foot</h3>
       <p>A common approximation is "1 foot = 30 cm" or "1 foot = 30.5 cm." The exact value is 30.48 cm. The error from using 30.5 is small per foot (0.066%) but compounds across multiple feet. For a 6-foot person: 6 × 30.5 = 183 cm vs the correct 182.88 cm, a 1.2 mm difference. For most purposes this is fine, but for any official form or medical record, use the exact value.</p>
-
-      <h2 id="faq">FAQs</h2>
-
+      <h2 id="faq">FAQs about height conversion</h2>
       <h3>How tall is 5'10" in cm?</h3>
       <p>5 feet 10 inches equals <strong>177.8 cm</strong>. Calculation: (5 × 12 + 10) × 2.54 = 70 × 2.54 = 177.8 cm.</p>
-
       <h3>How tall is 170 cm in feet and inches?</h3>
       <p>170 cm equals <strong>5 ft 6.9 in</strong>. Calculation: 170 / 2.54 = 66.929 total inches = 5 feet (60 in) + 6.929 inches.</p>
-
       <h3>How tall is 6 feet in cm?</h3>
       <p>6 feet equals exactly <strong>182.88 cm</strong>. Calculation: 6 × 30.48 = 182.88 cm. Since 1 foot = 0.3048 m exactly, this is also 1.8288 m.</p>
-
       <h3>How do I convert 5'11" to cm?</h3>
       <p>5 feet 11 inches equals <strong>180.34 cm</strong>. Calculation: (5 × 12 + 11) × 2.54 = 71 × 2.54 = 180.34 cm.</p>
-
       <h3>What is 175 cm in feet and inches?</h3>
       <p>175 cm equals <strong>5 ft 8.9 in</strong>. Calculation: 175 / 2.54 = 68.898 total inches = 5 feet and 8.898 inches.</p>
-
       <h3>How many cm is one inch?</h3>
       <p>One inch equals exactly <strong>2.54 cm</strong>. This is a fixed international standard set in 1959. All inch-to-cm conversions are exact rather than approximate.</p>
-
       <h3>What is the average adult height?</h3>
       <p>The global average adult male height is approximately <strong>171 cm (5 ft 7 in)</strong> and the global average adult female is approximately <strong>159 cm (5 ft 2.5 in)</strong>. These vary considerably by country. Dutch men average around 183 cm (6 ft 0 in), one of the tallest averages in the world. US male average is about 176 cm (5 ft 9 in).</p>
-
+      <h3>How tall is 5'9" in cm?</h3>
+      <p>5 feet 9 inches equals <strong>175.3 cm</strong>. Calculation: (5 × 12 + 9) × 2.54 = 69 × 2.54 = 175.26 cm.</p>
+      <h3>What is 180 cm in feet and inches?</h3>
+      <p>180 cm equals <strong>5 ft 10.9 in</strong>. Calculation: 180 / 2.54 = 70.866 total inches = 5 feet (60 in) + 10.866 inches.</p>
+      <h3>What is 160 cm in feet and inches?</h3>
+      <p>160 cm equals <strong>5 ft 3.0 in</strong>. Calculation: 160 / 2.54 = 62.992 total inches = 5 feet (60 in) + 2.992 inches.</p>
+      <h3>How tall is 5'6" in cm?</h3>
+      <p>5 feet 6 inches equals <strong>167.6 cm</strong>. Calculation: (5 × 12 + 6) × 2.54 = 66 × 2.54 = 167.64 cm.</p>
+      <h3>How tall is 6'2" in cm?</h3>
+      <p>6 feet 2 inches equals <strong>187.96 cm</strong>. Calculation: (6 × 12 + 2) × 2.54 = 74 × 2.54 = 187.96 cm.</p>
+      <QuizBlock
+        topic="height conversion"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/conversion/height-converter"
+      />
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
           <span class="tool-icon">⚖️</span>
           <div>
             <a href="/conversion/weight-converter">Weight Converter</a>
-            <p>Convert between kilograms, pounds, ounces, stone, and metric or US tons.</p>
+            <p>Convert between kilograms, pounds, ounces, stone, and <a href="/glossary/metric-system">metric</a> or US tons.</p>
           </div>
         </li>
         <li>
@@ -258,8 +315,7 @@ const schema = [
           </div>
         </li>
       </ul>
-
+      <RelatedGlossaryTerms toolPath="/conversion/height-converter" />
     </div>
   </div>
-
 </CalculatorLayout>

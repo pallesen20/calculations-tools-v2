@@ -1,8 +1,36 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import type { Source } from '../../components/Sources.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+
+const sources: Source[] = [
+  {
+    author: 'International Bureau of Weights and Measures (BIPM)',
+    title: 'The metre - SI base units',
+    journal: 'bipm.org',
+    year: 2019,
+    url: 'https://www.bipm.org/en/si-base-units/metre',
+  },
+  {
+    author: 'National Institute of Standards and Technology (NIST)',
+    title: 'SI Units - Length',
+    journal: 'nist.gov',
+    year: 2023,
+    url: 'https://www.nist.gov/pml/owm/si-units-length',
+  },
+  {
+    author: 'International Bureau of Weights and Measures (BIPM)',
+    title: 'The International System of Units (SI Brochure), 9th edition',
+    journal: 'bipm.org',
+    year: 2019,
+    url: 'https://www.bipm.org/en/publications/si-brochure/',
+  },
+];
 
 const tocItems = [
   { id: 'how-to-use',       label: 'How to use this converter' },
+  { id: 'explained-to-beginner', label: 'Length conversion explained to a beginner' },
   { id: 'metric',           label: 'Metric length units' },
   { id: 'imperial',         label: 'Imperial and nautical units' },
   { id: 'metric-vs-imperial', label: 'Metric vs imperial' },
@@ -11,8 +39,42 @@ const tocItems = [
   { id: 'pair-converters',  label: 'Dedicated pair converters' },
   { id: 'common-mistakes',  label: 'Common mistakes' },
   { id: 'faq',              label: 'FAQs' },
+  { id: 'quiz',             label: 'Quiz: test your knowledge' },
   { id: 'related-tools',    label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What is the exact number of centimeters in one inch, as fixed by international agreement in 1959?',
+    options: ['2.50 cm', '2.52 cm', '2.54 cm', '2.58 cm'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '1 inch = exactly 2.54 cm. This was fixed in 1959 by agreement between the US, UK, Australia, Canada, New Zealand, and South Africa - it is a definition, not a measurement.',
+  },
+  {
+    q: 'A marathon is 26.2 miles. Using the exact conversion factor, how many kilometers is this?',
+    options: ['42.165 km', '40.0 km', '44.0 km', '42.5 km'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: '1 mile = 1,609.344 m exactly, so 26.2 × 1.609344 = 42.165 km. This is why a marathon is officially described as 42.195 km (the exact IAAF-certified distance is 26.2188 miles).',
+  },
+  {
+    q: 'Why is the nautical mile still used in aviation and maritime navigation rather than the kilometer?',
+    options: ['It is shorter and easier to work with at sea', 'It corresponds to one arcminute of latitude along a meridian, making it directly useful on navigation charts', 'It was standardized globally before the kilometer existed', 'Aviation radar systems were calibrated to nautical miles in the 20th century'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'A nautical mile equals one arcminute of latitude, so 1 degree of latitude = exactly 60 nautical miles on any navigation chart. This geometric relationship is what makes it practically useful for navigation.',
+  },
+  {
+    q: 'How many feet are in a statute mile?',
+    options: ['5,000 ft', '5,400 ft', '5,500 ft', '5,280 ft'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '1 mile = 8 furlongs, 1 furlong = 220 yards, 1 yard = 3 feet: 8 × 220 × 3 = 5,280 feet.',
+  },
+  {
+    q: 'Someone enters their height as 5.11 ft instead of converting 5 ft 11 in properly. What is the correct decimal feet value?',
+    options: ['5.11 ft', '5.83 ft', '5.9167 ft', '5.92 ft'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '5 ft 11 in = 5 + (11/12) = 5.9167 ft. The value 5.11 ft represents only 5 ft 1.3 in - nearly 10 inches shorter than intended.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -54,7 +116,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Length Converter"
   metaTitle="Length Converter - km, miles, feet, inches, meters & more ᐅ"
@@ -63,25 +124,19 @@ const schema = [
   tocItems={tocItems}
   embedSlug="length-converter"
   schema={schema}
+  sources={sources}
   ogFormula="1 mile = 1.60934 km; 1 inch = 2.54 cm; 1 foot = 30.48 cm"
   ogExample="5 miles = 5 × 1.60934 = 8.047 km"
 >
-
-  <!-- CALCULATOR WIDGET -->
   <div slot="calculator">
     <section class="calculator-interface" id="lc-calculator">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Length Conversion Calculator</h2>
           <p>Enter a value and select units - result updates instantly</p>
         </div>
-
-        <!-- Quick conversions -->
-        <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
+        <h3 class="font-semibold text-white text-center mb-6">Quick Length Conversions</h3>
         <div id="lc-quick" class="lc-quick"></div>
-
-        <!-- Inputs -->
         <div class="lc-inputs">
           <div class="input-group">
             <label for="lc-value">Value</label>
@@ -103,41 +158,34 @@ const schema = [
             <select id="lc-to"></select>
           </div>
         </div>
-
-        <!-- Result -->
         <div class="lc-result-box">
           <div class="result-label">Result</div>
           <div class="lc-result" id="lc-result">-</div>
           <div class="lc-result-desc" id="lc-result-desc"></div>
         </div>
-
-        <!-- Common conversions -->
         <div class="lc-common-section">
           <h3 id="lc-common-title" class="lc-common-title"></h3>
           <div id="lc-common" class="lc-common-grid"></div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/length-converter.js" is:inline></script>
   </div>
-
-  <!-- LONG-FORM CONTENT -->
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>This converter handles all common metric and imperial length units: meters, kilometers, centimeters, millimeters, feet, inches, yards, miles, nautical miles, furlongs, and fathoms. Enter a value, choose your units, and the result appears instantly. All conversions use exact or internationally defined factors and calculate entirely in your browser.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use our length converter</h2>
       <p>Type a value in the input field, choose your "From" unit, then choose your "To" unit. The result updates as you type. To reverse a conversion, click the swap button between the two unit selectors. The quick conversion buttons at the top let you jump straight to the most common pairs.</p>
       <p>All calculations run locally in your browser using exact conversion factors. Results are shown to 8 significant figures, which is more than sufficient for any practical use.</p>
-
+      <h3 id="explained-to-beginner">Length conversion explained to a beginner</h3>
+      <p>Think of <a href="/glossary/metric-system">metric</a> and <a href="/glossary/imperial-system">imperial</a> as two different rulers - one built on counting in tens, one built on historical conventions. On the metric ruler, every step is exactly 10 times the previous one: 10 millimeters make a centimeter, 100 centimeters make a meter, 1,000 meters make a kilometer. Moving between units is a decimal shift, nothing more.</p>
+      <p>Imperial works differently. 12 inches make a foot, 3 feet make a yard, and 1,760 yards make a mile. Each ratio is independent - there is no shared factor linking them. The only bridge between the two systems is a single exact number <a href="https://www.nist.gov/pml/owm/si-units-length" target="_blank" rel="noopener noreferrer">agreed internationally in 1959</a>: 1 inch = 2.54 cm. Every other metric-imperial length conversion is derived from this anchor.</p>
+      <p><strong>A worked example:</strong> a US product manual gives a dimension as 4.5 inches and you need it in centimeters. Multiply by 2.54: 4.5 x 2.54 = 11.43 cm. Going the other direction, divide: 11.43 cm / 2.54 = 4.5 inches. For km and miles, the anchor is 1 mile = 1,609.344 m, giving a multiplier of about 1.609 (<a href="/conversion/length-converter/mi-to-km">miles to km</a>) or 0.621 (<a href="/conversion/length-converter/km-to-mi">km to miles</a>).</p>
       <h2 id="metric">Metric length units</h2>
-      <p>The metric system defines length from a single base unit, the meter, and scales everything by powers of 10. This makes arithmetic predictable: to convert between any two metric units, you multiply or divide by a power of 10.</p>
+      <p><a href="/glossary/metric-system">The metric system</a> defines length from a single base unit, the meter, and scales everything by powers of 10. This makes arithmetic predictable: to convert between any two metric units, you multiply or divide by a power of 10.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -153,7 +201,6 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="imperial">Imperial and nautical units</h2>
       <p>Imperial units are defined in terms of the inch, which is fixed at exactly 2.54 centimeters by international agreement since 1959. All other imperial units follow from this anchor.</p>
       <div class="responsive-table">
@@ -172,31 +219,25 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>The nautical mile is not an imperial unit in the traditional sense. It is defined as exactly 1,852 meters by the International Hydrographic Organization, and it corresponds to one arcminute of latitude. That geometric definition is why it is still used in navigation rather than the kilometer.</p>
-
+      <p><a href="/glossary/nautical-mile">The nautical mile</a> is not an imperial unit in the traditional sense. It is defined as exactly 1,852 meters by the International Hydrographic Organization, and it corresponds to one arcminute of latitude. That geometric definition is why it is still used in navigation rather than the kilometer.</p>
       <h2 id="metric-vs-imperial">Metric vs imperial: when to use each</h2>
       <p>The choice between metric and imperial is usually determined by geography and context, not preference. Here is how each system tends to be used in practice.</p>
-
       <h3>Where metric is standard</h3>
-      <p>Scientific publishing, engineering, manufacturing, and international trade all use metric exclusively. In everyday life, most of the world uses kilometers for driving distances, meters for height and room dimensions, and centimeters for clothing and screens.</p>
-
+      <p>Scientific publishing, engineering, manufacturing, and international trade all use metric exclusively. In everyday life, most of the world uses kilometers for driving distances, meters for height and room dimensions, and centimeters for clothing and screens, as some examples.</p>
       <h3>Where imperial is still common</h3>
       <p>The United States uses miles for road distances, feet for altitude and personal height, and inches for screen sizes and hardware. The UK officially uses metric but retains miles for road signs and pints for beer. Aviation worldwide uses feet for altitude, a legacy of US industry dominance in the 20th century.</p>
-
       <h3>Scientific contexts</h3>
-      <p>Physics, chemistry, and biology use SI units (the modern metric system) universally. At the extremes, nanometers describe wavelengths of visible light (400–700 nm), micrometers describe cell diameters (1–100 µm), and kilometers describe planetary distances. When you see a unit like "Angstrom" in physics, that is 0.1 nanometers, or 100 picometers, still metric.</p>
-
-      <h2 id="common">Common conversions</h2>
-      <p>These are the most frequently needed conversions, verified against exact definition values.</p>
-
+      <p>Physics, chemistry, and biology use SI units (<a href="https://www.bipm.org/en/measurement-units" target="_blank" rel="noopener noreferrer">the modern metric system</a>) universally. At the extremes, nanometers describe wavelengths of visible light (400–700 nm), micrometers describe cell diameters (1–100 µm), and kilometers describe planetary distances. When you see a unit like "Angstrom" in physics, that is 0.1 nanometers, or 100 picometers, still metric.</p>
+      <h2 id="common">Most common length conversions</h2>
+      <p>These are the most frequently needed length conversions, verified against exact definition values.</p>
       <h3>Centimeters and inches</h3>
-      <p>1 inch = exactly 2.54 cm. This is the anchor of the entire imperial system.</p>
+      <p>1 inch = exactly 2.54 cm. This is the anchor of the entire <a href="/glossary/imperial-system">imperial system</a>.</p>
       <ul>
         <li>30 cm to inches: 30 ÷ 2.54 = 11.811 in</li>
         <li>6 inches to cm: 6 × 2.54 = 15.24 cm</li>
-        <li>A standard A4 sheet is 29.7 cm × 21.0 cm, which is 11.69 in × 8.27 in</li>
+        <li>A standard A4 sheet is 29.7 cm × 21.0 cm, which is 11.69 in × 8.27 in (this one has been helpful to me personally a couple of times.)</li>
       </ul>
-
+      <p>See our dedicated <a href="/conversion/length-converter/cm-to-in">centimeters to inches converter</a> and <a href="/conversion/length-converter/in-to-cm">inches to centimeters converter</a> pages.</p>
       <h3>Meters and feet</h3>
       <p>1 foot = 0.3048 m exactly, so 1 meter = 1 ÷ 0.3048 = 3.28084 ft.</p>
       <ul>
@@ -204,7 +245,7 @@ const schema = [
         <li>6 ft to meters: 6 × 0.3048 = 1.8288 m</li>
         <li>The cruising altitude of a commercial aircraft is around 35,000 ft = 10,668 m</li>
       </ul>
-
+      <p>See our dedicated <a href="/conversion/length-converter/m-to-ft">meters to feet converter</a> and <a href="/conversion/length-converter/ft-to-m">feet to meters converter</a> pages.</p>
       <h3>Kilometers and miles</h3>
       <p>1 mile = 1,609.344 m exactly, so 1 km = 1 ÷ 1.609344 = 0.62137 miles.</p>
       <ul>
@@ -212,15 +253,14 @@ const schema = [
         <li>26.2 miles (marathon) to km: 26.2 × 1.609344 = 42.165 km</li>
         <li>A 5K race is exactly 5 km = 3.107 miles</li>
       </ul>
-
+      <p>See our dedicated <a href="/conversion/length-converter/km-to-mi">kilometers to miles converter</a> and <a href="/conversion/length-converter/mi-to-km">miles to kilometers converter</a> pages.</p>
       <h3>Nautical miles</h3>
       <p>1 nautical mile = 1,852 m = 1.852 km = 1.15078 statute miles.</p>
       <ul>
         <li>100 nautical miles to km: 100 × 1.852 = 185.2 km</li>
         <li>Speed in knots: 1 knot = 1 nautical mile per hour = 1.852 km/h. See more in our <a href="/conversion/speed-converter">speed converter</a>.</li>
       </ul>
-
-      <h2 id="reference">Quick reference table</h2>
+      <h2 id="reference">Quick reference table for length units</h2>
       <div class="responsive-table">
       <table>
         <thead>
@@ -241,18 +281,15 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="pair-converters">Dedicated pair converters</h2>
+      <h2 id="pair-converters">Dedicated length pair converters</h2>
       <p>Each link below opens a dedicated page for that specific unit pair, with a formula, reference table, and worked examples.</p>
-
-      <h3>Height &amp; body measurements</h3>
+      <h3>Height and body measurements</h3>
       <div class="pair-links-grid">
         <a href="/conversion/length-converter/cm-to-ft">cm → ft</a>
         <a href="/conversion/length-converter/ft-to-cm">ft → cm</a>
         <a href="/conversion/length-converter/m-to-ft">m → ft</a>
         <a href="/conversion/length-converter/ft-to-m">ft → m</a>
       </div>
-
       <h3>Small measurements</h3>
       <div class="pair-links-grid">
         <a href="/conversion/length-converter/mm-to-cm">mm → cm</a>
@@ -262,13 +299,11 @@ const schema = [
         <a href="/conversion/length-converter/cm-to-in">cm → in</a>
         <a href="/conversion/length-converter/in-to-cm">in → cm</a>
       </div>
-
-      <h3>Feet &amp; inches</h3>
+      <h3>Feet and inches</h3>
       <div class="pair-links-grid">
         <a href="/conversion/length-converter/ft-to-in">ft → in</a>
         <a href="/conversion/length-converter/in-to-ft">in → ft</a>
       </div>
-
       <h3>Distance</h3>
       <div class="pair-links-grid">
         <a href="/conversion/length-converter/km-to-mi">km → mi</a>
@@ -276,40 +311,40 @@ const schema = [
         <a href="/conversion/length-converter/m-to-yd">m → yd</a>
         <a href="/conversion/length-converter/yd-to-m">yd → m</a>
       </div>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <p>When I encounter length inputs in technical documents, the most consistent source of error is aviation altitude data.</p>
+      <p>Aircraft altitude is given in feet almost universally, but European ATC systems and engineering specs often work in meters. The approximation 3.28 ft/m is tempting, but 35,000 ft / 3.28 gives 10,671 m - eight meters above the correct value of 10,668 m.</p>
+      <p>Eight meters in cruising cruise is inconsequential, but using the approximation inside vertical separation calculations compounds quickly. The exact factor is 1 m = 100/30.48 ft, which is why the converter uses the full precision.</p>
+      <p>Screen and panel sizing is the other area where I regularly see confusion. Televisions and monitors are sold by diagonal in inches, but installation cutout dimensions in mounting manuals are given in millimeters.</p>
+      <p>The conversion 1 inch = 25.4 mm is exact with no rounding error, but the trap is that a "55-inch" screen means the display diagonal - not the panel body. The actual panel is always wider and taller than the diagonal suggests, and the bezel adds further.</p>
+      <p>When cutting a recess for a screen, always use the manufacturer's overall dimensions in mm, not a diagonal calculation.</p>
+      <h2 id="common-mistakes">Common mistakes when converting lengths</h2>
       <h3>Confusing miles and nautical miles</h3>
-      <p>A statute mile (used on roads) is 1,609.344 m. A <a href="/glossary/nautical-mile">nautical mile is 1,852 m</a>, about 15% longer. Mixing these matters most in aviation and sailing, where speeds, fuel calculations, and navigation charts all use nautical miles and knots.</p>
-
+      <p>A statute mile (used on roads) is 1,609.344 m exactly. A <a href="/glossary/nautical-mile">nautical mile is 1,852 m</a>, so about 15% longer. Mixing these matters most in aviation and sailing, where speeds, fuel calculations, and navigation charts all use nautical miles and knots.</p>
       <h3>Using 3.28 instead of 3.28084 for meters to feet</h3>
       <p>3.28 is a common approximation, but it introduces a 0.026% error. At 100 meters, that means an answer of 328 ft instead of the correct 328.084 ft. For casual use this is fine, but for engineering or surveying, use the full factor or the exact relationship: 1 m = 100/30.48 feet.</p>
-
       <h3>Forgetting that feet and inches are a mixed unit</h3>
-      <p>When someone says they are "5 foot 11", that is not 5.11 feet. It is 5 + (11/12) feet = 5.9167 feet = 1.8034 meters. The converter works in decimal feet, so if you need to enter "5 foot 11", convert it to 5.9167 ft first, or use the dedicated <a href="/conversion/height-converter">height converter</a> which handles ft+in as a combined unit.</p>
-
-      <h2 id="faq">FAQs</h2>
-
+      <p>When someone says they are "5 foot 11", that is not 5.11 feet. It is 5 + (11/12) feet = 5.9167 feet = 1.8034 meters. The converter works in decimal feet, so if you need to enter "5 foot 11", convert it to 5.9167 ft first, or use the <a href="/conversion/height-converter">dedicated height converter</a> which handles ft+in as a combined unit.</p>
+      <h2 id="faq">FAQs for length units between metric and imperial</h2>
       <h3>How many centimeters are in an inch?</h3>
-      <p>Exactly 2.54 centimeters. This has been the international standard since 1959, when the US, UK, Australia, Canada, New Zealand, and South Africa agreed to fix the inch at precisely 25.4 mm. It is not an approximation.</p>
-
+      <p>Exactly 2.54 centimeters. This has been the international standard since 1959, when the US, UK, Australia, Canada, New Zealand, and South Africa agreed to fix the inch at precisely 25.4 mm. It is therefore not just an approximation.</p>
       <h3>How many feet are in a meter?</h3>
       <p>1 meter = 3.28084 feet (to 6 significant figures). The exact value is 1 ÷ 0.3048, which produces a repeating decimal: 3.280839895013123... Because 1 foot = 0.3048 m exactly, the feet-to-meters direction is always exact.</p>
-
       <h3>How do I convert miles to kilometers?</h3>
       <p>Multiply by 1.609344. This is exact: 1 mile = 1,760 yards × 0.9144 m/yard = 1,609.344 m. Example: 5 miles × 1.609344 = 8.04672 km.</p>
-
       <h3>How do I convert km to miles?</h3>
       <p>Multiply by 0.621371 (or divide by 1.609344). Example: 10 km × 0.621371 = 6.21371 miles.</p>
-
       <h3>How many feet are in a mile?</h3>
       <p>Exactly 5,280 feet. The chain of definitions: 1 mile = 8 furlongs, 1 furlong = 10 chains, 1 chain = 22 yards, 1 yard = 3 feet. So 8 × 10 × 22 × 3 = 5,280.</p>
-
       <h3>What is a nautical mile and why is it different?</h3>
       <p>A nautical mile is exactly 1,852 meters. It was originally defined as one arcminute (1/60 of a degree) of latitude along any meridian, making it useful for navigation: on a chart, 1 degree of latitude = 60 nautical miles. It is longer than a statute mile by about 1.15 times.</p>
-
       <h3>What is the difference between metric and imperial length?</h3>
-      <p>Metric units scale by powers of 10 from a single base unit (the meter), which makes converting between them a matter of shifting a decimal point. Imperial units (foot, yard, mile) have irregular multipliers between them (12, 3, 5280) that are historical, not mathematical. The metric system is used for science and engineering worldwide; the US uses imperial for most everyday measurements.</p>
+      <p>Metric units scale by powers of 10 from a single base unit (the meter), which makes converting between them a matter of shifting a decimal point. Imperial units (foot, yard, mile) have irregular multipliers between them (12, 3, 5280) that are historical, not mathematical.</p>
+      <p>The metric system is used for science and engineering worldwide; the US uses imperial for most everyday measurements.</p>
+      <QuizBlock
+        topic="length conversion"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/conversion/length-converter"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
@@ -342,12 +377,10 @@ const schema = [
           </div>
         </li>
       </ul>
-
+      <RelatedGlossaryTerms toolPath="/conversion/length-converter" />
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-links-grid { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; margin: 0.5rem 0 1.25rem; }
   .pair-links-grid a { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 0.3rem 0.75rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none !important; white-space: nowrap; }

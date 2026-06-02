@@ -463,7 +463,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const r = histAmount.getBoundingClientRect();
           dateInput.style.width = r.width + 'px';
           dateInput.style.height = r.height + 'px';
-          dateInput.style.boxSizing = 'border-box';
         }
         loadHistStats(cpFrom, cpTo);
       }

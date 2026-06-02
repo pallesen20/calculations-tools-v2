@@ -1917,6 +1917,83 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'imperial-system': {
+    definition: [
+      'The imperial system is the traditional British system of units, codified in the British Weights and Measures Act of 1824. It covers length (inches, feet, yards, miles), mass (ounces, pounds, stones, hundredweights, tons), volume (fluid ounces, pints, quarts, gallons), and area (acres, square feet, square miles). Each quantity has its own set of conversion ratios - 12 inches per foot, 16 ounces per pound, 8 pints per gallon - none of which share a common decimal base.',
+      'The British Empire spread these units across its colonies. After decolonisation, most countries adopted metric, leaving three notable holdouts: the United States (which uses a close variant called US customary units), Myanmar, and Liberia. The UK officially converted to metric for most purposes but still uses miles for road distances, pints for draught beer and milk, and stones for body weight.',
+      'The US customary system is related to but not identical to imperial. The two systems share unit names for most quantities but differ for volume: a US gallon is 3.785 litres, while an imperial gallon is 4.546 litres. A US fluid pint is 473 mL; an imperial pint is 568 mL.',
+    ],
+    beginnerExplain: [
+      'The simplest way to think about imperial is "units with historical names and irregular conversion ratios." There is no single multiplier that links inches to feet to yards to miles the way metric links millimeters to centimeters to meters to kilometers.',
+      'Each conversion ratio - 12, 3, 1,760 - was set by historical practice and tradition, not mathematical design. This is why converting 5 miles 3,000 feet to a single unit requires several manual steps, where the metric equivalent would be a trivial decimal shift.',
+    ],
+    whenToUse: 'Use imperial units when working with US documents, construction in the UK or US, American recipes, or any context where your audience expects those units. For precise engineering calculations or comparisons across borders, convert to metric first to reduce conversion errors and ambiguity.',
+    examples: {
+      headers: ['Imperial unit', 'Imperial equivalent', 'Metric equivalent'],
+      rows: [
+        ['1 inch', '-', '2.54 cm'],
+        ['1 foot', '12 inches', '30.48 cm'],
+        ['1 yard', '3 feet', '0.9144 m'],
+        ['1 mile', '1,760 yards', '1.609 km'],
+        ['1 ounce (mass)', '-', '28.35 g'],
+        ['1 pound', '16 ounces', '453.59 g'],
+        ['1 stone', '14 pounds', '6.35 kg'],
+        ['1 imperial pint', '20 fl oz', '568 mL'],
+        ['1 US pint', '16 fl oz', '473 mL'],
+        ['1 imperial gallon', '8 pints', '4.546 L'],
+        ['1 US gallon', '-', '3.785 L'],
+      ],
+    },
+    pitfalls: 'The most dangerous imperial pitfall is the US pint vs imperial pint discrepancy. A US recipe calling for 1 pint of cream means 473 mL; a British recipe means 568 mL - a 20% difference that matters in baking. Similarly, a "US ton" (short ton) is 2,000 lb (907 kg), while a "UK ton" (long ton) is 2,240 lb (1,016 kg). Always specify which variant when communicating across borders.',
+    faqs: [
+      { q: 'What is the simple definition of the imperial system?', a: 'A system of units based on historical British measures, using non-decimal conversion ratios between units: 12 inches per foot, 16 ounces per pound, 1,760 yards per mile. It is still used primarily in the United States (as US customary units) and partially in the UK for a few everyday quantities.' },
+      { q: 'How many countries use the imperial system?', a: 'Three countries primarily use imperial-derived units for everyday measurement: the United States, Myanmar, and Liberia. The UK officially uses metric but retains imperial for road distances (miles), draught beer and bottled milk (pints), and informal body weight (stones and pounds).' },
+      { q: 'What is the difference between US customary and imperial?', a: 'The two systems share the same names for most units but differ for volume. A US fluid ounce, cup, pint, quart, and gallon are all smaller than their imperial equivalents. The most practically important difference: a US gallon = 3.785 L vs an imperial gallon = 4.546 L.' },
+      { q: 'Why does the US still use imperial units?', a: 'The US uses US customary units due to historical inertia. Congress passed the Metric Conversion Act in 1975, but adoption was voluntary and largely did not happen in everyday commerce, construction, or consumer products. US science, medicine, and pharmaceuticals do use metric.' },
+      { q: 'What is the difference between metric and imperial?', a: 'Metric uses a base-10 structure with consistent prefixes (kilo-, centi-, milli-), so all unit conversions involve multiplying or dividing by powers of 10. Imperial uses irregular historical ratios that vary by quantity and require memorisation. Converting 5,280 feet to miles requires knowing the 5,280 ratio; converting 5,280 meters to kilometers is simply 5.280.' },
+    ],
+    quiz: {
+      topic: 'the imperial system',
+      questions: [
+        {
+          q: 'What is the key structural difference between the imperial and metric systems?',
+          options: [
+            'Imperial uses base-10 ratios; metric uses historical ratios',
+            'Metric uses base-10 ratios for all conversions; imperial uses irregular historical ratios such as 12, 16, and 1,760',
+            'Imperial is only used for length; metric covers all physical quantities',
+            'Metric is more precise because its units are physically smaller',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Metric is built entirely on powers of 10: 1 km = 1,000 m, 1 kg = 1,000 g. Imperial uses different ratios for every quantity: 12 inches per foot, 16 ounces per pound, 1,760 yards per mile. None of these share a common factor.',
+        },
+        {
+          q: 'How many yards are in 1 mile?',
+          options: ['5,280', '880', '1,760', '3,520'],
+          correct: 2 as const,
+          explanation: '1 mile = 1,760 yards = 5,280 feet. The 5,280 figure is feet per mile; the 1,760 figure is yards per mile (since 3 feet = 1 yard, 5,280 / 3 = 1,760).',
+        },
+        {
+          q: 'How many ounces are in 1 pound in the imperial/US customary system?',
+          options: ['8', '10', '12', '16'],
+          correct: 3 as const,
+          explanation: '1 pound = 16 ounces. This is one of the most commonly needed imperial ratios. 1 pound = 453.59 grams, so 1 ounce = 28.35 grams.',
+        },
+        {
+          q: 'A US recipe calls for 1 pint of milk. How many millilitres is a US pint?',
+          options: ['568 mL', '473 mL', '250 mL', '946 mL'],
+          correct: 1 as const,
+          explanation: 'A US pint = 473 mL. An imperial (UK) pint = 568 mL. These are not the same - using an imperial pint in a US recipe adds about 20% more liquid than intended.',
+        },
+        {
+          q: 'Which of the following is NOT a unit in the imperial system?',
+          options: ['Furlong', 'Stone', 'Hectare', 'Hundredweight'],
+          correct: 2 as const,
+          explanation: 'A hectare is a metric unit of area equal to 10,000 m2. Furlongs (1/8 of a mile), stones (14 pounds), and hundredweights (100 lb in the US, 112 lb in the UK) are all imperial units.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'npv': {
     definition: [
       'Net Present Value (NPV) is the sum of all cash flows from an investment - positive (inflows) and negative (outflows) - each discounted back to their present value using a chosen rate. A positive NPV means the investment generates more value in present-dollar terms than it costs, creating wealth. A negative NPV means it destroys value at the given discount rate.',
@@ -2085,6 +2162,84 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why do high-growth companies trade at higher multiples?', a: 'A multiple is a simplified discounted cash flow. A faster-growing business will generate substantially more earnings in years 3-7 than it does today. Buyers pay for those future earnings now, driving up the current multiple. A SaaS company growing 30% per year commands 20x EV/Revenue because investors are pricing in the earnings it does not yet have. A business with 0% growth commands a lower multiple because future earnings will look much like current earnings.' },
       { q: 'Are multiples useful for valuing private companies?', a: 'Yes - comparable company multiples are one of the three main methods for private business valuation (alongside DCF and precedent transactions). Apply the public market multiple for the closest peer group, then apply a private company discount of typically 15-30% to account for illiquidity and concentration risk. The discount narrows as the private company grows larger and more institutional in its operations.' },
     ],
+  },
+
+  'metric-system': {
+    definition: [
+      'The metric system is the international decimal system of measurement, formally known as the International System of Units (SI). Its seven base units are the meter (length), kilogram (mass), second (time), ampere (electric current), kelvin (thermodynamic temperature), mole (amount of substance), and candela (luminous intensity). All other SI units - newtons, joules, pascals, watts - are derived from combinations of these seven.',
+      'The system\'s defining feature is its decimal structure: every unit steps up or down by a factor of 10 using standardized prefixes. A kilometer is 1,000 meters; a centimeter is one-hundredth of a meter; a millimeter is one-thousandth. This makes arithmetic straightforward compared to converting feet to miles or ounces to pounds, where each conversion requires a different ratio.',
+      'Adopted formally by France in 1795 and spread globally through trade and treaty, the metric system is now the legal system of measurement in 195 of 196 countries. The United States is the most notable exception; it uses US customary units for everyday commerce but relies on metric for science, medicine, the military, and pharmaceutical manufacturing.',
+    ],
+    beginnerExplain: [
+      'Think of metric as "counting in tens at every level." If you know that 1 meter = 100 centimeters and 1 kilogram = 1,000 grams, you can rescale any measurement by moving a decimal point - no memorizing that 5,280 feet make a mile or 16 ounces make a pound.',
+      'The same prefix works identically for every base unit: kilo always means 1,000 (kilometer, kilogram, kilojoule), centi always means 1/100 (centimeter, centiliter), milli always means 1/1,000 (millimeter, milligram, millisecond). Learn the prefixes once and they apply everywhere.',
+    ],
+    whenToUse: 'Use metric when communicating across borders, performing scientific calculations, or working in medicine, engineering, or manufacturing. If you receive measurements in imperial and need to do arithmetic or compare values, convert to metric first. The only reason to stay in imperial is when your specific audience expects those units.',
+    examples: {
+      headers: ['Prefix', 'Symbol', 'Factor', 'Example'],
+      rows: [
+        ['giga', 'G', '1,000,000,000 (10^9)', '1 gigabyte = 1,000 megabytes'],
+        ['mega', 'M', '1,000,000 (10^6)', '1 megameter = 1,000 km'],
+        ['kilo', 'k', '1,000 (10^3)', '1 kilometer = 1,000 meters'],
+        ['(base)', '-', '1', 'meter, gram, liter, second'],
+        ['centi', 'c', '0.01 (10^-2)', '1 cm = 0.01 meter'],
+        ['milli', 'm', '0.001 (10^-3)', '1 mm = 0.001 meter'],
+        ['micro', 'μ', '0.000001 (10^-6)', '1 micrometer = 0.000001 m'],
+      ],
+    },
+    pitfalls: 'The most common metric confusion is treating "weight" and "mass" as the same thing. The kilogram is a unit of mass; weight (the force due to gravity) is measured in newtons. In everyday use this distinction is ignored, but in science and engineering it matters. A second common mistake: "metric ton" (tonne, 1,000 kg) is a valid metric unit, but a "US ton" (short ton, 907 kg) is not - and the two differ by almost 10%.',
+    faqs: [
+      { q: 'What is the simple definition of the metric system?', a: 'A decimal system of measurement where all units relate by powers of 10. It is built on 7 SI base units and a set of standard prefixes (kilo-, centi-, milli-) that work identically across all physical quantities. The same prefix means the same multiplier whether applied to meters, grams, liters, or seconds.' },
+      { q: 'How many countries use the metric system?', a: '195 of 196 countries have officially adopted the metric system. The United States is the most notable holdout, using US customary units for everyday commerce while relying on metric for science, medicine, and international trade. Myanmar and Liberia are the other two countries without official metrication, though all three use metric in technical contexts.' },
+      { q: 'What are the 7 SI base units?', a: 'Metre (length), kilogram (mass), second (time), ampere (electric current), kelvin (thermodynamic temperature), mole (amount of substance), and candela (luminous intensity). All other SI units are derived from combinations of these seven. For example, a newton (force) = kg x m/s2, and a joule (energy) = kg x m2/s2.' },
+      { q: 'What is the difference between metric and imperial?', a: 'Metric uses a base-10 structure with consistent prefixes, so all unit conversions involve multiplying or dividing by powers of 10. Imperial uses irregular historical ratios that vary by quantity: 12 inches per foot, 16 ounces per pound, 1,760 yards per mile. Metric arithmetic is generally faster and less error-prone for any calculation beyond simple look-ups.' },
+      { q: 'Why doesn\'t the US use the metric system?', a: 'The US attempted metrication after passing the Metric Conversion Act of 1975, but adoption was voluntary and stalled due to industry inertia and public resistance. US manufacturing, construction, and everyday commerce remain on US customary units. Science, medicine, the military, and pharmaceutical production use metric exclusively - so the US effectively runs two parallel unit systems.' },
+    ],
+    quiz: {
+      topic: 'the metric system',
+      questions: [
+        {
+          q: 'What is the formal name of the metric system?',
+          options: [
+            'The British System of Units',
+            'The International System of Units (SI)',
+            'The Universal Decimal System',
+            'The French Base-10 Standard',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The metric system is formally called the International System of Units, abbreviated SI from the French "Systeme International d\'unites." It was adopted in 1960 at the General Conference on Weights and Measures and defines the 7 base units still in use today.',
+        },
+        {
+          q: 'How many millimeters are in 1 meter?',
+          options: ['100', '10', '10,000', '1,000'],
+          correct: 3 as const,
+          explanation: '1 meter = 1,000 millimeters. The prefix "milli" always means 1/1,000 (10^-3), so a millimeter is one-thousandth of a meter. This same ratio applies to milligrams (1/1,000 of a gram) and milliseconds (1/1,000 of a second).',
+        },
+        {
+          q: 'What makes the metric system easier to use for arithmetic than imperial?',
+          options: [
+            'It uses larger units, reducing the number of conversions needed',
+            'It is based on powers of 10, so unit conversions only require moving a decimal point',
+            'Its units were standardised first, giving it historical precedence',
+            'It uses the same unit names across all countries',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Every metric conversion is a multiplication or division by a power of 10. Converting 5,280 meters to kilometers is 5.280 (divide by 1,000). The imperial equivalent - 5,280 feet to miles - requires knowing the 5,280 ratio, then dividing by it.',
+        },
+        {
+          q: 'Which of the following is the most notable country that has NOT officially adopted the metric system as its primary everyday system?',
+          options: ['United Kingdom', 'France', 'United States', 'Australia'],
+          correct: 2 as const,
+          explanation: 'The United States is the most prominent non-metric country. It passed the Metric Conversion Act in 1975 but adoption was voluntary and did not take hold in everyday commerce. The UK, France, and Australia all use metric as their primary measurement system.',
+        },
+        {
+          q: 'Which prefix means one-thousandth (0.001)?',
+          options: ['milli-', 'centi-', 'micro-', 'deci-'],
+          correct: 0 as const,
+          explanation: 'Milli- means 10^-3 = 0.001. A millimeter is 0.001 meters; a milligram is 0.001 grams. Centi- means 0.01 (10^-2), deci- means 0.1 (10^-1), and micro- means 0.000001 (10^-6).',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'mid-market-rate': {
