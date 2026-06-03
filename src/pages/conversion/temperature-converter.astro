@@ -1,6 +1,33 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import Formula from '../../components/Formula.astro';
+import type { Source } from '../../components/Sources.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+
+const sources: Source[] = [
+  {
+    author: 'International Bureau of Weights and Measures (BIPM)',
+    title: 'The International System of Units (SI Brochure), 9th edition',
+    journal: 'bipm.org',
+    year: 2019,
+    url: 'https://www.bipm.org/en/publications/si-brochure/',
+  },
+  {
+    author: 'National Institute of Standards and Technology (NIST)',
+    title: 'SI Units - Temperature',
+    journal: 'nist.gov',
+    year: 2023,
+    url: 'https://www.nist.gov/pml/owm/si-units-temperature',
+  },
+  {
+    author: 'World Health Organization (WHO)',
+    title: 'Food safety - fact sheet',
+    journal: 'who.int',
+    year: 2022,
+    url: 'https://www.who.int/news-room/fact-sheets/detail/food-safety',
+  },
+];
 
 const tocItems = [
   { id: 'how-to-use',          label: 'How to use this converter' },
@@ -11,8 +38,9 @@ const tocItems = [
   { id: 'formulas',            label: 'All conversion formulas' },
   { id: 'temperature-differences', label: 'Temperature differences vs absolute' },
   { id: 'common-mistakes',     label: 'Common mistakes' },
-  { id: 'faq',                 label: 'FAQs' },
   { id: 'sub-pages',           label: 'Dedicated conversion pages' },
+  { id: 'faq',                 label: 'FAQs' },
+  { id: 'quiz',                label: 'Quiz: test your knowledge' },
   { id: 'related-tools',       label: 'Related tools' },
 ];
 
@@ -22,6 +50,39 @@ const f = {
   cToK:  "$$K = C + 273.15$$",
   diff:  "$$\\Delta F = \\Delta C \\times \\frac{9}{5}$$",
 };
+
+const quizQuestions = [
+  {
+    q: 'At which temperature are Celsius and Fahrenheit exactly equal?',
+    options: ['0°', '-17.8°', '-32°', '-40°'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '-40 is the only point where both scales are equal. Above -40, Fahrenheit is always higher than Celsius; below -40, Fahrenheit is always lower.',
+  },
+  {
+    q: 'Using the exact formula, what is 20°C in Fahrenheit?',
+    options: ['56°F', '64°F', '68°F', '72°F'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'F = 20 × 9/5 + 32 = 36 + 32 = 68°F. The 9/5 scales the degree size; the +32 accounts for the different zero points.',
+  },
+  {
+    q: 'Why does the Celsius-to-Fahrenheit formula require two steps (multiply, then add 32)?',
+    options: ['To improve accuracy at extreme temperatures', 'Because the two scales differ in both degree size and zero point', 'Because Fahrenheit uses fractions while Celsius uses decimals', 'The +32 accounts for a historical calibration error'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The 9/5 multiplication corrects for the different degree size (one Fahrenheit degree is smaller), and the +32 shifts for the different zero point. Both adjustments are necessary.',
+  },
+  {
+    q: 'At what temperature does water boil in Denver (altitude 1,609 m)?',
+    options: ['100°C (212°F)', '97°C (207°F)', '94°C (201°F)', '88°C (190°F)'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Reduced atmospheric pressure at 1,609 m lowers the boiling point to about 94°C (201°F). This affects cooking times and food safety - water cannot reach 100°C at that altitude.',
+  },
+  {
+    q: 'A recipe says to increase the oven temperature by 10°C. How many Fahrenheit degrees should you increase it?',
+    options: ['50°F', '10°F', '42°F', '18°F'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Temperature changes use only the scaling factor, not the +32 offset. A change of 10°C × 9/5 = 18°F. The +32 offset only applies when converting a fixed temperature point, not a difference.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -64,7 +125,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Temperature Converter"
   metaTitle="Temperature Converter - Celsius to Fahrenheit, Kelvin & more ᐅ"
@@ -73,21 +133,19 @@ const schema = [
   tocItems={tocItems}
   embedSlug="temperature-converter"
   schema={schema}
+  sources={sources}
   ogFormula="°F = (°C × 9/5) + 32; °C = (°F - 32) × 5/9; K = °C + 273.15"
   ogExample="100°C = (100 × 9/5) + 32 = 212°F"
 >
-
   <div slot="calculator">
     <section class="calculator-interface" id="tc-calculator">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Temperature Conversion Calculator</h2>
           <p>Enter a value and select units - result updates instantly</p>
         </div>
         <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
         <div id="tc-quick" class="lc-quick"></div>
-
         <div class="lc-inputs">
           <div class="input-group">
             <label for="tc-value">Value</label>
@@ -109,35 +167,27 @@ const schema = [
             <select id="tc-to"></select>
           </div>
         </div>
-
         <div class="lc-result-box">
           <div class="result-label">Result</div>
           <div class="lc-result" id="tc-result">-</div>
           <div class="lc-result-desc" id="tc-result-desc"></div>
         </div>
-
         <div>
           <h3 id="tc-common-title" class="lc-common-title"></h3>
           <div id="tc-common" class="tc-common-grid"></div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/temperature-converter.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
-        <p>To convert Celsius to Fahrenheit: multiply by 9/5 then add 32. To convert Fahrenheit to Celsius: subtract 32 then multiply by 5/9. Example: 100°C = 212°F; 72°F = 22.2°C. To convert to Kelvin, add 273.15 to the Celsius value.</p>
+        <p>To convert <a href="/conversion/temperature-converter/c-to-f">Celsius to Fahrenheit</a>: multiply by 9/5 then add 32. To convert <a href="/conversion/temperature-converter/f-to-c">Fahrenheit to Celsius</a>: subtract 32 then multiply by 5/9. Example: 100°C = 212°F; 72°F = 22.2°C. To convert to Kelvin, add 273.15 to the Celsius value.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use our temperature converter</h2>
       <p>Type a temperature in the input field, choose the scale you are converting from, then choose the target scale. The result updates instantly. Quick conversion buttons at the top jump to the most common pairs. All five scales are supported: Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur. All calculations run locally in your browser.</p>
-
       <h2 id="scales">The five temperature scales</h2>
       <p>Five temperature scales are in regular or historical use. Three are relevant to everyday life; two are specialist or historical.</p>
       <div class="responsive-table">
@@ -155,27 +205,25 @@ const schema = [
       </table>
       </div>
       <p>Kelvin has no degree symbol because it is an absolute scale with a physically meaningful zero point. Saying "300 degrees Kelvin" is technically incorrect; the proper form is "300 kelvin" or "300 K." Rankine is the Fahrenheit equivalent of Kelvin: same degree size as Fahrenheit, but starting from absolute zero.</p>
-
       <h2 id="celsius-fahrenheit">Celsius and Fahrenheit in depth</h2>
       <p>The Celsius-Fahrenheit conversion is the most common temperature conversion in everyday life. The formula has two parts because the two scales differ in both their zero point and their degree size.</p>
-
       <h3>Celsius to Fahrenheit</h3>
       <p>Multiply by 9/5 (which scales the degree size), then add 32 (which accounts for the offset between the zero points).</p>
       <Formula expr={f.cToF} />
       <p>Examples: 0°C = 32°F, 20°C = 68°F, 37°C = 98.6°F, 100°C = 212°F.</p>
       <p>Quick mental estimate: double the Celsius value and add 30. This gives 0°C ≈ 30°F (actual: 32°F) and 20°C ≈ 70°F (actual: 68°F). The estimate is off by a couple of degrees but useful for quick comparisons.</p>
-
+      <p>Also see: <a href="/conversion/temperature-converter/c-to-f">Celsius to Fahrenheit converter</a>.</p>
       <h3>Fahrenheit to Celsius</h3>
       <p>Subtract 32 first (remove the zero-point offset), then multiply by 5/9 (scale back to Celsius degree size).</p>
       <Formula expr={f.fToC} />
       <p>Examples: 32°F = 0°C, 72°F = 22.2°C, 98.6°F = 37°C, 212°F = 100°C.</p>
-
+      <p>Also see: <a href="/conversion/temperature-converter/f-to-c">Fahrenheit to Celsius converter</a>.</p>
       <h3>Celsius to Kelvin</h3>
       <p>Celsius and Kelvin use the same degree size, so you only need to shift the zero point.</p>
       <Formula expr={f.cToK} />
       <p>Examples: 0°C = 273.15 K, 25°C = 298.15 K, 100°C = 373.15 K.</p>
-
-      <h2 id="reference">Key reference points</h2>
+      <p>Also see: <a href="/conversion/temperature-converter/c-to-k">Celsius to Kelvin converter</a>.</p>
+      <h2 id="reference">Key reference points for temperature scales</h2>
       <p>These are the most useful fixed points across all five scales.</p>
       <div class="responsive-table">
         <table>
@@ -198,11 +246,9 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="cooking">Cooking temperatures</h2>
       <p>Temperature conversion matters most in cooking when working with recipes from another country. Below are the standard oven temperatures and safe internal meat temperatures used in professional cooking.</p>
-
-      <h3>Oven temperatures</h3>
+      <h3>Oven temperatures in Celsius and Fahrenheit</h3>
       <div class="responsive-table">
         <table>
           <thead>
@@ -221,9 +267,8 @@ const schema = [
         </table>
       </div>
       <p>Note: fan-assisted (convection) ovens typically run 15-20°C (25-35°F) hotter than a conventional oven setting. If a recipe specifies a conventional oven, reduce the temperature by that amount for a fan oven.</p>
-
       <h3>Safe internal meat temperatures</h3>
-      <p>The following are the minimum internal temperatures recommended by food safety authorities (US FDA / UK Food Standards Agency) for safely cooked meat.</p>
+      <p>The following are the minimum internal temperatures recommended by food safety authorities (<a href="https://www.who.int/news-room/fact-sheets/detail/food-safety" target="_blank" rel="noopener noreferrer">US FDA / UK Food Standards Agency</a>) for safely cooked meat.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -238,8 +283,9 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="formulas">All conversion formulas</h2>
+      <h2 id="formulas">All temperature conversion formulas</h2>
+      <p>The table below lists every conversion formula supported by this converter. Each row gives the exact algebraic formula - no approximations.</p>
+      <p>The two-step structure of the Celsius/Fahrenheit formulas (multiply, then add or subtract an offset) reflects the fact that those scales differ in both degree size and zero point.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -253,78 +299,50 @@ const schema = [
             <tr><td>°F</td><td>K</td><td>K = (°F - 32) × 5/9 + 273.15</td></tr>
             <tr><td>K</td><td>°F</td><td>°F = (K - 273.15) × 9/5 + 32</td></tr>
             <tr><td>°C</td><td>°R</td><td>°R = (°C + 273.15) × 9/5</td></tr>
+            <tr><td>°R</td><td>°C</td><td>°C = °R × 5/9 - 273.15</td></tr>
             <tr><td>°F</td><td>°R</td><td>°R = °F + 459.67</td></tr>
+            <tr><td>°R</td><td>°F</td><td>°F = °R - 459.67</td></tr>
             <tr><td>K</td><td>°R</td><td>°R = K × 9/5</td></tr>
+            <tr><td>°R</td><td>K</td><td>K = °R × 5/9</td></tr>
             <tr><td>°C</td><td>°Ré</td><td>°Ré = °C × 4/5</td></tr>
             <tr><td>°Ré</td><td>°C</td><td>°C = °Ré × 5/4</td></tr>
+            <tr><td>°F</td><td>°Ré</td><td>°Ré = (°F - 32) × 4/9</td></tr>
+            <tr><td>°Ré</td><td>°F</td><td>°F = °Ré × 9/4 + 32</td></tr>
+            <tr><td>K</td><td>°Ré</td><td>°Ré = (K - 273.15) × 4/5</td></tr>
+            <tr><td>°Ré</td><td>K</td><td>K = °Ré × 5/4 + 273.15</td></tr>
+            <tr><td>°R</td><td>°Ré</td><td>°Ré = °R × 4/9 - 218.52</td></tr>
+            <tr><td>°Ré</td><td>°R</td><td>°R = °Ré × 9/4 + 491.67</td></tr>
           </tbody>
         </table>
       </div>
-
       <h2 id="temperature-differences">Temperature differences vs absolute temperatures</h2>
       <p>This is the most misunderstood aspect of temperature conversion, and it causes real errors in cooking, engineering, and science.</p>
-
       <p>When you convert a <em>temperature value</em> (a fixed point on a scale), you use the full formula including the offset: 20°C = 68°F.</p>
-
       <p>But when you convert a <em>temperature difference</em> or <em>change</em>, you only use the scaling factor, not the offset.</p>
-
       <Formula expr={f.diff} />
-
       <p>Examples:</p>
       <ul>
         <li>A rise of 5°C is a rise of 9°F (5 × 9/5 = 9). Not 41°F.</li>
-        <li>If a recipe says "increase oven temperature by 10°C", that is an increase of 18°F.</li>
+        <li>If a recipe says "increase oven temperature by 10°C", that is an increase of 18°F. This is why recipes usually say the final temperature to avoid confusion.</li>
         <li>A fever of 1°C above normal (37°C) is a 1.8°F rise above normal, not a 33.8°F rise.</li>
       </ul>
-
       <p>The confusion arises because 5°C (the temperature) converts to 41°F, while a 5°C change converts to a 9°F change. These look like different answers, but they are answering different questions.</p>
-
-      <p>Practical rule: if the question is "what temperature is X degrees?" use the full formula with the +32 offset. If the question is "how many degrees did it change by?" just multiply by 9/5 or 5/9 with no offset.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <p><strong>Practical rule:</strong> if the question is "what temperature is X degrees?" use the full formula with the +32 offset. If the question is "how many degrees did it change by?" just multiply by 9/5 or 5/9 with no offset.</p>
+      <p>For me, the recipe conversion problem comes up whenever I work across <a href="/glossary/metric-system">metric</a> and <a href="/glossary/imperial-system">imperial</a> recipe sources.</p>
+      <p>A US baking book calls for 375°F; a European recipe calls for 190°C - these are nearly identical (375°F = 190.6°C), but the bigger trap is the fan oven adjustment. Recipes written for conventional ovens need a 15-20°C reduction for convection.</p>
+      <p>If you are working from a US recipe at 350°F in a UK convection oven, you need to first convert (350°F = 177°C), then reduce by 15-20°C to get 157-162°C. Skipping the convection adjustment is more likely to cause problems than the <a href="/conversion/temperature-converter/c-to-f">C-to-F conversion</a> itself.</p>
+      <p>The altitude boiling point catches people working in mountainous regions. In Denver at 1,609 m altitude, water boils at about 94°C (201°F), which means pasta takes longer and some food safety temperature requirements become harder to meet with boiling water as the cooking medium.</p>
+      <p>Anyone calibrating a thermometer against boiling water at altitude will also get a false reading if they assume 100°C as the reference - the actual boiling point at 1,609 m is 6°C lower than that.</p>
+      <h2 id="common-mistakes">Common mistakes in temperature conversion</h2>
       <h3>Forgetting the offset in the Celsius-Fahrenheit formula</h3>
       <p>The most frequent error is multiplying Celsius by 1.8 (which is 9/5) without adding 32. This gives the right degree-size scaling but the wrong absolute temperature. Example: 100°C × 1.8 = 180, which is wrong. The correct answer is 180 + 32 = 212°F. Similarly, dividing Fahrenheit by 1.8 without first subtracting 32 gives an incorrect Celsius value.</p>
-
       <h3>Using the absolute formula for a temperature change</h3>
       <p>See the section above. If an oven recipe says 180°C and you need to add 20°C, the new temperature is 200°C = 392°F. Do not convert 20°C to 68°F and add that to 356°F. You are changing an absolute value, not adding an offset, so convert the final absolute temperature (200°C = 392°F).</p>
-
       <h3>Assuming water always boils at 100°C</h3>
       <p>Water boils at 100°C (212°F) at standard sea-level pressure (1 atm). At altitude, the boiling point drops. At Denver (1,609 m / 5,280 ft), water boils at about 94°C (201°F). At the top of Mount Everest (8,849 m), water boils at around 71°C (160°F) - barely hot enough to safely brew tea. This matters for any recipe or food safety calculation done at significant altitude.</p>
-
       <h3>Negative Celsius and negative Fahrenheit are different ranges</h3>
       <p>-5°C is cold but above the Fahrenheit zero: -5°C = 23°F. Fahrenheit zero (0°F = -17.8°C) is much colder. Many people assume negative Celsius and negative Fahrenheit overlap more than they do. The scales only cross at -40 degrees.</p>
-
-      <h2 id="faq">FAQs</h2>
-
-      <h3>How do I convert Celsius to Fahrenheit?</h3>
-      <p>Multiply by 9/5 then add 32. Formula: °F = °C × 9/5 + 32. Example: 20°C × 9/5 = 36, + 32 = 68°F. Quick mental estimate: double the Celsius and add 30 (gives 70°F for 20°C, off by 2°F).</p>
-
-      <h3>How do I convert Fahrenheit to Celsius?</h3>
-      <p>Subtract 32 then multiply by 5/9. Formula: °C = (°F - 32) × 5/9. Example: 98.6°F - 32 = 66.6, × 5/9 = 37°C.</p>
-
-      <h3>What temperature is the same in Celsius and Fahrenheit?</h3>
-      <p>-40 degrees is the only temperature where both scales are equal. At any temperature above -40, Fahrenheit is always higher than Celsius. At any temperature below -40, Fahrenheit is always lower.</p>
-
-      <h3>Can Kelvin be negative?</h3>
-      <p>No. Kelvin starts at absolute zero (0 K = -273.15°C), the lowest possible temperature in the universe. There are no negative Kelvin values. Absolute zero has been approached to within a billionth of a degree in laboratory conditions but never fully reached.</p>
-
-      <h3>What is absolute zero?</h3>
-      <p>Absolute zero is 0 K, -273.15°C, or -459.67°F. It is the point at which all atomic thermal motion effectively ceases. It is theoretically unreachable because removing the last quanta of thermal energy from a system would require infinite work.</p>
-
-      <h3>What is 180°C in Fahrenheit?</h3>
-      <p>180°C = 356°F. Calculation: 180 × 9/5 + 32 = 324 + 32 = 356°F. This is a standard moderate oven temperature for baking cakes and roasting.</p>
-
-      <h3>What is a normal body temperature in Fahrenheit?</h3>
-      <p>Normal adult body temperature is 37°C = 98.6°F. A fever in adults is generally defined as 38°C (100.4°F) or above. Note that normal body temperature varies slightly by individual and time of day.</p>
-
-      <h3>What is the difference between Kelvin and Celsius?</h3>
-      <p>Kelvin and Celsius use identical degree sizes, so a change of 1 K is the same change as 1°C. The only difference is the zero point: 0 K = -273.15°C. To convert, add or subtract 273.15. Kelvin has no degree symbol because its zero is physically absolute, not arbitrary.</p>
-
-      <h3>What is Rankine used for?</h3>
-      <p>Rankine is used in US thermodynamics, aerospace engineering, and HVAC where absolute temperatures are needed but engineers work in Fahrenheit. It is the Fahrenheit counterpart of Kelvin: same degree size as Fahrenheit, but starting from absolute zero (0°R = 0 K = -273.15°C).</p>
-
-      <h2 id="sub-pages">Dedicated conversion pages</h2>
+      <h2 id="sub-pages">Dedicated temperature conversion pages</h2>
       <p>Each page below focuses on a single conversion pair with a full reference table, exact formula, and worked examples.</p>
       <div class="responsive-table">
       <table>
@@ -339,6 +357,30 @@ const schema = [
         </tbody>
       </table>
       </div>
+      <h2 id="faq">FAQs about the temperature scales</h2>
+      <h3>How do I convert Celsius to Fahrenheit?</h3>
+      <p>Multiply by 9/5 then add 32. Formula: °F = °C × 9/5 + 32. Example: 20°C × 9/5 = 36, + 32 = 68°F. Quick mental estimate: double the Celsius and add 30 (gives 70°F for 20°C, off by 2°F).</p>
+      <h3>How do I convert Fahrenheit to Celsius?</h3>
+      <p>Subtract 32 then multiply by 5/9. Formula: °C = (°F - 32) × 5/9. Example: 98.6°F - 32 = 66.6, × 5/9 = 37°C.</p>
+      <h3>What temperature is the same in Celsius and Fahrenheit?</h3>
+      <p>-40 degrees is the only temperature where both scales are equal. At any temperature above -40, Fahrenheit is always higher than Celsius. At any temperature below -40, Fahrenheit is always lower.</p>
+      <h3>Can Kelvin be negative?</h3>
+      <p>No. Kelvin starts at absolute zero (0 K = -273.15°C), the lowest possible temperature in the universe. There are no negative Kelvin values. Absolute zero has been approached to within a billionth of a degree in laboratory conditions but never fully reached.</p>
+      <h3>What is absolute zero?</h3>
+      <p>Absolute zero is 0 K, -273.15°C, or -459.67°F. It is the point at which all atomic thermal motion effectively ceases. It is theoretically unreachable because removing the last quanta of thermal energy from a system would require infinite work.</p>
+      <h3>What is 180°C in Fahrenheit?</h3>
+      <p>180°C = 356°F. Calculation: 180 × 9/5 + 32 = 324 + 32 = 356°F. This is a standard moderate oven temperature for baking cakes and roasting.</p>
+      <h3>What is a normal body temperature in Fahrenheit?</h3>
+      <p>Normal adult body temperature is 37°C = 98.6°F. A fever in adults is generally defined as 38°C (100.4°F) or above. Note that normal body temperature varies slightly by individual and time of day.</p>
+      <h3>What is the difference between Kelvin and Celsius?</h3>
+      <p>Kelvin and Celsius use identical degree sizes, so a change of 1 K is the same change as 1°C. The only difference is the zero point: 0 K = -273.15°C. To convert, add or subtract 273.15. Kelvin has no degree symbol because its zero is physically absolute, not arbitrary.</p>
+      <h3>What is Rankine used for?</h3>
+      <p>Rankine is used in US thermodynamics, aerospace engineering, and HVAC where absolute temperatures are needed but engineers work in Fahrenheit. It is the Fahrenheit counterpart of Kelvin: same degree size as Fahrenheit, but starting from absolute zero (0°R = 0 K = -273.15°C).</p>
+      <QuizBlock
+        topic="temperature conversion"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/conversion/temperature-converter"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
@@ -364,8 +406,7 @@ const schema = [
           </div>
         </li>
       </ul>
-
+      <RelatedGlossaryTerms toolPath="/conversion/temperature-converter" />
     </div>
   </div>
-
 </CalculatorLayout>
