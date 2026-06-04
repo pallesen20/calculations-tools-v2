@@ -22,6 +22,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['ebitda', 'ebitda-margin', 'operating-profit'],
   },
   {
+    slug: 'avoirdupois-system',
+    term: 'Avoirdupois System',
+    letter: 'A',
+    category: 'Units & Measurement',
+    siteCategory: 'Conversion',
+    shortDef: 'The avoirdupois system is the standard weight system used for everyday goods in the US and UK. Built around the pound (453.592 g) with 16 ounces per pound, it is the default meaning of "pound" and "ounce" in everyday English - distinct from the troy system (used for precious metals, where 1 troy ounce = 31.1 g) and from metric.',
+    relatedTools: ['/conversion/weight-converter'],
+    relatedTerms: ['imperial-system', 'metric-system'],
+  },
+  {
     slug: 'capex',
     term: 'Capital Expenditure (CapEx)',
     letter: 'C',
@@ -900,7 +910,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Conversion',
     shortDef: 'The imperial system is the traditional British system of units - inches, feet, yards, miles, ounces, pounds, stones, pints, gallons - spread by the British Empire. It uses irregular conversion ratios (12 inches per foot, 16 ounces per pound, 1,760 yards per mile) rather than a consistent decimal base. Still the primary everyday system in the United States.',
     relatedTools: ['/conversion/length-converter', '/conversion/weight-converter', '/conversion/height-converter', '/conversion/temperature-converter', '/conversion/speed-converter'],
-    relatedTerms: ['metric-system'],
+    relatedTerms: ['metric-system', 'avoirdupois-system'],
   },
   {
     slug: 'npv',
@@ -954,6 +964,6 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Conversion',
     shortDef: 'The metric system is the international decimal system of measurement, formally known as the International System of Units (SI). Every unit is linked by powers of 10 using standard prefixes (kilo-, centi-, milli-). Used officially in 195 of 196 countries, it is the global standard for science, medicine, and international trade.',
     relatedTools: ['/conversion/length-converter', '/conversion/weight-converter', '/conversion/height-converter', '/conversion/temperature-converter', '/conversion/speed-converter'],
-    relatedTerms: ['imperial-system'],
+    relatedTerms: ['imperial-system', 'avoirdupois-system'],
   },
 ];

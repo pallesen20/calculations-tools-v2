@@ -1917,6 +1917,74 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
   },
 
+  'avoirdupois-system': {
+    definition: [
+      'The avoirdupois system is the standard system of weights used for everyday commercial and domestic purposes in the United States, United Kingdom, and most English-speaking countries. Its foundational unit is the pound (lb), defined since 1959 as exactly 453.59237 grams. The pound divides into 16 ounces (oz); each ounce divides into 16 drams. Larger units build upward: 14 pounds make 1 stone (used in the UK for body weight), 100 pounds make 1 US short hundredweight, and 2,000 pounds make 1 US short ton.',
+      'The name comes from the Old French phrase "aveir de peis" meaning "goods of weight" - a medieval trading term for bulk commodities sold by weight rather than by the piece. The system was formally standardized in England during the 14th century and spread globally through British colonial trade.',
+      'Avoirdupois is one of three historical weight systems that share unit names but use different values. The troy system - used for precious metals such as gold and silver - uses a heavier ounce (31.1035 g vs 28.3495 g) and a lighter pound (12 troy ounces vs 16 avoirdupois ounces). The apothecary system, historically used in pharmacy, has been entirely replaced by metric in modern clinical contexts.',
+    ],
+    beginnerExplain: [
+      'If you have ever weighed yourself, bought meat at a grocery store, or shipped a parcel, you used the avoirdupois system. It is the default meaning of "pound" and "ounce" in everyday English. When a recipe calls for 8 oz of flour, that is avoirdupois.',
+      'The one trap is the word "ounce" in a jewelry or precious metals context. A gold price quoted per ounce uses troy ounces (31.1 g), not avoirdupois ounces (28.35 g) - a difference of about 10%. Outside of precious metals and gemstones, any English-language "ounce" is almost certainly avoirdupois.',
+    ],
+    whenToUse: 'Use avoirdupois for all everyday weight measurements: body weight, food, postal parcels, luggage, construction materials, and industrial goods. Switch to troy weight when dealing with precious metals, coins, or gemstones. Use metric (grams, kilograms) for scientific work, international trade documents, or any context where precision and unambiguity are required across borders.',
+    examples: {
+      headers: ['Unit', 'Avoirdupois equivalent', 'Grams (exact)'],
+      rows: [
+        ['1 dram', '1/16 oz', '1.7718 g'],
+        ['1 ounce (oz)', '16 drams', '28.3495 g'],
+        ['1 pound (lb)', '16 oz', '453.592 g'],
+        ['1 stone', '14 lb', '6,350.29 g'],
+        ['1 US short hundredweight', '100 lb', '45,359.2 g'],
+        ['1 US short ton', '2,000 lb', '907,185 g (907.185 kg)'],
+        ['1 UK long ton', '2,240 lb', '1,016,047 g (1,016.05 kg)'],
+      ],
+    },
+    pitfalls: 'The most important pitfall is confusing the avoirdupois ounce (28.35 g) with the troy ounce (31.10 g). Using the wrong ounce introduces a 9.7% error - significant for precious metals, pharmaceuticals from historical sources, or any contract that uses "oz" without specifying the system. A second pitfall is "ton" ambiguity: the US short ton (2,000 lb), UK long ton (2,240 lb), and metric tonne (2,204.62 lb) are all commonly written as just "ton." In international commodity contracts, "MT" or "t" means metric ton; a US domestic "ton" almost always means the short ton.',
+    faqs: [
+      { q: 'What is the avoirdupois system?', a: 'The avoirdupois system is the standard weight system used for everyday goods in English-speaking countries. It is built around the pound (453.592 g) and divides it into 16 ounces. It is the default meaning of "pound" and "ounce" in US and UK commerce, distinct from the troy system (used for precious metals) and from metric.' },
+      { q: 'How does the avoirdupois ounce differ from the troy ounce?', a: 'The avoirdupois ounce is 28.3495 g; the troy ounce is 31.1035 g - about 9.7% heavier. An avoirdupois pound contains 16 ounces; a troy pound contains only 12 troy ounces. This means a troy pound (373.24 g) is lighter than an avoirdupois pound (453.59 g), despite having a heavier ounce.' },
+      { q: 'Why is avoirdupois still used instead of metric?', a: 'Avoirdupois persists primarily in the United States, where metrication was made voluntary in 1975 and never mandated for most commercial uses. It remains the default for body weight, food labeling, and construction in the US. The UK converted most official and commercial uses to metric but retains stone and pounds informally for body weight.' },
+      { q: 'What is the difference between a US ton and a UK ton?', a: 'A US short ton is 2,000 avoirdupois pounds (907.185 kg). A UK long ton is 2,240 avoirdupois pounds (1,016.05 kg). A metric tonne is 1,000 kg (2,204.62 lb) - between the two. All three are called "ton" in informal use. In international trade, "ton" almost always means the metric tonne.' },
+      { q: 'How do I convert avoirdupois to metric?', a: '1 ounce = 28.3495 g (or divide grams by 28.3495 to reverse). 1 pound = 453.592 g = 0.453592 kg (or multiply kg by 2.20462 to get pounds). These factors are exact by definition since the 1959 International Yard and Pound Agreement, which defined 1 lb = 0.45359237 kg exactly.' },
+    ],
+    quiz: {
+      topic: 'the avoirdupois system',
+      questions: [
+        {
+          q: 'How many ounces are in one avoirdupois pound?',
+          options: ['12', '14', '16', '20'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'One avoirdupois pound = 16 ounces. The number 12 applies to the troy pound (12 troy ounces), used for precious metals - not everyday goods.',
+        },
+        {
+          q: 'An avoirdupois ounce weighs 28.35 g. How does that compare to a troy ounce?',
+          options: ['They are identical', 'The troy ounce is lighter (about 26 g)', 'The troy ounce is heavier (about 31.1 g)', 'The troy ounce is heavier by exactly 5 g'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'A troy ounce = 31.1035 g, about 9.7% heavier than an avoirdupois ounce (28.3495 g). The troy ounce is used for precious metals; the avoirdupois ounce is the default for everything else.',
+        },
+        {
+          q: 'What does "avoirdupois" literally mean?',
+          options: ['Standard commercial weight', 'Goods of weight', 'The pound system', 'Heavy measure'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: '"Avoirdupois" comes from the Old French phrase "aveir de peis" meaning "goods of weight" - a medieval trading term for bulk commodities sold by weight. The name reflects its origin as a system for weighing everyday traded goods.',
+        },
+        {
+          q: 'Which of these is NOT an avoirdupois unit?',
+          options: ['Dram', 'Stone', 'Troy pound', 'Hundredweight'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The troy pound belongs to the troy weight system, not avoirdupois. Drams (1/16 oz), stones (14 lb), and hundredweights (100 lb in the US) are all avoirdupois units.',
+        },
+        {
+          q: 'A US short ton and a UK long ton are both in avoirdupois pounds. What are the correct values?',
+          options: ['US: 2,000 lb; UK: 2,240 lb', 'US: 2,240 lb; UK: 2,000 lb', 'US: 2,000 lb; UK: 2,000 lb', 'US: 2,204 lb; UK: 2,240 lb'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The US short ton = 2,000 lb (907.185 kg). The UK long ton = 2,240 lb (1,016.05 kg). The metric tonne is 1,000 kg (about 2,204 lb). All three are called "ton" in common usage, which is a frequent source of confusion in commodity trade.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'imperial-system': {
     definition: [
       'The imperial system is the traditional British system of units, codified in the British Weights and Measures Act of 1824. It covers length (inches, feet, yards, miles), mass (ounces, pounds, stones, hundredweights, tons), volume (fluid ounces, pints, quarts, gallons), and area (acres, square feet, square miles). Each quantity has its own set of conversion ratios - 12 inches per foot, 16 ounces per pound, 8 pints per gallon - none of which share a common decimal base.',
