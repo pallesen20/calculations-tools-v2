@@ -4,8 +4,6 @@ import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 
-// LaTeX formulas - defined as JS strings so Astro doesn't misparse { } in
-// the template as expression delimiters. Backslashes are double-escaped.
 const f = {
   basic:      "$$\\text{Result} = N \\times \\frac{P}{100}$$",
   basicEx:    "$$\\text{Result} = 80 \\times \\frac{15}{100} = 80 \\times 0.15 = 12$$",
@@ -16,6 +14,7 @@ const f = {
   whatPct:    "$$P = \\frac{X}{Y} \\times 100$$",
   whatPctEx:  "$$P = \\frac{45}{180} \\times 100 = 0.25 \\times 100 = 25\\%$$",
   pctDiff:    "$$\\% \\text{ Difference} = \\frac{|V_1 - V_2|}{\\dfrac{V_1 + V_2}{2}} \\times 100$$",
+  pctDiffEx:  "$$\\frac{|120 - 150|}{\\dfrac{120 + 150}{2}} \\times 100 = \\frac{30}{135} \\times 100 = 22.2\\%$$",
 };
 
 const tocItems = [
@@ -121,7 +120,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Percentage Calculator"
   metaTitle="Percentage Calculator - Find %, Increase, Decrease & More ᐅ"
@@ -150,21 +148,17 @@ const schema = [
         ))}
       </div>
     </section>
-
     <section class="calculator-interface" aria-label="Calculator">
       <div class="calculator-container">
         <div class="calculator-header">
           <h2 id="calculator-title">Basic Percentage</h2>
           <p id="calculator-description">Calculate what X% of a number is</p>
         </div>
-
         <div id="inputsContainer" class="inputs-container"></div>
-
         <div id="formulaDisplay" class="formula-display hidden">
           <p class="formula-label">Formula:</p>
           <p id="formulaText" class="formula-text"></p>
         </div>
-
         <div id="resultDisplay" class="result-display hidden">
           <p class="result-label" id="resultLabel">Result</p>
           <div class="result-value">
@@ -172,22 +166,18 @@ const schema = [
             <button type="button" id="copyButton" class="copy-button" title="Copy result"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
           </div>
         </div>
-
         <button type="button" id="resetButton" class="reset-button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg> Reset</button>
       </div>
     </section>
-
     <script src="/js/percentage-calculator.js" is:inline></script>
   </div>
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>To find <strong>X% of a number</strong>, multiply the number by X then divide by 100. To calculate a <strong>percentage increase or decrease</strong>, divide the difference by the original value and multiply by 100.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <h2 id="how-to-use">How to use our percentage calculator</h2>
       <p>Select one of the four modes at the top of the tool, enter your values, and the result updates immediately. No submit button needed. All calculations run locally in your browser, nothing is sent to a server, and results are rounded to four decimal places.</p>
       <ul>
         <li><strong>Basic Percentage:</strong> find what X% of a given number equals</li>
@@ -195,52 +185,33 @@ const schema = [
         <li><strong>Percentage Decrease:</strong> calculate how much a value has fallen</li>
         <li><strong>What Percentage:</strong> find what percentage one number is of another</li>
       </ul>
-
-      <h2 id="basic-percentage">Basic percentage</h2>
+      <h2 id="basic-percentage">Calculate basic percentage</h2>
       <p>A basic percentage calculation returns the portion that a given percentage represents of a whole number. It answers: "What is X% of N?"</p>
-
       <Formula expr={f.basic} />
-
       <p>Where <strong>N</strong> is the base number and <strong>P</strong> is the percentage.</p>
-
       <p><strong>Example:</strong> What is 15% of 80?</p>
       <Formula expr={f.basicEx} />
-
       <p>Common uses: calculating a discount at checkout, working out <a href="/tax/sales-tax-calculator">tax on a purchase</a>, or finding a sales commission amount.</p>
-
-      <h2 id="percentage-increase">Percentage increase</h2>
-      <p>Percentage increase measures how much a value has grown relative to its original value, expressed as a proportion of that original.</p>
-
+      <h2 id="percentage-increase">Calculate percentage increase</h2>
+      <p><a href="/math/percentage-calculator/increase">Percentage increase</a> measures how much a value has grown relative to its original value, expressed as a proportion of that original.</p>
       <Formula expr={f.increase} />
-
       <p><strong>Example:</strong> A salary rises from 50,000 to 58,000.</p>
       <Formula expr={f.increaseEx} />
-
       <p>The denominator is always the <em>original</em> (old) value. Using the new value as the base is the most common error in these calculations.</p>
-
-      <h2 id="percentage-decrease">Percentage decrease</h2>
-      <p>Percentage decrease measures how much a value has fallen relative to its original value.</p>
-
+      <h2 id="percentage-decrease">Calculate percentage decrease</h2>
+      <p><a href="/math/percentage-calculator/decrease">Percentage decrease</a> measures how much a value has fallen relative to its original value.</p>
       <Formula expr={f.decrease} />
-
       <p><strong>Example:</strong> A product drops from 200 to 150.</p>
       <Formula expr={f.decreaseEx} />
-
       <p>Percentage increase and decrease are not symmetrical. A 25% increase followed by a 25% decrease does not return to the starting value, because the base changes between operations. Starting at 100: a 25% increase gives 125, then a 25% decrease on 125 gives 93.75.</p>
-
-      <h2 id="what-percentage">What percentage is X of Y?</h2>
+      <h2 id="what-percentage">Calculate what percentage is X of Y?</h2>
       <p>This calculation finds what percentage one number (X) represents of another (Y). It answers: "30 is what percent of 120?"</p>
-
       <Formula expr={f.whatPct} />
-
       <p><strong>Example:</strong> 45 is what percentage of 180?</p>
       <Formula expr={f.whatPctEx} />
-
       <p>This formula underlies grading (what percentage is 72 out of 90?), market share analysis, and survey response rates.</p>
-
       <h2 id="formulas">All percentage formulas</h2>
       <p>All four percentage calculations are variations of the same core relationship: divide a part by a base and multiply by 100.</p>
-
       <div class="responsive-table">
       <table>
         <thead>
@@ -274,50 +245,41 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h3>Percentage change vs. percentage difference</h3>
-      <p><strong>Percentage change</strong> has a direction. You know which value is the starting point, and the original is always the base. Use it for before-and-after comparisons: an old price vs. a new price, or last year's revenue vs. this year's.</p>
-      <p><strong>Percentage difference</strong> is used when neither value is clearly the original. The base is the average of the two values:</p>
-
+      <p><strong><a href="/math/percentage-calculator/change">Percentage change</a></strong> has a direction. You know which value is the starting point, and the original is always the base. Use it for before-and-after comparisons: an old price vs. a new price, or last year's revenue vs. this year's.</p>
+      <p><strong><a href="/math/percentage-calculator/difference">Percentage difference</a></strong> is used when neither value is clearly the original. The base is the average of the two values:</p>
       <Formula expr={f.pctDiff} />
-
       <p>Use percentage difference when comparing two independent measurements with no defined reference point, for example the prices of two competing products where neither is the baseline.</p>
-
-      <h2 id="common-pitfalls">Common mistakes</h2>
+      <p>If Product A costs $120 and Product B costs $150:</p>
+      <Formula expr={f.pctDiffEx} />
+      <p>Neither price is treated as the original - the average ($135) is the base.</p>
+      <h2 id="common-pitfalls">Common mistakes when calculating percentages</h2>
       <p>Most percentage errors come from one of three causes: using the wrong base, misunderstanding symmetry, or treating percentages as if they can be added directly.</p>
-
       <h3>Using the wrong base</h3>
       <p>When calculating percentage increase or decrease, always divide by the original value, not the new one. Using the new value as the denominator produces a smaller and incorrect result.</p>
-
       <h3>Assuming increases and decreases cancel out</h3>
       <p>A 20% increase followed by a 20% decrease does not return to the starting value. From 100: a 20% increase gives 120, and a 20% decrease on 120 gives 96. The base shifts with each step, so the two percentages act on different numbers.</p>
-
       <h3>Adding percentages with different bases</h3>
       <p>You cannot meaningfully add percentages unless they share the same base. A 5% raise on a 40,000 <a href="/finance/salary-to-hourly-calculator">salary</a> and a 5% raise on a 60,000 salary are different amounts in absolute terms. The average of two percentage changes is also not the same as the percentage change of their averages.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>Reviewing a quarterly business report where a colleague had calculated a 38% revenue increase. The actual increase was 27%. The error: they had divided by the new Q2 figure instead of the original Q1 figure.</p>
+      <p>The percentage was then presented to senior management without a second check. It is the single most common calculation error in financial reporting - and it always overstates the result because the denominator is larger than it should be.</p>
+      <p>A supplier offered "30% trade discount, plus an extra 10% loyalty discount." A buyer calculated the combined saving as 40%. The actual saving is 37% - because the 10% applies to the already-discounted price, not the original.</p>
+      <p>That 3 <a href="/math/percentage-calculator/percentage-point">percentage point</a> gap translates to a meaningful difference on large orders. The stacking error comes up constantly in pricing negotiations, and most people only notice it when the invoice arrives.</p>
+      <h2 id="faq">Questions about percentage calculation</h2>
       <h3>How do you calculate a percentage of a number?</h3>
       <p>Multiply the number by the percentage, then divide by 100. Example: 20% of 150 = (150 × 20) ÷ 100 = 30.</p>
-
       <h3>How do you calculate percentage increase?</h3>
       <p>Subtract the old value from the new, divide by the old value, then multiply by 100. Example: from 50 to 65 is (15 ÷ 50) × 100 = 30% increase.</p>
-
       <h3>How do you calculate percentage decrease?</h3>
       <p>Subtract the new value from the old, divide by the old value, then multiply by 100. Example: from 800 to 600 is (200 ÷ 800) × 100 = 25% decrease.</p>
-
       <h3>What is the difference between percentage change and percentage difference?</h3>
       <p>Percentage change measures movement from a known starting point; the original is always the base. Percentage difference compares two values with no fixed reference, using their average as the base. Use percentage change for before-and-after scenarios; use percentage difference when comparing two independent figures.</p>
-
       <h3>Does a percentage increase followed by the same percentage decrease return to the original value?</h3>
       <p>No. A 50% increase on 100 gives 150. A 50% decrease on 150 gives 75, not 100. The operations use different bases, so they are not symmetrical.</p>
-
       <h3>How do you convert a fraction to a percentage?</h3>
       <p>Divide the numerator by the denominator, then multiply by 100. Example: 3 ÷ 4 = 0.75 × 100 = 75%.</p>
-
       <h3>How do you convert a decimal to a percentage?</h3>
       <p>Multiply by 100. Example: 0.45 × 100 = 45%.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator/increase', blurb: 'Dedicated calculator for percentage increases - shows the formula, absolute change, and step-by-step workings.' },
@@ -331,11 +293,7 @@ const schema = [
         { path: '/date-calculator',                  blurb: 'Calculate days between dates - useful when the percentage change spans a defined time period.' },
         { path: '/conversion/currency-converter',  blurb: 'Convert between 150+ currencies with live rates - useful for financial percentage calculations across markets.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/math/percentage-calculator" />
-
     </div>
-
   </div>
-
 </CalculatorLayout>
