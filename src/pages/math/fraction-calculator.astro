@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   add:        "$$\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + c \\times b}{b \\times d}$$",
@@ -17,11 +18,13 @@ const f = {
   simplifyEx: "$$\\frac{18}{24}: \\gcd(18,24) = 6 \\implies \\frac{18 \\div 6}{24 \\div 6} = \\frac{3}{4}$$",
   toDec:      "$$\\text{Decimal} = \\frac{\\text{Numerator}}{\\text{Denominator}}$$",
   toPct:      "$$\\text{Percentage} = \\frac{\\text{Numerator}}{\\text{Denominator}} \\times 100$$",
+  fracParts:  "$$\\frac{\\text{Numerator (parts taken)}}{\\text{Denominator (total parts)}}$$",
 };
 
 const tocItems = [
-  { id: 'how-to-use',   label: 'How to use this calculator' },
-  { id: 'adding',       label: 'Adding fractions' },
+  { id: 'how-to-use',        label: 'How to use this calculator' },
+  { id: 'numerator-denominator', label: 'Numerator & denominator' },
+  { id: 'adding',            label: 'Adding fractions' },
   { id: 'subtracting',  label: 'Subtracting fractions' },
   { id: 'multiplying',  label: 'Multiplying fractions' },
   { id: 'dividing',     label: 'Dividing fractions' },
@@ -30,8 +33,42 @@ const tocItems = [
   { id: 'mixed',        label: 'Mixed numbers' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',          label: 'FAQs' },
+  { id: 'quiz',         label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'In the fraction 3/4, what does the denominator (4) represent?',
+    options: ['The number of parts you have taken', 'The result when you divide numerator by denominator', 'The total number of equal parts the whole is divided into', 'The simplified form of the fraction'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The denominator defines how many equal parts the whole is split into. In 3/4, the whole is divided into 4 equal pieces. The numerator (3) counts how many of those pieces you are referring to.',
+  },
+  {
+    q: 'Using the subtraction formula, what is 5/6 - 1/4?',
+    options: ['7/12', '4/2', '9/12', '11/24'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Using cross-multiplication: (5 x 4 - 1 x 6) / (6 x 4) = (20 - 6) / 24 = 14/24. GCD(14, 24) = 2, so 14/24 simplifies to 7/12.',
+  },
+  {
+    q: 'When dividing two fractions, which fraction gets flipped to form the reciprocal?',
+    options: ['The first fraction (the dividend)', 'Both fractions are flipped', 'Neither - the division is performed directly across numerators and denominators', 'The second fraction (the divisor)'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Only the divisor (the second fraction) is flipped. For example, 3/4 / 2/5 becomes 3/4 x 5/2 = 15/8. Flipping the first fraction instead is the most common division error.',
+  },
+  {
+    q: 'What is 15/20 in its simplest form?',
+    options: ['3/5', '3/4', '4/5', '6/8'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'GCD(15, 20) = 5. Dividing both by 5 gives 15/5 = 3 and 20/5 = 4, so 15/20 simplifies to 3/4.',
+  },
+  {
+    q: 'A student calculates 1/2 + 1/3 = 2/5 by adding numerators and denominators. What is the correct answer?',
+    options: ['2/5', '3/5', '5/6', '4/6'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The correct answer is 5/6. The common denominator of 2 and 3 is 6. Converting gives 3/6 + 2/6 = 5/6. Adding numerators and denominators directly is a common error that produces a result smaller than either fraction alone.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -78,7 +115,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "How do you simplify a fraction?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Find the greatest common divisor (GCD) of the numerator and denominator, then divide both by it. For example: 18/24 → GCD(18,24) = 6 → 18÷6 / 24÷6 = 3/4." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Find the greatest common divisor (GCD) of the numerator and denominator, then divide both by it. For example: 18/24 → GCD (18,24) = 6 → 18÷6 / 24÷6 = 3/4." }
       },
       {
         "@type": "Question",
@@ -94,7 +131,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Fraction Calculator"
   metaTitle="Fraction Calculator | Add, Subtract, Multiply & Divide ᐅ"
@@ -111,7 +147,6 @@ const schema = [
           <h2>Calculate Fractions Instantly</h2>
           <p>Add, subtract, multiply, divide, or simplify</p>
         </div>
-
         <div class="fc-ops">
           <button class="fc-op-btn active" data-op="add">+ Add</button>
           <button class="fc-op-btn" data-op="subtract">− Subtract</button>
@@ -119,7 +154,6 @@ const schema = [
           <button class="fc-op-btn" data-op="divide">÷ Divide</button>
           <button class="fc-op-btn" data-op="simplify">Simplify</button>
         </div>
-
         <div class="fc-inputs">
           <div class="fc-fraction">
             <input type="text" inputmode="decimal" id="fc-n1" class="fc-frac-input" placeholder="3" />
@@ -133,7 +167,6 @@ const schema = [
             <input type="text" inputmode="decimal" id="fc-d2" class="fc-frac-input" placeholder="2" />
           </div>
         </div>
-
         <div id="fc-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
             <span id="fc-res-n" class="fc-res-num">-</span>
@@ -141,7 +174,6 @@ const schema = [
             <span id="fc-res-d" class="fc-res-den">-</span>
           </div>
           <div class="lbm-primary-lbl">Result (simplified)</div>
-
           <div class="lbm-cards">
             <div class="lbm-card hidden" id="fc-mixed-card">
               <div class="lbm-card-val" id="fc-mixed">-</div>
@@ -156,7 +188,6 @@ const schema = [
               <div class="lbm-card-lbl">Percentage</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step hidden" id="fc-step1-row">
@@ -175,75 +206,70 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/fraction-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick rules</p>
-        <p><strong>Add/subtract:</strong> find a common denominator, convert, then add/subtract numerators. <strong>Multiply:</strong> numerator × numerator over denominator × denominator. <strong>Divide:</strong> multiply by the reciprocal. <strong>Simplify:</strong> divide both parts by their GCD.</p>
+        <p><strong>Add/subtract:</strong> find a common denominator, convert, then add/subtract numerators. <strong>Multiply:</strong> numerator × numerator over denominator × denominator. <strong>Divide:</strong> multiply by the reciprocal. <strong>Simplify:</strong> divide both parts by their GCD (Greatest Common Divisor).</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <h2 id="how-to-use">How to use our fraction calculator</h2>
       <p>Select an operation using the buttons at the top, then enter the numerator and denominator for each fraction. Results appear instantly: the simplified fraction, mixed number (when applicable), decimal equivalent, and percentage. The step-by-step panel shows how the result was reached. For <strong>Simplify</strong>, only one fraction is needed.</p>
-
+      <h2 id="numerator-denominator">Numerator and denominator</h2>
+      <p>A fraction has two parts separated by a horizontal bar (the vinculum). The number above the bar is the <strong>numerator</strong> - it counts how many parts you have. The number below is the <strong>denominator</strong> - it defines how many equal parts the whole is divided into.</p>
+      <Formula expr={f.fracParts} />
+      <p>In the fraction ¾, the denominator 4 means the whole is split into 4 equal pieces, and the numerator 3 means you are referring to 3 of those pieces. Change the denominator and the size of each piece changes; change the numerator and the count of pieces changes.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Fraction</th><th>Denominator means...</th><th>Numerator means...</th><th>In words</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1/2</td><td>Split into 2 equal parts</td><td>Take 1 of them</td><td>One half</td></tr>
+            <tr><td>3/4</td><td>Split into 4 equal parts</td><td>Take 3 of them</td><td>Three quarters</td></tr>
+            <tr><td>2/5</td><td>Split into 5 equal parts</td><td>Take 2 of them</td><td>Two fifths</td></tr>
+            <tr><td>5/3</td><td>Split into 3 equal parts</td><td>Take 5 of them</td><td>Five thirds (improper)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When the numerator equals the denominator (e.g. 4/4), the fraction equals 1 - all parts are taken. When the numerator is 0, the fraction equals 0 regardless of the denominator. A denominator of 0 is undefined - dividing by zero has no mathematical meaning.</p>
       <h2 id="adding">Adding fractions</h2>
       <p>To add two fractions, both must share a common denominator. The standard approach is to cross-multiply to create equivalent fractions with the same denominator, then add the numerators:</p>
-
       <Formula expr={f.add} />
-
       <h3>Example</h3>
       <p>Add ¾ and ½:</p>
       <Formula expr={f.addEx} />
-      <p>The result 10/8 simplifies to <strong>5/4</strong> (or 1¼ as a mixed number) because GCD(10, 8) = 2.</p>
-
+      <p>The result 10/8 simplifies to <strong>5/4</strong> (or 1¼ as a mixed number) because GCD (10, 8) = 2.</p>
       <p>The calculator uses the <strong>least common multiple (LCM)</strong> of the two denominators as the common denominator, which produces smaller intermediate numbers and avoids unnecessary simplification steps.</p>
-
       <h2 id="subtracting">Subtracting fractions</h2>
       <p>Subtraction follows the same common-denominator logic as addition - only the sign between the numerators changes:</p>
-
       <Formula expr={f.sub} />
-
       <h3>Example</h3>
       <p>Subtract ¼ from 5/6:</p>
       <Formula expr={f.subEx} />
-      <p>GCD(14, 24) = 2, so 14/24 simplifies to <strong>7/12</strong>.</p>
-
+      <p>GCD (14, 24) = 2, so 14/24 simplifies to <strong>7/12</strong>.</p>
       <h2 id="multiplying">Multiplying fractions</h2>
       <p>Multiplication is the most straightforward fraction operation - no common denominator is required. Multiply numerators together and denominators together, then simplify:</p>
-
       <Formula expr={f.mul} />
-
       <h3>Example</h3>
       <p>Multiply ⅔ by 3/5:</p>
       <Formula expr={f.mulEx} />
-      <p>GCD(6, 15) = 3, so 6/15 simplifies to <strong>2/5</strong>.</p>
-
+      <p>GCD (6, 15) = 3, so 6/15 simplifies to <strong>2/5</strong>.</p>
       <p>A useful shortcut when multiplying is to <strong>cross-cancel</strong> before multiplying: if a numerator and a different denominator share a common factor, divide both by that factor first. In the example above, the 3 in the numerator and the 3 in the denominator cancel to give 2/5 directly.</p>
-
       <h2 id="dividing">Dividing fractions</h2>
       <p>Dividing by a fraction is the same as multiplying by its reciprocal - flip the second fraction and multiply:</p>
-
       <Formula expr={f.div} />
-
       <h3>Example</h3>
       <p>Divide ¾ by 2/5:</p>
       <Formula expr={f.divEx} />
       <p>The result <strong>15/8</strong> is already fully simplified (GCD = 1), and as a mixed number it is 1⅞.</p>
-
       <h2 id="simplifying">Simplifying (reducing) fractions</h2>
       <p>A fraction is in its simplest form when the numerator and denominator share no common factor other than 1. The standard method uses the <strong>greatest common divisor (GCD)</strong>:</p>
-
       <Formula expr={f.simplify} />
-
       <h3>Example</h3>
       <Formula expr={f.simplifyEx} />
-
       <p>The GCD can be found using the Euclidean algorithm: divide the larger number by the smaller, then replace the larger with the smaller and the smaller with the remainder, repeating until the remainder is zero. The last non-zero remainder is the GCD.</p>
-
       <h3>Simplification reference</h3>
       <div class="responsive-table">
         <table>
@@ -262,13 +288,10 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="converting">Converting fractions to decimal and percentage</h2>
       <p>Every fraction represents a division. Converting is straightforward:</p>
-
       <Formula expr={f.toDec} />
       <Formula expr={f.toPct} />
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -286,49 +309,42 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="mixed">Mixed numbers</h2>
       <p>A mixed number combines a whole number and a proper fraction - for example, 1¾ means 1 + ¾ = 7/4 as an improper fraction. The calculator shows the mixed-number form whenever the result is an improper fraction (numerator greater than denominator).</p>
-
       <p>To convert a mixed number to an improper fraction before entering it into the calculator: multiply the whole number by the denominator and add the numerator. For 2⅗: (2 × 5) + 3 = 13, so 2⅗ = 13/5.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when calculating fractions</h2>
       <h3>Adding denominators instead of finding a common one</h3>
-      <p>A very common error: ½ + ⅓ ≠ 2/5. You cannot add ½ and ⅓ by adding 1+1=2 and 2+3=5. The correct answer is 3/6 + 2/6 = 5/6.</p>
-
+      <p>A very common error: ½ + ⅓ ≠ 2/5. You cannot add ½ and ⅓ by adding 1+1 = 2 and 2+3 = 5. The correct answer is 3/6 + 2/6 = 5/6.</p>
       <h3>Forgetting to simplify</h3>
-      <p>An unsimplified fraction like 6/8 is not wrong, but it is not in its standard form. Always check whether GCD(numerator, denominator) > 1 and divide both by it. 6/8 → GCD = 2 → 3/4.</p>
-
+      <p>An unsimplified fraction like 6/8 is not wrong, but it is not in its standard form. Always check whether GCD (numerator, denominator) > 1 and divide both by it. 6/8 → GCD = 2 → 3/4.</p>
       <h3>Dividing incorrectly - not flipping the second fraction</h3>
       <p>To divide, flip the <em>second</em> fraction (not the first) and multiply. ¾ ÷ ⅖ becomes ¾ × 5/2 = 15/8. A common error is to flip the first fraction instead.</p>
-
       <h3>Not applying sign rules to negative fractions</h3>
       <p>A negative fraction can be written three ways: −a/b = a/(−b) = −(a/b). When multiplying or dividing negative fractions, count the total number of negative signs - an odd count gives a negative result, even gives a positive.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>Reviewing a project cost split between three contractors: one had billed for 1/3 of the work, another for 1/4. A colleague calculated their combined share as 2/7 - by adding the numerators (1+1=2) and the denominators (3+4=7).</p>
+      <p>The actual combined share is 7/12, found using 12 as the common denominator: 4/12 + 3/12 = 7/12. The difference between 2/7 (about 28.6%) and 7/12 (about 58.3%) is not small.</p>
+      <p>The add-denominators error appears in non-mathematical contexts more often than you would expect from people who otherwise handle numbers confidently.</p>
+      <p>Scaling a recipe from 3/4 cup down to 1/8 cup portions: the question is how many 1/8-cup measures fit in 3/4 cup, which is 3/4 ÷ 1/8 = 3/4 × 8/1 = 24/4 = 6. In three separate instances, the person doing the calculation flipped the first fraction instead of the second, getting 4/3 × 1/8 = 4/24 = 1/6. That gives 0.17 instead of 6 - a factor-of-36 error from flipping the wrong fraction. The rule is always to flip the divisor (the second fraction), never the dividend.</p>
+      <h2 id="faq">Frequently asked questions about fractions</h2>
       <h3>How do you add fractions with different denominators?</h3>
       <p>Find the least common multiple (LCM) of both denominators. Convert each fraction so both have that denominator, then add the numerators. Example: 1/3 + 1/4 → LCM = 12 → 4/12 + 3/12 = 7/12.</p>
-
       <h3>How do you multiply fractions?</h3>
       <p>Multiply numerator × numerator and denominator × denominator, then simplify. No common denominator is needed. Example: 2/3 × 3/5 = 6/15 = 2/5.</p>
-
       <h3>How do you divide fractions?</h3>
       <p>Multiply the first fraction by the reciprocal of the second: a/b ÷ c/d = a/b × d/c. Example: 3/4 ÷ 2/5 = 3/4 × 5/2 = 15/8.</p>
-
       <h3>How do you simplify a fraction?</h3>
       <p>Divide both numerator and denominator by their greatest common divisor (GCD). Example: 18/24 → GCD = 6 → 3/4.</p>
-
       <h3>How do you convert a fraction to a decimal?</h3>
       <p>Divide the numerator by the denominator. Example: 3/4 = 3 ÷ 4 = 0.75.</p>
-
       <h3>How do you convert a fraction to a percentage?</h3>
       <p>Divide the numerator by the denominator, then multiply by 100. Example: 3/4 = 0.75 × 100 = 75%.</p>
-
       <h3>What is an improper fraction?</h3>
       <p>An improper fraction has a numerator larger than (or equal to) its denominator - for example, 7/4. It is equivalent to a mixed number: 7/4 = 1¾. Both forms are mathematically correct; improper fractions are often easier to work with in calculations.</p>
-
+      <QuizBlock
+        topic="fractions"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/fraction-calculator"
+      />
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator',                      blurb: 'Calculate percentages, percentage increases, decreases, and more.' },
@@ -337,10 +353,7 @@ const schema = [
         { path: '/math/percentage-calculator/change',               blurb: 'Percentage change calculator - covers both increases and decreases.' },
         { path: '/date-calculator',                                 blurb: 'Calculate the number of days or months between two dates.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/math/fraction-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

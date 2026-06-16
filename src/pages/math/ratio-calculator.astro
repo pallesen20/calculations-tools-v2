@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   def:      "$$a : b = \\frac{a}{b}$$",
@@ -23,8 +24,42 @@ const tocItems = [
   { id: 'tools',        label: 'Ratio tool suite' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',          label: 'FAQs' },
+  { id: 'quiz',         label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does it mean for a ratio to be "dimensionless"?',
+    options: ['The ratio can only compare quantities in the same units', 'The ratio equals zero when both quantities are equal', 'The ratio 3:2 is the same whether counting apples, millilitres, or dollars', 'The ratio must always be written as a fraction'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'A ratio expresses relative size, not absolute units. 3:2 apples and 3:2 litres are the same ratio - the unit cancels out when you divide one quantity by the other.',
+  },
+  {
+    q: 'What is the simplified form of the ratio 100:75?',
+    options: ['4:3', '5:4', '3:4', '20:15'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'GCD(100, 75) = 25. Dividing both terms by 25 gives 100/25 = 4 and 75/25 = 3, so the simplified ratio is 4:3.',
+  },
+  {
+    q: 'Dividing £500 in ratio 3:2, how much does the larger share receive?',
+    options: ['£250', '£300', '£350', '£200'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Total parts = 3 + 2 = 5. The larger share is 3/5 x £500 = £300. The smaller share is 2/5 x £500 = £200. Both add up to £500.',
+  },
+  {
+    q: 'You want to scale ratio 5:3 so the first term becomes 20. What is the second term?',
+    options: ['9', '16', '15', '12'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Scale factor = 20 / 5 = 4. Multiply the second term by the same factor: 3 x 4 = 12. The equivalent ratio is 20:12, which simplifies back to 5:3.',
+  },
+  {
+    q: 'A ratio is written as 3:5. What fraction of the total does the first part represent?',
+    options: ['3/5', '5/8', '3/8', '2/5'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'In ratio a:b, the first part is a/(a+b) of the total, not a/b. Here: 3/(3+5) = 3/8. Confusing 3:5 with the fraction 3/5 is a common error - 3/5 would be the ratio of first to second, not first to whole.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -61,7 +96,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Ratio Calculator"
   metaTitle="Ratio Calculator | Simplify, Scale & Compare Ratios"
@@ -78,7 +112,6 @@ const schema = [
           <h2>Calculate Simplified Ratios</h2>
           <p>Enter a ratio to simplify it and find scaled equivalents</p>
         </div>
-
         <div class="input-row">
           <div class="bmi-field">
             <label class="bmi-label" for="rc-a">First value (a)</label>
@@ -94,20 +127,17 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="rc-scale">Scale multiplier (optional)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="rc-scale" class="bmi-input" placeholder="e.g. 5" />
           </div>
         </div>
-
         <div id="rc-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="rc-simplified">-</span>
           </div>
           <div class="lbm-primary-lbl">Simplified ratio</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="rc-fraction">-</div>
@@ -118,12 +148,10 @@ const schema = [
               <div class="lbm-card-lbl">Decimal</div>
             </div>
           </div>
-
           <div class="pi-step hidden" id="rc-scale-row" style="background:rgba(139,92,246,0.1);border-radius:6px;padding:0.5rem 0.75rem;margin-top:0.5rem;">
             <span class="pi-step-label">Scaled ratio (simplified × multiplier)</span>
             <span class="pi-step-val"><span id="rc-scaled-a">-</span> : <span id="rc-scaled-b">-</span></span>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -140,29 +168,24 @@ const schema = [
     </section>
     <script src="/js/ratio-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>To simplify a ratio a:b, <strong>divide both terms by their GCD</strong>. 12:8 → GCD = 4 → <strong>3:2</strong>. Equivalent ratios are found by multiplying both terms by the same number.</p>
+        <p>To simplify a <a href="/glossary/ratio">ratio</a> a:b, <strong>divide both terms by their GCD</strong>. 12:8 → GCD = 4 → <strong>3:2</strong>. Equivalent ratios are found by multiplying both terms by the same number.</p>
+        <p>GCD = Greatest Common Divisor - the largest number that divides evenly into both terms. For 12 and 8, GCD = 4 because 4 is the highest factor shared by both.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the two terms of your ratio. Optionally enter a scale multiplier to generate a scaled equivalent. The calculator returns the simplified ratio, fraction form, decimal value, and step-by-step GCD workings.</p>
-
+      <h2 id="how-to-use">How to use this ratio calculator</h2>
+      <p>Enter the two terms of your ratio. Optionally enter a scale multiplier to generate a scaled equivalent. The calculator returns the simplified ratio, <a href="/math/fraction-calculator">fraction form</a>, decimal value, and step-by-step GCD workings.</p>
       <h2 id="what-is">What is a ratio?</h2>
       <p>A ratio compares two quantities and shows their relative sizes:</p>
       <Formula expr={f.def} />
       <p>A ratio of 3:2 means for every 3 units of the first quantity, there are 2 units of the second. Ratios can represent parts-to-parts (mixing ratios) or parts-to-whole (share ratios). They are dimensionless - 3:2 is the same whether counting apples, millilitres, or dollars.</p>
-
       <h2 id="simplify">Simplifying ratios</h2>
       <p>A ratio is in its simplest form when the two terms share no common factor other than 1. To simplify, divide both by their GCD:</p>
       <Formula expr={f.simplify} />
       <Formula expr={f.ex1} />
       <p>GCD(12,8) = 4. 12 ÷ 4 = 3, 8 ÷ 4 = 2. Simplified ratio: 3:2.</p>
-
       <div class="responsive-table">
         <table>
           <thead><tr><th>Ratio</th><th>GCD</th><th>Simplified</th><th>As fraction</th></tr></thead>
@@ -175,7 +198,6 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="scaling">Scaling ratios</h2>
       <p>Multiplying both terms by the same number k gives an equivalent ratio:</p>
       <Formula expr={f.scale} />
@@ -183,23 +205,17 @@ const schema = [
       <Formula expr={f.equiv} />
       <p>3:2 = 15:10? 3 × 10 = 30 and 2 × 15 = 30. Equal products - equivalent. ✓</p>
       <p>Scaling up is used in cooking (scaling a recipe), engineering (scale drawings), and finance (scaling returns to a portfolio size).</p>
-
       <h2 id="dividing">Dividing a quantity in a ratio</h2>
       <p>To divide a total amount T between two parts in ratio a:b:</p>
       <Formula expr={f.part} />
       <p>Divide £500 in ratio 3:2: total parts = 5. Part A = (3/5) × 500 = £300. Part B = (2/5) × 500 = £200. Check: 300 + 200 = 500 ✓.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for ratio calculation</h2>
       <h3>Example 1: simplify 36:48</h3>
       <p>GCD(36, 48) = 12. 36 ÷ 12 = 3, 48 ÷ 12 = 4. Simplified: 3:4.</p>
-
       <h3>Example 2: find a ratio equivalent to 5:3 with first term 20</h3>
       <p>Scale factor: 20 ÷ 5 = 4. Second term: 3 × 4 = 12. Equivalent ratio: 20:12.</p>
-
       <h3>Example 3: divide 90 kg in ratio 2:1</h3>
       <p>Total parts = 3. Part 1 = (2/3) × 90 = 60 kg. Part 2 = (1/3) × 90 = 30 kg.</p>
-
       <h2 id="tools">Ratio tool suite</h2>
       <p>This hub covers ratio simplification and scaling. For more specific ratio calculations:</p>
       <ul>
@@ -207,26 +223,27 @@ const schema = [
         <li><a href="/math/ratio-calculator/unit-rate"><strong>Unit Rate Calculator</strong></a> - find the rate per single unit (e.g. price per item)</li>
         <li><a href="/math/ratio-calculator/golden-ratio"><strong>Golden Ratio Calculator</strong></a> - find dimensions based on φ ≈ 1.618</li>
       </ul>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when calculating ratios</h2>
       <h3>Adding instead of multiplying to scale</h3>
       <p>3:2 + 4 ≠ 7:6. Adding 4 to both terms changes the ratio. To scale, multiply: 3:2 × 4 = 12:8.</p>
-
       <h3>Confusing ratio with fraction</h3>
       <p>A ratio 3:5 means 3 parts first and 5 parts second. As a fraction of the total, the first part is 3/(3+5) = 3/8 - not 3/5. The fraction a/b represents the ratio a:b, but the fraction of the whole is a/(a+b).</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>A partnership agreement specified profits would be split in a 2:3 ratio. The partner with the smaller share assumed they would receive 2/3 of all profits - reading the ratio directly as a fraction. The actual share is 2/(2+3) = 2/5 = 40%, not 66.7%.</p>
+      <p>The discrepancy was not caught until the first annual distribution. Ratio a:b gives shares of a/(a+b) and b/(a+b) of the total - the denominator is the sum of both terms, not just the other term.</p>
+      <p>A baker scaling a glaze recipe that called for cornstarch to water in a 1:4 ratio added 3 to each term to make a larger batch: 4:7. The resulting glaze came out noticeably thinner than the original.</p>
+      <p>Adding a constant to both terms does not preserve a ratio - 4/7 is 57% water, while 1/4 is 80% water. The correct approach is to multiply both terms by the same factor: 1:4 scaled by 3 gives 3:12, which holds the same proportion.</p>
+      <h2 id="faq">Frequently asked questions about ratios</h2>
       <h3>How do you simplify a ratio?</h3>
       <p>Divide both terms by their GCD. 12:8 → GCD = 4 → 3:2.</p>
-
       <h3>What is a ratio?</h3>
       <p>A comparison of two quantities showing their relative sizes. Written a:b or a/b. Dimensionless.</p>
-
       <h3>How do you find an equivalent ratio?</h3>
       <p>Multiply both terms by the same number k. Verify with cross-multiplication.</p>
-
+      <QuizBlock
+        topic="ratios"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/ratio-calculator"
+      />
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/ratio-calculator/proportion',   blurb: 'Solve a:b = c:d for the missing value with cross-multiplication.' },
@@ -236,10 +253,7 @@ const schema = [
         { path: '/math/fraction-calculator',           blurb: 'Fraction calculator - add, subtract, multiply, divide fractions.' },
         { path: '/math/percentage-calculator',         blurb: 'Percentage calculator - percentage of a number, increase, decrease.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/math/ratio-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

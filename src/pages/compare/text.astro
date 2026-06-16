@@ -1,5 +1,6 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const tocItems = [
   { id: 'how-to-use',     label: 'How to use this tool' },
@@ -11,8 +12,42 @@ const tocItems = [
   { id: 'privacy',        label: 'Privacy' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',            label: 'FAQs' },
+  { id: 'quiz',           label: 'Quiz: test your knowledge' },
   { id: 'related-tools',  label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What algorithm does this diff checker use to identify differences between two texts?',
+    options: ['Binary search', 'Levenshtein distance', 'Longest Common Subsequence (LCS)', 'Myers diff algorithm'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The tool uses the Longest Common Subsequence (LCS) algorithm, which finds the longest sequence of lines appearing in both texts in the same order. Lines outside the LCS are classified as added or removed - the same principle used by the Unix diff command and Git.',
+  },
+  {
+    q: 'In the diff output, what colour are lines that were deleted from the original text?',
+    options: ['Orange', 'Blue', 'Green', 'Red'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Removed lines are highlighted in red. Green is used for additions - lines that exist in the changed (right) text but not in the original (left). Unchanged lines are shown without colour to keep focus on what changed.',
+  },
+  {
+    q: 'Which diff view format is used by Git and GitHub pull requests?',
+    options: ['Side-by-side view', 'Unified view', 'Inline view', 'Column view'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Unified view shows all changes in a single column with added and removed lines interleaved in order. This is the standard format used by Git, GitHub, and most version control systems. Side-by-side is better suited for reading prose documents.',
+  },
+  {
+    q: 'What can cause two visually identical lines to appear as "changed" in the diff output?',
+    options: ['Trailing whitespace or different line endings (CRLF vs LF)', 'Using a different browser', 'Having more than 1,000 lines of text', 'Switching between unified and side-by-side view'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Trailing spaces or different line endings (Windows CRLF vs Unix LF) make lines look identical on screen but differ byte-for-byte. The algorithm treats them as different lines. Using plain-text paste (Ctrl+Shift+V) strips hidden formatting.',
+  },
+  {
+    q: 'Where does the term "diff" come from and what does it mean?',
+    options: ['Short for "digital file format", coined in the 1990s', 'Short for "document inspection framework", from word processing software', 'Short for "difference" - from the Unix diff command first written in 1974', 'Short for "data integrity filter" - from database systems'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Diff is short for difference. The term comes from the Unix diff command, first written in 1974, which compared two files line by line. It is now used broadly for any tool that identifies changes between two versions of text or code.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -54,7 +89,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Diff Checker"
   metaTitle="Instant Diff Checker | Compare Two Texts Online Free ᐅ"
@@ -66,18 +100,14 @@ const schema = [
   ogFormula="LCS line diff"
   ogExample="Find every addition, removal & change"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container ct-container">
-
         <div class="calculator-header">
-          <h2>Compare Text & Code Online</h2>
-          <p>Paste or upload two texts to compare them line by line</p>
+          <h2>Compare Text & Code</h2>
+          <p>Paste or upload two texts to compare them line by line to find differences</p>
         </div>
-
         <div class="ct-editors">
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Original Text</h3>
@@ -98,7 +128,6 @@ const schema = [
               <span id="ct-original-chars">Characters: 0</span>
             </div>
           </div>
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Changed Text</h3>
@@ -119,15 +148,12 @@ const schema = [
               <span id="ct-changed-chars">Characters: 0</span>
             </div>
           </div>
-
         </div>
-
         <div class="diff-actions">
           <button class="diff-btn-primary" onclick="findDifferences()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
           <button class="diff-btn-secondary" onclick="swapTexts()">⇄ Swap</button>
           <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
         </div>
-
         <div id="diff-output" class="diff-output">
           <div class="diff-header">
             <div class="diff-stats">
@@ -145,35 +171,27 @@ const schema = [
           </div>
           <div class="ct-diff-wrap"><div class="ct-diff-container" id="ct-diff-container"></div><div class="ct-scroll-track" id="ct-scroll-track"></div></div>
         </div>
-
       </div>
     </section>
-
     <input type="file" id="ct-file-input" style="display:none"
       accept=".txt,.js,.ts,.py,.html,.css,.json,.xml,.md,.csv,.jsx,.tsx,.php,.rb,.go,.java,.c,.cpp,.h,.sql,.yaml,.yml,.sh,.bat,.log,.cfg,.ini,.toml" />
     <div class="diff-toast"></div>
     <script src="/js/compare-text.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Paste your original text in the left panel and your changed text in the right panel, then click <strong>Find Differences</strong>. Additions are highlighted in green, removals in red, with line numbers throughout. Toggle between Unified and Side-by-Side views. You can also upload files directly. Nothing is ever sent to a server - all comparison runs in your browser.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this tool</h2>
+      <h2 id="how-to-use">How to use this diff checker tool</h2>
       <p>Paste your original (older) text in the left editor and the revised (newer) text in the right editor. Click "Find Differences." The diff output appears below with every change clearly marked. To upload a file instead of pasting, use the upload icon at the top of each panel - it accepts .txt, .js, .py, .html, .css, .json, .xml, .md, .sql, .yaml, and dozens of other text-based formats.</p>
       <p>The Swap button exchanges the contents of both panels. The Sample button loads a short example if you want to see how the output looks before pasting your own text. The Copy Diff button copies the full diff result to your clipboard.</p>
-
       <h2 id="what-is-diff">What is a diff checker?</h2>
       <p>A diff checker compares two versions of text and shows exactly what changed between them. The name comes from the Unix <code>diff</code> command, first written in 1974, which compared two files line by line and output the differences. Today the term is used broadly for any tool that identifies additions, removals, and unchanged content between two text inputs.</p>
       <p>Diff checkers are used by developers to review code changes, by writers to compare document drafts, by lawyers to spot contract redlines, and by system administrators to track config file changes. The core function is always the same: show precisely what is in one version but not the other, without having to read both texts manually.</p>
-
       <h3>What does "diff" mean?</h3>
       <p>Diff is short for difference. In computing it refers specifically to the output of a comparison operation - a structured list of changes between two versions of a file or text. When a developer says "I'll send you the diff," they mean the exact list of lines added and removed, not the full files.</p>
-
       <h2 id="reading-output">Reading the diff output</h2>
       <p>Once you click Find Differences, the output panel shows every line from both texts classified into one of three states:</p>
       <ul>
@@ -181,7 +199,6 @@ const schema = [
         <li><strong>Red lines (removals):</strong> Lines that exist in the original (left) text but not in the changed (right). These were deleted.</li>
         <li><strong>Unchanged lines:</strong> Lines that are identical in both texts. Shown without colour to keep the focus on what changed.</li>
       </ul>
-
       <h2 id="diff-views">Unified vs side-by-side view</h2>
       <p>The tool offers two ways to display the same diff.</p>
       <h3>Unified view</h3>
@@ -198,8 +215,7 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="use-cases">Use cases</h2>
+      <h2 id="use-cases">Use cases for this text comparison tool</h2>
       <h3>Code review</h3>
       <p>Compare your working copy against the original to catch bugs, unintended changes, or missing lines before merging. Works with any language - JavaScript, TypeScript, Python, HTML, CSS, SQL, Go, Java, PHP, and more. For language-specific tools see <a href="/compare/code">Compare Code</a>.</p>
       <h3>Document and essay proofreading</h3>
@@ -208,20 +224,16 @@ const schema = [
       <p>A single changed word in a contract can alter its meaning significantly. Pasting two versions of a contract into a diff checker immediately surfaces every change - including additions and removals that are easy to miss in a manual read-through.</p>
       <h3>Config file and infrastructure changes</h3>
       <p>Paste two versions of a configuration file (nginx, Docker Compose, Kubernetes YAML, .env) to see every line that changed between environments or deployments.</p>
-
       <h2 id="algorithm">How the diff algorithm works</h2>
       <p>This tool uses a <strong>Longest Common Subsequence (LCS)</strong> algorithm. Both texts are split into lines. The algorithm builds a matrix that tracks the longest sequence of lines appearing in both texts in the same order. Lines in the LCS are unchanged; lines outside it are added or removed. This is the same principle used by the Unix <code>diff</code> command and Git.</p>
-
       <h2 id="privacy">Privacy</h2>
       <p>All diff processing runs entirely in your browser using JavaScript. Your text is never sent to any server, never logged, never stored, and never shared with any third party. The moment you close the tab, the text is gone. Open your browser's network panel (F12 → Network tab), paste text and click Find Differences, and confirm that no network requests are made when the diff runs.</p>
-
       <h2 id="common-mistakes">Common mistakes</h2>
       <h3>Pasting in the wrong order</h3>
       <p>The left panel is "Original" and the right panel is "Changed." If you paste the newer version on the left, the colours will be reversed. Use the Swap button to fix it without repasting.</p>
       <h3>Trailing whitespace and line endings</h3>
       <p>A line that looks identical may differ only in trailing spaces or line endings (Windows CRLF vs Unix LF). This causes the diff to show lines as changed when the visible content is the same. Use plain-text paste (Ctrl+Shift+V) to strip formatting.</p>
-
-      <h2 id="faq">FAQs</h2>
+      <h2 id="faq">FAQs about this text comparison tool</h2>
       <h3>What is a diff checker?</h3>
       <p>A diff checker compares two versions of text and highlights exactly what changed. Additions appear in green, removals in red. It uses a diff algorithm to identify which lines were added, removed, or unchanged.</p>
       <h3>Is my text private?</h3>
@@ -232,6 +244,11 @@ const schema = [
       <p>Yes, with the dedicated <a href="/compare/excel">Excel and CSV comparison tool</a>. It compares spreadsheets cell by cell and finds changed values, added rows, and removed rows.</p>
       <h3>How is this different from Git diff?</h3>
       <p>Git diff compares tracked file versions within a repository. This tool compares any two texts you paste or upload, with no repository setup required. The underlying algorithm (LCS) is similar.</p>
+      <QuizBlock
+        topic="text diff"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/compare/text"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
@@ -257,12 +274,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .ct-container { max-width: 100% !important; }
   .ct-editors { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.25rem; }

@@ -45,6 +45,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is stock-based compensation always added back in Adjusted EBITDA?', a: 'Often, but it is controversial. SBC is a real economic cost to shareholders (dilution) even though it is non-cash. Many sophisticated investors adjust EBITDA to exclude SBC add-backs to get a more conservative view of profitability.' },
       { q: 'What is the difference between Adjusted EBITDA and Run-Rate EBITDA?', a: 'Run-Rate EBITDA annualises a partial-year EBITDA figure - for example, multiplying Q1 EBITDA by four. Adjusted EBITDA removes non-recurring items from the historical figure. Both are adjustments to reported EBITDA but for different purposes.' },
     ],
+    quiz: {
+      topic: 'Adjusted EBITDA',
+      questions: [
+        {
+          q: 'What is the primary purpose of Adjusted EBITDA?',
+          options: ['To report EBITDA under GAAP standards for public filings', 'To show normalised, repeatable EBITDA under steady-state operations by removing non-recurring items', 'To calculate the tax liability owed on operating profits', 'To measure total revenue after deducting all costs including interest'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Adjusted EBITDA starts with reported EBITDA and adds back or removes items management considers non-recurring, non-cash, or unrepresentative. The goal is to reveal what EBITDA will look like year after year - the normalised figure buyers, lenders, and acquirers use for valuation and debt capacity analysis.',
+        },
+        {
+          q: 'Using the worked example (Reported EBITDA $4,200,000 + $300,000 restructuring + $150,000 SBC - $200,000 asset sale gain), what is Adjusted EBITDA?',
+          options: ['$4,200,000', '$4,650,000', '$4,850,000', '$4,450,000'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: '$4,200,000 + $300,000 + $150,000 - $200,000 = $4,450,000. Add-backs increase the figure; removing the non-recurring asset sale gain reduces it. The net result is a $250,000 increase over reported EBITDA.',
+        },
+        {
+          q: 'Which parties primarily use Adjusted EBITDA to set valuations and determine debt capacity?',
+          options: ['Private equity buyers, lenders, and strategic acquirers', 'Government tax authorities and external auditors', 'Central banks and regulatory bodies', 'Human resources departments setting executive pay'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that private equity buyers, lenders, and strategic acquirers use Adjusted EBITDA to set valuations and determine how much debt a business can service. It is the normalised profitability figure that represents the business under steady-state operations.',
+        },
+        {
+          q: 'What does the pitfalls section identify as a red flag in Adjusted EBITDA reporting?',
+          options: ['When Adjusted EBITDA equals reported EBITDA with no add-backs', 'When the reconciliation table has fewer than three adjustment line items', 'When Adjusted EBITDA is materially higher than reported EBITDA across multiple consecutive years', 'When restructuring charges are the largest single add-back item'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'An Adjusted EBITDA that is materially higher than reported EBITDA over multiple years suggests recurring costs are being classified as non-recurring. If a cost will realistically recur next year, it should remain in reported EBITDA rather than being added back.',
+        },
+        {
+          q: 'Why is stock-based compensation (SBC) a controversial add-back in Adjusted EBITDA?',
+          options: ['SBC is defined by GAAP as a mandatory exclusion from all adjusted metrics', 'SBC is non-cash but represents real economic dilution to shareholders, so many sophisticated investors do not add it back', 'Adding back SBC is prohibited under IFRS reporting standards', 'SBC only qualifies as an add-back for companies with fewer than 500 employees'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'SBC is non-cash, which is the standard justification for adding it back. However, it dilutes shareholders and is therefore a real economic cost. As the FAQ notes, many sophisticated investors exclude SBC add-backs to get a more conservative view of profitability.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'capex': {
@@ -68,6 +103,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is software CapEx or OpEx?', a: 'It depends. Purchased software licences are typically CapEx. Cloud/SaaS subscriptions are typically OpEx. Internally developed software can be either, depending on the development stage and accounting policy (US GAAP ASC 350-40 governs this).' },
       { q: 'How does CapEx relate to Free Cash Flow?', a: 'Free Cash Flow = Operating Cash Flow − CapEx. CapEx is the primary deduction from operating cash flow to arrive at FCF. A business that generates strong operating cash flow but has heavy CapEx requirements will have thin FCF despite healthy earnings.' },
     ],
+    quiz: {
+      topic: 'CapEx',
+      questions: [
+        {
+          q: 'How does CapEx differ from operating expenses (OpEx) on the financial statements?',
+          options: ['CapEx covers only technology investments; OpEx covers all other business costs', 'CapEx reduces EBITDA directly, while OpEx reduces only net income', 'CapEx is capitalised on the balance sheet and expensed as depreciation over the asset\'s life, while OpEx flows through the income statement immediately', 'CapEx requires government disclosure; OpEx does not require formal reporting'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Unlike OpEx which hits the income statement immediately, CapEx is capitalised on the balance sheet and expensed gradually as depreciation over the asset\'s useful life. This is why CapEx does not directly reduce EBITDA but still represents real cash outflow.',
+        },
+        {
+          q: 'From the examples table, which company type achieves the highest FCF conversion on $5,000,000 EBITDA?',
+          options: ['SaaS company - 96% conversion with $200,000 CapEx', 'Manufacturer - 60% conversion with $2,000,000 CapEx', 'Telecom operator - 30% conversion with $3,500,000 CapEx', 'Retailer - 45% conversion with $2,750,000 CapEx'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The SaaS company converts 96% of EBITDA to FCF because it requires only $200,000 in CapEx, generating $4,800,000 in free cash flow. The telecom operator, with $3,500,000 in CapEx, converts only 30% - illustrating why CapEx intensity is critical to evaluating EBITDA quality.',
+        },
+        {
+          q: 'What does the whenToUse section say maintenance CapEx should roughly equal in a mature business?',
+          options: ['Annual revenue multiplied by the industry CapEx intensity ratio', 'Annual operating profit after adjusting for working capital changes', 'Annual EBITDA divided by a standard industry valuation multiple', 'Annual D&A (depreciation and amortization)'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The whenToUse section states that maintenance CapEx should be roughly equal to annual D&A in a mature business. If CapEx consistently exceeds D&A, the business is growing its asset base. The relationship between CapEx and D&A is a key indicator of whether a business is investing for growth or just maintaining existing capacity.',
+        },
+        {
+          q: 'What does the pitfalls section warn about deferring maintenance CapEx in the short term?',
+          options: ['Deferred CapEx triggers an immediate EBITDA restatement under GAAP', 'It makes FCF appear temporarily strong, but eventually leads to higher spending when degraded assets need repair', 'Deferred CapEx must be disclosed as a contingent liability on the balance sheet', 'Deferred CapEx reduces depreciation charges, which overstates EBIT in subsequent periods'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that deferring CapEx makes free cash flow appear temporarily strong. Eventually the business must spend more to repair or replace degraded assets. This is why multi-year CapEx trends must be reviewed rather than a single year\'s figure.',
+        },
+        {
+          q: 'According to the FAQ, what standard governs whether internally developed software is treated as CapEx or OpEx?',
+          options: ['US GAAP ASC 350-40, which classifies software based on development stage and accounting policy', 'IFRS 16, which requires all internally developed software to be expensed immediately as OpEx', 'GAAP ASC 606, based on revenue recognition timing for the software product', 'There are no formal standards - the classification is left entirely to company discretion'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that internally developed software can be either CapEx or OpEx depending on the development stage and accounting policy, with US GAAP ASC 350-40 governing this. Purchased software licences are typically CapEx; cloud and SaaS subscriptions are typically OpEx.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'cdn': {
@@ -93,6 +163,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why do some tools on this site require a CDN and others do not?', a: 'Tools that need large specialised libraries (OCR, Excel parsing, PDF rendering) load those libraries from a CDN to avoid bloating the initial page load for all visitors. Simpler tools - such as the text and code comparison tools - run on pure JavaScript that is bundled directly into the page, requiring no external CDN fetch.' },
       { q: 'Will the CDN library be re-downloaded every time I use the tool?', a: 'No. Your browser caches CDN files after the first download. Subsequent uses in the same browser session (and often across sessions, depending on cache expiry headers) will serve the file from your local browser cache rather than fetching it again.' },
     ],
+    quiz: {
+      topic: 'CDN',
+      questions: [
+        {
+          q: 'What is the primary purpose of a Content Delivery Network (CDN)?',
+          options: ['To store and back up user files in multiple cloud data centers', 'To compress and minify JavaScript files before sending them to the browser', 'To serve files from the server location geographically closest to the user, reducing latency', 'To encrypt data transfers between a user\'s browser and the origin server'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'A CDN is a geographically distributed network of servers that caches and serves files from edge locations worldwide. Serving files from the nearest edge location reduces the physical distance data must travel, lowering latency and improving load speed.',
+        },
+        {
+          q: 'When this site says a tool "loads from CDN," what is being fetched from the external CDN provider?',
+          options: ['Only the library code (such as Tesseract.js or SheetJS) - your files and data never leave the browser', 'Your input data, which is processed on the CDN server and returned as output', 'The HTML and CSS for the tool page, which are not bundled locally', 'A secure token that authenticates your session before the tool processes your files'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition clarifies that only library code is fetched from the CDN. Your files, text, and input data stay entirely on your device. The library comes down to the browser; your data stays put.',
+        },
+        {
+          q: 'According to the examples table, which CDN library is the largest at approximately 25 MB?',
+          options: ['SheetJS, because Excel files can contain complex formatting', 'PDF.js, because PDF rendering requires many font definitions', 'KaTeX, because mathematical notation requires extensive symbol tables', 'Tesseract.js, because it includes the language model for OCR'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table lists Tesseract.js at approximately 25 MB - the largest entry - because it includes the language model needed to recognize text in images. SheetJS (~1 MB), PDF.js (~2 MB), mammoth.js (~0.5 MB), and KaTeX (~0.3 MB) are all significantly smaller.',
+        },
+        {
+          q: 'What does the pitfalls section identify as the main trade-off of CDN loading?',
+          options: ['CDN delivery always increases page load time compared to bundled code', 'If the CDN is unreachable, the tool will fail to load its library and will not function', 'CDN loading requires a paid subscription to an external service provider', 'CDN files are not cached by the browser, so every visit re-downloads the library'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states the main trade-off is dependency on a third-party service. If the CDN is unreachable (rare, but possible), the tool will fail to load its library. CDN loading on this site is limited to large, infrequently-used libraries where the trade-off favors CDN delivery.',
+        },
+        {
+          q: 'According to the FAQ, which types of tools on this site do NOT require CDN loading?',
+          options: ['Tools that process images, such as OCR and PDF converters', 'Tools built with React or other JavaScript frameworks', 'Simpler tools such as text and code comparison, which run on pure JavaScript bundled into the page', 'Tools available only on desktop browsers, not mobile'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ explains that tools needing large specialised libraries (OCR, Excel parsing, PDF rendering) use CDN loading. Simpler tools like text and code comparison run on pure JavaScript bundled directly into the page, requiring no external CDN fetch.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'cogs': {
@@ -116,6 +221,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Does COGS include salaries?', a: 'Only direct labour salaries - wages paid to workers directly involved in production or service delivery. Salaries of sales, marketing, HR, and executive staff are OpEx (SG&A), not COGS.' },
       { q: 'How is COGS calculated for a retailer vs a manufacturer?', a: 'For a retailer: COGS = Beginning Inventory + Purchases − Ending Inventory. For a manufacturer: COGS = Beginning Finished Goods + Cost of Goods Manufactured − Ending Finished Goods, where cost of goods manufactured includes materials, direct labour, and factory overhead.' },
     ],
+    quiz: {
+      topic: 'COGS',
+      questions: [
+        {
+          q: 'What does Cost of Goods Sold (COGS) measure?',
+          options: ['All costs a company incurs during a period, including sales, marketing, and administrative expenses', 'The aggregate of all direct costs incurred to produce the goods or deliver the services a company sells', 'The overhead costs of running the business, such as rent and management salaries', 'The total expenses deducted from revenue to arrive at net income'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'COGS covers only direct production costs - the costs that vary directly with units produced or services delivered. Sales, marketing, HR, and executive costs are operating expenses, not COGS.',
+        },
+        {
+          q: 'Which of the following salaries would be classified as COGS rather than operating expenses?',
+          options: ['Marketing manager salary', 'HR director salary', 'CEO salary', 'Factory production line worker salary'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'Only direct labour salaries - wages paid to workers directly involved in production or service delivery - count as COGS. Salaries of sales, marketing, HR, and executive staff are operating expenses (SG&A), not COGS.',
+        },
+        {
+          q: 'According to the examples table, what are the COGS components for the SaaS company?',
+          options: ['Hosting and support staff', 'Wholesale cost of goods', 'Materials, labour, and factory overhead', 'Direct labour hours and client project costs'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows the SaaS company\'s COGS is made up of hosting and support staff, totalling $1,600,000 on $8,000,000 revenue - a gross profit of $6,400,000. This reflects the definition that software companies often count only hosting costs and customer support as COGS.',
+        },
+        {
+          q: 'What does the pitfalls section warn is a red flag when reviewing a company\'s gross margin trend?',
+          options: ['A gross margin that is higher than the industry average by more than 10 percentage points', 'A business that reports identical gross margins in two consecutive years', 'A sudden gross margin improvement with no corresponding operational change, which may signal cost reclassification', 'A gross margin that tracks closely with changes in EBITDA margin over time'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section warns that companies can improve reported gross margins by reclassifying costs from COGS to operating expenses. A sudden improvement without an operational reason may indicate reclassification rather than genuine margin improvement.',
+        },
+        {
+          q: 'According to the FAQ, what is the formula for calculating COGS for a retailer?',
+          options: ['Beginning Inventory + Purchases - Ending Inventory', 'Revenue - Gross Profit - Operating Expenses', 'Beginning Finished Goods + Cost of Goods Manufactured - Ending Finished Goods', 'Total direct labour costs + total raw material costs'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that for a retailer, COGS = Beginning Inventory + Purchases - Ending Inventory. For a manufacturer, the formula is more complex: Beginning Finished Goods + Cost of Goods Manufactured - Ending Finished Goods.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'depreciation-amortization': {
@@ -140,6 +280,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between depreciation and amortization?', a: 'Depreciation applies to tangible assets (equipment, buildings, vehicles). Amortization applies to intangible assets (patents, customer relationships, software). The mechanics are the same - both allocate an asset\'s cost over its useful life.' },
       { q: 'Can depreciation be accelerated for tax purposes?', a: 'Yes. Most tax authorities allow accelerated depreciation for tax reporting, meaning a company can deduct more depreciation in early years for tax purposes than it records in its financial statements. This creates a deferred tax liability on the balance sheet.' },
     ],
+    quiz: {
+      topic: 'depreciation and amortization',
+      questions: [
+        {
+          q: 'What does depreciation represent in accounting?',
+          options: ['The systematic allocation of a tangible asset\'s cost over its useful life', 'The cash paid out when a long-term asset is purchased', 'The reduction in an asset\'s market value due to wear and tear', 'A tax deduction applied to all operating expenses in the year of purchase'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Depreciation allocates a tangible asset\'s cost over its useful life. A $500,000 machine with a 10-year life generates $50,000 of depreciation expense each year rather than being expensed in full at the time of purchase.',
+        },
+        {
+          q: 'What distinguishes amortization from depreciation?',
+          options: ['Amortization is always calculated using an accelerated method; depreciation always uses straight-line', 'Amortization applies only to assets held for more than 20 years; depreciation applies to shorter-lived assets', 'Amortization reduces a company\'s cash balance directly; depreciation does not', 'Amortization applies to intangible assets such as patents and customer lists; depreciation applies to tangible assets such as equipment and buildings'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition explains that depreciation applies to tangible assets (machines, buildings) while amortization is the same concept applied to intangible assets (patents, customer lists, trademarks, software). The mechanics are identical - both allocate an asset\'s cost over its useful life.',
+        },
+        {
+          q: 'According to the examples table, what is the annual straight-line depreciation on an office building costing $2,000,000 with a 40-year useful life?',
+          options: ['$40,000 per year', '$60,000 per year', '$50,000 per year', '$80,000 per year'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: '$2,000,000 / 40 years = $50,000 per year. The table shows this is the same annual charge as the manufacturing machine ($500,000 / 10 years), illustrating how cost and useful life together determine the depreciation amount.',
+        },
+        {
+          q: 'What does the pitfalls section warn about treating EBITDA as equivalent to free cash flow?',
+          options: ['EBITDA overstates cash generation because it does not add back non-cash interest expense', 'EBITDA ignores the CapEx requirement to replace depreciating assets, which is a real economic cost even though D&A is non-cash', 'EBITDA understates cash generation because it still includes amortization of intangibles', 'EBITDA is a GAAP metric, so comparing it to non-GAAP free cash flow is methodologically invalid'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that D&A is a real economic cost even though it is non-cash - an asset that depreciates to zero must eventually be replaced, often at higher cost. Treating EBITDA as free cash flow ignores this CapEx requirement, especially in capital-intensive industries.',
+        },
+        {
+          q: 'What accounting consequence does the FAQ identify from using accelerated depreciation for tax purposes?',
+          options: ['The company must restate prior-year financial statements to reflect the accelerated method', 'Operating profit (EBIT) becomes permanently higher than it would be under straight-line depreciation', 'The difference between tax and book depreciation is disclosed as a contingent asset on the balance sheet', 'A deferred tax liability is created on the balance sheet, because more depreciation is deducted for tax than is recorded in the financial statements'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states that accelerated depreciation allows a company to deduct more in early years for tax than it records in its financial statements. This timing difference creates a deferred tax liability on the balance sheet.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ebit': {
@@ -168,6 +343,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between EBIT and EBITDA?', a: 'EBITDA = EBIT + Depreciation + Amortization. EBITDA adds back the non-cash D&A charge to show a closer approximation of cash profit. EBIT reflects the true cost of using assets (via depreciation) while EBITDA ignores it.' },
       { q: 'When is EBIT margin more useful than EBITDA margin?', a: 'EBIT margin is more useful when comparing companies with similar capital intensity, because it includes depreciation as a cost. EBITDA margin is preferred when comparing companies with very different depreciation policies or when assessing cash generation potential.' },
     ],
+    quiz: {
+      topic: 'EBIT',
+      questions: [
+        {
+          q: 'What does EBIT stand for, and what does it measure?',
+          options: ['Earnings Before Income Tax - profit after deducting interest but before deducting tax', 'Earnings Before Investment and Taxes - profit after excluding all non-operating items', 'Earnings Before Interest and Tax - operating profit from core business activities before financing costs or taxes', 'Earnings Between Investments and Taxes - the midpoint between gross profit and net income'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'EBIT stands for Earnings Before Interest and Tax, also called Operating Profit. It measures income from core business activities after deducting COGS and all operating expenses including D&A, but before accounting for how the business is financed or taxed.',
+        },
+        {
+          q: 'What is the mathematical relationship between EBIT and EBITDA?',
+          options: ['EBIT = EBITDA + Interest Expense + Tax Expense', 'EBITDA = EBIT + Depreciation + Amortization', 'EBIT = EBITDA - Net Income + Tax Expense', 'EBITDA = EBIT - CapEx + Working Capital Changes'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'EBITDA = EBIT + Depreciation + Amortization. EBITDA adds back the non-cash D&A charge to show a closer approximation of cash profit, while EBIT retains D&A as a cost and reflects the economic impact of using long-lived assets.',
+        },
+        {
+          q: 'In the examples table, Company A and Company B both report $5,000,000 EBIT. Company A pays $500,000 in interest; Company B pays $2,000,000. At a 30% tax rate, what is Company B\'s net income?',
+          options: ['$3,150,000', '$2,450,000', '$2,800,000', '$2,100,000'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'Company B: EBT = $5,000,000 - $2,000,000 = $3,000,000. Net Income = $3,000,000 x (1 - 0.30) = $2,100,000. Despite identical EBIT, Company B\'s higher debt load reduces net income by $1,050,000 vs Company A - illustrating why EBIT strips out capital structure differences.',
+        },
+        {
+          q: 'The pitfalls section notes that EBIT includes depreciation. What consequence does this have for asset-heavy businesses?',
+          options: ['EBIT can understate cash generation for asset-heavy businesses, because depreciation is a non-cash charge that reduces EBIT without any cash outflow', 'EBIT overstates cash generation for asset-heavy businesses because it includes all operating cash outflows', 'EBIT cannot be used to compare asset-heavy businesses because each company defines depreciation differently', 'EBIT penalises asset-light businesses more than asset-heavy businesses by excluding financing costs'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The pitfalls section states that EBIT includes depreciation, which can understate cash generation for high-D&A businesses because D&A is non-cash. This is why EBITDA is preferred for M&A valuation while EBIT is more useful for operational comparisons.',
+        },
+        {
+          q: 'According to the FAQ, when is EBIT margin more useful than EBITDA margin?',
+          options: ['When comparing companies operating in different countries with different corporate tax rates', 'When assessing the debt capacity of a business for a leveraged buyout', 'When comparing companies with similar capital intensity, because EBIT includes depreciation as a cost', 'When a company has recently changed its revenue recognition policy, distorting prior-year EBITDA comparisons'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that EBIT margin is more useful when comparing companies with similar capital intensity, because it includes depreciation as a cost. EBITDA margin is preferred when companies have very different depreciation policies or when assessing cash generation potential.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ebitda': {
@@ -192,6 +402,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why do acquirers use EBITDA for valuation?', a: 'Because it allows comparison across companies with different debt loads, tax rates, and depreciation policies. The EV/EBITDA multiple tells an acquirer how many years of current EBITDA they are paying for the entire business, on a capital-structure-neutral basis.' },
       { q: 'What is a normal EBITDA multiple?', a: 'It varies by industry and growth profile. SaaS companies trade at 10–25× EBITDA; traditional manufacturers at 5–8×; retail at 4–7×. High growth and high margins command premium multiples. Always use sector-specific comparable transactions.' },
     ],
+    quiz: {
+      topic: 'EBITDA',
+      questions: [
+        {
+          q: 'What does EBITDA stand for?',
+          options: ['Earnings Before Interest, Taxes, Dividends, and Adjustments', 'Earnings Before Income Tax, Depreciation, and Amortization', 'Earnings Before Interest, Taxes, Depreciation, and Accruals', 'Earnings Before Interest, Taxes, Depreciation, and Amortization'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'EBITDA stands for Earnings Before Interest, Taxes, Depreciation, and Amortization. It strips out financing decisions, depreciation methods, and tax policies from net income to reveal how much operating cash profit the business generates on a comparable basis.',
+        },
+        {
+          q: 'According to the FAQ, what does EBITDA ignore that makes it different from operating cash flow?',
+          options: ['Changes in working capital and capital expenditures', 'Revenue from discontinued operations and one-time gains', 'Foreign exchange gains and losses on overseas subsidiaries', 'Differences between cash and accrual accounting for revenue recognition'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that EBITDA ignores changes in working capital and capital expenditures. A business with high EBITDA but rising receivables and heavy CapEx may generate very little actual cash - which is why FCF (Operating Cash Flow minus CapEx) is a more complete measure.',
+        },
+        {
+          q: 'From the examples table, what is the EBITDA for the manufacturer with Net Income $3,000,000, Interest $400,000, Tax $900,000, and D&A $800,000?',
+          options: ['$4,300,000', '$4,700,000', '$5,100,000', '$5,500,000'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: '$3,000,000 + $400,000 + $900,000 + $800,000 = $5,100,000. The bottom-up method starts with Net Income and adds back Interest, Tax, Depreciation, and Amortization to reach EBITDA.',
+        },
+        {
+          q: 'What does the pitfalls section warn about using EBITDA to value a capital-intensive business?',
+          options: ['CapEx should be added back to EBITDA along with D&A to get a more accurate cash profit figure', 'A capital-intensive business that needs heavy reinvestment is worth less than its EBITDA implies, because EBITDA ignores CapEx requirements', 'EBITDA overstates profitability for capital-intensive businesses more than for asset-light businesses in the same sector', 'EBITDA multiple comparisons are only valid between companies with identical depreciation policies'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that EBITDA ignores CapEx requirements, so a capital-intensive business needing heavy reinvestment is worth less than its EBITDA multiple suggests. Always review free cash flow conversion (FCF / EBITDA) alongside EBITDA.',
+        },
+        {
+          q: 'According to the FAQ, what is a typical EV/EBITDA multiple range for SaaS companies?',
+          options: ['10-25x EBITDA', '5-8x EBITDA', '4-7x EBITDA', '2-4x EBITDA'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that SaaS companies trade at 10-25x EBITDA, reflecting their high growth rates and strong margins. Traditional manufacturers trade at 5-8x and retail at 4-7x. High growth and high margins command premium multiples.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ebitda-margin': {
@@ -216,6 +461,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How is EBITDA Margin different from Net Profit Margin?', a: 'Net Profit Margin = Net Income / Revenue. It includes interest, taxes, and D&A - making it always lower than EBITDA Margin for a profitable company. EBITDA Margin isolates operational efficiency; Net Profit Margin shows bottom-line shareholder return.' },
       { q: 'Can EBITDA Margin exceed 100%?', a: 'No. EBITDA cannot exceed Revenue because Revenue is the starting point from which costs are subtracted. An EBITDA Margin of 100% would mean zero operating costs, which is not possible in practice.' },
     ],
+    quiz: {
+      topic: 'EBITDA margin',
+      questions: [
+        {
+          q: 'What is the formula for EBITDA Margin?',
+          options: ['EBITDA divided by Net Income, expressed as a percentage', 'EBITDA divided by Revenue, expressed as a percentage', 'Gross Profit divided by Revenue, expressed as a percentage', 'EBITDA divided by Total Operating Expenses, expressed as a percentage'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'EBITDA Margin = EBITDA / Revenue x 100. It measures what percentage of each revenue dollar becomes EBITDA, making it scale-independent and suitable for comparing companies of very different sizes within the same sector.',
+        },
+        {
+          q: 'How does EBITDA Margin differ from Net Profit Margin?',
+          options: ['EBITDA Margin uses EBIT instead of EBITDA as the numerator; Net Profit Margin uses net income after all adjustments', 'EBITDA Margin is typically calculated quarterly; Net Profit Margin is typically calculated annually', 'EBITDA Margin excludes revenue from one-time transactions; Net Profit Margin includes all revenue', 'Net Profit Margin = Net Income / Revenue, making it always lower than EBITDA Margin because it includes interest, taxes, and D&A'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ explains that Net Profit Margin = Net Income / Revenue, and includes interest, taxes, and D&A - making it always lower than EBITDA Margin for a profitable company. EBITDA Margin isolates operational efficiency; Net Profit Margin shows bottom-line shareholder return.',
+        },
+        {
+          q: 'From the examples table, which company has the highest EBITDA Margin?',
+          options: ['Telecom operator at 33.3%', 'Established SaaS at 30.0%', 'SaaS startup at 15.0%', 'Retail chain at 5.0%'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The telecom operator has the highest EBITDA Margin at 33.3% ($400M EBITDA on $1.2B revenue), just ahead of the established SaaS company at 30.0%. The retail chain is lowest at 5.0%, illustrating how dramatically margin norms differ across industries.',
+        },
+        {
+          q: 'What does the pitfalls section warn about a company with a very high EBITDA Margin?',
+          options: ['A high EBITDA Margin always indicates the company is overcharging customers relative to peers', 'A high EBITDA Margin in isolation guarantees the company will outperform peers over the long term', 'A high EBITDA Margin can be misleading if the business is underinvesting in growth or maintenance CapEx', 'A very high EBITDA Margin triggers mandatory disclosure of CapEx plans under GAAP reporting rules'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section warns that a high EBITDA Margin does not always mean a good business - some high-margin companies underinvest in growth or maintenance CapEx. A company with 40% EBITDA Margin but zero growth and heavy deferred maintenance is less valuable than its margin suggests.',
+        },
+        {
+          q: 'According to the FAQ, what is the typical EBITDA Margin range for grocery companies?',
+          options: ['10-20%', '3-8%', '15-30%', '30-40%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states grocery companies typically have EBITDA Margins of 3-8%, among the lowest of any sector. This compares to SaaS at 15-30% and telecom at 30-40%, which is why the whenToUse section warns that cross-industry margin comparisons are not meaningful.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ebt': {
@@ -240,6 +520,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How is EBT calculated?', a: 'EBT = Net Income + Tax Expense. Alternatively, EBT = EBIT − Interest Expense. Both methods produce the same result.' },
       { q: 'Can EBT be negative?', a: 'Yes. A negative EBT means the company made a pre-tax loss. This happens when interest expenses exceed operating profit, or when operating losses are large enough to persist after financing costs. A negative EBT typically results in zero tax or a deferred tax asset.' },
     ],
+    quiz: {
+      topic: 'EBT',
+      questions: [
+        {
+          q: 'What does EBT stand for, and what does it measure?',
+          options: ['Earnings Before Tax - profit after all operating costs and interest expenses, but before income tax is applied', 'Earnings Before Transfers - profit before any cash is distributed to shareholders or debtholders', 'Earnings Between Taxes - the midpoint between gross profit and net income on the income statement', 'Estimated Base Tax - the minimum tax a company must pay regardless of reported income'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'EBT (Earnings Before Tax), also called Pre-Tax Income, is profit after all operating costs and interest expenses but before income tax. The relationship is: EBT x (1 - Tax Rate) = Net Income.',
+        },
+        {
+          q: 'What is the key difference between EBT and EBIT?',
+          options: ['EBT excludes both interest and tax; EBIT excludes only tax', 'EBT is calculated annually; EBIT can only be calculated quarterly', 'EBIT excludes both interest and tax; EBT excludes only tax and still includes interest expense', 'EBT is a GAAP metric; EBIT is non-GAAP and can be defined differently by each company'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ clarifies that EBIT excludes both interest and tax, while EBT excludes only tax and still includes interest expense. EBIT is better for comparing operational efficiency across different capital structures; EBT is better for comparing profitability across different tax environments.',
+        },
+        {
+          q: 'From the examples table, all four companies have the same $1,000,000 EBT. Which country results in the lowest Net Income?',
+          options: ['USA - $805,000', 'Germany - $715,000', 'UK - $770,000', 'Ireland - $890,000'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Germany has the highest effective tax rate at 28.5%, resulting in $285,000 of tax paid and Net Income of $715,000 - the lowest of the four. This illustrates why EBT is used for cross-jurisdictional comparisons: identical EBT produces very different Net Income depending on the tax environment.',
+        },
+        {
+          q: 'What does the pitfalls section warn about using EBT to compare companies with different debt levels?',
+          options: ['EBT overstates profitability for highly-leveraged companies because interest expense is treated as a tax deduction', 'EBT comparisons are invalid when interest rates differ between the countries where companies are domiciled', 'EBT understates the profitability of debt-free companies because it does not include interest income', 'Companies with heavy debt loads show lower EBT than less-leveraged peers with identical operating performance, because EBT still includes interest expense'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section states that EBT is affected by interest expense - a heavily-leveraged company will show lower EBT than a debt-free peer with identical EBIT. For pure operational comparison, EBIT (which also excludes interest) is the more appropriate metric.',
+        },
+        {
+          q: 'According to the FAQ, what typically happens when a company reports a negative EBT?',
+          options: ['The company typically pays zero tax or records a deferred tax asset', 'The company must restate prior-year earnings to reflect the accumulated loss', 'Lenders are automatically notified that the company has breached its debt covenants', 'The effective tax rate is reset to the statutory rate for the current and following year'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that a negative EBT means the company made a pre-tax loss, typically resulting in zero tax or a deferred tax asset. This happens when interest expenses exceed operating profit or when operating losses are large enough to persist after financing costs.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'effective-tax-rate': {
@@ -264,6 +579,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Can the effective tax rate be negative?', a: 'Yes, in rare cases. This happens when tax credits or deferred tax benefits exceed the gross tax liability, resulting in the company receiving a net tax benefit rather than paying tax. It is uncommon and typically temporary.' },
       { q: 'How does the effective tax rate affect valuation?', a: 'A lower effective tax rate increases Net Income relative to EBT, boosting earnings-based valuation metrics. When building DCF models, analysts often normalise the effective tax rate to a long-run sustainable level rather than using a single year\'s rate.' },
     ],
+    quiz: {
+      topic: 'effective tax rate',
+      questions: [
+        {
+          q: 'How is the Effective Tax Rate calculated?',
+          options: ['Statutory Tax Rate divided by Net Income, multiplied by 100', 'Net Income divided by EBT, multiplied by 100', 'Tax Expense divided by Revenue, multiplied by 100', 'Tax Expense divided by EBT (pre-tax income), multiplied by 100'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The Effective Tax Rate = Tax Expense / EBT x 100. It shows the actual percentage of pre-tax income paid as tax in a given period, which often differs significantly from the Statutory Tax Rate set by the government.',
+        },
+        {
+          q: 'What causes the Effective Tax Rate to differ from the Statutory Tax Rate?',
+          options: ['The effective rate is always higher because companies must pay penalties and surcharges on top of the statutory rate', 'Tax deductions, credits, loss carry-forwards, tax-exempt income, and profit allocation across jurisdictions with different rates', 'Companies are legally allowed to apply a flat 5% reduction to the statutory rate under most GAAP frameworks', 'The effective rate is set by a company\'s board of directors and adjusted each year'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition explains the gap arises from tax deductions, credits, loss carry-forwards, tax-exempt income, accelerated depreciation, R&D credits, and the mix of income across different tax jurisdictions. Large multinationals often have effective rates significantly below statutory rates.',
+        },
+        {
+          q: 'From the examples table, the tech multinational has EBT of $5,000,000 and pays $400,000 in tax. What is its Effective Tax Rate?',
+          options: ['21.0%', '12.0%', '8.0%', '4.0%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Effective Tax Rate = $400,000 / $5,000,000 x 100 = 8.0%. Despite a 21% statutory rate, the tech multinational pays only 8.0% - well below statutory, likely due to international profit allocation and tax credits.',
+        },
+        {
+          q: 'What does the pitfalls section recommend when an Effective Tax Rate is well below the statutory rate?',
+          options: ['Normalise the effective tax rate to a more conservative level when projecting future Net Income, because the low rate may not be sustainable', 'Disregard the effective rate and use only the statutory rate for all financial projections', 'Increase the valuation multiple to compensate for the additional tax risk embedded in the low effective rate', 'Report the discrepancy to the relevant tax authority as a potential misclassification'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The pitfalls section warns that an effective rate well below statutory may rely on deferred tax assets, international arrangements under regulatory scrutiny, or one-time credits. Normalising to a more conservative rate gives a more reliable projection of future Net Income.',
+        },
+        {
+          q: 'According to the FAQ, when can the Effective Tax Rate be negative?',
+          options: ['When a company operates at a net loss and has no taxable income in any jurisdiction', 'When a company\'s statutory tax rate exceeds 50% and it qualifies for a standard OECD hardship exemption', 'When the company defers more than 12 months of tax payments under an agreed instalment plan', 'In rare cases when tax credits or deferred tax benefits exceed the gross tax liability, resulting in a net tax benefit'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states a negative effective tax rate is possible but rare - it occurs when tax credits or deferred tax benefits exceed the gross tax liability, so the company receives a net benefit rather than paying tax. The FAQ notes this is uncommon and typically temporary.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'enterprise-value': {
@@ -290,6 +640,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between Enterprise Value and Market Cap?', a: 'Market Cap = Share Price × Shares Outstanding - it is the equity value only. EV adds debt and subtracts cash to capture the full value of the business regardless of how it is financed. EV is almost always used in M&A; Market Cap is used in equity-only contexts like P/E ratios.' },
       { q: 'What is a "bridge" from Enterprise Value to Equity Value?', a: 'Equity Value = EV − Net Debt (Debt − Cash). This bridge is used in M&A to calculate the actual offer price per share after accounting for what the acquirer must pay debt-holders.' },
     ],
+    quiz: {
+      topic: 'enterprise value',
+      questions: [
+        {
+          q: 'What does Enterprise Value (EV) represent?',
+          options: ['The current stock price multiplied by the number of shares outstanding', 'The total value of a company\'s equity, excluding all debt and financial obligations', 'The total economic value of a business - what it would cost an acquirer to buy the entire company, including taking on its debt and receiving its cash', 'The present value of all future dividends a company is expected to pay to shareholders'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'EV = Market Capitalisation + Total Debt - Cash. It represents the total economic cost of acquiring the entire business, including assuming its debt and netting off its cash. This makes EV capital-structure-neutral.',
+        },
+        {
+          q: 'How does Enterprise Value differ from Market Capitalisation?',
+          options: ['Market Cap is equity value only (share price x shares outstanding); EV adds debt and subtracts cash to capture the full business value regardless of financing', 'EV only counts listed equity and excludes private shares; Market Cap includes all outstanding shares whether publicly traded or not', 'Market Cap is used for acquisition pricing; EV is used only in equity markets for P/E ratio calculations', 'EV and Market Cap are the same metric expressed in different currencies'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ explains that Market Cap = Share Price x Shares Outstanding, representing equity value only. EV adds total debt and subtracts cash to capture the full business value regardless of financing. EV is used in M&A; Market Cap is used in equity-only contexts like P/E ratios.',
+        },
+        {
+          q: 'Company A has Market Cap $50,000,000, Debt $30,000,000, and Cash $5,000,000. What is its Enterprise Value?',
+          options: ['$80,000,000', '$75,000,000', '$85,000,000', '$55,000,000'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'EV = Market Cap + Debt - Cash = $50M + $30M - $5M = $75M. The examples table confirms Company A has EV of $75M and an EV/EBITDA multiple of 7.5x on $10M EBITDA.',
+        },
+        {
+          q: 'What does the pitfalls section warn about when comparing EV across companies in a peer set?',
+          options: ['EV calculations always overstate the value of companies with large pension obligations by ignoring future liabilities', 'EV should be recalculated daily because market capitalisation changes with the stock price', 'EV is not comparable across companies in different countries because FX translation distorts the metric', 'EV calculations can vary depending on what is included in "debt" - analysts must use the same EV definition across the entire peer set'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section states that "debt" can be defined differently - analysts sometimes include lease obligations, pension deficits, and minority interests as debt-like items. For a clean comparison, always use the same EV definition across all companies in the peer set.',
+        },
+        {
+          q: 'According to the FAQ, what is the formula for bridging from Enterprise Value to Equity Value?',
+          options: ['Equity Value = EV + Net Debt (Debt + Cash)', 'Equity Value = EV x (1 - Debt/Capital Ratio)', 'Equity Value = EV - Net Debt (Debt - Cash)', 'Equity Value = EV divided by the EV/EBITDA multiple'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states Equity Value = EV - Net Debt (Debt - Cash). This bridge is used in M&A to calculate the actual offer price per share after accounting for what the acquirer must pay to debt-holders.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ev-ebitda': {
@@ -315,6 +700,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Should I use LTM or NTM EBITDA for EV/EBITDA?', a: 'In M&A, NTM (Next Twelve Months, i.e. forward) EBITDA is typically used because buyers are paying for future performance. LTM (Last Twelve Months, i.e. trailing) EBITDA is used for historical benchmarking and when forward estimates are unreliable.' },
       { q: 'How is EV/EBITDA different from P/E?', a: 'P/E = Share Price / EPS, using Equity Value and Net Income - both affected by capital structure and taxes. EV/EBITDA is capital-structure-neutral and pre-tax. EV/EBITDA is preferred in M&A; P/E is more common in equity market contexts.' },
     ],
+    quiz: {
+      topic: 'EV/EBITDA',
+      questions: [
+        {
+          q: 'What does an EV/EBITDA multiple of 8x mean?',
+          options: ['The business is worth eight times its annual revenue', 'The buyer is paying eight years\' worth of current EBITDA for the entire business', 'The company\'s equity is valued at eight times its net income', 'The business will pay back its purchase price in eight years at the current operating cash flow rate'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition explains that EV/EBITDA answers the question: how many years of current EBITDA would it take to pay the full price of the business? A multiple of 8x means the buyer is paying eight years\' worth of current EBITDA.',
+        },
+        {
+          q: 'According to the FAQ, why is EV/EBITDA preferred over the P/E ratio in M&A?',
+          options: ['P/E ratios are only available for publicly traded companies, while EV/EBITDA can be calculated for private businesses', 'EV/EBITDA is calculated quarterly; P/E is only available annually and therefore less current', 'EV/EBITDA includes the effect of non-recurring items; P/E strips them out for a cleaner comparison', 'EV/EBITDA is capital-structure-neutral and pre-tax; P/E uses equity value and net income, which are affected by debt levels and tax rates'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ explains that P/E = Share Price / EPS, using Equity Value and Net Income - both affected by capital structure and taxes. EV/EBITDA removes those effects, making it valid for comparing companies regardless of debt levels or tax rates.',
+        },
+        {
+          q: 'According to the examples table, which industry typically trades at the highest EV/EBITDA multiple?',
+          options: ['SaaS / Cloud Software at 10x-25x', 'Healthcare services at 10x-18x', 'Consumer goods at 8x-14x', 'Industrial manufacturing at 5x-9x'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows SaaS / Cloud Software trades at 10x-25x - the highest range. Key drivers are high growth, high margins, and recurring revenue. Grocery / Food retail is at the bottom at 4x-7x due to thin margins and low growth.',
+        },
+        {
+          q: 'What does the pitfalls section warn about comparing two companies with identical EV/EBITDA ratios?',
+          options: ['EV/EBITDA comparisons are only valid if both companies were acquired in the same calendar year', 'EV/EBITDA comparisons are unreliable unless both companies use identical revenue recognition policies', 'A company with higher CapEx requirements generates less free cash from the same EBITDA, so identical multiples can conceal very different valuations', 'The multiple must be adjusted for dividend yield before two companies can be directly compared'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states that two companies with identical EV/EBITDA but different CapEx requirements are not equally valued - the one with higher CapEx generates less free cash. The recommendation is to also calculate EV/EBIT and EV/FCF to triangulate.',
+        },
+        {
+          q: 'According to the FAQ, which EBITDA figure should be used in an M&A acquisition context?',
+          options: ['LTM (Last Twelve Months) EBITDA, because historical performance is the most reliable basis for valuation', 'NTM (Next Twelve Months) EBITDA, because buyers are paying for future performance', 'The average of LTM and NTM EBITDA, to balance historical and forward-looking views', 'Five-year average EBITDA, to smooth out cyclical fluctuations in any single year'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states that in M&A, NTM (Next Twelve Months, i.e. forward) EBITDA is typically used because buyers are paying for future performance. LTM (Last Twelve Months, i.e. trailing) EBITDA is used for historical benchmarking and when forward estimates are unreliable.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'gross-profit': {
@@ -339,6 +759,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Can Gross Profit be negative?', a: 'Yes. If COGS exceeds Revenue, the company is selling products for less than they cost to produce - a fundamental unit economics problem. This is a critical warning sign and is rarely sustainable.' },
       { q: 'What does a high Gross Profit mean?', a: 'A high Gross Profit (both in dollars and as a margin) indicates strong pricing power, low production costs, or both. It signals that the business has resources to invest in growth, R&D, or other operating costs while still generating operating profit.' },
     ],
+    quiz: {
+      topic: 'gross profit',
+      questions: [
+        {
+          q: 'What is the formula for Gross Profit?',
+          options: ['Revenue minus Cost of Goods Sold (COGS)', 'Revenue minus all operating expenses including SG&A and R&D', 'Revenue minus COGS minus interest expense', 'Net Income plus tax expense plus depreciation'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Gross Profit = Revenue - COGS. It is the first profitability figure on the income statement, representing what remains after paying the direct costs of producing goods or delivering services, before any overhead, R&D, SG&A, interest, or tax.',
+        },
+        {
+          q: 'What is the key difference between Gross Profit and Net Profit?',
+          options: ['Gross Profit is calculated before revenue is recognised; Net Profit is calculated after revenue recognition', 'Gross Profit includes interest income; Net Profit excludes all non-operating income', 'Gross Profit uses cash accounting; Net Profit uses accrual accounting', 'Gross Profit deducts only COGS; Net Profit also deducts operating expenses, interest, and tax - making it always lower than or equal to Gross Profit'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states: Gross Profit = Revenue - COGS; Net Profit = Revenue - COGS - OpEx - Interest - Tax. Net Profit deducts every business cost while Gross Profit only deducts direct production costs, so Net Profit is always lower than or equal to Gross Profit.',
+        },
+        {
+          q: 'From the examples table, the SaaS company has Revenue of $8,000,000 and COGS of $1,600,000. What is its Gross Profit?',
+          options: ['$7,200,000', '$5,600,000', '$6,400,000', '$6,800,000'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Gross Profit = $8,000,000 - $1,600,000 = $6,400,000, representing an 80% Gross Margin. The SaaS company has the highest Gross Margin of the four examples in the table because software has near-zero marginal delivery costs.',
+        },
+        {
+          q: 'What does the pitfalls section warn about a business that acquires customers through heavy discounts?',
+          options: ['Heavy discounting reduces the EV/EBITDA multiple and makes the business harder to value in an M&A context', 'Despite strong revenue growth, heavy discounting can lead to deteriorating Gross Profit and Gross Margin simultaneously', 'Discounting inflates COGS because promotional costs must be classified as direct production expenses under GAAP', 'A business offering heavy discounts must disclose this in its revenue recognition policy under ASC 606'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that a business acquiring customers with heavy discounts may show strong revenue growth but deteriorating Gross Profit and Gross Margin. This is why both absolute Gross Profit and the margin percentage must be tracked together.',
+        },
+        {
+          q: 'According to the FAQ, what does a negative Gross Profit indicate?',
+          options: ['COGS exceeds Revenue, meaning the company is selling products for less than they cost to produce - a fundamental unit economics problem', 'The company has recorded a one-time write-down that temporarily exceeded the current period\'s revenue', 'The company\'s Revenue is negative, which occurs when product returns exceed new sales in a given period', 'The company has reclassified operating expenses into COGS, distorting the gross profit line'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that a negative Gross Profit occurs when COGS exceeds Revenue - meaning the company is selling products for less than they cost to produce. This is described as a fundamental unit economics problem that is a critical warning sign and rarely sustainable.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'gross-profit-margin': {
@@ -365,6 +820,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How is Gross Profit Margin different from Net Profit Margin?', a: 'Gross Profit Margin only deducts COGS. Net Profit Margin deducts all costs including SG&A, R&D, interest, and tax. Net Profit Margin is always lower. The gap between them represents the weight of overhead and financing costs.' },
       { q: 'Can Gross Profit Margin be improved?', a: 'Yes. The main levers are: raising prices (increases revenue without increasing COGS), reducing input costs (renegotiating supplier contracts, improving manufacturing efficiency), and changing product mix (selling more high-margin products). Scale can also improve margins if fixed production costs are spread over higher volume.' },
     ],
+    quiz: {
+      topic: 'gross profit margin',
+      questions: [
+        {
+          q: 'What does Gross Profit Margin measure?',
+          options: ['The percentage of total costs that are fixed versus variable, separating overhead from direct production expenses', 'The difference between revenue and operating expenses expressed as a percentage of total assets', 'What proportion of each revenue dollar remains after paying the direct costs of producing goods or services - gross profit divided by revenue', 'The percentage increase in gross profit from one period to the next, measuring growth in absolute profit terms'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states that Gross Profit Margin is Gross Profit expressed as a percentage of Revenue, measuring what proportion of each revenue dollar remains after paying direct production costs. A 40% margin means 40 cents of every revenue dollar is available for operating expenses and profit.',
+        },
+        {
+          q: 'According to the FAQ, how does Gross Profit Margin differ from Net Profit Margin?',
+          options: ['Gross Profit Margin only deducts COGS; Net Profit Margin deducts all costs including SG&A, R&D, interest, and tax - the gap between them represents the weight of overhead and financing costs', 'Gross Profit Margin deducts all operating expenses; Net Profit Margin adds back non-cash items like depreciation to give a cash-equivalent profitability view', 'The two measures are identical except that Net Profit Margin uses EPS as its numerator rather than total net income', 'Gross Profit Margin is always higher than Net Profit Margin by a fixed percentage exactly equal to the company\'s effective tax rate'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that Gross Profit Margin only deducts COGS, while Net Profit Margin deducts all costs including SG&A, R&D, interest, and tax. Net Profit Margin is always lower, and the gap represents the weight of overhead and financing costs.',
+        },
+        {
+          q: 'From the industry benchmarks table, which sector shows the lowest typical gross margin range?',
+          options: ['Grocery (20-30%), driven by high volume and thin mark-ups on commodity goods', 'Consumer electronics (30-45%), driven by component and assembly costs', 'Pharmaceuticals (60-75%), supported by IP pricing power and low incremental manufacturing cost', 'Construction (15-25%), driven by material and subcontractor costs'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows Construction at 15-25% as the lowest range, below Grocery at 20-30%. The primary driver is material and subcontractor costs, which consume a large share of each project\'s revenue.',
+        },
+        {
+          q: 'What does the pitfalls section warn about a sudden improvement in Gross Profit Margin?',
+          options: ['A sudden improvement always signals a pricing power breakthrough and should be viewed as an unambiguously positive business development', 'Gross margin improvements can result from COGS reclassification - costs moved from COGS to SG&A improve gross margin without any real operational change - so always check whether the improvement is operational or definitional', 'Sudden gross margin improvements trigger mandatory restatement requirements under GAAP before they can be included in published accounts', 'A sudden improvement most likely means the company has eliminated a major supplier contract and is temporarily operating without sufficient raw materials'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that gross margin improvements can result from COGS reclassification rather than genuine efficiency gains. When gross margin improves suddenly, always check whether the improvement is operational or definitional.',
+        },
+        {
+          q: 'According to the FAQ, what are the main levers for improving Gross Profit Margin?',
+          options: ['Reducing administrative headcount, which lowers SG&A and flows through to higher gross margins over time', 'Gross margin can only be improved during periods of low inflation; high-inflation environments always erode margins before prices can be adjusted upward', 'Raising prices (increases revenue without raising COGS), reducing input costs (renegotiating suppliers or improving manufacturing efficiency), and changing product mix toward higher-margin products', 'Vertical integration is the only proven lever; owning the full supply chain eliminates all external mark-ups and directly improves gross margin'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ identifies three main levers: raising prices, reducing input costs (through supplier renegotiation or manufacturing efficiency), and changing product mix toward higher-margin products. Scale can also help by spreading fixed production costs over higher volume.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'net-income': {
@@ -394,6 +884,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Can a company have high revenue but negative Net Income?', a: 'Yes, this is common in growth-stage companies that invest heavily in sales, marketing, and R&D. Revenue growth does not guarantee profitability. Amazon ran at or near breakeven net income for many years while growing revenue rapidly.' },
       { q: 'What happens to Net Income if it is not paid as a dividend?', a: 'It is retained in the business and added to Retained Earnings on the balance sheet. Retained Earnings accumulate over time and fund reinvestment in the business, debt repayment, or share buybacks.' },
     ],
+    quiz: {
+      topic: 'net income',
+      questions: [
+        {
+          q: 'What does Net Income represent, and where does it sit on the income statement?',
+          options: ['Net Income is revenue minus COGS only, representing what the business earns after production costs but before overhead, interest, and tax obligations are deducted', 'Net Income is profit after deducting every cost - COGS, operating expenses, interest, and tax - and is the final line of the income statement representing what is left for shareholders after all obligations are met', 'Net Income equals Operating Profit (EBIT) with tax added back, reflecting what the core operations generate independently of the company\'s financing decisions', 'Net Income is the sum of all cash inflows minus all cash outflows during a period, bridging the income statement with the cash flow statement at the bottom line'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states Net Income deducts every cost - COGS, operating expenses, interest, and tax - and is the final line of the income statement. It represents what is left for shareholders after all obligations are met.',
+        },
+        {
+          q: 'Using the income statement example in the entry, what is Net Income when EBT is $2,200,000 and the tax rate is 25%?',
+          options: ['$2,200,000 - tax is shown separately as a memo item and has not yet been deducted from the pre-tax profit figure', '$1,925,000 - calculated by deducting only the operating expenses and interest from the original $10,000,000 revenue figure', '$1,500,000 - applying a 30% effective tax rate to EBT rather than the 25% rate used in the example', '$1,650,000 - the result of deducting $550,000 tax (25% of $2,200,000 EBT) from EBT, leaving $1,650,000 for shareholders'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows the full waterfall: EBT of $2,200,000 minus 25% tax ($550,000) equals Net Income of $1,650,000. This is the final line after all deductions from the original $10,000,000 revenue.',
+        },
+        {
+          q: 'According to the definition, what happens to Net Income on the balance sheet when it is not distributed as dividends?',
+          options: ['Net Income is added to Retained Earnings on the balance sheet, accumulating over time to fund reinvestment in the business, debt repayment, or share buybacks', 'Net Income is transferred directly to the cash account on the balance sheet, increasing reported cash by the exact Net Income amount each period', 'Net Income is recognised as an increase in paid-in capital, temporarily inflating the equity section until dividends are declared and paid in the following period', 'Net Income flows to the financing activities section of the cash flow statement, where it is offset by dividend payments and stock issuances during the period'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states Net Income flows into the balance sheet through Retained Earnings when not distributed as dividends. The FAQ confirms Retained Earnings accumulate over time to fund reinvestment, debt repayment, or share buybacks.',
+        },
+        {
+          q: 'The pitfalls section warns that Net Income is the most susceptible earnings metric to accounting manipulation. Which specific methods are named?',
+          options: ['Companies overstate capital expenditures to reduce depreciation and inflate Net Income over future periods without disclosing the reclassification to investors', 'Management inflates Net Income by classifying operating expenses as financing activities on the cash flow statement, reducing the apparent cost base on the income statement', 'Revenue recognition timing, expense deferral, and impairment reversals can all distort Net Income; the section recommends always cross-checking Net Income against operating cash flow from the cash flow statement', 'Companies understate COGS by capitalizing direct labor costs as long-term assets, shifting expenses off the income statement and boosting gross and net profit margins'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section names three manipulation methods: revenue recognition timing, expense deferral, and impairment reversals. It also notes that Net Income includes non-cash items like depreciation, and recommends cross-checking against operating cash flow.',
+        },
+        {
+          q: 'Can a company report high revenue but negative Net Income, and what does the FAQ cite as an example?',
+          options: ['No - high revenue always ensures positive Net Income because direct production costs are the only significant deduction, and healthy revenue margins eliminate the risk of a net loss', 'Yes - this is common in growth-stage companies investing heavily in sales, marketing, and R&D. The FAQ cites Amazon running at or near breakeven Net Income for many years while growing revenue rapidly', 'Yes - but only in capital-intensive industries where depreciation exceeds gross profit, making the manufacturing sector structurally prone to net losses regardless of revenue scale', 'No - public companies must achieve Net Income breakeven before listing, so large-revenue companies by definition report positive Net Income after their IPO'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ confirms that high revenue does not guarantee profitability. Growth-stage companies that invest heavily in sales, marketing, and R&D commonly run negative Net Income - Amazon is cited as a company that ran at or near breakeven Net Income for many years while growing revenue rapidly.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'net-profit-margin': {
@@ -418,6 +943,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why do some industries have inherently low net margins?', a: 'Industries with high asset intensity, thin pricing power, or intense competition - like grocery, construction, and low-end manufacturing - have structurally thin margins. They compensate with high asset turnover: generating large revenues from their asset base. Return on assets or return on equity is often more useful than net margin for these sectors.' },
       { q: 'How does leverage affect Net Profit Margin?', a: 'Debt increases interest expense, which reduces EBT and therefore Net Income. Two companies with identical operations but different debt levels will have different Net Profit Margins. EBIT Margin is a better comparison for operational efficiency in this case.' },
     ],
+    quiz: {
+      topic: 'net profit margin',
+      questions: [
+        {
+          q: 'What makes Net Profit Margin more comprehensive than Gross Profit Margin or EBITDA Margin?',
+          options: ['Net Profit Margin and Gross Profit Margin are identical metrics; they differ only in the terminology used by different industries and accounting standards', 'Net Profit Margin deducts every cost - COGS, operating expenses, interest, and tax - whereas Gross Profit Margin only deducts COGS and EBITDA Margin strips out interest, tax, and D&A, making Net Profit Margin the measure that "hides nothing"', 'Net Profit Margin is always lower than EBITDA Margin and always higher than Gross Profit Margin, so it sits in the middle of the profitability hierarchy with no unique informational value', 'Net Profit Margin is adjusted for non-recurring items by default, whereas Gross Profit Margin and EBITDA Margin reflect raw reported figures without any normalisation'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states that unlike Gross Profit Margin (which only deducts COGS) or EBITDA Margin (which strips out interest, tax, and D&A), Net Profit Margin hides nothing - it deducts every cost from revenue to arrive at the final profit figure.',
+        },
+        {
+          q: 'From the examples table, what net profit margin does the SaaS company achieve on $15,000,000 revenue with $3,000,000 net income?',
+          options: ['20.0% - described in the table as "strong for SaaS"', '25.0% - the midpoint of the SaaS benchmark range of 15-30% cited in the FAQ', '7.5% - the margin of the consumer goods brand in the table, not the SaaS company', '15.0% - the lower end of the SaaS industry benchmark range listed in the FAQ'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows the SaaS company with $3,000,000 net income on $15,000,000 revenue, giving a 20.0% net margin, which the table labels as "strong for SaaS." The FAQ confirms the typical SaaS range is 15-30%.',
+        },
+        {
+          q: 'Why does the definition argue that Net Profit Margin is most meaningful within an industry rather than across industries?',
+          options: ['Companies in different industries use different accounting standards (IFRS vs GAAP), making cross-industry comparisons inherently unreliable without restatement', 'Net Profit Margin is primarily a function of revenue scale rather than cost structure, so only companies of similar size produce comparable margin figures', 'Tax rates vary substantially across jurisdictions, meaning Net Profit Margin reflects tax policy as much as operational quality when comparing across sectors', 'Grocery retailers at 1-3% margins are not necessarily worse businesses than software companies at 20-30% - they have different unit economics, capital requirements, and growth profiles; margin must be evaluated alongside ROE and asset turnover'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states grocery retailers at 1-3% net margins are not necessarily worse businesses than software companies at 20-30% because they have different unit economics, capital requirements, and growth profiles. The margin must be evaluated in the context of return on equity and asset turnover.',
+        },
+        {
+          q: 'Why does the pitfalls section recommend using normalised net margin over 3-5 years rather than a single year\'s figure?',
+          options: ['Single-year Net Profit Margin is only reliable for companies with fewer than five product lines; multi-year normalisation is required under GAAP for diversified businesses', 'Annual figures are always restated once the audited accounts are published, making in-year figures unreliable until the full audit cycle completes', 'Net Profit Margin fluctuates due to non-recurring items - asset sales, impairments, tax adjustments, and restructuring charges - making a single year\'s figure potentially highly misleading about underlying profitability', 'Capital expenditure cycles cause Net Profit Margin to vary annually, and the 3-5 year average smooths this CapEx-driven volatility across the investment cycle'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states that non-recurring items such as asset sales, impairments, tax adjustments, and restructuring charges can make a single year\'s net margin highly misleading. Using a normalised (adjusted) net margin over 3-5 years gives a more reliable picture of profitability.',
+        },
+        {
+          q: 'According to the FAQ, how does financial leverage (debt) affect Net Profit Margin, and what alternative metric is recommended?',
+          options: ['Higher leverage improves Net Profit Margin because interest payments reduce taxable income, creating a tax shield that flows back as higher net income relative to revenue', 'Debt increases interest expense, which reduces EBT and therefore Net Income - so two companies with identical operations but different debt levels will show different Net Profit Margins. EBIT Margin is a better comparison for operational efficiency', 'Leverage has no effect on Net Profit Margin because interest expense is excluded from the net income calculation under standard accrual accounting', 'Higher debt always results in a higher Net Profit Margin because lenders impose operational discipline that reduces overhead costs as a condition of the credit agreement'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states that debt increases interest expense, reducing EBT and Net Income. Two operationally identical companies with different debt levels will report different Net Profit Margins. The FAQ recommends EBIT Margin for comparing operational efficiency when capital structures differ.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'operating-expenses': {
@@ -442,6 +1002,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is depreciation an operating expense?', a: 'Yes, depreciation of operating assets (office equipment, leasehold improvements) is classified as an operating expense. Manufacturing equipment depreciation is often included in COGS. The classification depends on whether the asset is used in production or in overhead functions.' },
       { q: 'Why is OpEx versus CapEx an important distinction?', a: 'OpEx reduces profit immediately in the current period. CapEx does not - it creates an asset that is depreciated gradually. A company can shift spending between OpEx and CapEx to influence reported profit. Cloud computing has shifted many IT costs from CapEx (servers) to OpEx (subscriptions), affecting reported margins.' },
     ],
+    quiz: {
+      topic: 'operating expenses',
+      questions: [
+        {
+          q: 'What are Operating Expenses (OpEx), and where do they sit on the income statement?',
+          options: ['Operating Expenses are all costs on the income statement including COGS, SG&A, R&D, and depreciation - they collectively reduce revenue to arrive at gross profit', 'Operating Expenses are costs directly tied to producing goods or services (materials and direct labor) that scale proportionally with production volume and appear above gross profit', 'Operating Expenses are the cash costs of running the business, excluding all non-cash charges like depreciation and amortization which are reported separately', 'Operating Expenses are the ongoing costs of running the business not directly tied to producing goods or services - including SG&A, R&D, and depreciation of operating assets - and appear between Gross Profit and Operating Profit (EBIT)'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states OpEx are the ongoing costs not directly tied to producing goods or services, including SG&A, R&D, and depreciation of operating assets. They appear on the income statement between Gross Profit and Operating Profit (EBIT) - distinct from COGS which is deducted to arrive at Gross Profit.',
+        },
+        {
+          q: 'According to the examples table, what is the typical R&D expense range as a percentage of revenue?',
+          options: ['5%-25% - reflecting wide variation based on strategy; a biotech or early SaaS company may spend at the high end while a mature consumer goods business spends near the low end', '10%-30% - the same range as Sales & Marketing, since both are treated as growth investment expenses that scale with business ambition', '1%-8% - the range for operating depreciation, sometimes misclassified as R&D when it relates to laboratory or technology infrastructure', '5%-15% - the same range as General & Administrative, since many companies bundle back-office technology costs into R&D for reporting purposes'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows R&D at 5%-25% of revenue, described as an "investment" expense that "varies by strategy." This wide range reflects how differently companies invest in product development depending on their competitive position and industry.',
+        },
+        {
+          q: 'What is the key distinction between Operating Expenses (OpEx) and COGS, according to the FAQ?',
+          options: ['COGS covers all operational costs including SG&A; OpEx covers only financing-related costs like interest on credit lines used to purchase inventory', 'OpEx and COGS cover the same costs but are separated by company size: smaller companies classify all costs as COGS while larger companies split them into COGS and OpEx', 'COGS covers direct production costs that vary with output (materials, direct labor); OpEx covers overhead and period costs that do not directly scale with units produced (SG&A, R&D) - COGS is deducted to get Gross Profit, OpEx to get Operating Profit', 'COGS is recorded on the balance sheet until goods are sold and then transferred to the income statement; OpEx is immediately expensed, creating a timing difference between the two'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states COGS covers direct production costs that vary with output, while OpEx covers overhead and period costs that do not directly scale with units produced. COGS is deducted to arrive at Gross Profit; OpEx is deducted to arrive at Operating Profit (EBIT).',
+        },
+        {
+          q: 'What does the pitfalls section warn about companies that temporarily reduce OpEx to boost short-term margins?',
+          options: ['Reducing OpEx by cutting marketing or R&D can trigger regulatory scrutiny under GAAP\'s matching principle for deferred investment costs and require additional financial disclosures', 'Companies can temporarily suppress OpEx (by cutting marketing spend, delaying R&D, or reducing headcount) to improve margins in the short term, but this damages future growth - always check whether margin improvement came from genuine efficiency or deferred investment', 'Cutting OpEx below 10% of revenue triggers an automatic goodwill impairment test under IFRS, because cost suppression signals potential going-concern risk that must be disclosed', 'Temporarily reducing OpEx inflates EBITDA but has no effect on EBIT or Net Income, so investors should focus only on EBIT margin trends when evaluating whether margin improvement is sustainable'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that companies can temporarily suppress OpEx by reducing marketing spend, delaying R&D, or cutting headcount. This improves margins in the short term but damages future growth. The key analytical question is whether margin improvement came from genuine efficiency or deferred investment.',
+        },
+        {
+          q: 'According to the FAQ, what effect has cloud computing had on how companies classify IT spending?',
+          options: ['Cloud computing converted most software costs from OpEx (annual licenses) to CapEx (multi-year perpetual licenses), increasing balance sheet assets and improving near-term earnings for technology companies', 'Cloud computing eliminated the OpEx vs CapEx distinction for IT entirely, since both on-premise servers and cloud subscriptions are now classified as intangible assets under updated accounting guidance', 'Cloud computing shifted data center costs from OpEx (maintenance and power) to CapEx (hardware), allowing companies to capitalize more spending and report higher near-term operating margins', 'Cloud computing shifted many IT costs from CapEx (servers bought and depreciated over several years) to OpEx (subscription fees expensed immediately), which affects reported profit margins depending on the accounting treatment'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states that cloud computing has shifted many IT costs from CapEx (servers) to OpEx (subscriptions), affecting reported margins. Because OpEx reduces profit immediately while CapEx creates a depreciating asset, the shift to cloud subscriptions expenses IT costs faster, which can compress operating margins for companies transitioning from on-premise infrastructure.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'operating-profit': {
@@ -470,6 +1065,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between Operating Profit and Gross Profit?', a: 'Gross Profit deducts only COGS. Operating Profit also deducts SG&A, R&D, and D&A. Operating Profit is always lower than or equal to Gross Profit.' },
       { q: 'Why does a company focus on Operating Profit in earnings reporting?', a: 'Because it isolates what management directly controls: revenue generation and cost management. Interest expense is a financing decision; tax is a government levy. Operating Profit shows the pure operational result.' },
     ],
+    quiz: {
+      topic: 'operating profit',
+      questions: [
+        {
+          q: 'What is Operating Profit, and what does it include versus exclude?',
+          options: ['Operating Profit is profit after deducting COGS only, leaving the gross profit figure before overhead and administrative costs are applied', 'Operating Profit equals Net Income with interest expense and tax added back, representing a theoretical unlevered pre-tax view of the income statement', 'Operating Profit (also called EBIT or Operating Income) is profit from core operations after deducting COGS and all operating expenses, but before accounting for interest and tax - the third major profit figure below Gross Profit and above EBT', 'Operating Profit is calculated by adding D&A back to EBIT, representing the cash-based equivalent of operational profitability before interest and taxes'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states Operating Profit (also called EBIT or Operating Income) is profit from core operations after deducting COGS and all operating expenses, but before interest and tax. It is the third major profit figure on the income statement, sitting below Gross Profit and above EBT.',
+        },
+        {
+          q: 'From the examples table, what is Operating Profit on $15,000,000 revenue after COGS of $6M, SG&A of $4.5M, R&D of $1M, and D&A of $500K?',
+          options: ['$3,000,000 - a 20% operating profit margin after all four deductions from the $9,000,000 gross profit', '$3,500,000 - if only COGS, SG&A, and R&D are deducted but D&A is excluded as a non-cash item', '$4,500,000 - the SG&A expense line, sometimes confused with operating profit in income statement waterfall presentations', '$9,000,000 - the gross profit figure before operating expenses are deducted from revenue'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows the waterfall: $15M revenue minus $6M COGS equals $9M gross profit, then minus $4.5M SG&A, $1M R&D, and $500K D&A equals $3,000,000 Operating Profit - a 20% margin.',
+        },
+        {
+          q: 'Why would two identical businesses - one debt-free and one heavily leveraged - show the same Operating Profit but different Net Income?',
+          options: ['Operating Profit is calculated before COGS, so financing decisions about inventory purchasing have no effect on the metric regardless of debt level', 'Leverage affects the balance sheet but not the income statement, so debt levels have no bearing on any income statement metric including Operating Profit, EBIT, EBT, or Net Income', 'Operating Profit and EBIT are different metrics; EBIT includes interest while Operating Profit excludes it, so leveraged companies report a lower EBIT but the same Operating Profit', 'Operating Profit is calculated before interest expense, which is where leverage shows up on the income statement; since both companies have identical operations their COGS and OpEx are the same - only EBT and Net Income diverge based on the interest charge'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states that two identical businesses - one debt-free and one heavily leveraged - will show the same Operating Profit but very different EBT and Net Income. This is because Operating Profit is calculated before interest expense, which is the mechanism through which leverage affects reported earnings.',
+        },
+        {
+          q: 'What does the pitfalls section warn about using Operating Profit for capital-intensive businesses?',
+          options: ['Capital-intensive businesses overstate Operating Profit because high CapEx is immediately expensed rather than depreciated, making EBITDA the more accurate profitability measure', 'Operating Profit (which includes D&A) may significantly understate cash generation for capital-intensive businesses relative to EBITDA (which excludes D&A); the gap should be explicitly acknowledged and CapEx requirements evaluated separately', 'Capital-intensive businesses report Operating Profit and EBITDA identically because D&A charges are reclassified as financing costs under IFRS for property, plant, and equipment', 'Operating Profit is the more reliable metric for capital-intensive businesses because EBITDA fails to reflect the true replacement cost of assets that will need to be repurchased when fully depreciated'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that for capital-intensive businesses, Operating Profit (which includes D&A) may significantly understate cash generation relative to EBITDA (which excludes D&A). In those cases, the gap between the two metrics should be explicitly acknowledged and CapEx requirements evaluated separately.',
+        },
+        {
+          q: 'According to the FAQ, why do companies focus on Operating Profit in earnings reporting rather than Net Income?',
+          options: ['Operating Profit is more stable than Net Income because it excludes the most volatile earnings components, making quarterly comparisons look smoother for investor relations purposes', 'Net Income is not a GAAP measure, whereas Operating Profit is standardized under both GAAP and IFRS, making it the preferred metric for regulatory filings and investor presentations', 'Operating Profit isolates what management directly controls - revenue generation and cost management; interest expense is a financing decision and tax is a government levy, so they are excluded to show the pure operational result', 'Operating Profit excludes depreciation charges, which vary based on accounting policy choices, making it more comparable across companies using different asset useful-life assumptions'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that Operating Profit isolates what management directly controls: revenue generation and cost management. Interest expense is a financing decision and tax is a government levy - neither reflects the operational capability of the business. Operating Profit shows the pure operational result.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'operating-profit-margin': {
@@ -495,6 +1125,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between Operating Margin and EBITDA Margin?', a: 'EBITDA Margin adds back D&A, so it is always higher than or equal to Operating Margin. The gap equals D&A as a percentage of revenue. Capital-intensive businesses have a larger gap; asset-light businesses have a smaller one.' },
       { q: 'What is a good Operating Profit Margin?', a: 'Above 15% signals strong operational efficiency for most businesses. SaaS often achieves 20–35%; retail 5–12%; manufacturing 8–15%. Always benchmark against direct peers - the number is meaningless without context.' },
     ],
+    quiz: {
+      topic: 'operating profit margin',
+      questions: [
+        {
+          q: 'What does Operating Profit Margin measure, and why is it described as "capital-structure-neutral"?',
+          options: ['Operating Profit Margin is Net Income divided by Revenue, adjusted to remove tax effects but keep interest expense, making it independent of corporate tax rates across jurisdictions', 'Operating Profit Margin is Operating Profit (EBIT) as a percentage of Revenue, measuring what share of each revenue dollar remains after COGS and operating expenses; it is capital-structure-neutral because it is calculated before interest, so leveraged and debt-free companies with identical operations show the same margin', 'Operating Profit Margin is EBITDA divided by Revenue, stripping out D&A to focus on cash-generative efficiency of the business before financing costs are applied', 'Operating Profit Margin equals Gross Profit as a percentage of Revenue, making it a production efficiency measure that is capital-structure-neutral because production costs are identical regardless of how the business is financed'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states Operating Profit Margin is Operating Profit (EBIT) as a percentage of Revenue. It is capital-structure-neutral because it is calculated before interest expense - so a highly leveraged company and a debt-free company with identical operations will show the same Operating Profit Margin but different Net Profit Margins.',
+        },
+        {
+          q: 'According to the definition, what does the gap between Gross Profit Margin and Operating Profit Margin reveal?',
+          options: ['The gap reflects the weight of SG&A and R&D expenses - the larger the gap, the more overhead the business carries relative to its direct production costs', 'The gap reflects the cost of debt (interest expense) and the tax burden, showing how much financing and government obligations reduce the gross profit figure', 'The gap shows the D&A charge as a percentage of revenue, since Operating Profit includes depreciation while Gross Profit does not, producing a fixed spread between the two margins', 'The gap is always zero for asset-light businesses with no physical inventory, since COGS and OpEx are both negligible and the two margin metrics converge'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states the gap between Gross Margin and Operating Margin reflects the weight of SG&A and R&D. The gap between Operating Margin and Net Margin reflects the cost of debt (interest) and the tax burden - each gap tells a different story about where margin is lost.',
+        },
+        {
+          q: 'According to the examples table, what is the typical operating margin range for Financial Services, and what drives it?',
+          options: ['8%-15% - driven by tight margins on interest income and high compliance overhead that compress profitability below most other sectors', '20%-35% - the same range as SaaS businesses, since both sectors have high gross margins and scalable cost structures', '5%-12% - reflecting intense price competition and overhead costs in consumer financial products distribution', '30%-45% - driven by low COGS and fee and interest income that produce high gross margins with relatively contained overhead'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows Financial Services at 30%-45%, with "low COGS; fee and interest income" as the key driver. This is the highest range in the table, above SaaS at 20%-35%, because financial services businesses have minimal direct production costs.',
+        },
+        {
+          q: 'What does the pitfalls section recommend checking before concluding that a high-D&A business has a poor operating margin?',
+          options: ['High-D&A businesses always have permanently depressed Operating Margins that cannot be improved operationally; investors should immediately switch to EBITDA without further investigation', 'Check whether the company is misclassifying R&D costs as capital expenditures, which would inflate the D&A charge and artificially suppress the reported operating margin figure', 'Check how much of the gap between Operating Margin and EBITDA Margin is attributable to D&A, and whether that D&A is backed by CapEx at similar levels - because a large D&A charge does not indicate poor operations if CapEx supports it', 'High-D&A businesses should be evaluated using Gross Profit Margin instead of Operating Profit Margin, since the gross margin strip removes all distortion from depreciation methods and asset lives'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states that before concluding a business has a poor operating margin, check how much of the gap between Operating Margin and EBITDA Margin is attributable to D&A, and whether that D&A is backed by CapEx at similar levels. A large D&A-driven gap is not necessarily a sign of operational weakness.',
+        },
+        {
+          q: 'According to the FAQ, what operating margin threshold signals strong performance for most businesses, and what is the typical SaaS range?',
+          options: ['Above 10% is strong for most businesses; SaaS typically achieves 15%-25%, while retail achieves 8%-15% - the FAQ notes that SaaS is the only sector where 10% is considered below average', 'Above 15% signals strong operational efficiency for most businesses; SaaS often achieves 20%-35%, while retail achieves 5%-12% and manufacturing 8%-15%; the FAQ notes the margin is meaningless without benchmarking against direct peers', 'Above 20% is the threshold for strong performance across all industries; any margin below 20% signals excessive overhead regardless of sector', 'Above 30% is considered exceptional for any sector; the 15%-20% range is average across most industries, with only financial services and SaaS consistently exceeding this threshold'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states above 15% signals strong operational efficiency for most businesses. SaaS often achieves 20%-35%; retail 5%-12%; manufacturing 8%-15%. It explicitly notes the number is meaningless without context - always benchmark against direct peers.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'revenue': {
@@ -622,6 +1287,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is a good FCF margin?', a: 'FCF margin (FCF / Revenue) varies enormously by industry. Asset-light software and professional services businesses routinely achieve 20–40%. Capital-intensive industries such as utilities, telecoms, and industrials may generate 5–15% despite healthy EBITDA margins. The most useful comparison is FCF margin relative to industry peers and to the same company\'s historical performance.' },
       { q: 'Why is FCF harder to manipulate than earnings?', a: 'Net income is subject to numerous accrual accounting choices - revenue recognition timing, depreciation methods, impairment decisions, and provisions - that can significantly affect reported profit without any corresponding cash movement. FCF is anchored to actual cash receipts and payments, making it far more difficult to inflate sustainably.' },
     ],
+    quiz: {
+      topic: 'free cash flow',
+      questions: [
+        {
+          q: 'What is the standard formula for Free Cash Flow (FCF)?',
+          options: ['FCF = Net Income + Depreciation - Changes in Working Capital', 'FCF = EBITDA - Interest Expense - Taxes', 'FCF = Revenue - Total Operating Costs - Capital Expenditure', 'FCF = Operating Cash Flow - Capital Expenditure'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states the standard formula is FCF = Operating Cash Flow - Capital Expenditure. A more granular derivation starts from EBITDA and also subtracts changes in working capital and cash taxes, but OCF - CapEx is the standard form.',
+        },
+        {
+          q: 'According to the FAQ, what three factors drive the gap between EBITDA and FCF?',
+          options: ['CapEx (often larger than D&A in growing businesses), changes in working capital (which can consume substantial cash), and cash taxes (which EBITDA ignores entirely)', 'Interest expense, tax accruals, and non-cash revenue recognition adjustments under different accounting standards', 'Depreciation method choices, stock-based compensation, and the timing of accounts receivable collection', 'Debt repayments, dividend payments, and share buybacks made during the measurement period'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that the gap between EBITDA and FCF is driven by three factors: CapEx (often larger than D&A), changes in working capital (which can consume substantial cash in fast-growing companies), and cash taxes (which EBITDA ignores entirely).',
+        },
+        {
+          q: 'From the worked examples table, what is the FCF/EBITDA conversion ratio for the Software (SaaS) company?',
+          options: ['20% (the utility company\'s conversion ratio)', '78% (SaaS: $39M FCF on $50M EBITDA, with only $5M CapEx and minimal working capital drag)', '36% (the fast-growth retailer\'s conversion ratio)', '28% (the manufacturer\'s conversion ratio)'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows the SaaS company converting 78% of its $50M EBITDA into $39M FCF, driven by low CapEx ($5M) and a small positive working capital effect (-$2M). This contrasts with the utility at only 20% due to $35M in CapEx.',
+        },
+        {
+          q: 'What does the pitfalls section warn about when a company\'s CapEx is persistently below its depreciation?',
+          options: ['This is an optimal sign that the company has reached peak efficiency and no longer needs to replace equipment', 'When CapEx exceeds depreciation permanently, the business is over-investing and FCF will eventually collapse to zero', 'If CapEx is persistently below depreciation, question whether the business is under-investing - near-term FCF may look high while the underlying asset base quietly deteriorates', 'CapEx and depreciation have no meaningful relationship because they are calculated under entirely different accounting standards'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section warns that a company deferring maintenance CapEx will report high FCF in the short term while its asset base deteriorates. If CapEx is persistently below depreciation, question whether the business is under-investing.',
+        },
+        {
+          q: 'According to the FAQ, why is Free Cash Flow harder to manipulate than net income?',
+          options: ['FCF uses audited cash flow statements that regulators review more frequently than income statements', 'FCF calculations exclude all non-cash items, making it impossible to use depreciation to obscure earnings quality', 'FCF is directly observable from bank statements, which management cannot alter without criminal liability under SOX', 'Net income can be inflated through accrual accounting choices - revenue recognition timing, depreciation methods, provisions - without any cash movement; FCF is anchored to actual cash receipts and payments, making it far more difficult to inflate sustainably'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ explains that net income is subject to numerous accrual accounting choices that can significantly affect reported profit without any cash movement. FCF is anchored to actual cash receipts and payments, making it far more difficult to inflate sustainably.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'operating-cash-flow': {
@@ -647,6 +1347,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Where do I find OCF on a financial statement?', a: 'OCF is the subtotal labelled "Net cash provided by (used in) operating activities" on the cash flow statement. For FCF, you also need CapEx, which appears in the "Cash from Investing Activities" section, typically labelled "Purchase of property, plant and equipment" or "Capital expenditures." CapEx is shown as a negative number; use the absolute value.' },
       { q: 'Why does OCF sometimes exceed net income?', a: 'OCF exceeds net income when non-cash charges (depreciation, amortisation, stock-based compensation) add back more than working capital consumes. It also exceeds net income when customers pay in advance - subscriptions, deposits, retainers - creating deferred revenue liabilities that boost cash received above recognised revenue. A ratio above 1.0x is generally a positive quality-of-earnings signal.' },
     ],
+    quiz: {
+      topic: 'operating cash flow',
+      questions: [
+        {
+          q: 'What is Operating Cash Flow (OCF) and what is its core equation?',
+          options: ['OCF equals net income minus capital expenditure and financing costs, representing the true cash return to shareholders after all obligations are settled', 'OCF is EBITDA adjusted for cash taxes paid, showing how much operating profit converts to real cash before the business invests in new assets or repays debt', 'OCF is the cash generated by core business operations before CapEx or financing activities; the core equation is OCF = Net Income + D&A - Increase in Working Capital', 'OCF is identical to Free Cash Flow and represents the cash available to equity holders after all operating and capital spending obligations are met'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states OCF is cash generated by core operations before CapEx or financing. The core equation is OCF = Net Income + D&A - Increase in Working Capital. D&A is added back because it reduced reported income but consumed no cash; working capital changes adjust for the timing difference between accrual recognition and actual cash movement.',
+        },
+        {
+          q: 'From the examples table, what is the OCF-to-Net Income ratio for the SaaS company that pre-collects subscriptions?',
+          options: ['0.60x - reflecting a large inventory build that absorbs cash relative to reported net income', '1.46x - driven by a $200K deferred revenue increase (advance payments) plus a $30K D&A add-back on $500K net income', '1.13x - the ratio for the stable mature business where working capital effects are neutral', '0.56x - the ratio for the manufacturer with slow collections, where receivables growth consumes cash below the net income line'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows the SaaS company at 1.46x: $500K net income plus $30K D&A plus $200K from rising deferred revenue (customers paying in advance) equals $730K OCF. This illustrates how advance subscription payments boost OCF above net income.',
+        },
+        {
+          q: 'What does an OCF-to-Net Income ratio persistently below 0.8x signal in a mature business, according to the definition?',
+          options: ['Accrual profits may be overstated relative to actual cash generation - a warning sign that earnings quality is poor and that reported income is not fully converting to cash', 'The company is in a high-growth phase deliberately investing in working capital, and below 0.8x is expected and desirable until expansion slows and working capital stabilizes', 'The company has an unusually asset-light model where most expenses are cash-based, causing OCF to fall below net income because D&A add-backs are minimal', 'The business is financially healthy because OCF below net income signals that customers are paying quickly and accounts receivable is declining'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that an OCF-to-Net Income ratio persistently below 0.8x in a mature business signals that accrual profits may be overstated relative to actual cash generation. This is a quality-of-earnings warning; a ratio consistently above 1.0x is the positive signal.',
+        },
+        {
+          q: 'The pitfalls section warns about accounts payable stretching. Why is this a trap when evaluating OCF?',
+          options: ['AP stretching permanently inflates OCF because suppliers rarely enforce payment terms, making the OCF figure a reliable long-term signal of strong cash management rather than a temporary distortion', 'AP stretching reduces OCF because paying suppliers faster than necessary drains cash, creating an artificially low OCF that understates the business\'s true earning power', 'AP stretching distorts OCF downward by creating a large payables balance that must be repaid all at once, producing a sudden cash outflow spike when supplier payments finally clear', 'AP stretching (delaying payments to suppliers) temporarily boosts OCF by keeping cash longer - it is legal but unsustainable; if Days Payable Outstanding keeps extending each quarter, the inflated OCF will eventually reverse'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section explains that delaying payments to suppliers keeps cash in the business longer, temporarily boosting OCF. However, if Days Payable Outstanding keeps extending quarter after quarter, the OCF is flattering the true cash position and will reverse once payment practices normalize.',
+        },
+        {
+          q: 'According to the FAQ, why might a manufacturer have strong OCF but thin Free Cash Flow (FCF)?',
+          options: ['Manufacturers have high working capital that suppresses OCF far below EBITDA, but FCF is boosted by government investment grants that partially offset heavy capital spending', 'Manufacturers have strong FCF because CapEx is capitalized as long-lived assets, but thin OCF because depreciation of those assets flows through operating expenses and reduces net income', 'Manufacturers spend heavily on equipment (CapEx), and since FCF = OCF - CapEx, even strong OCF can become thin FCF when CapEx requirements are large; for a SaaS company with minimal CapEx, OCF and FCF are nearly identical', 'Manufacturer OCF and FCF diverge because manufacturing companies use the indirect OCF calculation method, which systematically understates OCF relative to the direct method used by service companies'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that for a manufacturer spending heavily on equipment, OCF can be strong while FCF is thin because FCF = OCF - CapEx. For a SaaS company with minimal CapEx, OCF and FCF are nearly identical. The CapEx deduction is what separates the two metrics.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   // ─── Math ────────────────────────────────────────────────────────────────────
@@ -924,6 +1659,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is a healthy BMI for adults?', a: 'For most adults aged 18–65, the WHO-defined healthy range is 18.5–24.9. For adults over 65, evidence supports a slightly higher range of 23–27.5 as optimal for survival and functional health. Ethnic-specific thresholds also exist - South Asian and East Asian populations have higher cardiometabolic risk at lower BMI values, and some guidelines recommend a lower overweight threshold of 23 for these groups.' },
       { q: 'Does BMI apply to athletes?', a: 'Standard BMI thresholds are unreliable for athletes with high muscle mass. A competitive bodybuilder or rugby player may have a BMI of 28–32 with body fat below 12%, which would be misclassified as overweight or obese. For athletic populations, body fat percentage and FFMI provide far more meaningful assessment.' },
     ],
+    quiz: {
+      topic: 'BMI',
+      questions: [
+        {
+          q: 'How is BMI calculated?',
+          options: ['Weight in pounds divided by height in feet squared, multiplied by 703', 'Height in metres divided by weight in kilograms squared', 'Waist circumference divided by height in metres', 'Weight in kilograms divided by height in metres squared'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The BMI formula is weight (kg) divided by height (m) squared. It produces a dimensionless number used to screen whether a person\'s weight is appropriate for their height.',
+        },
+        {
+          q: 'According to the WHO classification table, which BMI range is "Normal weight"?',
+          options: ['18.5 - 24.9', 'Below 18.5', '25.0 - 29.9', '30.0 - 34.9'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The WHO defines normal weight as BMI 18.5 to 24.9, which corresponds to the lowest all-cause mortality risk in general adults. Below 18.5 is underweight; 25.0 to 29.9 is overweight.',
+        },
+        {
+          q: 'For adults aged 65 and over, what does the definition section say about the optimal BMI range?',
+          options: ['The standard 18.5-24.9 range applies equally to all adults regardless of age', 'The optimal range shifts upward to approximately 23-27.5, associated with better survival and bone density', 'BMI is not applicable above age 65 and should be replaced with waist circumference alone', 'The obesity threshold drops to 25 for older adults due to reduced muscle mass'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Research consistently shows that a slightly higher BMI of 23-27.5 is associated with better survival outcomes, greater bone density, and improved resilience during illness in adults 65 and over. The standard thresholds do not apply directly to this population.',
+        },
+        {
+          q: 'What key limitation does the pitfalls section identify about BMI?',
+          options: ['It is unreliable for adults over 40 due to hormonal changes', 'It requires blood test results to produce an accurate classification', 'It cannot distinguish fat mass from muscle mass, so muscular individuals may be misclassified as overweight', 'It is not recognized by the World Health Organization for clinical use'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'BMI cannot distinguish fat mass from muscle mass. A heavily muscled athlete may be classified as overweight or obese despite very low body fat. It also ignores fat distribution - two people with the same BMI can have very different cardiometabolic risk profiles.',
+        },
+        {
+          q: 'For athletes with high muscle mass, what does the FAQ recommend as a more meaningful alternative to BMI?',
+          options: ['Waist-to-height ratio and resting blood pressure', 'Body fat percentage and FFMI', 'The standard BMI thresholds with an upward adjustment of 5 points', 'Hydrostatic weighing as a percentage of lean body mass'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states that for athletic populations, body fat percentage and FFMI provide far more meaningful assessment than BMI. A competitive bodybuilder or rugby player may have a BMI of 28-32 with body fat below 12%, which standard BMI would misclassify as overweight or obese.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'body-composition': {
@@ -949,6 +1719,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is body composition a better health indicator than BMI?', a: 'For individuals, yes. Body composition directly quantifies adiposity and lean mass, which are the physiologically meaningful variables underlying metabolic risk. BMI fails to detect normal-weight obesity (adequate BMI, high fat, low muscle) and misclassifies muscular individuals. When resources permit, a DEXA scan or validated tape-measure method provides far more actionable information.' },
       { q: 'How do I improve body composition?', a: 'Improving body composition means decreasing fat mass and/or increasing lean mass. Progressive resistance training is the most evidence-based intervention for increasing lean mass. Moderate caloric restriction combined with adequate protein intake (≥1.6g/kg body weight) drives fat loss while preserving muscle. The combination produces the best simultaneous recomposition outcomes, particularly in individuals new to training.' },
     ],
+    quiz: {
+      topic: 'body composition',
+      questions: [
+        {
+          q: 'What does the two-compartment model divide body weight into?',
+          options: ['Muscle mass and bone mineral content', 'Total body water and dry mass', 'Fat mass and fat-free mass', 'Essential fat and storage fat'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The simplest clinical model divides body weight into fat mass and fat-free mass (FFM). Fat-free mass encompasses muscle, bone mineral, total body water, and the mass of organs and other non-fat tissues.',
+        },
+        {
+          q: 'What does the definition identify as the research gold standard for body composition measurement?',
+          options: ['The four-compartment (4C) model, which independently measures fat mass, bone mineral content, total body water, and residual protein mass', 'BIA (bioimpedance analysis), assessed under standardised hydration conditions', 'The two-compartment model, using hydrostatic weighing to distinguish fat from fat-free mass', 'The Navy tape method, validated across diverse athletic populations'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The four-compartment (4C) model is the research gold standard. Unlike two-compartment models that assume a fixed density for fat-free mass, the 4C model independently measures fat mass, bone mineral content, total body water, and residual protein mass.',
+        },
+        {
+          q: 'According to the methods comparison table, what is the accuracy range of DEXA scanning?',
+          options: ['±3-4%', '±2-3%', '±3-8%', '±1-2%'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'DEXA scanning carries ±1-2% accuracy, the highest of any method in the table. It is described as the most practical clinical gold standard, also providing segmental data and bone mineral density in a single scan.',
+        },
+        {
+          q: 'What does the pitfalls section warn about when tracking body composition over time?',
+          options: ['DEXA scanning is too expensive for regular use and should only be done once per year', 'Body composition methods are not interchangeable - switching methods mid-programme makes progress tracking unreliable', 'BIA devices consistently underestimate body fat by 3-5 percentage points in all users', 'Progressive resistance training raises body fat percentage in the short term before improving it'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that body composition methods are not interchangeable. Switching methods makes progress tracking unreliable. BIA results can also shift by 3-5 percentage points on the same person based on hydration, time of day, and recent exercise - so always use the same method and device throughout a tracking period.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'body-fat-percentage': {
@@ -974,6 +1773,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is body fat percentage a better measure than BMI?', a: 'For individuals, yes - body fat percentage directly measures adiposity and is not confounded by muscle mass. However, it requires specialised equipment or estimation methods, whereas BMI requires only a scale and tape measure. The two metrics are complementary: BMI is practical for population screening, body fat percentage is superior for individual assessment.' },
       { q: 'How is body fat percentage measured?', a: 'Methods range in accuracy. DEXA and hydrostatic weighing are the most accurate clinical methods. The US Navy tape method uses waist, neck, and (for women) hip circumferences in a validated formula and is a practical field approximation. BIA devices are convenient but less reliable. Skinfold calipers in trained hands can achieve accuracy comparable to DEXA.' },
     ],
+    quiz: {
+      topic: 'body fat percentage',
+      questions: [
+        {
+          q: 'What formula defines body fat percentage?',
+          options: ['Fat mass divided by lean mass, multiplied by 100', 'Total body weight minus fat-free mass, divided by height squared', 'Fat mass multiplied by 100, divided by BMI', 'Fat mass (kg) divided by total body weight (kg), multiplied by 100'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'Body fat percentage = (Fat Mass / Total Body Weight) x 100. It expresses what proportion of total body weight consists of adipose (fat) tissue.',
+        },
+        {
+          q: 'What are the approximate essential fat minimums stated in the definition?',
+          options: ['5-8% in men and 15-18% in women', '0-2% in men and 5-8% in women', '2-5% in men and 10-13% in women', '8-10% in men and 18-20% in women'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Essential fat is approximately 2-5% in men and 10-13% in women. Below these thresholds, hormonal and organ function are compromised, as essential fat supports hormone regulation, organ protection, and thermal insulation.',
+        },
+        {
+          q: 'According to the category table, which body fat range is classified as "Athletic" for men?',
+          options: ['2-5%', '6-13%', '14-17%', '18-24%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows the Athletic category for men as 6-13%, described as competitive athletes with visible muscle definition. The 2-5% range is essential fat; 14-17% is the Fit category.',
+        },
+        {
+          q: 'What does the pitfalls section warn about BIA device accuracy?',
+          options: ['BIA cannot detect body fat in individuals with high muscle mass', 'BIA consistently underestimates body fat by 5% compared to DEXA', 'BIA is calibrated only for sedentary adults and cannot be used for athletes', 'BIA results can vary by 3-5 percentage points on the same person in the same day due to hydration sensitivity'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'BIA devices are highly sensitive to hydration status and can shift by 3-5 percentage points on the same person on the same day. Even DEXA carries ±1-2% measurement error. Always compare results using the same method under standardised conditions.',
+        },
+        {
+          q: 'According to the FAQ, what determines whether 7% body fat is healthy or causes problems?',
+          options: ['Whether the person is an endurance athlete (may be healthy) or sedentary (may experience hormonal suppression)', 'Whether the person is male or female, since thresholds differ significantly by sex', 'Whether body fat was measured by DEXA or a less accurate estimation method', 'Whether the person is over or under 40 years of age'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ notes that an endurance athlete at 7% body fat may be healthy, while a sedentary person at the same level may experience hormonal suppression. Healthy body fat is context-dependent, not a fixed universal threshold.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ffmi': {
@@ -1000,6 +1834,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the natural FFMI limit?', a: 'The Kouri 1995 study found that drug-free male bodybuilders rarely exceeded an FFMI of 25. Subsequent research and natural bodybuilding competition data generally support this as an approximate upper boundary for most natural male athletes. For women, the equivalent ceiling is estimated at approximately 21–22.' },
       { q: 'How does FFMI differ from BMI?', a: 'BMI uses total body weight, so it cannot distinguish a 90kg bodybuilder at 8% body fat from a 90kg sedentary person at 30% body fat - both would have the same BMI. FFMI uses only the lean (fat-free) component of weight, making it a direct measure of muscularity rather than overall body size.' },
     ],
+    quiz: {
+      topic: 'FFMI',
+      questions: [
+        {
+          q: 'What does FFMI measure, and how does its formula differ from BMI?',
+          options: ['FFMI measures muscularity relative to height, using lean body mass (kg) divided by height (m) squared - analogous to BMI but using fat-free mass instead of total body weight', 'FFMI measures the ratio of fat mass to lean body mass, expressing what proportion of total body weight is non-fat tissue', 'FFMI uses total body weight divided by height squared (the same formula as BMI) but applies a correction factor for body fat percentage to adjust the result', 'FFMI measures body fat percentage adjusted for height, combining both fatness and frame size into a single composite score'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that FFMI = LBM (kg) / height (m)^2, making it analogous to BMI but using fat-free mass instead of total weight. This is what makes it a direct measure of muscularity rather than overall body size.',
+        },
+        {
+          q: 'According to the FAQ, what key limitation of BMI does FFMI address?',
+          options: ['BMI cannot be used for people above 30 BMI units; FFMI has no upper limit and is valid across all body sizes', 'BMI requires DEXA scan data for accuracy; FFMI only requires height and total weight measurements', 'FFMI uses the same formula as BMI but applies age-adjusted reference ranges instead of fixed population thresholds', 'BMI uses total body weight and cannot distinguish a 90kg bodybuilder at 8% body fat from a 90kg sedentary person at 30% body fat - FFMI uses only the lean component, making it a direct measure of muscularity rather than overall body size'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ explicitly states that BMI cannot distinguish a 90kg bodybuilder at 8% body fat from a 90kg sedentary person at 30% body fat - both have the same BMI. FFMI uses only the lean (fat-free) component, solving this limitation.',
+        },
+        {
+          q: 'From the FFMI classification table, which category corresponds to an FFMI range of 23-25?',
+          options: ['Excellent - Serious amateur athlete, advanced training (the 22-23 range)', 'Superior - Elite natural athlete, years of progressive training (the 23-25 range)', 'Suspicious - Rarely achieved naturally; PED use plausible (the >25 range)', 'Above average - Consistent training, visible muscle development (the 20-22 range)'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows 23-25 as "Superior - Elite natural athlete, years of progressive training." The next category above 25 is "Suspicious," where PED use is considered plausible.',
+        },
+        {
+          q: 'What does the pitfalls section warn about using FFMI > 25 as evidence of PED use?',
+          options: ['An FFMI above 25 is a legally recognised anti-doping threshold used by sports federations to trigger mandatory testing', 'The Kouri 1995 study has since been revised, placing the natural male threshold at 27 and the female threshold at 23', 'The FFMI > 25 threshold is a statistical observation from one study, not a diagnostic criterion - some natural athletes may exceed 25 due to exceptional genetics, PED users below 25 are common, and the figure depends on accurate body fat measurement', 'The threshold applies only to competitive bodybuilders; recreational lifters and endurance athletes are exempt from the 25 ceiling under sports medicine guidelines'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section explicitly states that the FFMI > 25 threshold is a statistical observation from one study, not a diagnostic criterion. Some natural athletes with exceptional genetics may exceed 25, while PED users below 25 are common.',
+        },
+        {
+          q: 'According to the FAQ on natural FFMI limits, what is the estimated natural ceiling for women?',
+          options: ['Approximately 21-22, compared to approximately 25 for men, consistent with women\'s FFMI values running roughly 3-4 points lower across all categories', 'Approximately 25, because the normalised FFMI formula already accounts for sex differences and produces the same ceiling for both sexes', 'Approximately 27-28, because women\'s greater proportion of type 1 muscle fibres allows higher FFMI values than the male reference population', 'Approximately 18-19, which is why the "above average" category for women begins at a lower absolute threshold than the male table'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that for women, the equivalent natural ceiling is estimated at approximately 21-22, compared to approximately 25 for men. The "good FFMI" FAQ confirms that average values for women are roughly 3-4 points lower than men due to physiological differences in muscle mass potential.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ideal-body-weight': {
@@ -1024,6 +1893,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Which ideal body weight formula is best?', a: 'No formula is universally superior - the choice depends on the clinical context. The Devine formula remains the most widely used in clinical pharmacokinetics. For non-clinical purposes, BMI combined with body fat percentage provides more individually meaningful targets.' },
       { q: 'Why do different IBW formulas give different answers?', a: 'Each formula was developed from a different dataset using different reference populations. Devine (1974) was based on lung function research; Hamwi (1964) was a simple rule-of-thumb for diabetes management; Robinson and Miller (1983) re-analysed Metropolitan Life Insurance tables. Because they used different statistical methods and populations, they produce meaningfully different results.' },
     ],
+    quiz: {
+      topic: 'ideal body weight',
+      questions: [
+        {
+          q: 'What was Ideal Body Weight (IBW) originally developed for?',
+          options: ['To define target weight ranges for athletes preparing for competitive events, based on optimal power-to-weight ratios in elite performers', 'To replace BMI as the primary weight classification tool used by life insurance companies and public health authorities in the 1970s', 'To serve as the basis for calorie restriction recommendations in obesity treatment programs, providing a science-backed weight goal for patients', 'To guide drug dosing in pharmacokinetics, specifically for calculating doses of renally-cleared drugs where using total body weight would lead to overdosing'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states IBW was created for pharmacokinetic applications - calculating doses of renally-cleared and volume-of-distribution-sensitive drugs in patients where total body weight would lead to overdosing. Its use as a general weight target is a secondary application that has outgrown its original clinical purpose.',
+        },
+        {
+          q: 'According to the FAQs, which IBW formula is most widely used in clinical pharmacokinetics?',
+          options: ['The Devine formula - it remains the most widely used in clinical pharmacokinetics despite being developed in 1974', 'The Robinson formula - it was specifically developed to improve pharmacokinetic accuracy over the older Devine and Hamwi methods', 'The Hamwi formula - as the oldest rule-of-thumb, it is the most ingrained in clinical practice and least likely to be replaced', 'The Miller formula - it produces the lowest estimates, which are preferred when the risk of overdosing outweighs the risk of underdosing'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states the Devine formula remains the most widely used in clinical pharmacokinetics. For non-clinical purposes, however, the FAQ recommends using BMI combined with body fat percentage for more individually meaningful targets.',
+        },
+        {
+          q: 'According to the examples table, what is the Devine IBW for a 175cm (5\'9") man?',
+          options: ['59.6 kg', '64.1 kg', '68.6 kg', '70.5 kg'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows the Devine IBW for a 175cm man is 68.6 kg. The 70.5 kg figure is the Robinson IBW for the same height, illustrating how different formulas produce meaningfully different results for the same person.',
+        },
+        {
+          q: 'What critical limitation do all IBW formulas share, according to the pitfalls section?',
+          options: ['The formulas systematically underestimate IBW for tall individuals because they were derived from populations where heights above 6\'0" were rare', 'IBW formulas do not account for body composition, frame size, age, ethnicity, or fitness level - a muscular person above their IBW may be in excellent health, while someone at their IBW with low muscle mass may have significant metabolic risk', 'All four formulas are only validated for adults aged 20-40, and using them for older adults or adolescents produces unvalidated results', 'The formulas only apply to individuals of average frame size and require a correction factor for small or large frame sizes in any clinical context'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states IBW formulas do not account for body composition, frame size, age, ethnicity, or fitness level. A muscular person above their IBW may be in excellent health, while someone meeting IBW with low muscle mass and high fat may have significant metabolic risk.',
+        },
+        {
+          q: 'Why do the four major IBW formulas (Devine, Robinson, Miller, Hamwi) produce different results for the same person?',
+          options: ['The formulas use different base units - some were derived in metric while others used imperial measurements, and conversion introduced rounding errors that compound at extreme heights', 'Later formulas were deliberately designed to produce lower estimates to correct the tendency of earlier formulas to recommend weights that were too high for metabolic health', 'The formulas disagree because they measure different things - Devine estimates fat-free mass while Robinson and Miller estimate total target weight including an assumed fat component', 'Each formula was derived from a different reference population using different statistical methods - Devine (1974) used lung function data, Hamwi (1964) was a diabetes rule-of-thumb, and Robinson and Miller (1983) re-analysed Metropolitan Life Insurance tables'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ explains that each formula was developed from a different dataset and reference population using different statistical methods. Because they used different populations and methodologies, they produce meaningfully different results, particularly at the extremes of height.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'lean-body-mass': {
@@ -1047,6 +1951,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between lean body mass and muscle mass?', a: 'Lean body mass is the total weight of all non-fat tissue - muscle, bone, organs, blood, skin, and water. Muscle mass refers specifically to skeletal muscle tissue. In a typical adult, skeletal muscle accounts for roughly 40–50% of LBM in men and 35–40% in women. The remainder is bone, organs, blood, and water.' },
       { q: 'How do I increase lean body mass?', a: 'Progressive resistance training is the most evidence-based method for increasing skeletal muscle. Adequate protein intake (1.6–2.2g per kg of body weight per day) is required to support muscle protein synthesis. LBM decreases with age (sarcopenia) at approximately 3–8% per decade after age 30 without deliberate training.' },
     ],
+    quiz: {
+      topic: 'lean body mass',
+      questions: [
+        {
+          q: 'What does lean body mass (LBM) include?',
+          options: ['Only skeletal muscle tissue - LBM is a synonym for muscle mass since muscle is the primary non-fat component worth measuring clinically', 'Everything in the body that is not fat - including skeletal muscle, bone mineral, organs, blood, skin, and total body water; it equals Total Body Weight minus Fat Mass', 'Total body weight minus fat mass and bone mass combined, isolating only soft tissue (muscle, organs, and skin) for clinical measurement', 'The combined weight of skeletal muscle and stored glycogen, which are the primary energy-storing non-fat tissues used in metabolic rate calculations'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states LBM is everything in the body that is not fat, including skeletal muscle, bone mineral, organs, blood, skin, and total body water. It is calculated as Total Body Weight minus Fat Mass.',
+        },
+        {
+          q: 'What is the difference between lean body mass and muscle mass?',
+          options: ['They are the same; LBM and muscle mass are interchangeable terms used in different clinical disciplines to describe the same body composition metric', 'LBM measures only the largest muscle groups while muscle mass refers to all skeletal muscle including the smaller stabilising muscles', 'LBM is calculated from total body water measurements while muscle mass is calculated from creatinine excretion rates, making them independent metrics', 'LBM includes all non-fat tissue (muscle, bone, organs, blood, skin, and water), while muscle mass refers specifically to skeletal muscle - which accounts for only about 40-50% of LBM in men and 35-40% in women'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states that LBM is the total weight of all non-fat tissue (muscle, bone, organs, blood, skin, and water), while muscle mass refers specifically to skeletal muscle. In a typical adult, skeletal muscle accounts for roughly 40-50% of LBM in men and 35-40% in women.',
+        },
+        {
+          q: 'According to the examples table, what is the LBM for a 75 kg man at 25% body fat?',
+          options: ['56.3 kg - the lean body mass after subtracting 18.8 kg of fat mass from the 75 kg total weight', '63.7 kg - the LBM for the same man at 15% body fat, not at 25%', '48.8 kg - the LBM for a 65 kg woman at 25% body fat, not a 75 kg man', '18.8 kg - the fat mass at 25% body fat, not the lean body mass itself'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows that a 75 kg man at 25% body fat has a fat mass of 18.8 kg, leaving an LBM of 56.3 kg (75 - 18.8). The 63.7 kg figure in the same table is for the same man at 15% body fat.',
+        },
+        {
+          q: 'What does the pitfalls section warn about confusing LBM with muscle mass?',
+          options: ['LBM calculations from the Boer formula significantly overestimate lean mass in obese patients because the regression equation was derived from lean populations', 'LBM is unreliable as a drug dosing metric because it does not account for organ impairment, which changes drug distribution independently of lean tissue mass', 'LBM is often conflated with muscle mass, but bone, organs, blood, and water together account for a large fraction of LBM - a person can gain or lose several kilograms of LBM through hydration changes alone without any change in actual muscle tissue', 'LBM decreases with age at 3-8% per decade, making it unreliable for tracking training progress in older adults because natural sarcopenia masks the gains from resistance training'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section warns that LBM is often conflated with muscle mass, but bone, organs, blood, and water account for a large fraction of LBM. A person can gain or lose several kilograms of LBM through hydration changes alone without any actual change in muscle tissue.',
+        },
+        {
+          q: 'What is sarcopenia, and at what rate does it progress after age 30?',
+          options: ['Sarcopenia begins in the mid-40s and progresses at about 1-2% per year regardless of physical activity level, making resistance training ineffective for maintaining lean mass after age 50', 'LBM decreases with age at approximately 3-8% per decade after age 30 without deliberate training - a process called sarcopenia - making progressive resistance training and adequate protein intake the primary evidence-based methods to slow the decline', 'Sarcopenia accelerates significantly after age 60, transitioning from 1-2% per year in middle age to 3-5% per year in older adults, with protein supplementation alone being sufficient to halt most of the loss', 'Age-related LBM loss averages 5% per year after age 70 and cannot be reversed through training; resistance exercise only slows the rate of loss rather than rebuilding lost lean mass'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states that LBM decreases with age (sarcopenia) at approximately 3-8% per decade after age 30 without deliberate training. Progressive resistance training is the most evidence-based method for increasing skeletal muscle, with adequate protein intake (1.6-2.2g/kg/day) required to support muscle protein synthesis.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'bioelectrical-impedance-analysis': {
@@ -1073,6 +2012,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the best time to use a BIA scale?', a: 'First thing in the morning, before eating or drinking, after using the bathroom. At this point body water has equilibrated overnight, providing the most consistent baseline. Avoid measuring after exercise, after a large meal, after alcohol, or in the evening - all of these can shift BIA readings by 2-4 percentage points without any change in actual body composition.' },
       { q: 'How does BIA compare to the Navy tape method?', a: 'Both methods have similar accuracy (±3-5% vs DEXA) for most people under typical conditions. The Navy tape method is not affected by hydration and produces the same result regardless of when you measure, making it more reliable for one-off readings. BIA is more convenient - no tape measure or measuring technique required - but requires consistent conditions to produce comparable readings over time. For trend tracking, both work well when used consistently; for a reliable single reading, the tape method is generally more stable.' },
     ],
+    quiz: {
+      topic: 'BIA',
+      questions: [
+        {
+          q: 'What does BIA derive body fat percentage from after measuring electrical impedance?',
+          options: ['Bone mineral density estimated from multi-frequency absorption patterns', 'Skin temperature gradients between fat and muscle tissue layers', 'Total body water (TBW), from which fat-free mass and body fat percentage are calculated', 'Direct measurement of adipose tissue volume using current flow mapping'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'BIA measures total electrical impedance, then applies regression equations to estimate total body water (TBW). From TBW it derives fat-free mass, and from that it calculates body fat percentage. The method relies on the fact that fat tissue (low water) resists current more than muscle (high water).',
+        },
+        {
+          q: 'Why does fat tissue resist electrical current more than skeletal muscle?',
+          options: ['Fat tissue has low water content, making it a poor electrical conductor, while skeletal muscle has high water content', 'Fat cells are larger and physically block the current pathway more than muscle fibers', 'Fat tissue generates a counter-current that partially cancels the BIA signal', 'Fat tissue has fewer blood vessels to carry conductive electrolyte ions'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that fat tissue has high electrical resistance due to low water content (fat is a poor conductor), while skeletal muscle and organs have low resistance because of their high water content. This contrast is the physical basis of the entire BIA method.',
+        },
+        {
+          q: 'According to the examples table, which BIA device type achieves the best typical accuracy versus DEXA?',
+          options: ['Consumer foot-to-foot bathroom scale (±3-6%)', '4-electrode hand-to-foot device (±2.5-4%)', 'Consumer handheld device (±3-5%)', 'Clinical multi-frequency BIA (±1.5-2.5%)'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows clinical multi-frequency BIA achieves ±1.5-2.5% accuracy versus DEXA under controlled conditions. Consumer foot-to-foot scales have the widest error range at ±3-6% and only measure current through the lower body.',
+        },
+        {
+          q: 'What does the pitfalls section identify as the most common misuse of BIA?',
+          options: ['Using BIA on athletic individuals where muscle composition inflates resistance readings', 'Treating day-to-day readings as meaningful data, when a 2-point swing almost certainly reflects hydration changes rather than fat loss or muscle gain', 'Comparing devices from different manufacturers, which use incompatible electrode placements', 'Measuring body fat on individuals below age 18, where BIA equations are not validated'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that treating day-to-day readings as meaningful is the most common misuse. A 2-point swing from one day to the next almost certainly reflects hydration changes, not actual body composition change. The recommendation is to compare weekly or biweekly averages.',
+        },
+        {
+          q: 'According to the FAQ, what makes the Navy tape method more reliable than BIA for a single one-off body fat reading?',
+          options: ['The Navy tape method is not affected by hydration and produces the same result regardless of when measured', 'The Navy tape method uses validated regression equations developed specifically for athletic populations', 'The Navy tape method measures multiple sites, averaging out individual measurement errors', 'The Navy tape method is faster and easier to administer than attaching BIA electrodes'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states the Navy tape method is not affected by hydration and produces the same result regardless of when you measure. BIA readings can shift by 2-4 percentage points without any change in actual body composition, making it less suitable for one-off readings.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'waist-circumference': {
@@ -1144,6 +2118,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is a good CAGR for a business?', a: 'Context determines the benchmark. A high-growth startup might target 40–100%+ CAGR in early years. Established companies are often valued on 10–20% revenue CAGR. The S&P 500 has historically produced roughly 10% nominal CAGR (7% inflation-adjusted) over long periods. Always compare against industry peers and factor in the stage of the business.' },
       { q: 'Can CAGR be negative?', a: 'Yes. If the end value is lower than the start value, CAGR will be negative, indicating compound annual decline. This is common for distressed assets, declining industries, or portfolios measured over bear market periods.' },
     ],
+    quiz: {
+      topic: 'CAGR',
+      questions: [
+        {
+          q: 'What does CAGR stand for, and what does it measure?',
+          options: ['Cumulative Annual Growth Rate - the total growth achieved over a multi-year period', 'Compound Adjusted Growth Return - the inflation-adjusted return on an investment', 'Compound Annual Growth Rate - the annualised growth rate that smooths actual performance into a single constant annual rate', 'Calculated Average Growth Rate - the arithmetic mean of year-by-year growth percentages'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'CAGR (Compound Annual Growth Rate) is the annualised growth rate that would take a value from its starting point to its ending point if it grew at a constant rate each year with compounding. It smooths actual year-to-year performance into a single representative annual figure.',
+        },
+        {
+          q: 'According to the FAQ, why is CAGR more accurate than simple average annual return for volatile investments?',
+          options: ['CAGR derives the geometric mean - the single constant rate that produces the actual end value from the actual start value, while simple average sums year-by-year percentages and divides by n', 'CAGR adjusts for inflation using the Consumer Price Index, while simple average return uses nominal figures only', 'CAGR is calculated quarterly and then annualised, giving more granularity than the simple average which uses only annual data points', 'CAGR excludes the first and last years of measurement as anomalies, while simple average includes all years'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ explains that simple average sums year-by-year percentages and divides by n, while CAGR derives the geometric mean - the single constant rate that produces the actual end value from the actual start value. For volatile investments, CAGR will always be lower than the arithmetic average, making it the more accurate representation of investor experience.',
+        },
+        {
+          q: 'From the examples table, what is the CAGR of the company revenue that grew from $2,000,000 to $6,200,000 over 8 years?',
+          options: ['18.5%', '12.7%', '16.1%', '15.2%'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows 15.2% CAGR for this scenario. This is the constant annual rate that would take $2,000,000 to $6,200,000 with compounding over 8 years, derived using the formula (6,200,000 / 2,000,000)^(1/8) - 1.',
+        },
+        {
+          q: 'What does the pitfalls section warn about an investment that doubles then halves?',
+          options: ['Such an investment should be excluded from CAGR calculations because the formula produces a mathematical error', 'This investment has a CAGR of 0%, yet no investor would describe the experience as a stable 0% return - illustrating that CAGR ignores volatility', 'The CAGR would be negative because gains are taxed while losses are only partially deductible', 'CAGR overstates the return for such an investment, making it appear more attractive than investments with steady growth'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section explicitly states that an investment that doubles then halves has a CAGR of 0%, yet no investor would describe it as a stable 0% return. CAGR ignores the path between start and end, so it must be paired with standard deviation or maximum drawdown for volatile assets.',
+        },
+        {
+          q: 'According to the FAQ, when is CAGR negative?',
+          options: ['When the investment was made during a recession and the final measurement falls in a bull market period', 'When inflation exceeds the nominal return, eroding the real value of the investment', 'When the end value is lower than the start value, indicating compound annual decline', 'When dividends or distributions paid out during the measurement period reduce the ending balance'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that if the end value is lower than the start value, CAGR will be negative, indicating compound annual decline. This is common for distressed assets, declining industries, or portfolios measured over bear market periods.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'compound-interest': {
@@ -1168,6 +2177,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How does the Rule of 72 relate to compound interest?', a: 'The Rule of 72 is a mental shortcut for compound interest: divide 72 by the annual interest rate to estimate how many years it takes to double your money. At 6%, money doubles in approximately 12 years (72 ÷ 6). At 9%, it doubles in roughly 8 years. This works because of the mathematical properties of the compound interest exponential.' },
       { q: 'Does compound interest apply to stocks?', a: 'Not directly - stocks do not pay a fixed interest rate. But the concept of compounding applies to investment returns through reinvested dividends and retained earnings that generate future earnings. The term "compounding" in equity investing refers to the same exponential growth principle, applied to variable returns.' },
     ],
+    quiz: {
+      topic: 'compound interest',
+      questions: [
+        {
+          q: 'What makes compound interest different from simple interest in how it calculates each period\'s interest?',
+          options: ['It applies the interest rate to the original principal only, not the accumulated balance', 'It divides the annual rate by the number of compounding periods before applying it to the principal', 'It uses an inflation-adjusted rate rather than the stated nominal rate for each calculation period', 'It calculates interest on the original principal plus all previously accumulated interest, creating an exponential growth loop'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'Compound interest is calculated on the accumulated balance - principal plus all prior interest earned. This creates a compounding feedback loop: the more you have, the more you earn, and the more you have again.',
+        },
+        {
+          q: 'According to the FAQ, how does compound interest growth differ from simple interest growth over long periods?',
+          options: ['Simple interest grows linearly (only on principal), while compound interest grows exponentially (on principal plus all accumulated interest), creating an enormous gap over decades', 'Compound interest is always cheaper for borrowers because banks apply it daily rather than annually', 'Simple interest becomes compound interest automatically after 10 years under most financial contracts', 'Both grow at the same rate for the first 5 years, then compound interest accelerates due to regulatory changes'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that simple interest grows linearly (only on the original principal), while compound interest grows exponentially. For short periods and low rates the difference is minimal, but over decades the gap becomes enormous.',
+        },
+        {
+          q: 'From the worked examples table, what is the final balance for $10,000 invested at 6% with monthly compounding over 20 years?',
+          options: ['$32,071 (the annual compounding result for the same scenario)', '$34,560', '$33,102', '$31,288'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows $33,102 for $10,000 at 6% with monthly compounding over 20 years. This is $1,031 more than the annual compounding result of $32,071, illustrating how compounding frequency matters even at the same stated rate.',
+        },
+        {
+          q: 'According to the pitfalls section, what is the effective annual rate (EAR) of a 12% annual rate that compounds monthly?',
+          options: ['12.00% - the stated nominal rate and effective rate are always identical', '13.00%', '12.50%', '12.68%'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section states that a 12% annual rate compounding monthly has an EAR of 12.68%. This is the true annual cost because each month\'s interest is added to the balance before the next month\'s interest is calculated.',
+        },
+        {
+          q: 'The FAQ explains the Rule of 72 as a compound interest shortcut. Using it, approximately how many years does money take to double at a 9% annual rate?',
+          options: ['12 years', '8 years', '9 years', '10 years'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states: divide 72 by the annual interest rate to estimate doubling time. At 9%, that is 72 / 9 = 8 years. At 6%, the Rule of 72 gives 72 / 6 = 12 years.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'current-ratio': {
@@ -1192,6 +2236,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between current ratio and quick ratio?', a: 'The quick ratio (acid test) subtracts inventory from current assets before dividing by current liabilities. This removes the least liquid current asset - inventory that may take months to sell. A company with $5M in current assets, $2M of which is slow-moving inventory, has a current ratio of 2.5 but a quick ratio of only 1.5. The quick ratio is a more conservative test of immediate liquidity.' },
       { q: 'Can the current ratio be negative?', a: 'No - both current assets and current liabilities are always positive numbers, so the ratio itself is always positive. A current ratio below 1.0 means current liabilities exceed current assets (negative working capital), but the ratio is still a positive number.' },
     ],
+    quiz: {
+      topic: 'current ratio',
+      questions: [
+        {
+          q: 'What does a current ratio below 1.0 indicate about a company\'s short-term financial position?',
+          options: ['The company is highly efficient, using leverage to maximise returns on fewer liquid assets', 'The company has a working capital deficit - current liabilities exceed current assets - meaning it relies on future cash generation or credit to meet near-term payments', 'The company\'s assets are 100% financed by equity, giving it the strongest possible balance sheet', 'The ratio signals the company must immediately liquidate all assets to avoid defaulting on obligations'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A current ratio below 1.0 - sometimes called a working capital deficit - means current liabilities exceed current assets. The definition states this signals reliance on future cash generation or credit facilities to meet near-term payments.',
+        },
+        {
+          q: 'What is the key difference between the current ratio and the quick ratio (acid test)?',
+          options: ['The current ratio uses annual balance sheet figures; the quick ratio uses quarterly data for more timely assessment', 'The current ratio measures total assets against total liabilities, while the quick ratio focuses only on cash versus short-term debt', 'The current ratio includes long-term assets in its numerator, making it a broader measure than the quick ratio', 'The quick ratio removes inventory from current assets before dividing by current liabilities, giving a more conservative view of immediate liquidity'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ explains that the quick ratio subtracts inventory from current assets before dividing by current liabilities. A company with $5M in current assets including $2M of slow-moving inventory has a current ratio of 2.5 but a quick ratio of only 1.5.',
+        },
+        {
+          q: 'From the worked examples table, what is the current ratio for a company with $3,000,000 in current assets and $2,500,000 in current liabilities?',
+          options: ['1.20', '2.50', '0.82', '1.50'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Current Ratio = $3,000,000 / $2,500,000 = 1.20. The table labels this "Adequate - monitor closely," consistent with the whenToUse guidance that 1.2 may be adequate for retail businesses with fast inventory turnover.',
+        },
+        {
+          q: 'What does the pitfalls section warn about interpreting a very high current ratio such as 5.0?',
+          options: ['A ratio of 5.0 always provides maximum protection against short-term default and should be the target for all companies', 'A ratio above 3.0 requires special disclosure under accounting standards due to the excess liquidity it represents', 'A high ratio can indicate excessive cash holdings or slow-moving inventory - both signs of poor capital efficiency - and a falling ratio can signal either improving efficiency or deteriorating liquidity, so trend matters as much as the point-in-time number', 'Ratios above 4.0 are exclusively found in SaaS and technology companies and should not be interpreted as a warning sign for those sectors'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section warns that a ratio of 5.0 may indicate the company is holding excessive cash or has slow-moving inventory - signs of poor capital efficiency. A falling ratio can mean either improving efficiency or deteriorating liquidity, so trend analysis is essential.',
+        },
+        {
+          q: 'According to the FAQ, can the current ratio ever produce a negative value?',
+          options: ['Yes - when accumulated losses exceed paid-in capital, the negative book value flows into the current ratio calculation', 'Yes - the ratio turns negative whenever current liabilities exceed current assets by more than 50%', 'No - accounting rules prohibit any company from reporting current liabilities greater than current assets on its balance sheet', 'No - both current assets and current liabilities are always positive numbers, so the ratio is always positive; a ratio below 1.0 means negative working capital, but the ratio itself remains positive'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ explicitly states the current ratio cannot be negative because both inputs are always positive numbers. A ratio below 1.0 is called negative working capital, but the ratio value itself remains a positive number.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'break-even-point': {
@@ -1216,6 +2295,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How does a price increase affect the break-even point?', a: 'A price increase raises the contribution margin (Price − Variable Cost), which lowers the break-even point. Raising price from $25 to $28 on a product with $10 variable cost increases CM from $15 to $18 - reducing break-even units by 17%. This is why pricing power is one of the most important drivers of business economics.' },
       { q: 'Can break-even analysis be used for services?', a: 'Yes. For service businesses, variable cost is typically the direct labour cost per service delivered, and price is the fee charged per service. A consulting firm with $200,000 in monthly overhead, charging $5,000 per engagement at $1,500 in direct costs per engagement, has a break-even of 57 engagements per month.' },
     ],
+    quiz: {
+      topic: 'break-even point',
+      questions: [
+        {
+          q: 'What happens at the break-even point?',
+          options: ['The business earns profit equal to its total fixed costs', 'Total revenue exactly equals total costs, producing neither profit nor loss', 'Variable costs are fully covered and fixed costs begin to accumulate', 'The business reaches its minimum target return on investment'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The break-even point is where total revenue equals total costs - the business earns no profit and incurs no loss. Below it the business runs at a loss; above it every additional unit generates profit equal to the contribution margin per unit.',
+        },
+        {
+          q: 'Using the first worked example (Fixed Costs $50,000, Price $25, Variable Cost $10), what is the break-even revenue?',
+          options: ['$50,000', '$75,000', '$83,333', '$125,000'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Contribution margin per unit = $25 - $10 = $15. Break-even units = $50,000 / $15 = 3,333. Break-even revenue = 3,333 x $25 = $83,333, matching the first row of the examples table.',
+        },
+        {
+          q: 'What does the margin of safety measure?',
+          options: ['The ratio of fixed costs to variable costs at the current sales volume', 'The percentage of revenue that becomes contribution margin', 'The gap between current revenue and the revenue needed to reach target profit', 'How much revenue can decline before the business becomes unprofitable'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The margin of safety is the gap between actual revenue and break-even revenue, expressed as a percentage. Below 10% is considered precarious; a 30% margin means revenue can fall 30% before losses begin.',
+        },
+        {
+          q: 'According to the pitfalls section, what key assumption does basic break-even analysis make that often fails in practice?',
+          options: ['That price and variable cost per unit remain constant regardless of sales volume', 'That fixed costs increase proportionally as the business grows', 'That break-even applies only to single-product businesses', 'That the margin of safety must exceed 30% before a product can be launched'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Break-even analysis assumes constant price and constant variable cost per unit. In practice, bulk discounts, volume-driven input cost reductions, and step increases in fixed costs all invalidate a simple linear model.',
+        },
+        {
+          q: 'What impact did raising price from $25 to $28 have on break-even units, according to the FAQ example (variable cost $10)?',
+          options: ['Break-even units increased by 17% due to the higher price reducing demand', 'Break-even units stayed the same because fixed costs were unchanged', 'Break-even revenue doubled as the higher price offset lower unit volume', 'Break-even units fell by 17% as the contribution margin rose from $15 to $18'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'CM rises from $15 (25-10) to $18 (28-10). Each unit now covers more fixed cost, reducing the volume needed to break even. The FAQ states this cuts break-even units by 17%.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'contribution-margin': {
@@ -1239,6 +2353,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How does contribution margin relate to break-even?', a: 'Break-even is directly derived from CM: Break-Even Units = Fixed Costs ÷ CM per Unit. Increasing CM (by raising prices or cutting variable costs) directly reduces the break-even volume. This makes CM improvement one of the most powerful levers for business model health.' },
       { q: 'What is a good contribution margin ratio?', a: 'It varies significantly by industry. SaaS and software companies typically have CM Ratios of 60–80% because variable costs (hosting, payment processing) are very low. Service businesses range from 30–60%. Manufacturing 30–50%. Retail and distribution 20–40%. There is no universal benchmark - compare against industry peers and evaluate trend over time.' },
     ],
+    quiz: {
+      topic: 'contribution margin',
+      questions: [
+        {
+          q: 'What does the Contribution Margin Ratio measure, and how is it calculated?',
+          options: ['CM Ratio = Variable Costs / Revenue, showing what proportion of revenue is consumed by variable costs', 'CM Ratio = Net Income / Revenue, equal to the net profit margin', 'CM Ratio = (Revenue - Variable Costs) / Revenue, showing what percentage of each revenue dollar is available to cover fixed costs and profit', 'CM Ratio = Fixed Costs / Revenue, showing the break-even threshold as a percentage of revenue'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The CM Ratio is (Revenue - Variable Costs) / Revenue. The definition states that a 60% CM Ratio means for every $100 in sales, $60 is available for fixed costs and profit - the other $40 is consumed by variable costs.',
+        },
+        {
+          q: 'According to the definition, how does Contribution Margin differ from Gross Profit for a manufacturer with $500,000 in fixed factory overhead spread across 100,000 units?',
+          options: ['CM deducts only truly variable costs, while Gross Profit via COGS also includes the $5 per unit of fixed overhead, making CM per unit $5 higher than gross profit per unit', 'CM is a company-level figure only, while Gross Profit can be calculated per product unit', 'Gross Profit excludes all overhead, while CM includes both fixed and variable costs in its deduction from revenue', 'CM and Gross Profit are identical; the difference is only in terminology used by different industries'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ explains that COGS includes both variable costs and fixed manufacturing overhead. With $500,000 fixed overhead across 100,000 units, each unit carries $5 of fixed cost in COGS. CM per unit excludes that fixed portion, so it is $5 higher than gross profit per unit.',
+        },
+        {
+          q: 'From the worked examples table, what is the Contribution Margin per unit for Product A (Price $80, Variable Cost $32)?',
+          options: ['$32', '$48', '$80', '$18'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'CM per unit = Price - Variable Cost per Unit = $80 - $32 = $48. The table also confirms a 60% CM Ratio ($48 / $80), matching the definition\'s 60% CM Ratio example.',
+        },
+        {
+          q: 'What does the pitfalls section warn about Product B, which shows a negative full-cost profit of -$5 but a positive CM of $15 per unit?',
+          options: ['Product B should be immediately discontinued because any product with negative full-cost profit destroys shareholder value', 'Product B\'s positive CM means it is inherently more profitable than Product A and should be prioritised', 'Product B\'s CM proves it covers all its costs, making it a better investment than Product C', 'While Product B contributes to fixed costs in the short run, relying on low-CM products long-term prevents the business from covering its fixed cost base'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section warns that focusing solely on CM can lead to strategically harmful decisions. Product B has positive CM so it contributes toward fixed costs short-term, but relying on it long-term prevents the business from covering its full fixed cost base.',
+        },
+        {
+          q: 'According to the FAQ, which type of business typically achieves the highest Contribution Margin Ratio range?',
+          options: ['SaaS and software companies (60-80%), because variable costs like hosting and payment processing are very low', 'Manufacturing companies (30-50%), because they eliminate variable materials costs through economies of scale', 'Service businesses (30-60%), because they have no physical inventory variable costs', 'Retail and distribution (20-40%), because high volume offsets the thin margin per unit'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states that SaaS and software companies typically achieve CM Ratios of 60-80% because their variable costs (hosting, payment processing) are very low. Retail and distribution have the lowest range at 20-40%.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'pe-ratio': {
@@ -1290,6 +2439,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is a consensus EPS estimate and why does it matter?', a: 'Wall Street analysts publish quarterly EPS forecasts for public companies. The average of these estimates is the consensus. When a company reports actual EPS above consensus, it has beaten - usually driving the stock up. A miss drives it down. The magnitude of the beat or miss relative to expectations, and management\'s forward guidance, are typically more important to stock price reaction than the absolute EPS number itself.' },
       { q: 'How does EPS relate to dividends?', a: 'EPS and dividends are linked through the payout ratio: Payout Ratio = Dividends Per Share / EPS. A company paying $2.00 annually per share with EPS of $4.00 has a 50% payout ratio. The remaining 50% is retained earnings, reinvested in the business. A payout ratio consistently above 100% means the company is paying more in dividends than it earns - unsustainable without borrowing or asset sales.' },
     ],
+    quiz: {
+      topic: 'EPS',
+      questions: [
+        {
+          q: 'What core problem does Earnings Per Share (EPS) solve for investors comparing companies of different sizes?',
+          options: ['EPS eliminates the impact of leverage so that all companies can be compared on a debt-free basis', 'EPS adjusts reported net income for one-time charges and restructuring costs to show recurring profitability', 'EPS translates total net income into a per-share figure, enabling direct comparison between companies of vastly different sizes on P/E ratios and other metrics', 'EPS shows the portion of net income distributed to shareholders as dividends during the reporting period'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states that EPS translates total net income into a per-share figure, enabling investors to compare profitability across companies of vastly different sizes. A $10B and a $500M company both reporting $1.00 EPS can be compared directly on the P/E ratio.',
+        },
+        {
+          q: 'What is the key difference between basic EPS and diluted EPS, and which should be used for P/E analysis?',
+          options: ['Basic EPS uses the actual weighted average shares outstanding; diluted EPS assumes all dilutive instruments (options, RSUs, convertibles) are converted - always equal to or lower than basic EPS. Use diluted EPS for P/E analysis as it reflects the worst-case fully converted share count', 'Diluted EPS uses the current share price to adjust the denominator; basic EPS uses the average share price over the period, making basic more conservative for P/E analysis', 'Both figures are identical unless the company pays dividends; the payout reduces diluted EPS but not basic EPS, which only measures retained earnings per share', 'Basic EPS is a mandatory GAAP disclosure; diluted EPS is an optional supplemental figure that smaller companies are not required to report'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that diluted EPS adjusts for all dilutive instruments and is always equal to or lower than basic EPS. The whenToUse section explicitly says to use diluted EPS (not basic) for P/E ratio calculations and equity analysis.',
+        },
+        {
+          q: 'From the examples table, what is the diluted EPS for Company A, which has net income of $500,000,000 and 220,000,000 diluted shares?',
+          options: ['$2.50 (basic EPS using 200M shares)', '$1.00 (basic EPS for Company B)', '$0.98 (diluted EPS for Company B)', '$2.27 (diluted EPS: $500M / 220M diluted shares)'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows Company A\'s diluted EPS as $2.27, calculated by dividing $500,000,000 net income by 220,000,000 diluted shares. This is lower than the basic EPS of $2.50 because the diluted share count includes potential shares from options and other instruments.',
+        },
+        {
+          q: 'What does the pitfalls section warn about using EPS growth as a standalone measure of business performance?',
+          options: ['EPS growth above 15% per year is a red flag for potential accounting manipulation and should trigger closer scrutiny', 'A company spending $500M on buybacks can show EPS growth of 10% with zero improvement in actual profitability; always compare EPS growth to net income growth and monitor the share count trend', 'EPS growth is only meaningful for companies with fewer than 500 million diluted shares, as larger share counts distort the per-share growth rate', 'Diluted EPS consistently grows faster than basic EPS, inflating the apparent earnings growth rate for most public companies'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that buybacks can boost EPS by up to 10% with zero profit improvement. Always compare EPS growth to net income growth and track the share count trend to distinguish real earnings growth from financial engineering.',
+        },
+        {
+          q: 'According to the FAQ, what does a payout ratio consistently above 100% indicate about a company\'s dividend sustainability?',
+          options: ['The company is retaining more earnings than it distributes, building a strong cash reserve for future investment', 'The company reinvests all earnings into growth rather than paying dividends, which is typical for early-stage technology companies', 'The payout ratio above 100% means the company pays more in dividends than it earns in EPS - unsustainable without borrowing or asset sales', 'A payout ratio above 100% signals that the company uses stock dividends rather than cash, reducing actual cash outflows from operations'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that a payout ratio consistently above 100% means the company is paying more in dividends than it earns - unsustainable without borrowing or selling assets. The formula is Payout Ratio = Dividends Per Share / EPS.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'roe': {
@@ -1388,6 +2572,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why do planes use knots instead of km/h or mph?', a: 'Aviation adopted knots because nautical miles are directly tied to Earth\'s latitude grid - one degree of latitude = 60 nautical miles. This makes navigation calculations, distance estimates on charts, and fuel planning simpler. The convention was established when the US dominated early commercial aviation and has remained the global standard ever since.' },
       { q: 'Is 1 knot the same in all countries?', a: 'Yes. The International Hydrographic Organization defines the nautical mile as exactly 1,852 meters, making 1 knot exactly 1.852 km/h worldwide. There is no US or UK variant - unlike the statute mile, which differs from the nautical mile.' },
     ],
+    quiz: {
+      topic: 'knots',
+      questions: [
+        {
+          q: 'What is the definition of one knot?',
+          options: ['One nautical mile per hour - exactly 1.852 km/h and approximately 1.151 mph', 'One statute mile per hour - the maritime speed equivalent used in aviation and shipping worldwide', 'Exactly 1.0 km/h - a metric speed unit adopted for maritime navigation to align with international standards', 'One arcminute of latitude per minute of time - a unit derived directly from Earth\'s coordinate geometry'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states a knot is a unit of speed equal to one nautical mile per hour, defined as exactly 1.852 km/h (approximately 1.15078 mph or 0.51444 m/s). It is universally accepted in aviation and maritime navigation.',
+        },
+        {
+          q: 'How did sailors originally measure speed in knots before modern instruments?',
+          options: ['By timing how long it took a floating marker to travel between two fixed points on the ship\'s hull, then dividing hull length by elapsed seconds', 'By observing the angle of the ship\'s wake relative to the horizon and converting it to a speed using trigonometric tables', 'By counting the number of wave crests passing the bow per minute, multiplied by the estimated wavelength of typical ocean swells', 'By casting a knotted rope with a wooden float overboard and counting how many knots passed through their hands in a 28-second interval'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition describes the 17th-century chip log technique: sailors cast a knotted rope attached to a wooden float overboard and counted how many knots passed through their hands in a set time interval (typically 28 seconds). The count gave the ship\'s speed directly in nautical miles per hour.',
+        },
+        {
+          q: 'According to the examples table, what is the km/h equivalent of 490 knots (commercial airliner cruise)?',
+          options: ['277.8 km/h', '564 km/h', '907.5 km/h', '1,852 km/h'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows 490 kn = 907.5 km/h in the context of commercial airliner cruise. The 564 figure in the table is the mph equivalent, not km/h.',
+        },
+        {
+          q: 'What two errors does the pitfalls section warn about when using knots?',
+          options: ['Always adding 15% to a knots reading at altitude because atmospheric pressure reduces effective ground speed, and confusing airspeed with ground speed in headwind conditions', 'Confusing knots with km/h (they differ by nearly double: 35 kn = 64.8 km/h, not 35 km/h), and saying "knots per hour" which is incorrect because a knot already means nautical miles per hour', 'Assuming knots apply only to water speed and not to wind or airspeed, and failing to apply a temperature correction factor at high altitudes', 'Confusing nautical miles with statute miles when converting knots to mph, and using land-based GPS speed readings in nautical contexts without adjustment'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that knots and km/h are off by nearly double (1 kn = 1.852 km/h), so 35 knots is 64.8 km/h not 35 km/h. It also warns that "knots per hour" is incorrect because the unit is simply "knots" - a knot already includes "per hour."',
+        },
+        {
+          q: 'Is 1 knot the same value in all countries?',
+          options: ['No. The US uses the international nautical mile (1,852 m) while the UK uses the historical Admiralty nautical mile (1,853.18 m), creating a small difference in precision navigation', 'No. The knot varies slightly by hemisphere because it is defined relative to arcminutes of latitude and Earth is an oblate spheroid with slightly different meridian lengths at different latitudes', 'Yes. The International Hydrographic Organization defines the nautical mile as exactly 1,852 meters worldwide, so 1 knot is exactly 1.852 km/h in every country with no national variants', 'Yes, but only since 1979 when NATO standardized the definition - before that, the US and UK used different values that required correction tables'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ confirms that 1 knot is identical worldwide. The International Hydrographic Organization defines the nautical mile as exactly 1,852 meters, making 1 knot exactly 1.852 km/h with no US or UK variant - unlike the statute mile, which differs from the nautical mile.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'mach-number': {
@@ -1411,6 +2630,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between subsonic, transonic, supersonic, and hypersonic?', a: 'Subsonic: Mach below 0.8. Transonic: Mach 0.8–1.2 (shock waves begin forming). Supersonic: Mach 1.2–5. Hypersonic: Mach 5 and above. The Concorde cruised at Mach 2; the Space Shuttle re-entered at around Mach 25.' },
       { q: 'Who is Mach named after?', a: 'Ernst Mach, an Austrian physicist (1838–1916) who studied the shock waves formed by projectiles moving faster than sound. The unit was named in his honour by the aeronautical engineer Jakob Ackeret in 1929.' },
     ],
+    quiz: {
+      topic: 'Mach number',
+      questions: [
+        {
+          q: 'What does a Mach number represent?',
+          options: ['The absolute speed of an aircraft in km/h, measured at a standard reference altitude of 10,000 meters to enable consistent comparison between aircraft types', 'The ratio of an aircraft\'s ground speed to its cruising airspeed, used to measure efficiency relative to its design operating range', 'The ratio of an object\'s speed to the local speed of sound in the surrounding medium, so Mach 1 means travelling at exactly the speed of sound', 'The percentage of the speed of light at which an object travels, expressed as a decimal fraction used in both aeronautics and relativistic physics'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states a Mach number is the ratio of an object\'s speed to the local speed of sound in the surrounding medium. Mach 1 means the object is travelling at the speed of sound; Mach 0.5 is half the speed of sound; Mach 2 is twice.',
+        },
+        {
+          q: 'Why do commercial airliners quote cruise speed in Mach rather than km/h?',
+          options: ['Because aerodynamic behaviour depends on Mach number, not absolute speed - the same true airspeed produces very different aerodynamic effects at high altitude (where Mach 1 is lower) versus at sea level', 'Because international air traffic control regulations require all flights to report speed in Mach numbers above 25,000 feet to maintain standard separation distances', 'Because km/h measurements require GPS correction for wind speed and direction, which introduces errors at high altitude that Mach number inherently avoids', 'Because Mach numbers are proportional to fuel consumption, making them the natural metric for flight planning and fuel efficiency monitoring'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition explains that an airliner\'s aerodynamic behaviour depends on Mach number, not absolute speed - which is why cruise speeds are quoted in Mach. At cruising altitude (~10,000m), Mach 1 drops to about 1,062 km/h, significantly below the sea-level value of 1,225 km/h.',
+        },
+        {
+          q: 'According to the examples table, at what Mach number do commercial airliners typically cruise, and what is the km/h equivalent at sea-level reference conditions?',
+          options: ['Mach 0.5 = 612.5 km/h - a subsonic speed balancing fuel efficiency with passenger comfort', 'Mach 1 = 1,225 km/h - transonic speed that minimises journey time while staying within engine design limits', 'Mach 2 = 2,450 km/h - the same speed the Concorde used for supersonic commercial operations', 'Mach 0.85 = 1,041 km/h - just below the transonic range where shock waves begin forming on control surfaces'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows commercial airliners cruise at Mach 0.85, equivalent to 1,041 km/h at sea-level reference conditions. This places them just below the transonic range (Mach 0.8-1.2) where shock waves begin to form.',
+        },
+        {
+          q: 'What does the pitfalls section warn about converting Mach numbers to km/h?',
+          options: ['Mach numbers above 1.0 are only valid for military aircraft; commercial aviation regulations prohibit supersonic flight because of sonic boom noise regulations', 'Mach 1 is not a fixed speed - it changes with air temperature, so at 10,000m altitude Mach 1 is about 1,062 km/h, significantly slower than 1,225 km/h at sea level; never convert a Mach number to km/h without specifying altitude and temperature conditions', 'The Mach number on flight instruments is calibrated airspeed that already compensates for pressure differences at altitude and does not need temperature correction', 'Mach measurements become unreliable above Mach 3 because shock wave interactions alter the pressure readings that instruments rely on to compute the speed ratio'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states Mach 1 is not a fixed speed - it changes with air temperature. At 10,000m altitude with temperatures around -50°C, Mach 1 is about 295 m/s (1,062 km/h), significantly slower than 340 m/s at sea level. The altitude and temperature must always be specified.',
+        },
+        {
+          q: 'What are the correct Mach number ranges for subsonic, transonic, supersonic, and hypersonic flight?',
+          options: ['Subsonic below Mach 1.0; Supersonic Mach 1.0-3.0; Hypersonic Mach 3.0+; transonic is not a recognised aviation category', 'Subsonic below Mach 0.8; Transonic Mach 0.8-1.5; Supersonic Mach 1.5-5.0; Hypersonic Mach 5+; Concorde cruised at Mach 2.0', 'Subsonic below Mach 0.8; Transonic Mach 0.8-1.2 (shock waves begin forming); Supersonic Mach 1.2-5; Hypersonic Mach 5 and above - the Space Shuttle re-entered at around Mach 25', 'Subsonic below Mach 0.5; Transonic Mach 0.5-1.0; Supersonic Mach 1.0-4.0; Hypersonic Mach 4.0+'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ gives the exact ranges: Subsonic below Mach 0.8, Transonic Mach 0.8-1.2 (where shock waves begin forming), Supersonic Mach 1.2-5, and Hypersonic Mach 5+. It notes the Concorde cruised at Mach 2 and the Space Shuttle re-entered at around Mach 25.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'nautical-mile': {
@@ -1433,6 +2687,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why is it called a "nautical" mile?', a: 'The term distinguishes it from the statute mile (used on land). "Nautical" simply means relating to the sea or navigation. Before GPS, sailors needed a distance unit directly readable from latitude lines on a chart - the nautical mile, defined as one arcminute of latitude, fulfilled this exactly.' },
       { q: 'Is the nautical mile metric?', a: 'Not officially - it is not part of the SI system. However, its definition (1,852 m exactly) was fixed by international agreement in 1929, making it a precisely defined unit with an exact metric equivalent. The International System of Units allows its continued use alongside SI units for maritime and aviation purposes.' },
     ],
+    quiz: {
+      topic: 'nautical miles',
+      questions: [
+        {
+          q: 'What is a nautical mile, and what geometric property makes it essential for navigation?',
+          options: ['A nautical mile is exactly 1,000 meters, equivalent to one kilometer, defined by the International Hydrographic Organization as the standard unit for all maritime distance measurements', 'A nautical mile equals 1,609.344 meters - the same as a statute mile - but named differently to indicate its use in maritime contexts versus land-based travel', 'A nautical mile is exactly 1,852 meters, defined as one arcminute of latitude along any meridian of Earth\'s surface - a geometric link to the coordinate system that lets navigators read distances directly off latitude lines on a chart', 'A nautical mile is approximately 1,852 meters but varies slightly by latitude because Earth is not a perfect sphere, requiring GPS correction factors at extreme latitudes'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states a nautical mile is exactly 1,852 meters, defined as one arcminute (1/60 of a degree) of latitude along any meridian. This geometric relationship to Earth\'s coordinate system means navigators can read distances directly off the latitude scale on a chart without any conversion.',
+        },
+        {
+          q: 'According to the examples table, how many nautical miles correspond to one full degree of latitude?',
+          options: ['60 nautical miles - because a nautical mile is defined as one arcminute (1/60 of a degree) of latitude, so one full degree equals exactly 60 nautical miles', '100 nautical miles - the metric-aligned rounding used when dividing the globe\'s 6,000-nautical-mile circumference into 60 equal segments', '69.05 nautical miles - derived from the statute mile equivalent of one degree of latitude at the equator, used in US government navigation tables', '111.12 nautical miles - based on the kilometer conversion, since one degree at the equator spans approximately 111.12 km'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows 60 nmi = 111.12 km = 69.05 mi labeled as "1 degree of latitude." The definition explains this directly: a nautical mile is one arcminute of latitude, so one degree (60 arcminutes) equals exactly 60 nautical miles.',
+        },
+        {
+          q: 'The pitfalls section warns against confusing nautical miles with statute miles. Approximately how much longer is a nautical mile?',
+          options: ['About 5% longer - a small difference that only matters for very long ocean voyages where cumulative error builds across multiple waypoints', 'About 10% longer - which is why GPS charts flag the discrepancy when users switch between statute and nautical mile settings', 'They are the same physical distance measured differently; the values 1,852m and 1,609.344m refer to two different calculation methods for the same unit', 'About 15% longer - a nautical mile is 1,852 m versus a statute mile\'s 1,609.344 m, so a "100-mile voyage" means very different distances depending on which unit was intended'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section states a statute mile is 1,609.344 m and a nautical mile is 1,852 m - about 15% longer. It warns that a voyage of "100 miles" could mean very different distances depending on the unit, and that GPS devices must always be verified for the correct setting before navigation.',
+        },
+        {
+          q: 'Is the nautical mile part of the SI (metric) system?',
+          options: ['Yes - it is a derived SI unit officially adopted by the International Bureau of Weights and Measures when its metric equivalent of 1,852 m was formally established in 1929', 'No - it is not part of the SI system, but its exact metric definition (1,852 m) was fixed by international agreement in 1929, and the International System of Units allows its continued use alongside SI for maritime and aviation purposes', 'No - the nautical mile has no fixed metric equivalent and varies by country; European authorities use 1,852 m while the US still uses the traditional 1,853.248 m derived from Clarke\'s ellipsoid', 'Yes - the nautical mile was fully metricated in 1960 when the SI system was formally adopted, classified as a supplementary unit for approved navigation contexts'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states the nautical mile is not part of the SI system. However, its definition of exactly 1,852 m was fixed by international agreement in 1929, and the International System of Units allows its continued use alongside SI units for maritime and aviation purposes.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'gross-pay': {
@@ -1458,6 +2741,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is gross pay the same as salary?', a: 'Gross pay and salary are related but not identical. Salary is the agreed annual or periodic rate. Gross pay is the actual amount earned in a specific pay period, which may differ from base salary if bonuses, overtime, or commissions are included.' },
       { q: 'What percentage of gross pay do most people take home?', a: 'For most US workers earning $40,000-$100,000, net pay is roughly 65-75% of gross pay. The exact figure depends on filing status, state taxes, retirement contributions, and benefit elections. Higher earners in high-tax states may keep as little as 55-60%.' },
     ],
+    quiz: {
+      topic: 'gross pay',
+      questions: [
+        {
+          q: 'Which of the following correctly describes what gross pay includes?',
+          options: ['Only the agreed base salary or hourly wage rate paid for regular hours worked during the pay period', 'Base salary minus mandatory deductions for Social Security and Medicare, before income tax is applied', 'The amount deposited into your bank account after all voluntary and mandatory deductions are removed', 'Total compensation before any deductions, including base salary, overtime, bonuses, and commissions'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states that gross pay is the total compensation earned before any deductions, and it includes base salary or hourly wages, overtime, bonuses, commissions, and other taxable compensation.',
+        },
+        {
+          q: 'What is the key difference between gross pay and net pay?',
+          options: ['Gross pay is the total earned before deductions; net pay is the take-home amount after all taxes and deductions are removed', 'Gross pay includes bonuses and overtime; net pay is the base salary only, excluding all variable compensation', 'Gross pay is calculated monthly; net pay is the bi-weekly or weekly equivalent used for day-to-day budgeting', 'Gross pay covers regular hours only; net pay adds overtime and commission to show total actual compensation'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition explains that gross pay is distinct from net pay (take-home pay). Federal income tax, FICA, health premiums, and retirement contributions are all deducted from gross pay to arrive at the amount actually deposited into your account.',
+        },
+        {
+          q: 'According to the examples table, what is the bi-weekly gross pay for a $60,000 annual salary?',
+          options: ['$1,473.46', '$2,500.00', '$2,307.69', '$5,000.00'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows that a $60,000 annual salary divided into 26 bi-weekly periods equals $2,307.69 gross per period. The $1,473.46 figure is the net (take-home) pay after all deductions.',
+        },
+        {
+          q: 'What does the pitfalls section warn about using gross pay for monthly budgeting?',
+          options: ['Gross pay is too variable because overtime and bonuses are included but not guaranteed each pay period', 'A $60,000 salary sounds like $5,000 per month, but after taxes and deductions most US workers take home only $3,200-$3,800 per month, making gross pay misleading for expense planning', 'Gross pay overstates earnings because Social Security and Medicare contributions legally belong to the government, not the employee', 'Gross pay is unsuitable for comparing job offers because state tax variations make the figure incomparable across locations'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns never to budget using gross pay. A $60,000 salary sounds like $5,000/month, but after taxes and deductions, most US workers take home $3,200-$3,800 per month. Net pay should be used for all monthly expense planning.',
+        },
+        {
+          q: 'According to the FAQs, what share of gross pay do most US workers earning $40,000-$100,000 typically take home?',
+          options: ['85-90%, because most deductions are voluntary and most workers opt out of major benefits at enrollment', '50-60%, because federal income tax alone consumes approximately one-third of gross earnings in this income range', '75-85%, reflecting a modest deduction rate for workers in low-tax states without employer benefit elections', '65-75%, though higher earners in high-tax states may keep as little as 55-60%'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states that for most US workers earning $40,000-$100,000, net pay is roughly 65-75% of gross pay. The exact figure depends on filing status, state taxes, retirement contributions, and benefit elections. Higher earners in high-tax states may keep as little as 55-60%.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'rpm': {
@@ -1504,6 +2822,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do I see my CPC in Google AdSense?', a: 'Log into AdSense, go to Reports, set your date range, and add CPC as a column via the columns icon. You can filter by ad unit or country to see which placements and geographic markets earn the most per click. The figure shown is your net share - approximately 68% of what the advertiser paid.' },
       { q: 'Why is my CPC so low?', a: 'Low CPC usually means your content targets low-value keywords, your audience is from low-advertiser-spend geographies, or your ad placements attract low-competition ad inventory. The most impactful fix is to create content in higher-CPC niches (finance, tech, health) targeting US, UK, Canadian, or Australian audiences.' },
     ],
+    quiz: {
+      topic: 'CPC',
+      questions: [
+        {
+          q: 'What percentage of advertiser spend does Google pay to publishers through AdSense for content ads?',
+          options: ['Approximately 45% - the remainder is retained by Google as the platform majority share', 'Approximately 55% - a roughly even split with a small platform premium', 'Approximately 68% - Google keeps approximately 32% and pays publishers the rest', 'Approximately 80% - publishers receive the majority as the content creators'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states that Google keeps approximately 32% and pays publishers approximately 68% of what advertisers spend on content ads. The CPC figure shown in AdSense reports is already this net publisher share.',
+        },
+        {
+          q: 'From the examples table, which niche category commands the highest CPC range?',
+          options: ['Finance / Insurance / Legal ($1.00 - $50+)', 'Technology / Software ($0.50 - $8.00)', 'Health / Medical ($0.50 - $5.00)', 'Lifestyle / Food / Travel ($0.10 - $1.50)'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows Finance / Insurance / Legal at $1.00 - $50+, the widest and highest range of all five categories. The definition notes that a single click on a finance keyword from a US visitor can be worth more than 100 clicks on a general content page.',
+        },
+        {
+          q: 'According to the whenToUse section, when is improving CPC more impactful for revenue than improving CTR?',
+          options: ['When ad impressions are already maximised and no additional traffic can be acquired through any channel', 'When CTR is already below 0.5% and further placement optimisation is no longer technically feasible', 'When the site operates in a niche where ad inventory is limited and CPM pricing applies instead of CPC', 'Improving CPC through targeting higher-value content is often more impactful because a 2x CPC increase doubles earnings without requiring any additional traffic'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The whenToUse section states that improving CPC (by targeting higher-value content) is often more impactful than improving CTR, since a 2x CPC increase doubles earnings without needing any more traffic.',
+        },
+        {
+          q: 'What does the pitfalls section warn about relying on a single click\'s CPC value when setting ad strategy?',
+          options: ['Google delays CPC reporting by up to 48 hours, making individual click values unreliable for real-time decisions', 'The CPC in AdSense reports is an average across all clicks in a period; individual clicks vary widely - one might earn $0.02 and the next $4.50 - so strategy should not be based on a single click\'s value', 'CPC values are rounded to two decimal places in reports, creating systematic underreporting for high-value clicks above $10', 'Google only displays CPC data for the top 10% of clicks by value, making the average misleading for low-volume publishers'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that the reported CPC is an average across all clicks. Individual clicks vary enormously depending on which ad was served, so a single click value should not be used as the basis for strategy.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ctr': {
@@ -1517,6 +2864,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is a good CTR for AdSense?', a: 'A good AdSense CTR is 1-3% for most content sites. Below 0.5% usually means ads are poorly placed or mismatched with the audience. Above 3% is strong and achievable with well-placed in-content ads. Google may review accounts with CTR above 10%, as unusually high rates can indicate invalid traffic or deceptive ad placement.' },
       { q: 'How do I increase my AdSense CTR?', a: 'Place ads within the content body rather than only in sidebars or footers. Ads after the first paragraph and within long-form content perform best. Use responsive ad formats that fit any screen size. Match ad colour schemes loosely to your site design so they feel native rather than intrusive. Avoid excessive ad density, which trains visitors to ignore ads entirely.' },
     ],
+    quiz: {
+      topic: 'CTR',
+      questions: [
+        {
+          q: 'How is Click-Through Rate (CTR) calculated for Google AdSense at the page level?',
+          options: ['Clicks divided by page views, multiplied by 100 to give a percentage', 'Impressions divided by clicks, showing how many ads are served per click received', 'Revenue divided by total ad impressions, giving the effective earnings per page view', 'Clicks divided by total page sessions including non-ad pages, measuring overall site engagement'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that for Google AdSense, CTR is measured at the page level: clicks divided by page views. The general formula is clicks / impressions x 100 - for example, 200 clicks from 10,000 ad impressions gives a 2% CTR.',
+        },
+        {
+          q: 'According to the definition, what is the typical AdSense CTR range for banner ads on content sites?',
+          options: ['0.1 - 0.5%', '3 - 5%', '5 - 8%', '1 - 3%'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states that a typical AdSense CTR for banner ads on content sites is 1-3%. The FAQ confirms that below 0.5% usually means ads are poorly placed, while above 3% is strong and achievable with well-placed in-content ads.',
+        },
+        {
+          q: 'According to the whenToUse section, when should you focus on optimising CTR rather than CPC to increase AdSense revenue?',
+          options: ['When your site already ranks in the top 3 for its primary keywords and traffic growth has plateaued', 'When your CPC is already strong - in that case, improving ad placement and format can significantly increase earnings without changing your content strategy', 'When your site is less than 12 months old and has not yet been approved for premium ad inventory', 'When your page RPM already exceeds the category benchmark, indicating CTR is the only remaining optimisation lever'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The whenToUse section states that when CPC is already strong, focusing on CTR through better placement and format can significantly increase earnings without changing content strategy. CTR is the right lever when CPC is the strength and placement is the gap.',
+        },
+        {
+          q: 'What does the pitfalls section warn about a CTR that exceeds 10%?',
+          options: ['A CTR above 10% automatically switches the account from CPC to CPM-only billing to prevent revenue manipulation', 'Google caps reported CTR at 10% in its dashboard; any higher figure requires a manual data export to verify', 'A CTR above 10% can trigger a Google AdSense review for invalid traffic, as unusually high rates can indicate artificially inflated clicks or deceptive ad placement', 'Revenue earned above a 10% CTR threshold is held in a reserve account for 90 days pending traffic quality verification'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section explicitly warns that a CTR above 10% can trigger a Google AdSense review for invalid traffic. Google monitors CTR patterns and may suspend accounts where clicks appear artificially inflated.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'pay-period': {
@@ -1608,6 +2984,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the GST rate in Australia?', a: 'Australia applies a flat 10% GST on most goods and services. Some supplies are GST-free (fresh food, certain medical services, and exports) and some are input-taxed (financial services, residential rent). The Australian GST has been in force since 1 July 2000.' },
       { q: 'How do I reverse GST from a price?', a: 'Divide the GST-inclusive price by (1 + GST Rate / 100). For an AU$110 price including 10% GST: AU$110 / 1.10 = AU$100 net; the GST was AU$10. This is the same reverse formula used for VAT. Never subtract the percentage directly from the gross price.' },
     ],
+    quiz: {
+      topic: 'GST',
+      questions: [
+        {
+          q: 'How does GST flow through each stage of the supply chain?',
+          options: ['Businesses collect GST on sales only; purchases are made without GST, so the full amount collected is remitted to the government', 'GST is charged once at the point of final retail sale only, with no credit or recovery mechanism at earlier production stages', 'Each business pays GST on its purchases and collects GST on its sales, remitting only the difference to the government', 'Businesses pool all collected GST into a trust account and remit the full balance at the end of each annual filing period'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states that each business in the supply chain pays GST on purchases and collects GST on sales, remitting only the difference. End consumers bear the full cost because they cannot reclaim it.',
+        },
+        {
+          q: 'What is the relationship between GST and VAT?',
+          options: ['GST and VAT are the same type of tax with different names; both are multi-stage consumption taxes with identical formulas', 'VAT is a flat-rate tax on all goods, whereas GST uses multiple rates by category, making GST calculations more complex', 'GST applies only at the final retail stage, while VAT cascades independently through every stage of the supply chain', 'VAT applies exclusively in Europe; GST is a replacement system adopted by OECD countries after 2000 using a different formula'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ confirms that GST and VAT are the same type of tax with different names. Europe calls it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST. The formula for calculating both is identical.',
+        },
+        {
+          q: 'According to the examples table, what is the gross (GST-inclusive) price for a S$100 item in Singapore at the current 9% GST rate?',
+          options: ['S$118', 'S$115', 'S$110', 'S$109'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows Singapore at 9% GST: net S$100, GST amount S$9, gross price S$109. Singapore raised its GST rate from 8% to 9% in January 2024.',
+        },
+        {
+          q: 'What makes Canadian GST calculations especially complex, according to the pitfalls section?',
+          options: ['Canada applies four GST tiers (5%, 12%, 18%, and 28%) by product category, mirroring India\'s multi-rate structure', 'The federal 5% GST is combined with a provincial tax (PST or HST), making the combined rate range from 5% in Alberta to 15% in several other provinces', 'Canada uses a reverse-charge mechanism where the buyer, not the seller, remits GST directly to the government for all B2B transactions', 'Canada applies GST at two separate stages - once at import and once at final retail sale - meaning some goods are effectively taxed twice'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that Canada\'s federal 5% GST is often combined with a provincial sales tax (PST) or replaced by a Harmonised Sales Tax (HST). The combined rate ranges from 5% in Alberta (no provincial tax) to 15% in New Brunswick, Newfoundland, Nova Scotia, and PEI.',
+        },
+        {
+          q: 'A GST-inclusive invoice shows AU$110 with 10% GST included. Which method correctly extracts the net (pre-GST) price?',
+          options: ['Subtract 10% of the gross price: AU$110 - AU$11 = AU$99', 'Multiply the gross price by 1.10 to adjust for the tax inclusion: AU$110 x 1.10 = AU$121', 'Divide the gross price by 1.10: AU$110 / 1.10 = AU$100', 'Divide the gross price by the GST rate percentage: AU$110 / 0.10 = AU$1,100'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states you must divide the GST-inclusive price by (1 + GST Rate / 100). For AU$110 at 10%: AU$110 / 1.10 = AU$100 net. The FAQ explicitly warns never to subtract the rate percentage directly from the gross price, since 10% of AU$110 is AU$11, not AU$10.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'net-pay': {
@@ -1621,6 +3032,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do I calculate my net pay from gross pay?', a: 'Start with gross pay, subtract federal income tax (based on your bracket and W-4 allowances), Social Security (6.2%), Medicare (1.45%), state income tax, and any voluntary deductions (health insurance, 401k). The remainder is your net pay. A paycheck stub shows each deduction line by line.' },
       { q: 'Does a higher 401k contribution reduce my net pay?', a: 'Yes - traditional 401k contributions reduce your taxable income, which lowers your federal and state income tax. The net effect on take-home pay is less than the contribution amount. Contributing $200 bi-weekly may only reduce net pay by $140-$160 depending on your marginal tax rate.' },
     ],
+    quiz: {
+      topic: 'net pay',
+      questions: [
+        {
+          q: 'What is net pay, and which deduction categories reduce gross pay to arrive at it?',
+          options: ['Net pay is gross pay minus only mandatory government-imposed deductions (federal and state income tax); voluntary deductions like 401k and health insurance are excluded from the net pay calculation', 'Net pay is gross pay reduced only by Social Security (6.2%) and Medicare (1.45%), the two universal FICA deductions that apply to all US workers regardless of other elections', 'Net pay equals gross pay minus a flat effective tax rate of approximately 25-30%, which the IRS applies uniformly to all W-2 employees regardless of income or filing status', 'Net pay is the amount deposited into your bank account after all deductions are removed from gross pay - including mandatory deductions (federal/state income tax, Social Security 6.2%, Medicare 1.45%) and voluntary ones (health insurance, 401k, HSA)'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states net pay is the amount deposited into your bank account after all deductions are removed from gross pay. It covers both mandatory deductions (federal income tax, state income tax, Social Security at 6.2%, Medicare at 1.45%) and voluntary ones like health insurance, 401k, and HSA contributions.',
+        },
+        {
+          q: 'According to the definition, what is the approximate annual net pay range for a $60,000 salary for a single filer in a median-tax US state?',
+          options: ['$52,000-$56,000 per year - reflecting only FICA deductions of 7.65% without accounting for federal or state income tax', '$42,000-$46,000 per year, or about $1,600-$1,770 bi-weekly - significantly lower than gross after all federal, state, and mandatory deductions', '$38,000-$40,000 per year - the typical range in a high-tax state where state income tax and high health insurance premiums apply simultaneously', '$48,000-$51,000 per year - derived by applying only the federal income tax withholding at the 22% marginal bracket'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states that for a $60,000 annual salary, a single filer in a median-tax US state typically takes home $42,000-$46,000 per year, or $1,600-$1,770 bi-weekly. This is significantly less than the gross pay figures many people use for budgeting.',
+        },
+        {
+          q: 'The pitfalls section warns against confusing net pay with disposable income. What is the key distinction?',
+          options: ['Net pay is after taxes and statutory deductions, but fixed expenses like rent, car payments, and loan repayments further reduce what is truly discretionary - making net pay and disposable income meaningfully different figures', 'Net pay is always lower than disposable income because the IRS requires workers to set aside a portion of take-home pay into an escrow account for future tax shortfalls if withholding was insufficient', 'Disposable income is a gross pay figure before voluntary deductions; net pay is the lower post-deduction amount that reflects actual bank deposits after benefit premiums and retirement contributions', 'Net pay overstates disposable income only for workers with student loan repayments, since income-driven plans are not reflected in payroll deductions but do consume a significant share of take-home pay'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The pitfalls section states net pay is after tax and statutory deductions, but fixed expenses like rent, car payments, and loan repayments reduce what is truly discretionary. Net pay is not disposable income - it is the starting point before personal obligations are accounted for.',
+        },
+        {
+          q: 'Why does a traditional 401k contribution reduce net pay by less than the contribution amount?',
+          options: ['401k contributions are matched by the employer dollar-for-dollar, so the employee\'s net pay reduction is offset by the employer match being deposited directly into the take-home account', 'The IRS taxes 401k contributions at a flat 10% withdrawal rate when deposited, so the net pay impact is the contribution minus the pre-paid tax, always less than the nominal deduction', 'Traditional 401k contributions reduce taxable income, which lowers federal and state income tax - so contributing $200 bi-weekly may only reduce net pay by $140-$160 depending on the marginal tax rate', '401k contributions are processed after the payroll tax calculation, meaning Social Security and Medicare are calculated on the full pre-401k gross, and the 401k is deducted purely from the post-FICA remainder'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ explains that traditional 401k contributions reduce taxable income, which lowers federal and state income tax. The tax saving partially offsets the contribution, so a $200 bi-weekly contribution may only reduce net pay by $140-$160 depending on the marginal tax rate.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'merit-increase': {
@@ -1643,6 +3083,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is a merit increase the same as a cost-of-living raise?', a: 'No. A merit increase rewards individual performance; a cost-of-living adjustment (COLA) simply offsets inflation for all employees. Many companies issue a COLA to everyone and a separate merit increase to strong performers. A raise of only 2-3% when inflation is 3% is effectively a COLA with no merit component.' },
       { q: 'How do I negotiate a higher merit increase?', a: 'Document specific, quantifiable contributions before your review: revenue generated, costs saved, projects delivered ahead of schedule. Frame your ask around market data - know the median salary for your role and location. A raise 1-2% above the stated merit pool is achievable with strong evidence.' },
     ],
+    quiz: {
+      topic: 'merit increases',
+      questions: [
+        {
+          q: 'What distinguishes a merit increase from other types of salary adjustments?',
+          options: ['A merit increase is a mandatory annual salary adjustment required by labor law to ensure wages keep pace with industry productivity growth', 'A merit increase is the salary growth that comes from job promotion to a higher pay grade, distinct from in-band increases that stay within the same level', 'A merit increase applies to all employees equally as a fixed percentage, making it different from a bonus which is paid as a lump sum rather than a permanent base increase', 'A merit increase is a salary raise tied directly to individual job performance, distinct from cost-of-living adjustments or across-the-board increases - employers budget a merit pool (typically 3-5% of payroll) and allocate larger raises to high performers'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states a merit increase rewards individual performance and is distinct from automatic COLA or across-the-board increases. Employers budget a merit pool (typically 3-5% of total payroll) and allocate larger raises to high performers, smaller ones to average performers, and nothing to below-average performers.',
+        },
+        {
+          q: 'What is the key difference between a merit increase and a cost-of-living adjustment (COLA)?',
+          options: ['A merit increase rewards individual performance; a COLA offsets inflation for all employees. A raise of only 2-3% when inflation is 3% is effectively a COLA with no merit component', 'A COLA rewards individual performance while a merit increase offsets inflation - they work in opposite directions, making combined raises hard to interpret', 'Merit increases and COLAs are calculated the same way but differ in approval: HR approves COLAs based on CPI data while managers approve merit increases based on performance reviews', 'A merit increase is paid as a permanent base salary change while a COLA is a temporary annual bonus that does not raise the base salary or affect future percentage calculations'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states merit increases reward individual performance while COLAs simply offset inflation for all employees. Many companies issue a COLA to everyone and a separate merit increase to strong performers. A raise of only 2-3% when inflation is 3% is effectively a COLA with no merit component.',
+        },
+        {
+          q: 'According to the examples table, what is the typical merit increase percentage range for a top performer?',
+          options: ['0-2% - most companies reserve the highest pools for the middle tier to reduce flight risk among the largest employee group', '4-6% - the "exceeds expectations" category, which is often mislabeled as top performer in annual review language', '6-10% - a meaningfully higher allocation reflecting the manager directing an outsized portion of the merit pool to their best contributor', '3-5% - matching the overall merit pool, since top performers\' allocation is typically constrained by the total pool available for distribution'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows top performers receive 6-10% merit increases. On a $60,000 salary that translates to $3,600-$6,000, and on a $100,000 salary to $6,000-$10,000 - significantly above the "exceeds expectations" tier of 4-6%.',
+        },
+        {
+          q: 'What does the pitfalls section warn about the compounding effect of merit increases?',
+          options: ['Receiving a 6% raise in year one often signals the manager used more than their allocated pool, making future merit increases less likely for that employee', 'Merit increases compound over time: a 5% raise versus a 3% raise on $60,000 is only $1,200 in year one, but over 10 years the higher trajectory produces a significantly larger base - negotiate each raise as if permanent, because future raises are percentages of the new higher figure', 'Merit increases are often overstated in offer letters, with actual payouts falling 1-2% below the stated range, making the gap between top and average performer much smaller than guidelines suggest', 'Companies apply merit increases quarterly rather than annually, so employees who focus only on annual reviews miss three additional review cycles per year'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that a 5% raise versus a 3% raise on a $60,000 salary is only $1,200 difference in year one, but the higher trajectory compounds significantly over 10 years. Each raise should be negotiated as if permanent because future percentage increases build on the new higher base.',
+        },
+        {
+          q: 'What approach does the FAQ recommend for negotiating a merit increase above the stated pool percentage?',
+          options: ['Reference your total compensation package (equity, benefits, and bonus) rather than base salary, since total comp comparisons reveal larger gaps more effectively', 'Request to see the company\'s salary grade bands for your role before the review, since knowing where your salary falls in the band is the most reliable predictor of merit increase size', 'Document specific quantifiable contributions before your review (revenue generated, costs saved, projects delivered early), frame your ask around market data for your role and location, and a raise 1-2% above the stated merit pool is achievable with strong evidence', 'Delay your request until immediately after a major project success when manager goodwill is highest, since timing matters more than documentation for merit increase outcomes'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ recommends documenting specific, quantifiable contributions before the review - revenue generated, costs saved, projects delivered ahead of schedule - and framing the ask around market data (median salary for your role and location). With strong evidence, a raise 1-2% above the stated merit pool is achievable.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'cost-of-living-adjustment': {
@@ -1665,6 +3140,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How is the Social Security COLA calculated?', a: 'The SSA compares the average CPI-W (Consumer Price Index for Urban Wage Earners) in Q3 of the current year against Q3 of the previous year. If the index rose, all Social Security benefits increase by the same percentage the following January. For 2026, the COLA was 2.8%.' },
       { q: 'Does every employer give a COLA?', a: 'No. COLA is mandatory for Social Security and some government pension plans, but private employers are not required to give inflation-linked raises. Many employers issue a single combined increase that blends COLA and merit, making it difficult to separate the two components.' },
     ],
+    quiz: {
+      topic: 'COLA',
+      questions: [
+        {
+          q: 'What is the primary purpose of a Cost-of-Living Adjustment (COLA)?',
+          options: ['To reward employees for above-average performance and productivity improvements during the year', 'To align salaries with market rates paid by competitors in the same labour market and region', 'To gradually increase wages toward a statutory living wage minimum over a multi-year period', 'To preserve purchasing power by automatically offsetting the effect of inflation on wages, salaries, or benefits'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states that a COLA is an automatic increase designed to offset inflation - keeping purchasing power stable as the general price level rises. It is not a performance or market adjustment.',
+        },
+        {
+          q: 'According to the examples table, what was the real outcome of a 3.5% raise in 2022, when US CPI rose by 8.0%?',
+          options: ['A +3.5% real gain, because the SSA COLA of 8.7% covered the remaining inflation gap for all workers', 'A -4.5% real loss, because the 3.5% nominal raise was far below the 8.0% inflation rate, reducing actual purchasing power', 'A +0.1% near break-even, because government adjustments offset most of the inflation impact on take-home pay', 'A -8.0% real loss, with the entire raise wiped out and additional purchasing power eroded on top'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows that in 2022 (CPI +8.0%), a 3.5% raise produced a -4.5% real loss. A nominal raise below the inflation rate is a real-terms pay cut even though the dollar amount is higher.',
+        },
+        {
+          q: 'What does the pitfalls section warn about when employers bundle COLA and merit increases into a single percentage?',
+          options: ['Employees cannot distinguish real performance recognition from an inflation offset, so they should ask their employer to separate the two components to evaluate each independently', 'Bundling is required by law for companies with more than 50 employees and cannot legally be separated on the same payroll period', 'Separating COLA and merit creates two taxable events that increase the employee\'s effective withholding rate for that pay period', 'Combined COLA and merit raises always compound against each other, resulting in over-payment relative to what either component would produce alone'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The pitfalls section warns that a single bundled percentage makes it hard to know whether you received real performance recognition or just an inflation offset. The advice is to ask your employer to separate the COLA component from the merit component.',
+        },
+        {
+          q: 'According to the FAQ, how does the SSA calculate the annual Social Security COLA?',
+          options: ['By averaging the full-year CPI-U rate and applying it to all Social Security benefits starting in January', 'By using the Bureau of Labor Statistics inflation figure published in the prior December', 'By comparing the average CPI-W in Q3 of the current year against Q3 of the prior year; if the index rose, benefits increase by that percentage the following January', 'By tracking wage growth rather than price inflation, so the adjustment reflects income growth in the broader economy'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that the SSA compares the average CPI-W in Q3 of the current year against Q3 of the previous year. If the index rose, all Social Security benefits increase by that percentage the following January - the 2026 COLA of 2.8% was calculated this way.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'overtime-pay': {
@@ -1733,6 +3237,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Do employers pay FICA in addition to your salary?', a: 'Yes. Employers pay a matching 7.65% on top of every employee\'s wages - separate from and in addition to the gross salary. A $100,000 salaried employee costs the employer at least $107,650 in FICA alone, before health insurance, retirement contributions, or other benefits.' },
       { q: 'Can I avoid paying FICA?', a: 'For most W-2 employees, no. FICA is mandatory and withheld automatically. However, some limited exemptions exist: student workers employed by their own university, members of certain religious groups who have formally opted out, and non-resident aliens on specific visa types may be partially or fully exempt. Self-employed individuals cannot avoid the tax but can deduct half of it.' },
     ],
+    quiz: {
+      topic: 'FICA taxes',
+      questions: [
+        {
+          q: 'What is the total FICA employee rate, and how is it divided between Social Security and Medicare?',
+          options: ['Total FICA employee rate is 12.4%, split as 10.2% Social Security and 2.2% Medicare', 'Total FICA employee rate is 7.65%, split as 6.2% Social Security and 1.45% Medicare, with Social Security capped at the annual wage base', 'Total FICA employee rate is 15.3%, split evenly between Social Security and Medicare, with no cap on either component', 'Total FICA employee rate is 5.65%, covering only Medicare; Social Security is funded separately through employer payroll accounts'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states the total employee FICA rate is 7.65%: 6.2% for Social Security and 1.45% for Medicare. Social Security is capped at the annual wage base ($176,100 in 2025); Medicare has no cap.',
+        },
+        {
+          q: 'From the worked examples table, what is the total employee FICA withholding on $100,000 in gross wages?',
+          options: ['$6,200 (Social Security only, before Medicare is added)', '$6,925 (Social Security plus a partial Medicare contribution)', '$13,818 (the total FICA shown for the $200,000 wage row)', '$7,650 (6.2% Social Security plus 1.45% Medicare = 7.65% x $100,000)'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows $7,650 total FICA for $100,000 in gross wages ($6,200 Social Security + $1,450 Medicare). The employer matches this same $7,650, making the combined FICA contribution $15,300 on that salary.',
+        },
+        {
+          q: 'According to the definition, what self-employment tax rate do self-employed individuals pay, and what tax relief is available?',
+          options: ['Self-employed individuals pay 15.3% self-employment tax on net self-employment income (both employee and employer FICA halves), but can deduct half (7.65%) from gross income when calculating federal income tax', 'Self-employed individuals pay only the employee half (7.65%) because they have no employer to make the matching contribution on their behalf', 'Self-employed individuals are exempt from FICA; they fund Social Security and Medicare solely through estimated income tax quarterly payments', 'Self-employed individuals pay 12.4% self-employment tax and can deduct the full amount from their adjusted gross income'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that self-employed individuals pay the full 15.3% self-employment tax (both halves). To offset the extra burden, the IRS allows them to deduct half (7.65%) from gross income when calculating federal income tax.',
+        },
+        {
+          q: 'What does the pitfalls section warn about the Additional Medicare Tax of 0.9%?',
+          options: ['The Additional Medicare Tax of 0.9% is split equally between employee and employer, just like the standard 1.45% Medicare rate', 'The Additional Medicare Tax of 0.9% applies to all wages from the first dollar, not just wages above a threshold', 'The Additional Medicare Tax of 0.9% on wages above $200,000 (single filers) is paid only by the employee - the employer does not match it, and many paycheck calculators omit this line item', 'The Additional Medicare Tax threshold is fixed at $200,000 for all filing statuses, including married filing jointly filers'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section explicitly warns that the 0.9% Additional Medicare Tax on wages above $200,000 (single) is paid only by the employee - the employer does not match it. The threshold for married filing jointly is $250,000, not $200,000.',
+        },
+        {
+          q: 'According to the FAQ, which workers may qualify for a FICA exemption?',
+          options: ['All full-time employees working for government agencies or non-profit organisations are automatically exempt from FICA withholding', 'Some limited exemptions apply, including student workers employed by their own university, members of certain religious groups who have formally opted out, and non-resident aliens on specific visa types', 'Self-employed individuals and independent contractors are fully exempt from FICA because they do not receive W-2 wages', 'All employees earning below the Social Security wage base are exempt from Medicare tax but still pay Social Security'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states that while most W-2 employees cannot avoid FICA, some limited exemptions exist: student workers at their own university, members of certain religious groups who have formally opted out, and non-resident aliens on specific visa types. Self-employed individuals still owe FICA as self-employment tax.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'mfj': {
@@ -1756,6 +3295,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Can I file jointly if my spouse has no income?', a: 'Yes. You can file MFJ even if one spouse had zero income, did not work, or did not file individually. The non-earning spouse still signs the joint return. This is often the most tax-efficient option for couples with a stay-at-home partner.' },
       { q: 'What is the difference between MFJ and MFS?', a: 'Married Filing Jointly combines both spouses\' income on one return, uses wider brackets, and doubles the standard deduction. Married Filing Separately (MFS) treats each spouse as nearly independent - each uses single-style brackets and a lower standard deduction. MFS is rarely advantageous for federal taxes but may reduce individual AGI for income-driven student loan repayment calculations or when one spouse has large deductions subject to AGI-based floors.' },
     ],
+    quiz: {
+      topic: 'Married Filing Jointly',
+      questions: [
+        {
+          q: 'What are the two main tax advantages of Married Filing Jointly (MFJ) over single filing in 2025?',
+          options: ['MFJ allows both spouses to claim their individual standard deductions separately, doubling the total amount shielded from tax', 'MFJ grants a $5,000 spousal credit on top of the standard deduction and reduces the effective rate by 3 percentage points for income over $50,000', 'MFJ provides a $30,000 standard deduction (versus $15,000 for single) and uses wider tax brackets - the 22% bracket starts at $94,300 MFJ versus $47,150 for single filers in 2025', 'MFJ merges both spouses\' Social Security credits into one account, permanently reducing their combined FICA obligations and payroll tax burden'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states the 2025 standard deduction is $30,000 for MFJ versus $15,000 for single, and the 22% bracket for MFJ starts at $94,300 compared to $47,150 for single filers - two structural advantages that reduce the combined tax bill for most couples.',
+        },
+        {
+          q: 'When does MFJ trigger a "marriage penalty" and in which brackets is it most pronounced?',
+          options: ['A marriage penalty arises when both spouses earn similar high incomes, pushing combined income into higher brackets than they would face as two separate single filers - most pronounced in the 32-37% brackets where MFJ thresholds are less than double the single thresholds', 'A marriage penalty always occurs in the first year of marriage because the IRS requires a one-time adjustment for the change from single to MFJ filing status', 'A marriage penalty applies only to couples with combined income above $500,000, triggering an automatic 3% surcharge on all joint returns above that threshold', 'The marriage penalty affects MFJ filers who claim the standard deduction instead of itemising, because the standard deduction for MFJ is less than twice the single amount'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition explains the marriage penalty arises when both spouses earn similar high incomes - combined income pushes them into higher brackets than two single filers would face. It is most pronounced in the 32%, 35%, and 37% brackets where MFJ thresholds are less than double the single thresholds.',
+        },
+        {
+          q: 'According to the examples table, what is the estimated federal tax for a couple with $180,000 combined income under MFJ versus MFS?',
+          options: ['MFJ: ~$30,000 total; MFS: ~$25,230 total - showing MFS saves about $4,770 for this income level', 'MFJ: ~$24,183 total; MFS: ~$21,230 total - showing MFS saves about $2,953 for this income level', 'MFJ: ~$28,500 total; MFS: ~$25,230 total - showing MFS saves about $3,270 in the higher income brackets', 'MFJ: ~$24,183 total; MFS: ~$25,230 total - showing MFJ saves about $1,047 compared to filing separately'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows MFJ produces ~$24,183 in federal tax versus ~$25,230 under MFS for $180,000 combined income - a saving of about $1,047. The MFS result equals two separate single-filer returns, each paying ~$12,615 on $75,000 of taxable income.',
+        },
+        {
+          q: 'What liability risk does the pitfalls section warn about for MFJ filers?',
+          options: ['MFJ returns are audited 2.5x more often than separate returns because the combined income triggers higher IRS scrutiny thresholds', 'Both spouses are jointly and severally liable for all taxes, interest, and penalties on an MFJ return - even if only one spouse earned the income or made an error. Concerns about a spouse\'s tax compliance are a valid reason to file separately', 'MFJ filers cannot claim the standard deduction if either spouse had self-employment income; both must itemize, which is often disadvantageous for couples with limited deductible expenses', 'The MFJ standard deduction is recaptured if the couple later divorces, triggering a retroactive tax adjustment for prior years the status was claimed'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that both spouses are jointly and severally liable for all taxes, interest, and penalties on an MFJ return - even if only one spouse earned the income or made an error. It specifically recommends filing separately to protect yourself if you have concerns about a spouse\'s tax compliance.',
+        },
+        {
+          q: 'According to the FAQs, when is Married Filing Separately (MFS) actually advantageous over MFJ?',
+          options: ['MFS is always better when both spouses have similar incomes, because splitting into two separate returns keeps each income in the lowest possible bracket regardless of total household earnings', 'MFS is better whenever one spouse has any self-employment income, because it prevents the higher earner\'s income from inflating the combined SE tax calculation', 'MFS may be advantageous when one spouse has an income-driven student loan repayment plan (keeping individual AGI lower reduces monthly payments) or when one spouse has large unreimbursed medical expenses relative to their own income', 'MFS is better for all married couples whose combined income exceeds $200,000, because the AMT threshold for MFJ is lower than for two single filers above that level'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states MFS is rarely advantageous for federal taxes but may help when one spouse has an income-driven student loan repayment plan (lower individual AGI reduces monthly payments) or large unreimbursed medical expenses (subject to a 7.5% AGI floor that is easier to clear with a lower individual AGI).',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'mfs': {
@@ -1781,6 +3355,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Can I switch from MFS to MFJ after filing?', a: 'Yes. You can amend a separately filed return to a joint return by filing an amended return before the three-year statute of limitations expires. However, you cannot amend a joint return to two separate returns after the original filing deadline has passed.' },
       { q: 'Does MFS affect Social Security benefits?', a: 'Indirectly. Social Security benefits become taxable once your combined income (AGI plus non-taxable interest plus half of Social Security) exceeds $25,000 for single or MFS filers - which is lower than the $32,000 MFJ threshold. Filing separately can result in more of your Social Security being taxable if your combined income would have been below the $32,000 MFJ threshold.' },
     ],
+    quiz: {
+      topic: 'Married Filing Separately',
+      questions: [
+        {
+          q: 'How do MFS bracket thresholds compare to MFJ, and what does this mean for most couples?',
+          options: ['MFS uses half the MFJ bracket thresholds, making it the most favorable status for single-income households where one spouse earns significantly more', 'MFS uses entirely different brackets specially designed for couples who prefer separate returns, typically producing the same combined tax as MFJ', 'MFS uses identical bracket thresholds to MFJ but splits them equally, so each spouse pays tax as if earning half of the combined household income', 'MFS uses the same bracket thresholds as single filers and the same $15,000 standard deduction, so choosing MFS over MFJ almost always raises the combined tax bill'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states MFS uses the same bracket thresholds as single filers and the same $15,000 standard deduction. Because MFJ brackets are designed for two incomes and are roughly double the single thresholds, MFS almost always raises the combined tax bill.',
+        },
+        {
+          q: 'From the examples table, what is the tax comparison for two equal earners at $80,000 each under MFS vs MFJ?',
+          options: ['Equal earners ($80K each) pay ~$20,926 total under MFS vs ~$20,405 under MFJ, saving ~$521 with MFJ plus regaining access to credits like the Earned Income Credit', 'Equal earners ($80K each) pay ~$20,405 under MFS vs ~$20,926 under MFJ, saving ~$521 with MFS while keeping full independence on each return', 'Equal earners ($80K each) pay identical totals under MFS and MFJ; the only meaningful difference is credit eligibility, not the tax liability itself', 'Equal earners ($80K each) pay ~$15,200 total under MFS vs ~$20,926 under MFJ, a difference of over $5,700 driven by the bracket structure'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows equal earners at $80K each pay ~$10,463 each under MFS, totaling ~$20,926, versus ~$20,405 under MFJ. MFJ saves ~$521 and also restores access to credits like the Earned Income Credit.',
+        },
+        {
+          q: 'In the student loan scenario from the examples table, why might MFS produce a better overall outcome despite higher taxes?',
+          options: ['MFS prevents the non-borrowing spouse\'s wages from being garnished if the borrower defaults, protecting household income regardless of the repayment plan type', 'On a SAVE plan, MFS bases the monthly payment on $50K individual income (~$280/mo) rather than $100K combined (~$560/mo), potentially cutting the payment by $280/mo in a way that outweighs the extra tax cost', 'MFS allows the borrower to deduct 100% of student loan interest with no income cap, whereas MFJ phases out the deduction above $85,000 combined income', 'MFS automatically qualifies the borrowing spouse for Public Service Loan Forgiveness regardless of employer, which is unavailable under MFJ'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows a SAVE plan borrower earning $50K pays ~$280/mo under MFS (based on $50K) vs ~$560/mo under MFJ (based on $100K combined). The definition notes this loan payment reduction sometimes exceeds the extra tax cost.',
+        },
+        {
+          q: 'What is the Roth IRA phase-out range for MFS filers, and why does this matter?',
+          options: ['The Roth IRA phase-out for MFS is identical to single filers ($150,000-$165,000 MAGI), so most MFS filers retain full Roth contribution ability', 'MFS filers can contribute to a Roth IRA up to a $10,000 ceiling, after which contributions are capped at 50% of the normal limit until fully phased out at $25,000 MAGI', 'The Roth IRA phase-out for MFS starts at $0 MAGI, meaning nearly all MFS filers earning any income are effectively barred from contributing to a Roth IRA', 'MFS has no effect on Roth IRA eligibility; the $7,000 annual limit and standard phase-out thresholds apply regardless of filing status for married taxpayers'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states the Roth IRA phase-out for MFS starts at $0 MAGI and phases out by $10,000 - meaning nearly all MFS filers earning any income are barred from contributing, compared to the $150,000-$165,000 range for single filers.',
+        },
+        {
+          q: 'How does MFS affect the taxation of Social Security benefits compared to MFJ?',
+          options: ['MFS has no effect on Social Security taxation since benefits are assessed at the household level regardless of how each spouse files their return', 'MFS increases the Social Security taxation threshold from $25,000 to $32,000 per spouse, allowing each to exclude more benefits than single filers', 'MFS automatically exempts 50% of Social Security benefits from federal tax for retirees below a combined household income of $44,000', 'Under MFS, Social Security becomes taxable once income exceeds $25,000 (the same as single), versus $32,000 under MFJ, so couples below the $32,000 MFJ threshold may end up with more benefits taxed by filing separately'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states that Social Security benefits become taxable above $25,000 for MFS filers - the same threshold as single, and lower than the $32,000 MFJ threshold. Couples whose combined income falls below $32,000 can end up with more Social Security taxed by choosing MFS.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'hoh': {
@@ -1806,6 +3415,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between HOH and single filing status?', a: 'HOH provides a $22,500 standard deduction versus $15,000 for single, and uses wider tax brackets. For a filer with $60,000 of taxable income before the deduction, HOH saves roughly $2,000-$3,000 in federal income tax compared to single filing. The trade-off is that HOH requires meeting strict qualifying-person and household cost tests.' },
       { q: 'Can two parents in the same household both claim Head of Household?', a: 'Only if they have different qualifying children. Two unmarried parents living together can each file HOH if each claims a different child as their qualifying person and each independently paid more than half the cost of maintaining that child\'s home. They cannot both claim HOH using the same child.' },
     ],
+    quiz: {
+      topic: 'Head of Household',
+      questions: [
+        {
+          q: 'What are the three core requirements to file as Head of Household (HOH)?',
+          options: ['You must be divorced with a final court order, have a dependent child, and have paid all housing costs for the full calendar year', 'You must be widowed within the last two years, have at least one dependent listing you as custodial parent, and file before the April deadline', 'You must be unmarried (or considered unmarried), have paid more than half the cost of maintaining a home, and have a qualifying person who lived with you for more than half the year', 'You must have earned income below $100,000, lived apart from any spouse for the full calendar year, and claimed at least two dependents on your return'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition lists three requirements: be unmarried (or considered unmarried) on December 31, have paid more than half the home maintenance cost, and have a qualifying child or dependent who lived with you for more than half the year.',
+        },
+        {
+          q: 'How does the 2025 HOH standard deduction compare to single filing status?',
+          options: ['HOH offers a $22,500 standard deduction versus $15,000 for single, giving $7,500 more income shielded from tax before any brackets apply', 'HOH offers a $20,000 standard deduction versus $15,000 for single, a $5,000 difference applied before bracket calculations', 'HOH and single share the same $15,000 standard deduction, but HOH gets a separate $7,500 dependent credit applied after bracket calculations', 'HOH offers a $25,000 standard deduction versus $20,000 for single, matching the Married Filing Jointly deduction for two-income households'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states the 2025 standard deduction is $22,500 for HOH versus $15,000 for single - a $7,500 difference that alone saves $825 to $1,650 in tax depending on your bracket.',
+        },
+        {
+          q: 'According to the 2025 bracket table, at what income level does the HOH 10% bracket top out?',
+          options: ['$11,925 - the same upper threshold as the single filing 10% bracket', '$15,000 - aligned with the single standard deduction, creating a natural tax threshold', '$22,500 - the full HOH standard deduction amount, aligning bracket boundaries with the deduction', '$17,000 - giving $5,075 more income taxed at 10% instead of the higher 12% rate compared to single filing'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows the HOH 10% bracket runs from $0 to $17,000, versus $0 to $11,925 for single. This means an extra $5,075 is taxed at 10% rather than 12%, one of the concrete advantages of HOH status.',
+        },
+        {
+          q: 'In a divorce, which parent can claim Head of Household status on their federal return?',
+          options: ['Both parents can each claim HOH as long as they live in separate households and each contributes more than 25% of the child\'s annual expenses', 'Only the custodial parent - the one with whom the child lives for more nights during the year. The noncustodial parent may claim the child as a dependent via Form 8332, but this does not transfer HOH status', 'The parent who earns the higher income is automatically assigned HOH status by the IRS based on prior-year W-2 records, regardless of custody arrangements', 'Either parent can claim HOH as long as both parties sign a written agreement and submit it with their federal return'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section explains that only the custodial parent can claim HOH. The noncustodial parent may receive dependency via Form 8332, but the pitfalls section is explicit that this does not transfer HOH status.',
+        },
+        {
+          q: 'Under what condition can two unmarried parents living in the same household both file as Head of Household?',
+          options: ['Never - the IRS assigns HOH to only one adult per physical address, automatically going to the higher earner', 'Yes, always - as long as the household has at least two children, regardless of which parent primarily cares for each child', 'Yes, but only if they have different qualifying children and each independently paid more than half the cost of maintaining that child\'s home', 'No - two adults sharing the same mailing address are automatically treated as Married Filing Separately, disqualifying both from HOH'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that two unmarried parents in the same household can each file HOH only if each claims a different child as their qualifying person and each independently paid more than half the cost of maintaining that child\'s home. They cannot both use the same child.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'regular-rate-of-pay': {
@@ -1848,6 +3492,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between the algemene heffingskorting and the arbeidskorting?', a: 'The algemene heffingskorting (AHK) is available to all Dutch taxpayers below state pension age. The arbeidskorting is only available to people with employment income - it rewards work. Both phase out at higher incomes. A typical €60,000 employee receives around €1,178 AHK and €4,747 AK in 2026.' },
       { q: 'Are the heffingskortingen applied by the employer or the tax authority?', a: 'The employer deducts payroll tax (loonheffing) monthly, which incorporates an estimated AHK. The full picture - including the arbeidskorting - is reconciled in the annual income tax return (aangifte inkomstenbelasting) with the Belastingdienst (Dutch tax authority).' },
     ],
+    quiz: {
+      topic: 'heffingskorting',
+      questions: [
+        {
+          q: 'Why is a heffingskorting more valuable than an income tax deduction of the same amount?',
+          options: ['A deduction reduces taxable income proportionally, while a heffingskorting only applies to the lowest income bracket and is capped at €1,000 per year', 'A heffingskorting reduces the tax owed directly, so a €1,000 credit saves exactly €1,000 in tax regardless of your bracket; a deduction only saves €355-€495 because it reduces taxable income, not the tax itself', 'A heffingskorting is indexed to inflation annually, while deductions remain fixed, making the credit more valuable in high-inflation years', 'A heffingskorting can be carried forward to future tax years if unused, while a deduction expires at year-end and cannot offset future income'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states a heffingskorting reduces tax owed - not taxable income. A €1,000 credit saves exactly €1,000 in tax regardless of bracket, whereas a €1,000 deduction saves only €355-€495 depending on which bracket applies.',
+        },
+        {
+          q: 'What is the key difference between the algemene heffingskorting (AHK) and the arbeidskorting (AK)?',
+          options: ['The AHK is exclusively for high earners above €80,000 where it provides targeted relief, while the arbeidskorting applies to all taxpayers at a flat rate', 'Both credits apply to all Dutch taxpayers equally, but the AHK phases out before the arbeidskorting, creating a smooth income progression with no cliff', 'The AHK is applied by the employer through monthly payroll tax; the arbeidskorting is only available via the annual tax return and cannot appear on monthly payslips', 'The AHK is available to all Dutch taxpayers below state pension age; the arbeidskorting is only available to people with employment income, rewarding work over other income types'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states the AHK is available to all Dutch taxpayers below state pension age, while the arbeidskorting is only available to people with employment income. It is designed to make work financially more rewarding compared to benefits.',
+        },
+        {
+          q: 'According to the examples table, what is the AHK credit for someone earning €80,000 gross?',
+          options: ['€0 - the AHK has fully phased out by €80,000 gross income', '€1,178 - the same AHK credit applied at €60,000, as it remains flat above that level', '€1,628 - the maximum AHK credit, which is locked in once income exceeds €40,000', '€2,109 - the same as the arbeidskorting at €80,000, since both credits converge at this income level'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows that at €80,000 gross, the AHK credit is €0 - it has fully phased out. The arbeidskorting at that income is €2,109, which is the only credit still reducing the net tax bill.',
+        },
+        {
+          q: 'What does the pitfalls section warn about many online Dutch salary calculators?',
+          options: ['They apply both credits at their maximum values regardless of income, overstating take-home pay for higher earners in the phase-out range', 'They confuse Box 1 and Box 3 income, misclassifying investment income as employment income and incorrectly applying the arbeidskorting', 'Many only apply one of the two credits (AHK or AK) and miss the other, leading to inaccurate take-home estimates', 'They assume the credits are refundable and show a cash payout that the Belastingdienst will not actually pay'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section warns that many online salary calculators only apply the AHK and miss the AK, or vice versa, leading to inaccurate take-home estimates. Both credits must be applied together for an accurate net salary figure.',
+        },
+        {
+          q: 'In practice, who applies the heffingskortingen and when are they finalized?',
+          options: ['The employee claims both credits directly from the Belastingdienst each month by submitting a digital form, with credits deposited to their bank account', 'Both credits are applied entirely through the annual income tax return; employers do not incorporate any credits into monthly payroll calculations', 'The Belastingdienst applies both credits automatically when they receive the employer\'s annual payroll filing, requiring no action from the employee', 'The employer incorporates an estimated AHK into monthly payroll tax (loonheffing), and the full picture - including the arbeidskorting - is reconciled in the annual tax return with the Belastingdienst'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ explains that the employer deducts payroll tax (loonheffing) monthly, incorporating an estimated AHK. The full picture - including the arbeidskorting - is reconciled in the annual income tax return (aangifte inkomstenbelasting) with the Belastingdienst.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'arbeidskorting': {
@@ -1870,6 +3549,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'At what income is the arbeidskorting at its maximum?', a: 'The arbeidskorting reaches its maximum of €5,685 at an employment income of €45,592 in 2026. Below that income it builds progressively. Above €45,592 the credit phases out at 6.51 cents per euro until it is fully gone at €132,920.' },
       { q: 'Is the arbeidskorting the same as the algemene heffingskorting?', a: 'No. The algemene heffingskorting (AHK) is available to all Dutch taxpayers. The arbeidskorting is only for people with employment income. Both are applied to reduce Box 1 income tax. Together they can cut the effective tax rate substantially, especially for incomes in the €30,000-€60,000 range.' },
     ],
+    quiz: {
+      topic: 'arbeidskorting',
+      questions: [
+        {
+          q: 'What does the arbeidskorting do?',
+          options: ['It reimburses employers for social insurance costs', 'It reduces income tax owed for people with employment income, making work more rewarding than benefits', 'It reduces taxable income before Box 1 rates are applied', 'It exempts the first €5,685 of employment income from all Dutch taxes'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The arbeidskorting is a Dutch employment tax credit that reduces income tax owed directly - not taxable income. It is designed to make work financially more rewarding than benefits by lowering the effective tax rate on earned income.',
+        },
+        {
+          q: 'According to the examples table, at what gross income does the arbeidskorting reach its maximum, and what is that maximum?',
+          options: ['€20,000 - maximum €3,744', '€80,000 - maximum €5,685', '€132,920 - credit fully phased out', '€45,592 - maximum €5,685'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The credit reaches its maximum of €5,685 at a gross income of €45,592. Above that level it phases out at 6.51% per euro until it disappears entirely at €132,920.',
+        },
+        {
+          q: 'Which groups are NOT eligible for the arbeidskorting?',
+          options: ['Self-employed individuals using the zelfstandigenaftrek, benefit recipients, and pensioners', 'Employees with a gross income above €80,000', 'Part-time workers earning less than €20,000 per year', 'Employees subject to the second or third Box 1 tax bracket'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The arbeidskorting is not available to self-employed individuals using the zelfstandigenaftrek, benefit recipients, or pensioners - those groups have different credits. It is specifically for people with wages, salary, or other employment income.',
+        },
+        {
+          q: 'What does the pitfalls section warn about when estimating Dutch net salary?',
+          options: ['Applying the credit to gross income rather than taxable income', 'Confusing the arbeidskorting with the zelfstandigenaftrek', 'Omitting the arbeidskorting entirely, which significantly overstates the tax burden', 'Adding the credit to gross salary instead of deducting it from income tax'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The arbeidskorting is often left out of quick net salary estimates. Missing it significantly overstates the tax burden, especially at mid-range incomes where the credit is near its maximum of €5,685.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'box-1-income-tax': {
@@ -1915,6 +3623,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is a good IRR?', a: 'It depends on the asset class and risk. Private equity funds typically target 20-30% gross IRR. Venture capital funds may target 30%+ to compensate for portfolio company failures. Corporate investment projects are often evaluated against the company\'s WACC, typically 8-15%. Real estate deals commonly target 12-20% IRR depending on risk profile. The only valid benchmark is the opportunity cost: what else can the capital earn at the same risk level?' },
       { q: 'What is a hurdle rate?', a: 'A hurdle rate is the minimum acceptable IRR for an investment. In corporate finance it is typically the company\'s WACC plus a risk premium. In private equity it is a contractual threshold (commonly 8%) above which the fund manager earns carried interest. Any project with IRR below the hurdle rate is rejected because it earns less than the cost of the capital required to fund it.' },
     ],
+    quiz: {
+      topic: 'IRR',
+      questions: [
+        {
+          q: 'What does the Internal Rate of Return (IRR) represent?',
+          options: ['The expected future value of an investment, calculated by summing all projected cash inflows without discounting them back to present value', 'The discount rate at which the net present value of all cash flows from an investment equals exactly zero - the implied annual return embedded in a project\'s cash flow schedule', 'The ratio of total profit to initial investment, expressed as a percentage of original capital committed regardless of time period', 'The difference between a project\'s cost of capital and its weighted average return on assets, expressed in percentage points as a spread metric'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states IRR is the discount rate at which the NPV of all cash flows equals exactly zero. It is the implied annual return embedded in the project\'s cash flow schedule - if you invest $100,000 today and receive $40,000/year for 3 years, IRR is the rate that makes those future receipts worth exactly $100,000 today.',
+        },
+        {
+          q: 'When do IRR and NPV agree, and when can they conflict?',
+          options: ['IRR and NPV always agree on both accept/reject decisions and project ranking, since they use the same cash flows and only differ in presentation format', 'IRR is more reliable than NPV for all comparisons because it produces a single percentage that can be compared across different investment sizes and time horizons', 'IRR and NPV disagree on accept/reject decisions but agree on project ranking, since the discount rate affects the dollar amount but not the implied return percentage', 'For a standard project both methods agree on accept/reject (IRR above hurdle = positive NPV), but they can disagree when ranking projects of different scale or timing, in which case NPV is more reliable'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states that for a standard project (cash out then cash in), if IRR exceeds the hurdle rate, NPV at that rate is positive - both methods agree. They can conflict when ranking competing projects of different scale or timing, and in those cases the FAQ says NPV is more reliable.',
+        },
+        {
+          q: 'According to the examples table, which project has the highest IRR?',
+          options: ['Project B (back-loaded) at 14.5% - the three-year wait for the $150,000 payoff implies a higher annual return rate than the steadier projects', 'Project C (large) at 12.8% - its larger investment generates more absolute cash flow than the smaller projects', 'Project A (steady) at 9.7% - the consistent annual cash flows reduce risk and provide the highest risk-adjusted return', 'Project D (loss) because the negative cash flows create a high negative IRR that implies superior return when adjusted for risk'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows Project B (back-loaded) has an IRR of 14.5%, the highest of the four projects. Despite receiving no cash until Year 3, the single $150,000 payment on a $100,000 investment implies the highest annual compounding rate.',
+        },
+        {
+          q: 'What are the two main failure modes of IRR identified in the pitfalls section?',
+          options: ['IRR fails when projects have different starting dates and when the hurdle rate changes over time; both are fixed by adjusting each cash flow to a common base date', 'IRR can produce artificially high results when costs are understated, and artificially low results when revenues are delayed beyond Year 3 of the cash flow schedule', 'Multiple IRRs (when cash flows alternate between positive and negative, creating an ambiguous polynomial) and the reinvestment rate assumption (interim cash flows are implicitly assumed to reinvest at the IRR rate itself); in both cases MIRR or NPV is more reliable', 'IRR overstates returns on large projects due to a scale bias, and understates returns on small projects because the percentage calculation amplifies small absolute gains disproportionately'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section identifies two failure modes: first, multiple IRRs when a project has alternating positive and negative cash flows (as with a mine requiring closure remediation); second, the reinvestment rate assumption - IRR implicitly assumes interim cash flows are reinvested at the IRR rate itself, which is unrealistic for high-IRR projects.',
+        },
+        {
+          q: 'According to the FAQs, what is the only valid benchmark for determining whether an IRR is "good"?',
+          options: ['An IRR above 20%, since below that threshold the inflation-adjusted return approaches zero and the investment destroys real value for institutional investors', 'The opportunity cost of capital at the same risk level - private equity may target 20-30%, venture capital 30%+, corporate projects the company\'s WACC (8-15%), and real estate 12-20%, so the threshold varies by asset class and risk profile', 'At least double the risk-free rate (10-year Treasury yield), a standard institutional benchmark to compare project returns on a risk-adjusted basis', 'The project\'s accounting return on equity (ROE), since ROE reflects the actual historical book return and represents the minimum credible new investment threshold'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states the only valid benchmark is the opportunity cost: what else can the capital earn at the same risk level? It then gives typical targets by asset class - PE 20-30%, VC 30%+, corporate WACC 8-15%, real estate 12-20% - showing there is no universal "good" IRR independent of context.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'avoirdupois-system': {
@@ -2084,6 +3827,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What discount rate should I use for NPV?', a: 'For corporate projects, the standard choice is the company\'s Weighted Average Cost of Capital (WACC) - the blended required return across debt and equity. For personal investments, use your required return or opportunity cost (e.g., the return you could earn in an index fund at similar risk). For public sector projects, governments often use a social discount rate of 3-8%. The discount rate is the single most debated input in NPV analysis.' },
       { q: 'Can NPV be negative and the investment still be worthwhile?', a: 'At a given discount rate, a negative NPV means the investment earns less than required and should be rejected. However, changing the discount rate can change the sign of NPV. If your actual cost of capital is lower than your initial assumption, the project may actually be positive-NPV. This is why IRR is useful alongside NPV: IRR tells you exactly what return the project earns, which you then compare to your actual cost of capital.' },
     ],
+    quiz: {
+      topic: 'NPV',
+      questions: [
+        {
+          q: 'What does Net Present Value (NPV) measure, and what does a positive NPV indicate?',
+          options: ['NPV measures the total undiscounted sum of all cash flows from an investment, representing the nominal profit while ignoring the time value of money', 'NPV measures the internal rate of return of an investment expressed as an absolute dollar figure rather than a percentage, adjusted for the investor\'s cost of capital', 'NPV is the sum of all cash flows - inflows and outflows - each discounted to their present value at a chosen rate; a positive NPV means the investment generates more present-dollar value than it costs, creating wealth', 'NPV measures how quickly an investment recovers its initial outlay in discounted terms, expressed as the number of periods for cumulative discounted inflows to exceed the initial investment'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states NPV is the sum of all cash flows discounted to present value using a chosen rate. A positive NPV means the investment generates more value in present-dollar terms than it costs, creating wealth; a negative NPV means it destroys value at the given discount rate.',
+        },
+        {
+          q: 'From the examples table, what is the NPV of the factory expansion project (-$500,000 initial outflow, $150K/$200K/$250K in years 1-3, at a 10% discount rate)?',
+          options: ['+$36,157 - a positive NPV meaning the project creates value above the 10% required return', '+$100,000 - the simple undiscounted net sum of cash flows ($600K total inflows minus $500K outlay)', '-$30,812 - the NPV of the rejected project, which uses a 15% discount rate rather than 10%', '+$6,427 - the NPV of the equipment upgrade project with a smaller $80,000 initial outlay at 8%'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows the factory expansion has an NPV of +$36,157 at a 10% discount rate. This positive value means discounting the future inflows at 10% still produces more than the $500,000 outlay, confirming the project creates value at that required return.',
+        },
+        {
+          q: 'What is the mathematical relationship between NPV and IRR, according to the definition?',
+          options: ['IRR is always 2-3 percentage points higher than the discount rate used to calculate a positive NPV, reflecting the return premium above the required rate that justifies investment', 'IRR and NPV use the same formula but differ in presentation: IRR shows NPV as a percentage of invested capital while NPV shows it in absolute dollars', 'IRR and NPV have no direct mathematical relationship; they are independent metrics that agree on accept/reject decisions for different mathematical reasons', 'IRR is the specific discount rate at which NPV equals exactly zero; for a standard project, NPV is positive when the actual discount rate is below the IRR, and negative when it exceeds the IRR'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states NPV and IRR are mathematically linked: IRR is the specific discount rate at which NPV equals exactly zero. For a standard project, NPV is positive whenever the actual discount rate is below the IRR, and negative whenever it exceeds the IRR.',
+        },
+        {
+          q: 'What does the pitfalls section identify as the single most important and most uncertain input in DCF models?',
+          options: ['Year 1-3 cash flow forecasts, because small errors in near-term revenue projections compound dramatically over the full model horizon', 'Terminal value - the assumed value at the end of the explicit forecast period - which typically accounts for 60-80% of total NPV in DCF models; the section recommends always stress-testing terminal value assumptions separately', 'The initial capital outflow (Year 0), because overestimating project costs is the most common source of NPV distortion in capital budgeting', 'The tax rate applied to operating cash flows, since small changes in the effective tax rate compound through every year and accumulate to a substantial distortion in total NPV'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states terminal value typically accounts for 60-80% of total NPV in DCF models, making it the single most important and most uncertain input. It specifically recommends always stress-testing terminal value assumptions separately.',
+        },
+        {
+          q: 'Under what circumstance might an investment with a negative NPV at your initial discount rate actually be worthwhile?',
+          options: ['A negative NPV investment is never worthwhile by definition, since NPV is designed to identify all value-destroying investments regardless of any changes to assumptions', 'A negative NPV investment can be worthwhile if it has strategic importance (brand value, future optionality) not captured in the numerical cash flow forecasts', 'If the actual cost of capital is lower than the initial discount rate assumption, the project may in fact be positive-NPV; IRR is useful because it tells you exactly what return the project earns, which you then compare to your actual cost of capital', 'A negative NPV investment can be worthwhile if it prevents a competitor from acquiring a key asset, making the defensive strategic value higher than the negative financial NPV'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that changing the discount rate can change the sign of NPV. If the actual cost of capital is lower than the initial assumption, the project may be positive-NPV. This is why the FAQ recommends using IRR alongside NPV: IRR reveals the exact return the project earns, which can then be compared to the actual cost of capital.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'moic': {
@@ -2109,6 +3887,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is a good MOIC for private equity?', a: 'Industry benchmarks: below 1.0x means loss of capital; 1.0x-2.0x is below expectations for a standard 5-year PE hold; 2.0x-3.0x is considered adequate to good; 3.0x-5.0x is strong performance; above 5.0x is exceptional, typically reserved for early-stage venture investments in breakout companies. These are gross figures - net MOIC after fees runs 0.3x-0.7x lower.' },
       { q: 'What is the difference between Gross MOIC and Net MOIC?', a: 'Gross MOIC is calculated before deducting management fees and carried interest. Net MOIC reflects what limited partners (investors) actually received after all fees. Management fees (typically 2% per year) reduce capital available for investment; carried interest (typically 20% of profits above the hurdle rate) reduces distributions. A fund with a 3.0x gross MOIC might deliver 2.3x-2.6x net MOIC to investors over a 10-year life.' },
     ],
+    quiz: {
+      topic: 'MOIC',
+      questions: [
+        {
+          q: 'What does a 3.0x MOIC mean, and what does it NOT tell you?',
+          options: ['MOIC is the annualised rate of return on an investment, accounting for the exact timing of each cash inflow and outflow throughout the holding period', 'MOIC is the compound annual growth rate of a fund\'s net asset value, adjusted for management fees and carried interest paid to the general partner', 'Every dollar invested returned three dollars in total (the original dollar plus two dollars of gain), but MOIC says nothing about how long the investment took to achieve that result', 'MOIC is the net present value of all future distributions discounted at the fund\'s hurdle rate, divided by committed capital to produce a per-dollar risk-adjusted return'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states a 3.0x MOIC means every dollar invested returned three dollars total. However, MOIC is deliberately simple and ignores time - a 3.0x over 3 years and a 3.0x over 10 years are reported identically despite representing roughly 44% vs 12% IRR respectively.',
+        },
+        {
+          q: 'Why are MOIC and IRR always presented together in private equity, rather than just one or the other?',
+          options: ['MOIC measures total capital returned as a simple multiple without accounting for time; IRR measures the annualised return accounting for the timing of every cash flow - together they show both the magnitude and the pace of returns', 'MOIC is a gross return measure before fees while IRR is always expressed net of management fees and carried interest, so they complement each other by showing two different fee perspectives on the same investment', 'MOIC is used only for realized investments and IRR only for unrealized ones, so reporting both ensures coverage across the entire portfolio at any point in time', 'MOIC reflects returns across all fund investments combined while IRR applies only to individual portfolio companies, so both are needed to assess fund-level and deal-level performance separately'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states MOIC shows how much capital was returned and IRR shows how quickly - neither metric alone tells the full story. The same 3.0x MOIC achieved in 3 years versus 10 years produces very different IRRs (roughly 44% vs 12%), which MOIC alone cannot distinguish.',
+        },
+        {
+          q: 'According to the definition, what approximate IRRs correspond to a 3.0x MOIC realised in 3 years versus the same 3.0x realised over 10 years?',
+          options: ['3 years = ~25% IRR vs 10 years = ~8% IRR, showing moderate sensitivity of IRR to holding period at 3.0x multiples', '3 years = ~33% IRR vs 10 years = ~10% IRR, the typical range cited in LP benchmark surveys for institutional PE funds', '3 years = ~55% IRR vs 10 years = ~15% IRR, reflecting the outsized annualised impact of compounding at shorter holding periods', '3 years = ~44% IRR vs 10 years = ~12% IRR, demonstrating that identical MOIC figures can represent dramatically different annualised returns'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition gives these exact figures: a 3.0x MOIC in three years is roughly a 44% IRR, while the same 3.0x over ten years is roughly 12% IRR. This is why MOIC and IRR are always presented together - MOIC alone cannot reveal how efficiently time was used.',
+        },
+        {
+          q: 'What does the pitfalls section warn about when a fund reports a high gross MOIC with a long hold period?',
+          options: ['A high gross MOIC with a long hold automatically means the fund outperformed its benchmark, since absolute return is the only metric that matters to LPs seeking to preserve capital over time', 'A high MOIC with a long hold period can mask a mediocre IRR - a 3.0x over 12 years is only ~9.6% IRR, which is below many institutional hurdle rates. Fees reduce gross MOIC by 0.3x-0.7x further, making the net return even less impressive', 'A high gross MOIC combined with a long hold always indicates fraud or accounting manipulation, since legitimate PE returns require exits within a standard 5-7 year fund cycle', 'Long hold periods produce artificially inflated MOIC figures because distributions are reinvested within the fund structure and compound without fee drag, making comparison to shorter-hold funds misleading'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states a 3.0x MOIC over 12 years is only ~9.6% IRR - below many institutional hurdle rates. It also warns that fees typically reduce MOIC by 0.3x-0.7x over a 10-year fund life, and that a fast 2.0x in two years produces a 41% IRR - far superior to the slow 3.0x.',
+        },
+        {
+          q: 'According to the FAQ, which MOIC range is considered "adequate to good" performance for a private equity investment?',
+          options: ['1.0x-2.0x - the standard acceptable range for a 5-year PE hold that compensates investors for the illiquidity premium over public markets', '1.5x-2.5x - the range covering below-expectations through adequate returns, reflecting median PE fund performance over recent vintages', '2.0x-3.0x - adequate to good; below 2.0x is considered below expectations for a typical 5-year PE hold, while above 3.0x is strong performance', '3.0x-5.0x - the strong performance range that most institutional LP agreements require before carried interest can be claimed by the general partner'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ benchmarks state: below 1.0x means loss of capital; 1.0x-2.0x is below expectations for a standard 5-year PE hold; 2.0x-3.0x is adequate to good; 3.0x-5.0x is strong performance; above 5.0x is exceptional. These are gross figures - net MOIC runs 0.3x-0.7x lower after fees.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'interest-expense': {
@@ -2134,6 +3947,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How does interest expense affect EBT?', a: 'EBT = EBIT - Interest Expense. Every dollar of interest reduces EBT by one dollar, which reduces tax and Net Income by less (the tax saving partially offsets the cost). This is why the after-tax cost of debt is lower than the stated rate: after-tax cost = rate × (1 - effective tax rate).' },
       { q: 'What is the interest coverage ratio?', a: 'Interest coverage = EBIT / Interest Expense. It measures how many times over a company can pay its interest from operating profit. A ratio of 3.0x means three dollars of EBIT for every dollar of interest owed. Below 2.0x is a stress warning; below 1.0x means the company cannot service its debt from operations alone.' },
     ],
+    quiz: {
+      topic: 'interest expense',
+      questions: [
+        {
+          q: 'Where does interest expense sit on the income statement, and what is its relationship to EBIT and EBT?',
+          options: ['Interest expense appears above EBIT on the income statement, as a deduction from operating revenue before gross profit is calculated', 'Interest expense appears below EBT on the income statement, after the pre-tax profit line is established and before the tax charge is applied', 'Interest expense sits between EBIT and EBT on the income statement - it is the only line that separates these two metrics, and EBT = EBIT minus interest expense', 'Interest expense is reported separately in the financing activities section of the cash flow statement and does not appear on the income statement'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states that interest expense sits between EBIT and EBT on the income statement - the only line that separates the two metrics. A company with $2M EBIT reports very different EBT depending on how much debt it carries.',
+        },
+        {
+          q: 'What is the difference between interest expense and interest paid?',
+          options: ['Interest expense is the accrued cost recognised on the income statement regardless of when cash is paid; interest paid is the actual cash outflow recorded on the cash flow statement - they differ when payment timing does not match the accrual period', 'Interest expense includes all financing costs including bond premiums and loan origination fees; interest paid refers only to the periodic coupon payments made to bondholders', 'Interest expense is calculated on the principal outstanding at year-end; interest paid is calculated on the average balance throughout the year, making interest paid typically lower for declining-balance loans', 'Interest expense and interest paid are always the same figure; the distinction only matters for cash-basis filers who record expenses when cash is actually transferred'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition explains that interest expense is recognised as it accrues under accrual accounting, regardless of when cash changes hands. A semi-annual coupon bond records monthly interest accruals even though cash is paid only twice a year, creating a timing difference between the income statement and cash flow statement figures.',
+        },
+        {
+          q: 'According to the examples table, what is the interest coverage ratio for the "highly leveraged" company?',
+          options: ['6.7x - sufficient coverage with comfortable headroom above the 3.0x threshold', '3.0x - exactly at the minimum comfortable threshold described in the entry', '2.0x - at the warning threshold where stress begins to show', '1.7x - below the 2.0x stress warning level, meaning the company has limited buffer before it cannot cover interest from operating profit'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows the highly leveraged company has EBIT of $2,000,000 and interest expense of $1,200,000, giving a coverage ratio of 1.7x. The whenToUse section identifies below 2.0x as a warning level and below 1.0x as inability to cover interest from operations.',
+        },
+        {
+          q: 'What accounting treatment does the pitfalls section warn can cause interest expense to be understated and EBIT to be overstated?',
+          options: ['Companies sometimes classify interest expense as an SG&A cost to exclude it from operating margin and flatter EBITDA comparisons with peers', 'Some companies capitalise interest on construction projects - adding it to the asset\'s cost rather than expensing it immediately - which flatters EBIT; check the notes and add capitalised interest back when comparing with peers who expense directly', 'Companies in high-tax jurisdictions sometimes defer interest expense recognition to future periods when the tax shield will be more valuable, temporarily understating the current period\'s interest charge', 'Certain regulated industries allow companies to record interest as revenue when borrowing from group entities, netting the income against expense and dramatically understating gross interest costs'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that some companies capitalise interest on construction projects - adding it to the asset\'s cost rather than expensing it immediately - which flatters EBIT. The second trap is net interest expense presentation, which can understate gross debt cost for companies with large cash balances.',
+        },
+        {
+          q: 'Why is the after-tax cost of debt lower than the stated interest rate?',
+          options: ['Interest expense increases EBT by reducing total tax liability, so the gross cost of debt is always lower than the stated coupon rate by a fixed 35%', 'Interest expense is non-deductible for corporate tax in most jurisdictions, but lenders discount the rate for creditworthy borrowers who avoid default risk', 'Because interest expense reduces EBT, the tax on net income falls by the marginal rate on each dollar of interest, making the after-tax cost of debt equal to the stated rate multiplied by (1 minus the effective tax rate)', 'The tax benefit of interest expense is capped at the company\'s dividend yield, because regulators treat debt above that level as equity substitution and deny the deduction'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ explains that every dollar of interest reduces EBT by one dollar, which reduces tax and net income by less than a dollar because the tax saving partially offsets the cost. The after-tax cost of debt = stated rate x (1 - effective tax rate).',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'principal-and-interest': {
