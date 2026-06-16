@@ -1210,6 +1210,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why do SaaS companies have high SG&A?', a: 'SaaS businesses invest heavily in sales and marketing to acquire subscribers and grow ARR. Customer acquisition costs (CAC) are typically expensed immediately as SG&A even though the customer will generate recurring revenue for multiple years. This front-loading of cost is why SaaS businesses often run at operating losses in growth phases despite strong gross margins.' },
       { q: 'What is a normal SG&A-to-revenue ratio?', a: 'It varies significantly. Mature, efficient businesses aim for SG&A below 20% of revenue. Growth-stage SaaS companies may run at 50–80% during rapid expansion. Industrial companies often target below 15%. There is no universal benchmark - compare against direct peers.' },
     ],
+    quiz: {
+      topic: 'SG&A',
+      questions: [
+        {
+          q: 'What does SG&A include, and where does it sit on the income statement?',
+          options: ['Selling, General & Administrative expenses - below Gross Profit and above Operating Profit (EBIT), the primary driver of the gap between Gross Profit Margin and Operating Profit Margin', 'Sales, Growth & Acquisition expenses - above Gross Profit as a direct production cost alongside COGS', 'Selling, Governance & Administrative expenses - below Operating Profit, classified as a non-operating item alongside interest expense', 'Systems, General & Administrative expenses - deducted directly from revenue before calculating Gross Profit'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'SG&A is Selling, General & Administrative expenses. It sits below Gross Profit and above Operating Profit (EBIT) on the income statement, and is the primary driver of the gap between Gross Profit Margin and Operating Profit Margin.',
+        },
+        {
+          q: 'A business has a 60% Gross Margin and SG&A of 25% of revenue. What is its Operating Margin?',
+          options: ['25%', '35%', '60%', '45%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition gives this exact example: 60% Gross Margin minus 25% SG&A-to-revenue = 35% Operating Margin. Operating Margin is Gross Profit Margin minus all operating expense ratios.',
+        },
+        {
+          q: 'According to the whenToUse section, what does a declining SG&A-to-revenue ratio indicate as revenue grows?',
+          options: ['The company is reducing its sales force, which may signal slowing customer acquisition', 'The company is shifting spend from marketing to G&A overhead, lowering return on selling investment', 'The company is growing through acquisitions rather than organic revenue, temporarily compressing the ratio', 'Positive operating leverage - the overhead cost base is scaling more slowly than revenue'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The whenToUse section states that a declining SG&A-to-revenue ratio as revenue grows indicates positive operating leverage. This means fixed and semi-fixed overhead costs are being spread over a larger revenue base.',
+        },
+        {
+          q: 'The pitfalls section warns that SG&A cuts can damage long-term growth. Which type of cuts are most dangerous?',
+          options: ['Cuts to rent and facilities through consolidating office footprints and remote-work policies', 'Cuts to G&A functions such as finance, legal, and HR that inflate administrative bloat', 'Cuts to sales and marketing expenses that directly fund customer acquisition and revenue growth', 'Cuts to IT infrastructure by migrating to shared-service centres and cloud platforms'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section specifically warns that "SG&A cuts can be a short-term profit lever that damages long-term growth - particularly cuts to sales and marketing." A company with lower G&A but higher selling costs may actually be more efficiently structured if it converts that spend into revenue.',
+        },
+        {
+          q: 'According to the FAQ, why do SaaS companies often run operating losses during growth phases despite strong gross margins?',
+          options: ['Customer acquisition costs (CAC) are expensed immediately as SG&A even though the customer generates recurring revenue for multiple years, front-loading costs into the current period', 'SaaS companies must maintain large on-premise data centre teams classified under G&A, inflating the administrative cost base', 'Software license and support renewal costs are classified as SG&A rather than COGS, inflating the ratio for subscription businesses', 'SaaS businesses have no physical COGS, so the entire cost structure is reclassified into SG&A by accounting standards'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ explains that CAC is expensed immediately as SG&A even though the customer will generate recurring revenue for multiple years. This front-loading of cost causes operating losses in growth phases despite strong underlying gross margins.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'rnd': {
@@ -1237,6 +1272,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How does R&D affect EBIT versus EBITDA?', a: 'R&D reduces both EBIT and EBITDA equally, since both metrics include R&D as a line-item operating cost. Unlike Depreciation & Amortization - which EBITDA adds back - there is no standard add-back for R&D. The only scenario where R&D has different impacts is if a company capitalises some R&D costs and amortises them; in that case EBITDA adds back the amortisation while EBIT does not.' },
       { q: 'What is R&D capitalisation?', a: 'R&D capitalisation is the practice of treating R&D costs as a long-lived asset rather than an immediate expense - estimating the balance sheet value of accumulated R&D investment (minus amortisation). It is not standard GAAP practice, but is used by valuation researchers (notably Damodaran) to estimate the true intangible asset base of technology and pharma companies. It can significantly change calculated returns on capital (ROIC) for R&D-intensive businesses.' },
     ],
+    quiz: {
+      topic: 'R&D expense',
+      questions: [
+        {
+          q: 'Under US GAAP (ASC 730), how are nearly all R&D costs treated?',
+          options: ['Capitalised as intangible assets and amortised over their useful life', 'Split equally between an operating expense and a capitalised development asset', 'Deducted against retained earnings rather than flowing through the income statement', 'Expensed immediately, reducing profit in the period they occur'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states that under US GAAP, nearly all R&D costs must be expensed as incurred - reducing profit in the current period even when spending generates long-lived competitive advantages.',
+        },
+        {
+          q: 'Where does R&D appear on the income statement?',
+          options: ['Below Gross Profit and above Operating Profit (EBIT), alongside SG&A', 'As part of Cost of Goods Sold (COGS), reducing Gross Profit directly', 'Below Operating Profit (EBIT) but above Earnings Before Tax (EBT)', 'As a non-operating expense below EBIT, similar to interest expense'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition places R&D as a separate line item below Gross Profit and above Operating Profit (EBIT), alongside SG&A. Unlike COGS (which varies with production), R&D is a discretionary investment in future capability.',
+        },
+        {
+          q: 'From the sector table, which two industries have the highest typical R&D intensity as a percentage of revenue?',
+          options: ['Enterprise software (SaaS) at 10-20% and automotive at 4-6%', 'Semiconductors at 15-20% and consumer staples at 1-3%', 'Large pharma/biotech at 15-25% and semiconductors at 15-20%', 'Retail at under 1% and consumer staples at 1-3%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows large pharma/biotech at 15-25% (drug pipeline and clinical trials) and semiconductors at 15-20% (new chip architectures) as the two highest-intensity sectors.',
+        },
+        {
+          q: 'What accounting inconsistency does the pitfalls section identify between US GAAP and IFRS for R&D costs?',
+          options: ['Under GAAP, R&D includes all software development; under IFRS, only external-use software development is expensed', 'Under IFRS (IAS 38), development costs may be capitalised if six criteria are met; under GAAP, capitalisation applies only to internal-use software - not to product R&D', 'GAAP allows pharmaceutical companies to capitalise clinical trial costs; IFRS requires all clinical costs to be expensed immediately', 'Under IFRS, research costs are capitalised while development costs are expensed; under GAAP, both are always expensed'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section explains that under IFRS (IAS 38), development costs may be capitalised if six specific criteria are met, while GAAP (ASC 730) requires nearly all R&D to be expensed - creating a divergence when comparing GAAP and IFRS peers.',
+        },
+        {
+          q: 'According to the FAQ, in what one scenario does R&D have a different impact on EBIT versus EBITDA?',
+          options: ['When R&D spending falls year-over-year, creating a positive EBIT variance not captured by EBITDA', 'When a company\'s R&D exceeds 15% of revenue, triggering different bridge treatment in EBITDA analysis', 'When a company capitalises some R&D costs and amortises them - EBITDA adds back the amortisation while EBIT does not', 'When R&D is reclassified as a below-the-line item in a restructuring rather than an operating expense'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states the only scenario where R&D has different impacts on EBIT vs EBITDA is when a company capitalises some R&D costs and amortises them. EBITDA adds back that amortisation; EBIT does not.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'working-capital': {
@@ -1261,6 +1331,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is negative Working Capital always bad?', a: 'No. Negative Working Capital can be structurally positive in businesses that collect cash before paying suppliers - subscription businesses, retailers, and fast-food chains. Amazon, for example, runs negative Working Capital as a feature of its model, not a flaw.' },
       { q: 'What is the difference between Working Capital and Cash?', a: 'Cash is a component of Working Capital (a current asset). Working Capital is the broader concept: Current Assets − Current Liabilities, including receivables, inventory, payables, and accruals, not just cash. A company can have positive Working Capital but very little cash if most of the current assets are tied up in slow-moving inventory.' },
     ],
+    quiz: {
+      topic: 'working capital',
+      questions: [
+        {
+          q: 'What does Working Capital measure?',
+          options: ['A company\'s total long-term assets minus its total long-term liabilities', 'The cash balance held in a company\'s bank accounts at the end of the reporting period', 'The difference between current assets (cash, receivables, inventory) and current liabilities, measuring short-term liquidity', 'A company\'s ability to generate earnings before interest and taxes over the next 12 months'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Working Capital = Current Assets - Current Liabilities. It measures short-term liquidity - the net financial resources available to fund the next 12 months of operations, not long-term solvency or profitability.',
+        },
+        {
+          q: 'When can negative Working Capital be a structural advantage rather than a warning sign?',
+          options: ['When a business collects cash from customers immediately but pays suppliers on extended terms - such as supermarkets - giving it interest-free funding from suppliers', 'When a company uses high leverage and tax-deductible interest payments offset the liquidity risk', 'When a company has very high inventory turnover that keeps Days Inventory Outstanding below 10 days', 'When short-term debt is refinanced frequently, effectively converting current liabilities into long-term obligations'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that negative Working Capital is the norm in some business models: retailers like supermarkets collect cash from customers immediately while paying suppliers on 30-60 day terms, generating negative Working Capital as a structural feature rather than a liquidity problem.',
+        },
+        {
+          q: 'According to the definition, what effect does growing accounts payable (suppliers extending terms) have on operating cash flow?',
+          options: ['Operating cash flow falls because the company has more obligations to settle in the coming period', 'Operating cash flow is unchanged; accounts payable changes affect only the balance sheet', 'Operating cash flow rises and Working Capital rises, because extended supplier terms reduce net liabilities', 'Working Capital releases cash and operating cash flow increases, because the company defers supplier payments and retains cash longer'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition explains: if accounts payable grows (suppliers extending terms), Working Capital releases cash. The company pays out less cash in the current period, so operating cash flow increases even though the income statement is unchanged.',
+        },
+        {
+          q: 'What does the pitfalls section warn about growing businesses and Working Capital?',
+          options: ['Growing businesses should reduce Working Capital by switching to just-in-time inventory to fund expansion internally', 'A company that doubles revenue without matching Working Capital financing may face a cash crisis even while remaining profitable', 'Working Capital requirements fall as a business grows, because larger companies gain negotiating power over suppliers', 'Fast-growing businesses must prioritize reducing Days Sales Outstanding before expanding, as DSO is the primary driver of Working Capital crises'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that Working Capital requirements can change rapidly as a business grows. A company that doubles revenue without equivalent Working Capital financing may face a cash crisis even if it is profitable, so always model Working Capital needs as part of a growth plan.',
+        },
+        {
+          q: 'According to the FAQ, what is the key distinction between Working Capital and Cash?',
+          options: ['Cash is net of Working Capital; positive Working Capital confirms cash is available, while negative Working Capital means cash is depleted', 'Working Capital and Cash are interchangeable terms; the distinction only matters for accounting presentation purposes', 'Cash is a component of Working Capital (a current asset), and a company can have positive Working Capital but very little cash if most current assets are tied up in slow-moving inventory', 'Cash measures inflows and outflows over a period, while Working Capital is a balance sheet snapshot that never reflects actual liquidity'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ clarifies that cash is a component of Working Capital, not the same thing. Working Capital = Current Assets - Current Liabilities, which includes receivables, inventory, payables, and accruals. A company can show positive Working Capital on paper while being cash-poor if its current assets are mostly slow-moving inventory.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   // ─── Finance (additional) ────────────────────────────────────────────────────
@@ -1556,6 +1661,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do I convert a percentage point change to a relative percentage change?', a: 'Divide the percentage point change by the original percentage and multiply by 100. If unemployment rises 2.5 pp from 4.0%, the relative change is (2.5 / 4.0) × 100 = 62.5%.' },
       { q: 'When should I report percentage points vs. percentage change?', a: 'For policy rates, exam pass rates, and survey percentages - where absolute shifts matter - percentage points are clearer. For revenue growth, population growth, or any metric where scale matters - percentage change is more informative. Ideally, report both: "the pass rate fell 3 percentage points (−4.2%)."' },
     ],
+    quiz: {
+      topic: 'percentage points',
+      questions: [
+        {
+          q: 'What does a percentage point (pp) measure?',
+          options: ['The relative change in a metric expressed as a fraction of its original value', 'The compound growth rate between two percentage values over time', 'The arithmetic difference between two percentage values', 'The ratio of a new percentage value to the old percentage value'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'A percentage point is the arithmetic difference between two percentage values - it is an absolute unit of measurement. It is not a relative change; it is the raw gap on the percentage scale.',
+        },
+        {
+          q: 'An interest rate rises from 1% to 2%. Which pair of statements is correct?',
+          options: ['This is a 1 percentage point increase AND a 100% relative increase', 'This is a 1% increase AND a 1 percentage point increase', 'This is a 2 percentage point increase AND a 200% relative increase', 'This is a 1 percentage point increase AND a 50% relative increase'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition explicitly uses this example: a rise from 1% to 2% is a 1 percentage point increase (absolute difference) but a 100% relative increase (1 is 100% of 1). The same event looks trivially small or dramatically large depending on which framing you use.',
+        },
+        {
+          q: 'From the examples table, the unemployment rate rises from 4.0% to 6.5%. What is the relative (percentage) change?',
+          options: ['2.5%', '25.0%', '37.5%', '62.5%'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows the change as +2.5 pp and +62.5% relative change. The relative change is calculated as (2.5 / 4.0) x 100 = 62.5% - far larger than the 2.5 pp absolute figure.',
+        },
+        {
+          q: 'What does the pitfalls section identify as the most dangerous misuse of percentage language?',
+          options: ['Reporting basis points when percentage points are more appropriate for general audiences', 'Saying a rate "increased by 2%" when it rose from 3% to 5% - most readers interpret this as a 2 pp absolute increase, not a 2% relative increase', 'Reporting the relative change without also reporting the percentage point change alongside it', 'Using percentage points for non-rate metrics such as market share or exam pass rates'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that saying an interest rate "increased by 2%" when it rose from 3% to 5% is ambiguous - almost all readers interpret it as a 2 percentage point increase. Always write "percentage points" explicitly when you mean an absolute difference.',
+        },
+        {
+          q: 'How many basis points equal one percentage point?',
+          options: ['10 basis points', '1 basis point', '100 basis points', '1,000 basis points'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states that one basis point equals 0.01 percentage points, so 100 basis points equal 1 percentage point. A 25 basis point rate increase equals a 0.25 percentage point increase.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'proportion': {
@@ -1631,6 +1771,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do I find a unit rate from a ratio?', a: 'Divide both terms of the ratio by the denominator. If a car travels 360 km in 4 hours, divide both by 4: 360 ÷ 4 = 90 km per 1 hour. If a price is $7.50 for 3 kg, divide both by 3: $7.50 ÷ 3 = $2.50 per kg.' },
       { q: 'How are unit rates used to solve proportions?', a: 'Once you have a unit rate, multiply by any desired quantity to scale it. If a printer produces 12 pages per minute (unit rate), it produces 12 × 35 = 420 pages in 35 minutes - equivalent to solving the proportion 12/1 = x/35.' },
     ],
+    quiz: {
+      topic: 'unit rates',
+      questions: [
+        {
+          q: 'What mathematical property defines a unit rate?',
+          options: ['A ratio where both numerator and denominator are whole numbers', 'A ratio in which the denominator is exactly 1, expressing a quantity per single unit', 'A fraction where the numerator is larger than the denominator', 'Any comparison of two quantities measured in different units'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A unit rate is a ratio in which the denominator is exactly 1, expressing how much of one quantity corresponds to a single unit of another. The "per one" structure makes unit rates the most intuitive form for direct comparison.',
+        },
+        {
+          q: 'Which statement correctly describes the relationship between unit rates and ratios?',
+          options: ['Only unit rates are ratios; regular ratios are a different mathematical concept', 'Ratios compare quantities in the same unit while unit rates always mix different units', 'Every ratio is automatically a unit rate once it is simplified', 'Every unit rate is a ratio, but a ratio does not need to have a denominator of 1'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'Every unit rate is a ratio, but not every ratio is a unit rate. A ratio compares any two quantities and the denominator does not need to be 1; a unit rate is specifically a ratio that has been simplified so the denominator equals 1.',
+        },
+        {
+          q: 'According to the examples table, what is the unit rate for a price of $5.40 for 1.5 kg?',
+          options: ['$3.60 per kg', '$5.40 per kg', '$2.70 per kg', '$4.50 per kg'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Dividing both terms by the denominator: $5.40 / 1.5 = $3.60 and 1.5 kg / 1.5 = 1 kg, giving a unit rate of $3.60 per kilogram.',
+        },
+        {
+          q: 'What does the pitfalls section warn is the main error when comparing unit rates?',
+          options: ['Using different denominator units (e.g. per 100 g vs per kg) makes rates incomparable until converted to the same base', 'Unit rates are only valid when comparing identical product categories', 'Using the wrong formula leads to negative unit rate values', 'Unit rates become inaccurate when the raw numbers are very large or very small'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Choosing the wrong unit for the denominator leads to rates that cannot be compared. If one supermarket advertises price per 100 g and another per kg, they appear incomparable until both are converted to the same unit rate.',
+        },
+        {
+          q: 'A printer produces 12 pages per minute. According to the FAQ, how many pages does it produce in 35 minutes?',
+          options: ['47 pages', '420 pages', '350 pages', '252 pages'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Once you have a unit rate, multiply by any desired quantity to scale it. 12 pages/minute x 35 minutes = 420 pages - equivalent to solving the proportion 12/1 = x/35.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   // ─── Health ──────────────────────────────────────────────────────────────────
@@ -2070,6 +2245,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why is waist circumference important beyond BMI?', a: 'Waist circumference specifically reflects visceral fat, which is far more metabolically harmful than subcutaneous fat stored in the hips and thighs. Studies consistently show that waist circumference predicts type 2 diabetes, cardiovascular disease, and all-cause mortality independently of BMI. Adding waist circumference to BMI reclassifies a meaningful proportion of individuals into higher or lower risk categories compared to BMI alone.' },
       { q: 'How do I measure waist circumference correctly?', a: 'Stand upright with feet together. Locate the natural waist - the narrowest part of the torso, just above the top of the hip bones and just above the navel. Wrap a flexible, non-elastic tape measure horizontally around this point, touching the skin but not compressing it. Take the measurement at the end of a normal exhale. Take two readings and average them; if they differ by more than 1 cm, take a third.' },
     ],
+    quiz: {
+      topic: 'waist circumference',
+      questions: [
+        {
+          q: 'What does waist circumference directly measure?',
+          options: ['Total body fat mass as a percentage of overall body weight', 'Abdominal adiposity - the accumulation of fat in the trunk region', 'The ratio of hip to waist dimensions used to assess body fat distribution', 'Lean muscle mass in the core and abdominal musculature'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states waist circumference is a direct measure of abdominal adiposity - the accumulation of fat in the trunk region. It is a strong independent predictor of metabolic disease risk beyond what BMI captures.',
+        },
+        {
+          q: 'What does waist circumference capture about body fat that BMI cannot?',
+          options: ['Total caloric surplus accumulated over time reflected as stored fat across all body regions', 'The ratio of fat mass to lean mass, which is better assessed by DEXA or hydrostatic weighing', 'Subcutaneous fat in the hips and thighs, which BMI systematically underestimates in women', 'Visceral adipose tissue (VAT) surrounding the abdominal organs, which drives insulin resistance, inflammation, and dyslipidaemia at higher rates than subcutaneous fat'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition explains that waist circumference captures visceral adipose tissue (VAT), which is metabolically active in ways subcutaneous fat is not. VAT drives insulin resistance, systemic inflammation, dyslipidaemia, and hypertension - health effects that BMI cannot detect.',
+        },
+        {
+          q: 'According to the examples table, at what waist circumference does a man reach the "high risk" category?',
+          options: ['≥ 102 cm', '≥ 94 cm', '≥ 88 cm', '≥ 110 cm'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The WHO defines two thresholds for men: ≥94 cm is "increased risk" and ≥102 cm is "high risk." The examples table confirms the high risk threshold for men as ≥102 cm. (88 cm is the women\'s high risk threshold.)',
+        },
+        {
+          q: 'What does the pitfalls section identify as the main source of measurement variability in waist circumference?',
+          options: ['Differences in tape measure elasticity between brands used in clinical versus home settings', 'Time of day, since waist circumference fluctuates significantly with food and fluid intake', 'Measuring at the wrong anatomical landmark (e.g., at the iliac crest or navel on an obese individual) and failing to keep the tape horizontal or measure at end of normal exhale', 'Variation in posture, since standing versus sitting changes the waist dimension by up to 5 cm'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states measurement is highly sensitive to technique. The main errors are using the wrong anatomical landmark, angling the tape, and not measuring at the end of a normal exhale. Correct technique requires a horizontal, snug (not compressing) tape at the natural waist.',
+        },
+        {
+          q: 'According to the FAQ, what waist-to-height ratio (WHtR) is associated with lower cardiometabolic risk across a broad range of ethnic groups?',
+          options: ['Below 0.4', 'Below 0.5 - meaning waist less than half of height', 'Below 0.6', 'Below 0.45'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states that many clinicians use the waist-to-height ratio (WHtR), with a value below 0.5 (waist less than half of height) associated with lower cardiometabolic risk. This threshold applies across a broad range of ethnic groups and ages, unlike the WHO absolute thresholds which were derived from European populations.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'roi': {
@@ -2094,6 +2304,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between ROI and CAGR?', a: 'ROI measures total return over the full investment period regardless of length. CAGR converts that total return into an equivalent annual rate, enabling fair comparison across investments held for different periods. A 100% ROI over 2 years equals a CAGR of approximately 41.4%; the same 100% ROI over 5 years equals a CAGR of 14.9%.' },
       { q: 'How does ROI differ from ROE?', a: 'ROI is a general-purpose investment return metric that applies to any asset. ROE (Return on Equity) is a specific corporate finance metric comparing net income to shareholders\' equity - it measures management\'s efficiency in using owner capital. A company\'s overall ROE informs investors; project-level ROI informs internal capital allocation decisions.' },
     ],
+    quiz: {
+      topic: 'ROI',
+      questions: [
+        {
+          q: 'What does Return on Investment (ROI) measure?',
+          options: ['The net gain or loss on an investment relative to its initial cost, expressed as a percentage', 'The annualised compound growth rate of an investment over multiple years', 'The total return on shareholders\' equity over a financial period', 'The net present value of future cash flows discounted to today\'s value'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'ROI measures how much an investment gains or loses relative to its cost, calculated as (Final Value - Initial Cost) / Initial Cost x 100. A positive ROI means the investment was profitable; a negative ROI means it lost money.',
+        },
+        {
+          q: 'Why is CAGR a better companion metric than standalone ROI for multi-year investments?',
+          options: ['CAGR adjusts for inflation, making it a real return measure that ROI does not provide', 'CAGR eliminates compounding to show simple linear growth for easier comparison across assets', 'CAGR measures absolute dollar returns whereas ROI only measures percentage returns', 'CAGR converts total ROI into an annualised rate that accounts for time, enabling fair comparison across investments held for different periods'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states that ROI ignores time - a 50% ROI is excellent in one year but mediocre over a decade. CAGR converts total ROI into an annualised rate that accounts for the time value of money, making multi-year comparisons meaningful.',
+        },
+        {
+          q: 'From the examples table, which investment generated the highest ROI?',
+          options: ['Stock purchase: $10,000 initial cost, $14,500 final value, 45% ROI', 'Marketing campaign: $5,000 initial cost, $18,000 final value, 260% ROI', 'Equipment upgrade: $80,000 initial cost, $95,000 final value, 18.75% ROI', 'Failed product launch: $25,000 initial cost, $12,000 final value, -52% ROI'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The marketing campaign at 260% ROI is the highest in the table. Despite having the smallest absolute dollar gain ($13,000), it produced the greatest return relative to its cost ($5,000 invested).',
+        },
+        {
+          q: 'The pitfalls section warns that a 10% ROI may not be attractive. Under what condition?',
+          options: ['When the investment is held for fewer than 3 years, making the time horizon too short to justify the risk', 'When the investment was funded entirely by equity rather than a blend of debt and equity financing', 'When the company\'s weighted average cost of capital (WACC) is 12% - a 10% ROI fails to cover the cost of financing', 'When the ROI is calculated using nominal rather than inflation-adjusted figures'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states that "a 10% ROI is not attractive if the company\'s cost of capital is 12%." ROI must always be compared against WACC - it only creates value if it exceeds the cost of the capital deployed.',
+        },
+        {
+          q: 'According to the FAQ, what is the only valid benchmark for evaluating whether an ROI is good?',
+          options: ['The historical stock market return of 7-10% annualised, inflation-adjusted over long periods', 'The opportunity cost - what else the same capital could have earned in the next best alternative', 'A minimum 3:1 return ratio ($3 return per $1 spent, i.e. 200% ROI) regardless of investment type', 'The company\'s weighted average cost of capital (WACC) for that specific fiscal year'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states "the only valid comparison is against the opportunity cost: what else could the capital have earned?" There is no universal ROI benchmark - the right reference is always what the alternative use of capital would have returned.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'cagr': {
@@ -2412,6 +2657,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Can P/E be negative?', a: 'P/E is undefined - not negative - when EPS is negative because the company has negative earnings. Some systems display a negative P/E in this case, but it is not analytically meaningful. For loss-making companies, analysts typically use Price/Sales, EV/Revenue, or a DCF model instead.' },
       { q: 'What is the difference between P/E and EV/EBITDA?', a: 'P/E is an equity-level metric using share price and per-share earnings - affected by capital structure (leverage) and tax. EV/EBITDA is a firm-level metric using Enterprise Value (equity + debt − cash) and pre-tax, pre-depreciation earnings - making it capital-structure neutral. EV/EBITDA is preferred for comparing companies with different leverage or tax profiles and is the dominant metric in M&A. P/E is easier to understand and more widely reported in public equity markets.' },
     ],
+    quiz: {
+      topic: 'P/E ratio',
+      questions: [
+        {
+          q: 'What investor question does the P/E ratio directly answer?',
+          options: ['What percentage of earnings does the company distribute as dividends each year?', 'How much is an investor paying for each dollar of annual profit?', 'What is the total enterprise value relative to annual earnings?', 'What earnings growth rate is required to justify the current stock price?'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states that P/E "directly answers the investor\'s most fundamental question: how much am I paying for each dollar of annual profit?" It is calculated by dividing the stock price by EPS.',
+        },
+        {
+          q: 'Why is forward P/E typically lower than trailing P/E for growing companies?',
+          options: ['Forward P/E uses a different share count that excludes dilutive instruments', 'Trailing P/E includes one-time charges that artificially reduce the earnings denominator', 'Forward P/E is calculated on an after-tax basis while trailing P/E uses pre-tax earnings', 'Forward P/E uses consensus estimates of expected higher future earnings, making the denominator larger relative to today\'s price'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'Forward P/E uses analyst estimates for the next 12 months of expected EPS. For growing companies, future earnings are expected to be higher than today\'s, so dividing the same price by a larger earnings estimate produces a lower P/E.',
+        },
+        {
+          q: 'From the examples table, which company trades at the largest premium to its sector average P/E?',
+          options: ['Growth Tech, at 40x vs sector average 28x (+43% premium)', 'Mature Retail, at 10x vs sector average 12x (-17% discount)', 'Utility, at 15x vs sector average 16x (-6% discount)', 'Pharma, at 15x vs sector average 18x (-17% discount)'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Growth Tech trades at 40x vs its sector average of 28x, a 43% relative premium - the largest in the table. A 43% premium implies investors expect significantly higher growth or quality than the sector peer group.',
+        },
+        {
+          q: 'What does a very low P/E potentially signal, according to the pitfalls section?',
+          options: ['The company consistently beats analyst EPS estimates, reducing the apparent denominator', 'Investors anticipate high future earnings growth that will quickly normalise the ratio', 'The stock may be a value trap - a business in terminal decline rather than a genuine bargain', 'The company has high free cash flow that is not yet captured in reported EPS'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section warns that "a very low P/E can signal value or a value trap - a business in terminal decline." A low P/E alone is not a buy signal without understanding why earnings are what they are.',
+        },
+        {
+          q: 'Why is EV/EBITDA preferred over P/E for comparing companies with different levels of leverage?',
+          options: ['EV/EBITDA only measures equity value while P/E includes the full enterprise value, making P/E less comparable', 'EV/EBITDA is capital-structure neutral because it uses enterprise value and pre-tax, pre-depreciation earnings, while P/E is affected by leverage and tax', 'P/E can only be used for profitable companies whereas EV/EBITDA applies to both profitable and loss-making businesses', 'EV/EBITDA is always a lower multiple than P/E, making it the more conservative valuation metric'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states EV/EBITDA uses Enterprise Value (equity + debt - cash) and pre-tax, pre-depreciation earnings, making it capital-structure neutral. P/E is affected by leverage (interest expense reduces earnings) and tax, making cross-company comparison unreliable when leverage differs.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'eps': {
@@ -2499,6 +2779,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the DuPont formula for ROE?', a: 'ROE = Net Profit Margin × Asset Turnover × Equity Multiplier, or equivalently: (Net Income / Revenue) × (Revenue / Total Assets) × (Total Assets / Equity). The extended 5-factor DuPont further decomposes Net Profit Margin into Tax Burden × Interest Burden × EBIT Margin, enabling even more granular analysis of what drives the difference in ROE between two companies.' },
       { q: 'Why can ROE be misleadingly high?', a: 'Three common distortions: (1) High leverage inflates ROE by shrinking the equity denominator - a company that borrows heavily will show high ROE even with mediocre profitability. (2) Share buybacks funded by debt reduce equity, which mechanically raises ROE without improving the underlying business. (3) Goodwill write-downs or large losses reduce equity permanently, which paradoxically raises future ROE calculations on the remaining smaller equity base.' },
     ],
+    quiz: {
+      topic: 'ROE',
+      questions: [
+        {
+          q: 'What does Return on Equity (ROE) measure?',
+          options: ['The total return generated per dollar of total assets, including both debt- and equity-funded assets', 'The annualised dividend income expressed as a percentage of the current stock price', 'How many dollars of net income a company generates for each dollar of shareholders\' equity', 'The operating profit margin before interest and tax relative to the book value of the business'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'ROE measures how many dollars of net income a company generates for each dollar of shareholders\' equity. Shareholders\' equity is the accounting value of assets minus liabilities - what would remain for equity holders if all assets were liquidated at book value and all debts paid.',
+        },
+        {
+          q: 'What are the three multiplicative components in the DuPont decomposition of ROE?',
+          options: ['Net Profit Margin x Asset Turnover x Equity Multiplier', 'Gross Profit Margin x Revenue Growth Rate x Debt-to-Equity Ratio', 'EBITDA Margin x Capital Efficiency x Financial Leverage Ratio', 'Operating Margin x Asset Utilisation x Interest Coverage Ratio'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that DuPont breaks ROE into Net Profit Margin (Net Income / Revenue) x Asset Turnover (Revenue / Total Assets) x Equity Multiplier (Total Assets / Equity). This framework diagnoses whether ROE is driven by profitability, efficiency, or leverage.',
+        },
+        {
+          q: 'From the examples table, which company achieves the highest ROE, and what is its primary driver?',
+          options: ['The bank at 12% ROE, driven primarily by extreme financial leverage (10x equity multiplier)', 'The retailer at 22.5% ROE, driven by asset turnover and leverage combined', 'The industrial company at 30% ROE, driven by a balanced combination of margin, turnover, and leverage', 'The consumer brand at 43.2% ROE, driven primarily by high net profit margin (18%)'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows the consumer brand at 43.2% ROE as the highest, with margin listed as the primary driver. Its 18% net margin combined with 1.2x asset turnover and only 2.0x equity multiplier produces the superior result without extreme leverage.',
+        },
+        {
+          q: 'Why can high ROE driven by high leverage be misleading, according to the pitfalls section?',
+          options: ['Companies with large equity multipliers typically have lower P/E ratios, understating true profitability for investors', 'The company is amplifying returns through debt, which also amplifies losses in downturns - high debt with a small equity base carries significant bankruptcy risk', 'High leverage increases the equity denominator, which artificially raises the ROE figure beyond real operational performance', 'Debt reduces interest income on the balance sheet, offsetting the leverage benefit in the DuPont calculation'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that a company with a $5M equity base and $100M in debt will show extreme ROE on any net income, but this capital structure carries significant bankruptcy risk. Debt amplifies both gains and losses, so always examine ROE alongside the debt-to-equity ratio.',
+        },
+        {
+          q: 'According to the FAQ, what three distortions can make ROE misleadingly high?',
+          options: ['Revenue recognition timing, depreciation method choices, and management compensation structures that reduce reported equity', 'Poor earnings quality, declining asset turnover, and below-market tax rates that inflate net income in the denominator', 'High leverage shrinking the equity denominator, share buybacks funded by debt reducing equity, and goodwill write-downs permanently reducing equity', 'Aggressive inventory write-ups, capitalising operating expenses, and extending accounts payable to boost short-term working capital'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ lists three distortions: (1) high leverage reduces the equity denominator, (2) share buybacks funded by debt mechanically reduce equity without improving the business, and (3) goodwill write-downs or large losses permanently reduce equity, paradoxically raising future ROE calculations.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
 
@@ -2525,6 +2840,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between ROA and ROE?', a: 'ROA uses total assets (debt + equity) as the denominator; ROE uses only shareholders\' equity. Because debt is included in total assets, ROA is unaffected by how the business is financed - it measures pure operational efficiency. ROE is amplified by leverage: a company with ROA of 5% and 4x leverage shows 20% ROE. The gap between a company\'s ROE and ROA directly reflects the impact of its financial leverage.' },
       { q: 'Why do banks have such low ROA compared to other industries?', a: 'Banks\' business model requires holding large asset bases - loans, securities, reserves - to generate their income. A bank might hold $100 of assets (mostly loans) for every $1 of equity. Net income of $1 on $100 of assets is 1% ROA, but against $8 of equity it is 12.5% ROE. The low ROA is structural and expected; it does not indicate poor performance. This is why bank analysts focus on ROE and Net Interest Margin rather than ROA.' },
     ],
+    quiz: {
+      topic: 'ROA',
+      questions: [
+        {
+          q: 'Why is ROA not inflated by how a business is financed, unlike ROE?',
+          options: ['ROA uses EBIT (earnings before interest and tax), excluding financing costs from the numerator entirely', 'ROA measures only tangible assets, excluding financial instruments from the denominator', 'ROA compares operating cash flow to total assets, bypassing accrual accounting entirely', 'ROA uses total assets - funded by both debt and equity holders - in the denominator, not just shareholders\' equity'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states that because both equity holders and debt holders\' contributions are in the denominator (total assets), ROA is not inflated by borrowing. This is what makes ROA fundamentally different from ROE.',
+        },
+        {
+          q: 'What is the mathematical relationship between ROA and ROE?',
+          options: ['ROE = ROA x Equity Multiplier (Total Assets / Equity)', 'ROE = ROA / Equity Multiplier (Equity / Total Assets)', 'ROA = ROE x Asset Turnover (Revenue / Total Assets)', 'ROE = ROA plus the Debt-to-Equity ratio as an additive leverage premium'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states ROE = ROA x Equity Multiplier, where the equity multiplier is Total Assets / Equity. This shows that two companies with identical ROA can report very different ROE simply because one uses more debt financing.',
+        },
+        {
+          q: 'From the examples table, three companies all show 25% ROE but with different ROA. Which achieves 25% ROE with the lowest leverage?',
+          options: ['The bank at 1.0% ROA and ~12x equity multiplier', 'The consumer brand at 14.3% ROA and ~1.7x equity multiplier', 'The asset-light SaaS at 25% ROA and equity multiplier ~1x', 'The retailer at 7.5% ROA and ~3.3x equity multiplier'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows the asset-light SaaS at 25% ROA with an equity multiplier of approximately 1x - meaning its 25% ROE is driven entirely by operational efficiency with no leverage amplification.',
+        },
+        {
+          q: 'The pitfalls section warns ROA can be misleading for companies using heavy operating leases. Why?',
+          options: ['Operating lease payments are classified as interest expense, inflating the numerator of ROA compared to companies that own assets outright', 'Under IFRS 16 and ASC 842, lease assets are now capitalised on the balance sheet, inflating total assets and depressing ROA relative to pre-2019 figures or asset-owning companies', 'Operating leases extend the effective useful life of assets, causing depreciation to be understated and net income to be overstated', 'Companies with heavy operating leases record higher revenues from the assets than companies that own identical assets, creating a numerator bias'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that under IFRS 16 and ASC 842, lease assets are now capitalised on the balance sheet, inflating total assets and depressing ROA relative to pre-2019 figures or companies that own rather than lease.',
+        },
+        {
+          q: 'According to the FAQ, why is a bank\'s 1.0-1.5% ROA not considered poor performance?',
+          options: ['Banks are exempted from standard ROA benchmarks because their regulatory capital requirements artificially inflate total assets', 'Bank ROA is calculated on a pre-tax basis unlike other industries, making 1.0% equivalent to approximately 5% on an after-tax comparable basis', 'Banks hold large asset bases (loans, securities, reserves) to generate income; 1% ROA against ~8x equity produces 12.5% ROE - the low ROA is structural and expected, not a sign of poor performance', 'Deposit liabilities are excluded from total assets when calculating bank ROA, making the metric non-comparable to non-financial company ROA figures'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ explains that banks hold $100 of assets for every $1 of equity; net income of $1 on $100 assets is 1% ROA but 12.5% ROE. The low ROA is structural and expected, which is why bank analysts focus on ROE and Net Interest Margin rather than ROA.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'roce': {
@@ -2550,6 +2900,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is a good ROCE?', a: 'ROCE should exceed the company\'s WACC (Weighted Average Cost of Capital) to be value-creating. For capital-intensive regulated industries (utilities, toll roads), ROCE of 8-12% may be excellent. For asset-light businesses, ROCE of 25-40%+ is achievable. A commonly cited rule of thumb is ROCE above 15% is strong for most non-financial industries. Always benchmark within the same sector and stage of the capex cycle.' },
       { q: 'What is the difference between ROCE and ROE?', a: 'ROCE uses EBIT (pre-interest, pre-tax) and includes long-term debt in the denominator - giving a leverage-neutral view of operating efficiency. ROE uses net income (after interest and tax) and uses only equity in the denominator - showing the return to shareholders after the cost of debt has been paid. ROCE is better for operational comparison across businesses with different capital structures; ROE is better for evaluating returns from a shareholder perspective.' },
     ],
+    quiz: {
+      topic: 'ROCE',
+      questions: [
+        {
+          q: 'What makes ROCE capital-structure neutral compared to ROE?',
+          options: ['ROCE uses net income, which is identical regardless of how the business is financed', 'ROCE uses EBIT (operating profit before interest and tax), making it independent of financing decisions and tax jurisdiction', 'ROCE divides operating profit by total equity, excluding all debt from the denominator', 'ROCE measures only revenue-generating assets, excluding financial instruments from the denominator'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states that using EBIT rather than net income makes ROCE independent of how the business is financed and which tax jurisdiction it operates in. Interest expense and tax are excluded, so two identical operations with different debt levels show the same ROCE.',
+        },
+        {
+          q: 'According to the FAQ, how is Capital Employed calculated?',
+          options: ['Current Assets minus Current Liabilities (Net Working Capital)', 'Total Assets minus Long-term Debt (removing the effect of external financing)', 'Shareholders\' Equity plus Short-term Debt (all equity and near-term obligations)', 'Total Assets minus Current Liabilities, which equals Shareholders\' Equity plus Long-term Debt'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ defines Capital Employed as Total Assets minus Current Liabilities, which is equivalent to Shareholders\' Equity plus Long-term Debt. Current liabilities are excluded because they represent short-term funding rather than invested capital.',
+        },
+        {
+          q: 'What is the key benchmark for deciding whether a ROCE figure creates economic value?',
+          options: ['ROCE must exceed the Weighted Average Cost of Capital (WACC) - if ROCE > WACC the business creates value; if below, it destroys value even with positive accounting profits', 'ROCE must exceed the company\'s Return on Equity (ROE) - if ROCE is higher the business is more operationally efficient than its financing structure implies', 'ROCE must exceed 20%, which is the accepted minimum threshold across capital-intensive industries worldwide', 'ROCE must exceed the company\'s dividend yield, confirming enough operating profit to sustain distributions to shareholders'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states that if ROCE exceeds WACC the business is creating economic value; if ROCE falls below WACC it is destroying value even if accounting profits look positive. This is the foundation of Economic Value Added (EVA) analysis.',
+        },
+        {
+          q: 'Why does a company with old, fully depreciated assets show artificially high ROCE, according to the pitfalls section?',
+          options: ['Older assets generate more revenue as they have been refined through years of operational use', 'Old assets attract lower maintenance costs, improving EBIT and therefore the numerator of ROCE', 'The denominator (Capital Employed) shrinks through accumulated depreciation without any improvement in operating efficiency, inflating the ratio', 'Fully depreciated assets are removed from the balance sheet entirely, reducing Capital Employed to near zero'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states that a company with fully depreciated assets shows very high ROCE because the denominator has shrunk through years of depreciation. A company mid-way through a major capex cycle will conversely show depressed ROCE, so always compare peers at similar capex cycle stages.',
+        },
+        {
+          q: 'According to the FAQ, when is ROCE a better comparison metric than ROE?',
+          options: ['When comparing asset-light industries such as software and professional services, where book equity is very small', 'When comparing operational efficiency across businesses with different capital structures, since ROCE is leverage-neutral while ROE is amplified by debt', 'When evaluating returns from a shareholder perspective, since ROCE captures the debt financing effect that directly impacts shareholder value', 'When a company has negative shareholders\' equity due to buybacks, making the ROE denominator unreliable for analysis'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states ROCE is better for operational comparison across businesses with different capital structures, while ROE is better for evaluating returns from a shareholder perspective. ROCE uses EBIT and includes debt in the denominator, making it unaffected by leverage variation.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'knot': {
@@ -2799,6 +3184,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between RPM and CPM?', a: 'RPM (Revenue Per Mille) is a publisher metric - your earnings per 1,000 page views. CPM (Cost Per Mille) is an advertiser metric - what advertisers pay per 1,000 ad impressions. They measure the same thing from different perspectives. Your RPM will always be lower than the advertiser\'s CPM because Google keeps a revenue share.' },
       { q: 'How do I increase my AdSense RPM?', a: 'The three main levers are: target higher-CPC niches (finance and tech content earns 5-10x more per click than entertainment), optimise ad placement (in-content ads above the fold outperform sidebar ads), and build US/UK/CA/AU traffic (tier-1 countries deliver the highest advertiser CPCs by a large margin).' },
     ],
+    quiz: {
+      topic: 'RPM',
+      questions: [
+        {
+          q: 'How is RPM (Revenue Per Mille) calculated?',
+          options: ['Total earnings divided by ad impressions, multiplied by 1,000', 'Click-through rate multiplied by cost per click, multiplied by 1,000 page views', 'Total earnings divided by total page views, multiplied by 1,000', 'Total ad revenue divided by the number of active ad units, multiplied by 1,000'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states RPM is calculated by dividing total earnings by page views, then multiplying by 1,000. For example, $50 earned from 10,000 page views gives an RPM of $5.00.',
+        },
+        {
+          q: 'From the niche RPM table, which content category earns the highest typical RPM?',
+          options: ['Finance / Insurance at $15-$40', 'Technology / Software at $10-$25', 'Health / Medical at $8-$20', 'Lifestyle / Food / Travel at $3-$8'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows Finance / Insurance at $15-$40 RPM, the highest range in the table. This reflects the high CPC advertisers pay in finance-related keyword auctions.',
+        },
+        {
+          q: 'Why does the pitfalls section recommend analysing RPM over 30+ days rather than a shorter window?',
+          options: ['Google AdSense only finalises RPM data after a 30-day processing window for accuracy', 'RPM includes estimated earnings subject to advertiser verification within the first 30 days', 'New content takes 30 days to attract competitive ad bidding, making early RPM unrepresentative', 'A single day with unusually high or low traffic can distort the figure; 30+ days provides a reliable baseline'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section states that a single day with unusually high or low traffic can distort the RPM figure. Always analyse RPM over 30+ days to get a reliable baseline.',
+        },
+        {
+          q: 'What is the key difference between RPM and CPM?',
+          options: ['CPM is calculated per 1,000 page views like RPM, but only counts pages where at least one ad was displayed', 'RPM is your publisher earnings per 1,000 page views; CPM is what advertisers pay per 1,000 ad impressions - your RPM will always be lower because Google keeps a revenue share', 'RPM measures all page views including those with no ads loaded; CPM only counts pages where ads were successfully displayed', 'CPM is the gross figure before tax withholding; RPM is the net figure after tax deductions for the publisher\'s country'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ explains that RPM is a publisher metric (earnings per 1,000 page views) while CPM is an advertiser metric (spend per 1,000 ad impressions). RPM is always lower than CPM because Google retains its revenue share before paying the publisher.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'cpc': {
@@ -2938,6 +3352,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do I remove sales tax from a total price?', a: 'Divide the tax-inclusive total by (1 + Tax Rate / 100). For a $108.00 total at 8%: $108 / 1.08 = $100.00 pre-tax. The tax was $8.00. Never subtract the percentage directly from the total - that method overstates the tax amount and gives the wrong original price.' },
       { q: 'Which US states have no sales tax?', a: 'Five states have no statewide sales tax: Alaska, Delaware, Montana, New Hampshire, and Oregon. Delaware, Montana, New Hampshire, and Oregon also have no local sales taxes. Alaska allows local municipalities to levy their own sales taxes, so many Alaskan cities do charge rates above 0%.' },
     ],
+    quiz: {
+      topic: 'sales tax',
+      questions: [
+        {
+          q: 'How does the sales tax collection mechanism work in the US?',
+          options: ['The government bills buyers directly based on annual spending reported on income tax returns', 'The seller adds the tax to the purchase price, collects it from the buyer, and remits it to the state or local government', 'Retailers pay a flat annual license fee to the state in lieu of collecting individual transaction taxes', 'Buyers self-report and pay sales tax at year-end based on total taxable purchases during the fiscal year'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states the seller adds the tax to the purchase price, collects it from the buyer, and remits it to the state or local government. This distinguishes sales tax from self-assessed consumption taxes.',
+        },
+        {
+          q: 'How does sales tax differ from income tax and property tax?',
+          options: ['Sales tax is a business expense tax on commercial transactions; income tax is a personal tax on wages only', 'Sales tax is collected by the federal government; income tax is collected by state and local governments', 'Sales tax is applied to profit from a sale; income tax taxes the full sale price including cost of goods', 'Sales tax taxes spending at the moment of purchase; income tax taxes earnings; property tax taxes asset ownership'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition states: "Unlike income tax (which taxes earnings) or property tax (which taxes assets), sales tax taxes spending at the moment of purchase." It is often described as regressive because lower-income households spend a larger share of income on taxable goods.',
+        },
+        {
+          q: 'From the examples table, what is the total price of a $200.00 item at 7.25% sales tax?',
+          options: ['$207.25', '$213.00', '$214.50', '$215.00'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows $200.00 at 7.25% = $14.50 tax, for a total of $214.50. Tax is calculated as $200.00 x 0.0725 = $14.50.',
+        },
+        {
+          q: 'A receipt shows a total of $108 at 8% sales tax. What is the correct method to find the pre-tax price?',
+          options: ['Divide $108 by 1.08, which gives $100.00', 'Subtract 8% of $108 ($8.64) from $108, which gives $99.36', 'Subtract the tax rate (8%) from 100% to get 92%, then multiply $108 by 0.92', 'Divide $108 by 0.08 to find the tax base, then subtract the tax'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The pitfalls section states the correct method is $108 / 1.08 = $100.00. Subtracting 8% of the total ($8.64) gives $99.36, which is wrong. Always divide by (1 + rate) to reverse out sales tax.',
+        },
+        {
+          q: 'Which five US states have no statewide sales tax?',
+          options: ['Texas, Oregon, Delaware, Montana, and Alaska', 'Alaska, Delaware, Montana, New Hampshire, and Oregon', 'Nevada, Delaware, Wyoming, Montana, and New Hampshire', 'Oregon, New Hampshire, Alaska, Hawaii, and Delaware'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ lists the five states with no statewide sales tax as Alaska, Delaware, Montana, New Hampshire, and Oregon. Alaska allows local municipalities to levy their own rates, so some Alaskan cities do charge above 0%.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'value-added-tax': {
@@ -2961,6 +3410,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do I remove VAT from a gross price?', a: 'Divide the gross price by (1 + VAT Rate / 100). For £120 gross at 20% VAT: £120 / 1.20 = £100 net. The VAT was £20. Never subtract the percentage directly from the gross - that method overstates the tax and gives the wrong net price every time.' },
       { q: 'What is the difference between VAT and GST?', a: 'VAT and GST are the same type of tax with different names. Both are multi-stage consumption taxes where businesses reclaim input tax. Europe, the UK, and most of Africa and Asia call it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST. The calculation formula is identical.' },
     ],
+    quiz: {
+      topic: 'VAT',
+      questions: [
+        {
+          q: 'What fundamentally distinguishes VAT from sales tax?',
+          options: ['VAT is paid only by manufacturers and wholesalers, not by retailers', 'VAT is a flat rate applied uniformly across all countries, while sales tax rates vary by jurisdiction', 'VAT is collected at every stage of production and distribution, while sales tax is collected only at the final retail sale', 'VAT applies only to goods, while sales tax applies to both goods and services'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Unlike sales tax, which is collected only at the final retail sale, VAT is collected at every stage of production and distribution. Each business in the chain claims back the VAT it paid on inputs, so only the net value added at each stage is actually taxed.',
+        },
+        {
+          q: 'Who ultimately bears the full cost of VAT?',
+          options: ['The end consumer, who cannot reclaim it', 'The retailer, as the last business to collect VAT before the final sale', 'Each business in the supply chain pays an equal share of the total VAT collected', 'The government nets out the cost through the input tax credit system'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The end consumer bears the full VAT cost because they cannot reclaim it. For a business, VAT is broadly neutral: they collect it on sales and reclaim it on purchases.',
+        },
+        {
+          q: 'According to the examples table, what is the gross (VAT-inclusive) price for a €500.00 item in Germany at 19% VAT?',
+          options: ['€519.00', '€550.00', '€590.00', '€595.00'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows Germany at 19% VAT: net €500.00, VAT amount €95.00, gross price €595.00. (€500 x 0.19 = €95; €500 + €95 = €595.)',
+        },
+        {
+          q: 'What is the correct way to extract the net price from a £120 gross price that includes 20% VAT?',
+          options: ['Subtract the VAT percentage directly: £120 - (£120 x 0.20) = £96.00', 'Divide the gross price by (1 + the VAT rate): £120 / 1.20 = £100.00', 'Multiply the gross price by the VAT rate to find the tax, then subtract: £120 - £24 = £96.00', 'Divide the gross price by the VAT rate only: £120 / 0.20 = £600.00'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states you must divide the gross price by (1 + rate). £120 / 1.20 = £100.00 net. Subtracting 20% of the gross (£24) gives £96, which is wrong because it treats £120 as the base rather than as the gross already containing the tax.',
+        },
+        {
+          q: 'According to the FAQ, what is the relationship between VAT and GST?',
+          options: ['GST is a simplified version of VAT with fewer collection stages and lower administration costs', 'VAT applies to goods only, while GST extends the same framework to services', 'VAT and GST are the same type of tax with different names; both use an identical calculation formula', 'GST replaced VAT in most countries after 2010 due to its lower compliance burden for small businesses'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ confirms VAT and GST are the same type of tax with different names. Europe, the UK, and most of Africa and Asia call it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST. The calculation formula is identical.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'gst': {
@@ -3212,6 +3696,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is time and a half the same everywhere?', a: 'No. The 1.5x rate is the US federal standard under the FLSA, but other countries use different multipliers. France pays 1.25x for hours 36-43 and 1.5x beyond 43. Japan uses 1.25x for standard overtime and 1.35x on weekends. Australia starts at 1.5x but moves to 2x after the first two overtime hours.' },
       { q: 'Does time and a half apply to bonuses?', a: 'Non-discretionary bonuses (e.g. attendance or production bonuses) must be included in the regular rate of pay before calculating overtime, which can raise the effective overtime rate above the simple 1.5x of base wages. Discretionary bonuses paid at the employer\'s sole discretion are excluded from the regular rate.' },
     ],
+    quiz: {
+      topic: 'time and a half',
+      questions: [
+        {
+          q: 'What does "time and a half" mean as an overtime rate?',
+          options: ['1.5 times the pre-tax wage after payroll deductions are removed from the base calculation', '1.25 times the regular hourly wage, representing 25% additional pay on top of normal earnings', '1.5 times the regular hourly wage - normal time (1x) plus an additional half (0.5x), totalling 1.5x', '2 times the regular hourly wage, required for all overtime under US federal law'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states time and a half equals 1.5 times the regular hourly wage. The name reflects the structure: normal time (1x) plus an additional half (0.5x). At $20/hr, time and a half is $30/hr.',
+        },
+        {
+          q: 'From the examples table, what is the time-and-a-half rate for an employee earning $20/hr?',
+          options: ['$30.00/hr', '$28.00/hr', '$25.00/hr', '$32.50/hr'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows $20/hr regular rate becomes $30.00/hr at time and a half, with $10.00 extra earned per overtime hour. This is calculated as $20 x 1.5 = $30.',
+        },
+        {
+          q: 'The pitfalls section warns 1.5x is not universal outside the US. Which countries are mentioned as starting at a lower rate?',
+          options: ['Australia (1.0x for the first two hours) and Germany (1.1x on weekdays)', 'Canada (1.25x on statutory holidays) and the UK (1.1x for standard overtime)', 'Germany (1.2x standard) and Japan (1.35x on weekday overtime)', 'France and Japan, which both start at 1.25x for standard overtime hours'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section states that France starts at 1.25x and Japan at 1.25x - both lower than the US 1.5x minimum. India is also mentioned as requiring 2x, which is higher than 1.5x.',
+        },
+        {
+          q: 'According to the FAQ, which types of bonuses must be included when calculating the overtime regular rate?',
+          options: ['Discretionary bonuses paid at the employer\'s sole discretion, such as year-end performance bonuses', 'Non-discretionary bonuses such as attendance or production bonuses, which can raise the effective overtime rate above the simple 1.5x of base wages', 'All bonuses, whether discretionary or non-discretionary, are included in the regular rate for overtime purposes', 'Only signing bonuses paid in the first year of employment must be included in the regular rate calculation'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states that non-discretionary bonuses (such as attendance or production bonuses) must be included in the regular rate of pay before calculating overtime. Discretionary bonuses paid at the employer\'s sole discretion are excluded.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'fica': {
@@ -4008,6 +4521,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why does most of the early mortgage payment go to interest?', a: 'Because interest is charged on the outstanding balance, and the balance starts at its maximum - the full loan amount. At 7%, a $300,000 balance generates $1,750 of interest in Month 1. After that payment, only $246 is applied to the balance. The next month\'s interest is calculated on $299,754 - a difference of just $1.43. The balance falls slowly at first, so the interest portion shrinks slowly. This accelerates as the balance compounds downward through the later years of the loan.' },
       { q: 'Does paying extra principal change the monthly P&I payment?', a: 'No, for a standard amortising fixed-rate loan. Extra payments reduce the outstanding balance and shorten the remaining term, but the contractual monthly payment stays the same - the loan simply ends earlier. Some lenders offer loan recasting (re-amortising at the lower balance to produce a reduced monthly payment), but this typically requires a lump sum and a recast fee. A standard extra payment does not trigger recasting automatically.' },
     ],
+    quiz: {
+      topic: 'principal and interest',
+      questions: [
+        {
+          q: 'What is the principal component of a loan payment?',
+          options: ['The lender\'s charge for extending credit, calculated on the remaining balance', 'The total monthly payment minus property taxes and insurance', 'The portion that reduces the outstanding loan balance', 'The fixed interest charged at the start of the loan term'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Principal is the portion of each payment that reduces the outstanding balance - the amount originally borrowed. Interest is the separate charge for extending credit, calculated on the remaining balance each period.',
+        },
+        {
+          q: 'In Month 1 of a $300,000, 30-year mortgage at 7%, approximately what percentage of the $1,996 payment goes to principal?',
+          options: ['12.3%', '34.9%', '50.0%', '61.7%'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Only $246 of Month 1\'s $1,996 payment (12.3%) reduces the balance; $1,750 (87.7%) is interest. Because interest is charged on the full $300,000 balance, the interest charge is at its maximum on day one.',
+        },
+        {
+          q: 'Why do extra principal payments made in Years 1-5 of a mortgage save more total interest than the same payment made in Year 20?',
+          options: ['The interest rate applied to the loan is higher in the early years', 'Early payments are processed before interest accrues each month', 'The mortgage balance is not yet accruing interest in the first five years', 'They reduce the balance on which interest compounds for the entire remaining term'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'An extra payment in Year 1 lowers the balance that generates interest for the next 29 years. The same payment in Year 20 only avoids interest on a much smaller remaining balance for 10 years - far less impact.',
+        },
+        {
+          q: 'After 5 years of payments on a $300,000, 30-year mortgage at 7%, how much has the outstanding balance actually fallen?',
+          options: ['About $60,000', 'About $17,600', 'About $40,000', 'About $50,000'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Despite paying $119,760 over five years, the balance falls by only roughly $17,600 - meaning more than 85 cents of every early dollar went to interest, not equity. This is the mathematical structure of amortising loans, not a lender-specific feature.',
+        },
+        {
+          q: 'For a standard fixed-rate amortising loan, what happens to the monthly P&I payment when a borrower makes an extra principal payment?',
+          options: ['It permanently decreases to reflect the lower balance', 'It temporarily decreases for the following month only', 'It stays the same but the loan ends earlier', 'The lender automatically recasts the loan to a lower payment'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Extra payments reduce the outstanding balance and shorten the remaining term, but the contractual monthly payment stays the same. Loan recasting - which would reduce the payment - requires a separate lump sum and recast fee and does not happen automatically.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'flsa-duties-test': {
@@ -4078,6 +4626,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why do high-growth companies trade at higher multiples?', a: 'A multiple is a simplified discounted cash flow. A faster-growing business will generate substantially more earnings in years 3-7 than it does today. Buyers pay for those future earnings now, driving up the current multiple. A SaaS company growing 30% per year commands 20x EV/Revenue because investors are pricing in the earnings it does not yet have. A business with 0% growth commands a lower multiple because future earnings will look much like current earnings.' },
       { q: 'Are multiples useful for valuing private companies?', a: 'Yes - comparable company multiples are one of the three main methods for private business valuation (alongside DCF and precedent transactions). Apply the public market multiple for the closest peer group, then apply a private company discount of typically 15-30% to account for illiquidity and concentration risk. The discount narrows as the private company grows larger and more institutional in its operations.' },
     ],
+    quiz: {
+      topic: 'valuation multiples',
+      questions: [
+        {
+          q: 'What does a valuation multiple express?',
+          options: ['A business\'s current market capitalisation divided by its book value of assets', 'The premium an acquirer pays above the target\'s last reported share price', 'A company\'s expected earnings growth rate over the next five years', 'The price of a business as a multiple of a financial metric such as EBITDA, revenue, or earnings'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'A valuation multiple is a ratio that expresses the price of a business as a multiple of a financial metric - most commonly EBITDA, revenue, earnings, or cash flow. The metric chosen depends on the nature of the business.',
+        },
+        {
+          q: 'Why must Enterprise Value (EV) be used as the numerator when the denominator is EBITDA?',
+          options: ['EBITDA belongs to all capital providers (debt and equity holders alike), so the numerator must reflect total business value including debt', 'EBITDA is a post-interest metric, so it belongs only to equity shareholders, requiring market cap as the numerator', 'EV and EBITDA both exclude non-cash items, making them conceptually consistent in the same way net income and market cap are consistent', 'Using market cap with EBITDA is acceptable when comparing companies in the same sector with similar debt levels'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states the cardinal rule: always match numerator to denominator. EBITDA belongs to all capital providers, so you must use Enterprise Value (equity + net debt) in the numerator. Dividing EV by Net Income - or Market Cap by EBITDA - produces a meaningless ratio.',
+        },
+        {
+          q: 'According to the examples table, which multiple is typically used to value a mature manufacturer, and what is its typical range?',
+          options: ['P/E ratio (market cap / net income), 15x - 25x', 'Price/Book (market cap / book value), 0.8x - 2.0x', 'EV/EBITDA, 6x - 12x', 'EV/Revenue, 5x - 15x'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows that mature manufacturers are valued using EV/EBITDA in a range of 6x to 12x. EBITDA multiples suit profitable, mature companies where depreciation and amortization are large relative to earnings.',
+        },
+        {
+          q: 'What does the pitfalls section warn about using pre-2022 benchmarks to value a 2025 business?',
+          options: ['Pre-2022 multiples used book value denominators, making them incompatible with today\'s EBITDA-based standards', 'It can overstate value by 30-50% because multiples inflate when interest rates are low and compress when rates rise', 'Pre-2022 transactions involved primarily private equity buyers who pay structurally higher multiples than strategic acquirers', 'Using older benchmarks understates value because companies were smaller then and growth expectations have since risen'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Multiples are highly sensitive to the interest rate environment. Low rates inflate multiples (future cash flows are discounted less); high rates compress them. Using pre-2022 low-rate benchmarks to value a 2025 business can overstate value by 30-50%.',
+        },
+        {
+          q: 'When applying public market multiples to value a private company, what discount does the FAQ recommend and why?',
+          options: ['5-10% to account for the extra reporting costs of remaining private', '35-50% because private companies are typically much smaller than their public peers', 'No discount; public and private multiples are directly comparable when the business model matches', '15-30% to account for illiquidity and concentration risk'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states to apply the public market multiple for the closest peer group, then apply a private company discount of typically 15-30% to account for illiquidity and concentration risk. The discount narrows as the private company grows larger and more institutional in its operations.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'metric-system': {
