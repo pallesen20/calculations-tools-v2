@@ -3,6 +3,7 @@ import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   main:    "$$\\% \\text{ Decrease} = \\frac{\\text{Old} - \\text{New}}{\\text{Old}} \\times 100$$",
@@ -13,16 +14,51 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',      label: 'How to use' },
-  { id: 'formula',         label: 'Percentage decrease formula' },
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',             label: 'Percentage decrease formula' },
   { id: 'examples',        label: 'Worked examples' },
   { id: 'reverse',         label: 'Reverse: finding the new value' },
   { id: 'vs-increase',     label: 'Decrease vs. increase asymmetry' },
   { id: 'reference-table', label: 'Reference table' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'In the percentage decrease formula, what value is always the denominator?',
+    options: ['The absolute difference between old and new', 'The original (old) value', 'The average of old and new', 'The new (lower) value'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The formula divides (Old - New) by the original value. Using the new value as the denominator always overstates the decrease - in the 200-to-150 example it gives 33.3% instead of the correct 25%.',
+  },
+  {
+    q: 'A jacket originally costs $89.99 and is on sale for $62.99. What is the discount percentage?',
+    options: ['25%', '35%', '20%', '30%'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '(89.99 - 62.99) / 89.99 × 100 = 27 / 89.99 × 100 ≈ 30%. You can verify it: 89.99 × 0.70 = 62.99.',
+  },
+  {
+    q: 'A value drops by 20% and then rises by 20%. Where does it end up relative to the original?',
+    options: ['4% below the original', 'Exactly at the original', '4% above the original', '2% below the original'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'A 20% decrease gives a multiplier of 0.80; a 20% increase on that gives 0.80 × 1.20 = 0.96 - still 4% below the start. The base changes between operations, so the two moves do not cancel.',
+  },
+  {
+    q: 'According to the reference table, what multiplier do you apply to find a value after a 25% decrease?',
+    options: ['0.80', '0.70', '0.75', '0.65'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'A 25% decrease leaves 75% of the original, so the multiplier is 0.75. Multiplying any starting value by 0.75 gives the reduced value directly.',
+  },
+  {
+    q: 'What is the maximum possible percentage decrease for a positive starting value?',
+    options: ['200%', '100%', '150%', 'There is no limit'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'A 100% decrease reduces a value to exactly zero. Going below zero is a sign reversal handled by percentage change formulas, not percentage decrease.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -85,7 +121,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Percentage Decrease Calculator"
   metaTitle="Percentage Decrease Calculator | Formula & Examples ᐅ"
@@ -104,27 +139,23 @@ const schema = [
           <h2>Calculate Percentage Decrease</h2>
           <p>Enter the original value and the new (lower) value</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pd-original">Original Value</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="pd-original" class="bmi-input" placeholder="e.g. 200" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pd-new">New Value</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="pd-new" class="bmi-input" placeholder="e.g. 150" />
           </div>
         </div>
-
         <div id="pd-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="pd-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage Decrease</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="pd-abs">-</div>
@@ -132,7 +163,6 @@ const schema = [
               <div class="lbm-card-badge" id="pd-badge">-</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
@@ -151,58 +181,46 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/percentage-decrease-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
         <p>Percentage decrease = <strong>((Old − New) ÷ Old) × 100</strong>. The original value is always the denominator. A positive result means the value fell; a negative result means it actually rose.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <h2 id="how-to-use">How to use this percentage decrease calculator</h2>
       <p>Enter the original (old) value and the new value. The percentage decrease appears instantly, along with the absolute change and a three-step breakdown of the calculation. If the new value is larger than the original, the result will be negative - indicating the value increased rather than decreased.</p>
-
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Picture a jacket on sale: it was $100 last week, now $75. The price dropped $25. To find the percentage decrease, ask what fraction of the original $100 the price fell - $25 out of $100 is 25%. The formula does exactly this: divide the drop by the original, then multiply by 100. The critical detail is always dividing by the original price, not the sale price.</p>
       <h2 id="formula">Percentage decrease formula</h2>
       <p>The percentage decrease formula measures how much a value has fallen relative to its original level:</p>
-
       <Formula expr={f.main} />
-
       <p>The original value is always the denominator. The numerator is (Old − New), so when the new value is smaller, the result is positive - confirming a real decrease. This is the mirror of the percentage increase formula, which uses (New − Old) in the numerator.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for percentage decrease</h2>
       <h3>Example 1: price reduction</h3>
       <p>A product price falls from 200 to 150. What is the percentage decrease?</p>
       <Formula expr={f.mainEx} />
       <p>The price decreased by <strong>25%</strong>.</p>
-
       <h3>Example 2: retail discount</h3>
       <p>A jacket is originally priced at 89.99 and is on sale for 62.99. What is the discount percentage?</p>
       <Formula expr={f.discEx} />
       <p>The discount is approximately <strong>30%</strong>. Note that "30% off 89.99" gives 89.99 × 0.70 = 62.99, confirming the calculation.</p>
-
-      <h2 id="reverse">Reverse: finding the new value after a known percentage decrease</h2>
+      <h3 id="reverse">Reverse: finding the new value after a known percentage decrease</h3>
       <p>If you know the original value and the percentage decrease and want to find the reduced value:</p>
-
       <Formula expr={f.reverse} />
-
       <p><strong>Example:</strong> What is 200 after a 25% decrease?</p>
       <Formula expr={f.revEx} />
-
       <p>The multiplier (1 − %/100) is the key: a 10% decrease multiplies by 0.90, a 25% decrease by 0.75, and a 50% decrease by 0.50 (halving the value).</p>
-
       <h2 id="vs-increase">Decrease and increase are not symmetrical</h2>
       <p>A common misconception is that a percentage decrease and a percentage increase of the same magnitude cancel each other out. They do not, because the base changes between operations.</p>
       <p><strong>Example:</strong> Start at 100. A 20% decrease gives 80. A 20% increase on 80 gives 96, not 100. To return to the original after a 20% decrease, you need a 25% increase - because 80 × 1.25 = 100.</p>
       <p>In general, to reverse a P% decrease you need an increase of P ÷ (100 − P) × 100 percent. For a 20% decrease: 20 ÷ 80 × 100 = 25%.</p>
-
+      <p>When I review quarterly performance reports for investing, this asymmetry is the most consistent source of errors. A team will report that results "recovered" after matching last quarter's percentage drop with the same percentage gain - but the figures are still below the starting point.</p>
+      <p>Running the multiplier takes five seconds and immediately shows the gap: 0.80 × 1.20 = 0.96, not 1.00.</p>
       <h2 id="reference-table">Percentage decrease reference table</h2>
       <p>The multiplier for each percentage decrease is the number you multiply the original value by to get the reduced value.</p>
-
+      <p>The table below shows different examples to better understand this.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -226,38 +244,32 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when calculating percentage decrease</h2>
       <h3>Using the new value as the denominator</h3>
       <p>The formula divides by the <em>original</em> value. Using the new value produces a larger, incorrect result. In the price example: (50 ÷ 150) × 100 = 33.3%, which overstates the decrease. The correct answer is 25% (dividing by the original 200).</p>
-
       <h3>Assuming a percentage decrease can exceed 100%</h3>
       <p>A percentage decrease is bounded at 100% - that is when the new value reaches zero. Values that go negative represent a different type of change (sign reversal) and are outside the normal domain of percentage decrease.</p>
-
       <h3>Confusing the decrease percentage with the remaining percentage</h3>
       <p>A 30% decrease leaves 70% of the original value. These two numbers (30 and 70) are complements that sum to 100. Confusing the decrease percentage with the remaining fraction is a common error in discount calculations.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>When I spot a percentage decrease that looks suspiciously large, the denominator is the first thing I check. Dividing by the new value instead of the original always inflates the result - in the 200-to-150 example, that mistake turns a 25% decrease into a 33% one.</p>
+      <h2 id="faq">Frequently asked questions about percentage decrease</h2>
       <h3>What is the formula for percentage decrease?</h3>
       <p>Percentage decrease = ((Original − New) ÷ Original) × 100. The original value is always the denominator.</p>
-
       <h3>How do you find the new value after a percentage decrease?</h3>
       <p>Multiply the original value by (1 − percentage ÷ 100). A 25% decrease on 200 gives 200 × 0.75 = 150.</p>
-
       <h3>Can a percentage decrease exceed 100%?</h3>
       <p>No. A 100% decrease reduces the value to exactly zero. Percentage decreases are bounded between 0% and 100% for positive starting values.</p>
-
       <h3>Is a 50% decrease followed by a 50% increase the same as the start?</h3>
       <p>No. A 50% decrease on 100 gives 50. A 50% increase on 50 gives 75, not 100. To return to the original after a 50% decrease, you need a 100% increase.</p>
-
       <h3>What is the difference between percentage decrease and percentage change?</h3>
       <p>Percentage change covers both increases and decreases in one formula with a signed result. Percentage decrease uses (Old − New) in the numerator, making it positive when the value falls. They use the same underlying formula, framed differently.</p>
-
       <h3>How do you calculate a discount percentage?</h3>
       <p>Subtract the sale price from the original price, divide by the original price, and multiply by 100. A product marked down from 90 to 63 has a discount of (27 ÷ 90) × 100 = 30%.</p>
-
+      <QuizBlock
+        topic="percentage decrease"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/percentage-calculator/decrease"
+      />
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator',          blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
@@ -269,10 +281,7 @@ const schema = [
         { path: '/math/percentage-calculator/decimal-to-percent',  blurb: 'Convert any decimal to a percentage - multiply by 100, with a reference table for common decimals.' },
         { path: '/date-calculator',                           blurb: 'Calculate days between dates - useful when the percentage decrease spans a defined time period.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/math/percentage-calculator/decrease" />
-
     </div>
   </div>
-
 </CalculatorLayout>
