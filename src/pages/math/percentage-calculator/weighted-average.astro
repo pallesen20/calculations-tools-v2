@@ -1,0 +1,298 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  main:    "$$\\bar{P}_w = \\frac{P_1 W_1 + P_2 W_2 + \\cdots + P_n W_n}{W_1 + W_2 + \\cdots + W_n}$$",
+  ex1:     "$$\\frac{60\\% \\times 200 + 80\\% \\times 50}{200 + 50} = \\frac{12{,}000 + 4{,}000}{250} = \\frac{16{,}000}{250} = 64\\%$$",
+  ex2:     "$$\\frac{80\\% \\times 30 + 90\\% \\times 10 + 70\\% \\times 60}{30 + 10 + 60} = \\frac{2{,}400 + 900 + 4{,}200}{100} = 75\\%$$",
+  ex3:     "$$\\frac{3\\% \\times 10{,}000 + 8\\% \\times 1{,}000}{10{,}000 + 1{,}000} = \\frac{300 + 80}{11{,}000} \\approx 3.45\\%$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',           label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',              label: 'Formula' },
+  { id: 'examples',             label: 'Worked examples' },
+  { id: 'vs-simple',            label: 'Weighted vs simple average' },
+  { id: 'when-to-use',          label: 'When to use weighted average' },
+  { id: 'common-mistakes',      label: 'Common mistakes' },
+  { id: 'faq',                  label: 'FAQs' },
+  { id: 'related-tools',        label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Weighted Average Percentage Calculator",
+    "url": "https://calculations.tools/math/percentage-calculator/weighted-average",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate the weighted average of multiple percentages. Enter each percentage with its sample size, marks, or hours to get the combined rate that accounts for unequal group sizes.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate a weighted average percentage",
+    "description": "Calculate the combined percentage rate across groups of different sizes in three steps.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter the first percentage", "text": "Type the percentage value for the first group (e.g. 60 for a 60% pass rate)." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter its weight", "text": "Enter the weight for that group - typically the sample size, total marks, hours, or any denominator used when the percentage was calculated." },
+      { "@type": "HowToStep", "position": 3, "name": "Add more groups", "text": "Click '+ Add row' to include additional groups. Repeat until all groups are entered." },
+      { "@type": "HowToStep", "position": 4, "name": "Read the result", "text": "The calculator shows the weighted average, the sum of products, and a step-by-step breakdown of the calculation." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a weighted average percentage?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A weighted average percentage is the combined rate across multiple groups, where each group's percentage is multiplied by its size before averaging. It gives larger groups more influence on the result, producing the same answer as calculating the overall rate directly from raw counts." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate a weighted average percentage?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply each percentage by its weight (sample size, marks, or hours). Sum all the products. Divide by the total of all weights. Example: 60% from 200 people and 80% from 50 people gives (60x200 + 80x50) / (200+50) = 16000/250 = 64%." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between a weighted average and a simple average of percentages?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A simple average treats every percentage equally regardless of group size. A weighted average adjusts for size. When groups are equal in size, both methods give the same result. When sizes differ, simple averaging overstates the smaller group's influence - using weighted average is the only correct approach." }
+      },
+      {
+        "@type": "Question",
+        "name": "When should I use a weighted average percentage?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Use weighted average whenever percentages come from groups of different sizes: pass rates from courses with different enrollments, grades from assignments worth different marks, click-through rates from campaigns with different impressions, or survey results from samples of different sizes." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use weighted average to calculate a course grade?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Enter each assignment's percentage score and its weight (the marks or percentage of the course it represents). If an essay is worth 30 marks and scored 80%, and a final exam is worth 60 marks and scored 70%, the weighted average is (80x30 + 70x60) / (30+60) = 73.3%." }
+      }
+    ]
+  }
+];
+---
+
+<CalculatorLayout
+  title="Weighted Average Percentage Calculator"
+  metaTitle="Weighted Average Percentage Calculator ᐅ"
+  description="Calculate the weighted average of multiple percentages. Enter each percentage and its sample size, marks, or hours to get the combined rate that accounts for unequal group sizes."
+  canonical="https://calculations.tools/math/percentage-calculator/weighted-average"
+  tocItems={tocItems}
+  schema={schema}
+  embedSlug="weighted-average-percentage-calculator"
+  ogFormula="Weighted Avg % = (P1 × W1 + P2 × W2 + ...) / (W1 + W2 + ...)"
+  ogExample="(60% × 200 + 80% × 50) / (200 + 50) = 64%"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Weighted Average Percentage</h2>
+          <p>Enter each percentage and its weight (sample size, marks, or hours)</p>
+        </div>
+        <div id="wa-rows"></div>
+        <button type="button" id="wa-add" class="pav-add-btn">+ Add row</button>
+        <div id="wa-result" class="lbm-result hidden">
+          <div class="lbm-primary">
+            <span class="lbm-primary-val" id="wa-result-val">-</span>
+          </div>
+          <div class="lbm-primary-lbl">Weighted Average Percentage</div>
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="wa-count">-</div>
+              <div class="lbm-card-lbl">Groups entered</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="wa-total-weight">-</div>
+              <div class="lbm-card-lbl">Total weight</div>
+            </div>
+          </div>
+          <div class="pi-steps">
+            <div class="pi-steps-title">How it was calculated</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 1 - Multiply &amp; sum</span>
+              <span id="wa-step1" class="pi-step-val">-</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 2 - Sum weights</span>
+              <span id="wa-step2" class="pi-step-val">-</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Step 3 - Divide</span>
+              <span id="wa-step3" class="pi-step-val">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/weighted-average-percentage-calculator.js" is:inline></script>
+  </div>
+
+  <style is:global>
+    .wa-row { margin-bottom: 0.5rem; }
+    .wa-row-group { display: flex; gap: 0.75rem; align-items: flex-end; }
+    .wa-field-pct, .wa-field-wt { flex: 1; min-width: 0; margin-bottom: 0; }
+    .wa-row-action { width: 2rem; flex-shrink: 0; display: flex; align-items: center; padding-bottom: 0.25rem; }
+    .wa-remove-btn { background: none; border: none; color: rgba(255,255,255,0.35); cursor: pointer; font-size: 1rem; padding: 0.25rem; line-height: 1; transition: color 0.15s; }
+    .wa-remove-btn:hover { color: rgba(255,255,255,0.75); }
+  </style>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <p class="answer-box-label">Formula</p>
+        <p>Weighted average percentage = <strong>(P1 x W1 + P2 x W2 + ... + Pn x Wn) / (W1 + W2 + ... + Wn)</strong>. Each percentage is multiplied by its weight before summing, so larger groups contribute more to the combined rate than smaller ones.</p>
+      </div>
+
+      <div class="answer-box">
+        <p class="answer-box-label">Key takeaways</p>
+        <ul>
+          <li>Simple averaging gives the wrong answer when groups differ in size: 60% from 200 people and 80% from 50 people combine to 64%, not 70%.</li>
+          <li>The weight is the denominator of each percentage - sample size, total marks, hours, or impression count.</li>
+          <li>The formula equals the direct combined rate: sum all individual outcomes, then divide by the total count.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter the percentage and weight for each group. The weight is whatever denominator was used when that percentage was originally calculated - sample size for pass rates, total marks for grades, or impression count for click-through rates.</p>
+      <p>Click <strong>+ Add row</strong> to include more groups. The calculator shows the weighted average, the total weight, and a three-step breakdown. Results update instantly as you type.</p>
+
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Imagine three school assignments: an essay worth 30 marks where you scored 80%, a short quiz worth 10 marks where you scored 90%, and a final exam worth 60 marks where you scored 70%. A simple average gives (80 + 90 + 70) / 3 = <strong>80%</strong>.</p>
+      <p>But the exam accounts for 60 of the 100 marks, so it should pull the result down. Weighted average: (80 x 30 + 90 x 10 + 70 x 60) / (30 + 10 + 60) = 7,500 / 100 = <strong>75%</strong>. The larger the assignment, the more it shapes your final grade.</p>
+
+      <h2 id="formula">Weighted average percentage formula</h2>
+      <p>The general formula multiplies each percentage by its corresponding weight, sums the products, and divides by the total weight:</p>
+      <Formula expr={f.main} />
+      <p>Here W represents the weight for each percentage - usually the sample size, total marks, total hours, or any unit that was the denominator when the percentage was first calculated. The formula is equivalent to combining all raw counts and computing the rate directly, which makes it the most reliable approach for mixing percentages from different-sized groups.</p>
+
+      <h2 id="examples">Worked examples</h2>
+
+      <h3>Example 1: combining pass rates from different-sized groups</h3>
+      <p>A training programme has a 60% pass rate in Group A (200 participants) and 80% in Group B (50 participants). The simple average would be (60 + 80) / 2 = 70%. With different group sizes, the weighted average is:</p>
+      <Formula expr={f.ex1} />
+      <p>The true combined pass rate is <strong>64%</strong>. Group A's larger size pulls the combined rate much closer to its 60% result.</p>
+
+      <h3>Example 2: calculating a course grade from weighted assignments</h3>
+      <p>A student scores 80% on an essay worth 30 marks, 90% on a quiz worth 10 marks, and 70% on a final exam worth 60 marks. The weighted course grade is:</p>
+      <Formula expr={f.ex2} />
+      <p>The final grade is <strong>75%</strong>. The exam's larger weight pulls the result below the simple average of 80%.</p>
+
+      <h3>Example 3: blending campaign click-through rates</h3>
+      <p>A marketing team runs two ad campaigns. Campaign A achieves a 3% CTR from 10,000 impressions; Campaign B achieves 8% from 1,000 impressions. The blended rate across both is:</p>
+      <Formula expr={f.ex3} />
+      <p>The true blended CTR is approximately <strong>3.45%</strong> - far closer to Campaign A's rate because it had ten times the impressions. Simple averaging (5.5%) would be misleading in any performance report.</p>
+
+      <h2 id="vs-simple">How does weighted average differ from a simple average?</h2>
+      <p>The core difference is whether group size influences the result. A simple average treats every percentage equally; a weighted average scales each percentage by how many items it covers.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Simple average</th>
+              <th>Weighted average</th>
+              <th>Correct method</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>60% (n=200), 80% (n=50)</td>
+              <td>70.0%</td>
+              <td>64.0%</td>
+              <td>Weighted</td>
+            </tr>
+            <tr>
+              <td>Essay 80% (30 marks), exam 70% (60 marks)</td>
+              <td>75.0%</td>
+              <td>73.3%</td>
+              <td>Weighted</td>
+            </tr>
+            <tr>
+              <td>3% CTR (10,000 imp.), 8% CTR (1,000 imp.)</td>
+              <td>5.5%</td>
+              <td>3.45%</td>
+              <td>Weighted</td>
+            </tr>
+            <tr>
+              <td>70% (n=100), 80% (n=100)</td>
+              <td>75.0%</td>
+              <td>75.0%</td>
+              <td>Either (groups equal)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When all group sizes are equal, both methods give identical results. Any mismatch between simple and weighted output is a signal that the groups have different sizes and the weighted result is the accurate one.</p>
+      <p>When I review portfolio performance reports, combining returns without weighting by position size is the most consistent error I encounter. The test I apply: could you reconstruct the blended rate from the raw counts? If adding up individual outcomes and dividing by the total gives a different number than the simple average, the simple average is wrong.</p>
+
+      <h2 id="when-to-use">When should you use a weighted average percentage?</h2>
+      <p>Use weighted average whenever the percentages you are combining came from groups or items of different sizes. Common situations where simple averaging fails:</p>
+      <ul>
+        <li>Pass rates or success rates from cohorts with different enrollment counts</li>
+        <li>Exam or assignment grades where each piece is worth a different number of marks</li>
+        <li>Click-through rates, conversion rates, or open rates from campaigns with different impression or send counts</li>
+        <li>Survey satisfaction scores from respondent pools of different sizes</li>
+        <li>Investment portfolio returns weighted by the value of each position</li>
+        <li>Employee retention rates from departments with different headcounts</li>
+      </ul>
+      <p>If you are averaging percentages from items that all share the same denominator (three equal-weight quizzes, two surveys with the same number of respondents), the <a href="/math/percentage-calculator/average">simple average</a> gives the correct result and no weighting is needed.</p>
+
+      <h2 id="common-mistakes">Common mistakes</h2>
+
+      <h3>Using the percentage as its own weight</h3>
+      <p>Some calculators allow a "percentage of total" input as the weight - for example, entering that Course A is worth 40% of the final grade. This works only if those percentage weights sum to exactly 100. When they don't, always switch to raw totals (marks, hours, or counts) to avoid ambiguity.</p>
+
+      <h3>Mixing units across weights</h3>
+      <p>All weights must be in the same unit. Mixing sample sizes (people) with hours, or mixing marks with course credit hours, produces a mathematically meaningless result. Choose one unit and convert everything to it before entering values.</p>
+
+      <h3>Forgetting that equal percentages with unequal weights still produce the right answer</h3>
+      <p>If Group A has a 70% rate with 100 people and Group B also has a 70% rate with 300 people, the weighted average is still 70%. The formula always works - you only get an unexpected answer when the percentages actually differ.</p>
+
+      <p>The most consistent error I see in grade calculations is dividing by 100 when weights don't sum to 100. A grading scheme where homework is worth 40 points, quizzes 20 points, and the exam 60 points gives a total weight of 120, not 100. Dividing by 100 instead of 120 inflates every grade by 20%. Always divide by the actual sum of your weights.</p>
+
+      <h2 id="faq">Frequently asked questions</h2>
+
+      <h3>What is a weighted average percentage?</h3>
+      <p>A weighted average percentage is the combined rate across groups of different sizes, where each group's percentage is multiplied by its size before averaging. It gives larger groups more influence and produces the same answer as computing the combined rate directly from raw counts.</p>
+
+      <h3>How do you calculate a weighted average percentage?</h3>
+      <p>Multiply each percentage by its weight (sample size, marks, or hours). Sum the products. Divide by the total of all weights. For 60% from 200 people and 80% from 50 people: (60 x 200 + 80 x 50) / (200 + 50) = 16,000 / 250 = 64%.</p>
+
+      <h3>What is the difference between weighted average and simple average?</h3>
+      <p>Simple average treats every percentage equally regardless of group size. Weighted average scales each percentage by how many observations it covers. When groups are equal in size, both give the same result. When sizes differ, only the weighted average is correct.</p>
+
+      <h3>When should I use weighted average instead of regular average?</h3>
+      <p>Any time the percentages you are combining came from groups of different sizes: pass rates from unequal cohorts, grades from assignments worth different marks, CTRs from campaigns with different impression counts, or survey results from samples of different sizes.</p>
+
+      <h3>Can I use this calculator for course grades?</h3>
+      <p>Yes. Enter each assignment's percentage score and its weight in marks (or percentage of the course). For an essay scored 80% worth 30 marks and an exam scored 70% worth 60 marks: (80 x 30 + 70 x 60) / (30 + 60) = 73.3%.</p>
+
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/percentage-calculator/average',    blurb: 'Simple average of multiple percentages - arithmetic mean with a guide on when simple averaging is valid.' },
+        { path: '/math/percentage-calculator',            blurb: 'The main percentage hub - basic percentages, increase, decrease, and what percentage is X of Y.' },
+        { path: '/math/percentage-calculator/change',     blurb: 'Percentage change calculator - signed result for before-and-after comparisons.' },
+        { path: '/math/percentage-calculator/difference', blurb: 'Percentage difference calculator - compares two independent values using their average as the base.' },
+        { path: '/math/percentage-calculator/decrease',   blurb: 'Percentage decrease calculator - useful for discounts, markdowns, and price drops.' },
+        { path: '/math/ratio-calculator',                           blurb: 'Ratio calculator - simplify, scale, and compare ratios directly.' },
+        { path: '/math/percentage-calculator/percent-to-goal',       blurb: 'Percent to goal calculator - track weighted attainment across multiple goals with different priorities.' },
+        { path: '/math/ratio-calculator/ratio-to-percentage',         blurb: 'Ratio to percentage converter - turn a pass ratio or count into a percentage before combining across groups.' },
+      ]} />
+
+      <RelatedGlossaryTerms toolPath="/math/percentage-calculator/weighted-average" />
+
+    </div>
+  </div>
+
+</CalculatorLayout>

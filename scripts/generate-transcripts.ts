@@ -45,8 +45,9 @@ const TOOLS: ToolMeta[] = [
   { slug: 'speed-converter',       name: 'Speed Converter',       path: '/conversion/speed-converter',       category: 'Conversion', priority: 4 },
   { slug: 'temperature-converter', name: 'Temperature Converter', path: '/conversion/temperature-converter', category: 'Conversion', priority: 4 },
   { slug: 'weight-converter',      name: 'Weight Converter',      path: '/conversion/weight-converter',      category: 'Conversion', priority: 4 },
-  { slug: 'percentage-calculator', name: 'Percentage Calculator', path: '/math/percentage-calculator', category: 'Math', priority: 5 },
-  { slug: 'fraction-calculator',   name: 'Fraction Calculator',   path: '/math/fraction-calculator',   category: 'Math', priority: 5 },
+  { slug: 'percentage-calculator',                    name: 'Percentage Calculator',                    path: '/math/percentage-calculator',                    category: 'Math', priority: 5 },
+  { slug: 'weighted-average-percentage-calculator',  name: 'Weighted Average Percentage Calculator',   path: '/math/percentage-calculator/weighted-average', category: 'Math', priority: 5 },
+  { slug: 'fraction-calculator',                     name: 'Fraction Calculator',                      path: '/math/fraction-calculator',                    category: 'Math', priority: 5 },
   { slug: 'ratio-calculator',      name: 'Ratio Calculator',      path: '/math/ratio-calculator',      category: 'Math', priority: 5 },
   { slug: 'diff-checker', name: 'Diff Checker', path: '/compare/text', category: 'Tools', priority: 6 },
 ];

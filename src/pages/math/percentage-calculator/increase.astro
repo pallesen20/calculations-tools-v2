@@ -3,6 +3,7 @@ import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   main:    "$$\\% \\text{ Increase} = \\frac{\\text{New} - \\text{Old}}{\\text{Old}} \\times 100$$",
@@ -22,8 +23,42 @@ const tocItems = [
   { id: 'reference-table', label: 'Reference table' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'In the percentage increase formula, what value is always the denominator?',
+    options: ['The new value', 'The average of old and new', 'The original (old) value', 'The absolute change'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The formula divides (New - Old) by the original value. Using the new value instead produces a smaller, incorrect result - in the salary example, dividing by 58,000 gives 13.8% instead of the correct 16%.',
+  },
+  {
+    q: 'A salary rises from $50,000 to $58,000. What is the percentage increase?',
+    options: ['13.8%', '16%', '20%', '8%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '(58,000 - 50,000) / 50,000 × 100 = 8,000 / 50,000 × 100 = 16%. The 13.8% trap comes from dividing by 58,000 (the new value) rather than the original 50,000.',
+  },
+  {
+    q: 'An approval rating rises from 40% to 50%. What is the percentage increase in the rating?',
+    options: ['25%', '10%', '50%', '12.5%'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: '(50 - 40) / 40 × 100 = 10 / 40 × 100 = 25%. The 10 percentage point rise and the 25% percentage increase describe the same event differently - percentage points measure the absolute gap, percentage increase measures relative growth.',
+  },
+  {
+    q: 'According to the reference table, what multiplier produces a 100% increase?',
+    options: ['× 1.50', '× 1.75', '× 3.00', '× 2.00'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'A 100% increase doubles the original value, so the multiplier is × 2.00. The reference table confirms: starting at 100, a 100% increase gives 200.',
+  },
+  {
+    q: 'Two consecutive 10% increases produce a total increase of:',
+    options: ['20% exactly', '19%', '21%', '22%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Starting at 100: 100 × 1.10 = 110, then 110 × 1.10 = 121. The total is 21%, not 20%, because the second 10% acts on the already-raised base of 110, not the original 100.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -157,14 +192,14 @@ const schema = [
       <h2 id="how-to-use">How to use this percentage increase calculator</h2>
       <p>Enter the original (old) value and the new value. The percentage increase appears instantly, along with the absolute change and a three-step breakdown of the calculation. If the new value is smaller than the original, the result will be negative - indicating a decrease.</p>
       <h3 id="explained-to-beginner">Explained to a beginner</h3>
-      <p>Think of a pay raise. You earn $50,000 and your new salary is $58,000. The raise is $8,000 in cash - but to understand its size as a percentage, compare it to what you started with. $8,000 out of the original $50,000 is 16%.</p>
+      <p>Think of a <a href="/finance/pay-raise-calculator">pay raise</a>. You earn $50,000 and your new salary is $58,000. The raise is $8,000 in cash - but to understand its size as a percentage, compare it to what you started with. $8,000 out of the original $50,000 is 16%.</p>
       <p>The formula does exactly this: divide the growth by the original value, then multiply by 100 to express it as a percentage. The original is always the reference point, never the new number.</p>
       <h2 id="formula">Percentage increase formula</h2>
       <p>The percentage increase formula measures how much a value has grown relative to its starting point:</p>
       <Formula expr={f.main} />
-      <p>The original value is always the denominator. Dividing by the new value is the single most common error in percentage increase calculations.</p>
+      <p>The original value is always the <a href="/glossary/denominator">denominator</a>. Dividing by the new value is the single most common error in percentage increase calculations.</p>
       <p>The formula produces a signed result: positive means an increase, negative means a decrease. The word "increase" describes a direction - if the result is negative, the quantity has decreased rather than increased.</p>
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for increase as percentage</h2>
       <h3>Example 1: salary increase</h3>
       <p>A <a href="/finance/salary-to-hourly-calculator">salary</a> rises from 50,000 to 58,000. What is the percentage increase?</p>
       <Formula expr={f.mainEx} />
@@ -183,13 +218,13 @@ const schema = [
       <p>Percentage change is the general term; percentage increase is a specific case where the result is positive. The formula is identical for both:</p>
       <ul>
         <li><strong>Positive result</strong> → percentage increase (the value grew)</li>
-        <li><strong>Negative result</strong> → percentage decrease (the value fell)</li>
+        <li><strong>Negative result</strong> → <a href="/math/percentage-calculator/decrease">percentage decrease</a> (the value fell)</li>
         <li><strong>Zero result</strong> → no change</li>
       </ul>
-      <p>Percentage change should not be confused with <strong>percentage points</strong>. If an approval rating rises from 40% to 50%, it has risen 10 percentage points but increased by 25% relative to the original rating (10 ÷ 40 × 100 = 25%).</p>
+      <p>Percentage change should not be confused with <a href="/math/percentage-calculator/percentage-point">percentage points</a>. If an approval rating rises from 40% to 50%, it has risen 10 percentage points but increased by 25% relative to the original rating (10 ÷ 40 × 100 = 25%).</p>
       <p>In my experience, the percentage points vs. percentage increase distinction causes the most confusion in finance reporting. When market share rises from 10% to 12%, calling that a "2% increase" understates the story - it is a 20% relative increase, and that is the figure that drives competitive analysis and strategy decisions.</p>
       <h2 id="reference-table">Percentage increase reference table</h2>
-      <p>The multiplier for each percentage increase is the number you multiply the original value by to get the new value. This is useful for mental estimates.</p>
+      <p>The multiplier for each percentage increase is the number you multiply the original value by to get the new value. This is useful for mental estimates. The table below shows different references for this.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -214,7 +249,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <h2 id="common-mistakes">Common mistakes</h2>
+      <h2 id="common-mistakes">Common mistakes when calculating percentage increase</h2>
       <h3>Using the new value as the denominator</h3>
       <p>The formula divides by the <em>original</em> value, not the new one. Dividing by the new value gives a smaller, incorrect result. In the salary example: (8,000 ÷ 58,000) × 100 = 13.8%, which understates the increase. The correct answer using the original value as the base is 16%.</p>
       <h3>Confusing percentage increase with percentage points</h3>
@@ -222,7 +257,8 @@ const schema = [
       <h3>Treating sequential increases as additive</h3>
       <p>A 10% increase followed by another 10% increase is not a 20% increase overall. After the first 10%, the base is higher, so the second 10% acts on a larger number. Starting at 100: 100 × 1.10 = 110, then 110 × 1.10 = 121. The total increase is 21%, not 20%.</p>
       <p>When I build financial projections, compounding is the detail that catches people off guard most often. A business planning 10% growth per year for three years needs to apply 1.10 × 1.10 × 1.10 = 1.331 - a 33.1% total increase over the period, not the 30% that naive addition suggests. The gap becomes significant at higher rates or longer horizons.</p>
-      <h2 id="faq">Frequently asked questions</h2>
+      <p>Use our <a href="/finance/compound-interest-calculator">compound interest calculator</a> to quickly calculate compounding interest.</p>
+      <h2 id="faq">FAQs about percentage increase</h2>
       <h3>What is the formula for percentage increase?</h3>
       <p>Percentage increase = ((New Value − Original Value) ÷ Original Value) × 100. The original (old) value is always the denominator.</p>
       <h3>How do you find the new value after a percentage increase?</h3>
@@ -235,6 +271,11 @@ const schema = [
       <p>Percentage change is the broader term that covers both increases (positive) and decreases (negative). The formula is identical. "Percentage increase" refers specifically to cases where the new value exceeds the original.</p>
       <h3>Does a 50% increase followed by a 50% decrease return to the original?</h3>
       <p>No. A 50% increase on 100 gives 150. A 50% decrease on 150 gives 75, not 100. Because the base changes between operations, increases and decreases of the same percentage are not symmetrical.</p>
+      <QuizBlock
+        topic="percentage increase"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/percentage-calculator/increase"
+      />
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator',          blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },

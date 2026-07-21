@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   main:       "$$\\% = \\frac{\\text{Numerator}}{\\text{Denominator}} \\times 100$$",
@@ -12,15 +13,50 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',      label: 'How to use' },
-  { id: 'formula',         label: 'Formula' },
+  { id: 'how-to-use',           label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',              label: 'Formula' },
   { id: 'examples',        label: 'Worked examples' },
   { id: 'reference-table', label: 'Common fractions table' },
   { id: 'mixed-numbers',   label: 'Mixed numbers' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What are the two steps to convert any fraction to a percentage?',
+    options: ['Add numerator and denominator, then multiply by 100', 'Divide numerator by denominator, then multiply by 100', 'Multiply numerator by denominator, then divide by 100', 'Divide denominator by numerator, then multiply by 100'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The formula is (Numerator / Denominator) × 100. Step 1 gives the decimal equivalent; step 2 shifts it to "per hundred" - the definition of a percentage.',
+  },
+  {
+    q: 'What is 5/8 as a percentage?',
+    options: ['58%', '160%', '62.5%', '37.5%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '5 ÷ 8 = 0.625, then 0.625 × 100 = 62.5%. The 37.5% trap comes from calculating 3/8 instead - the complement of 5/8.',
+  },
+  {
+    q: 'What result do you get when converting an improper fraction (numerator larger than denominator) to a percentage?',
+    options: ['The calculation is invalid - improper fractions cannot be converted', 'The result is always exactly 100%', 'The result is negative', 'A percentage greater than 100%'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'When the numerator exceeds the denominator, the fraction is greater than 1, so the percentage exceeds 100%. The page example 7/3 ≈ 233.33% confirms this.',
+  },
+  {
+    q: 'According to the common fractions table, what is 1/3 as a percentage?',
+    options: ['30%', '33.333...% (repeating)', '33% exactly', '0.333%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '1 ÷ 3 = 0.333… (non-terminating repeating decimal). Multiplied by 100, this gives 33.333…% - it cannot be expressed as a finite decimal, only approximated.',
+  },
+  {
+    q: 'Which mistake produces the reciprocal of the correct answer when converting a fraction to a percentage?',
+    options: ['Forgetting to multiply by 100', 'Writing the result as a decimal instead of a percentage', 'Dividing the denominator by the numerator instead of the numerator by the denominator', 'Rounding intermediate values too early'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Reversing the division - 4 ÷ 3 instead of 3 ÷ 4 - gives the reciprocal fraction. For 3/4, this produces 133.33% instead of the correct 75%.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -82,7 +118,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Fraction to Percent Calculator"
   metaTitle="Fraction to Percent Calculator | Convert & Examples ᐅ"
@@ -101,27 +136,23 @@ const schema = [
           <h2>Convert Fraction to Percent</h2>
           <p>Enter the numerator and denominator</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ftp-num">Numerator (top number)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ftp-num" class="bmi-input" placeholder="e.g. 3" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ftp-den">Denominator (bottom number)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="ftp-den" class="bmi-input" placeholder="e.g. 4" />
           </div>
         </div>
-
         <div id="ftp-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="ftp-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="ftp-dec">-</div>
@@ -129,7 +160,6 @@ const schema = [
               <div class="lbm-card-badge" id="ftp-badge">-</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
@@ -144,46 +174,36 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/fraction-to-percent-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
         <p>Fraction to percent = <strong>(Numerator ÷ Denominator) × 100</strong>. Divide the top number by the bottom number, then multiply by 100. Example: 3/4 = 0.75 × 100 = <strong>75%</strong>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the numerator (top number) and denominator (bottom number). The percentage appears instantly along with the decimal equivalent and a two-step breakdown. The calculator works for any real numbers except when the denominator is zero.</p>
-
-      <h2 id="formula">Formula</h2>
+      <h2 id="how-to-use">How to use this fraction to percent converter</h2>
+      <p>Enter the <a href="/glossary/numerator">numerator (top number)</a> and <a href="/glossary/denominator">denominator (bottom number)</a>. The percentage appears instantly along with the decimal equivalent and a two-step breakdown. The calculator works for any real numbers except when the denominator is zero.</p>
+      <p>To add, subtract, multiply, or divide any two fractions, see our dedicated <a href="/math/fraction-calculator">fractions calculator</a>.</p>
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Think of a fraction as a recipe: 3/4 means you cut the whole into 4 equal pieces and take 3. A percentage just asks "what if you cut it into 100 pieces instead?" If 4 pieces become 100, each piece grows by a factor of 25 - so your 3 pieces become 75. That is all the formula does: divide (find what one piece is worth as a decimal) then multiply by 100 (restate it in "out of 100" terms).</p>
+      <h2 id="formula">Fraction to percent calculation formula</h2>
       <p>A percentage is a fraction expressed out of 100. To convert any fraction:</p>
-
       <Formula expr={f.main} />
-
       <p>The two steps are: divide the numerator by the denominator to get the decimal, then multiply by 100 to shift the decimal point two places to the right. The process is identical whether the fraction is proper (numerator &lt; denominator), improper (numerator &gt; denominator), or negative.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for fractions to percentages</h2>
       <h3>Example 1: proper fraction - 3/4</h3>
       <Formula expr={f.ex1} />
       <p>3/4 is equal to <strong>75%</strong>.</p>
-
       <h3>Example 2: proper fraction - 5/8</h3>
       <Formula expr={f.ex2} />
       <p>5/8 is equal to <strong>62.5%</strong>.</p>
-
       <h3>Example 3: improper fraction - 7/3</h3>
       <p>When the numerator is larger than the denominator, the result exceeds 100%:</p>
       <Formula expr={f.ex3} />
       <p>7/3 is approximately <strong>233.33%</strong>.</p>
-
       <h2 id="reference-table">Common fractions reference table</h2>
       <p>The most frequently encountered fractions and their exact percentage equivalents:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -208,45 +228,38 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="mixed-numbers">Mixed numbers</h2>
-      <p>A mixed number (e.g. 2¼) combines a whole number and a fraction. To convert to a percentage, first convert to an improper fraction, then apply the standard formula:</p>
-
+      <p>In my experience, the thirds and eighths are the fractions most worth memorizing - they appear constantly in cooking, construction, and quick estimation.</p>
+      <p>Knowing that 1/3 is about 33.3% and 3/8 is exactly 37.5% saves repeated calculation and builds an intuition for whether a fraction is roughly a quarter, a third, or a half at a glance.</p>
+      <h2 id="mixed-numbers">Converting mixed numbers</h2>
+      <p>A mixed number (e.g. 2¼) combines a whole number and a fraction. To convert to a percentage, first <a href="/math/fraction-calculator/mixed-to-improper">convert to an improper fraction</a>, then apply the standard formula:</p>
       <Formula expr={f.mixed} />
-
       <p>General rule: for a mixed number <em>a b/c</em>, the improper fraction is (a × c + b) / c.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when converting fractions to percentage</h2>
       <h3>Dividing denominator by numerator instead of numerator by denominator</h3>
       <p>The numerator always goes on top. 3/4 means 3 divided by 4 (= 0.75 = 75%), not 4 divided by 3. Reversing the division gives the reciprocal - a different value entirely.</p>
-
       <h3>Forgetting to multiply by 100</h3>
       <p>The division step gives the decimal equivalent (0.75), not the percentage. Multiplying by 100 is what converts it to a percentage (75%). Writing 0.75% is a 100× error.</p>
-
       <h3>Rounding repeating decimals incorrectly</h3>
       <p>Fractions like 1/3 produce non-terminating repeating decimals (0.333…). Round only the final percentage result, not intermediate values, to avoid compounding rounding errors.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>When I work with repeating decimals, I hold the full decimal through every intermediate step and only round the final answer. Rounding 0.333 to 0.33 mid-calculation turns 2/3 into 66% instead of 66.67% - a 1 <a href="/math/percentage-calculator/percentage-point">percentage point</a> error that compounds quickly in multi-step problems.</p>
+      <h2 id="faq">FAQs about fraction to percentage calculations</h2>
       <h3>How do you convert a fraction to a percentage?</h3>
       <p>Divide the numerator by the denominator, then multiply by 100. Example: 3/4 = 3 ÷ 4 = 0.75 × 100 = 75%.</p>
-
       <h3>What is 3/4 as a percentage?</h3>
       <p>75%. Divide 3 by 4 to get 0.75, then multiply by 100.</p>
-
       <h3>What is 1/3 as a percentage?</h3>
       <p>Approximately 33.33%. The exact value is 33.333… (repeating), since 1 ÷ 3 = 0.333…</p>
-
       <h3>Can a fraction give a percentage greater than 100%?</h3>
       <p>Yes. Any improper fraction (numerator larger than denominator) converts to a percentage above 100%. For example, 7/3 ≈ 233.33%.</p>
-
       <h3>How do you convert a mixed number to a percentage?</h3>
       <p>Convert to an improper fraction first: multiply the whole number by the denominator and add the numerator. Example: 2¼ → (2 × 4 + 1)/4 = 9/4 → 9 ÷ 4 × 100 = 225%.</p>
-
       <h3>What is the difference between a fraction, a decimal, and a percentage?</h3>
       <p>All three represent the same value in different forms. A fraction (3/4), a decimal (0.75), and a percentage (75%) are interchangeable. A percentage is a decimal multiplied by 100 - it expresses the value "per hundred".</p>
-
+      <QuizBlock
+        topic="fraction to percent"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/percentage-calculator/fraction-to-percent"
+      />
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator',            blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
@@ -256,8 +269,6 @@ const schema = [
         { path: '/math/percentage-calculator/decimal-to-percent',       blurb: 'Convert any decimal to a percentage - the natural companion to this tool.' },
         { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% - covers successive discounts and why stacking percentages cannot simply be added.' },
       ]} />
-
     </div>
   </div>
-
 </CalculatorLayout>

@@ -241,6 +241,16 @@ const entries: Entry[] = [
     short: 'Average of multiple percentages',
   },
   {
+    path: '/math/percentage-calculator/weighted-average',
+    title: 'Weighted Average Percentage Calculator - Formula & Examples',
+    description: 'Calculate the weighted average of multiple percentages. Enter each percentage and its sample size, marks, or hours to get the correct combined rate when groups differ in size.',
+    changefreq: 'weekly',
+    priority: 0.9,
+    icon: '⚖',
+    short: 'Weighted average - accounts for group sizes',
+    lastmod: '2026-07-21',
+  },
+  {
     path: '/math/percentage-calculator/fraction-to-percent',
     title: 'Fraction to Percent Calculator - Convert & Examples',
     description: 'Convert any fraction to a percentage instantly. Enter a numerator and denominator to get the percentage, decimal equivalent, and step-by-step workings.',

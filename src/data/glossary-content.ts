@@ -4832,4 +4832,181 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'numerator': {
+    definition: [
+      'The numerator is the top number in a fraction, written as $$\\frac{a}{b}$$ where $$a$$ is the numerator. It counts how many equal parts of the whole are being considered. The denominator (bottom number) defines how many equal parts the whole is split into; the numerator tells you how many of those parts you have. In 3/8, the numerator 3 means "3 out of 8 parts."',
+      'In percentage and ratio calculations, the numerator is the change or the quantity being expressed as a proportion. In the percentage increase formula $$\\frac{\\text{New} - \\text{Old}}{\\text{Old}} \\times 100$$, the numerator is (New - Old) - the absolute change. Increasing the numerator raises the result proportionally; changing the denominator has the inverse effect.',
+      'The numerator can be any real number, including zero and negatives. A numerator of zero gives a result of zero (as long as the denominator is non-zero). A negative numerator with a positive denominator produces a negative result - in percentage change, this signals a fall rather than a rise.',
+    ],
+    beginnerExplain: ['If a pizza is cut into 8 slices and you eat 3, you had 3/8 of the pizza. The "3" at the top is the numerator - it counts how many slices you actually took. Think of the numerator as the answer to "how many?" and the denominator as the answer to "out of how many total?" The numerator is always what you are measuring; the denominator is always the scale you are measuring it against.'],
+    whenToUse: 'Identify the numerator by asking: "what quantity am I measuring or comparing?" That value goes on top. In a percentage formula, the numerator is always the change or the part - the thing being expressed as a proportion of the base (denominator). In a rate such as miles per hour, the distance (miles) is the numerator.',
+    examples: {
+      headers: ['Context', 'Expression', 'Numerator', 'What it counts'],
+      rows: [
+        ['Pizza slices eaten', '3/8', '3', 'Slices taken from the pizza'],
+        ['Exam score', '45/60', '45', 'Marks the student scored'],
+        ['Percentage increase', '(58,000 - 50,000) / 50,000', '8,000', 'The salary increase in absolute terms'],
+        ['Percentage decrease', '(200 - 150) / 200', '50', 'The price reduction in absolute terms'],
+        ['Pass rate', '72 / 120', '72', 'Students who passed the exam'],
+      ],
+    },
+    pitfalls: 'In percentage calculations, a common error is placing the wrong quantity in the numerator. For a percentage increase, the numerator is always (New - Old), not the new value itself. Putting the new value in the numerator produces a meaningless result. Confusing which value is the "change" (numerator) and which is the "base" (denominator) is the root of most percentage errors.',
+    faqs: [
+      { q: 'What is the difference between numerator and denominator?', a: 'The numerator is the top number - it counts how many parts are selected. The denominator is the bottom number - it defines how many equal parts make up the whole. In 3/8, the 3 is the numerator (parts you have) and the 8 is the denominator (total parts available).' },
+      { q: 'Can the numerator be zero?', a: 'Yes. A fraction with a numerator of zero equals zero, provided the denominator is non-zero. In percentage change, a numerator of zero means no change occurred - the new value equals the old value, giving 0%.' },
+      { q: 'Can the numerator be larger than the denominator?', a: 'Yes. When the numerator exceeds the denominator, the fraction is greater than 1 (called an improper fraction). In percentage terms, this means a result above 100% - valid for percentage increase but not possible for percentage decrease.' },
+    ],
+    quiz: {
+      topic: 'numerators',
+      questions: [
+        {
+          q: 'In the fraction 5/8, which number is the numerator?',
+          options: ['5', '8', '13', '40'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The numerator is always the top number. In 5/8, the "5" counts how many parts are selected; the "8" (denominator) defines how many equal parts the whole is divided into.',
+        },
+        {
+          q: 'In the percentage increase formula ((New - Old) / Old) x 100, what is the numerator?',
+          options: ['The original (old) value', 'The new value', 'The absolute change (New - Old)', 'The result multiplied by 100'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The numerator is the absolute change: (New - Old). The original value is the denominator. Swapping them - putting the new value on top - produces a meaningless result.',
+        },
+        {
+          q: 'A student scores 45 out of 60 on an exam. What is the numerator in the fraction representing their score?',
+          options: ['60', '15', '45', '105'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The numerator is the quantity being measured - the student\'s score of 45. The denominator is the total marks available (60). The fraction is 45/60.',
+        },
+        {
+          q: 'What is the value of a fraction when its numerator is zero?',
+          options: ['Undefined - zero cannot be a numerator', 'Zero', 'Equal to the denominator', 'Equal to 1'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: '0 / b = 0 for any non-zero denominator. In percentage terms, a numerator of zero means no change - the new value equals the starting value, giving a result of 0%.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'denominator': {
+    definition: [
+      'The denominator is the bottom number in a fraction, written as $$\\frac{a}{b}$$ where $$b$$ is the denominator. It defines how many equal parts the whole has been divided into. The numerator (top number) counts how many of those parts are selected. A fraction is meaningless without knowing the denominator - 3 slices of pizza could be 3/8 or 3/4, and those represent very different amounts.',
+      'In percentage and ratio calculations, the denominator is the reference base - the value you are expressing the other number as a proportion of. In the percentage decrease formula $$\\frac{\\text{Old} - \\text{New}}{\\text{Old}} \\times 100$$, the denominator is always the original value. Choosing the wrong denominator is the most common error in percentage calculations, and it always produces a plausible-looking but incorrect result.',
+      'One universal rule: the denominator can never be zero. Division by zero is undefined - there is no number that, when multiplied by zero, produces a non-zero numerator. This is why percentage change is mathematically undefined when the starting value is zero.',
+    ],
+    beginnerExplain: ['Think of a pizza cut into 8 slices. The denominator is 8 - it tells you how many total slices the pizza was divided into. If you eat 3 slices, you had 3/8 of the pizza. The "8" at the bottom defines how big each slice is. A smaller denominator means bigger pieces: 1/2 (denominator = 2) gives you half the pizza, while 1/8 (denominator = 8) gives you one small slice. In any fraction or percentage, the denominator is always the total you are dividing by.'],
+    whenToUse: 'Identify the denominator whenever you are setting up a fraction, percentage, ratio, or rate. Ask: "what is the total or reference base?" That is your denominator. In percentage calculations, the original (before) value is always the denominator. In a rate such as miles per hour, the time (hours) is the denominator.',
+    examples: {
+      headers: ['Context', 'Expression', 'Denominator', 'What it represents'],
+      rows: [
+        ['Pizza slices eaten', '3/8', '8', 'Total slices the pizza was cut into'],
+        ['Exam score', '45/60', '60', 'Total marks available'],
+        ['Percentage decrease', '(200 - 150) / 200', '200', 'Original price - the reference value'],
+        ['Percentage increase', '(58,000 - 50,000) / 50,000', '50,000', 'Original salary, not the new figure'],
+        ['Pass rate', '72 / 120', '120', 'Total students who sat the exam'],
+      ],
+    },
+    pitfalls: 'The most common error is using the new value as the denominator instead of the original. In a price drop from $200 to $150, the decrease is $50. Dividing by $150 (new value) gives 33.3%; dividing by the correct denominator - $200 (original) - gives 25%. The new-value version always overstates a decrease and understates an increase. Always ask "what was the starting reference?" before choosing a denominator.',
+    faqs: [
+      { q: 'What is the difference between numerator and denominator?', a: 'The numerator is the top number - it counts how many parts you have. The denominator is the bottom number - it defines how many equal parts make up the whole. In 3/8, the numerator 3 counts the selected pieces; the denominator 8 is the total number of slices.' },
+      { q: 'Why can\'t the denominator be zero?', a: 'Division by zero is undefined. If the denominator were 0, you would need a number that, multiplied by 0, equals the numerator - but any number multiplied by 0 is always 0. No consistent answer exists, so the expression is undefined rather than infinite or zero.' },
+      { q: 'In a percentage formula, which value is the denominator?', a: 'The original (starting) value is always the denominator in percentage increase and percentage decrease formulas. The numerator is the change (new minus old, or old minus new). Putting the new value in the denominator is the most common percentage calculation mistake.' },
+    ],
+    quiz: {
+      topic: 'denominators',
+      questions: [
+        {
+          q: 'In the fraction 3/8, which number is the denominator?',
+          options: ['3', '8', '11', '5'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The denominator is always the bottom number. In 3/8, the "8" defines the total number of equal parts; the "3" (numerator) counts how many parts are selected.',
+        },
+        {
+          q: 'In the percentage decrease formula ((Old - New) / Old) x 100, which value is the denominator?',
+          options: ['The new (lower) value', 'The difference between old and new', 'The original (old) value', 'The average of old and new'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The original value is always the denominator in percentage decrease. Using the new value overstates the result - in a drop from $200 to $150, dividing by $150 gives 33.3% instead of the correct 25%.',
+        },
+        {
+          q: 'Why is division by zero (a denominator of 0) undefined?',
+          options: ['Calculators return an error so it is treated as undefined by convention', 'Zero is not a valid integer', 'No number multiplied by zero can equal a non-zero numerator', 'Division by zero always equals infinity'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'If x / 0 = q, then q x 0 must equal x. But any number multiplied by 0 is always 0, so no value of q satisfies the equation. The operation is genuinely undefined, not a calculator limitation.',
+        },
+        {
+          q: 'A student scored 45 out of 60 on an exam. What is the denominator in the fraction representing their score?',
+          options: ['45', '15', '105', '60'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The denominator represents the total - the 60 marks available. The fraction is 45/60. The numerator 45 is the score; the denominator 60 is the whole being divided.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'weighted-average': {
+    definition: [
+      'A weighted average assigns each value a weight that reflects how much data it represents before the average is computed. The formula multiplies each value by its weight, sums the products, and divides by the total weight. The result is identical to what you would get by combining all individual data points and computing a single overall rate.',
+      'The concept appears whenever groups of different sizes are combined. A simple arithmetic mean treats every value equally, so smaller groups get the same influence as larger ones - producing a misleading result. A weighted average corrects for this by scaling each value to the size of the group it came from.',
+      'Weights can be any unit that represents the denominator of each value: sample size, total marks, hours, impression counts, or investment amounts. The only requirement is that all weights use the same unit.',
+    ],
+    beginnerExplain: [
+      'Think of two test scores: you scored 90% on a 10-question quiz and 70% on a 100-question exam. Simple average: (90 + 70) / 2 = 80%. But the exam had ten times as many questions, so your overall performance is much closer to 70%.',
+      'Weighted average: (90 x 10 + 70 x 100) / (10 + 100) = (900 + 7000) / 110 = 72.7%. That number matches what you would get if you counted all 110 questions directly. The weighted average always matches the direct count.',
+    ],
+    whenToUse: 'Use a weighted average any time the values you are combining came from groups or items of different sizes. Common cases: combining pass rates from cohorts with different enrollment counts, calculating course grades from assignments worth different marks, blending ad campaign click-through rates from runs with different impression counts, or computing portfolio returns weighted by position size. When all groups have equal size, simple average and weighted average give the same result.',
+    examples: {
+      headers: ['Scenario', 'Values', 'Weights', 'Simple avg', 'Weighted avg'],
+      rows: [
+        ['Pass rates, unequal groups', '60%, 80%', '200, 50 people', '70%', '64%'],
+        ['Course grades', '80%, 90%, 70%', '30, 10, 60 marks', '80%', '75%'],
+        ['Campaign CTR', '3%, 8%', '10,000, 1,000 impressions', '5.5%', '3.45%'],
+        ['Survey satisfaction', '72%, 88%', '500, 100 respondents', '80%', '74.7%'],
+        ['Equal groups (same size)', '70%, 80%', '100, 100 people', '75%', '75%'],
+      ],
+    },
+    pitfalls: 'The most common error is treating percentages as their own weights - for example, using "40% of the course" as the weight for a grade rather than the underlying mark total. This works only when those percentage weights already sum to 100. A second pitfall is mixing units across weights: combining people with hours, or marks with credit hours, produces a meaningless result. Always confirm all weights share the same unit.',
+    faqs: [
+      {
+        q: 'Is weighted average always more accurate than simple average?',
+        a: 'When groups differ in size, yes - weighted average is the only mathematically correct method. When all groups are equal in size, both methods give identical results and either is valid. "More accurate" only applies when there is a size difference to account for.',
+      },
+      {
+        q: 'What should I use as the weight for each percentage?',
+        a: 'Use whatever was the denominator when the percentage was originally calculated: the number of people in a group, the total marks available for an assignment, the number of impressions in a campaign, or the value of an investment position. If you know the raw counts, they are always the correct weight.',
+      },
+      {
+        q: 'Can the weights be decimals or fractions?',
+        a: 'Yes. Weights do not need to be whole numbers or sum to any particular value. What matters is that they are proportional to the actual sizes of the groups. If one group is 2.5 times the size of another, its weight should be 2.5 times larger.',
+      },
+    ],
+    quiz: {
+      topic: 'weighted average',
+      questions: [
+        {
+          q: 'A class of 200 students has a 60% pass rate. A second class of 50 students has an 80% pass rate. What is the combined pass rate?',
+          options: ['70%', '72%', '64%', '68%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: '(60 x 200 + 80 x 50) / (200 + 50) = (12,000 + 4,000) / 250 = 64%. The larger class dominates, pulling the result toward its 60% rate rather than splitting the difference at 70%.',
+        },
+        {
+          q: 'When does weighted average give the same result as simple average?',
+          options: ['When all percentages are below 50%', 'When all values are positive', 'When all groups have equal size', 'When there are only two groups'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Equal weights cancel out in the formula: (P1 x W + P2 x W) / (W + W) = (P1 + P2) / 2. The group size no longer matters when every group is the same size, so both methods produce identical results.',
+        },
+        {
+          q: 'What should you use as the weight for a test score percentage?',
+          options: ['The percentage score itself', 'The number of correct answers', 'The total marks available for the test', 'The student\'s overall average'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The weight should be the denominator that was used to calculate the percentage - in this case, the total marks available. A test worth 60 marks gets a weight of 60; a quiz worth 10 marks gets a weight of 10.',
+        },
+        {
+          q: 'Which of the following is a pitfall when calculating a weighted average?',
+          options: ['Using sample size as the weight', 'Mixing weights in different units (e.g. some in people, some in hours)', 'Having more than three groups', 'Using percentages greater than 100%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'All weights must share the same unit. Mixing people with hours, or marks with credit hours, produces a number with no real-world meaning. Convert all weights to the same unit before computing the average.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
 };

@@ -526,4 +526,17 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     proTipFix: "if all lines show as changed but the content looks identical, the files likely use different line endings. Paste through a plain text editor first to normalise them, or switch to the Unified view to spot the hidden characters. And this same tool works for code, CSS, JavaScript, Python, HTML, and more — just pick the right variant from the compare menu.",
   },
 
+  'weighted-average-percentage-calculator': {
+    hookProblem: 'combine pass rates or grades from groups of different sizes without getting a misleading average',
+    character: 'Priya, a 34-year-old university lecturer',
+    exampleSetup: 'She has two tutorial groups: Group A has 200 students with a 60% pass rate, and Group B has 50 students with an 80% pass rate',
+    formulaPlain: 'multiply each percentage by its group size, add those products together, then divide by the total number of students across all groups',
+    exampleWalkthrough: '60 percent times 200 gives 12,000. 80 percent times 50 gives 4,000. Add them: 16,000. Divide by 250 total students',
+    exampleResult: '64% - the true combined pass rate across both groups',
+    exampleImplication: 'the simple average of 60 and 80 would give 70%, which overstates performance - the correct answer is 64% because Group A is four times larger and dominates the combined result',
+    notableFeature: 'a three-step breakdown showing the multiply-and-sum step, the total weight, and the final division - so you can verify the calculation at every stage',
+    proTipMistake: 'entering the same weight for every group out of habit, treating all groups as equal when they are not',
+    proTipFix: 'the weight for each row should be whatever denominator was used when that percentage was calculated - the number of students, total marks available, or impression count. If the underlying count is the same for every group, use the simple average calculator instead',
+  },
+
 };

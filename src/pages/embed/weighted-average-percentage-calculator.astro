@@ -1,0 +1,58 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Weighted Average Percentage Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Calculate Weighted Average Percentage</h2>
+        <p>Enter each percentage and its weight (sample size, marks, or hours)</p>
+      </div>
+      <div id="wa-rows"></div>
+      <button type="button" id="wa-add" class="pav-add-btn">+ Add row</button>
+      <div id="wa-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="wa-result-val">-</span>
+        </div>
+        <div class="lbm-primary-lbl">Weighted Average Percentage</div>
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="wa-count">-</div>
+            <div class="lbm-card-lbl">Groups entered</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="wa-total-weight">-</div>
+            <div class="lbm-card-lbl">Total weight</div>
+          </div>
+        </div>
+        <div class="pi-steps">
+          <div class="pi-steps-title">How it was calculated</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 1 - Multiply &amp; sum</span>
+            <span id="wa-step1" class="pi-step-val">-</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 2 - Sum weights</span>
+            <span id="wa-step2" class="pi-step-val">-</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Step 3 - Divide</span>
+            <span id="wa-step3" class="pi-step-val">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/weighted-average-percentage-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .wa-row { margin-bottom: 0.5rem; }
+  .wa-row-group { display: flex; gap: 0.75rem; align-items: flex-end; }
+  .wa-field-pct, .wa-field-wt { flex: 1; min-width: 0; margin-bottom: 0; }
+  .wa-row-action { width: 2rem; flex-shrink: 0; display: flex; align-items: center; padding-bottom: 0.25rem; }
+  .wa-remove-btn { background: none; border: none; color: rgba(255,255,255,0.35); cursor: pointer; font-size: 1rem; padding: 0.25rem; line-height: 1; }
+  .wa-remove-btn:hover { color: rgba(255,255,255,0.75); }
+</style>
