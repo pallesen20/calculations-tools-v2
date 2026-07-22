@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   main:       "$$P\\% \\text{ of } Q\\% = \\frac{P \\times Q}{100}$$",
@@ -13,14 +14,49 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',        label: 'How to use' },
-  { id: 'formula',           label: 'Formula' },
+  { id: 'how-to-use',           label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',              label: 'Formula' },
   { id: 'examples',          label: 'Worked examples' },
   { id: 'successive',        label: 'Successive discounts & stacked percentages' },
   { id: 'common-mistakes',   label: 'Common mistakes' },
   { id: 'faq',               label: 'FAQs' },
+  { id: 'quiz',              label: 'Quiz: test your knowledge' },
   { id: 'related-tools',     label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What is the formula for P% of Q%?',
+    options: ['(P + Q) ÷ 100', 'P ÷ Q × 100', '(P × Q) ÷ 100', '(P − Q) × 100'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'To find P% of Q%, convert P to its decimal form (P ÷ 100) and multiply by Q. This equals (P × Q) ÷ 100.',
+  },
+  {
+    q: 'A store applies a 20% discount, then an extra 25% off the reduced price. What is the total discount?',
+    options: ['40%', '45%', '38%', '42%'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Total discount = 20 + 25 - (20 × 25 ÷ 100) = 45 - 5 = 40%. The second discount acts on the already-reduced price, not the original, so the percentages cannot simply be added.',
+  },
+  {
+    q: 'A salesperson earns 15% commission on sales, and 30% of that commission goes to income tax. What percentage of the original sale value is paid in tax?',
+    options: ['15%', '30%', '10.5%', '4.5%'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '30% of 15% = (30 × 15) ÷ 100 = 4.5%. The tax applies to the commission amount, not the full sale value, so you must calculate the percentage of a percentage.',
+  },
+  {
+    q: 'Why can stacked percentage discounts NOT simply be added together?',
+    options: ['Percentage discounts are always rounded down', 'Each successive percentage acts on a smaller base than the one before it', 'The first discount is always applied incorrectly', 'Adding percentages only works when both values exceed 50%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The second discount applies to the already-reduced price, not the original. A 25% discount after a 20% reduction acts on 80% of the original price, so the two rates cannot be summed.',
+  },
+  {
+    q: 'For two positive percentages P and Q (both between 0% and 100%), what is always true about the result of P% of Q%?',
+    options: ['The result equals P minus Q', 'The result is larger than both P and Q', 'The result is smaller than both P and Q', 'The result equals 50% of the sum of P and Q'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'When you take a fraction of a fraction, the result shrinks. (P × Q) ÷ 100 is always less than both P and Q when both inputs are between 0 and 100.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -147,12 +183,23 @@ const schema = [
         <p class="answer-box-label">Formula</p>
         <p>P% of Q% = <strong>(P × Q) ÷ 100</strong>. Convert the first percentage to a decimal, then multiply by the second. Example: 20% of 50% = (20 × 50) ÷ 100 = <strong>10%</strong>.</p>
       </div>
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <p class="answer-box-label">Key takeaways</p>
+        <ul>
+          <li>P% of Q% = (P × Q) ÷ 100. Multiply the two percentages together and divide by 100 - do not add them.</li>
+          <li>Stacked discounts are never additive. Two successive discounts of A% and B% give A + B - (A×B/100) total, not A + B.</li>
+          <li>The result is always smaller than both input percentages when both are between 0% and 100%, because a fraction of a fraction shrinks.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our percentage of percentage calculator</h2>
       <p>Enter two percentage values. The calculator returns P% of Q% - the result of applying the first percentage to the second. This is useful for successive discounts, commission calculations, probability, and any scenario where one percentage rate applies to another.</p>
-      <h2 id="formula">Formula</h2>
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>A store has 50% of its items on sale. You have a coupon for 20% off sale items only. You might expect to save 20% across the whole store - but you can only use the coupon on the half that is already on sale. So your coupon covers 20% of 50% of the store: (20 × 50) / 100 = <strong>10%</strong> of the full store's prices.</p>
+      <p>The formula turns this into arithmetic: convert 20% into the decimal 0.20, then multiply by 50%. Result: 0.20 × 50% = 10%. The "percentage of a percentage" step shrinks the result because you are applying a fraction to an already-smaller number.</p>
+      <h2 id="formula">P% of Q% formula</h2>
       <p>To find what P% of Q% equals, convert P to its decimal form and multiply by Q%:</p>
       <Formula expr={f.main} />
-      <p>Equivalently: divide P by 100 to get its decimal, then multiply that decimal by Q. The result is a percentage. Note that the result is always smaller than both P and Q (for positive inputs between 0 and 100) - because a fraction of a fraction is smaller than either fraction alone.</p>
+      <p>Equivalently: divide P by 100 to get its decimal, then multiply that decimal by Q. The result is a <a href="/math/percentage-calculator">percentage</a>. Note that the result is always smaller than both P and Q (for positive inputs between 0 and 100) - because a fraction of a fraction is smaller than either fraction alone.</p>
       <h2 id="examples">Worked examples</h2>
       <h3>Example 1: 20% of 50%</h3>
       <Formula expr={f.mainEx} />
@@ -173,14 +220,16 @@ const schema = [
       <Formula expr={f.multiplier} />
       <p>For 20% and 25%: (1 − 0.20) × (1 − 0.25) = 0.80 × 0.75 = 0.60, meaning 60% of the original price remains - confirming a 40% total discount.</p>
       <p><strong>Key rule:</strong> two successive percentage discounts of A% and B% always give a total discount that is less than A + B. The shortfall is exactly A% of B%.</p>
-      <h2 id="common-mistakes">Common mistakes</h2>
+      <p>When I see retail promotions advertising "20% off + an extra 25% off", I calculate 40% total, not 45%. Most shoppers assume 45%, so the framing creates a perception gap. The retailer is mathematically precise, but the stacking language makes the offer sound more generous than it is.</p>
+      <h2 id="common-mistakes">Common mistakes for percent of a percent</h2>
       <h3>Adding stacked percentages instead of compounding them</h3>
       <p>The most common error is treating successive percentage rates as additive. A 10% discount and an additional 10% discount do not give a 20% total discount - they give a 19% total discount (10 + 10 − 1 = 19), because the second 10% acts on the already-reduced price.</p>
       <h3>Confusing "P% of Q%" with "P% of a value that is Q%"</h3>
       <p>"20% of 50%" (this calculator) asks what percentage 20% of 50% represents - the answer is 10%. This is different from "20% of a value, where that value is 50% of something else." Both involve percentage of a percentage, but the framing matters for context.</p>
       <h3>Treating the result as a percentage point reduction</h3>
-      <p>When a 30% tax rate is applied to a 15% commission, the result (4.5%) is an absolute percentage reduction on the base amount - not a percentage point reduction of the commission rate. Keeping track of what the "base" is at each step prevents errors.</p>
-      <h2 id="faq">Frequently asked questions</h2>
+      <p>When a 30% tax rate is applied to a 15% commission, the result (4.5%) is an absolute percentage reduction on the base amount - not a <a href="/math/percentage-calculator/percentage-point">percentage point reduction</a> of the commission rate. Keeping track of what the "base" is at each step prevents errors.</p>
+      <p>The mistake I see most consistently in commission calculations is sales reps adding their override rate to their base rate. If a rep earns 15% commission and a manager takes a 30% override of that commission, the manager does not receive 30% of the sale - they receive 30% of 15% = 4.5% of the sale. The two rates operate on different bases and cannot be added.</p>
+      <h2 id="faq">FAQs about percentages of percentages</h2>
       <h3>What is the formula for a percentage of a percentage?</h3>
       <p>P% of Q% = (P × Q) ÷ 100. Convert P to a decimal by dividing by 100, then multiply by Q. Example: 20% of 50% = (20 × 50) ÷ 100 = 10%.</p>
       <h3>What is 20% of 50%?</h3>
@@ -193,6 +242,12 @@ const schema = [
       <p>4.5%. Calculation: (30 × 15) ÷ 100 = 4.5%.</p>
       <h3>When do you need to calculate a percentage of a percentage?</h3>
       <p>Common scenarios: successive retail discounts, commission structures where part of the commission is taxed, probability calculations combining two rates, and VAT or sales tax on a discounted price.</p>
+      <QuizBlock
+        topic="percentage of percentage"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/percentage-calculator/percentage-of-percentage"
+      />
+
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator',                    blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
