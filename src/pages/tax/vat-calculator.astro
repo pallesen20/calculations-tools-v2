@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import Formula from '../../components/Formula.astro';
 import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
 import type { Source } from '../../components/Sources.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
 
 const f = {
   forward:  "$$\\text{VAT Amount} = \\text{Net Price} \\times \\frac{\\text{VAT Rate}}{100}$$",
@@ -18,19 +19,68 @@ const sources: Source[] = [
     year: 2026,
     url: 'https://taxfoundation.org/data/all/eu/value-added-tax-vat-rates-europe/',
   },
+  {
+    author: 'European Commission',
+    title: 'VAT rates applicable in the Member States of the European Union',
+    journal: 'Taxation and Customs Union',
+    year: 2026,
+    url: 'https://taxation-customs.ec.europa.eu/taxation-1/value-added-tax-vat/vat-rates_en',
+  },
+  {
+    author: 'HM Revenue & Customs',
+    title: 'VAT rates',
+    journal: 'GOV.UK',
+    year: 2026,
+    url: 'https://www.gov.uk/vat-rates',
+  },
 ];
 
 const tocItems = [
-  { id: 'how-to-use',          label: 'How to use this calculator' },
-  { id: 'how-to-calculate',    label: 'How to calculate VAT' },
+  { id: 'how-to-use',            label: 'How to use this calculator' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'how-to-calculate',      label: 'How to calculate VAT' },
   { id: 'reverse-vat',         label: 'Reverse VAT calculation' },
   { id: 'vat-rates-by-country',label: 'VAT rates by country (2026)' },
   { id: 'vat-vs-gst',          label: 'VAT vs GST vs sales tax' },
   { id: 'local-names',         label: 'Local names for VAT' },
   { id: 'mistakes',            label: 'Common mistakes' },
   { id: 'faq',                 label: 'FAQs' },
+  { id: 'quiz',                label: 'Quiz: test your knowledge' },
   { id: 'related-tools',       label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What is the correct formula to find the net (ex-VAT) price from a gross (VAT-inclusive) price?',
+    options: ['Subtract (Gross × VAT Rate / 100) from the gross', 'Multiply the gross by (1 - VAT Rate / 100)', 'Divide the gross by the VAT rate', 'Divide the gross by (1 + VAT Rate / 100)'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The reverse formula is Net = Gross / (1 + Rate / 100). At 20% VAT this means dividing by 1.20, which gives £100 from a £120 gross. Subtracting a percentage from the gross is a common mistake that gives the wrong answer.',
+  },
+  {
+    q: 'A net price of €500 has Germany\'s 19% VAT applied. What is the gross (VAT-inclusive) price?',
+    options: ['€595', '€590', '€519', '€619'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'VAT = €500 × 0.19 = €95. Gross = €500 + €95 = €595. The VAT amount is calculated on the net price, not on the gross total.',
+  },
+  {
+    q: 'What is the key structural difference between VAT and US sales tax?',
+    options: ['VAT is always a higher rate than sales tax', 'Sales tax applies to business-to-business transactions only', 'VAT is collected at every stage of production; sales tax is collected only at the final retail sale', 'VAT cannot be reclaimed by businesses, but sales tax can'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'VAT is a multi-stage tax collected at each step of production, with each business reclaiming the tax paid on inputs. Sales tax is collected once, by the retailer, at the point of final sale. Both add the same cost to the consumer, but VAT creates a paper trail across the supply chain.',
+  },
+  {
+    q: 'Which country has the world\'s highest standard VAT rate, according to the Tax Foundation (2026)?',
+    options: ['Finland (25.5%)', 'Hungary (27%)', 'Denmark (25%)', 'Sweden (25%)'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Hungary has the world\'s highest standard VAT rate at 27% (Tax Foundation, 2026). Finland is next at 25.5%, followed by Croatia, Denmark, Norway, and Sweden each at 25%.',
+  },
+  {
+    q: 'A receipt shows a gross price of £120 including 20% UK VAT. What is the correct net (ex-VAT) price?',
+    options: ['£98', '£96', '£100', '£104'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '£120 / 1.20 = £100 net. The common mistake is subtracting 20% from the gross (£120 × 0.20 = £24, leaving £96), but this is wrong because the VAT rate was applied to the net price, not to the gross total.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -78,7 +128,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="VAT Calculator"
   metaTitle="Instant VAT Calculator | Add & Remove Value Added Tax ᐅ"
@@ -98,12 +147,10 @@ const schema = [
           <h2>Instantly Add or Remove Value Added Tax</h2>
           <p>Add VAT to a net price or remove it from a gross total</p>
         </div>
-
         <div class="vat-mode-toggle">
           <button id="vat-mode-add" class="vat-mode-btn vat-mode-active">Add VAT</button>
           <button id="vat-mode-remove" class="vat-mode-btn">Remove VAT</button>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" id="vat-price-label" for="vat-price">Net price (excl. VAT)</label>
           <div class="vat-price-row">
@@ -114,14 +161,12 @@ const schema = [
             <input type="text" inputmode="decimal" id="vat-price" class="bmi-input amount-input" placeholder="e.g. 100.00" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="vat-rate">VAT rate (%)</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="vat-rate" class="bmi-input" placeholder="e.g. 20" />
           </div>
         </div>
-
         <div id="vat-result" class="lbm-result hidden">
           <div class="vat-results-grid">
             <div class="vat-result-row" id="vat-row-net">
@@ -140,19 +185,15 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/vat-calculator.js" is:inline></script>
     <FinanceDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>A VAT calculator takes a net price and a VAT rate and returns the VAT amount plus the gross total. Use it when creating invoices, checking a receipt, or shopping in a country where prices are shown without tax. Switch to "Remove VAT" mode to work backwards from a tax-inclusive price to the net amount.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -162,26 +203,25 @@ const schema = [
           <li>VAT and GST are the same tax type with different names. Australia, Canada, India, New Zealand, and Singapore use "GST"; Europe uses "VAT".</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to Use This VAT Calculator</h2>
+      <h2 id="how-to-use">How to use this VAT calculator</h2>
       <p>Enter your price and VAT rate, then choose your mode. "Add VAT" takes a net (excl. VAT) price and shows you the VAT amount and gross total. "Remove VAT" takes a gross (incl. VAT) price and works backwards to the net amount and the tax charged. The currency selector auto-detects your location and defaults to EUR for European visitors.</p>
       <p>The calculator updates as you type. Not sure of your country's rate? The table below lists standard VAT rates for all major countries in 2026.</p>
-
-      <h2 id="how-to-calculate">How Do You Calculate VAT?</h2>
+      <h3 id="explained-to-beginner">VAT explained to a beginner</h3>
+      <p>Imagine a restaurant charges £80 for a meal before tax. With 20% UK VAT, the bill becomes £80 + (£80 x 0.20) = £80 + £16 = <strong>£96</strong>. That £16 is 20% of the net £80 price - not 20% of the £96 you pay. This distinction matters the moment you need to work backwards from the total.</p>
+      <p>If a friend shows you a £96 receipt and asks what the food cost before tax, the answer is £96 / 1.20 = <strong>£80</strong> - not £96 - (£96 x 0.20) = £76.80. Subtracting 20% from the gross gives the wrong answer because the VAT rate was applied to the net, not to the final total. The "Remove VAT" mode in this calculator always uses the correct division method.</p>
+      <h2 id="how-to-calculate">How do you calculate VAT?</h2>
       <p>Multiply the net price by the VAT rate divided by 100 to get the VAT amount, then add it to the net price. For a £100 net price at 20% UK VAT: £100 x 0.20 = £20 VAT, giving a gross price of £120. Over 175 countries use VAT as their primary consumption tax, with the EU average standard rate at 21.9% in 2026 (Tax Foundation).</p>
       <p>The forward formula in two steps:</p>
       <Formula expr={f.forward} />
       <Formula expr={f.gross} />
-      <p>Example: a €500 net price at Germany's 19% standard rate. VAT = €500 x 0.19 = €95. Gross = €500 + €95 = €595. Most EU countries apply reduced rates to essentials like food, books, and medicines, so always confirm whether the standard or a reduced rate applies to your specific product.</p>
-
-      <h2 id="reverse-vat">How Do You Remove VAT from a Price?</h2>
+      <p><strong>Example:</strong> a €500 net price at Germany's 19% standard rate. VAT = €500 x 0.19 = €95. Gross = €500 + €95 = €595. Most EU countries apply reduced rates to essentials like food, books, and medicines, so always confirm whether the standard or a reduced rate applies to your specific product.</p>
+      <h2 id="reverse-vat">How do you remove VAT from a price?</h2>
       <p>Divide the gross (tax-inclusive) price by (1 + VAT Rate / 100). This is the correct reverse calculation, and it's needed whenever a price is quoted with VAT already included. For a £120 gross price at 20% UK VAT: £120 / 1.20 = £100 net, and the VAT was £20.</p>
       <p>The reverse formula:</p>
       <Formula expr={f.reverse} />
       <p>A very common mistake is subtracting the percentage directly from the gross: £120 x 0.20 = £24, giving £96 net. This is wrong. The correct net is £100, and the difference of £4 matters on large invoices. Always use the division method, or use the "Remove VAT" mode in this calculator to avoid the error.</p>
-
-      <h2 id="vat-rates-by-country">VAT Rates by Country (2026)</h2>
-      <p>Standard VAT rates range from 4.5% in Andorra to 27% in Hungary. The EU requires all member states to apply a minimum standard rate of 15%, though every member state currently exceeds this floor. The table below covers standard rates for 40+ countries; many also apply reduced rates of 5-12% on food, medicine, and other essentials (Tax Foundation, 2026).</p>
+      <h2 id="vat-rates-by-country">VAT rates by country (2026)</h2>
+      <p>Standard VAT rates range from 4.5% in Andorra to 27% in Hungary. The EU requires all member states to apply a minimum standard rate of 15% - "there is no maximum" according to the European Commission - though every member state currently exceeds this floor. The table below covers standard rates for 40+ countries; many also apply reduced rates of 5-12% on food, medicine, and other essentials (Tax Foundation, 2026).</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -240,8 +280,7 @@ const schema = [
         </table>
       </div>
       <p>Source: Tax Foundation, 2026 VAT Rates in Europe; OECD Consumption Tax Trends. Reduced rates (food, medicines, books) are not shown - check your national tax authority for applicable rates on specific goods.</p>
-
-      <h2 id="vat-vs-gst">What Is the Difference Between VAT, GST, and Sales Tax?</h2>
+      <h2 id="vat-vs-gst">What is the difference between VAT, GST, and sales tax?</h2>
       <p>VAT, GST, and sales tax are three names for consumption taxes, but they operate differently. VAT and GST are multi-stage taxes collected at each step of production, with businesses reclaiming input tax. Sales tax is collected only at the final sale. Over 175 countries use VAT or GST; the US uses sales tax and is the only major economy without a federal VAT (Tax Foundation).</p>
       <p>Here's how each system works in practice:</p>
       <div class="responsive-table">
@@ -261,8 +300,7 @@ const schema = [
       </div>
       <p>The math for a consumer looks identical in all three systems: a 20% tax on a £100 item costs £20 regardless of whether it's called VAT, GST, or sales tax. The difference is in the mechanics - VAT and GST create a paper trail at every business-to-business transaction, which makes under-reporting harder and provides built-in enforcement. Sales tax has no such trail, which is why the US relies on state-level audits instead.</p>
       <p>For more on how sales tax works in the US, see our <a href="/tax/sales-tax-calculator">sales tax calculator</a>. For GST-specific calculations (Australia, Canada, India, New Zealand, Singapore), use our <a href="/tax/gst-calculator">GST calculator</a>.</p>
-
-      <h2 id="local-names">What Is VAT Called in Different Countries?</h2>
+      <h2 id="local-names">What is VAT called in different countries?</h2>
       <p>VAT goes by many local names, but the underlying mechanics are identical everywhere. France calls it TVA (Taxe sur la Valeur Ajoutée), Germany uses MwSt. (Mehrwertsteuer), Spain and Italy use IVA (Impuesto/Imposta sul Valore Aggiunto), and Nordic countries call it MOMS. Understanding these labels matters when reading foreign invoices or import documents.</p>
       <div class="responsive-table">
         <table>
@@ -288,32 +326,34 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="mistakes">Common Mistakes When Calculating VAT</h2>
+      <h2 id="mistakes">Common mistakes when calculating VAT</h2>
       <p>The most frequent error is removing VAT by subtracting the percentage directly from the gross price. At 20% VAT, people subtract £120 x 0.20 = £24 and get £96 net. The correct answer is £100. The net price at 20% VAT is always Gross / 1.20, not Gross x 0.80 - these give different results because the VAT rate applies to the net, not the gross.</p>
+      <p>On a £50,000 invoice at 20% VAT, this subtraction error overstates the tax component by £2,000 and understates the recoverable net by the same amount. For VAT-registered businesses, that means the input tax reclaim is wrong, not just the bookkeeping entry.</p>
+      <p>I see this most often in businesses that calculate VAT manually outside their accounting software rather than letting the system apply the division formula.</p>
       <ul>
         <li><strong>Using the standard rate when a reduced rate applies</strong>: Most countries apply lower rates to food, children's clothing, books, and medicines. Applying the standard rate to exempt or zero-rated goods overstates the tax due.</li>
         <li><strong>Confusing net and gross</strong>: "Net" means the price without VAT; "gross" means with VAT included. On B2B invoices, prices are usually quoted net. Consumer prices are usually quoted gross (tax-inclusive).</li>
         <li><strong>Ignoring input tax credits</strong>: VAT-registered businesses don't bear the tax themselves - they collect VAT on sales and deduct VAT paid on purchases. Only the net amount goes to the government. Forgetting this on invoices leads to accounting errors.</li>
         <li><strong>Wrong rate for the country</strong>: A product sold to a customer in France is taxed at France's rate (20%), not the seller's country rate, for cross-border EU sales above the distance-selling threshold.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <p>The cross-border rate mistake is one I see regularly in B2B supply chains. When an EU supplier sells to a UK VAT-registered business, the correct treatment is typically reverse charge - the seller issues an invoice with zero VAT, and the UK buyer accounts for the tax themselves.</p>
+      <p>Charging the seller's home country rate instead creates a compliance problem on both sides: the seller has collected tax it shouldn't have, and the buyer cannot reclaim it through their normal input tax process.</p>
+      <h2 id="faq">Frequently asked questions about VAT calculation</h2>
       <h3>How do I calculate VAT on a price?</h3>
       <p>Multiply the net price by the VAT rate divided by 100, then add the result to the net price. At 20% on £100: £100 x 0.20 = £20 VAT; gross = £120. Use the "Add VAT" mode in the calculator above to do this instantly for any price and rate without manual multiplication.</p>
-
       <h3>How do I remove VAT from a price?</h3>
       <p>Divide the gross price by (1 + VAT Rate / 100). For a £120 gross at 20% VAT: £120 / 1.20 = £100 net price. The VAT was £20. Don't subtract 20% directly from £120 - that gives the wrong answer (£96 instead of £100). Use the "Remove VAT" mode in this calculator to avoid this error every time.</p>
-
       <h3>What is the difference between VAT and GST?</h3>
       <p>VAT and GST work identically - both are multi-stage consumption taxes collected at each production step, with businesses reclaiming input tax. The only difference is the name. Europe, the UK, and most of Africa and Asia call it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST. This calculator works for both.</p>
-
       <h3>What is the difference between VAT and sales tax?</h3>
       <p>VAT is collected at every stage of production, and each business in the chain reclaims the tax it paid on inputs. Sales tax is collected only at the final retail sale. For a consumer, both add the same percentage to the price. The US uses sales tax; most of the world uses VAT or GST. See our <a href="/tax/sales-tax-calculator">sales tax calculator</a> for US-specific calculations.</p>
-
       <h3>Which country has the highest VAT rate?</h3>
       <p>Hungary has the world's highest standard VAT rate at 27%, according to the Tax Foundation (2026). In Europe, Finland (25.5%) and Croatia, Denmark, Norway, and Sweden (all 25%) are next. The EU's average standard rate is 21.9%. Switzerland has one of Europe's lowest rates at 8.1%, and the UAE applies just 5%.</p>
+      <QuizBlock
+        topic="VAT"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/tax/vat-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
@@ -346,12 +386,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .vat-mode-toggle {
     display: flex;

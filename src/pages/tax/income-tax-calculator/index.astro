@@ -1,16 +1,64 @@
 ---
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import FinanceDisclaimer from '../../../components/FinanceDisclaimer.astro';
+import type { Source } from '../../../components/Sources.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const tocItems = [
   { id: 'how-to-use', label: 'How to use this calculator' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'income-vs-tax', label: 'Income tax vs. payroll tax' },
   { id: 'global-rates', label: 'Income tax rates around the world' },
   { id: 'effective-marginal', label: 'Effective vs. marginal tax rate' },
   { id: 'reduce-tax', label: 'How to reduce your tax bill' },
   { id: 'faq', label: 'FAQs' },
+  { id: 'quiz', label: 'Quiz: test your knowledge' },
   { id: 'us-calculator', label: 'US income tax calculator' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'FICA covers Social Security and Medicare. According to the page, what is the combined total FICA rate paid by employee and employer together?',
+    options: ['6.2%', '12.4%', '15.3%', '7.65%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page states "both employee and employer each pay FICA taxes, so the total FICA contribution is 15.3% of wages." The employee pays 7.65% (6.2% Social Security + 1.45% Medicare) and the employer matches that, giving 15.3% combined.',
+  },
+  {
+    q: 'A taxpayer earns $100,000 and pays $18,000 in federal income taxes. What is their effective tax rate?',
+    options: ['22%', '18%', '20%', '15%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The effective tax rate is total tax divided by gross income: $18,000 / $100,000 = 18%. The page uses this exact example to illustrate that the effective rate is lower than the 22% marginal bracket the income falls into.',
+  },
+  {
+    q: 'A raise pushes a taxpayer into the next federal bracket. What happens to the income they earned before reaching that threshold?',
+    options: [
+      'It is recalculated at the new bracket rate to simplify withholding',
+      'It is averaged with the higher-bracket income at a blended effective rate',
+      'It triggers an AMT adjustment that may increase tax on all prior income',
+      'It is unaffected - only the income inside the higher bracket is taxed at the higher rate',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The page explains that under a progressive system, only the income within each bracket is taxed at that bracket\'s rate. A raise to $50,001 taxes just that last dollar at the higher rate - the income below the threshold is unaffected, so a raise can never reduce after-tax income.',
+  },
+  {
+    q: 'According to the global income tax rates table, which country has the highest top marginal rate?',
+    options: ['Finland at 56.9%', 'Denmark at 55.9%', 'Japan at 55.9%', 'Sweden at 52%'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'The table lists Finland at 56.9% (national + municipal combined) as the highest rate among the countries shown. Denmark and Japan are both at 55.9%, and Sweden is at 52%.',
+  },
+  {
+    q: 'How are long-term capital gains (assets held 1+ year) taxed differently from short-term gains?',
+    options: [
+      'They are exempt from all federal tax regardless of income level',
+      'They are taxed at ordinary income bracket rates, the same as short-term gains',
+      'They are taxed at preferential rates of 0%, 15%, or 20% depending on income',
+      'They are taxed at a flat 10% rate regardless of income or filing status',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page states long-term gains are taxed at "preferential rates: 0%, 15%, or 20% depending on income," and qualified dividends receive the same treatment. Short-term gains are taxed as ordinary income at the full marginal bracket rate.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const sources: Source[] = [
   {
@@ -73,7 +121,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Income Tax Calculator"
   metaTitle="Global Income Tax Calculator | Instant Paycheck Calculator ᐅ"
@@ -86,7 +133,6 @@ const schema = [
   ogFormula="After-tax = Income - (Income x Rate)"
   ogExample="$75,000 x 25% = $18,750 tax | $56,250 take-home"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
@@ -98,21 +144,18 @@ const schema = [
               <div class="itc-sub">Works for any country or currency</div>
             </div>
           </div>
-
           <div class="bmi-field">
             <label class="bmi-label" for="itc-currency">Currency</label>
             <div class="bmi-input-wrap">
               <select id="itc-currency" class="bmi-input itc-input"></select>
             </div>
           </div>
-
           <div class="bmi-field">
             <label class="bmi-label" for="itc-income">Annual gross income</label>
             <div class="bmi-input-wrap">
               <input id="itc-income" class="amount-input itc-input" type="text" inputmode="decimal" placeholder="75000" />
             </div>
           </div>
-
           <div class="bmi-field">
             <label class="bmi-label" for="itc-rate">Effective income tax rate</label>
             <div class="bmi-input-wrap">
@@ -121,7 +164,6 @@ const schema = [
             </div>
             <span class="stax-rate-hint">Enter your total effective rate (federal + state combined). Use our <a href="/tax/income-tax-calculator/us" style="color:rgba(167,139,250,0.9)">US state calculators</a> for a precise breakdown.</span>
           </div>
-
           <div id="itc-result" class="hidden">
             <div class="itc-results">
               <div class="itc-result-row">
@@ -150,31 +192,38 @@ const schema = [
               </div>
             </div>
           </div>
-
           <div class="itc-us-cta">
             <span>Need a full US paycheck breakdown?</span>
             <a href="/tax/income-tax-calculator/us" class="itc-cta-link">US income tax calculator - all 50 states &rarr;</a>
           </div>
-
         </div>
       </div>
     </section>
     <FinanceDisclaimer />
     <script src="/js/income-tax-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Income tax is calculated by applying progressive bracket rates to your taxable income (gross income minus deductions). To estimate your after-tax income quickly, enter your gross income and effective rate above. For a full US paycheck calculation including federal, state, and FICA taxes, use our <a href="/tax/income-tax-calculator/us">US state income tax calculators</a>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <p class="answer-box-label">Key takeaways</p>
+        <ul>
+          <li>Progressive taxation means only the income within each bracket is taxed at that bracket's rate - a raise never reduces your after-tax income by pushing you into a higher bracket.</li>
+          <li>Your effective tax rate (total tax / gross income) is always lower than your marginal rate and is the right number to use for budgeting and take-home pay estimates.</li>
+          <li>Pre-tax contributions to a 401(k), HSA, or FSA reduce your taxable income dollar-for-dollar, lowering both your income tax and your effective rate without reducing your total compensation.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our income tax calculator</h2>
       <p>This global tool works for any country or currency. Enter your annual gross income, select your currency, and enter your effective income tax rate. The calculator instantly shows your tax liability and after-tax income on annual, monthly, and weekly bases.</p>
-      <p>If you don't know your effective rate, use a rough estimate based on your country's tax schedule. For US residents, enter a combined federal and state effective rate - typically 15-30% for most earners. For a precise US breakdown including FICA, use our <a href="/tax/income-tax-calculator/us">US income tax calculator</a>.</p>
-
+      <p>If you don't know your effective rate, use a rough estimate based on your country's tax schedule. For US residents, enter a combined federal and state effective rate - typically 15-30% for most earners.</p>
+      <p>For a precise US breakdown including FICA, use our <a href="/tax/income-tax-calculator/us">US income tax calculator</a>.</p>
+      <h3 id="explained-to-beginner">Income tax explained to a beginner</h3>
+      <p>Think of your income as filling stacked containers. The first container is taxed at the lowest rate. Once it's full, income spills into the next container at a slightly higher rate, then the next - and only the income in each container is taxed at that container's rate. Earning $50,001 does not tax all $50,001 at the top rate; it taxes just the last dollar at the higher rate.</p>
+      <p>For a US single filer earning $50,000 in 2025: after the $15,000 standard deduction, taxable income is $35,000. The first $11,925 is taxed at 10% ($1,193). The remaining $23,075 is taxed at 12% ($2,769). Total federal tax: roughly $3,962 - an effective rate of about 7.9% on gross income, even though the highest bracket reached is 12%.</p>
+      <p>The calculator above uses this effective-rate logic.</p>
       <h2 id="income-vs-tax">Income tax vs. payroll tax</h2>
       <p>Income tax and payroll tax (<a href="/glossary/fica">FICA</a> in the US) are both withheld from paychecks but serve different purposes:</p>
       <div class="responsive-table">
@@ -189,7 +238,6 @@ const schema = [
         </table>
       </div>
       <p>This simple calculator uses a single effective rate for easy estimation. Our <a href="/tax/income-tax-calculator/us">US state calculators</a> calculate all four components separately and give you the precise breakdown.</p>
-
       <h2 id="global-rates">Income tax rates around the world</h2>
       <p>Top marginal income tax rates vary dramatically across countries. Nordic countries tend toward high rates to fund comprehensive welfare states, while many Asian economies opt for lower rates to attract capital and skilled workers.</p>
       <div class="responsive-table">
@@ -216,16 +264,16 @@ const schema = [
         </table>
       </div>
       <p>Source: <a href="https://taxsummaries.pwc.com/" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries</a>; <a href="https://taxfoundation.org/research/global-tax/" target="_blank" rel="noopener noreferrer">Tax Foundation Global Tax Data 2026</a>.</p>
-
-      <h2 id="effective-marginal">Effective vs. marginal tax rate</h2>
+      <h2 id="effective-marginal">Effective tax rate vs. marginal tax rate</h2>
       <p>Understanding the difference between effective and marginal tax rates is crucial for tax planning.</p>
       <p>Your <strong>marginal tax rate</strong> is the rate applied to your next dollar of income - the highest bracket you've reached. Your <strong>effective tax rate</strong> is total tax paid divided by gross income. For most earners, effective rate is significantly lower than marginal rate because only the income within each bracket is taxed at that bracket's rate.</p>
-      <p>Example: A US single filer earning $100,000 in 2025 has a marginal federal rate of 22% (the bracket from $48,475 to $103,350). But their federal effective rate is approximately 14%, because the first $15,000 is sheltered by the standard deduction, the first $11,925 of taxable income is taxed at 10%, and the next $36,550 at 12% - before reaching the 22% bracket.</p>
+      <p><strong>Example:</strong> A US single filer earning $100,000 in 2025 has a marginal federal rate of 22% (the bracket from $48,475 to $103,350). But their federal effective rate is approximately 14%, because the first $15,000 is sheltered by the standard deduction, the first $11,925 of taxable income is taxed at 10%, and the next $36,550 at 12% - before reaching the 22% bracket.</p>
       <p>Use the effective rate for planning and comparing your actual tax burden. Use the marginal rate to evaluate whether extra income or a deduction is worthwhile.</p>
-
+      <p>The most common tax misconception I personally encounter is the fear that a raise will "push you into a higher bracket and you'll end up with less money." This cannot happen under a progressive system.</p>
+      <p>A higher bracket applies only to the slice of income inside it. A $48,475 earner who gets a $2,000 raise pays the higher rate on those $2,000 alone - the income below the threshold is unaffected. No raise has ever reduced after-tax income by pushing into a higher bracket.</p>
       <h2 id="reduce-tax">How to reduce your income tax bill</h2>
       <p>Legal tax reduction strategies fall into three categories: deductions (reduce taxable income), credits (reduce tax directly), and deferrals (shift income to future years).</p>
-      <p><strong>Common pre-tax deductions (US):</strong></p>
+      <h3>Common pre-tax deductions (US)</h3>
       <ul>
         <li>401(k) and 403(b) contributions: up to $23,500 in 2025 ($31,000 if age 50+)</li>
         <li>Traditional IRA contributions: up to $7,000 ($8,000 if 50+), subject to income limits</li>
@@ -233,21 +281,24 @@ const schema = [
         <li>Health insurance premiums paid through employer (pre-tax via Section 125)</li>
         <li>Flexible Spending Account (FSA) contributions: up to $3,300</li>
       </ul>
-      <p><strong>Itemized deductions (if exceeding the $15,000 standard deduction in 2025):</strong> mortgage interest, state and local taxes (capped at $10,000), charitable contributions, medical expenses above 7.5% of AGI.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h3>Itemized deductions (if exceeding the $15,000 standard deduction in 2025)</h3>
+      <p>Mortgage interest, state and local taxes (capped at $10,000), charitable contributions, medical expenses above 7.5% of AGI.</p>
+      <p>One strategy I see systematically underused among earners near the standard deduction threshold is deduction bunching. If your typical itemized deductions land just above $15,000, you're barely benefiting from itemizing.</p>
+      <p>By deferring charitable donations one year and doubling them the next, you alternate between a large itemized deduction year and a standard deduction year - effectively converting deductions that were doing nothing into real tax savings over the two-year cycle without spending any more money.</p>
+      <h2 id="faq">Frequently asked questions about income tax</h2>
       <h3>What is the difference between gross and net income?</h3>
-      <p>Gross income is your total income before any taxes or deductions. Net income (take-home pay) is what you receive after all taxes - income tax, FICA, and any other withholdings. The difference between gross and net can be 25-45% for median earners in high-tax states.</p>
-
+      <p>Gross income is your total income before any taxes or deductions. <a href="/glossary/net-income">Net income (take-home pay)</a> is what you receive after all taxes - income tax, FICA, and any other withholdings. The difference between gross and net can be 25-45% for median earners in high-tax states.</p>
       <h3>Is Social Security income taxable?</h3>
       <p>Yes, up to 85% of Social Security benefits may be included in federal taxable income depending on your "combined income" (AGI + non-taxable interest + half of Social Security). Below $25,000 (single), none is taxable. Above $34,000 (single), up to 85% is taxable. Many states fully exempt Social Security from state income tax.</p>
-
       <h3>How is income tax calculated on a salary?</h3>
       <p>Start with gross wages. Subtract pre-tax deductions (401k, health insurance premiums, HSA). The result is adjusted gross income (AGI). Subtract your standard or itemized deduction. Apply the relevant tax brackets to the result. The federal brackets in 2026 range from 10% on the first $11,925 of taxable income up to 37% on income over $626,350 (single filer).</p>
-
       <h3>Do I pay income tax on investment income?</h3>
       <p>Short-term capital gains (assets held under 1 year) are taxed as ordinary income at your marginal bracket rate. Long-term capital gains (held 1+ year) are taxed at preferential rates: 0%, 15%, or 20% depending on income. Qualified dividends receive the same preferential rates as long-term capital gains.</p>
+      <QuizBlock
+        topic="income tax"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/tax/income-tax-calculator"
+      />
 
       <h2 id="us-calculator">US income tax by state</h2>
       <p>For a full US paycheck breakdown - federal income tax, state income tax, Social Security, and Medicare - use our state-specific calculators. Each state page includes 2026 tax brackets, filing status options, deduction inputs, and a take-home pay breakdown.</p>
@@ -281,10 +332,10 @@ const schema = [
           </div>
         </li>
       </ul>
+      <RelatedGlossaryTerms toolPath="/tax/income-tax-calculator" />
     </div>
   </div>
 </CalculatorLayout>
-
 <style is:global>
   .itc-card {
     background: rgba(255,255,255,0.05);

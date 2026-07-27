@@ -3462,7 +3462,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
         ['Canada (federal)', '5%', 'CA$100', 'CA$5', 'CA$105'],
       ],
     },
-    pitfalls: "Canada's tax system is especially complex because the federal GST is often combined with a provincial sales tax (PST) or replaced by a Harmonised Sales Tax (HST) that merges both. The combined rate ranges from 5% (Alberta, which has no provincial sales tax) to 15% (New Brunswick, Newfoundland, Nova Scotia, PEI). Always use the combined rate for Canadian calculations.",
+    pitfalls: "Canada's tax system is especially complex because the federal GST is often combined with a provincial sales tax (PST) or replaced by a <a href=\"/glossary/hst\">Harmonised Sales Tax (HST)</a> that merges both. The combined rate ranges from 5% (Alberta, which has no provincial sales tax) to 15% (New Brunswick, Newfoundland, Nova Scotia, PEI). Always use the combined rate for Canadian calculations.",
     faqs: [
       { q: 'Is GST the same as VAT?', a: 'Yes. GST and VAT are the same type of tax with different names. Both are multi-stage consumption taxes where businesses collect tax on sales and reclaim it on purchases. Europe calls it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST. The formula for calculating both is identical.' },
       { q: 'What is the GST rate in Australia?', a: 'Australia applies a flat 10% GST on most goods and services. Some supplies are GST-free (fresh food, certain medical services, and exports) and some are input-taxed (financial services, residential rent). The Australian GST has been in force since 1 July 2000.' },
@@ -3500,6 +3500,65 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
           options: ['Subtract 10% of the gross price: AU$110 - AU$11 = AU$99', 'Multiply the gross price by 1.10 to adjust for the tax inclusion: AU$110 x 1.10 = AU$121', 'Divide the gross price by 1.10: AU$110 / 1.10 = AU$100', 'Divide the gross price by the GST rate percentage: AU$110 / 0.10 = AU$1,100'] as [string, string, string, string],
           correct: 2 as const,
           explanation: 'The FAQ states you must divide the GST-inclusive price by (1 + GST Rate / 100). For AU$110 at 10%: AU$110 / 1.10 = AU$100 net. The FAQ explicitly warns never to subtract the rate percentage directly from the gross price, since 10% of AU$110 is AU$11, not AU$10.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'hst': {
+    definition: [
+      'HST (Harmonised Sales Tax) is a blended federal-provincial consumption tax used in five Canadian provinces. Rather than collecting the 5% federal GST and a separate provincial sales tax (PST) in two distinct streams, participating provinces merged both into a single rate administered by the Canada Revenue Agency (CRA). Ontario applies 13% (5% federal + 8% provincial); New Brunswick, Newfoundland and Labrador, Nova Scotia, and Prince Edward Island each apply 15% (5% federal + 10% provincial).',
+      'Like GST and VAT, HST is a multi-stage tax with input tax credits. Registered businesses collect HST on taxable sales and recover it on business purchases by claiming Input Tax Credits (ITCs). Only end consumers bear the full economic cost, since they cannot reclaim HST. The calculation formula is identical to GST and VAT - the only differences are the rate and the fact that both the federal and provincial components arrive in a single charge.',
+    ],
+    whenToUse: 'Use HST rates when invoicing customers in Ontario, New Brunswick, Newfoundland and Labrador, Nova Scotia, or Prince Edward Island. For customers in Alberta, British Columbia, Manitoba, Quebec, or Saskatchewan, apply the 5% federal GST separately alongside any applicable provincial tax - those provinces do not participate in the harmonised system.',
+    examples: {
+      headers: ['Province', 'HST rate', 'Net price', 'HST amount', 'Gross price'],
+      rows: [
+        ['Ontario', '13%', 'CA$100', 'CA$13', 'CA$113'],
+        ['New Brunswick', '15%', 'CA$100', 'CA$15', 'CA$115'],
+        ['Newfoundland and Labrador', '15%', 'CA$100', 'CA$15', 'CA$115'],
+        ['Nova Scotia', '15%', 'CA$100', 'CA$15', 'CA$115'],
+        ['Prince Edward Island', '15%', 'CA$100', 'CA$15', 'CA$115'],
+      ],
+    },
+    pitfalls: "The most common mistake is applying HST to a province that does not participate in the harmonised system. Alberta has no provincial sales tax at all - only the 5% federal GST applies. British Columbia, Manitoba, and Saskatchewan each collect a separate PST alongside federal GST; the rates are not combined and the PST is administered provincially, not by the CRA. Quebec uses its own QST (Quebec Sales Tax) at 9.975% on top of the federal 5% GST - also administered separately.",
+    faqs: [
+      { q: 'Which Canadian provinces use HST?', a: 'Five provinces participate in the harmonised system: Ontario (13%), New Brunswick (15%), Newfoundland and Labrador (15%), Nova Scotia (15%), and Prince Edward Island (15%). Alberta, British Columbia, Manitoba, Quebec, and Saskatchewan do not use HST - each applies the federal GST alongside its own provincial tax structure.' },
+      { q: 'What is the difference between HST and GST in Canada?', a: 'GST is the 5% federal tax that applies across all Canadian provinces and territories. HST replaces GST in five participating provinces by merging the federal and provincial portions into one combined rate. In non-participating provinces, businesses charge the federal GST separately from any applicable provincial tax, and may need to file two separate returns.' },
+      { q: 'Can businesses recover HST paid on their purchases?', a: 'Yes. Businesses registered for HST claim Input Tax Credits (ITCs) for the HST paid on business-related purchases and expenses. This offsets the HST collected on sales, so only the net difference is remitted to the CRA. End consumers who are not registered for HST cannot claim ITCs and bear the full cost.' },
+    ],
+    quiz: {
+      topic: 'HST',
+      questions: [
+        {
+          q: "Ontario's 13% HST rate is made up of which two components?",
+          options: ['5% federal GST plus 8% provincial component', '10% federal GST plus 3% provincial component', '8% federal GST plus 5% provincial component', '5% federal GST plus 8% Quebec QST'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states Ontario applies 13% HST composed of 5% federal and 8% provincial. All five HST provinces share the same 5% federal component - only the provincial portion differs.',
+        },
+        {
+          q: 'A client in New Brunswick is invoiced CA$500 net. HST is 15%. What is the gross (HST-inclusive) invoice total?',
+          options: ['CA$550', 'CA$565', 'CA$575', 'CA$580'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'CA$500 x 1.15 = CA$575. The examples table confirms New Brunswick applies 15% HST: a CA$100 net price becomes CA$115 gross, so the same rate applied to CA$500 gives CA$575.',
+        },
+        {
+          q: 'Which of the following provinces does NOT participate in the HST system?',
+          options: ['Ontario', 'British Columbia', 'Nova Scotia', 'New Brunswick'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'British Columbia applies the 5% federal GST separately alongside its own provincial sales tax (PST) - it does not participate in the harmonised system. Ontario, Nova Scotia, and New Brunswick are all HST provinces.',
+        },
+        {
+          q: 'What is a key operational advantage of HST over separate GST plus PST for businesses?',
+          options: ['The combined HST rate is always lower than separate GST plus PST combined', 'HST applies to a wider range of goods than GST alone, simplifying product classification', 'Businesses pay no HST on their own purchases, eliminating the need for input tax credit tracking', 'A single registration and one remittance to the CRA replaces separate federal and provincial filings'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The definition notes HST is administered by the CRA rather than split between federal and provincial authorities. Businesses in HST provinces file one return and make one remittance, whereas non-participating provinces require separate federal and provincial filings.',
+        },
+        {
+          q: 'A registered Nova Scotia business paid CA$230 HST on purchases and collected CA$575 HST on sales this quarter. How much must it remit to the CRA?',
+          options: ['CA$575', 'CA$345', 'CA$805', 'CA$230'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Businesses remit only the net HST - collected minus recoverable ITCs. CA$575 collected minus CA$230 paid = CA$345 net remittance. This input tax credit mechanism is what prevents HST from cascading through the supply chain.',
         },
       ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
     },

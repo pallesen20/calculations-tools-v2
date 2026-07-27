@@ -189,7 +189,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'Net Income is a company\'s bottom-line profit - revenue minus every expense including COGS, operating costs, interest, and tax. It is the figure reported as EPS (Earnings Per Share) for public companies.',
     formula: '$$\\text{Net Income} = \\text{Revenue} - \\text{COGS} - \\text{OpEx} - \\text{Interest} - \\text{Tax}$$',
-    relatedTools: ['/finance/ebitda-calculator', '/finance/net-profit-margin-calculator', '/finance/roe-calculator', '/finance/ebt-calculator'],
+    relatedTools: ['/finance/ebitda-calculator', '/finance/net-profit-margin-calculator', '/finance/roe-calculator', '/finance/ebt-calculator', '/tax/income-tax-calculator'],
     relatedTerms: ['ebt', 'ebit', 'ebitda', 'net-profit-margin', 'revenue', 'eps', 'roe'],
   },
   {
@@ -460,7 +460,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'Value Added Tax (VAT) is a multi-stage consumption tax collected at each step of production and distribution. Businesses reclaim the VAT they paid on inputs, so only the net value added at each stage is taxed. Over 175 countries use VAT; the US is the only major economy that does not.',
     formula: '$$\\text{VAT Amount} = \\text{Net Price} \\times \\frac{\\text{VAT Rate}}{100}$$',
-    relatedTools: ['/tax/vat-calculator'],
+    relatedTools: ['/tax/vat-calculator', '/tax/sales-tax-calculator'],
     relatedTerms: ['gst', 'sales-tax', 'effective-tax-rate'],
   },
 
@@ -702,7 +702,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'GST (Goods and Services Tax) is the name used in Australia, Canada, India, New Zealand, and Singapore for a tax that works identically to VAT - collected at each stage of production with businesses reclaiming input tax. The math and mechanics are the same; only the name differs.',
     formula: '$$\\text{GST Amount} = \\text{Net Price} \\times \\frac{\\text{GST Rate}}{100}$$',
     relatedTools: ['/tax/gst-calculator', '/tax/vat-calculator'],
-    relatedTerms: ['value-added-tax', 'sales-tax'],
+    relatedTerms: ['value-added-tax', 'sales-tax', 'hst'],
   },
   {
     slug: 'gross-pay',
@@ -712,7 +712,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'Gross pay is the total amount earned before any deductions - income tax, Social Security, Medicare, health insurance premiums, or retirement contributions. It is the figure quoted in salary offers and used to calculate hourly rates.',
     formula: '$$\\text{Gross Pay} = \\text{Hourly Rate} \\times \\text{Hours Worked}$$',
-    relatedTools: ['/finance/salary-to-hourly-calculator', '/finance/pay-raise-calculator'],
+    relatedTools: ['/finance/salary-to-hourly-calculator', '/finance/pay-raise-calculator', '/tax/income-tax-calculator'],
     relatedTerms: ['net-pay', 'fica'],
   },
   {
@@ -722,7 +722,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Personal Finance',
     siteCategory: 'Finance',
     shortDef: 'Net pay is take-home pay - the amount deposited into your bank account after all mandatory and voluntary deductions are removed from gross pay. For most US workers, net pay is 65-75% of gross pay depending on tax bracket and benefit elections.',
-    relatedTools: ['/finance/salary-to-hourly-calculator', '/finance/pay-raise-calculator'],
+    relatedTools: ['/finance/salary-to-hourly-calculator', '/finance/pay-raise-calculator', '/tax/income-tax-calculator'],
     relatedTerms: ['gross-pay', 'fica'],
   },
   {
@@ -880,6 +880,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'A heffingskorting is a Dutch tax credit that reduces the income tax owed directly - not the taxable income. The two main credits are the algemene heffingskorting (general credit, max €3,115) and the arbeidskorting (employment credit, max €5,685). Both phase out at higher incomes.',
     relatedTools: ['/tax/income-tax-calculator/eu/netherlands'],
     relatedTerms: ['box-1-income-tax', 'arbeidskorting', 'net-pay'],
+  },
+  {
+    slug: 'hst',
+    term: 'HST (Harmonised Sales Tax)',
+    letter: 'H',
+    category: 'Tax',
+    siteCategory: 'Finance',
+    shortDef: 'HST (Harmonised Sales Tax) is a blended federal-provincial consumption tax used in five Canadian provinces - Ontario (13%), New Brunswick, Newfoundland and Labrador, Nova Scotia, and Prince Edward Island (all 15%). It merges the 5% federal GST with the provincial portion into one rate, administered and remitted through the Canada Revenue Agency.',
+    formula: '$$\\text{HST Amount} = \\text{Net Price} \\times \\frac{\\text{HST Rate}}{100}$$',
+    relatedTools: ['/tax/gst-calculator'],
+    relatedTerms: ['gst', 'value-added-tax', 'sales-tax'],
   },
   {
     slug: 'arbeidskorting',
