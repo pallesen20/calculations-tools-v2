@@ -82,6 +82,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'arithmetic': {
+    definition: [
+      'Arithmetic is the branch of mathematics concerned with numbers and the four fundamental operations: addition (+), subtraction (-), multiplication (×), and division (÷). Every more advanced mathematical concept - percentages, fractions, algebra, and statistics - is built on top of these four operations and the rules that govern them.',
+      'Each operation has an inverse that undoes it: subtraction reverses addition; division reverses multiplication. This pairing is the foundation of equation solving - to isolate an unknown, you apply the inverse operation to both sides until the unknown stands alone.',
+      'When an expression contains multiple operations, the order in which they are evaluated matters. The standard convention - called PEMDAS in the US and BODMAS in the UK - specifies: Parentheses first, then Exponents, then Multiplication and Division (left to right), then Addition and Subtraction (left to right). The expression 3 + 4 × 2 evaluates to 11, not 14, because multiplication is applied before addition.',
+    ],
+    beginnerExplain: [
+      'Think of a grocery store. When you add prices in your head at checkout, that\'s addition. Figuring out your change is subtraction. Calculating the cost of six identical items is multiplication. Splitting the total equally with three friends is division. Those four actions - add, subtract, multiply, divide - are arithmetic.',
+      'Every formula you see on a calculator site is just these four operations combined in a specific order. Once you know how to do each one and when they apply, you can follow any calculation step by step.',
+    ],
+    whenToUse: 'Arithmetic applies any time you are combining, comparing, or scaling quantities. Use addition and subtraction to find totals and differences; use multiplication and division to scale, partition, or convert. Every formula on this site - from percentage change to compound interest - is built from these four operations applied in a defined sequence.',
+    examples: {
+      headers: ['Operation', 'Symbol', 'Example', 'Result', 'Inverse operation'],
+      rows: [
+        ['Addition', '+', '350 + 125', '475', 'Subtraction'],
+        ['Subtraction', '-', '475 - 125', '350', 'Addition'],
+        ['Multiplication', '×', '12 × 8', '96', 'Division'],
+        ['Division', '÷', '96 ÷ 12', '8', 'Multiplication'],
+      ],
+    },
+    pitfalls: 'The most common arithmetic error is applying operations in the wrong order. In 2 + 3 × 4, multiplication takes priority: 3 × 4 = 12, then 2 + 12 = 14. Reading left-to-right without operator precedence gives the wrong answer of 20. The fix: add parentheses to force the intended order, writing (2 + 3) × 4 = 20 if multiplication of the sum is what you want. Division by zero is the other fundamental error - no number multiplied by zero produces a non-zero result, so the operation is undefined and calculators return an error.',
+    faqs: [
+      { q: 'What are the four basic arithmetic operations?', a: 'Addition, subtraction, multiplication, and division. Addition finds the total of two or more numbers; subtraction finds the difference. Multiplication is repeated addition; division splits a quantity into equal parts. Every calculation on this site - percentages, fractions, compound interest - combines these four operations.' },
+      { q: 'What is the order of operations (PEMDAS / BODMAS)?', a: 'PEMDAS (US) and BODMAS (UK) are mnemonics for the same rule: evaluate Parentheses/Brackets first, then Exponents/Orders, then Multiplication and Division left to right, then Addition and Subtraction left to right. In 3 + 4 × 2, multiplication is applied first: 4 × 2 = 8, then 3 + 8 = 11 - not 14.' },
+      { q: 'What is the difference between arithmetic and mathematics?', a: 'Arithmetic is a subset of mathematics that deals specifically with numbers and the four basic operations. Mathematics also includes algebra, geometry, statistics, and calculus. All of these branches rely on arithmetic as their foundation - algebra manipulates arithmetic expressions using letters; statistics summarises arithmetic across many values.' },
+      { q: 'Why is division by zero undefined?', a: 'Division asks how many times the divisor fits into the dividend. No number of times can zero be added to itself to reach a non-zero number, so the question has no valid answer. In formal mathematics the result is described as undefined; in calculators it returns an error.' },
+    ],
+  },
+
   'capex': {
     definition: [
       'Capital Expenditure (CapEx) is money spent to acquire, upgrade, or maintain physical assets - property, buildings, machinery, equipment, and technology infrastructure - that will be used for more than one year. Unlike operating expenses, which flow through the income statement immediately, CapEx is capitalised on the balance sheet and expensed gradually as depreciation over the asset\'s useful life.',

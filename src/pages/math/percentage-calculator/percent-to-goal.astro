@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   main:  "$$\\text{Percent to Goal} = \\frac{\\text{Current Value}}{\\text{Goal}} \\times 100$$",
@@ -13,6 +14,7 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',      label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'formula',         label: 'Percent to goal formula' },
   { id: 'examples',        label: 'Worked examples' },
   { id: 'over-100',        label: 'When you exceed 100%' },
@@ -20,8 +22,57 @@ const tocItems = [
   { id: 'vs-pct-change',   label: 'Percent to goal vs percent change' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does "percent to goal" measure?',
+    options: [
+      'How much a value has grown since the start of a period',
+      'What fraction of a target value has been achieved, expressed as a percentage',
+      'The difference between two percentages in percentage points',
+      'How close a value is to the average of similar targets',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Percent to goal (also called goal attainment rate) answers the question "how much of my target have I reached?" using the formula (Current ÷ Goal) × 100. It is not a measure of growth from a starting point.',
+  },
+  {
+    q: 'A sales rep has closed 750 deals against a quarterly target of 1,000. What is their percent to goal?',
+    options: ['57.5%', '133.3%', '25%', '75%'],
+    correct: 3 as const,
+    explanation: '750 ÷ 1,000 × 100 = 75%. The rep has 250 deals remaining to reach the full target.',
+  },
+  {
+    q: 'In the percent-to-goal formula, which value is always the denominator?',
+    options: [
+      'The starting value at the beginning of the period',
+      'The remaining amount needed to reach the goal',
+      'The goal (target value)',
+      'The average of the current value and the goal',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The denominator is always the goal, not the starting point. This is what separates percent to goal from percent change, which uses the original (starting) value as the denominator.',
+  },
+  {
+    q: 'According to OKR frameworks cited on the page, what percent to goal result is typically considered a good outcome for a stretch target?',
+    options: ['50-60%', '70-80%', '90-95%', 'Exactly 100%'],
+    correct: 1 as const,
+    explanation: 'The page notes that 70-80% of a stretch OKR is a common benchmark for a good result. Achieving 100% of a stretch goal may actually signal the target was not ambitious enough.',
+  },
+  {
+    q: 'Your goal is to eliminate a $4,000 credit card balance. You have paid off $1,600. How should you enter this into the calculator?',
+    options: [
+      'Current = 1600, Goal = 4000 — giving 40% of goal',
+      'Current = 4000, Goal = 1600 — giving 250% of goal',
+      'Current = 2400, Goal = 4000 — giving 60% of goal',
+      'The formula cannot handle reduction goals',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'For reduction goals, set goal = the total reduction you want to make (4000) and current = how much of that reduction you have already achieved (1600). This gives 1600 ÷ 4000 × 100 = 40% of goal.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -78,7 +129,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Percent to Goal Calculator"
   metaTitle="Percent to Goal Calculator | Track Progress %"
@@ -95,88 +145,121 @@ const schema = [
       <div class="calculator-container bmi-container">
         <div class="calculator-header">
           <h2>Calculate Progress in Percentage</h2>
-          <p>Enter your current value and goal to track progress</p>
+          <p>Track a single goal or compare multiple at once</p>
         </div>
-
-        <div class="bmi-field">
-          <label class="bmi-label" for="ptg-current">Current Value</label>
-          <div class="bmi-input-wrap">
-            <input type="text" inputmode="decimal" id="ptg-current" class="bmi-input" placeholder="e.g. 750" />
-          </div>
+        <div class="bmi-unit-toggle" style="margin-bottom:1.25rem;">
+          <button class="bmi-unit-btn active" id="ptg-tab-single">Single Goal</button>
+          <button class="bmi-unit-btn" id="ptg-tab-multi">Multiple Goals</button>
         </div>
-
-        <div class="bmi-field">
-          <label class="bmi-label" for="ptg-goal">Goal</label>
-          <div class="bmi-input-wrap">
-            <input type="text" inputmode="decimal" id="ptg-goal" class="bmi-input" placeholder="e.g. 1000" />
-          </div>
-        </div>
-
-        <div id="ptg-result" class="lbm-result hidden">
-          <div class="lbm-primary">
-            <span class="lbm-primary-val" id="ptg-pct">-</span>
-          </div>
-          <div class="lbm-primary-lbl">Percent to Goal</div>
-
-          <div class="lbm-cards">
-            <div class="lbm-card">
-              <div class="lbm-card-val" id="ptg-remaining">-</div>
-              <div class="lbm-card-lbl">Progress status</div>
+        <div id="ptg-single-mode">
+          <div class="bmi-field">
+            <label class="bmi-label" for="ptg-current">Current Value</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ptg-current" class="bmi-input" placeholder="e.g. 750" />
             </div>
           </div>
-
-          <div class="pi-steps">
-            <div class="pi-steps-title">How it was calculated</div>
-            <div class="pi-step">
-              <span class="pi-step-label">Step 1 - Divide</span>
-              <span id="ptg-step1" class="pi-step-val">-</span>
+          <div class="bmi-field">
+            <label class="bmi-label" for="ptg-goal">Goal</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="ptg-goal" class="bmi-input" placeholder="e.g. 1000" />
             </div>
-            <div class="pi-step">
-              <span class="pi-step-label">Step 2 - Multiply by 100</span>
-              <span id="ptg-step2" class="pi-step-val">-</span>
+          </div>
+          <div id="ptg-result" class="lbm-result hidden">
+            <div class="lbm-primary">
+              <span class="lbm-primary-val" id="ptg-pct">-</span>
+            </div>
+            <div class="lbm-primary-lbl">Percent to Goal</div>
+            <div class="lbm-cards">
+              <div class="lbm-card">
+                <div class="lbm-card-val" id="ptg-remaining">-</div>
+                <div class="lbm-card-lbl">Progress status</div>
+              </div>
+            </div>
+            <div class="pi-steps">
+              <div class="pi-steps-title">How it was calculated</div>
+              <div class="pi-step">
+                <span class="pi-step-label">Step 1 - Divide</span>
+                <span id="ptg-step1" class="pi-step-val">-</span>
+              </div>
+              <div class="pi-step">
+                <span class="pi-step-label">Step 2 - Multiply by 100</span>
+                <span id="ptg-step2" class="pi-step-val">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="ptg-multi-mode" class="hidden">
+          <div class="ptg-row-headers">
+            <span>Name</span>
+            <span>Current</span>
+            <span>Goal</span>
+            <span>Weight&nbsp;%</span>
+            <span class="ptg-hdr-center">% to Goal</span>
+            <span></span>
+          </div>
+          <div id="ptg-rows"></div>
+          <button id="ptg-add-row" class="ptg-add-btn">+ Add goal</button>
+          <div id="ptg-multi-result" class="lbm-result hidden">
+            <div class="lbm-primary">
+              <span class="lbm-primary-val" id="ptg-simple-avg">—</span>
+            </div>
+            <div class="lbm-primary-lbl">Simple average (equal weight)</div>
+            <div id="ptg-weighted-row" class="lbm-cards hidden">
+              <div class="lbm-card">
+                <div class="lbm-card-val" id="ptg-weighted-avg">—</div>
+                <div class="lbm-card-lbl">Weighted average</div>
+              </div>
+              <div class="lbm-card">
+                <div class="lbm-card-val" id="ptg-weight-note" style="font-size:0.78rem">—</div>
+                <div class="lbm-card-lbl">Weight status</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-
     <script src="/js/percent-to-goal-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
         <p>Percent to goal = <strong>(Current Value ÷ Goal) × 100</strong>. Divide what you have achieved by the target and multiply by 100. Results above 100% mean you have exceeded the goal.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter your <strong>current value</strong> - the progress achieved so far - and your <strong>goal</strong> - the target to reach. The calculator returns the percent to goal, the amount remaining (or over-attainment), and a two-step breakdown.</p>
-      <p>Use this calculator for any goal tracked as a number: sales quotas, fundraising targets, fitness goals, project milestones, or any scenario where you want to express progress as a percentage of a target. For a goal progress visualizer, see our <a href="/math/percentage-calculator/progress-tracker">progress tracker</a>.</p>
-
-      <h2 id="formula">Percent to goal formula</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The formula is <strong>(Current Value ÷ Goal) × 100</strong> - the goal is always the denominator, not the starting point.</li>
+          <li>Results above 100% are valid and mean you have exceeded the target - 1,200 against a 1,000 goal = 120% attainment.</li>
+          <li>For multiple goals of equal importance, average the individual attainments. When goals carry different weights, use a weighted average - the calculator handles both modes.</li>
+          <li>The most common mistake is dividing by the remaining amount rather than the full goal, which inverts the result (25% instead of 75%).</li>
+          <li>If the goal is zero or negative, the formula breaks down - reframe it as the positive magnitude of the desired change instead.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our percentage to goal calculator</h2>
+      <p>In <strong>Single Goal</strong> mode, enter your current value and goal to see the percent complete, progress status, and a step-by-step breakdown. In <strong>Multiple Goals</strong> mode, add rows for each goal - with an optional name and weight - to track an entire scorecard at once. The calculator shows each goal's individual attainment plus an overall simple average and, if weights are provided, a weighted average.</p>
+      <p>Use this calculator for any goal tracked as a number: sales quotas, OKR key results, fundraising targets, fitness milestones, or any scenario where progress needs expressing as a percentage of a target.</p>
+      <p>For a visual progress bar, see our <a href="/math/percentage-calculator/progress-tracker">progress tracker</a>.</p>
+      <h3 id="explained-to-beginner">Percent to goal explained to a beginner</h3>
+      <p>Imagine you're saving $1,000 for a new laptop. You've put aside $750 so far. The question "how far am I toward my goal?" is really just "what fraction of $1,000 is $750?" - the answer is 0.75, or 75%. The formula makes that formal: $750 ÷ $1,000 × 100 = 75%.</p>
+      <p>The key is what you divide by: always the goal (the full amount you need), not how far you've come since you started. If you saved $200 last month and now have $750, percent to goal is still 75% - the starting point doesn't enter the calculation. You're measuring where you are relative to the finish line, not relative to where you began.</p>
+      <h2 id="formula">Percentage to target calculation formula</h2>
       <p>The formula is a simple ratio expressed as a percentage:</p>
       <Formula expr={f.main} />
-      <p>The denominator is always the <em>goal</em> (the target), not the starting point. This is what distinguishes percent to goal from percent change - there is no "starting point" in this calculation, only a current value relative to a fixed target.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <p>The <a href="/glossary/denominator">denominator</a> is always the <em>goal</em> (the target), not the starting point. This is what distinguishes percent to goal from <a href="/math/percentage-calculator/change">percent change</a> - there is no "starting point" in this calculation, only a current value relative to a fixed target.</p>
+      <h2 id="examples">Worked examples for progress as a percentage</h2>
       <h3>Example 1: sales quota</h3>
       <p>A sales rep has closed 750 deals against a quarterly target of 1,000.</p>
       <Formula expr={f.ex1} />
       <p>They are at <strong>75% of goal</strong> with 250 deals remaining to reach 100%.</p>
-
       <h3>Example 2: fundraising campaign</h3>
       <p>A charity has raised $37,500 toward a $50,000 campaign target.</p>
       <Formula expr={f.ex2} />
       <p>The campaign is <strong>75% funded</strong>, with $12,500 still to raise.</p>
-
       <h3>Example 3: daily step goal</h3>
       <p>You have walked 8,234 steps toward a 10,000-step daily goal.</p>
       <Formula expr={f.ex3} />
       <p>You are at <strong>82.34% of goal</strong>, with 1,766 steps remaining.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -192,21 +275,21 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="over-100">When you exceed 100%</h2>
-      <p>A result above 100% is valid and means you have <strong>exceeded your goal</strong>. If a rep closes 1,200 deals against a 1,000-unit target:</p>
+      <p>When I have audited sales dashboards in the past, the most common confusion I saw was between quota attainment (percent to goal) and growth rate (percent change).</p>
+      <p>A rep who grew from 400 to 700 deals is at 70% of a 1,000-unit quota - but also shows +75% growth from last quarter. Both figures appear on the same dashboard and tell completely different stories. Knowing which question each metric answers prevents a lot of misread reports.</p>
+      <h3 id="over-100">When a goal exceeds 100%</h3>
+      <p>A result above 100% is valid and means you have exceeded your goal. If a rep closes 1,200 deals against a 1,000-unit target:</p>
       <Formula expr={f.over} />
       <p>This represents <strong>120% attainment</strong> - 20% over the target. In sales compensation, over-attainment is often rewarded with accelerated commission rates. The formula handles any positive current value, including those above the goal.</p>
-      <p>Note: if your goal itself is zero or negative, the formula breaks down mathematically (division by zero or inverted sign). In those cases, reframe the goal as a positive number representing the magnitude of the desired change.</p>
-
+      <p><strong>Note:</strong> if your goal itself is zero or negative, the formula breaks down mathematically (division by zero or inverted sign). In those cases, reframe the goal as a positive number representing the magnitude of the desired change.</p>
+      <p>For example, if your goal is to pay off a $4,000 credit card balance down to $0, set goal = 4000 and current = how much you have already paid off (say $1,600) - giving 1600 / 4000 × 100 = 40% of goal.</p>
       <h2 id="multiple-goals">Tracking multiple goals</h2>
-      <p>When you have several goals to track simultaneously, there are two approaches:</p>
-
+      <p>Switch to <strong>Multiple Goals</strong> mode in the calculator above to track several goals at once. Enter a name, current value, and goal for each row - the calculator scores each one individually and computes an overall result using two methods:</p>
       <h3>Simple average (equal-weight goals)</h3>
-      <p>Calculate percent to goal for each metric separately, then take the arithmetic mean. Three goals at 60%, 80%, and 100% average to (60 + 80 + 100) / 3 = <strong>80% overall</strong>.</p>
-
+      <p>The calculator averages the attainment percentages across all rows with valid inputs. Three goals at 60%, 80%, and 100% give (60 + 80 + 100) / 3 = <strong>80% overall</strong>. Use this when all goals carry equal importance.</p>
+      <p>See also our <a href="/math/percentage-calculator/average">simple average percentage calculator</a>.</p>
       <h3>Weighted average (unequal-weight goals)</h3>
-      <p>Multiply each goal's attainment by its assigned weight, then sum:</p>
+      <p>Enter a <strong>Weight %</strong> for any row to activate the weighted average. The calculator multiplies each goal's attainment by its weight and normalises automatically - weights do not need to sum to 100:</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -219,8 +302,10 @@ const schema = [
           </tbody>
         </table>
       </div>
+      <p>See also our <a href="/math/percentage-calculator/weighted-average">weighted average percentage calculator</a>.</p>
       <p>OKR frameworks typically use a weighted or un-weighted average across key results. A common rule of thumb: achieving 70–80% of a stretch OKR is considered a good result.</p>
-
+      <p>In my experience reviewing OKR scorecards, the 70-80% benchmark often creates the wrong incentive: teams learn to set targets low enough to land comfortably in that range rather than setting genuinely ambitious ones.</p>
+      <p>A 95% result against a sandbagged target tells you less than a 65% result against an honest stretch. Percent to goal is only as meaningful as the goal itself is honest.</p>
       <h2 id="vs-pct-change">Percent to goal vs percent change</h2>
       <p>These two calculations look similar but answer different questions:</p>
       <div class="responsive-table">
@@ -234,38 +319,33 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>Example: a sales rep started the quarter at 0 deals and reached 750 against a 1,000-unit goal. Percent to goal is 75%. Percent change from the previous quarter (when they had 500 deals) is (750 − 500) / 500 × 100 = +50%. Both are useful but answer different questions - progress toward a target vs. growth over time.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <p>Example: a sales rep started the quarter at 0 deals and reached 750 against a 1,000-unit goal. Percent to goal is 75%. Percent change from the previous quarter (when they had 500 deals) is (750 − 500) / 500 × 100 = +50%.</p>
+      <p>Both are useful but answer different questions - progress toward a target vs. growth over time.</p>
+      <h2 id="common-mistakes">Common mistakes for percent to target calculation</h2>
       <h3>Using the remaining amount instead of the current value</h3>
       <p>If your goal is 1,000 and you have reached 750, enter <strong>750</strong> (what you have), not 250 (what remains). Entering the remainder gives 250 / 1,000 = 25%, the inverse of the correct 75%.</p>
-
       <h3>Dividing by the remaining amount instead of the goal</h3>
       <p>The denominator is always the <em>goal</em>, not how much is left. 750 / 250 = 3.0 (300%), which is not meaningful here.</p>
-
       <h3>Confusing percent to goal with percent change</h3>
       <p>If you started the year at $200,000 revenue and the goal is $400,000, a current value of $300,000 is <strong>75% to goal</strong> - not a 50% increase (which would be the growth from $200,000 to $300,000).</p>
-
       <h3>Setting the goal to zero</h3>
       <p>Division by zero is undefined. A goal must be a non-zero number. If you are reducing something to zero (e.g. eliminating backlog), reframe: set the goal as the magnitude of the reduction you want to achieve, and the current value as how much of that reduction you have already made.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about percentage to goal calculation</h2>
       <h3>What does percent to goal mean?</h3>
       <p>It expresses how much of a target you have achieved as a percentage: (Current ÷ Goal) × 100. It is also called "goal attainment rate," "percent of target," or "percent of quota."</p>
-
       <h3>Can percent to goal exceed 100%?</h3>
       <p>Yes. A value above 100% means over-achievement. Entering 1,200 against a goal of 1,000 gives 120% - 20% above the target.</p>
-
       <h3>How do I track progress across multiple goals?</h3>
       <p>For equal goals, average the individual attainment percentages. For weighted goals, multiply each attainment by its weight and sum. This is the <a href="/math/percentage-calculator/weighted-average">weighted average method</a> used in OKR and sales compensation frameworks.</p>
-
       <h3>How is percent to goal different from percent change?</h3>
       <p>Percent to goal divides by the target (goal). Percent change divides by the starting value (old value). They answer different questions: progress toward a fixed target vs. growth over a period.</p>
-
       <h3>What if my goal is a reduction (e.g. reducing defects)?</h3>
       <p>Reframe the goal as a positive magnitude. If you want to cut defects from 500 to 300 (a 200-unit reduction) and you are currently at 380 defects, you have reduced by 120 units out of a 200-unit goal - enter 120 as current and 200 as goal to get 60% of goal.</p>
+      <QuizBlock
+        topic="percent to goal"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/percentage-calculator/percent-to-goal"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -276,8 +356,81 @@ const schema = [
         { path: '/math/percentage-calculator/percentage-point',   blurb: 'Percentage point calculator - find the pp difference between two percentage values.' },
         { path: '/math/percentage-calculator/average',            blurb: 'Average percentage calculator - arithmetic mean and weighted average of percentages.' },
       ]} />
-
     </div>
   </div>
-
 </CalculatorLayout>
+
+<style is:global>
+.ptg-row-headers {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 72px 58px 32px;
+  gap: 6px;
+  padding: 0 2px;
+  margin-bottom: 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.45);
+}
+.ptg-hdr-center { text-align: center; }
+.ptg-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 72px 58px 32px;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.ptg-row input { min-width: 0; }
+.ptg-row-pct {
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  color: white;
+}
+.ptg-pct-empty { color: rgba(255,255,255,0.3); font-weight: 400; }
+.ptg-row-remove {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.4);
+  transition: color 0.15s, border-color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ptg-row-remove:hover { color: #f87171; border-color: rgba(248,113,113,0.5); }
+.ptg-add-btn {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px dashed rgba(255,255,255,0.25);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.7);
+  margin-top: 6px;
+  margin-bottom: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+.ptg-add-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.4); }
+
+@media (max-width: 580px) {
+  .ptg-row-headers { display: none; }
+  .ptg-row {
+    grid-template-columns: 1fr 1fr 58px 44px;
+    grid-template-rows: auto auto;
+    gap: 5px;
+  }
+  .ptg-row-name    { grid-column: 1 / 4; grid-row: 1; }
+  .ptg-row-remove  { grid-column: 4;     grid-row: 1; justify-self: end; }
+  .ptg-row-current { grid-column: 1; grid-row: 2; }
+  .ptg-row-goal    { grid-column: 2; grid-row: 2; }
+  .ptg-row-weight  { grid-column: 3; grid-row: 2; }
+  .ptg-row-pct     { grid-column: 4; grid-row: 2; text-align: center; }
+}
+</style>

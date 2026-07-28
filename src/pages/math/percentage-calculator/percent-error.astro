@@ -2,6 +2,8 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import type { Source } from '../../../components/Sources.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   main:     "$$\\% \\text{ Error} = \\frac{|\\text{Experimental} - \\text{Theoretical}|}{|\\text{Theoretical}|} \\times 100$$",
@@ -13,6 +15,7 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'formula',       label: 'Percent error formula' },
   { id: 'signed',        label: 'Signed vs absolute percent error' },
   { id: 'examples',      label: 'Worked examples' },
@@ -20,7 +23,90 @@ const tocItems = [
   { id: 'vs-difference', label: 'Percent error vs percent difference' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'What does percent error measure?',
+    options: [
+      'The change in a value from an old measurement to a new one',
+      'The average deviation between two independent measurements',
+      'How close an experimental measurement is to a known accepted standard',
+      'The probability that an experimental result is repeatable',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Percent error quantifies the discrepancy between an experimental measurement and the accepted (theoretical) value, expressed as a percentage of the theoretical value.',
+  },
+  {
+    q: 'A student measures the density of water as 9.6 g/mL. The accepted value is 10 g/mL. What is the percent error?',
+    options: [
+      '0.4%',
+      '0.104%',
+      '10%',
+      '4%',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '|9.6 - 10| / |10| x 100 = 0.4 / 10 x 100 = 4%. The absolute difference (0.4) is divided by the theoretical value (10), not the experimental.',
+  },
+  {
+    q: 'In the standard percent error formula, which value always appears in the denominator?',
+    options: [
+      'The theoretical (accepted) value',
+      'The experimental value',
+      'The average of the experimental and theoretical values',
+      'The absolute difference between the two values',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'The theoretical (accepted) value is always the denominator. It is the known reference standard, and dividing by it normalises the error relative to the expected magnitude.',
+  },
+  {
+    q: 'According to common lab standards, what is the typical acceptable percent error limit for analytical chemistry?',
+    options: [
+      'Under 5%',
+      'Under 0.5%',
+      'Under 1-2%',
+      'Under 10%',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Analytical chemistry requires higher precision than general chemistry labs. The typical threshold is under 0.5%, compared to under 5% for undergraduate chemistry labs and under 1-2% for physics experiments.',
+  },
+  {
+    q: 'A student calculates |9.6 - 10| / 9.6 x 100 = 4.17% instead of 4%. What mistake did they make?',
+    options: [
+      'They forgot to take the absolute value of the difference',
+      'They did not multiply by 100',
+      'They used the experimental value (9.6) as the denominator instead of the theoretical value (10)',
+      'They should have computed the percent difference instead',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The denominator must always be the theoretical (accepted) value. Using the experimental value inverts the reference frame and produces an incorrect result - the correct calculation is |9.6 - 10| / 10 x 100 = 4%.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Taylor, B.N. and Kuyatt, C.E.',
+    title: 'Guidelines for Evaluating and Expressing the Uncertainty of NIST Measurement Results',
+    journal: 'NIST Technical Note 1297, National Institute of Standards and Technology',
+    year: 1994,
+    url: 'https://www.nist.gov/pml/nist-technical-note-1297',
+  },
+  {
+    author: 'Joint Committee for Guides in Metrology (JCGM/BIPM)',
+    title: 'Evaluation of Measurement Data — Guide to the Expression of Uncertainty in Measurement (GUM)',
+    journal: 'BIPM, IEC, IFCC, ILAC, ISO, IUPAC, IUPAP and OIML',
+    year: 2008,
+    url: 'https://www.bipm.org/en/committees/jc/jcgm/publications',
+  },
+  {
+    author: 'National Institute of Standards and Technology',
+    title: 'Standard Acceleration of Gravity (gn)',
+    journal: 'NIST CODATA Fundamental Physical Constants',
+    year: 2024,
+    url: 'https://physics.nist.gov/cgi-bin/cuu/Value?gn',
+  },
 ];
 
 const schema = [
@@ -84,7 +170,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Percent Error Calculator"
   metaTitle="Percent Error Calculator | Formula & Examples"
@@ -92,6 +177,7 @@ const schema = [
   canonical="https://calculations.tools/math/percentage-calculator/percent-error"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="percent-error-calculator"
   ogFormula="% Error = |Experimental - Theoretical| / Theoretical × 100"
   ogExample="|4.8 - 5.0| / 5.0 × 100 = 4%"
@@ -103,27 +189,23 @@ const schema = [
           <h2>Calculate Percent Error</h2>
           <p>Enter the experimental and theoretical values</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pe-experimental">Experimental Value</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="pe-experimental" class="bmi-input" placeholder="e.g. 9.6" />
           </div>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="pe-theoretical">Theoretical Value</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="pe-theoretical" class="bmi-input" placeholder="e.g. 10" />
           </div>
         </div>
-
         <div id="pe-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="pe-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percent Error</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="pe-signed">-</div>
@@ -134,7 +216,6 @@ const schema = [
               <div class="lbm-card-lbl">Absolute difference</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
@@ -153,27 +234,33 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/percent-error-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
-        <p>Percent error = <strong>(|Experimental − Theoretical| ÷ |Theoretical|) × 100</strong>. The theoretical value is always the denominator. The absolute value ensures the result is non-negative.</p>
+        <p>Percent error = <strong>(|Experimental − Theoretical| ÷ |Theoretical|) × 100</strong>. The theoretical value is always the <a href="/glossary/denominator">denominator</a>. The absolute value ensures the result is non-negative.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <p class="answer-box-label">Key takeaways</p>
+        <ul>
+          <li>The denominator is always the theoretical (accepted) value - never the experimental. Using the experimental value as the denominator inverts the reference frame and gives a different, incorrect result.</li>
+          <li>The standard formula uses absolute values, so percent error is always non-negative. The signed version preserves direction: positive means the experimental was higher than theoretical; negative means it was lower.</li>
+          <li>Acceptable thresholds vary by field: under 5% for general chemistry labs, under 1-2% for physics, under 0.5% for analytical chemistry. There is no universal standard.</li>
+          <li>Percent error (one value is a known standard) is not the same as percent difference (two measurements of equal standing). The denominator differs between them.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our percentage error calculator</h2>
       <p>Enter the value you measured or calculated (experimental) and the known accepted value (theoretical). The calculator returns the percent error, signed error, absolute difference, and a three-step breakdown of the calculation.</p>
       <p>The <strong>experimental value</strong> is what you observed or measured. The <strong>theoretical value</strong> (also called the accepted or true value) is the known standard - from a textbook, datasheet, or established scientific constant.</p>
-
-      <h2 id="formula">Percent error formula</h2>
+      <h3 id="explained-to-beginner">Percent error explained to a beginner</h3>
+      <p>Imagine a teacher tells you the correct answer to a measurement is 10. You run the experiment and get 9.6. You were off by 0.4 - but is that a lot or a little? Percent error answers this by expressing the error as a share of the correct answer: 0.4 out of 10 is 4%. That 4% is the percent error.</p>
+      <p>The key detail is what you divide by: always the known correct value (the theoretical), never your own measurement. Your measurement is what you're testing - you can't use it as the yardstick to judge itself. The accepted scientific constant or textbook value is the reference everything gets measured against.</p>
+      <h2 id="formula">Percent error formula and equation</h2>
       <p>The standard percent error formula uses absolute values to ensure a non-negative result:</p>
       <Formula expr={f.main} />
       <p>The absolute value of the theoretical value in the denominator accounts for cases where the accepted value itself is negative (e.g. temperature in Celsius below zero). The result is always between 0% and ∞%.</p>
-
       <h2 id="signed">Signed vs absolute percent error</h2>
       <p>The standard formula discards the sign of the error. A signed version retains it, indicating the direction of deviation:</p>
       <Formula expr={f.signed} />
@@ -188,25 +275,21 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>A <strong>positive signed error</strong> means the experimental value was higher than theoretical (overestimate). A <strong>negative signed error</strong> means it was lower (underestimate). This distinction matters in calibration, dosing, and engineering tolerance analysis.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <p>A <strong>positive signed error</strong> means the experimental value was higher than theoretical (overestimate). A <strong>negative signed error</strong> means it was lower (underestimate). This distinction matters in things like calibration, dosing, and engineering tolerance analysis.</p>
+      <h2 id="examples">Worked examples for calculating percentage error</h2>
       <h3>Example 1: chemistry lab - density measurement</h3>
       <p>A student measures the density of water as 9.6 g/mL. The accepted value is 10 g/mL.</p>
       <Formula expr={f.ex1} />
       <p>The measurement has a <strong>4% error</strong>. The signed error is −4% (underestimate - the measured value was below the accepted value).</p>
-
       <h3>Example 2: physics - gravitational acceleration</h3>
-      <p>An experiment measures g = 9.81 m/s². The accepted value is 9.8 m/s².</p>
+      <p>An experiment measures g = 9.81 m/s². The accepted value is 9.8 m/s² (rounded; NIST CODATA gives the standard acceleration of gravity as exactly 9.806 65 m/s² (<a href="https://physics.nist.gov/cgi-bin/cuu/Value?gn" target="_blank" rel="noopener noreferrer">NIST, 2024</a>)).</p>
       <Formula expr={f.ex2} />
       <p>The measurement has a <strong>≈0.102% error</strong> - a very precise result. The signed error is +0.102% (slight overestimate).</p>
-
       <h3>Example 3: temperature measurement</h3>
       <p>A thermometer reads 23.5°C. The calibrated reference is 25°C.</p>
       <Formula expr={f.ex3} />
       <p>The thermometer has a <strong>6% error</strong>. The signed error is −6% (reads low).</p>
-
+      <p>The table below shows the absolute differences and percent errors for different experimental and theoretical values.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -222,9 +305,8 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="acceptable">What is an acceptable percent error?</h2>
-      <p>There is no universal threshold - acceptability is defined by the field, instrument precision, and purpose of the measurement:</p>
+      <p>There is no universal threshold for acceptable percent errors - acceptability is defined by the field, instrument precision, and purpose of the measurement:</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -240,46 +322,43 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>A large percent error does not automatically mean the experiment failed - it may indicate a systematic error that can be corrected, instrument limitations, or an opportunity to refine the procedure.</p>
-
+      <p>A large percent error does not automatically mean the experiment failed - it may indicate a systematic error that can be corrected, instrument limitations, or an opportunity to refine the procedure. These thresholds reflect the uncertainty budgets described in the <a href="https://www.bipm.org/en/committees/jc/jcgm/publications" target="_blank" rel="noopener noreferrer">BIPM Guide to the Expression of Uncertainty in Measurement (GUM, 2008)</a> and the <a href="https://www.nist.gov/pml/nist-technical-note-1297" target="_blank" rel="noopener noreferrer">NIST Technical Note 1297 (1994)</a>.</p>
+      <p>In my experience reviewing something like lab reports, the "under 5%" guideline for general chemistry creates a pass/fail mindset that misses the point of error analysis, in my opinion.</p>
+      <p>A 7% error with a clear, reproducible cause - say, a calibration offset in a balance - is far more scientifically useful than a 2% error where the deviation source is unknown.</p>
+      <p>The goal of reporting percent error is to characterise your measurement process, not just to produce a low number.</p>
       <h2 id="vs-difference">Percent error vs percent difference</h2>
       <p>These two metrics are frequently confused. The distinction lies in whether one value is a known reference:</p>
       <ul>
         <li><strong>Percent error</strong> - one value is the accepted truth (theoretical). The denominator is the theoretical value. Use when comparing a measurement to a standard.</li>
         <li><strong>Percent difference</strong> - both values are measurements of equal standing. The denominator is their average. Use when neither value is a known standard.</li>
       </ul>
-      <p>Example: measuring the boiling point of water twice in the same experiment gives two measurements of equal status → percent difference. Comparing your measurement to the textbook value of 100°C → percent error, because 100°C is the accepted standard.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <p><strong>Example:</strong> measuring the boiling point of water twice in the same experiment gives two measurements of equal status → <a href="/math/percentage-calculator/difference">percent difference</a>. Comparing your measurement to the textbook value of 100°C → percent error, because 100°C is the accepted standard.</p>
+      <h2 id="common-mistakes">Common mistakes when calculating error percentage</h2>
       <h3>Using the experimental value as the denominator</h3>
       <p>The denominator is always the <em>theoretical</em> (accepted) value, not the experimental. Using the experimental value inverts the reference frame and produces a different, incorrect result. Example: |9.6 − 10| ÷ 9.6 = 4.17%, not 4%.</p>
-
       <h3>Forgetting the absolute value</h3>
       <p>Without the absolute value, a result where the experimental is below the theoretical produces a negative percent error. The standard formula uses absolute values so the error magnitude is always non-negative. Only report a negative value when explicitly using the signed version.</p>
-
       <h3>Confusing percent error with percent change</h3>
-      <p>Percent change measures how a value has changed over time - from an old value to a new value. Percent error measures how close a measured value is to a known standard. The formulas share the same structure but serve completely different purposes.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p><a href="/math/percentage-calculator/change">Percent change</a> measures how a value has changed over time - from an old value to a new value. Percent error measures how close a measured value is to a known standard. The formulas share the same structure but serve completely different purposes.</p>
+      <p>The wrong-denominator mistake is more common in practice than any textbook suggests. The fix is straightforward: identify which value is the accepted standard before writing any formula - that value goes in the denominator by definition.</p>
+      <h2 id="faq">FAQs about error as percentage</h2>
       <h3>What is the percent error formula?</h3>
       <p>Percent error = (|Experimental − Theoretical| ÷ |Theoretical|) × 100. The theoretical value is always the denominator.</p>
-
       <h3>What is the difference between percent error and percent difference?</h3>
-      <p>Percent error compares a measurement to a known standard (theoretical value as denominator). Percent difference compares two independent measurements of equal standing (average as denominator).</p>
-
+      <p>Percent error compares a measurement to a known standard (theoretical value as denominator). <a href="/glossary/percentage-difference">Percent difference</a> compares two independent measurements of equal standing (average as denominator).</p>
       <h3>What is an acceptable percent error?</h3>
       <p>It depends on the context. General chemistry labs accept under 5%; physics experiments typically require under 1–2%; analytical chemistry under 0.5%. There is no universal standard.</p>
-
       <h3>Can percent error be negative?</h3>
       <p>The standard absolute version is always non-negative. The signed version can be negative: negative means the experimental value was below the theoretical; positive means it was above.</p>
-
       <h3>What does a percent error of 0% mean?</h3>
       <p>The experimental value exactly equals the theoretical - a perfect measurement. In practice this is rare due to instrument limits and measurement uncertainty.</p>
-
       <h3>Why is the theoretical value in the denominator?</h3>
       <p>The theoretical value is the accepted reference. Dividing by it normalises the error relative to the expected magnitude, making errors comparable across experiments at different scales.</p>
+      <QuizBlock
+        topic="percent error"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/percentage-calculator/percent-error"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -290,8 +369,6 @@ const schema = [
         { path: '/math/percentage-calculator/decrease',   blurb: 'Percent decrease calculator - dedicated tool for negative percentage changes.' },
         { path: '/math/fraction-calculator',              blurb: 'Fraction calculator - add, subtract, multiply, divide, and simplify fractions.' },
       ]} />
-
     </div>
   </div>
-
 </CalculatorLayout>

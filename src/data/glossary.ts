@@ -22,6 +22,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['ebitda', 'ebitda-margin', 'operating-profit'],
   },
   {
+    slug: 'arithmetic',
+    term: 'Arithmetic',
+    letter: 'A',
+    category: 'Fundamentals',
+    siteCategory: 'Math',
+    shortDef: 'Arithmetic is the branch of mathematics covering the four basic operations - addition, subtraction, multiplication, and division. These operations, and the rules governing their order (PEMDAS/BODMAS), underpin every calculation on this site: percentages, ratios, fractions, and all compound formulas.',
+    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/ratio-calculator'],
+    relatedTerms: ['fraction', 'denominator', 'numerator', 'percentage', 'ratio', 'proportion'],
+  },
+  {
     slug: 'avoirdupois-system',
     term: 'Avoirdupois System',
     letter: 'A',
@@ -506,7 +516,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'Percentage change measures how much a quantity has increased or decreased relative to its original value. A positive result is a gain; a negative result is a loss.',
     formula: '$$\\text{Percentage Change} = \\frac{\\text{New} - \\text{Old}}{|\\text{Old}|} \\times 100$$',
-    relatedTools: ['/math/percentage-calculator/change', '/math/percentage-calculator/increase', '/math/percentage-calculator/decrease'],
+    relatedTools: ['/math/percentage-calculator/change', '/math/percentage-calculator/increase', '/math/percentage-calculator/decrease', '/math/percentage-calculator/percentage-point'],
     relatedTerms: ['percentage', 'percentage-increase', 'percentage-decrease', 'percentage-difference', 'percentage-point'],
   },
   {

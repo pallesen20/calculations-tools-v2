@@ -2,6 +2,7 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   main:    "$$\\% = \\text{Decimal} \\times 100$$",
@@ -14,14 +15,49 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',      label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'formula',         label: 'Formula' },
   { id: 'examples',        label: 'Worked examples' },
   { id: 'reference-table', label: 'Reference table' },
   { id: 'reverse',         label: 'Reverse: percent to decimal' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: '"Percent" comes from Latin. What does it literally mean?',
+    options: ['Per hundred', 'Per ten', 'Per thousand', 'Per unit'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: '"Percent" comes from the Latin "per centum," meaning "per hundred." This is why multiplying a decimal by 100 converts it to its percentage form.',
+  },
+  {
+    q: 'A student scores 18 correct answers out of 24 questions. What is their score as a percentage?',
+    options: ['18%', '24%', '80%', '75%'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '18 / 24 = 0.75, then 0.75 x 100 = 75%. This is the test-score example from the beginner explanation on the page.',
+  },
+  {
+    q: 'What is the correct calculation to convert 37.5% back to a decimal?',
+    options: ['37.5 x 100 = 3,750', '37.5 - 100 = -62.5', '37.5 / 100 = 0.375', '37.5 + 1 = 38.5'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Dividing by 100 moves the decimal point two places to the left. The page gives this exact example: 37.5% / 100 = 0.375.',
+  },
+  {
+    q: 'According to the reference table on this page, what is 0.125 as a percentage?',
+    options: ['1.25%', '12.5%', '125%', '0.0125%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '0.125 x 100 = 12.5%. The reference table confirms this - 0.125 represents one eighth, which equals 12.5%.',
+  },
+  {
+    q: 'A student multiplies 0.45 by 10 instead of 100. What incorrect percentage do they get?',
+    options: ['45%', '0.045%', '4.5%', '450%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Multiplying by 10 moves the decimal only one place, giving 4.5% instead of 45%. The conversion always requires multiplying by 100 - two decimal places of movement.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -82,7 +118,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Decimal to Percent Calculator"
   metaTitle="Decimal to Percent Calculator | Convert & Examples ᐅ"
@@ -101,20 +136,17 @@ const schema = [
           <h2>Convert Decimal to Percent</h2>
           <p>Enter any decimal value</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="dtp-input">Decimal</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="dtp-input" class="bmi-input" placeholder="e.g. 0.75" />
           </div>
         </div>
-
         <div id="dtp-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="dtp-pct">-</span>
           </div>
           <div class="lbm-primary-lbl">Percentage</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="dtp-rev">-</div>
@@ -122,7 +154,6 @@ const schema = [
               <div class="lbm-card-badge" id="dtp-badge">-</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">How it was calculated</div>
             <div class="pi-step">
@@ -133,47 +164,46 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/decimal-to-percent-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
         <p>Decimal to percent = <strong>decimal × 100</strong>. Move the decimal point two places to the right and append the % symbol. Example: 0.75 × 100 = <strong>75%</strong>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <p class="answer-box-label">Key takeaways</p>
+        <ul>
+          <li>To convert a decimal to a percent, multiply by 100 - this moves the decimal point two places to the right (e.g. 0.75 becomes 75%).</li>
+          <li>Decimals greater than 1 are valid inputs and give percentages above 100% - 1.07 = 107%, representing a value 7% above a whole.</li>
+          <li>To reverse the conversion, divide the percentage by 100 (move the decimal two places left): 75% becomes 0.75.</li>
+          <li>A decimal and its equivalent percentage are the same value - only the notation differs. 0.75 and 75% are mathematically identical.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use decimal to percentage calculator</h2>
       <p>Enter any decimal value. The percentage appears instantly along with a one-step breakdown. The calculator works for any real number: positive, negative, less than 1, or greater than 1.</p>
-
-      <h2 id="formula">Formula</h2>
-      <p>A percentage is a decimal scaled to a "per hundred" basis. The conversion is a single multiplication:</p>
-
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>"Percent" is Latin for "per hundred." A decimal like 0.75 already holds the full value - it means 75 out of 100. Multiplying by 100 shifts the number into a form that explicitly says "per hundred," which is what the % symbol means. The multiplication does not change the underlying value; it only changes how that value is written.</p>
+      <p>Think of a test score: 18 correct answers out of 24 questions gives 18 / 24 = 0.75. Multiply by 100 and you get 75%. The 0.75 and 75% describe the exact same result - the "per hundred" format is just the convention humans settled on because whole numbers are easier to reason about than fractions of one.</p>
+      <h2 id="formula">Decimal to percent formula</h2>
+      <p>A <a href="/glossary/percentage">percentage</a> is a decimal scaled to a "per hundred" basis. The conversion is a single multiplication:</p>
       <Formula expr={f.main} />
-
       <p>The operation moves the decimal point two places to the right: 0.75 becomes 75, and 0.03 becomes 3. The "%" symbol is then appended to indicate that the value is expressed per hundred.</p>
       <p>The reverse is equally simple: divide by 100 (or move the decimal point two places to the left) to convert a percentage back to a decimal.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for converting decimals to percents</h2>
       <h3>Example 1: standard decimal - 0.75</h3>
       <Formula expr={f.ex1} />
       <p>0.75 is equal to <strong>75%</strong>.</p>
-
       <h3>Example 2: repeating decimal - 1/3</h3>
       <p>The decimal 0.333… (one-third) converts to a repeating percentage:</p>
       <Formula expr={f.ex2} />
       <p>0.333… is equal to <strong>33.333…%</strong> - a non-terminating repeating percentage.</p>
-
       <h3>Example 3: decimal greater than 1</h3>
       <p>Any decimal above 1 gives a percentage above 100%:</p>
       <Formula expr={f.ex3} />
       <p>1.5 is equal to <strong>150%</strong> - representing a value 50% more than a whole.</p>
-
       <h2 id="reference-table">Decimal to percent reference table</h2>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -197,48 +227,41 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>When I audit financial models, the decimal-percent boundary is where compounding errors most often hide.</p>
+      <p>A common pattern: a growth rate is stored as 0.05 in a lookup table (decimal form), but a formula elsewhere multiplies it by another rate also in decimal form - so 0.05 x 0.10 = 0.005 instead of the intended 0.5%. The result is 100 times too small and is nearly impossible to spot by visual inspection alone.</p>
       <h2 id="reverse">Reverse: percent to decimal</h2>
       <p>To convert a percentage back to a decimal, divide by 100:</p>
-
       <Formula expr={f.reverse} />
-
       <p><strong>Example:</strong> 37.5% as a decimal:</p>
       <Formula expr={f.revEx} />
-
       <p>Equivalently, move the decimal point two places to the left: 37.5 → 0.375.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when calculating decimal as percentage</h2>
       <h3>Confusing the decimal with the percentage</h3>
       <p>Writing 0.75% instead of 75% is a 100× error. 0.75% means "75 hundredths of one percent" - a very small quantity. This mistake is common when copying values from spreadsheets where cells may be formatted as percentages (showing 75%) but storing the decimal (0.75).</p>
-
       <h3>Not moving the decimal point far enough</h3>
       <p>Multiplying by 10 instead of 100 is a common slip. The conversion always requires two decimal places of movement: 0.45 × 100 = 45%, not 4.5%.</p>
-
       <h3>Forgetting that values above 1 are valid</h3>
       <p>Decimals greater than 1 are legitimate inputs. 1.07 = 107%, which might represent a 7% growth factor, a tax-inclusive price multiplier, or any quantity that exceeds a reference value by 7%.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>When I work through the "values above 1 are valid" concept, the example that lands best is a price multiplier. A 7% price increase means the new price is 1.07 times the original - so 1.07 expressed as a percentage is 107%.</p>
+      <p>Once the "multiplier as percentage" framing clicks, decimals greater than 1 stop feeling like edge cases and start feeling like the natural form for growth rates, scaling factors, and currency conversions.</p>
+      <h2 id="faq">Frequently asked questions about decimal to percent</h2>
       <h3>How do you convert a decimal to a percentage?</h3>
       <p>Multiply by 100 (or move the decimal point two places to the right). Example: 0.75 × 100 = 75%.</p>
-
       <h3>What is 0.5 as a percentage?</h3>
       <p>50%. Calculation: 0.5 × 100 = 50%.</p>
-
       <h3>What is 0.25 as a percentage?</h3>
       <p>25%. Calculation: 0.25 × 100 = 25%.</p>
-
       <h3>Can a decimal give a percentage greater than 100%?</h3>
       <p>Yes. Any decimal above 1 converts to a percentage above 100%. For example, 1.5 × 100 = 150%.</p>
-
       <h3>How do you convert a percentage back to a decimal?</h3>
       <p>Divide by 100 (or move the decimal point two places to the left). Example: 37.5% ÷ 100 = 0.375.</p>
-
       <h3>What is the difference between a decimal and a percentage?</h3>
       <p>They represent the same value in different forms. A percentage is a decimal multiplied by 100, expressing the quantity per hundred. 0.75 and 75% are identical - just written differently.</p>
-
+      <QuizBlock
+        topic="decimal to percent"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/percentage-calculator/decimal-to-percent"
+      />
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator',                    blurb: 'The main percentage hub - basic percentages, increase, decrease, and "what percentage is X of Y?" all in one tool.' },
@@ -248,8 +271,6 @@ const schema = [
         { path: '/math/percentage-calculator/percentage-of-percentage', blurb: 'Calculate P% of Q% - covers successive discounts and why stacking percentages cannot simply be added.' },
         { path: '/conversion/currency-converter',                  blurb: 'Convert between 150+ currencies with live rates - useful when decimal values involve exchange rates.' },
       ]} />
-
     </div>
   </div>
-
 </CalculatorLayout>
