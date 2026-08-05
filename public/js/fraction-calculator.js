@@ -28,6 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   [n1El, d1El, n2El, d2El].forEach(el => el.addEventListener('input', calculate));
 
+  function advanceFocus(el) {
+    const seq = op === 'simplify' ? [n1El, d1El] : [n1El, d1El, n2El, d2El];
+    const idx = seq.indexOf(el);
+    if (idx !== -1 && idx < seq.length - 1) {
+      const next = seq[idx + 1];
+      next.focus();
+      next.select();
+    }
+  }
+
+  [n1El, d1El, n2El, d2El].forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === '/') {
+        e.preventDefault();
+        advanceFocus(el);
+      }
+    });
+  });
+
   function gcd(a, b) { return b === 0 ? Math.abs(a) : gcd(b, a % b); }
 
   function simplifyFrac(n, d) {

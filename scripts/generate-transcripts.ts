@@ -108,33 +108,33 @@ function fillTemplate(tool: ToolMeta, data: ToolVideoData): string {
 
   const hook =
 `[HOOK]
-If you've ever needed to ${data.hookProblem}, you know how important getting it right is. Getting the wrong number here doesn't just mean a bit of confusion — it can lead to real mistakes in how you plan, budget, or track your health. In this video, I'll show you exactly how to use the ${tool.name} on calculations.tools, and I'll walk you through a complete real-world example so you can see exactly how it works.`;
+If you've ever needed to ${data.hookProblem}, you know how important getting it right is. Getting the wrong number here doesn't just mean a bit of confusion - it can lead to real mistakes in how you plan, budget, or track your health. In this video, I'll show you exactly how to use the ${tool.name} on calculations.tools, and I'll walk you through a complete real-world example so you can see exactly how it works.`;
 
   const formula =
 `[FORMULA]
-So what exactly are we calculating here? The ${tool.name} uses ${data.formulaPlain}. Each input you enter plays a specific role in the final figure. Breaking it down: the numbers combine to give you a single result that's standardised and comparable — meaning you can look up what your result means against established benchmarks. That's what makes this more useful than a rough estimate. The formula itself has been validated by researchers and is used by professionals worldwide, so when the tool gives you a number, you can trust it.`;
+So what exactly are we calculating here? The ${tool.name} uses ${data.formulaPlain}. Each input you enter plays a specific role in the final figure. Breaking it down: the numbers combine to give you a single result that's standardised and comparable - meaning you can look up what your result means against established benchmarks. That's what makes this more useful than a rough estimate. The formula itself has been validated by researchers and is used by professionals worldwide, so when the tool gives you a number, you can trust it.`;
 
   const example =
 `[EXAMPLE]
-Let's make this concrete with a real example. ${data.character}. ${data.exampleSetup}. Now let's run the numbers. ${data.exampleWalkthrough}. So ${firstName}'s result comes out at ${data.exampleResult}. Let's put that in context: ${data.exampleImplication}. That's a meaningful, actionable insight — and it came from just a few numbers entered into a form.`;
+Let's make this concrete with a real example. ${data.character}. ${data.exampleSetup}. Now let's run the numbers. ${data.exampleWalkthrough}. So ${firstName}'s result comes out at ${data.exampleResult}. Let's put that in context: ${data.exampleImplication}. That's a meaningful, actionable insight - and it came from just a few numbers entered into a form.`;
 
   const demoSuffix = isDiff
-    ? ' And this works exactly the same for code, CSS, JavaScript, Python, and HTML — just pick the right tool from the compare menu.'
+    ? ' And this works exactly the same for code, CSS, JavaScript, Python, and HTML - just pick the right tool from the compare menu.'
     : '';
 
   const unitNoteSuffix = data.unitNote ? ` ${data.unitNote}` : '';
 
   const demo =
 `[DEMO]
-You don't need to do any of that math by hand. On calculations.tools, go to ${tool.path}. I'll enter the values from our example and hit Calculate. You get the result instantly — ${data.exampleResult} — and you'll also see ${data.notableFeature} right there on the same page. No spreadsheet, no formula lookup, no manual steps.${demoSuffix}${unitNoteSuffix}`;
+You don't need to do any of that math by hand. On calculations.tools, go to ${tool.path}. I'll enter the values from our example and hit Calculate. You get the result instantly - ${data.exampleResult} - and you'll also see ${data.notableFeature} right there on the same page. No spreadsheet, no formula lookup, no manual steps.${demoSuffix}${unitNoteSuffix}`;
 
   const proTip =
 `[PRO TIP]
-One thing most people get wrong when using this tool: ${data.proTipMistake}. When you make that mistake, the result looks plausible but it's actually off — and that can mean acting on bad information. The correct approach is: ${data.proTipFix}. Take an extra ten seconds to get the input right and the output will be spot on.`;
+One thing most people get wrong when using this tool: ${data.proTipMistake}. When you make that mistake, the result looks plausible but it's actually off - and that can mean acting on bad information. The correct approach is: ${data.proTipFix}. Take an extra ten seconds to get the input right and the output will be spot on.`;
 
   const cta =
 `[CTA]
-The ${tool.name} is completely free at calculations.tools — no account, no sign-up, no paywalled results. If this video helped, subscribe for more tutorials like this one, and drop a comment below if you have any questions or want to see a specific tool covered next.`;
+The ${tool.name} is completely free at calculations.tools - no account, no sign-up, no paywalled results. If this video helped, subscribe for more tutorials like this one, and drop a comment below if you have any questions or want to see a specific tool covered next.`;
 
   return [hook, formula, example, demo, proTip, cta].join('\n\n');
 }
@@ -176,10 +176,10 @@ async function main(): Promise<void> {
     const fullUrl = `https://calculations.tools${tool.path}`;
 
     if (!data) {
-      console.warn(`  TODO  ${tool.name} — no VIDEO_DATA entry`);
+      console.warn(`  TODO  ${tool.name} - no VIDEO_DATA entry`);
       rows.push([tool.priority, tool.category, tool.name, fullUrl,
         `TODO: ${tool.name} Tutorial`, 'TODO', CATEGORY_TAGS[tool.category] ?? '', 0,
-        'TODO — add entry to scripts/video-data.ts']);
+        'TODO - add entry to scripts/video-data.ts']);
       continue;
     }
 
@@ -191,7 +191,7 @@ async function main(): Promise<void> {
     const tags        = CATEGORY_TAGS[tool.category] ?? '';
 
     rows.push([tool.priority, tool.category, tool.name, fullUrl, title, description, tags, wc, transcript]);
-    console.log(`  ok   ${tool.name} — ${wc} words`);
+    console.log(`  ok   ${tool.name} - ${wc} words`);
   }
 
   console.log(`\nTotal rows: ${rows.length}`);

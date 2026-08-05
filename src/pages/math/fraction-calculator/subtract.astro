@@ -2,6 +2,8 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   general:  "$$\\frac{a}{b} - \\frac{c}{d} = \\frac{a \\times d - c \\times b}{b \\times d}$$",
@@ -14,8 +16,9 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',       label: 'How to use' },
-  { id: 'formula',          label: 'Subtracting fractions formula' },
+  { id: 'how-to-use',            label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',               label: 'Subtracting fractions formula' },
   { id: 'same-denominator', label: 'Same denominator' },
   { id: 'different-denominators', label: 'Different denominators (LCD method)' },
   { id: 'examples',         label: 'Worked examples' },
@@ -24,8 +27,67 @@ const tocItems = [
   { id: 'mixed-numbers',    label: 'Subtracting mixed numbers' },
   { id: 'common-mistakes',  label: 'Common mistakes' },
   { id: 'faq',              label: 'FAQs' },
+  { id: 'quiz',             label: 'Quiz: test your knowledge' },
   { id: 'related-tools',    label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What is 5/8 − 3/8?',
+    options: [
+      '2/0',
+      '2/5',
+      '1/4',
+      '2/16',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Same denominators mean you subtract numerators directly and keep the denominator: 5 − 3 = 2, so the result is 2/8. Simplify with GCD(2, 8) = 2 to get 1/4.',
+  },
+  {
+    q: 'Subtract 1/4 from 5/6. The LCD of 6 and 4 is 12. What is the result?',
+    options: [
+      '4/2',
+      '4/24',
+      '7/10',
+      '7/12',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '5/6 converts to 10/12 and 1/4 converts to 3/12. Subtracting: 10/12 − 3/12 = 7/12. GCD(7, 12) = 1, so no simplification is needed.',
+  },
+  {
+    q: 'You calculate 3/4 − 5/6 and get −1/12. What should you do?',
+    options: [
+      'Recalculate - fractions can\'t produce negative results',
+      'Accept it as correct - a negative result means the second fraction was larger than the first',
+      'Flip the sign to get 1/12',
+      'Recalculate using a larger LCD',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '3/4 = 9/12 and 5/6 = 10/12. Since 9 < 10, the result is negative: 9/12 − 10/12 = −1/12. A negative result is valid - it signals the second fraction is larger, not that you made an error.',
+  },
+  {
+    q: 'What is 1/2 − (−1/3)?',
+    options: [
+      '5/6',
+      '1/6',
+      '1/2',
+      '−5/6',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Subtracting a negative is the same as adding its positive: 1/2 − (−1/3) = 1/2 + 1/3. LCD(2, 3) = 6, giving 3/6 + 2/6 = 5/6.',
+  },
+  {
+    q: 'If 3/4 − 1/4 = 1/2, what is 1/4 − 3/4?',
+    options: [
+      '1/2 - order doesn\'t change the result',
+      '0 - the fractions cancel',
+      '−1/2',
+      '2/4',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Fraction subtraction is not commutative. Reversing the order flips the sign: 1/4 − 3/4 = −2/4 = −1/2. The second fraction is always subtracted from the first.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -89,7 +151,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Subtract Fractions Calculator"
   metaTitle="Subtract Fractions Calculator | LCD Step-by-Step"
@@ -105,10 +166,9 @@ const schema = [
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
         <div class="calculator-header">
-          <h2>Subtract Fractions Instantly</h2>
+          <h2>Calculator for Subtracting Fractions</h2>
           <p>Enter two fractions to subtract the second from the first</p>
         </div>
-
         <div class="fc-ops">
           <button class="fc-op-btn" data-op="add">+ Add</button>
           <button class="fc-op-btn active" data-op="subtract">− Subtract</button>
@@ -116,7 +176,6 @@ const schema = [
           <button class="fc-op-btn" data-op="divide">÷ Divide</button>
           <button class="fc-op-btn" data-op="simplify">Simplify</button>
         </div>
-
         <div class="fc-inputs">
           <div class="fc-fraction">
             <input type="text" inputmode="decimal" id="fc-n1" class="fc-frac-input" placeholder="5" />
@@ -130,7 +189,6 @@ const schema = [
             <input type="text" inputmode="decimal" id="fc-d2" class="fc-frac-input" placeholder="4" />
           </div>
         </div>
-
         <div id="fc-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
             <span id="fc-res-n" class="fc-res-num">-</span>
@@ -138,7 +196,6 @@ const schema = [
             <span id="fc-res-d" class="fc-res-den">-</span>
           </div>
           <div class="lbm-primary-lbl">Result (simplified)</div>
-
           <div class="lbm-cards">
             <div class="lbm-card hidden" id="fc-mixed-card">
               <div class="lbm-card-val" id="fc-mixed">-</div>
@@ -153,7 +210,6 @@ const schema = [
               <div class="lbm-card-lbl">Percentage</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step hidden" id="fc-step1-row">
@@ -170,57 +226,59 @@ const schema = [
             </div>
           </div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/fraction-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
-        <p>To subtract fractions: find the <strong>LCD</strong> of the denominators, convert both fractions to that denominator, then <strong>subtract the second numerator from the first</strong> and simplify. When denominators are equal, subtract numerators directly.</p>
+        <p>To subtract fractions: find the <a href="/glossary/lcd">LCD</a> of the denominators, convert both fractions to that denominator, then <strong>subtract the second numerator from the first</strong> and simplify. When denominators are equal, subtract numerators directly.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the numerator and denominator of each fraction. The calculator subtracts the second fraction from the first, showing the simplified result, mixed number (where applicable), decimal, and percentage - along with a three-step breakdown using the LCD method.</p>
-
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Same denominator: subtract numerators directly and keep the denominator unchanged. It is a label for part size, not a value to operate on.</li>
+          <li>Different denominators: find the <a href="/glossary/lcd">LCD</a>, convert both fractions, subtract numerators, then simplify by dividing both parts by their <a href="/glossary/gcd">GCD</a>.</li>
+          <li>A negative result is correct - it means the second fraction was larger than the first. Never flip the sign; instead check whether the fractions are in the intended order.</li>
+          <li>Subtraction is not commutative: 3/4 - 1/4 = 1/2, but 1/4 - 3/4 = -1/2. Reversing the fractions flips the sign of the result.</li>
+          <li>For <a href="/math/fraction-calculator/mixed-number">mixed numbers</a>, always convert to improper fractions first. The "borrow" method works but adds a second error point - the borrow happens in fractional units, not whole numbers.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our fraction subtraction calculator</h2>
+      <p>Enter the <a href="/glossary/numerator">numerator</a> and <a href="/glossary/denominator">denominator</a> of each fraction. The calculator subtracts the second fraction from the first, showing the simplified result, mixed number (where applicable), decimal, and percentage - along with a three-step breakdown using the LCD method.</p>
+      <h3 id="explained-to-beginner">Subtracting fractions explained to a beginner</h3>
+      <p>Picture fractions as chunks of time. You have 3/4 of an hour free before a meeting, and a task takes 1/3 of an hour. How much time is left after the task?</p>
+      <p>You can't subtract directly because "quarter-hours" and "third-hours" are different sizes - like trying to subtract inches from centimeters without converting first. The LCD of 4 and 3 is 12, so you restate both in twelfths: 3/4 = 9/12 and 1/3 = 4/12. Now both chunks are the same size and 9/12 - 4/12 = 5/12 of an hour remaining.</p>
+      <p>Two things make subtraction different from addition. First, order matters: 3/4 - 1/3 is not the same as 1/3 - 3/4. Second, if the second fraction is larger, the result is negative - which is a valid answer, not a mistake. It simply means the task takes more time than you had available.</p>
       <h2 id="formula">Subtracting fractions formula</h2>
       <p>The general formula for subtracting two fractions cross-multiplies to eliminate different denominators:</p>
       <Formula expr={f.general} />
       <p>The preferred method uses the <strong>LCD</strong> to keep numbers smaller:</p>
       <Formula expr={f.lcd} />
       <p>Only the sign changes from addition - the structure is identical. Both methods produce the same answer after simplification.</p>
-
       <h2 id="same-denominator">Same denominator: the simple case</h2>
       <p>When both fractions share the same denominator, subtract the second numerator from the first and keep the denominator unchanged:</p>
       <Formula expr={f.ex1} />
       <p>5/8 − 3/8 = 2/8. Simplify with GCD(2, 8) = 2: 2/8 = 1/4. The denominator defines part size and never changes during subtraction.</p>
-
       <h2 id="different-denominators">Different denominators: the LCD method</h2>
       <p>When denominators differ, convert both fractions to a common denominator before subtracting. The steps mirror addition exactly - only the final operation changes:</p>
       <ol>
-        <li><strong>Find the LCD.</strong> The LCD is the LCM of both denominators. Use LCM(a, b) = (a × b) ÷ GCD(a, b).</li>
+        <li><strong>Find the LCD.</strong> The LCD is the <a href="/glossary/lcm">LCM</a> of both denominators. Use LCM(a, b) = (a × b) ÷ GCD(a, b).</li>
         <li><strong>Convert both fractions.</strong> Multiply each fraction's numerator and denominator by (LCD ÷ its denominator).</li>
         <li><strong>Subtract numerators.</strong> Subtract the second from the first. The denominator stays as the LCD.</li>
-        <li><strong>Simplify.</strong> Divide numerator and denominator by their GCD.</li>
+        <li><strong>Simplify.</strong> Divide numerator and denominator by their <a href="/glossary/gcd">GCD</a>.</li>
       </ol>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples fraction minus fraction</h2>
       <h3>Example 1: one denominator is a multiple of the other</h3>
       <p>Subtract 1/4 from 5/6. LCD(6, 4) = 12:</p>
       <Formula expr={f.ex2} />
       <p>5/6 → 10/12, 1/4 → 3/12. Result: 7/12. GCD(7, 12) = 1, already simplified.</p>
-
       <h3>Example 2: result is negative</h3>
       <p>Subtract 5/6 from 3/4. LCD(4, 6) = 12:</p>
       <Formula expr={f.ex3} />
       <p>3/4 → 9/12, 5/6 → 10/12. Since 9 < 10, the result is negative: −1/12.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -236,54 +294,48 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>When I personally review fraction subtraction errors from time to time, the negative-result cases are the most diagnostic. A student who gets −1/12 for 3/4 − 5/6 hasn't made a mistake - that is the correct answer. But a student who then "corrects" it to 1/12 has confused "unexpected" with "wrong."</p>
+      <p>A negative result is informative: it tells you the second fraction was larger than the first. Don't flip the sign - use it as a check on whether you entered the fractions in the intended order.</p>
       <h2 id="negative-result">When the result is negative</h2>
       <p>If the second fraction is larger than the first, the result is a negative fraction. This is completely valid - the sign lives in the numerator. For example, 3/4 − 5/6 = −1/12. The magnitude of the result follows the same LCD and simplification steps; the sign is determined by which numerator is larger after conversion.</p>
-
       <h2 id="subtracting-negative">Subtracting a negative fraction</h2>
       <p>Subtracting a negative fraction is equivalent to adding its positive counterpart - two negatives make a positive:</p>
       <Formula expr={f.neg} />
       <p>This follows directly from the rule that a − (−b) = a + b. The same LCD method applies; only the sign of the second numerator flips.</p>
-
       <h2 id="mixed-numbers">Subtracting mixed numbers</h2>
       <p>Convert each mixed number to an improper fraction before subtracting:</p>
       <Formula expr={f.mixed} />
       <p>Steps: 3½ = 7/2, 1⅔ = 5/3. LCD(2, 3) = 6. Convert: 21/6 − 10/6 = 11/6. As a mixed number: 1⅚.</p>
       <p>An alternative method subtracts whole numbers and fractions separately, but requires a "borrow" step when the fractional part of the second number is larger - similar to borrowing in column subtraction. Converting to improper fractions first avoids this complication.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <p>In practice, I always recommend <a href="/math/fraction-calculator/mixed-to-improper">converting mixed numbers to improper fractions</a> before subtracting. The borrow method sounds simpler but introduces a second error point that most people don't anticipate - the borrow happens in fractional units, not whole numbers, which is counterintuitive.</p>
+      <p>With <a href="/glossary/fraction">improper fractions</a>, the procedure is exactly the same every time: find the LCD, convert, subtract numerators, simplify. No special cases, no borrowing.</p>
+      <h2 id="common-mistakes">Common mistakes when subtracting fractions</h2>
       <h3>Subtracting the denominators</h3>
       <p>The denominator defines part size and must not change. 5/8 − 3/8 ≠ 2/0 and ≠ 2/5. The correct answer is 2/8 = 1/4. Only numerators are subtracted once both fractions share the same denominator.</p>
-
       <h3>Subtracting in the wrong order</h3>
       <p>Fraction subtraction is not commutative: a/b − c/d ≠ c/d − a/b (unless both are equal). 3/4 − 1/4 = 2/4, but 1/4 − 3/4 = −2/4. The second fraction is always subtracted from the first.</p>
-
       <h3>Forgetting to simplify</h3>
       <p>Always check whether the result shares a common factor between numerator and denominator. 6/8 is not in simplest form; GCD(6, 8) = 2 gives 3/4.</p>
-
       <h3>Not converting mixed numbers first</h3>
       <p>Subtracting 2½ − 1¾ by handling whole and fractional parts separately requires a borrow when ¾ > ½. Converting to improper fractions (5/2 − 7/4 = 10/8 − 7/8 = 3/8) is more reliable and less error-prone.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about fraction subtraction</h2>
       <h3>How do you subtract fractions with different denominators?</h3>
       <p>Find the LCD of both denominators, convert each fraction to that denominator, subtract the second numerator from the first, and simplify the result by dividing numerator and denominator by their GCD.</p>
-
       <h3>Can you subtract fractions with the same denominator directly?</h3>
       <p>Yes - subtract the second numerator from the first and keep the denominator unchanged. 5/8 − 3/8 = 2/8 = 1/4.</p>
-
       <h3>What if the result is negative?</h3>
       <p>A negative result is valid. It means the second fraction is larger than the first. The sign is carried in the numerator, and the fraction is otherwise simplified normally.</p>
-
       <h3>How do you subtract a negative fraction?</h3>
       <p>Subtracting a negative is the same as adding its positive. 1/2 − (−1/3) = 1/2 + 1/3 = 5/6.</p>
-
       <h3>How do you subtract mixed numbers?</h3>
       <p>Convert each mixed number to an improper fraction (whole × denominator + numerator, over the denominator), then subtract using the standard LCD method.</p>
-
       <h3>Why can't you subtract the denominators?</h3>
       <p>The denominator defines the size of each part. Subtracting denominators would change that size and produce a wrong answer. Only numerators change once both fractions share the same denominator.</p>
+      <QuizBlock
+        topic="subtracting fractions"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/fraction-calculator/subtract"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -295,8 +347,7 @@ const schema = [
         { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal and step-by-step workings.' },
         { path: '/math/percentage-calculator',        blurb: 'Percentage calculator - percentage of a number, percentage change, and more.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/fraction-calculator/subtract" />
     </div>
   </div>
-
 </CalculatorLayout>

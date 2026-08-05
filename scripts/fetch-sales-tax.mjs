@@ -100,7 +100,7 @@ function processState(stateAbbr) {
   };
 
   writeFileSync(outFile, JSON.stringify(output));
-  console.log(`${stateAbbr}: ${rows.length} ZIPs — ${cities.length} cities, ${counties.length} counties`);
+  console.log(`${stateAbbr}: ${rows.length} ZIPs - ${cities.length} cities, ${counties.length} counties`);
 }
 
 const csvFiles = readdirSync(CSV_DIR).filter(f => /^TAXRATES_ZIP5_[A-Z]{2}202604\.csv$/.test(f));

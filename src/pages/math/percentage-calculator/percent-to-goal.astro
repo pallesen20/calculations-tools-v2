@@ -64,9 +64,9 @@ const quizQuestions = [
   {
     q: 'Your goal is to eliminate a $4,000 credit card balance. You have paid off $1,600. How should you enter this into the calculator?',
     options: [
-      'Current = 1600, Goal = 4000 — giving 40% of goal',
-      'Current = 4000, Goal = 1600 — giving 250% of goal',
-      'Current = 2400, Goal = 4000 — giving 60% of goal',
+      'Current = 1600, Goal = 4000 - giving 40% of goal',
+      'Current = 4000, Goal = 1600 - giving 250% of goal',
+      'Current = 2400, Goal = 4000 - giving 60% of goal',
       'The formula cannot handle reduction goals',
     ] as [string, string, string, string],
     correct: 0 as const,
@@ -124,6 +124,21 @@ const schema = [
         "@type": "Question",
         "name": "What if my goal is a reduction (e.g. reducing costs)?",
         "acceptedAnswer": { "@type": "Answer", "text": "For reduction goals, reframe the current value as progress made: if you want to cut costs from $100,000 to $80,000 and you are currently at $88,000, the reduction achieved is $12,000 out of a $20,000 target - 60% of goal. Enter 12000 as current and 20000 as goal." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate percent to goal?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide the current value by the goal, then multiply by 100: (Current ÷ Goal) × 100. Example: 600 deals closed against a 1,000-unit target gives 600 ÷ 1,000 × 100 = 60% of goal. The same formula works for any unit - revenue, steps, items completed, or dollars raised." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is achievement calculation?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Achievement calculation is another term for percent to goal - it answers what percentage of a target has been achieved using (Current ÷ Goal) × 100. An achievement percentage of 85% means 85% of the target is met. Values above 100% indicate over-achievement. It is also called goal attainment rate in performance management." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is rate of progress to a goal?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Rate of progress adds a time dimension to goal tracking. If you are at 60% of goal after 8 weeks of a 20-week period, your rate of progress is 7.5 percentage points per week. At that rate you will reach 100% in roughly 5.3 more weeks - useful for forecasting whether you will hit the target by the deadline." }
       }
     ]
   }
@@ -131,8 +146,8 @@ const schema = [
 ---
 <CalculatorLayout
   title="Percent to Goal Calculator"
-  metaTitle="Percent to Goal Calculator | Track Progress %"
-  description="Calculate what percentage of your goal you have reached. Enter a current value and target to see percent complete, remaining amount, and step-by-step workings."
+  metaTitle="Percent to Goal Calculator | Progress & Achievement"
+  description="Calculate percent to goal and achievement percentage instantly. Enter a current value and target to see progress percentage, remaining amount, and step-by-step workings."
   canonical="https://calculations.tools/math/percentage-calculator/percent-to-goal"
   tocItems={tocItems}
   schema={schema}
@@ -201,16 +216,16 @@ const schema = [
           <button id="ptg-add-row" class="ptg-add-btn">+ Add goal</button>
           <div id="ptg-multi-result" class="lbm-result hidden">
             <div class="lbm-primary">
-              <span class="lbm-primary-val" id="ptg-simple-avg">—</span>
+              <span class="lbm-primary-val" id="ptg-simple-avg">-</span>
             </div>
             <div class="lbm-primary-lbl">Simple average (equal weight)</div>
             <div id="ptg-weighted-row" class="lbm-cards hidden">
               <div class="lbm-card">
-                <div class="lbm-card-val" id="ptg-weighted-avg">—</div>
+                <div class="lbm-card-val" id="ptg-weighted-avg">-</div>
                 <div class="lbm-card-lbl">Weighted average</div>
               </div>
               <div class="lbm-card">
-                <div class="lbm-card-val" id="ptg-weight-note" style="font-size:0.78rem">—</div>
+                <div class="lbm-card-val" id="ptg-weight-note" style="font-size:0.78rem">-</div>
                 <div class="lbm-card-lbl">Weight status</div>
               </div>
             </div>
@@ -237,14 +252,14 @@ const schema = [
         </ul>
       </div>
       <h2 id="how-to-use">How to use our percentage to goal calculator</h2>
-      <p>In <strong>Single Goal</strong> mode, enter your current value and goal to see the percent complete, progress status, and a step-by-step breakdown. In <strong>Multiple Goals</strong> mode, add rows for each goal - with an optional name and weight - to track an entire scorecard at once. The calculator shows each goal's individual attainment plus an overall simple average and, if weights are provided, a weighted average.</p>
-      <p>Use this calculator for any goal tracked as a number: sales quotas, OKR key results, fundraising targets, fitness milestones, or any scenario where progress needs expressing as a percentage of a target.</p>
+      <p>In <strong>Single Goal</strong> mode, enter your current value and goal to see the progress percentage, progress status, and a step-by-step breakdown. In <strong>Multiple Goals</strong> mode, add rows for each goal - with an optional name and weight - to track an entire scorecard at once. The calculator shows each goal's individual achievement percentage plus an overall simple average and, if weights are provided, a weighted average.</p>
+      <p>This progress to goal calculator works for any number-based goal: sales quotas, OKR key results, fundraising targets, fitness milestones, or any scenario where you need to calculate percent to goal against a fixed target. It is also used as a percent to target calculator - the formula is identical regardless of what you call the target value.</p>
       <p>For a visual progress bar, see our <a href="/math/percentage-calculator/progress-tracker">progress tracker</a>.</p>
       <h3 id="explained-to-beginner">Percent to goal explained to a beginner</h3>
       <p>Imagine you're saving $1,000 for a new laptop. You've put aside $750 so far. The question "how far am I toward my goal?" is really just "what fraction of $1,000 is $750?" - the answer is 0.75, or 75%. The formula makes that formal: $750 ÷ $1,000 × 100 = 75%.</p>
       <p>The key is what you divide by: always the goal (the full amount you need), not how far you've come since you started. If you saved $200 last month and now have $750, percent to goal is still 75% - the starting point doesn't enter the calculation. You're measuring where you are relative to the finish line, not relative to where you began.</p>
-      <h2 id="formula">Percentage to target calculation formula</h2>
-      <p>The formula is a simple ratio expressed as a percentage:</p>
+      <h2 id="formula">Progress formula: how to calculate percent to goal</h2>
+      <p>The progress formula is a simple ratio expressed as a percentage:</p>
       <Formula expr={f.main} />
       <p>The <a href="/glossary/denominator">denominator</a> is always the <em>goal</em> (the target), not the starting point. This is what distinguishes percent to goal from <a href="/math/percentage-calculator/change">percent change</a> - there is no "starting point" in this calculation, only a current value relative to a fixed target.</p>
       <h2 id="examples">Worked examples for progress as a percentage</h2>
@@ -321,7 +336,7 @@ const schema = [
       </div>
       <p>Example: a sales rep started the quarter at 0 deals and reached 750 against a 1,000-unit goal. Percent to goal is 75%. Percent change from the previous quarter (when they had 500 deals) is (750 − 500) / 500 × 100 = +50%.</p>
       <p>Both are useful but answer different questions - progress toward a target vs. growth over time.</p>
-      <h2 id="common-mistakes">Common mistakes for percent to target calculation</h2>
+      <h2 id="common-mistakes">Common mistakes when calculating progress to goal</h2>
       <h3>Using the remaining amount instead of the current value</h3>
       <p>If your goal is 1,000 and you have reached 750, enter <strong>750</strong> (what you have), not 250 (what remains). Entering the remainder gives 250 / 1,000 = 25%, the inverse of the correct 75%.</p>
       <h3>Dividing by the remaining amount instead of the goal</h3>
@@ -341,6 +356,12 @@ const schema = [
       <p>Percent to goal divides by the target (goal). Percent change divides by the starting value (old value). They answer different questions: progress toward a fixed target vs. growth over a period.</p>
       <h3>What if my goal is a reduction (e.g. reducing defects)?</h3>
       <p>Reframe the goal as a positive magnitude. If you want to cut defects from 500 to 300 (a 200-unit reduction) and you are currently at 380 defects, you have reduced by 120 units out of a 200-unit goal - enter 120 as current and 200 as goal to get 60% of goal.</p>
+      <h3>How do I calculate percent to goal?</h3>
+      <p>Divide the current value by the goal, then multiply by 100: (Current ÷ Goal) × 100. To calculate percentage to goal for a sales rep who closed 600 deals against a 1,000-unit target: 600 ÷ 1,000 × 100 = 60%. The same formula works for any unit - revenue, steps, items completed, or dollars raised.</p>
+      <h3>What is achievement calculation?</h3>
+      <p>Achievement calculation is another term for percent to goal - it answers "what percentage of the target have I achieved?" The formula is (Current ÷ Goal) × 100. An achievement percentage of 85% means 85% of the target has been met. Values above 100% indicate over-achievement. It is also called "goal attainment rate" or "achievement percentage" in performance management.</p>
+      <h3>What is rate of progress to a goal?</h3>
+      <p>Rate of progress adds a time dimension. If you are at 60% of goal after 8 weeks of a 20-week period, your rate of progress is 60 / 8 = 7.5 percentage points per week. At that rate you will reach 100% in roughly 5.3 more weeks. This is useful for forecasting whether you will hit the target by the deadline.</p>
       <QuizBlock
         topic="percent to goal"
         questions={quizQuestions}

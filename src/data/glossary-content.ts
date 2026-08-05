@@ -5096,5 +5096,89 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
     },
   },
+  'gcd': {
+    definition: [
+      'The GCD (Greatest Common Divisor) of two positive integers is the largest integer that divides both numbers exactly, leaving no remainder. It is also called the Greatest Common Factor (GCF) or Highest Common Factor (HCF). GCD(12, 8) = 4 because 4 divides both 12 and 8 perfectly, and no integer larger than 4 does the same.',
+      'The most efficient method for finding the GCD is the Euclidean algorithm: divide the larger number by the smaller, take the remainder, and repeat until the remainder is zero. The last non-zero remainder is the GCD. Example: GCD(18, 24) - divide 24 by 18, remainder 6. Divide 18 by 6, remainder 0. GCD = 6.',
+      'In fraction arithmetic, the GCD is used to simplify (reduce) a fraction to its lowest terms. Dividing both numerator and denominator by their GCD produces an equivalent fraction where the two parts share no common factor other than 1.',
+    ],
+    beginnerExplain: [
+      'Imagine you have 12 apples and 8 oranges and want to arrange them into identical groups with no fruit left over. The largest number of equal groups possible is 4 - giving 3 apples and 2 oranges per group. That "4" is GCD(12, 8).',
+      'For fractions, the GCD tells you how much you can shrink the fraction without changing its value. 12/18 divided top and bottom by GCD(12, 18) = 6 gives 2/3 - the same fraction, at its smallest.',
+    ],
+    whenToUse: 'Use the GCD to simplify fractions after addition, subtraction, or multiplication, and as an intermediate step when computing the LCM via LCM(a, b) = a × b ÷ GCD(a, b). Always check the GCD before reporting a fraction result to confirm it is fully reduced.',
+    examples: {
+      headers: ['Numbers', 'GCD', 'Application'],
+      rows: [
+        ['12, 8', '4', '12/8 simplifies to 3/2'],
+        ['18, 24', '6', '18/24 simplifies to 3/4'],
+        ['7, 13', '1', 'Coprime: 7/13 is already in lowest terms'],
+        ['100, 75', '25', '100/75 simplifies to 4/3'],
+        ['6, 9', '3', 'LCD(6,9) = 6×9÷3 = 18'],
+      ],
+    },
+    pitfalls: 'GCD(a, b) = 1 means the numbers are coprime - the fraction is already in simplest form. This is not an error; it confirms no further reduction is possible. A common mistake is stopping at a common divisor that is not the greatest - dividing 18/24 by 2 gives 9/12, but the GCD is 6 and the fully reduced form is 3/4. Always verify you have found the greatest, not just a, common divisor.',
+    faqs: [
+      { q: 'What is the difference between GCD and LCM?', a: 'GCD finds the largest shared factor (used to simplify fractions and compute LCD). LCM finds the smallest shared multiple (used to find a common denominator). They are linked: GCD(a, b) × LCM(a, b) = a × b, so knowing one gives you the other.' },
+      { q: 'What does it mean when GCD equals 1?', a: 'When GCD(a, b) = 1, the numbers are coprime - they share no common factor other than 1. For a fraction, this means it is already fully reduced. For denominators, it means their LCD equals their product.' },
+      { q: 'How do you find the GCD without the Euclidean algorithm?', a: 'List all factors of each number and find the largest one they share. For 12 and 8: factors of 12 are 1, 2, 3, 4, 6, 12; factors of 8 are 1, 2, 4, 8. Largest shared factor is 4. For large numbers the Euclidean algorithm is much faster.' },
+    ],
+  },
+  'lcd': {
+    definition: [
+      'The LCD (Lowest Common Denominator) is the smallest positive integer that is evenly divisible by both denominators in a pair of fractions. It equals the LCM of the two denominators. For the fractions 3/4 and 1/6, LCD(4, 6) = LCM(4, 6) = 12.',
+      'The LCD is the essential step in adding or subtracting fractions with different denominators. Converting both fractions to the LCD makes their denominators identical, meaning each fraction counts the same-sized parts - so numerators can be added or subtracted directly.',
+      'Computing the LCD: LCD(b, d) = (b × d) ÷ GCD(b, d). For denominators 4 and 6: GCD(4, 6) = 2, so LCD = (4 × 6) ÷ 2 = 12. When denominators are coprime (GCD = 1), the LCD equals their product.',
+    ],
+    beginnerExplain: [
+      'You want to add 1/4 and 1/3 of a pizza. But fourths and thirds are different slice sizes, so you cannot count them together yet. The LCD asks: what is the smallest number of equal slices you could cut both pizzas into so the sizes match? The answer is 12 - twelfths work for both evenly. That is the LCD.',
+      'Once both fractions are in twelfths: 1/4 = 3/12 and 1/3 = 4/12. Now the slice size is identical and 3/12 + 4/12 = 7/12.',
+    ],
+    whenToUse: 'Use the LCD whenever you add or subtract fractions with different denominators. It also applies to comparing fractions (convert both to the LCD, then compare numerators) and to simplifying complex fractions that have fractions in their numerator or denominator.',
+    examples: {
+      headers: ['Denominators b, d', 'GCD(b, d)', 'LCD = b×d÷GCD', 'Note'],
+      rows: [
+        ['4, 6', '2', '12', '4×6÷2 = 12'],
+        ['3, 5', '1', '15', 'Coprime: LCD = product'],
+        ['6, 9', '3', '18', '6×9÷3 = 18'],
+        ['5, 10', '5', '10', '10 is already a multiple of 5'],
+        ['8, 12', '4', '24', '8×12÷4 = 24'],
+      ],
+    },
+    pitfalls: 'Using the product b × d as the common denominator always works, but when GCD > 1 it produces unnecessarily large numbers. For 3/4 + 1/6, using 24 instead of 12 gives 18/24 + 4/24 = 22/24, requiring simplification to 11/12. Starting with the LCD skips that extra step. When denominators are coprime, the product IS the LCD so there is no saving to be had.',
+    faqs: [
+      { q: 'What is the difference between LCD and LCM?', a: 'LCD (Lowest Common Denominator) is the same mathematical object as LCM (Lowest Common Multiple), applied specifically to the denominators of fractions. LCD(b, d) = LCM(b, d). LCD is the fraction-context term; LCM is the more general number-theory term.' },
+      { q: 'Is the LCD always the product of the two denominators?', a: 'Only when the denominators are coprime. For 3/5 + 2/7, LCD = 5 × 7 = 35. For 3/4 + 1/6, GCD(4, 6) = 2, so LCD = 12, not 24. The product is always a valid common denominator but not always the lowest.' },
+      { q: 'Can the LCD be one of the existing denominators?', a: 'Yes - when one denominator is a multiple of the other. LCD(5, 10) = 10 because 10 is already divisible by 5. Only the first fraction needs converting: 2/5 becomes 4/10, and 3/10 stays unchanged.' },
+    ],
+  },
+  'lcm': {
+    definition: [
+      'The LCM (Lowest Common Multiple) of two positive integers is the smallest positive integer that is a multiple of both. LCM(4, 6) = 12 because 12 is the smallest number appearing in both the multiples of 4 (4, 8, 12, 16...) and the multiples of 6 (6, 12, 18...).',
+      'The fastest way to compute LCM uses the GCD identity: LCM(a, b) = (a × b) ÷ GCD(a, b). For LCM(4, 6): GCD(4, 6) = 2, so LCM = (4 × 6) ÷ 2 = 12. When a and b are coprime (GCD = 1), LCM equals their product.',
+      'In fraction arithmetic, the LCM of two denominators is the LCD - the smallest number that allows both fractions to be expressed with a shared denominator so their numerators can be added or subtracted.',
+    ],
+    beginnerExplain: [
+      'Bus A comes every 4 minutes. Bus B comes every 6 minutes. Both leave together at time zero. When is the next time they leave at the same moment? Multiples of 4: 4, 8, 12... Multiples of 6: 6, 12... First overlap: 12 minutes. That is LCM(4, 6) = 12.',
+      'In fractions the idea is identical: LCM of two denominators finds the smallest slot where both denominators fit evenly, so you can rewrite both fractions in same-sized pieces before adding.',
+    ],
+    whenToUse: 'Use LCM when finding the LCD for fraction addition or subtraction, when solving scheduling problems (next coincidence of two repeating events), or when scaling quantities to the smallest common unit. LCM and GCD together are the two key tools in elementary number theory.',
+    examples: {
+      headers: ['a', 'b', 'GCD(a,b)', 'LCM = a×b÷GCD', 'Check'],
+      rows: [
+        ['4', '6', '2', '12', 'Multiples of 4 and 6 first meet at 12'],
+        ['3', '5', '1', '15', 'Coprime: LCM = product'],
+        ['6', '9', '3', '18', 'Multiples of 6 and 9 first meet at 18'],
+        ['5', '10', '5', '10', '10 is already a multiple of 5'],
+        ['7', '13', '1', '91', 'Coprime: LCM = 7×13'],
+      ],
+    },
+    pitfalls: 'LCM(a, b) × GCD(a, b) = a × b is a useful check: if you know three of the four values you can derive the fourth. Also: LCM(a, a) = a and LCM(1, n) = n. For three or more numbers, compute pairwise: LCM(a, b, c) = LCM(LCM(a, b), c).',
+    faqs: [
+      { q: 'What is the difference between LCM and GCD?', a: 'GCD is the largest factor shared by two numbers - used to simplify fractions. LCM is the smallest multiple shared by two numbers - used to find a common denominator. They are linked: GCD(a, b) × LCM(a, b) = a × b.' },
+      { q: 'When does LCM equal the product a × b?', a: 'When a and b are coprime - they share no common factor other than 1. Examples: LCM(3, 5) = 15, LCM(7, 11) = 77. When GCD > 1, LCM is smaller than the product.' },
+      { q: 'How does LCM differ from LCD?', a: 'LCD (Lowest Common Denominator) is the same concept as LCM applied specifically to the denominators of fractions. LCD(b, d) = LCM(b, d). LCM is the general term; LCD is used in the fraction arithmetic context.' },
+    ],
+  },
 
 };

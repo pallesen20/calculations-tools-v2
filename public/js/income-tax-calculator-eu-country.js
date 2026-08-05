@@ -178,8 +178,8 @@ function initGermany(el) {
     setText('eutax-res-zve', fmt(zvE > 0 ? zvE : gross));
     setText('eutax-res-est', fmt(est));
     setText('eutax-res-est-rates', fmtRate(effIncomeTax) + ' / ' + fmtRate(marginalIncomeTax));
-    setText('eutax-res-soli', soli > 0 ? fmt(soli) : '—');
-    setText('eutax-res-kirche', kirchensteuer > 0 ? fmt(kirchensteuer) : '—');
+    setText('eutax-res-soli', soli > 0 ? fmt(soli) : '-');
+    setText('eutax-res-kirche', kirchensteuer > 0 ? fmt(kirchensteuer) : '-');
     setText('eutax-res-total-taxes', fmt(totalTaxes));
     setText('eutax-res-rv', fmt(rv));
     setText('eutax-res-kv', fmt(kv));

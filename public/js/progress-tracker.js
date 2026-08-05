@@ -42,32 +42,35 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('pt-step2').textContent = `${fmt(current / goal, 6)} × 100 = ${fmt(pct, 4)}%`;
 
     const deadlineVal = deadlineEl.value;
-    const deadlineRow = document.getElementById('pt-deadline-rows');
+    const cardDays   = document.getElementById('pt-card-days');
+    const cardDaily  = document.getElementById('pt-card-daily');
+    const cardWeekly = document.getElementById('pt-card-weekly');
 
-    if (deadlineVal) {
+    if (deadlineVal && !exceeded) {
       const today    = new Date();
       today.setHours(0, 0, 0, 0);
       const deadline = new Date(deadlineVal);
       deadline.setHours(0, 0, 0, 0);
       const daysLeft = Math.round((deadline - today) / 86400000);
 
-      if (daysLeft >= 0 && !exceeded) {
+      if (daysLeft >= 0) {
         const dailyNeeded  = remaining / Math.max(daysLeft, 1);
         const weeklyNeeded = dailyNeeded * 7;
-        document.getElementById('pt-days-left').textContent   = daysLeft + ' day' + (daysLeft !== 1 ? 's' : '');
-        document.getElementById('pt-daily').textContent       = fmtNum(dailyNeeded) + ' / day';
-        document.getElementById('pt-weekly').textContent      = fmtNum(weeklyNeeded) + ' / week';
-        deadlineRow.classList.remove('hidden');
-      } else if (exceeded) {
-        deadlineRow.classList.add('hidden');
+        document.getElementById('pt-days-left').textContent = daysLeft + ' day' + (daysLeft !== 1 ? 's' : '');
+        document.getElementById('pt-daily').textContent     = fmtNum(dailyNeeded) + ' / day';
+        document.getElementById('pt-weekly').textContent    = fmtNum(weeklyNeeded) + ' / week';
       } else {
-        document.getElementById('pt-days-left').textContent   = Math.abs(daysLeft) + ' day' + (Math.abs(daysLeft) !== 1 ? 's' : '') + ' overdue';
-        document.getElementById('pt-daily').textContent       = '-';
-        document.getElementById('pt-weekly').textContent      = '-';
-        deadlineRow.classList.remove('hidden');
+        document.getElementById('pt-days-left').textContent = Math.abs(daysLeft) + ' day' + (Math.abs(daysLeft) !== 1 ? 's' : '') + ' overdue';
+        document.getElementById('pt-daily').textContent     = '-';
+        document.getElementById('pt-weekly').textContent    = '-';
       }
+      cardDays.classList.remove('hidden');
+      cardDaily.classList.remove('hidden');
+      cardWeekly.classList.remove('hidden');
     } else {
-      deadlineRow.classList.add('hidden');
+      cardDays.classList.add('hidden');
+      cardDaily.classList.add('hidden');
+      cardWeekly.classList.add('hidden');
     }
 
     document.getElementById('pt-result').classList.remove('hidden');

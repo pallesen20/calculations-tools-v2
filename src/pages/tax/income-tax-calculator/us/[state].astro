@@ -615,22 +615,22 @@ const schema = [
                 <tr>
                   <td>Single</td>
                   <td>${state.single.standardDeduction.toLocaleString()}</td>
-                  {hasExemptions && <td>{state.single.personalExemption ? `$${state.single.personalExemption.toLocaleString()}` : '—'}</td>}
+                  {hasExemptions && <td>{state.single.personalExemption ? `$${state.single.personalExemption.toLocaleString()}` : '-'}</td>}
                 </tr>
                 <tr>
                   <td>Married Filing Jointly (MFJ)</td>
                   <td>${state.mfj.standardDeduction.toLocaleString()}</td>
-                  {hasExemptions && <td>{state.mfj.personalExemption ? `$${state.mfj.personalExemption.toLocaleString()}` : '—'}</td>}
+                  {hasExemptions && <td>{state.mfj.personalExemption ? `$${state.mfj.personalExemption.toLocaleString()}` : '-'}</td>}
                 </tr>
                 <tr>
                   <td>Head of Household (HOH)</td>
                   <td>${state.hoh.standardDeduction.toLocaleString()}</td>
-                  {hasExemptions && <td>{state.hoh.personalExemption ? `$${state.hoh.personalExemption.toLocaleString()}` : '—'}</td>}
+                  {hasExemptions && <td>{state.hoh.personalExemption ? `$${state.hoh.personalExemption.toLocaleString()}` : '-'}</td>}
                 </tr>
                 <tr>
                   <td>Married Filing Separately (MFS)</td>
                   <td>${state.mfs.standardDeduction.toLocaleString()}</td>
-                  {hasExemptions && <td>{state.mfs.personalExemption ? `$${state.mfs.personalExemption.toLocaleString()}` : '—'}</td>}
+                  {hasExemptions && <td>{state.mfs.personalExemption ? `$${state.mfs.personalExemption.toLocaleString()}` : '-'}</td>}
                 </tr>
               </tbody>
             </table>

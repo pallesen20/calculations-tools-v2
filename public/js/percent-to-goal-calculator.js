@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       '<input type="text" inputmode="decimal" class="bmi-input ptg-row-current" placeholder="Current">' +
       '<input type="text" inputmode="decimal" class="bmi-input ptg-row-goal" placeholder="Goal">' +
       '<input type="text" inputmode="decimal" class="bmi-input ptg-row-weight" placeholder="Weight %">' +
-      '<span class="ptg-row-pct ptg-pct-empty">—</span>' +
+      '<span class="ptg-row-pct ptg-pct-empty">-</span>' +
       '<button class="ptg-row-remove" aria-label="Remove">×</button>';
 
     row.querySelector('.ptg-row-remove').addEventListener('click', () => { row.remove(); calcMulti(); });
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         validCount++;
         if (!isNaN(w) && w > 0) { weightedSum += pct * w; totalWeight += w; }
       } else {
-        pctEl.textContent = '—';
+        pctEl.textContent = '-';
         pctEl.classList.add('ptg-pct-empty');
       }
     });
