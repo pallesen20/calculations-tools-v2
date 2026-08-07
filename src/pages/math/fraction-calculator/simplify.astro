@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+import type { Source } from '../../../components/Sources.astro';
 
 const f = {
   formula:   "$$\\frac{a}{b} = \\frac{a \\div \\gcd(a, b)}{b \\div \\gcd(a, b)}$$",
@@ -14,8 +17,9 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',   label: 'How to use' },
-  { id: 'formula',      label: 'Simplifying fractions formula' },
+  { id: 'how-to-use',         label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',            label: 'Simplifying fractions formula' },
   { id: 'gcd',          label: 'Finding the GCD' },
   { id: 'examples',     label: 'Worked examples' },
   { id: 'already-simplified', label: 'Already in simplest form' },
@@ -24,8 +28,67 @@ const tocItems = [
   { id: 'reference',    label: 'Reference table' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',          label: 'FAQs' },
+  { id: 'quiz',         label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does it mean for a fraction to be in its simplest form (lowest terms)?',
+    options: [
+      'The numerator and denominator share no common factor other than 1 - their GCD equals 1',
+      'The numerator is smaller than the denominator',
+      'The fraction has been divided by at least one common factor',
+      'Both the numerator and denominator are prime numbers',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'A fraction is in simplest form when GCD(numerator, denominator) = 1. The numerator and denominator are coprime - they share no common factor other than 1 and cannot be reduced further.',
+  },
+  {
+    q: 'Using the Euclidean algorithm shown on the page: GCD(48, 36). Step 1: 48 = 1×36 + 12. Step 2: 36 = 3×12 + 0. What is the GCD?',
+    options: [
+      '4',
+      '6',
+      '12',
+      '36',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The Euclidean algorithm stops when the remainder is 0. The last non-zero remainder is the GCD. Here, step 2 gives remainder 0, so the GCD is 12 - the divisor in that final step.',
+  },
+  {
+    q: 'The page shows that both 18/24 and 36/48 simplify to 3/4. What does this tell us?',
+    options: [
+      '36/48 cannot simplify to 3/4 because it has a different GCD than 18/24',
+      'They are equivalent fractions - different scales, identical value (0.75)',
+      '36/48 is larger than 18/24 because its numerator and denominator are bigger',
+      'Both fractions share a GCD of 6',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Equivalent fractions represent the same value written at different scales. 18/24 and 36/48 both equal 0.75 = 3/4. Simplifying does not change the value - it finds the most compact representation.',
+  },
+  {
+    q: 'From the reference table on the page, what does 100/250 simplify to?',
+    options: [
+      '1/3',
+      '1/4',
+      '1/2',
+      '2/5',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'GCD(100, 250) = 50. Dividing both by 50: 100 ÷ 50 = 2, 250 ÷ 50 = 5. Result: 2/5. Check: GCD(2, 5) = 1, so 2/5 is in simplest form.',
+  },
+  {
+    q: 'You simplify 36/48 by dividing both parts by 4, getting 9/12. What is the problem?',
+    options: [
+      '4 is not actually a factor of both 36 and 48',
+      'Dividing by 4 changes the value of the fraction',
+      'You stopped too early - 4 is not the GCD, so 9/12 can still be reduced (GCD(9, 12) = 3)',
+      'You should never divide by more than 2 at a time when simplifying',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'GCD(36, 48) = 12, not 4. Dividing by 4 is valid but incomplete: 9/12 still has GCD(9,12) = 3, so it further reduces to 3/4. Only dividing by the GCD reaches simplest form in one step. Always verify that GCD(result) = 1.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -87,8 +150,38 @@ const schema = [
     ]
   }
 ];
----
 
+const sources: Source[] = [
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Greatest Common Divisor',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/GreatestCommonDivisor.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Euclidean Algorithm',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/EuclideanAlgorithm.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Reduced Fraction',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/ReducedFraction.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Relatively Prime',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/RelativelyPrime.html',
+  },
+];
+---
 <CalculatorLayout
   title="Simplify Fractions Calculator"
   metaTitle="Simplify Fractions Calculator | Lowest Terms"
@@ -96,6 +189,7 @@ const schema = [
   canonical="https://calculations.tools/math/fraction-calculator/simplify"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="fraction-calculator"
   ogFormula="Simplify: divide numerator and denominator by their GCD"
   ogExample="18/24: GCD = 6 -> 18÷6 / 24÷6 = 3/4"
@@ -107,7 +201,6 @@ const schema = [
           <h2>Simplify a Fraction Instantly</h2>
           <p>Enter a fraction to reduce it to its lowest terms</p>
         </div>
-
         <div class="fc-ops">
           <button class="fc-op-btn" data-op="add">+ Add</button>
           <button class="fc-op-btn" data-op="subtract">− Subtract</button>
@@ -115,7 +208,6 @@ const schema = [
           <button class="fc-op-btn" data-op="divide">÷ Divide</button>
           <button class="fc-op-btn active" data-op="simplify">Simplify</button>
         </div>
-
         <div class="fc-inputs">
           <div class="fc-fraction">
             <input type="text" inputmode="decimal" id="fc-n1" class="fc-frac-input" placeholder="18" />
@@ -129,7 +221,6 @@ const schema = [
             <input type="text" inputmode="decimal" id="fc-d2" class="fc-frac-input" placeholder="2" />
           </div>
         </div>
-
         <div id="fc-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
             <span id="fc-res-n" class="fc-res-num">-</span>
@@ -137,7 +228,6 @@ const schema = [
             <span id="fc-res-d" class="fc-res-den">-</span>
           </div>
           <div class="lbm-primary-lbl">Simplified fraction</div>
-
           <div class="lbm-cards">
             <div class="lbm-card hidden" id="fc-mixed-card">
               <div class="lbm-card-val" id="fc-mixed">-</div>
@@ -152,7 +242,6 @@ const schema = [
               <div class="lbm-card-lbl">Percentage</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step hidden" id="fc-step1-row">
@@ -169,53 +258,54 @@ const schema = [
             </div>
           </div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/fraction-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Formula</p>
-        <p>To simplify a fraction: find the <strong>GCD</strong> (Greatest Common Divisor) of the numerator and denominator, then <strong>divide both by the GCD</strong>. The result is the fraction in its lowest terms.</p>
+        <p>To simplify a fraction: find the <a href="/glossary/gcd">GCD (Greatest Common Divisor)</a> of the numerator and denominator, then divide both by the GCD. The result is the fraction in its lowest terms.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the numerator and denominator of any fraction. The calculator finds the GCD, divides both parts, and shows the simplified result as a fraction, mixed number (where applicable), decimal, and percentage - along with a three-step GCD breakdown.</p>
-
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li><strong>Only the GCD reduces in one step</strong> - any common factor shrinks the fraction, but only dividing by the GCD reaches simplest form immediately.</li>
+          <li><strong>Simplifying never changes the value</strong> - 18/24, 9/12, and 3/4 are the same number (0.75) in different representations.</li>
+          <li><strong>GCD = 1 means already simplified</strong> - if the <a href="/glossary/numerator">numerator</a> and <a href="/glossary/denominator">denominator</a> share no common factor, the fraction is in lowest terms and cannot be reduced further.</li>
+          <li><strong>Improper fractions simplify the same way</strong> - apply the GCD method as normal; the result may still be improper, or it may reduce to a whole number.</li>
+          <li><strong>Always verify after simplifying</strong> - check that GCD(new numerator, new denominator) = 1; if not, you stopped too early.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our simplified fraction calculator</h2>
+      <p>Enter the numerator and denominator of any <a href="/glossary/fraction">fraction</a>. The calculator finds the GCD, divides both parts, and shows the simplified result as a fraction, mixed number (where applicable), decimal, and percentage - along with a three-step GCD breakdown.</p>
+      <h3 id="explained-to-beginner">Simplified fractions explained to a beginner</h3>
+      <p>Imagine a pizza cut into 24 equal slices and you eat 18 of them. You could say "I ate 18/24 of the pizza" - but "3/4" says the same thing more simply. The GCD (6 in this case) is the largest group size that fits evenly into both numbers: 18 slices become 3 groups of 6, and 24 slices become 4 groups of 6. So 18/24 = 3/4 - same amount of pizza, just described more compactly.</p>
+      <p>The GCD method gets you there in one step. Dividing by a smaller factor (say, 2) also works - 18/24 becomes 9/12 - but then you have to repeat until GCD = 1. Finding the largest group size first skips all the repetition.</p>
       <h2 id="formula">Simplifying fractions formula</h2>
       <p>A fraction is in its simplest form (lowest terms) when the numerator and denominator share no common factor other than 1. The reduction formula is:</p>
       <Formula expr={f.formula} />
       <p>GCD (Greatest Common Divisor) is also written as GCF (Greatest Common Factor) or HCF (Highest Common Factor) - all refer to the same value: the largest integer that divides both numbers exactly.</p>
-
-      <h2 id="gcd">Finding the GCD</h2>
-      <p>Three methods exist, each suited to different situations:</p>
-
+      <h2 id="gcd">How to find the GCD</h2>
+      <p>Three methods exist to find the Greatest Common Divisor, each suited to different situations:</p>
       <h3>Method 1: Euclidean algorithm (fastest)</h3>
       <p>Repeatedly divide the larger number by the smaller and take the remainder. Stop when the remainder is 0 - the last non-zero remainder is the GCD:</p>
       <Formula expr={f.euclidean} />
       <p>This method works efficiently on any pair of integers, regardless of size.</p>
-
       <h3>Method 2: Prime factorisation</h3>
       <p>Write both numbers as products of prime factors. The GCD is the product of all shared prime factors. For 18 and 24: 18 = 2 × 3² and 24 = 2³ × 3. Shared factors: 2¹ × 3¹ = 6. GCD = 6.</p>
-
       <h3>Method 3: Listing factors</h3>
       <p>List all factors of both numbers and find the largest common one. Practical only for small numbers. Factors of 18: 1, 2, 3, 6, 9, 18. Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24. Largest common: 6.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <p>In practice, the Euclidean algorithm is the method worth internalizing. Listing factors works well below 30 but becomes unreliable above 50 in my opinion - it's easy to miss a factor or a prime.</p>
+      <p>When I do GCDs by hand, I default to the Euclidean algorithm for anything over two digits: it's mechanical, guaranteed to terminate, and doesn't require recognizing all prime factors first.</p>
+      <h2 id="examples">Worked examples for simplifying fractions</h2>
       <h3>Example 1: straightforward reduction</h3>
       <Formula expr={f.ex1} />
       <p>GCD(18, 24) = 6. Divide: 18 ÷ 6 = 3, 24 ÷ 6 = 4. Result: 3/4. Check: GCD(3, 4) = 1 ✓</p>
-
       <h3>Example 2: different path, same result</h3>
       <Formula expr={f.ex2} />
       <p>GCD(36, 48) = 12. Both 18/24 and 36/48 simplify to 3/4 - they are equivalent fractions at different scales.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -233,56 +323,47 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="already-simplified">Already in simplest form</h2>
+      <h2 id="already-simplified">How about fractions already in simplest form?</h2>
       <p>If the GCD of numerator and denominator equals 1, the fraction cannot be reduced further - it is already in its simplest form:</p>
       <Formula expr={f.ex3} />
       <p>7 and 13 are both prime and share no common factor. GCD = 1, so 7/13 is already simplified. Any fraction where both numerator and denominator are prime numbers (and unequal) is automatically in lowest terms.</p>
-
-      <h2 id="improper">Improper fractions and mixed numbers</h2>
+      <h2 id="improper">Simplifying improper fractions and mixed numbers</h2>
       <p>An improper fraction (numerator ≥ denominator) is simplified exactly like a proper fraction. The simplified result may still be improper:</p>
       <Formula expr={f.improper} />
       <p>22/8 → GCD(22, 8) = 2 → 11/4. As a mixed number: 11 ÷ 4 = 2 remainder 3, so 2 3/4.</p>
-      <p>Note: simplifying and converting to a mixed number are two separate operations. Simplifying reduces the fraction; converting to a mixed number changes its representation. This calculator performs both.</p>
-
-      <h2 id="negative">Negative fractions</h2>
+      <p><strong>Note:</strong> simplifying and converting to a mixed number are two separate operations. Simplifying reduces the fraction; <a href="/math/fraction-calculator/improper-to-mixed">converting to a mixed number</a> changes its representation. This calculator performs both.</p>
+      <h2 id="negative">Simplify negative fractions</h2>
       <p>For negative fractions, the GCD is applied to the absolute values. The sign is preserved in the numerator:</p>
       <Formula expr={f.neg} />
       <p>Convention: the negative sign is placed on the numerator, not the denominator. −3/4 is standard; 3/−4 is avoided in final answers.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes for fractions simplification</h2>
       <h3>Dividing by a common factor that is not the GCD</h3>
       <p>Any common factor reduces the fraction, but only dividing by the GCD reduces it in one step to its simplest form. Dividing 18/24 by 2 gives 9/12 - correct but not fully simplified. Dividing by GCD(18, 24) = 6 reaches 3/4 directly.</p>
-
       <h3>Thinking that simplification changes the value</h3>
       <p>Simplifying a fraction does not change its value - it changes its representation. 18/24, 9/12, 6/8, 3/4 are all the same number (0.75). Simplest form is the most compact representation.</p>
-
       <h3>Stopping too early</h3>
       <p>A common error is to divide by a factor that is not the GCD, resulting in a fraction that can still be reduced. Always verify the result: if GCD(new numerator, new denominator) = 1, the simplification is complete.</p>
-
+      <p>This is the error I see most often. People divide by 2, see a smaller fraction, and consider the job done. The reliable fix is a two-second verification: after simplifying, check that GCD(new numerator, new denominator) = 1. If it isn't, there's still a common factor to remove. Building this habit catches every incomplete simplification.</p>
       <h3>Simplifying across addition or subtraction</h3>
       <p>You cannot "cancel" numerators and denominators across a + or − sign. For example, (2 + 3)/(2 + 5) ≠ (1 + 3)/(1 + 5). Simplification applies only to multiplication and division of fractions, not to their components separately.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about simplifying fractions</h2>
       <h3>How do you simplify a fraction?</h3>
       <p>Find the GCD of the numerator and denominator, then divide both by it. The result is the fraction in its lowest terms.</p>
-
       <h3>What does simplest form mean?</h3>
       <p>A fraction is in simplest form when its numerator and denominator share no common factor other than 1 - their GCD is 1.</p>
-
       <h3>What is the GCD?</h3>
       <p>The Greatest Common Divisor is the largest integer that divides both numbers exactly. Dividing both parts of a fraction by their GCD reduces it to simplest form in one step.</p>
-
       <h3>How do you find the GCD?</h3>
       <p>The Euclidean algorithm is the fastest method: divide the larger by the smaller, take the remainder, and repeat until the remainder is 0. The last non-zero remainder is the GCD.</p>
-
       <h3>Can an improper fraction be simplified?</h3>
       <p>Yes - apply the same GCD method. The simplified result may remain improper, or it may convert to a whole number or mixed number.</p>
-
       <h3>What if the GCD is 1?</h3>
       <p>The fraction is already in simplest form and cannot be reduced further. This applies to all fractions where numerator and denominator are coprime.</p>
+      <QuizBlock
+        topic="simplifying fractions"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/fraction-calculator/simplify"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -294,8 +375,7 @@ const schema = [
         { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage - shows the decimal and step-by-step workings.' },
         { path: '/math/percentage-calculator',         blurb: 'Percentage calculator - percentage of a number, percentage change, and more.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/fraction-calculator/simplify" />
     </div>
   </div>
-
 </CalculatorLayout>

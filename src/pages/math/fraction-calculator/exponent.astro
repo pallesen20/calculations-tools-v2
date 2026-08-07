@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+import type { Source } from '../../../components/Sources.astro';
 
 const f = {
   wholePos:  "$$\\left(\\frac{a}{b}\\right)^n = \\frac{a^n}{b^n}$$",
@@ -16,15 +19,57 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',   label: 'How to use' },
-  { id: 'whole-pos',    label: 'Positive whole exponent' },
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'whole-pos',           label: 'Positive whole exponent' },
   { id: 'whole-neg',    label: 'Negative exponent' },
   { id: 'frac-exp',     label: 'Fractional exponent (roots)' },
   { id: 'zero-exp',     label: 'Zero exponent' },
   { id: 'examples',     label: 'Worked examples' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',          label: 'FAQs' },
+  { id: 'quiz',         label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'What is the correct formula for raising a fraction (a/b) to a positive whole power n?',
+    options: ['a^n / b^n', 'a^n / b', 'a / b^n', '(a × n) / (b × n)'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'The exponent applies to both numerator and denominator separately: (a/b)^n = a^n / b^n. Applying it only to the numerator is the most common error on this type of problem.',
+  },
+  {
+    q: 'What is (27/8)^(2/3)?',
+    options: ['3/2', '9/4', '729/64', '2/3'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The exponent 2/3 means cube root first, then square. Cube root of 27 = 3, cube root of 8 = 2, giving 3/2. Then (3/2)^2 = 9/4.',
+  },
+  {
+    q: 'What does a negative exponent like (3/4)^(-2) tell you to do first?',
+    options: ['Make the result negative: -(3/4)^2 = -9/16', 'Multiply the fraction by -2', 'Flip the fraction to (4/3), then apply the positive exponent', 'Subtract 2 from both numerator and denominator'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'A negative exponent means take the reciprocal first. (3/4)^(-2) = (4/3)^2 = 16/9. The negative sign flips the fraction - it does not make the result negative.',
+  },
+  {
+    q: 'According to the fractional exponent reference table on this page, what does the exponent 2/3 mean?',
+    options: ['Cube root, then square', 'Square, then cube root', 'Square root, then cube', 'Cube, then square root'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'For exponent p/q, q is the root and p is the power. So 2/3 means cube root (q=3) first, then square (p=2). The table shows (8/27)^(2/3) = 4/9 as the worked example.',
+  },
+  {
+    q: 'A student calculates (3/4)^2 = 9/4. What mistake did they make?',
+    options: ['They forgot to simplify 9/4 to lowest terms', 'They treated the exponent as a multiplier: 3 × 2 / 4', 'They applied the wrong sign to the result', 'They only raised the numerator to the power 2 and left the denominator unchanged as 4'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The correct answer is 9/16, not 9/4. The denominator must also be raised: 4^2 = 16. The page notes this error persists because multiplying a fraction by a whole number changes only the numerator - but exponentiation applies to both parts.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  { author: 'Weisstein, Eric W.', title: 'Exponent Laws', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/ExponentLaws.html' },
+  { author: 'Weisstein, Eric W.', title: 'Power', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/Power.html' },
+  { author: 'Weisstein, Eric W.', title: 'Radical', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/Radical.html' },
+  { author: 'Weisstein, Eric W.', title: 'Greatest Common Divisor', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/GreatestCommonDivisor.html' },
 ];
 
 const schema = [
@@ -67,7 +112,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Fraction Exponent Calculator"
   metaTitle="Fraction Exponent Calculator | (a/b)^n Step-by-Step"
@@ -78,6 +122,7 @@ const schema = [
   embedSlug="fraction-exponent-calculator"
   ogFormula="(a/b)^n = a^n / b^n"
   ogExample="(2/3)³ = 8/27 ~ 0.296"
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -86,7 +131,6 @@ const schema = [
           <h2>Calculate Fractional Exponent</h2>
           <p>Raise a fraction to a whole or fractional exponent</p>
         </div>
-
         <div class="fe-layout">
           <div class="fe-group">
             <div class="bmi-label" style="text-align:center;margin-bottom:0.4rem;">Base</div>
@@ -106,7 +150,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="fe-result" class="lbm-result hidden">
           <div class="fc-result-fraction">
             <span id="fe-res-n" class="fc-res-num">-</span>
@@ -114,14 +157,12 @@ const schema = [
             <span id="fe-res-d" class="fc-res-den"></span>
           </div>
           <div class="lbm-primary-lbl">Result</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="fe-decimal">-</div>
               <div class="lbm-card-lbl">Decimal</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -136,39 +177,51 @@ const schema = [
         </div>
       </div>
     </section>
-
     <style is:global>
       .fe-layout { display:flex; align-items:center; gap:0.75rem; justify-content:center; margin:1rem 0; }
       .fe-group  { display:flex; flex-direction:column; align-items:center; }
       .fe-caret  { font-size:1.5rem; font-weight:700; color:rgba(255,255,255,0.6); margin-top:1.2rem; }
     </style>
-
     <script src="/js/fraction-exponent-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>To raise a fraction to a power: <strong>apply the exponent to numerator and denominator separately</strong>. (a/b)ⁿ = aⁿ/bⁿ. For fractional exponents, p/q means the q-th root of the p-th power. Negative exponents flip the fraction first.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the base fraction (numerator and denominator) and the exponent as a fraction (for a whole exponent like 3, enter 3 and 1). The calculator returns the simplified result, the decimal value, and step-by-step workings.</p>
-
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li><strong>Apply the exponent to both parts separately:</strong> (a/b)^n = a^n / b^n. Applying it only to the numerator is the most common mistake on this type of problem.</li>
+          <li><strong>Negative exponents mean reciprocal first:</strong> (a/b)^(-n) = (b/a)^n. Flip the fraction, then raise to the positive power.</li>
+          <li><strong>Fractional exponents are roots:</strong> 1/2 is the square root, 1/3 is the cube root, p/q is the q-th root of the p-th power - applied to <a href="/glossary/numerator">numerator</a> and <a href="/glossary/denominator">denominator</a> separately.</li>
+          <li><strong>Zero exponent always gives 1</strong> for any non-zero fraction. This follows from a^n / a^n = a^(n-n) = a^0 = 1.</li>
+          <li><strong>Always simplify the result.</strong> After raising to a power, divide by the <a href="/glossary/gcd">GCD</a>. (6/10)^2 = 36/100 - divide by 4 to get 9/25.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our fraction exponent calculator</h2>
+      <p>The calculator has two inputs: the <strong>base fraction</strong> and the <strong>exponent fraction</strong>.</p>
+      <ul>
+        <li><strong>Base fraction</strong> - the fraction you want to raise to a power, e.g. 3/4. Enter 3 in the numerator field and 4 in the denominator field.</li>
+        <li><strong>Exponent</strong> - how many times to multiply the base by itself. An exponent of 2 means (3/4) × (3/4). Enter whole exponents as a fraction too: for the exponent 3, enter 3 in the top field and 1 in the bottom field.</li>
+      </ul>
+      <p>The calculator returns the simplified result, the decimal equivalent, and step-by-step workings so you can see how the answer was reached.</p>
+      <h3 id="explained-to-beginner">Fractional exponent explained to a beginner</h3>
+      <p>Think of (3/4)^2 as simply (3/4) × (3/4) - the fraction multiplied by itself. Multiply the tops: 3 × 3 = 9. Multiply the bottoms: 4 × 4 = 16. Result: 9/16.</p>
+      <p>Raising a proper fraction to a positive integer power always shrinks it, because you are taking a <a href="/glossary/fraction">fraction of a fraction</a>. Three-quarters of three-quarters must be less than three-quarters.</p>
+      <p>A fractional exponent like (4/9)^(1/2) runs the question in reverse: "what fraction, when squared, gives 4/9?" The answer is 2/3, because (2/3)^2 = 4/9. That is the entire meaning of the exponent 1/2 - it undoes squaring.</p>
+      <p>For (8/27)^(2/3): first find the cube root of each part (2/3), then square the result (4/9). Power and root, applied in two steps.</p>
       <h2 id="whole-pos">Positive whole exponent</h2>
       <p>The rule: raise both numerator and denominator to the same power.</p>
       <Formula expr={f.wholePos} />
       <Formula expr={f.ex1} />
       <p>This works because (a/b)^n means multiplying the fraction by itself n times: (a/b)×(a/b)×…×(a/b). The numerators multiply to give a^n and the denominators multiply to give b^n.</p>
-
       <h2 id="whole-neg">Negative exponent</h2>
       <p>A negative exponent means take the reciprocal, then apply the positive exponent:</p>
       <Formula expr={f.wholeNeg} />
       <Formula expr={f.ex2} />
       <p>(2/3)^−1 = 3/2. (3/4)^−2 = (4/3)^2 = 16/9. The negative sign in the exponent always means "flip the fraction first."</p>
-
       <h2 id="frac-exp">Fractional exponent (roots)</h2>
       <p>A fractional exponent p/q combines a power (p) and a root (q):</p>
       <Formula expr={f.fracExp} />
@@ -178,7 +231,6 @@ const schema = [
       <p>For a combined power and root:</p>
       <Formula expr={f.ex4} />
       <p>(8/27)^(2/3): find the cube root of each part first (2/3), then square: 4/9.</p>
-
       <div class="responsive-table">
         <table>
           <thead><tr><th>Fractional exponent</th><th>Meaning</th><th>Example</th></tr></thead>
@@ -191,50 +243,44 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>The symmetry in that table is worth noting: (4/9)^(3/2) = 8/27, and working backwards with (8/27)^(2/3) returns 4/9 exactly.</p>
+      <p>I use this as a quick verification whenever I am not sure about a fractional exponent result. If (a/b)^(p/q) = c/d, then (c/d)^(q/p) should return a/b - if it does not, something went wrong in the root or power step.</p>
       <h2 id="zero-exp">Zero exponent</h2>
       <p>Any non-zero fraction raised to the power 0 equals 1:</p>
       <Formula expr={f.zero} />
       <p>This follows from the exponent rule: a^n / a^n = 1 = a^(n−n) = a^0.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for calculating fraction exponent</h2>
       <h3>Example 1: (2/5)^3</h3>
       <p>Raise each part to the 3rd power: 2^3 = 8, 5^3 = 125. Result: 8/125. Decimal: 0.064.</p>
-
       <h3>Example 2: (3/4)^−2</h3>
       <p>Negative exponent → flip: (4/3)^2 = 16/9 = 1.777…</p>
-
       <h3>Example 3: (1/4)^(1/2)</h3>
       <p>Square root: √1/√4 = 1/2. Decimal: 0.5.</p>
-
       <h3>Example 4: (27/8)^(2/3)</h3>
       <p>Cube root first: ∛27/∛8 = 3/2. Then square: (3/2)^2 = 9/4 = 2.25.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when working out fraction exponent</h2>
       <h3>Applying the exponent only to the numerator</h3>
       <p>(3/4)^2 ≠ 9/4. The exponent applies to both parts: 3^2 = 9 and 4^2 = 16, so (3/4)^2 = 9/16.</p>
-
+      <p>This error is persistent because it echoes what happens when multiplying a fraction by a whole number: 3/4 × 2 = 6/4 (numerator only changes).</p>
+      <p>Exponentiation is different - (3/4)^2 means (3/4) × (3/4), not 3 × 2 / 4. Keeping that distinction clear eliminates this mistake. A fast check: the denominator must also change when you raise to any power other than 1 or 0.</p>
       <h3>Misinterpreting a fractional exponent as a fraction</h3>
       <p>(4/9)^(1/2) is NOT the same as (4/9) × (1/2) = 2/9. The exponent 1/2 means square root: √4/√9 = 2/3.</p>
-
       <h3>Forgetting to simplify the result</h3>
       <p>After raising to a power, always simplify the resulting fraction with the GCD. (6/10)^2 = 36/100 → GCD = 4 → 9/25.</p>
-
       <h2 id="faq">Frequently asked questions</h2>
-
       <h3>How do you raise a fraction to a power?</h3>
       <p>Apply the exponent to both numerator and denominator separately. (a/b)^n = a^n / b^n. Simplify the result.</p>
-
       <h3>What does a fractional exponent mean?</h3>
       <p>p/q means raise to the p-th power and take the q-th root. (a/b)^(1/2) = square root, (a/b)^(1/3) = cube root.</p>
-
       <h3>What is (2/3)^3?</h3>
       <p>2^3 / 3^3 = 8/27 ≈ 0.296.</p>
-
       <h3>What is a negative fraction exponent?</h3>
       <p>Take the reciprocal first: (a/b)^(−n) = (b/a)^n. Example: (3/4)^(−2) = (4/3)^2 = 16/9.</p>
+      <QuizBlock
+        topic="fraction exponents"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/fraction-calculator/exponent"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -244,8 +290,7 @@ const schema = [
         { path: '/math/fraction-calculator/fraction-to-decimal',  blurb: 'Convert any fraction to its decimal form.' },
         { path: '/math/fraction-calculator/improper-to-mixed',    blurb: 'Convert an improper fraction to a mixed number.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/fraction-calculator/exponent" />
     </div>
   </div>
-
 </CalculatorLayout>

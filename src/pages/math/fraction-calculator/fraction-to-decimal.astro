@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+import type { Source } from '../../../components/Sources.astro';
 
 const f = {
   formula:    "$$\\text{Decimal} = \\frac{\\text{Numerator}}{\\text{Denominator}}$$",
@@ -13,16 +16,58 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',    label: 'How to use' },
-  { id: 'formula',       label: 'Fraction to decimal formula' },
-  { id: 'terminating',   label: 'Terminating decimals' },
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'formula',             label: 'Fraction to decimal formula' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'terminating',         label: 'Terminating decimals' },
   { id: 'repeating',     label: 'Repeating decimals' },
   { id: 'long-division', label: 'Long division method' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'reference',     label: 'Common fraction–decimal table' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'How do you convert a fraction to its decimal equivalent?',
+    options: ['Add the numerator and denominator together', 'Multiply the fraction by 10', 'Divide the numerator by the denominator', 'Divide the denominator by the numerator'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The decimal value of any fraction is simply numerator ÷ denominator. For example, 3/4 = 3 ÷ 4 = 0.75.',
+  },
+  {
+    q: 'What is 5/8 as a decimal?',
+    options: ['0.625', '0.583...', '0.5', '0.658'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: '5 ÷ 8 = 0.625. Because 8 = 2³ has only the factor 2, the decimal terminates exactly after three digits.',
+  },
+  {
+    q: 'After simplifying a fraction, what does it mean if the denominator contains a prime factor other than 2 or 5?',
+    options: ['The fraction cannot be converted to a decimal', 'The decimal terminates after that many digits', 'The result will always be greater than 1', 'The decimal will repeat a block of digits infinitely'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Only denominators whose prime factors are exclusively 2 and 5 produce terminating decimals, because base-10 = 2 × 5. Any other prime factor - such as 3, 7, or 11 - means the decimal repeats forever.',
+  },
+  {
+    q: 'According to the reference table on this page, which fraction has a repeating decimal with a 6-digit repeating block?',
+    options: ['1/9', '1/7', '1/3', '1/11'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '1/7 = 0.142857142857… The six digits 142857 repeat before the cycle closes. This is longer than any other single-digit denominator in the table.',
+  },
+  {
+    q: 'A student tests 3/6 by checking the denominator 6, which contains the factor 3. They conclude the decimal repeats. But 3/6 = 0.5 exactly. What rule did they skip?',
+    options: ['They should have used long division instead', 'They forgot that even denominators always terminate', 'They did not simplify first: 3/6 = 1/2, and denominator 2 has only the factor 2', 'They should have tested the numerator, not the denominator'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The termination rule applies to the denominator in lowest terms. Skipping simplification can give the wrong verdict - the GCD may cancel a "bad" prime factor, as it does here when 3/6 reduces to 1/2.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  { author: 'Weisstein, Eric W.', title: 'Decimal Expansion', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/DecimalExpansion.html' },
+  { author: 'Weisstein, Eric W.', title: 'Repeating Decimal', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/RepeatingDecimal.html' },
+  { author: 'Weisstein, Eric W.', title: 'Long Division', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/LongDivision.html' },
+  { author: 'Weisstein, Eric W.', title: 'Cyclic Number', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/CyclicNumber.html' },
 ];
 
 const schema = [
@@ -65,7 +110,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Fraction to Decimal Calculator"
   metaTitle="Fraction to Decimal Calculator | Terminating & Repeating"
@@ -76,6 +120,7 @@ const schema = [
   embedSlug="fraction-to-decimal-calculator"
   ogFormula="Fraction to decimal: divide numerator by denominator"
   ogExample="7/8 = 7 ÷ 8 = 0.875"
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -84,7 +129,6 @@ const schema = [
           <h2>Calculate Fraction to Decimal</h2>
           <p>Enter a fraction to convert it to a decimal</p>
         </div>
-
         <div class="fc-inputs" style="justify-content:center;">
           <div class="fc-fraction">
             <input type="text" inputmode="decimal" id="ftd-n" class="fc-frac-input" placeholder="1" />
@@ -92,13 +136,11 @@ const schema = [
             <input type="text" inputmode="decimal" id="ftd-d" class="fc-frac-input" placeholder="3" />
           </div>
         </div>
-
         <div id="ftd-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="ftd-decimal">-</span>
           </div>
           <div class="lbm-primary-lbl" id="ftd-type">-</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="ftd-percent">-</div>
@@ -109,7 +151,6 @@ const schema = [
               <div class="lbm-card-lbl">Simplified fraction</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -124,31 +165,38 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/fraction-to-decimal-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>To convert a fraction to a decimal: <strong>divide the numerator by the denominator</strong>. 3/4 = 3 ÷ 4 = 0.75. If division ends, the decimal terminates. If a remainder repeats, the decimal is repeating (e.g. 1/3 = 0.333…).</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the numerator and denominator of any fraction. The calculator performs the division, identifies whether the result is terminating or repeating, shows the repeating block (if any), the percentage equivalent, and the simplified fraction.</p>
-
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li><strong>One operation only:</strong> <a href="/glossary/numerator">numerator</a> ÷ <a href="/glossary/denominator">denominator</a>. No special steps needed - just division.</li>
+          <li><strong>Test before you divide:</strong> <a href="/math/fraction-calculator/simplify">simplify the fraction</a>, then check the denominator's prime factors. Only 2s and 5s? Terminates. Anything else? Repeats.</li>
+          <li><strong>Always simplify first.</strong> 6/9 = 2/3 (repeating). 6/10 = 3/5 (terminating). The unsimplified denominator can give the wrong answer to the terminate-or-repeat test.</li>
+          <li><strong>Repeating decimals are exact, not approximate.</strong> 0.333… = 1/3 precisely. Rounding to 0.33 introduces error; keeping the fraction keeps the truth.</li>
+          <li><strong>1/7 has the longest common repeating block:</strong> 142857 (6 digits), longer than any other single-digit denominator.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use this fraction to decimal calculator</h2>
+      <p>Enter the numerator and denominator of any <a href="/glossary/fraction">fraction</a>. The calculator performs the division, identifies whether the result is terminating or repeating, shows the repeating block (if any), the percentage equivalent, and the simplified fraction.</p>
       <h2 id="formula">Fraction to decimal formula</h2>
       <p>The conversion is simply division:</p>
       <Formula expr={f.formula} />
       <Formula expr={f.termEx} />
       <p>Divide 3 by 4 using long division or a calculator. The quotient is the decimal equivalent.</p>
-
+      <h3 id="explained-to-beginner">Fraction to decimal explained to a beginner</h3>
+      <p>Think of converting a fraction as making change from a dollar. A dollar has 100 cents - a clean base-10 grid. 1/4 = exactly 25 cents. Done, no remainder. But 1/3 = 33.333... cents - there is no exact number of cents that equals a third, so the digits keep going forever.</p>
+      <p>This is why the "only 2 and 5 as prime factors" rule works. Our number system is base-10, and 10 = 2 × 5. Any denominator built only from 2s and 5s will divide cleanly into some power of 10 (10, 100, 1000...). So the decimal always stops. Any other prime - 3, 7, 11 - never divides cleanly into any power of 10, so the decimal never stops.</p>
+      <p>In other words: the denominator tells you whether clean change is possible before you even start dividing.</p>
       <h2 id="terminating">Terminating decimals</h2>
       <p>A fraction produces a terminating decimal when - after simplifying to lowest terms - the denominator has <strong>only 2 and 5 as prime factors</strong>:</p>
       <Formula expr={f.repRule} />
-
       <div class="responsive-table">
         <table>
           <thead><tr><th>Denominator</th><th>Prime factors</th><th>Terminates?</th><th>Example</th></tr></thead>
@@ -162,7 +210,6 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="repeating">Repeating decimals</h2>
       <p>When the denominator (in lowest terms) contains a prime factor other than 2 or 5, the decimal repeats:</p>
       <Formula expr={f.repEx} />
@@ -179,24 +226,22 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>The 1/7 row is worth a second look. Six digits repeat before the cycle closes - longer than any other single-digit denominator. When people do long division by hand and expect a pattern to appear in one or two steps, 1/7 consistently surprises them.</p>
+      <p>You need to carry the division through six full remainders before seeing the same remainder twice, which signals where the cycle ends.</p>
       <h2 id="long-division">Long division method</h2>
       <p>Long division traces the exact decimal digit by digit - and identifies repeating blocks when a remainder appears twice:</p>
       <Formula expr={f.longDiv} />
       <p>7 ÷ 12: 7.000000 ÷ 12. Steps: 70 ÷ 12 = 5 rem 10 → 100 ÷ 12 = 8 rem 4 → 40 ÷ 12 = 3 rem 4 → remainder 4 repeats. Result: 0.583333… = 0.58̄3̄.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for calculation</h2>
       <h3>Example 1: 5/8 (terminating)</h3>
       <p>5 ÷ 8 = 0.625. GCD(5,8) = 1 - already simplified. Denominator 8 = 2³ → terminates. Percentage: 62.5%.</p>
-
       <h3>Example 2: 2/3 (repeating)</h3>
       <p>2 ÷ 3 = 0.666… = 0.6̄. Repeating block "6". Percentage: 66.666…% ≈ 66.67%.</p>
-
       <h3>Example 3: 7/6 (improper, mixed repeating)</h3>
       <p>7 ÷ 6 = 1.1666… = 1.16̄. Non-repeating part after decimal: "1"; repeating block: "6". As percentage: 116.67%.</p>
-
       <h2 id="reference">Common fraction–decimal reference table</h2>
+      <p>The table below covers the 11 fractions that appear most often in <a href="/glossary/arithmetic">everyday arithmetic</a> - from cooking and construction to finance.</p>
+      <p>The Type column tells you whether the decimal is exact (terminating) or goes on forever (repeating). Memorizing the terminating ones (1/2, 1/4, 1/5, 1/8, 3/4, 7/8) is worth it: they come up constantly and save you a calculation.</p>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Fraction</th><th>Decimal</th><th>Type</th><th>%</th></tr></thead>
@@ -215,28 +260,27 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when converting fraction to decimal</h2>
       <h3>Rounding a repeating decimal</h3>
       <p>1/3 ≈ 0.33 is an approximation. The exact value is 0.333… If you need an exact result in calculations, keep it as a fraction.</p>
-
       <h3>Thinking all decimals terminate</h3>
       <p>Only fractions whose denominator (in lowest terms) has no prime factors other than 2 and 5 will produce a terminating decimal. 1/3, 1/6, 1/7 are all repeating.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>In any multi-step calculation, I keep repeating decimals in fraction form rather than converting early. If you substitute 0.33 for 1/3 and that value feeds into several further operations, each step carries forward a small error.</p>
+      <p>Fractions preserve the exact value through every step without accumulation - convert to decimal only as the final output.</p>
+      <h2 id="faq">FAQs about fraction to decimal calculation</h2>
       <h3>How do you convert a fraction to a decimal?</h3>
       <p>Divide the numerator by the denominator. The quotient is the decimal. If a remainder repeats, the decimal is repeating.</p>
-
       <h3>What is 1/3 as a decimal?</h3>
       <p>0.333… = 0.3̄ (repeating). It is not possible to express 1/3 as a finite decimal.</p>
-
       <h3>How do you know if a fraction gives a terminating or repeating decimal?</h3>
       <p>Simplify the fraction. If the denominator's prime factors are only 2 and 5, it terminates. Any other prime factor (3, 7, 11…) causes repetition.</p>
-
       <h3>What is 5/8 as a decimal?</h3>
       <p>0.625. Since 8 = 2³, the decimal terminates exactly.</p>
+      <QuizBlock
+        topic="fraction to decimal"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/fraction-calculator/fraction-to-decimal"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -246,8 +290,7 @@ const schema = [
         { path: '/math/fraction-calculator',                               blurb: 'The main fraction calculator - add, subtract, multiply, divide.' },
         { path: '/math/fraction-calculator/compare',                       blurb: 'Compare two fractions to determine which is larger.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/fraction-calculator/fraction-to-decimal" />
     </div>
   </div>
-
 </CalculatorLayout>

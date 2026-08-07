@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+import type { Source } from '../../../components/Sources.astro';
 
 const f = {
   cross:    "$$\\frac{a}{b} \\text{ vs } \\frac{c}{d}: \\quad \\text{compare } a \\times d \\text{ with } c \\times b$$",
@@ -13,8 +16,9 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',        label: 'How to use' },
-  { id: 'formula',           label: 'Comparing fractions formula' },
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',             label: 'Comparing fractions formula' },
   { id: 'cross-multiply',    label: 'Cross-multiplication method' },
   { id: 'lcd-method',        label: 'LCD method' },
   { id: 'examples',          label: 'Worked examples' },
@@ -22,8 +26,42 @@ const tocItems = [
   { id: 'ordering',          label: 'Ordering 3 or more fractions' },
   { id: 'common-mistakes',   label: 'Common mistakes' },
   { id: 'faq',               label: 'FAQs' },
+  { id: 'quiz',              label: 'Quiz: test your knowledge' },
   { id: 'related-tools',     label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What does cross-multiplication compare to determine which fraction is larger?',
+    options: ['a × d vs b × c (first numerator × second denominator, vs second numerator × first denominator)', 'a × b vs c × d (numerators multiplied together, vs denominators multiplied together)', 'a + d vs b + c (add across the diagonal)', 'a / d vs c / b (divide across the diagonal)'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Cross-multiplication compares a×d against b×c. If a×d is larger, fraction a/b is greater. The method works because both fractions can be expressed over b×d, so you are effectively comparing numerators over the same denominator.',
+  },
+  {
+    q: 'Using cross-multiplication, compare 5/8 and 3/5. What are the two products?',
+    options: ['25 and 24 - so 5/8 is larger', '24 and 25 - so 3/5 is larger', '15 and 40 - so 3/5 is larger', '40 and 24 - so 5/8 is larger'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: '5×5=25 (first numerator × second denominator) and 3×8=24 (second numerator × first denominator). Since 25 > 24, the first fraction 5/8 is larger. As decimals: 0.625 > 0.6.',
+  },
+  {
+    q: 'When two fractions have the same numerator but different denominators, which fraction is larger?',
+    options: ['The fraction with the larger denominator', 'The fraction with the smaller denominator', 'They are always equal because the numerators match', 'You must always cross-multiply to determine this'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Equal numerators mean equal counts of parts, but the denominator sets each part\'s size. A smaller denominator divides the whole into fewer (bigger) pieces, making the fraction larger. For example, 2/5 > 2/7.',
+  },
+  {
+    q: 'According to the reference table on the page, what is the correct comparison for 2/5 vs 3/7?',
+    options: ['2/5 = 3/7', '2/5 < 3/7', '2/5 > 3/7', 'Cannot be determined without a calculator'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'From the table: a×d = 2×7 = 14 and b×c = 5×3 = 15. Since 14 < 15, the first fraction 2/5 is smaller than 3/7.',
+  },
+  {
+    q: 'Which of the following correctly compares -3/4 and -2/3?',
+    options: ['-3/4 > -2/3 because 3/4 is larger than 2/3 in absolute value', '-3/4 = -2/3 because both are negative fractions close to zero', '-3/4 < -2/3 because cross-multiplying gives -9 < -8', '-2/3 < -3/4 because -2/3 is closer to zero on the number line'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Cross-multiplying with signs: -3×3=-9 and -2×4=-8. Since -9 < -8, the result is -3/4 < -2/3. The larger absolute value makes the number more negative and therefore smaller.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -79,8 +117,31 @@ const schema = [
     ]
   }
 ];
----
 
+const sources: Source[] = [
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Fraction',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/Fraction.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Least Common Denominator',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/LeastCommonDenominator.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Least Common Multiple',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/LeastCommonMultiple.html',
+  },
+];
+---
 <CalculatorLayout
   title="Compare Fractions Calculator"
   metaTitle="Compare Fractions Calculator | Which is Bigger?"
@@ -88,6 +149,7 @@ const schema = [
   canonical="https://calculations.tools/math/fraction-calculator/compare"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="compare-fractions-calculator"
   ogFormula="Compare a/b vs c/d: cross-multiply - compare a×d vs b×c"
   ogExample="3/4 vs 2/3: 3×3 = 9, 4×2 = 8 -> 9 > 8, so 3/4 > 2/3"
@@ -99,7 +161,6 @@ const schema = [
           <h2>Compare Fractions Instantly</h2>
           <p>Enter two fractions to see which is larger</p>
         </div>
-
         <div class="cf-inputs">
           <div class="cf-side">
             <div class="fc-fraction">
@@ -117,13 +178,11 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="cf-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="cf-symbol">-</span>
           </div>
           <div class="lbm-primary-lbl" id="cf-label">-</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="cf-dec1">-</div>
@@ -134,7 +193,6 @@ const schema = [
               <div class="lbm-card-lbl">Second as decimal</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Cross-multiplication (step-by-step)</div>
             <div class="pi-step">
@@ -161,56 +219,56 @@ const schema = [
         </div>
       </div>
     </section>
-
     <style is:global>
       .cf-inputs { display: flex; align-items: center; gap: 1rem; justify-content: center; margin: 1.25rem 0; }
       .cf-side   { display: flex; align-items: center; justify-content: center; }
       .cf-vs     { font-size: 1rem; font-weight: 600; color: rgba(255,255,255,0.5); }
     </style>
-
     <script src="/js/compare-fractions-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>To compare two fractions, use <strong>cross-multiplication</strong>: multiply the numerator of each fraction by the denominator of the other. The fraction whose product is larger is the greater fraction. For equal products, the fractions are equivalent.</p>
+        <p>To compare two fractions, use <strong>cross-multiplication</strong>: multiply the <a href="/glossary/numerator">numerator</a> of each <a href="/glossary/fraction">fraction</a> by the <a href="/glossary/denominator">denominator</a> of the other. The fraction whose product is larger is the greater fraction. For equal products, the fractions are equivalent.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li><strong>Cross-multiply to compare any two fractions</strong>: compute a×d and b×c; the larger product belongs to the larger fraction. No common denominator needed.</li>
+          <li><strong>Same numerator shortcut</strong>: the fraction with the smaller denominator is always larger - fewer, bigger parts.</li>
+          <li><strong>Same denominator shortcut</strong>: just compare numerators directly - no formula required.</li>
+          <li><strong>Negative fractions flip the comparison</strong>: larger absolute value means smaller (more negative) number. -3/4 &lt; -2/3 even though 3/4 &gt; 2/3.</li>
+          <li><strong>Ordering 3 or more fractions</strong>: find the <a href="/glossary/lcd">LCD</a> of all denominators, convert each fraction, then rank by numerator.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our fractions comparing calculator</h2>
       <p>Enter the numerator and denominator of each fraction. The calculator instantly shows which fraction is greater (or that they are equal), the decimal value of each fraction, the cross-multiplication steps, and both fractions converted to a common denominator (LCD form).</p>
-
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Imagine comparing two discounts: "save 3 out of every 4 dollars" vs "save 2 out of every 3 dollars." To decide which is better, you need a common reference. If everything cost $12, the first deal saves $9 (3/4 of 12) and the second saves $8 (2/3 of 12). So 3/4 is the better deal. But finding that $12 reference takes work.</p>
+      <p>Cross-multiplication skips the $12 step entirely: multiply 3×3=9 and 2×4=8. Those products are exactly what the numerators become over the common denominator - so you get the comparison without computing it. Larger product, larger fraction: 9 &gt; 8, so 3/4 &gt; 2/3.</p>
       <h2 id="formula">Comparing fractions formula</h2>
       <p>The cross-multiplication rule for two fractions a/b and c/d:</p>
       <Formula expr={f.cross} />
       <p>If a × d &gt; c × b, then a/b &gt; c/d. If a × d &lt; c × b, then a/b &lt; c/d. If a × d = c × b, then a/b = c/d. This works because it is equivalent to finding a common denominator - without actually computing it.</p>
-
       <h2 id="cross-multiply">Cross-multiplication method</h2>
       <p>Cross-multiplication is the fastest method for comparing exactly two fractions. No common denominator computation is required:</p>
       <Formula expr={f.crossEx1} />
       <p>Since 9 > 8, the first fraction 3/4 is greater than 2/3. The method derives from the fact that both fractions can be expressed over b × d, making the comparison equivalent to comparing numerators directly.</p>
       <p>Cross-multiplication is valid only when both denominators are positive. If a denominator is negative, move the negative sign to the numerator first (e.g. 3/−4 = −3/4).</p>
-
       <h2 id="lcd-method">LCD method</h2>
       <p>An equivalent approach: convert both fractions to the same denominator (the LCD), then compare numerators directly:</p>
       <Formula expr={f.lcd} />
       <p>For 3/4 vs 2/3 - LCD(4, 3) = 12:</p>
       <Formula expr={f.lcdEx} />
       <p>Comparing numerators: 9 > 8, so 3/4 > 2/3. The LCD method is more informative when you need to see both fractions on the same scale, not just know which is larger.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for finding the greater fraction</h2>
       <h3>Example 1: simple comparison</h3>
       <p>Compare 5/8 and 3/5. Cross-multiply: 5 × 5 = 25 and 3 × 8 = 24. Since 25 > 24, we have 5/8 > 3/5. As decimals: 0.625 > 0.6.</p>
-
       <h3>Example 2: same numerator</h3>
       <p>Compare 2/5 and 2/7. When numerators are equal, the fraction with the <em>smaller denominator</em> is always larger. 2/5 > 2/7 because dividing into fewer parts gives larger parts. Cross-check: 2 × 7 = 14 > 2 × 5 = 10. ✓</p>
-
       <h3>Example 3: same denominator</h3>
       <p>Compare 5/9 and 7/9. Equal denominators mean equal part sizes, so compare numerators directly: 7 > 5, therefore 7/9 > 5/9.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -226,45 +284,42 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="negative">Negative fractions</h2>
+      <p>When I compare fractions by hand, I always scan for the same-numerator or same-denominator shortcut before reaching for cross-multiplication. Cross-multiplication works universally, but spotting that 5/9 vs 7/9 is just a numerator comparison takes one second; cross-multiplying takes five.</p>
+      <p>On a test or under time pressure, pattern recognition beats formula application every time.</p>
+      <h2 id="negative">Comparing negative fractions</h2>
       <p>Cross-multiplication carries the sign through the products automatically:</p>
       <Formula expr={f.neg} />
       <p>−9 &lt; −8, so −3/4 &lt; −2/3. This matches the intuition that −3/4 = −0.75 and −2/3 ≈ −0.667, and more negative means smaller.</p>
-      <p>A useful rule: for two negative fractions, the one with the <em>larger absolute value</em> is the smaller (more negative) number. So |−3/4| = 3/4 &gt; |−2/3| = 2/3, which confirms −3/4 &lt; −2/3.</p>
-
-      <h2 id="ordering">Ordering 3 or more fractions</h2>
+      <p><strong>A useful rule:</strong> for two negative fractions, the one with the <em>larger absolute value</em> is the smaller (more negative) number. So |−3/4| = 3/4 &gt; |−2/3| = 2/3, which confirms −3/4 &lt; −2/3.</p>
+      <p>Negative fractions are where fraction comparison intuition breaks down most reliably. I've seen people correctly find |−3/4| &gt; |−2/3| and then conclude −3/4 &gt; −2/3 because they're still thinking in absolute-value terms.</p>
+      <p>The number-line check fixes this: which number sits further left? Further left means more negative means smaller. One mental picture prevents dozens of sign errors.</p>
+      <h2 id="ordering">How to order 3 or more fractions</h2>
       <p>To order a list of fractions, find the LCD of all denominators and convert each fraction. Then rank by numerator:</p>
       <Formula expr={f.order3} />
       <p>General process: (1) find the LCM of all denominators, (2) convert every fraction to that denominator, (3) sort numerators. For a short list, pairwise cross-multiplication also works but takes more steps.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when comparing fractions</h2>
       <h3>Comparing numerators when denominators differ</h3>
       <p>3/7 vs 3/5 - the numerators are equal, so students sometimes conclude the fractions are equal. They are not: 3/7 ≈ 0.429 and 3/5 = 0.6. Equal numerators with different denominators means the fraction with the larger denominator is always smaller.</p>
-
       <h3>Assuming a larger denominator means a larger fraction</h3>
       <p>1/10 vs 1/3 - 10 &gt; 3, yet 1/10 &lt; 1/3. A larger denominator means each part is <em>smaller</em>, so the fraction itself is smaller (for equal numerators).</p>
-
       <h3>Forgetting sign rules for negatives</h3>
       <p>Applying the positive-number reasoning to negatives: −1/2 vs −1/3. In positive terms, 1/2 &gt; 1/3. But with negatives, the larger absolute value means the number is further left on the number line, so −1/2 &lt; −1/3.</p>
-
       <h2 id="faq">Frequently asked questions</h2>
-
       <h3>How do you compare fractions with different denominators?</h3>
       <p>Use cross-multiplication: multiply the numerator of each fraction by the other fraction's denominator. The fraction whose product is larger is the greater fraction.</p>
-
       <h3>Can you compare fractions by converting to decimals?</h3>
       <p>Yes - divide numerator by denominator for each fraction and compare. This is reliable but may introduce rounding error with repeating decimals. Cross-multiplication is exact with no rounding.</p>
-
       <h3>Which fraction is bigger: 3/4 or 2/3?</h3>
       <p>3/4. Cross-multiply: 3 × 3 = 9 and 2 × 4 = 8. Since 9 > 8, the fraction 3/4 is larger. As decimals: 3/4 = 0.75 and 2/3 ≈ 0.667.</p>
-
       <h3>How do you compare negative fractions?</h3>
       <p>Cross-multiplication carries the sign automatically. Remember: the fraction with the larger absolute value is the smaller (more negative) number - it lies further left on the number line.</p>
-
       <h3>How do you order more than two fractions from least to greatest?</h3>
       <p>Find the LCD of all denominators, convert every fraction to an equivalent fraction with that denominator, and sort by numerator in ascending order.</p>
+      <QuizBlock
+        topic="comparing fractions"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/fraction-calculator/compare"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -275,8 +330,7 @@ const schema = [
         { path: '/math/fraction-calculator/fraction-to-decimal',  blurb: 'Convert any fraction to its decimal form, including repeating decimals.' },
         { path: '/math/percentage-calculator/fraction-to-percent', blurb: 'Convert any fraction to a percentage with step-by-step workings.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/fraction-calculator/compare" />
     </div>
   </div>
-
 </CalculatorLayout>

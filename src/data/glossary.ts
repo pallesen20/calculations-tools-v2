@@ -78,7 +78,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'The denominator is the bottom number in a fraction - it defines how many equal parts the whole has been divided into. In percentage formulas, the denominator is always the original (reference) value. Using the wrong denominator is the single most common percentage calculation error.',
     formula: '$$\\frac{\\text{Numerator}}{\\text{Denominator}}$$',
-    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/percentage-calculator/decrease', '/math/percentage-calculator/increase', '/math/percentage-calculator/difference', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply'],
+    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/percentage-calculator/decrease', '/math/percentage-calculator/increase', '/math/percentage-calculator/difference', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/divide', '/math/fraction-calculator/simplify', '/math/fraction-calculator/compare', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/fraction-to-decimal', '/math/fraction-calculator/improper-to-mixed', '/math/fraction-calculator/mixed-to-improper'],
     relatedTerms: ['fraction', 'percentage', 'ratio', 'proportion'],
   },
   {
@@ -199,7 +199,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'The GCD (Greatest Common Divisor) of two integers is the largest positive integer that divides both numbers without a remainder. In fraction arithmetic, dividing both numerator and denominator by their GCD reduces a fraction to its lowest terms - a required final step after any fraction calculation.',
     formula: '$$\\gcd(a, b) = \\gcd(b,\\, a \\bmod b)$$',
-    relatedTools: ['/math/fraction-calculator/add', '/math/fraction-calculator/simplify', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply'],
+    relatedTools: ['/math/fraction-calculator/add', '/math/fraction-calculator/simplify', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/improper-to-mixed'],
     relatedTerms: ['lcm', 'lcd', 'fraction', 'denominator', 'numerator'],
   },
   {
@@ -494,7 +494,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'A fraction represents a part of a whole as a ratio of two integers: a numerator (top) and a denominator (bottom). Fractions, decimals, and percentages are three equivalent ways to express the same ratio.',
     formula: '$$\\frac{\\text{Numerator}}{\\text{Denominator}}$$',
-    relatedTools: ['/math/fraction-calculator', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/divide', '/math/fraction-calculator/simplify', '/math/fraction-calculator/compare'],
+    relatedTools: ['/math/fraction-calculator', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/divide', '/math/fraction-calculator/simplify', '/math/fraction-calculator/compare', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/fraction-to-decimal', '/math/fraction-calculator/improper-to-mixed', '/math/fraction-calculator/mixed-to-improper'],
     relatedTerms: ['ratio', 'percentage', 'proportion'],
   },
   {
@@ -505,7 +505,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'The numerator is the top number in a fraction - it counts how many equal parts are selected. In a percentage formula, the numerator is the change or the part being measured. It is always paired with the denominator, which defines the total number of parts.',
     formula: '$$\\frac{\\text{Numerator}}{\\text{Denominator}}$$',
-    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/percentage-calculator/difference', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply'],
+    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/percentage-calculator/difference', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/divide', '/math/fraction-calculator/simplify', '/math/fraction-calculator/compare', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/fraction-to-decimal', '/math/fraction-calculator/improper-to-mixed', '/math/fraction-calculator/mixed-to-improper'],
     relatedTerms: ['denominator', 'fraction', 'percentage', 'ratio'],
   },
   {
@@ -593,6 +593,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'A ratio compares two or more quantities, showing their relative sizes. Written as a:b or a/b, it is the foundation for fractions, percentages, rates, and proportions - the core language of proportional reasoning.',
     relatedTools: ['/math/ratio-calculator'],
     relatedTerms: ['proportion', 'unit-rate', 'fraction', 'percentage'],
+  },
+  {
+    slug: 'reciprocal',
+    term: 'Reciprocal',
+    letter: 'R',
+    category: 'Fundamentals',
+    siteCategory: 'Math',
+    shortDef: 'The reciprocal of a fraction a/b is b/a - formed by swapping numerator and denominator. Any non-zero number multiplied by its reciprocal equals 1. Reciprocals are the foundation of fraction division: dividing by a fraction is identical to multiplying by its reciprocal (keep-change-flip).',
+    formula: '$$\\text{Reciprocal of } \\frac{a}{b} = \\frac{b}{a}, \\quad \\frac{a}{b} \\times \\frac{b}{a} = 1$$',
+    relatedTools: ['/math/fraction-calculator/divide', '/math/fraction-calculator'],
+    relatedTerms: ['fraction', 'denominator', 'numerator', 'arithmetic'],
   },
   {
     slug: 'unit-rate',
@@ -712,7 +723,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'The LCD (Lowest Common Denominator) is the smallest number that both denominators divide into evenly. It equals the LCM of the two denominators and is the standard denominator used when adding or subtracting fractions - converting both fractions to the LCD makes their part sizes identical so numerators can be added directly.',
     formula: '$$\\text{LCD}(b,\\,d) = \\frac{b \\times d}{\\gcd(b,\\,d)}$$',
-    relatedTools: ['/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply'],
+    relatedTools: ['/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/compare', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/mixed-to-improper'],
     relatedTerms: ['lcm', 'gcd', 'denominator', 'fraction', 'numerator'],
   },
   {

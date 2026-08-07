@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+import type { Source } from '../../../components/Sources.astro';
 
 const f = {
   def:     "$$\\frac{n}{d} = \\left\\lfloor \\frac{n}{d} \\right\\rfloor + \\frac{n \\bmod d}{d}$$",
@@ -13,16 +16,58 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',    label: 'How to use' },
-  { id: 'definition',    label: 'What is an improper fraction?' },
-  { id: 'method',        label: 'Conversion method' },
+  { id: 'how-to-use',          label: 'How to use' },
+  { id: 'definition',          label: 'What is an improper fraction?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'method',              label: 'Conversion method' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'negative',      label: 'Negative improper fractions' },
   { id: 'reverse',       label: 'Reverse: mixed number to improper' },
   { id: 'reference',     label: 'Reference table' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'What is the defining characteristic of an improper fraction?',
+    options: ['The numerator is greater than or equal to the denominator', 'The numerator and denominator share a common factor greater than 1', 'The denominator is larger than the numerator', 'The fraction has no whole number equivalent'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'An improper fraction has a numerator >= its denominator, which means the value is >= 1. A proper fraction has a smaller numerator, giving a value less than 1.',
+  },
+  {
+    q: 'What is 11/3 as a mixed number?',
+    options: ['2 and 2/3', '3 and 1/3', '3 and 2/3', '4 and 1/3'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '11 ÷ 3 = 3 with remainder 2. The whole number is 3, and the fractional part is 2/3. GCD(2,3) = 1, so no further simplification is needed.',
+  },
+  {
+    q: 'When you divide the numerator by the denominator during conversion, what does the remainder become?',
+    options: ['The whole number part of the mixed number', 'The new numerator of the fractional part', 'The new denominator of the fractional part', 'The GCD used to simplify the result'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The quotient becomes the whole number, and the remainder becomes the new numerator. The denominator stays the same throughout - only the numerator splits into a whole and a remainder.',
+  },
+  {
+    q: 'According to the page, how do you convert the mixed number 2 and 3/5 back to an improper fraction?',
+    options: ['(2 + 3) / 5 = 5/5', '(2 + 3) × 5 over 5 = 25/5', '2 × 3 + 5 over 5 = 11/5', '(2 × 5 + 3) / 5 = 13/5'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The reverse formula is: whole × denominator + numerator, all over the original denominator. So 2 × 5 + 3 = 13, giving 13/5.',
+  },
+  {
+    q: 'A student converts 12/8 and writes the answer as 1 and 4/8. What step did they miss?',
+    options: ['They should have divided 8 by 12, not 12 by 8', 'The division is wrong: 12 ÷ 8 = 2, not 1', 'They did not simplify the remainder fraction: GCD(4,8) = 4, so 4/8 = 1/2, giving 1 and 1/2', 'They forgot to check whether the fraction is actually improper'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '12 ÷ 8 = 1 remainder 4 is correct, but 1 and 4/8 is not fully simplified. GCD(4,8) = 4, so 4/8 reduces to 1/2. The correct final answer is 1 and 1/2.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  { author: 'Weisstein, Eric W.', title: 'Improper Fraction', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/ImproperFraction.html' },
+  { author: 'Weisstein, Eric W.', title: 'Mixed Fraction', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/MixedFraction.html' },
+  { author: 'Weisstein, Eric W.', title: 'Greatest Common Divisor', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/GreatestCommonDivisor.html' },
+  { author: 'Weisstein, Eric W.', title: 'Pi', journal: 'Wolfram MathWorld', year: 2024, url: 'https://mathworld.wolfram.com/Pi.html' },
 ];
 
 const schema = [
@@ -70,7 +115,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Improper Fraction to Mixed Number Calculator"
   metaTitle="Improper Fraction to Mixed Number | Step-by-Step"
@@ -81,6 +125,7 @@ const schema = [
   embedSlug="improper-to-mixed-calculator"
   ogFormula="Divide top by bottom; quotient is whole, remainder is new top"
   ogExample="11/4: 11 ÷ 4 = 2 remainder 3 -> 2 and 3/4"
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -89,7 +134,6 @@ const schema = [
           <h2>Calculate Improper Fraction to Mixed Number</h2>
           <p>Enter an improper fraction (numerator ≥ denominator)</p>
         </div>
-
         <div class="fc-inputs" style="justify-content:center;">
           <div class="fc-fraction">
             <input type="text" inputmode="decimal" id="itm-n" class="fc-frac-input" placeholder="7" />
@@ -97,7 +141,6 @@ const schema = [
             <input type="text" inputmode="decimal" id="itm-d" class="fc-frac-input" placeholder="4" />
           </div>
         </div>
-
         <div id="itm-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val">
@@ -106,14 +149,12 @@ const schema = [
             </span>
           </div>
           <div class="lbm-primary-lbl">Mixed number</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="itm-decimal">-</div>
               <div class="lbm-card-lbl">Decimal</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -128,46 +169,49 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/improper-to-mixed-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>To convert an improper fraction to a mixed number: <strong>divide the numerator by the denominator</strong>. The quotient is the whole number; the remainder over the denominator is the fractional part. 7 ÷ 4 = 1 rem 3 → <strong>1¾</strong>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter any improper fraction (numerator ≥ denominator). The calculator returns the mixed number with the fractional part simplified to lowest terms, the decimal equivalent, and step-by-step division.</p>
-
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li><strong>Two steps, no more:</strong> integer division gives the whole number (quotient) and the new <a href="/glossary/numerator">numerator</a> (remainder). The <a href="/glossary/denominator">denominator</a> never changes.</li>
+          <li><strong>Always simplify the remainder fraction.</strong> 12/8 → 1 remainder 4 → 1 4/8 is technically correct, but the final answer is 1½ after dividing by <a href="/glossary/gcd">GCD(4,8)</a> = 4.</li>
+          <li><strong>Zero remainder = whole number.</strong> If numerator ÷ denominator has no remainder (e.g. 15/5), the result is a whole number with no fractional part.</li>
+          <li><strong>The reverse conversion is essential for arithmetic.</strong> You cannot add or subtract mixed numbers directly without converting to improper fractions first - whole × denominator + numerator gives you back the improper form.</li>
+          <li><strong>22/7 = 3 1/7 (decimal 3.142857...)</strong> - the classic rational approximation of π, accurate to within 0.04%.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our improper fraction calculator</h2>
+      <p>Enter any improper fraction (numerator ≥ denominator). The calculator returns the mixed number with the <a href="/glossary/fraction">fractional part</a> simplified to lowest terms, the decimal equivalent, and step-by-step division.</p>
+      <p>If you are looking for a mixed number to improper fraction converter, see our <a href="/math/fraction-calculator/mixed-to-improper">dedicated calculator</a>.</p>
       <h2 id="definition">What is an improper fraction?</h2>
-      <p>An improper fraction has a numerator that is greater than or equal to its denominator: 7/4, 11/3, 9/9, 22/7. All improper fractions are ≥ 1. A proper fraction has a numerator smaller than its denominator (e.g. 3/4 < 1).</p>
-
-      <h2 id="method">Conversion method</h2>
+      <p>An improper fraction has a numerator that is greater than or equal to its denominator: 7/4, 11/3, 9/9, 22/7. All improper fractions are ≥ 1 (equal to or more than one). A proper fraction has a numerator smaller than its denominator (e.g. 3/4 < 1).</p>
+      <h3 id="explained-to-beginner">Improper fractions explained to a beginner</h3>
+      <p>Imagine a pizza restaurant that cuts each pizza into 4 slices. You order 7 slices. The kitchen fills 1 whole pizza (4 slices) and cuts 3 more from a second pizza. You get 1 whole pizza plus 3 extra slices: 1 and 3/4 pizzas. That is 1¾ - the mixed number form of 7/4.</p>
+      <p>The fraction 7/4 is called "improper" because the top number is too large to sit inside a single whole unit - there are more fourths than one whole contains. The conversion simply asks two questions: how many complete wholes fit? (7 ÷ 4 = 1) And what is left over? (7 - 4 = 3, so 3/4 of a pizza remains.)</p>
+      <p>The denominator - the pizza's slice count - never changes. Only the numerator splits into a whole number and a remainder.</p>
+      <h2 id="method">Improper to mixed conversion method</h2>
       <p>The formula is integer division with a remainder:</p>
       <Formula expr={f.def} />
-      <p>Steps: (1) divide numerator by denominator using integer division to get the whole number and remainder; (2) write the remainder over the denominator; (3) simplify the fractional part using the GCD.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <p>Steps: (1) divide numerator by denominator using integer division to get the whole number and remainder; (2) write the remainder over the denominator; (3) simplify the fractional part using the <a href="/glossary/gcd">GCD</a>.</p>
+      <h2 id="examples">Worked examples for improper fraction into mixed number</h2>
       <h3>Example 1: 7/4</h3>
       <Formula expr={f.ex1} />
       <p>7 ÷ 4 = 1 with remainder 3. Mixed number: 1 3/4. GCD(3,4) = 1 - already simplified. Decimal: 1.75.</p>
-
       <h3>Example 2: 11/3</h3>
       <Formula expr={f.ex2} />
       <p>11 ÷ 3 = 3 with remainder 2. Mixed number: 3 2/3. GCD(2,3) = 1. Decimal: 3.666…</p>
-
       <h3>Example 3: exact division</h3>
       <Formula expr={f.ex3} />
       <p>15 ÷ 5 = 3 with remainder 0. No fractional part - result is the whole number 3.</p>
-
       <h3>Example 4: 22/7 (approximation of π)</h3>
       <p>22 ÷ 7 = 3 with remainder 1. Mixed number: 3 1/7. Decimal: 3.142857… This is the classic rational approximation of π.</p>
-
       <div class="responsive-table">
         <table>
           <thead><tr><th>Improper fraction</th><th>Whole</th><th>Remainder</th><th>Mixed number</th><th>Decimal</th></tr></thead>
@@ -181,35 +225,37 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="negative">Negative improper fractions</h2>
+      <p>Fractions with denominator 4 show up constantly in <a href="/glossary/imperial-system">imperial measurements</a> - lumber dimensions, recipe yields, and hardware specs all use quarters.</p>
+      <p>In practice, knowing these four by memory eliminates most calculations: 5/4 = 1¼, 7/4 = 1¾, 9/4 = 2¼, 11/4 = 2¾. If you work with inches or US measurements regularly, those four are worth committing to memory before any others.</p>
+      <h2 id="negative">Negative improper fractions to mixed number</h2>
       <p>Apply the conversion to the absolute value, then restore the negative sign:</p>
       <Formula expr={f.neg} />
       <p>−7/4: |−7| ÷ 4 = 1 rem 3 → 1¾ → apply negative → −1¾. As a decimal: −1.75.</p>
-
       <h2 id="reverse">Reverse: mixed number to improper fraction</h2>
       <p>To convert back, multiply the whole number by the denominator and add the numerator:</p>
       <Formula expr={f.reverse} />
       <p>This is the starting point for adding, subtracting, multiplying, or dividing mixed numbers - convert to improper fractions first, operate, then convert back.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <p>See our <a href="/math/fraction-calculator/mixed-to-improper">mixed number to improper fraction converter</a>.</p>
+      <p>The reverse formula also reveals why adding mixed numbers "horizontally" (whole parts together, fraction parts together) can silently go wrong.</p>
+      <p>Take 1¾ + 1¾: wholes sum to 2, fractions sum to 6/4. But 6/4 > 1, so it spills back into the whole number column and you get 3½, not 2 6/4.</p>
+      <p>Converting to improper fractions first (7/4 + 7/4 = 14/4 = 3½) handles that overflow automatically - which is precisely why textbooks insist on converting before operating.</p>
+      <h2 id="common-mistakes">Common mistakes for mixed number and improper fraction</h2>
       <h3>Not simplifying the remainder fraction</h3>
       <p>12/8 → 1 remainder 4 → 1 4/8. But 4/8 simplifies with GCD(4,8) = 4 to 1/2. Correct answer: 1½, not 1 4/8.</p>
-
       <h3>Applying the conversion to proper fractions</h3>
       <p>A proper fraction like 3/4 cannot be converted to a mixed number - the whole number would be 0. 3 ÷ 4 = 0 remainder 3, so it stays as 3/4.</p>
-
       <h2 id="faq">Frequently asked questions</h2>
-
       <h3>How do you convert an improper fraction to a mixed number?</h3>
       <p>Divide the numerator by the denominator. The quotient is the whole number. The remainder over the denominator (simplified) is the fractional part.</p>
-
       <h3>What is an improper fraction?</h3>
       <p>A fraction where the numerator ≥ denominator, representing a value ≥ 1. Examples: 5/3, 7/4, 9/2.</p>
-
       <h3>What is 11/3 as a mixed number?</h3>
       <p>11 ÷ 3 = 3 remainder 2. Mixed number: 3⅔.</p>
+      <QuizBlock
+        topic="improper fractions"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/fraction-calculator/improper-to-mixed"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -219,8 +265,7 @@ const schema = [
         { path: '/math/fraction-calculator/fraction-to-decimal', blurb: 'Convert any fraction to its decimal form.' },
         { path: '/math/fraction-calculator',                     blurb: 'The main fraction calculator - all four operations in one tool.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/fraction-calculator/improper-to-mixed" />
     </div>
   </div>
-
 </CalculatorLayout>

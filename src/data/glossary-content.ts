@@ -109,6 +109,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between arithmetic and mathematics?', a: 'Arithmetic is a subset of mathematics that deals specifically with numbers and the four basic operations. Mathematics also includes algebra, geometry, statistics, and calculus. All of these branches rely on arithmetic as their foundation - algebra manipulates arithmetic expressions using letters; statistics summarises arithmetic across many values.' },
       { q: 'Why is division by zero undefined?', a: 'Division asks how many times the divisor fits into the dividend. No number of times can zero be added to itself to reach a non-zero number, so the question has no valid answer. In formal mathematics the result is described as undefined; in calculators it returns an error.' },
     ],
+    quiz: {
+      topic: 'arithmetic',
+      questions: [
+        {
+          q: 'What are the four basic arithmetic operations?',
+          options: ['Addition, subtraction, multiplication, and division', 'Addition, subtraction, multiplication, and modulo', 'Addition, multiplication, exponentiation, and division', 'Addition, subtraction, multiplication, and integration'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states arithmetic is concerned with four fundamental operations: addition, subtraction, multiplication, and division. Every more advanced mathematical concept is built on these four operations.',
+        },
+        {
+          q: 'Using PEMDAS, what does 3 + 4 × 2 equal?',
+          options: ['14 - addition is performed first, giving 7, then multiplied by 2', '11 - multiplication is performed first (4 × 2 = 8), then 3 + 8', '24 - all numbers are multiplied together', '10 - an incorrect application of left-to-right order'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition gives this exact example: 3 + 4 × 2 = 11, not 14, because PEMDAS requires multiplication before addition. 4 × 2 = 8, then 3 + 8 = 11.',
+        },
+        {
+          q: 'From the examples table, what is the inverse operation of multiplication?',
+          options: ['Addition', 'Subtraction', 'Exponentiation', 'Division'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows that division is the inverse of multiplication: 12 × 8 = 96, and 96 ÷ 12 = 8. Inverse operations undo each other.',
+        },
+        {
+          q: 'What does the pitfalls section identify as the most common arithmetic error?',
+          options: ['Rounding intermediate results before reaching the final answer', 'Confusing percentages with fractions when performing calculations', 'Applying operations in the wrong order by ignoring operator precedence', 'Using the wrong units when multiplying or dividing measurement quantities'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states the most common arithmetic error is applying operations in the wrong order. In 2 + 3 × 4, multiplication takes priority: 3 × 4 = 12, then 2 + 12 = 14. Reading left-to-right gives the wrong answer of 20.',
+        },
+        {
+          q: 'Why is division by zero undefined?',
+          options: ['Zero is a placeholder digit, so using it as a divisor violates positional notation rules', 'Division requires both operands to be positive, and zero is neither positive nor negative', 'No real number multiplied by zero can produce a non-zero result, so the question has no valid answer', 'A historical convention established before zero was accepted as a number in European mathematics'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ explains: division asks how many times the divisor fits into the dividend. No number of times can zero be added to itself to reach a non-zero number, so the operation is undefined. Calculators return an error for this reason.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'capex': {
@@ -1214,6 +1249,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is ARR and how does it relate to Revenue?', a: 'ARR (Annual Recurring Revenue) is a metric used in SaaS businesses to represent the annualised value of active subscription contracts. It is a forward-looking measure of contracted revenue, not a GAAP accounting metric. Reported Revenue may differ from ARR due to contract timing, discounts, and usage-based components.' },
       { q: 'Can revenue be negative?', a: 'No. Revenue represents income earned and cannot be negative. If returns, refunds, or discounts exceed gross sales in a period, revenue is reported as zero. Negative adjustments are typically recorded as contra-revenue or as COGS.' },
     ],
+    quiz: {
+      topic: 'revenue',
+      questions: [
+        {
+          q: 'What is revenue also called, and where does it appear on the income statement?',
+          options: ['The top line, sales, or turnover - the first line above all profit metrics', 'The bottom line - net income after all costs have been deducted', 'Operating income - earnings before interest and taxes (EBIT)', 'Gross profit - revenue minus the cost of goods sold'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states revenue is also called "the top line," "sales," or "turnover." It is literally the first line of an income statement, above all profit metrics including gross profit, EBITDA, and net income.',
+        },
+        {
+          q: 'From the examples table, which revenue type is described as predictable and valued at premium multiples?',
+          options: ['Recurring subscription revenue, such as SaaS monthly fees', 'Transactional revenue, such as e-commerce sales', 'Project/milestone revenue, such as consulting or construction', 'Advertising revenue from media or social platforms'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows recurring subscription revenue (SaaS monthly fees) is both predictable and valued at premium multiples. Transactional revenue is variable; project revenue is lumpy; advertising revenue is cyclical.',
+        },
+        {
+          q: 'What does the pitfalls section warn about revenue growth without margin expansion or cash generation?',
+          options: ['It is not inherently valuable - "buying" revenue through discounting or high acquisition costs inflates the top line while destroying value', 'It is always beneficial in early-stage businesses because revenue scale is required before margin optimization is possible', 'It signals strong commercial momentum and should be rewarded with higher valuation multiples regardless of profitability', 'It is only a problem in mature industries - high-growth sectors routinely prioritize revenue scale over margin quality'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The pitfalls section states that revenue growth without margin expansion or cash generation is not inherently valuable. Buying revenue through aggressive discounting or high customer acquisition costs inflates the top line while destroying value.',
+        },
+        {
+          q: 'Can revenue be negative? What does the FAQ say?',
+          options: ['Yes - when customer returns exceed new sales, revenue is reported as a negative figure', 'No - revenue cannot be negative; if returns exceed gross sales it is reported as zero, and negative adjustments are recorded as contra-revenue or COGS', 'Yes - subscription businesses regularly report negative revenue during heavy promotional periods', 'It depends on the accounting standard: GAAP prohibits negative revenue but IFRS 15 permits it in specific circumstances'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states revenue cannot be negative. If returns, refunds, or discounts exceed gross sales in a period, revenue is reported as zero. Negative adjustments are typically recorded as contra-revenue or as COGS.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'sga': {
@@ -1543,6 +1607,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do I divide two fractions?', a: 'Multiply the first fraction by the reciprocal of the second: a/b ÷ c/d = a/b × d/c = (a×d)/(b×c). For example, 3/4 ÷ 2/5 = 3/4 × 5/2 = 15/8.' },
       { q: 'What is the difference between a fraction and a ratio?', a: 'A fraction expresses a part of a whole - the denominator is the total number of equal parts. A ratio compares two separate quantities - the denominator is not the total. A fraction 3/5 says "3 out of 5 equal parts of the whole"; a ratio 3:2 says "3 of one type for every 2 of another."' },
     ],
+    quiz: {
+      topic: 'fractions',
+      questions: [
+        {
+          q: 'From the examples table, which type of fraction has a numerator greater than or equal to the denominator?',
+          options: ['Proper fraction - numerator < denominator, value < 1', 'Improper fraction - numerator >= denominator, value >= 1', 'Unit fraction - numerator = 1, always less than 1', 'Mixed number - combines a whole number with a proper fraction'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows an improper fraction (9/4 = 2.25) has a numerator greater than or equal to the denominator and represents a value of 1 or more. A proper fraction (3/4 = 0.75) has a numerator smaller than the denominator.',
+        },
+        {
+          q: 'What is 1/3 + 1/4? The pitfalls section gives the correct answer.',
+          options: ['2/7 - add numerators and add denominators', '7/12 - find the LCD of 3 and 4 (which is 12), then add equivalent fractions', '3/12 - convert both to twelfths but only add one of them', '1/12 - find the product of both denominators, then add the numerators'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section explicitly states adding 1/3 + 1/4 is not 2/7. The LCD of 3 and 4 is 12, giving 4/12 + 3/12 = 7/12. Adding numerators and denominators separately is the most common error.',
+        },
+        {
+          q: 'According to the FAQ, how do you divide two fractions?',
+          options: ['Multiply the first fraction by the reciprocal of the second: a/b ÷ c/d = a/b × d/c', 'Find the LCD, convert both fractions, then divide the numerators', 'Divide both numerators together and both denominators together directly', 'Subtract the second fraction from the first and simplify by the GCD'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states: multiply the first fraction by the reciprocal of the second - a/b ÷ c/d = a/b × d/c = (a×d)/(b×c). For example, 3/4 ÷ 2/5 = 3/4 × 5/2 = 15/8.',
+        },
+        {
+          q: 'When should you use fractions over decimals, according to the whenToUse section?',
+          options: ['When communicating measurements to a general audience who prefers decimal notation', 'When inputting values into digital systems or calculators that expect decimal input', 'When exact rational representation is required and rounding is unacceptable - engineering tolerances, probability, algebraic manipulation', 'When the denominator is a power of 10, since those fractions convert to terminating decimals'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The whenToUse section states: use fractions when exact rational representation is required and rounding is unacceptable - engineering tolerances, probability calculations, and algebraic manipulation. Use decimals when inputting values into digital systems.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'percentage': {
@@ -1568,6 +1661,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Can a percentage exceed 100%?', a: 'Yes. A percentage exceeds 100% whenever the part is larger than the whole - for example, a value that has more than doubled is above 200% of its original. Percentages below 0% are also valid in contexts like negative returns or temperature changes below a reference point.' },
       { q: 'What is the difference between a percentage and a percentage point?', a: 'A percentage expresses a proportion. A percentage point is the arithmetic difference between two percentages. If a tax rate rises from 20% to 25%, it increased by 5 percentage points but by 25% relative to its original value. Confusing the two is one of the most common errors in financial and statistical reporting.' },
     ],
+    quiz: {
+      topic: 'percentages',
+      questions: [
+        {
+          q: 'From the examples table, what is 3/8 expressed as a percentage?',
+          options: ['33.33%', '37.5%', '30%', '40%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows 3/8 = 0.375 = 37.5%. As a decimal, 3 ÷ 8 = 0.375; multiply by 100 to get the percentage.',
+        },
+        {
+          q: 'A 50% increase followed by a 50% decrease - what is the net result relative to the original?',
+          options: ['Back to 100% of the original, because the changes cancel out', 'At 125% of the original, because increases compound faster than decreases', 'At 75% of the original, a net loss of 25%', 'At 50% of the original, because the decrease wipes out the entire gain'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states this leaves you at 75% of the start because each percentage is applied to a different base. Starting at 100, a 50% increase gives 150. A 50% decrease on 150 gives 75. The net multiplier is 1.50 × 0.50 = 0.75.',
+        },
+        {
+          q: '"20% off, then an additional 10% off." What is the combined discount according to the pitfalls section?',
+          options: ['30% - the discounts simply add together', '28% - the second 10% is applied to the already-reduced price', '25% - the average of 20% and 30%', '18% - the second discount partially reverses the first'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states: "20% off, then an additional 10% off is not a 30% discount - it is a 28% discount because the second 10% is applied to the already-reduced price." Always identify what the 100% base is.',
+        },
+        {
+          q: 'Can a percentage exceed 100%? What does the FAQ say?',
+          options: ['No - percentages represent parts of a whole, so 100% is always the maximum', 'Yes - a percentage exceeds 100% whenever the part is larger than the whole, and percentages below 0% are also valid', 'Only in financial contexts; in scientific measurement, 100% is the defined maximum', 'Yes, but only when describing compound growth over multiple periods'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ confirms yes - a percentage exceeds 100% whenever the part is larger than the whole. A value that has more than doubled is above 200% of its original. Percentages below 0% are also valid for negative returns or temperature changes.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'percentage-change': {
@@ -1592,6 +1714,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between percentage change and percentage difference?', a: 'Percentage change uses the original value as the denominator and implies a before-and-after relationship. Percentage difference uses the average of both values and is symmetric - it does not matter which value is "first." Use percentage difference when there is no temporal order between the two values.' },
       { q: 'How do I calculate percentage change when the old value is negative?', a: 'The formula still applies mathematically, but the result can be misleading. If revenue was −$200k and improved to −$50k, the formula gives (−50 − (−200)) / 200 × 100 = +75%. This correctly shows improvement, but readers may interpret it as moving from a loss to a profit. Always state the absolute values alongside the percentage.' },
     ],
+    quiz: {
+      topic: 'percentage change',
+      questions: [
+        {
+          q: 'From the examples table, what is the percentage change for a stock price rising from $80 to $100?',
+          options: ['+25.00%', '+20.00%', '+16.00%', '+10.00%'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows (100 - 80) / 80 × 100 = +25.00%. The original value ($80) is the denominator, not the new value.',
+        },
+        {
+          q: 'A 30% increase followed by a 20% decrease - what is the net percentage change?',
+          options: ['+10% - the changes simply add together', '+50% - they multiply by a compounding effect', '+4% - because growth factors multiply: 1.30 × 0.80 = 1.04', '-10% - the decrease more than offsets the increase'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states that sequential percentage changes must be multiplied as growth factors, not summed. 1.30 × 0.80 = 1.04, a net change of +4%, not +10%.',
+        },
+        {
+          q: 'When is percentage change mathematically undefined?',
+          options: ['When the new value is negative', 'When the percentage change exceeds 100%', 'When the original value is zero, because division by zero is undefined', 'When the two values have different units'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states: when the original value is zero, percentage change is mathematically undefined - division by zero. In those cases, report the absolute change and note that the percentage is not meaningful.',
+        },
+        {
+          q: 'Why is a 50% increase followed by a 50% decrease not zero net change?',
+          options: ['Because percentages always understate the true change when combined sequentially', 'Because increases are calculated before taxes, while decreases are calculated after', 'Because each percentage uses a different base - starting at 100, a 50% increase gives 150, then a 50% decrease on 150 gives 75, a 25% net decline', 'Because percentage change rounds to the nearest whole number, introducing cumulative error'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states: starting at 100, a 50% increase gives 150. A 50% decrease on 150 gives 75 - a net loss of 25%. The net multiplier is 1.50 × 0.50 = 0.75. Each change applies to a different base value.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'percentage-decrease': {
@@ -1617,6 +1768,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What percentage decrease reverses a 25% increase?', a: 'Use the reversal formula: Decrease% = P / (100 + P) × 100 = 25 / 125 × 100 = 20%. After a 25% increase from $100 to $125, a 20% decrease on $125 returns to $100. The reversal percentage is always smaller than the original increase.' },
       { q: 'Can you have a percentage decrease greater than 100%?', a: 'No, not when the original value is positive. A 100% decrease reduces the value to zero. Decreases beyond 100% imply a negative result, which requires a different framing - for example, a value crossing from positive to negative territory.' },
     ],
+    quiz: {
+      topic: 'percentage decrease',
+      questions: [
+        {
+          q: 'What is the maximum possible percentage decrease for a positive original value?',
+          options: ['50% - a value can be halved at most in a single period', '100% - when the value falls to exactly zero', '200% - when the value crosses from positive to negative', 'There is no maximum - values can decrease by any percentage'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states the largest possible percentage decrease is 100% - when a value falls to zero. A value cannot decrease by more than 100% of itself because there is nothing left to remove.',
+        },
+        {
+          q: 'From the examples table, what is the percentage decrease from $1,000 to $750?',
+          options: ['25.00%', '33.33%', '20.00%', '30.00%'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The examples table shows: absolute decrease = $250, percentage decrease = (1000 - 750) / 1000 × 100 = 25.00%. The original value ($1,000) is always the denominator.',
+        },
+        {
+          q: 'What percentage decrease exactly reverses a 25% increase? The FAQ provides the formula.',
+          options: ['25% decrease', '20% decrease', '30% decrease', '12.5% decrease'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states the reversal formula is: Decrease% = P / (100 + P) × 100 = 25 / 125 × 100 = 20%. After a 25% increase from $100 to $125, a 20% decrease on $125 returns to $100. The reversal percentage is always smaller than the original increase.',
+        },
+        {
+          q: 'According to the FAQ, if you know the new value and the percentage decrease, how do you find the original?',
+          options: ['Multiply the new value by (1 + Decrease% / 100)', 'Divide the new value by (1 - Decrease% / 100)', 'Subtract the percentage from the new value directly', 'Multiply the new value by the percentage decrease, then add the result'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ gives the formula: Original = New / (1 - Decrease% / 100). For example, if a price is $80 after a 20% decrease, the original was $80 / (1 - 0.20) = $80 / 0.80 = $100.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'percentage-difference': {
@@ -1641,6 +1821,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why does percentage difference use the average as the denominator?', a: 'Using the average eliminates directional bias. If you used V1 as the base, you would get a different result depending on which value you called V1. The average splits the difference, ensuring the metric is symmetric and does not imply that either measurement is more authoritative.' },
       { q: 'Is percentage difference the same as relative difference?', a: 'They are closely related but not identical. Relative difference typically refers to |V1 − V2| / V_reference, where V_reference is a chosen base (often the larger or the expected value). Percentage difference specifically uses the mean as the reference. Always state your denominator when communicating either metric.' },
     ],
+    quiz: {
+      topic: 'percentage difference',
+      questions: [
+        {
+          q: 'What denominator does percentage difference use, and why?',
+          options: ['The larger of the two values, to express how much the smaller falls short of the maximum', 'The arithmetic mean of both values, which ensures the result is symmetric regardless of which value you call V1', 'The smaller of the two values, to express how much larger the other is relative to the minimum', 'The first value (V1), because it is the reference point in the comparison'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states percentage difference uses the arithmetic mean of both values as the denominator. This produces a symmetric result - swapping V1 and V2 gives the same answer, unlike percentage change which depends on which value is the "original."',
+        },
+        {
+          q: 'From the examples table, what is the percentage difference between $90 and $110?',
+          options: ['10.0%', '11.1%', '20.0%', '22.2%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows: |90 - 110| = $20, mean = $100, percentage difference = (20 / 100) × 100 = 20.00%. The mean of $90 and $110 is $100.',
+        },
+        {
+          q: 'When should you NOT use percentage difference, according to the pitfalls section?',
+          options: ['When the two values are measured in the same unit and are within 50% of each other', 'When one value is a baseline, standard, or prior period - in those cases percentage change is correct', 'When the values come from different sources, since source inconsistency makes the mean unreliable', 'When the absolute difference is larger than 25% of either value'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns: do not use percentage difference when one value is a baseline, standard, or prior period. In those cases, percentage change (with the reference value as denominator) is the correct metric. Using the mean artificially inflates or deflates the reported magnitude.',
+        },
+        {
+          q: 'According to the FAQ, when should you use percentage difference instead of percentage change?',
+          options: ['When both values are very large numbers, to avoid overflow in percentage change calculations', 'When the absolute difference exceeds 10 units, making a relative measure more informative than an absolute one', 'When the two values are collected simultaneously with no before-and-after relationship - such as the price of the same item at two different stores', 'When the percentage change is negative, since percentage difference always returns a positive number'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states: use percentage difference when the two values have no before-and-after relationship - comparing the price of the same item at two different stores, or test scores from two independent groups. If one value is earlier in time or the accepted reference, use percentage change.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'percentage-increase': {
@@ -1665,6 +1874,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What does a 100% increase mean?', a: 'A 100% increase means the value has doubled. The new value equals the original plus 100% of it: New = Old + Old = 2 × Old. A 200% increase means the value has tripled. Note that "increase by 200%" and "increase to 200%" mean different things - the latter means the value doubled.' },
       { q: 'Is percentage increase the same as a growth rate?', a: 'Yes, when calculated over a single period. A period-over-period percentage increase is a simple growth rate. When growth compounds over multiple periods, a compound annual growth rate (CAGR) is more appropriate, as it accounts for the multiplicative nature of sequential percentage increases.' },
     ],
+    quiz: {
+      topic: 'percentage increase',
+      questions: [
+        {
+          q: 'From the examples table, a salary rises from €1,200 to €1,500. What is the percentage increase?',
+          options: ['20.00%', '25.00%', '30.00%', '33.33%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows: absolute increase = €300, percentage increase = (300 / 1200) × 100 = 25.00%. The original value (€1,200) is always the denominator.',
+        },
+        {
+          q: 'What does a 100% increase mean?',
+          options: ['The value has tripled: New = 3 × Old', 'The value has doubled: New = 2 × Old', 'The value has increased by half: New = 1.5 × Old', 'The value has increased by 100 units regardless of the original'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states a 100% increase means the value has doubled. New = Old + 100% of Old = 2 × Old. A 200% increase means the value has tripled (New = 3 × Old).',
+        },
+        {
+          q: 'A 50% increase followed by a 50% decrease. What happens according to the pitfalls section?',
+          options: ['The original value is fully restored, since both changes are equal in magnitude', 'The result is 125% of the original, because increases outweigh decreases when compounded', 'The result is 75% of the starting point - a net loss of 25% - because the base changes between the two percentages', 'The result is 50% of the original, since the decrease erases the entire gain and then some'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states: reversing a percentage increase always requires a larger percentage decrease. 1.50 × 0.50 = 0.75, leaving you at 75% of the starting point - a net decline of 25%, not zero.',
+        },
+        {
+          q: 'What percentage decrease reverses a 25% increase, according to the FAQ?',
+          options: ['25% - the same percentage in the opposite direction', '20% - using the formula P / (100 + P) × 100', '33.33% - one-third of the new value must be removed', '12.5% - half the original increase percentage'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ gives the formula: Decrease% = P / (100 + P) × 100. After a 25% increase from $100 to $125, a 20% decrease on $125 returns to $100. The reversal percentage is always smaller than the original increase.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'percentage-point': {
@@ -1750,6 +1988,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between a proportion and a ratio?', a: 'A ratio is a comparison of two quantities expressed as a:b or a/b. A proportion is a statement that two ratios are equal: a/b = c/d. A ratio is a single expression; a proportion is an equation relating two ratios. You use a ratio to express a relationship, and a proportion to scale that relationship to a new context.' },
       { q: 'How are proportions used in real life?', a: 'Proportions appear wherever scaling is needed: a pharmacist calculates drug dosages by proportion, a cartographer scales map distances, a chef multiplies a recipe, a contractor estimates material quantities for a larger floor plan. Any time you apply a known rate to a new quantity, you are solving a proportion.' },
     ],
+    quiz: {
+      topic: 'proportions',
+      questions: [
+        {
+          q: 'What is the cross-multiplication rule for a proportion a/b = c/d?',
+          options: ['a × d = b × c - the two cross-products are equal', 'a + d = b + c - the diagonal sums are equal', 'a / c = b / d - the ratios of corresponding terms are equal', 'a × b = c × d - the products of each ratio\'s terms are equal'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states the fundamental property of a proportion is the cross-multiplication rule: if a/b = c/d, then a × d = b × c. This allows any one unknown to be solved as long as the other three values are known.',
+        },
+        {
+          q: 'From the examples table, a map uses a scale of 1 cm = 50 km. A distance of 3.5 cm on the map equals how many km?',
+          options: ['50 km', '100 km', '150 km', '175 km'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The examples table shows: 1 cm / 50 km = 3.5 cm / ? km. Cross-multiply: 1 × ? = 50 × 3.5 = 175. The distance is 175 km.',
+        },
+        {
+          q: 'If 4 pumps drain a tank in 6 hours, how long do 8 pumps take? What type of proportion applies?',
+          options: ['12 hours - direct proportion: doubling the pumps doubles the time', '3 hours - inverse proportion: doubling the pumps halves the time', '6 hours - the number of pumps has no effect on draining time', '9 hours - direct proportion: each additional pump adds 1.5 hours'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section gives this exact example: if 4 pumps drain in 6 hours, doubling to 8 pumps halves the time to 3 hours. More pumps means less time - this is an inverse proportion (constant product: 4 × 6 = 8 × 3 = 24).',
+        },
+        {
+          q: 'Using the FAQ method, solve: 3/x = 5/20. What is x?',
+          options: ['x = 15', 'x = 12', 'x = 8', 'x = 6'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ demonstrates: cross-multiply to get 3 × 20 = 5 × x, so 60 = 5x, therefore x = 60 / 5 = 12.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'ratio': {
@@ -1775,6 +2042,100 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do I simplify a ratio?', a: 'Divide both terms by their greatest common divisor (GCD). For 18:24, the GCD is 6, giving a simplified ratio of 3:4. For multi-term ratios, divide all terms by the GCD of the entire set. The ratio 6:9:15 has a GCD of 3, simplifying to 2:3:5.' },
       { q: 'Can a ratio have more than two terms?', a: 'Yes. An extended ratio compares three or more quantities simultaneously - for example, a paint formula expressed as red:blue:yellow = 2:3:1. The same proportion rules apply: all terms scale together, and simplification uses the GCD of all terms.' },
     ],
+    quiz: {
+      topic: 'ratios',
+      questions: [
+        {
+          q: 'What must the two quantities in a ratio share to produce a dimensionless result?',
+          options: ['The same magnitude, so they can be divided without a remainder', 'The same unit - mixing kilograms and metres produces a rate, not a ratio', 'The same sign - mixing positive and negative quantities creates undefined ratios', 'The same scale, expressed in standard international (SI) base units'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states the two quantities must share the same unit for the ratio to be dimensionless. Mixing kilograms and metres produces a rate (a ratio with different units), not a true ratio.',
+        },
+        {
+          q: 'From the examples table, what does a debt-to-equity ratio of 2:1 mean?',
+          options: ['The company has $1 of debt for every $2 of equity', 'The company has 2 dollars of debt for every dollar of equity', 'Equity is twice as large as debt in the company\'s capital structure', 'Debt exceeds total assets by a factor of 2'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table states debt-to-equity 2:1 means "two dollars of debt for every dollar of equity." A 2:1 ratio means the first quantity is twice the second.',
+        },
+        {
+          q: 'Is a debt-to-equity ratio of 3:1 the same as 1:3? What does the pitfalls section say?',
+          options: ['Yes - ratios are symmetric and the order can be freely swapped', 'No - order is not interchangeable; 3:1 is a very different capital structure from 1:3', 'Only when both numbers are whole integers - decimals follow different ordering rules', 'They are equivalent because both represent the same relationship from different perspectives'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns: order is not interchangeable. A debt-to-equity ratio of 3:1 is not the same as 1:3. Always state which quantity comes first and be consistent.',
+        },
+        {
+          q: 'According to the FAQ, how do you simplify the ratio 18:24?',
+          options: ['Divide both by 6 (the GCD), giving 3:4', 'Divide both by 2, giving 9:12 (a partial simplification that is not final)', 'Multiply both by 1/6, giving 3:4', 'Divide the larger by the smaller to get 1.33:1 as a unit ratio'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The FAQ states: divide both terms by their GCD. For 18:24, GCD = 6, giving a simplified ratio of 3:4. For multi-term ratios, divide all terms by the GCD of the entire set.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'reciprocal': {
+    definition: [
+      'The reciprocal of a fraction a/b is b/a - formed by swapping numerator and denominator. For whole numbers, the reciprocal of n is 1/n. Every non-zero number has exactly one reciprocal, and a number multiplied by its reciprocal always equals 1: $$\\frac{a}{b} \\times \\frac{b}{a} = \\frac{ab}{ab} = 1$$ Zero has no reciprocal because 1/0 is undefined.',
+      'Reciprocals are the foundation of fraction division. Dividing by any fraction is identical to multiplying by its reciprocal: $$\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c}$$ The keep-change-flip method taught in school is simply a name for this reciprocal substitution - keep the first fraction, change ÷ to ×, flip the second fraction.',
+      'For negative fractions, the reciprocal carries the same sign: the reciprocal of -3/4 is -4/3. For mixed numbers, you must convert to an improper fraction first: the reciprocal of 2½ is not ½/2. Convert to 5/2, then flip to get 2/5.',
+    ],
+    beginnerExplain: [
+      'Think of a reciprocal as the "flip" of a fraction. If you have 3/4, flipping it gives 4/3. Multiply them together: 3/4 × 4/3 = 12/12 = 1. That "comes back to 1" property is what makes reciprocals so useful - it\'s how division gets turned into multiplication.',
+      'A good way to picture it: if you walk 3 steps forward for every 4 steps sideways (ratio 3/4), the reciprocal 4/3 describes the exact opposite journey. One undoes the other, which is why multiplying gives 1.',
+    ],
+    whenToUse: 'Use reciprocals when dividing fractions (replace ÷ with × and flip the second fraction), when solving equations of the form (a/b)x = c (multiply both sides by the reciprocal b/a), and when working with rates where you need to invert a ratio - for example, converting km per hour to hours per km.',
+    examples: {
+      headers: ['Number', 'Reciprocal', 'Product', 'Notes'],
+      rows: [
+        ['3/4', '4/3', '12/12 = 1', 'Standard fraction'],
+        ['5', '1/5', '5/5 = 1', 'Whole number: write as 5/1, then flip'],
+        ['-2/7', '-7/2', '14/14 = 1', 'Negative: sign is preserved'],
+        ['1', '1', '1/1 = 1', 'Reciprocal of 1 is 1'],
+        ['2½ (= 5/2)', '2/5', '10/10 = 1', 'Mixed number: convert to improper first'],
+      ],
+    },
+    pitfalls: 'The most common error with mixed numbers: students take the reciprocal of 2½ as ½/2 = 1/4. You must convert to an improper fraction first (2½ = 5/2), then flip to get 2/5. Also, zero has no reciprocal - 1/0 is undefined. And the reciprocal of a negative fraction is also negative: the reciprocal of -3/4 is -4/3, not 4/3.',
+    faqs: [
+      { q: 'What is the reciprocal of a fraction?', a: 'The reciprocal of a fraction a/b is b/a - numerator and denominator are swapped. Multiplying a fraction by its reciprocal always gives 1: 3/4 × 4/3 = 12/12 = 1. This is called the multiplicative inverse.' },
+      { q: 'How do reciprocals relate to fraction division?', a: 'Dividing by a fraction is identical to multiplying by its reciprocal. Instead of computing a/b ÷ c/d directly, you compute a/b × d/c. The keep-change-flip method is just a name for this substitution: flip the divisor and change the operation to multiplication.' },
+      { q: 'What is the reciprocal of a whole number?', a: 'Write the whole number as a fraction over 1, then flip. The reciprocal of 5 is 1/5; the reciprocal of 8 is 1/8. Multiplying any whole number n by its reciprocal 1/n gives 1: n × 1/n = n/n = 1.' },
+      { q: 'Does every number have a reciprocal?', a: 'Every non-zero real number has exactly one reciprocal. Zero is the only exception: 1/0 is undefined because no real number multiplied by 0 can equal 1.' },
+    ],
+    quiz: {
+      topic: 'reciprocals',
+      questions: [
+        {
+          q: 'What is the reciprocal of 3/4, and what is their product?',
+          options: ['3/4 itself - a fraction is its own reciprocal', '4/3 - swap numerator and denominator; 3/4 × 4/3 = 12/12 = 1', '1/3 - take the reciprocal of only the numerator', '-4/3 - the reciprocal always changes the sign'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states: the reciprocal of a fraction a/b is b/a. For 3/4, flip to get 4/3. Their product: 3/4 × 4/3 = 12/12 = 1. Every non-zero number multiplied by its reciprocal equals 1.',
+        },
+        {
+          q: 'From the examples table, what is the reciprocal of the whole number 5?',
+          options: ['5/1 - write as a fraction over 1', '1/5 - write as 5/1, then flip to get 1/5', '-1/5 - whole number reciprocals are always negative', '0.5 - the reciprocal is half the original'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows: the whole number 5 is written as 5/1, then flipped to get 1/5. Product: 5 × 1/5 = 5/5 = 1. The note reads "Whole number: write as 5/1, then flip."',
+        },
+        {
+          q: 'What is the correct reciprocal of the mixed number 2½? The pitfalls section identifies the common error.',
+          options: ['2/5 - convert 2½ to the improper fraction 5/2 first, then flip', '1/4 - a common error: taking the reciprocal of ½ without converting to an improper fraction', '2/1 = 2 - the reciprocal of any mixed number is the whole-number part only', '5/4 - divide the denominator by the whole number'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The pitfalls section warns: the common error is taking the reciprocal of 2½ as ½/2 = 1/4. You must convert to an improper fraction first (2½ = 5/2), then flip to get 2/5. Product: 5/2 × 2/5 = 10/10 = 1.',
+        },
+        {
+          q: 'Does every number have a reciprocal?',
+          options: ['Yes - every real number, including zero, has a reciprocal', 'Only positive numbers have reciprocals; negative numbers do not', 'Every non-zero real number has exactly one reciprocal; zero is the only exception because 1/0 is undefined', 'Only rational numbers (fractions) have reciprocals; irrational numbers do not'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states: every non-zero real number has exactly one reciprocal. Zero is the only exception: 1/0 is undefined because no real number multiplied by 0 can equal 1.',
+        },
+        {
+          q: 'How do reciprocals relate to fraction division, according to the FAQ?',
+          options: ['Dividing by a fraction first requires finding a common denominator, then the reciprocal cancels it out', 'Dividing by a fraction is identical to multiplying by its reciprocal - keep the first fraction, change ÷ to ×, flip the second fraction', 'Reciprocals are only used in division when both fractions have the same denominator', 'The reciprocal converts the division into a subtraction, which is then easier to compute'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states: dividing by a fraction is identical to multiplying by its reciprocal. Instead of a/b ÷ c/d, compute a/b × d/c. Keep-change-flip is just a name for this reciprocal substitution.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'unit-rate': {
@@ -3358,6 +3719,29 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the difference between bi-weekly and semi-monthly pay?', a: 'Bi-weekly means you are paid every two weeks, resulting in 26 pay cheques per year. Semi-monthly means you are paid twice a month on fixed dates (typically the 1st and 15th), giving 24 pay cheques per year. At the same annual salary, bi-weekly pay cheques are slightly smaller but you receive two extra per year.' },
       { q: 'How many pay periods are in a year?', a: 'It depends on your pay schedule. Weekly: 52 pay periods. Bi-weekly: 26 pay periods. Semi-monthly: 24 pay periods. Monthly: 12 pay periods. Most US private-sector employees are paid bi-weekly (26 pay periods), which is the most common schedule according to the Bureau of Labor Statistics.' },
     ],
+    quiz: {
+      topic: 'pay periods',
+      questions: [
+        {
+          q: 'What is the key difference between bi-weekly and semi-monthly pay?',
+          options: ['Bi-weekly = 26 cheques/year (every two weeks); semi-monthly = 24 cheques/year (twice a calendar month on fixed dates)', 'Bi-weekly = 24 cheques/year; semi-monthly = 26 cheques/year - the terms are often confused in the opposite direction', 'Both produce exactly 24 cheques per year but on different dates', 'Bi-weekly and semi-monthly are synonyms referring to the same 26-payment-per-year schedule'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'The definition states bi-weekly means every two weeks (26 pay cheques per year), while semi-monthly means twice a calendar month on fixed dates such as the 1st and 15th (24 pay cheques per year). Both are commonly confused.',
+        },
+        {
+          q: 'From the examples table, a $62,400 annual salary paid bi-weekly - what is each cheque amount?',
+          options: ['$1,200 per week', '$2,400 every 2 weeks', '$2,600 twice a month', '$5,200 per month'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows $62,400 / 26 = $2,400 bi-weekly. Semi-monthly would be $62,400 / 24 = $2,600, which is slightly higher per cheque but with two fewer payments per year.',
+        },
+        {
+          q: 'To annualize a bi-weekly pay cheque correctly, you must multiply by what number?',
+          options: ['24 - two payments per month times 12 months', '26 - 52 weeks divided by 2', '52 - the total number of weeks in a year', '12 - the number of months in a year'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns: multiplying a bi-weekly pay cheque by 24 (instead of 26) underestimates annual income by 7.7%. Always multiply bi-weekly pay by 26 and semi-monthly pay by 24 to get an accurate annual figure.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'sales-tax': {
@@ -3762,6 +4146,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What is the overtime rate in the US?', a: 'The US FLSA requires at least 1.5 times the regular hourly rate for hours over 40 per workweek for non-exempt employees. California also has a daily rule: 1.5x after 8 hours in one day, and 2x after 12 hours in one day or on the seventh consecutive day of work.' },
       { q: 'Is overtime pay mandatory for salaried workers?', a: 'Salaried workers earning below $684 per week ($35,568 annually) are entitled to FLSA overtime regardless of title. Above that threshold, exemption depends on job duties - executive, administrative, and professional roles may qualify as exempt. Job title alone does not determine overtime eligibility.' },
     ],
+    quiz: {
+      topic: 'overtime pay',
+      questions: [
+        {
+          q: 'Under the US FLSA, what is the minimum overtime rate for non-exempt employees?',
+          options: ['1.25x the regular rate for hours beyond 40 per week', '1.5x the regular rate for hours beyond 40 per week', '2x the regular rate for hours beyond 40 per week', '1.5x only applies to hours beyond 48 per week under federal law'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FLSA requires at least 1.5 times the regular rate of pay for all hours worked beyond 40 in a single workweek for non-exempt employees. Some states like California layer on daily thresholds as well.',
+        },
+        {
+          q: 'A worker earning $20/hr works 50 hours in a week. What is their total gross pay?',
+          options: ['$1,000 - straight time for all 50 hours', '$1,100 - $800 regular + $300 overtime (10 hrs x $30)', '$1,200 - $800 regular + $400 overtime (10 hrs x $40)', '$900 - time and a half only on the extra 10 hours with no regular pay included'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Regular pay: 40 hrs x $20 = $800. Overtime: 10 hrs x $30 (1.5 x $20) = $300. Total = $1,100. The example in the content confirms this calculation.',
+        },
+        {
+          q: 'How is overtime pay taxed compared to regular wages?',
+          options: ['At a special higher flat rate set by the IRS for premium pay', 'As ordinary income at the same rate as regular wages - no special overtime tax rate exists', 'Tax-free up to the first 8 hours of overtime per week under FLSA rules', 'At capital gains rates because the overtime premium is considered investment return'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that overtime pay is taxed as ordinary income with no special higher rate. Paychecks may show higher withholding during overtime weeks because payroll systems annualize earnings, but this is a timing difference, not a permanent tax increase.',
+        },
+        {
+          q: 'Which workers are NOT automatically entitled to FLSA overtime regardless of hours worked?',
+          options: ['Part-time hourly workers earning less than $15/hr', 'Exempt salaried employees whose duties qualify for executive, administrative, or professional exemption above the salary threshold', 'Employees who work remotely or in multiple states during the same workweek', 'Workers on fixed-term contracts or seasonal employment'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section notes that not all employees qualify for overtime. Exempt salaried workers above the FLSA threshold may not receive overtime if their job duties meet the executive, administrative, or professional exemption criteria.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'time-and-a-half': {
@@ -4072,6 +4485,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'How do you calculate the regular rate for a salaried worker?', a: 'Divide the weekly salary by the number of hours the salary covers. A $1,200 weekly salary for a 40-hour week gives a $30/hr regular rate. Overtime hours beyond 40 must then be paid at $45/hr (1.5x). The salary itself covers the first 40 hours; only the 0.5x premium is additional.' },
       { q: 'Does the regular rate include overtime premiums already paid?', a: 'No. Overtime premiums already paid (the extra 0.5x above base rate) are excluded when computing the regular rate. This prevents double-counting. Also excluded: discretionary bonuses, vacation or sick pay, and reimbursements for expenses.' },
     ],
+    quiz: {
+      topic: 'regular rate of pay',
+      questions: [
+        {
+          q: 'What is the regular rate of pay used for?',
+          options: ['Setting the minimum wage floor for a given industry or region', 'Calculating the baseline hourly rate to determine correct overtime compensation under the FLSA', 'Determining the gross annual salary for tax filing purposes', 'Setting the shift differential multiplier for night or weekend work'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states the regular rate of pay is the baseline hourly rate used to calculate overtime compensation under the FLSA. It must include most forms of compensation before the 1.5x multiplier is applied.',
+        },
+        {
+          q: 'An hourly worker earns $800 base pay plus a $100 non-discretionary bonus in a 40-hour week. What is their regular rate?',
+          options: ['$20.00/hr - only the base hourly wage counts', '$22.50/hr - ($800 + $100) / 40 hours', '$21.00/hr - the bonus is averaged over a standard 48-hour work model', '$25.00/hr - the bonus is doubled under FLSA bonus rules'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows that hourly workers with a $100 bonus have a total weekly pay of $900 ($800 base + $100 bonus), divided by 40 hours = $22.50/hr regular rate. Non-discretionary bonuses must be included before calculating overtime.',
+        },
+        {
+          q: 'Which of the following is EXCLUDED from the regular rate of pay calculation?',
+          options: ['Shift differentials paid for working evenings or weekends', 'Non-discretionary bonuses tied to attendance or production goals', 'Purely discretionary bonuses paid at the employer\'s sole discretion', 'Commission pay earned during the workweek'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition specifies that the regular rate must include base wages, shift differentials, and non-discretionary bonuses, but excludes purely discretionary bonuses, overtime premiums already paid, and certain benefit payments.',
+        },
+        {
+          q: 'What common employer mistake does the pitfalls section warn against?',
+          options: ['Using the regular rate to calculate deductions instead of overtime', 'Calculating overtime using base wage only and ignoring bonuses or shift differentials', 'Applying a 2x multiplier when only 1.5x is legally required', 'Dividing the weekly salary by 45 hours instead of 40 hours for salaried workers'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states many employers mistakenly calculate overtime using base wage only, ignoring bonuses or shift differentials. This understates the regular rate and results in underpayment of overtime - an FLSA violation.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'heffingskorting': {
@@ -4200,6 +4642,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Why is the Dutch first tax bracket rate so high at 35.75%?', a: 'The 35.75% rate is a combined rate, not pure income tax. It bundles the income tax rate (8.10%) with three social insurance premiums: AOW state pension (17.90%), ANW survivor benefit (0.10%), and WLZ long-term care (9.65%). AOW recipients do not pay the 17.90% AOW premium, cutting their first-bracket rate to 17.85%.' },
       { q: 'What is the difference between Box 1, Box 2, and Box 3 in the Netherlands?', a: 'Box 1 covers employment and business income (taxed at progressive rates 35.75-49.5%). Box 2 covers income from substantial company interest - dividends and capital gains from a 5%+ stake in a company (26.9% flat in 2026). Box 3 is a wealth tax on savings and investments charged on a deemed return regardless of actual return.' },
     ],
+    quiz: {
+      topic: 'Box 1 income tax',
+      questions: [
+        {
+          q: 'What types of income fall under Dutch Box 1?',
+          options: ['Dividends and capital gains from shares and investment funds', 'Employment income, freelance income, business profit, and the imputed rental value of an owner-occupied home', 'Savings account interest and wealth above a personal exemption threshold', 'Only wages from Dutch employers - foreign employment income goes into Box 3'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states Box 1 covers income from employment and home ownership, including wages, freelance income, business profit, and the imputed rental value of an owner-occupied home. Most employees only have Box 1 income.',
+        },
+        {
+          q: 'Why is the Dutch first-bracket rate 35.75% rather than a lower pure income tax rate?',
+          options: ['It includes a surcharge for environmental levies and municipal taxes applied to all residents', 'It is a combined rate bundling income tax (8.10%) with social insurance premiums: AOW (17.90%), ANW (0.10%), and WLZ (9.65%)', 'The Netherlands applies a flat 35.75% income tax on all brackets up to €38,883 without any further premiums', 'The rate includes both employee and employer social contributions, unlike other countries that split these separately'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition explains the 35.75% first-bracket rate is a combined rate: income tax (8.10%) plus AOW state pension (17.90%), ANW survivor benefit (0.10%), and WLZ long-term care (9.65%). Brackets 2 and 3 are pure income tax.',
+        },
+        {
+          q: 'From the examples table, what is the Box 1 rate for income between €38,883 and €78,426 in 2026?',
+          options: ['35.75% - the same combined rate as the first bracket', '37.56% - pure income tax with no social insurance premiums', '42.00% - a mid-range blended rate for middle earners', '49.50% - the top rate that starts from the second bracket'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The examples table shows the second bracket (€38,883 to €78,426) is taxed at 37.56% and explicitly notes it includes no social insurance - it is pure income tax only. Social insurance premiums only apply in the first bracket.',
+        },
+        {
+          q: 'What happens to the first-bracket rate for AOW (state pension) recipients?',
+          options: ['It stays at 35.75% - AOW recipients pay the same combined rate as all other taxpayers', 'It drops to approximately 17.85% because they do not pay the 17.90% AOW premium they already receive', 'It increases to 49.50% because pension income is classified as unearned income in a higher bracket', 'They pay 0% on the first €38,883 due to the full AOW exemption credit'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that AOW recipients do not pay the 17.90% AOW premium, dropping their first-bracket rate from 35.75% to 17.85%. Forgetting this distinction leads to overestimating their tax by nearly 18 percentage points on the first €38,883 of income.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'irr': {
@@ -4688,6 +5159,41 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
         a: 'It is the only white-collar exemption that can be satisfied by an hourly-paid worker. All other exemptions require the employee to be paid on a salary or fee basis - hourly pay automatically makes a worker non-exempt regardless of duties. Computer employees can qualify either on a salary basis (at least $684/week) or as an hourly worker earning at least $27.63 per hour. The duties requirement is the same either way: the work must involve high-level application of systems analysis, software design, programming, or testing - not routine operations, user training, or help-desk support.',
       },
     ],
+    quiz: {
+      topic: 'FLSA duties test',
+      questions: [
+        {
+          q: 'What are the TWO requirements an employer must satisfy to legally exempt a salaried employee from FLSA overtime?',
+          options: ['The employee must have a supervisory title and earn above the federal minimum wage annualized to 40 hours', 'The salary test (at least $684/week on a guaranteed basis) AND the duties test (actual job responsibilities match one of five white-collar exemption categories)', 'The salary test alone - any employee earning above $684/week is automatically exempt from overtime under the FLSA', 'The duties test alone - employees whose job duties qualify are exempt regardless of how much they earn per week'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition describes the FLSA exemption as a "two-lock system." Both must be satisfied: the salary test (at least $684/week guaranteed) and the duties test (actual responsibilities match an exemption category). Either lock failing means overtime applies.',
+        },
+        {
+          q: 'Which of the five white-collar exemptions has NO salary threshold requirement?',
+          options: ['Executive - because the management function implicitly exceeds the salary threshold', 'Administrative - because non-manual office work is treated as inherently professional', 'Outside Sales - because the exemption applies to field salespeople regardless of how they are paid', 'Computer Employee - because tech roles are separately governed by DOL wage guidance'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition explicitly notes the Outside Sales exemption has no salary threshold. Salespeople who make sales or obtain orders while customarily working away from the employer\'s place of business qualify regardless of their pay structure.',
+        },
+        {
+          q: 'Under the FLSA "primary duty" standard, what determines exempt status?',
+          options: ['The employee must spend more than 50% of working hours performing exempt duties - time allocation is the sole legal test', 'The principal, main, or most important duty performed - under the concurrent duties doctrine a manager spending 70% of time on non-exempt tasks can still qualify', 'The job title assigned by the employer - "Manager" and "Director" titles automatically satisfy the duties test', 'The number of subordinates supervised - managing at least five full-time employees satisfies the executive exemption'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states "primary duty" means the principal, main, or most important duty - not necessarily the one consuming the most hours. Under the concurrent duties doctrine, a store manager spending 70% on non-exempt shelf-stocking can still have a primary duty of management if that function defines the role.',
+        },
+        {
+          q: 'What is the "California trap" described in the pitfalls section?',
+          options: ['California requires all workers to receive the California minimum wage regardless of FLSA exempt status or salary level', 'California IWC Wage Orders require exempt employees to spend more than 50% of time on exempt duties, stricter than the federal primary duty standard - an employee who is federal-exempt may still be California-non-exempt', 'California extends the FLSA administrative exemption to include all office workers regardless of discretion, creating broader exemptions than federal law', 'California caps misclassification liability at one year of back pay, a more favorable standard than the two-year federal FLSA limit'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns multi-state employers that California IWC Wage Orders impose a 50%+ time requirement for exempt duties - stricter than the federal primary duty standard. California\'s overtime exposure also spans three years (versus two under FLSA) with no cap on liquidated damages.',
+        },
+        {
+          q: 'What is the Highly Compensated Employee (HCE) shortcut, and how does it differ from the standard duties test?',
+          options: ['HCE employees are entirely exempt from the FLSA, including minimum wage requirements, once they earn above $107,432', 'HCE employees at $107,432+ annually only need to "customarily and regularly" perform at least one exempt duty - a lighter standard than the full duties test', 'HCE employees must satisfy a stricter duties test with all five exemption categories applying simultaneously due to their compensation level', 'HCE status removes the salary threshold entirely so duties alone determine overtime eligibility above $107,432'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition explains that HCE employees earning at least $107,432 annually (with at least $684/week on salary) face a lighter standard: they need only "customarily and regularly" perform at least one executive, administrative, or professional duty. This is significantly easier to satisfy than the full duties test.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
   'valuation-multiple': {
@@ -5123,6 +5629,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'What does it mean when GCD equals 1?', a: 'When GCD(a, b) = 1, the numbers are coprime - they share no common factor other than 1. For a fraction, this means it is already fully reduced. For denominators, it means their LCD equals their product.' },
       { q: 'How do you find the GCD without the Euclidean algorithm?', a: 'List all factors of each number and find the largest one they share. For 12 and 8: factors of 12 are 1, 2, 3, 4, 6, 12; factors of 8 are 1, 2, 4, 8. Largest shared factor is 4. For large numbers the Euclidean algorithm is much faster.' },
     ],
+    quiz: {
+      topic: 'GCD',
+      questions: [
+        {
+          q: 'What does GCD(18, 24) equal, and how is it found with the Euclidean algorithm?',
+          options: ['GCD = 12, found by dividing both numbers by their average', 'GCD = 6, found by dividing 24 by 18 (remainder 6), then 18 by 6 (remainder 0) - last non-zero remainder is 6', 'GCD = 3, found by dividing both 18 and 24 by the smallest prime factor (3)', 'GCD = 4, found by listing all shared factors and picking the greatest'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition walks through this exact example: divide 24 by 18, remainder 6. Divide 18 by 6, remainder 0. The last non-zero remainder is 6, so GCD(18, 24) = 6. The examples table confirms 18/24 simplifies to 3/4.',
+        },
+        {
+          q: 'What does it mean when GCD(7, 13) = 1?',
+          options: ['One of the numbers is prime, so the algorithm always returns 1 for primes', '7 and 13 are coprime - they share no common factor other than 1, and 7/13 is already in its simplest form', 'The Euclidean algorithm failed because both numbers are odd, so 1 is returned as the default value', 'The fraction 7/13 must be converted to a different form before it can be simplified'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section and FAQ explain that GCD(a, b) = 1 means the numbers are coprime. The fraction is already fully reduced - no further simplification is possible. The examples table lists GCD(7, 13) = 1 with the note "Coprime: 7/13 is already in lowest terms."',
+        },
+        {
+          q: 'You want to simplify the fraction 12/8. What is the correct fully reduced result?',
+          options: ['6/4 - dividing by 2 is sufficient', '3/2 - dividing numerator and denominator by GCD(12, 8) = 4', '2/3 - swap numerator and denominator after finding the GCD', '4/3 - divide only the larger of the two numbers by the GCD'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'GCD(12, 8) = 4. Dividing both by 4 gives 3/2. The pitfalls section warns against stopping at a divisor that is not the greatest - dividing by 2 gives 6/4 which is correct but not fully reduced.',
+        },
+        {
+          q: 'What is the relationship between GCD and LCM?',
+          options: ['GCD and LCM are inverses: GCD(a,b) = 1 / LCM(a,b) for all positive integers', 'GCD(a, b) x LCM(a, b) = a x b - knowing one gives you the other', 'GCD always equals LCM when both numbers are multiples of 10', 'LCM is always smaller than GCD for numbers greater than 10'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states: "GCD(a, b) x LCM(a, b) = a x b, so knowing one gives you the other." The whenToUse section also notes this: LCM(a, b) = a x b / GCD(a, b), making GCD the intermediate step for computing LCM.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
   'lcd': {
     definition: [
@@ -5151,6 +5686,29 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'Is the LCD always the product of the two denominators?', a: 'Only when the denominators are coprime. For 3/5 + 2/7, LCD = 5 × 7 = 35. For 3/4 + 1/6, GCD(4, 6) = 2, so LCD = 12, not 24. The product is always a valid common denominator but not always the lowest.' },
       { q: 'Can the LCD be one of the existing denominators?', a: 'Yes - when one denominator is a multiple of the other. LCD(5, 10) = 10 because 10 is already divisible by 5. Only the first fraction needs converting: 2/5 becomes 4/10, and 3/10 stays unchanged.' },
     ],
+    quiz: {
+      topic: 'LCD',
+      questions: [
+        {
+          q: 'What is LCD(4, 6), and how is it calculated?',
+          options: ['24 - multiply the two denominators together since they share no common factors', '12 - calculated as (4 x 6) / GCD(4, 6) = 24 / 2 = 12', '8 - add the two denominators and divide by the number of fractions', '6 - the larger denominator is always the LCD when one is a multiple of the other'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition shows LCD(b, d) = (b x d) / GCD(b, d). GCD(4, 6) = 2, so LCD = (4 x 6) / 2 = 12. The examples table confirms this: denominators 4 and 6 give LCD = 12.',
+        },
+        {
+          q: 'When adding 1/4 + 1/3, what is the correct process using the LCD?',
+          options: ['Add numerators and denominators directly: 1+1 / 4+3 = 2/7', 'Find LCD = 12, convert 1/4 to 3/12 and 1/3 to 4/12, then add: 3/12 + 4/12 = 7/12', 'Find LCD = 12, convert 1/4 to 4/12 and 1/3 to 3/12, then add: 7/12', 'Multiply both fractions by the product of denominators 4 x 3 = 12, giving 12/12 = 1'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The beginnerExplain section walks through this: LCD(4, 3) = 12. Converting: 1/4 = 3/12 (multiply by 3/3) and 1/3 = 4/12 (multiply by 4/4). Adding: 3/12 + 4/12 = 7/12.',
+        },
+        {
+          q: 'From the examples table, what is LCD(5, 10)?',
+          options: ['50 - the product of 5 and 10', '15 - the sum of the two denominators', '10 - because 10 is already a multiple of 5', '5 - the GCD of 5 and 10 is the LCD in this case'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows LCD(5, 10) = 10 with the note "10 is already a multiple of 5." When one denominator is already a multiple of the other, the LCD is simply the larger denominator and only the first fraction needs converting.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
   'lcm': {
     definition: [
@@ -5179,6 +5737,35 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       { q: 'When does LCM equal the product a × b?', a: 'When a and b are coprime - they share no common factor other than 1. Examples: LCM(3, 5) = 15, LCM(7, 11) = 77. When GCD > 1, LCM is smaller than the product.' },
       { q: 'How does LCM differ from LCD?', a: 'LCD (Lowest Common Denominator) is the same concept as LCM applied specifically to the denominators of fractions. LCD(b, d) = LCM(b, d). LCM is the general term; LCD is used in the fraction arithmetic context.' },
     ],
+    quiz: {
+      topic: 'LCM',
+      questions: [
+        {
+          q: 'What is LCM(4, 6) and what does it represent?',
+          options: ['10 - the sum of the two numbers', '12 - the smallest positive integer that is a multiple of both 4 and 6', '24 - the product of 4 and 6', '2 - the GCD of 4 and 6, which equals the LCM for small numbers'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states LCM(4, 6) = 12 because 12 is the smallest number appearing in both the multiples of 4 (4, 8, 12...) and the multiples of 6 (6, 12...). Calculated via formula: LCM = (4 x 6) / GCD(4, 6) = 24 / 2 = 12.',
+        },
+        {
+          q: 'Bus A arrives every 4 minutes and Bus B arrives every 6 minutes. Both depart together at time zero. When is the next time they depart simultaneously?',
+          options: ['10 minutes - by adding the two intervals', '12 minutes - LCM(4, 6) = 12, the first overlap in both schedules', '24 minutes - the product of 4 x 6, the safe common multiple', '8 minutes - the first multiple of 4 that is also a multiple of 2'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The beginnerExplain section uses this exact bus analogy. Multiples of 4: 4, 8, 12... Multiples of 6: 6, 12... The first overlap is 12 minutes. LCM(4, 6) = 12 gives the next simultaneous departure.',
+        },
+        {
+          q: 'When does LCM(a, b) equal the product a x b?',
+          options: ['Always - multiplying the two numbers always gives the LCM', 'When a and b are coprime (GCD = 1) - they share no common factor other than 1', 'When a equals b - identical numbers always produce a product-equal LCM', 'When both a and b are even numbers divisible by 2'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states LCM equals the product only when a and b are coprime. Examples from the table: LCM(3, 5) = 15 = 3x5 (coprime); LCM(7, 13) = 91 = 7x13 (coprime). When GCD > 1, LCM is smaller than the product.',
+        },
+        {
+          q: 'What is the relationship between LCM(a, b) and GCD(a, b)?',
+          options: ['LCM(a, b) = GCD(a, b) for all pairs of integers greater than 1', 'LCM(a, b) x GCD(a, b) = a x b - knowing three of the four values gives you the fourth', 'LCM(a, b) is always greater than GCD(a, b) by a factor of exactly 10', 'LCM and GCD are independent - there is no algebraic relationship between them'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states: "LCM(a, b) x GCD(a, b) = a x b is a useful check: if you know three of the four values you can derive the fourth." This identity links the two fundamental number theory tools.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
   },
 
 };
