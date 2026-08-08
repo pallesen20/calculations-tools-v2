@@ -3,6 +3,8 @@ import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import type { Source } from '../../../components/Sources.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   def:     "$$\\frac{a}{b} = \\frac{c}{d} \\iff a \\times d = b \\times c$$",
@@ -15,14 +17,98 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',   label: 'How to use' },
-  { id: 'definition',   label: 'What is a proportion?' },
-  { id: 'cross-mult',   label: 'Cross-multiplication method' },
+  { id: 'definition',        label: 'What is a proportion?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'cross-mult',        label: 'Cross-multiplication method' },
   { id: 'examples',     label: 'Worked examples' },
   { id: 'direct',       label: 'Direct vs inverse proportion' },
   { id: 'applications', label: 'Real-world applications' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',          label: 'FAQs' },
+  { id: 'quiz',         label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'What does a proportion state?',
+    options: [
+      'That two differences are equal',
+      'That two products are equal',
+      'That two ratios are equal',
+      'That two sums are equal',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'A proportion is an equation stating that two ratios are equal: a/b = c/d. It describes a scaling relationship where quantities change together at the same rate.',
+  },
+  {
+    q: 'Solve: 5:8 = c:24. What is c?',
+    options: [
+      '15',
+      '14',
+      '16',
+      '12',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Cross-multiply: 8c = 5 × 24 = 120. Divide by 8: c = 15. Verify: 5 × 24 = 120 = 8 × 15.',
+  },
+  {
+    q: 'In the proportion a/b = c/d, what does cross-multiplication give you?',
+    options: [
+      'a × b = c × d',
+      'a × c = b × d',
+      'a + d = b + c',
+      'a × d = b × c',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Cross-multiplication multiplies each numerator by the opposite denominator: a × d = b × c. This eliminates both fractions and lets you isolate any one unknown.',
+  },
+  {
+    q: 'From the real-world applications table, which domain uses the proportion "1 cm : 5 km = 3.5 cm : d km"?',
+    options: [
+      'Finance',
+      'Cooking',
+      'Maps',
+      'Chemistry',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The maps row shows a scale where 1 cm represents 5 km. Cross-multiplying 1/5 = 3.5/d gives d = 17.5 km.',
+  },
+  {
+    q: 'For "3 workers take 4 days; how long for 6 workers?", why is writing 3/4 = 6/d a mistake?',
+    options: [
+      'Because d must always appear in the numerator',
+      'Because more workers means fewer days - this is inverse proportion, not direct',
+      'Because cross-multiplication only works with whole numbers',
+      'Because 3/4 must be simplified before setting up the equation',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'This is inverse proportion: as workers increase, days decrease. The page warns you must recognise whether quantities scale in the same direction (direct) or opposite directions (inverse) before writing the proportion.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Ratio',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/Ratio.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Directly Proportional',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/DirectlyProportional.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Inversely Proportional',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/InverselyProportional.html',
+  },
 ];
 
 const schema = [
@@ -60,7 +146,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Proportion Calculator"
   metaTitle="Proportion Calculator | Solve a:b = c:d Step-by-Step"
@@ -71,6 +156,7 @@ const schema = [
   embedSlug="proportion-calculator"
   ogFormula="Solve a:b = c:d - unknown = (b × known) / opposite"
   ogExample="3:4 = 9:? -> d = (4 × 9) / 3 = 12"
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -79,7 +165,6 @@ const schema = [
           <h2>Calculate Proportion to Find Missing Value</h2>
           <p>Solve a : b = c : d for the missing value</p>
         </div>
-
         <div class="prop-miss-row">
           <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);">Solve for:</span>
           <button class="prop-miss-btn" data-miss="a">A</button>
@@ -87,7 +172,6 @@ const schema = [
           <button class="prop-miss-btn" data-miss="c">C</button>
           <button class="prop-miss-btn active" data-miss="d">D</button>
         </div>
-
         <div class="prop-grid">
           <div class="prop-side">
             <div class="bmi-field">
@@ -121,13 +205,11 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="prop-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="prop-result-val">-</span>
           </div>
           <div class="lbm-primary-lbl">Value of <span id="prop-missing-lbl">D</span></div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -146,52 +228,52 @@ const schema = [
         </div>
       </div>
     </section>
-
     <style is:global>input:disabled { opacity:0.4; }</style>
-
     <script src="/js/proportion-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>To solve a proportion a:b = c:d for the missing value, use <strong>cross-multiplication</strong>: a × d = b × c. Isolate the unknown by dividing both sides by its coefficient. Example: 3:4 = 9:d → 3d = 36 → <strong>d = 12</strong>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>One formula solves every case: a × d = b × c. Rearrange to isolate whichever variable is missing.</li>
+          <li>Always verify after solving - plug the answer back in and check that both cross-products are equal.</li>
+          <li>Direct proportion (a/b = c/d) and inverse proportion (a × b = c × d) are different relationships. This calculator solves direct proportions only.</li>
+          <li>Most proportion errors happen at setup, not calculation - confirm that the quantities on each side of the equation are in the same order.</li>
+          <li>Proportions are behind everyday tasks: scaling recipes, reading maps, converting units, and working with similar triangles.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our proportions calculator</h2>
       <p>Select which variable you want to solve for (A, B, C, or D). Enter the three known values. The calculator solves for the missing value using cross-multiplication and verifies the result.</p>
-
       <h2 id="definition">What is a proportion?</h2>
-      <p>A proportion is an equation stating that two ratios are equal:</p>
+      <p><a href="/glossary/proportion">A proportion</a> is an equation stating that two ratios are equal:</p>
       <Formula expr={f.def} />
-      <p>A proportion describes a scaling relationship: if a/b = c/d, then multiplying a and b by the same factor k gives c and d. Proportions appear wherever quantities scale together - recipes, maps, unit conversions, similar triangles, and financial ratios.</p>
-
+      <p>A proportion describes a scaling relationship: if a/b = c/d, then multiplying a and b by the same factor k gives c and d. Proportions appear wherever quantities scale together - recipes, maps, <a href="/conversion">unit conversions</a>, similar triangles, and <a href="/finance">financial ratios</a>.</p>
+      <h3 id="explained-to-beginner">Propotions explained to a beginner</h3>
+      <p>Think of a road map. The legend says 1 cm = 10 km. You measure 4 cm between two cities and want to know the real distance. You know the scale stays constant, so: 1 cm to 10 km is the same relationship as 4 cm to ? km. Write it as a proportion: 1/10 = 4/?. Cross-multiply: 1 × ? = 10 × 4, so ? = 40 km.</p>
+      <p>That's all a proportion is - a statement that two scale relationships are equal. One side of the equation is your known scale (1 cm = 10 km). The other side uses the same scale with a new pair of numbers, one of which is unknown. Cross-multiplication is just a shortcut for eliminating the <a href="/glossary/fraction">fractions</a> so you can solve in one step.</p>
       <h2 id="cross-mult">Cross-multiplication method</h2>
-      <p>Given a/b = c/d, multiply both sides by b × d to eliminate the denominators:</p>
+      <p>Given a/b = c/d, multiply both sides by b × d to eliminate the <a href="/glossary/denominator">denominators</a>:</p>
       <p>a × d = b × c</p>
       <p>To solve for each variable:</p>
       <Formula expr={f.solveD} />
       <Formula expr={f.solveA} />
       <p>The other two: b = a×d/c and c = a×d/b. In every case, the missing variable equals the product of the two values on the opposite diagonal, divided by the remaining known value.</p>
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for calculating proportions</h2>
       <h3>Example 1: find d given 3/4 = 9/d</h3>
       <Formula expr={f.ex1} />
       <p>Cross-multiply: 3d = 4 × 9 = 36. Divide by 3: d = 12. Verify: 3 × 12 = 36 = 4 × 9 ✓.</p>
-
       <h3>Example 2: find c given 5/8 = c/24</h3>
       <Formula expr={f.ex2} />
       <p>Cross-multiply: 8c = 5 × 24 = 120. Divide by 8: c = 15. Verify: 5 × 24 = 120 = 8 × 15 ✓.</p>
-
       <h3>Example 3: recipe scaling</h3>
       <p>A recipe uses 250 g flour for 4 servings. For 10 servings: 250/4 = x/10 → 4x = 2500 → x = 625 g.</p>
-
       <h3>Example 4: map scale</h3>
       <p>1 cm on a map = 5 km in reality. Distance on map = 3.5 cm. Real distance: 1/5 = 3.5/d → d = 17.5 km.</p>
-
       <div class="responsive-table">
         <table>
           <thead><tr><th>Proportion</th><th>Missing</th><th>Calculation</th><th>Answer</th></tr></thead>
@@ -203,13 +285,14 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>In practice I find that most proportion errors come from setup, not <a href="/glossary/arithmetic">arithmetic</a>. When I work through a problem with proportions, I always write out the proportion explicitly with units on both sides before cross-multiplying - something like "250 g / 4 servings = x g / 10 servings".</p>
+      <p>That extra second of labeling makes it obvious if the quantities are in the wrong positions before any calculations happen.</p>
       <h2 id="direct">Direct vs inverse proportion</h2>
       <p>This calculator solves <strong>direct proportions</strong> where a/b = c/d - as one quantity increases, the other increases proportionally:</p>
       <Formula expr={f.direct} />
-      <p><strong>Inverse proportion</strong> means as one quantity increases, the other decreases: a × b = c × d (constant product). For example, 4 workers take 6 days; 8 workers take 3 days. Inverse proportion is a different relationship and is not solved by this calculator.</p>
-
+      <p><a href="/glossary/proportion">Inverse proportion</a> means as one quantity increases, the other decreases: a × b = c × d (constant product). For example, 4 workers take 6 days; 8 workers take 3 days. Inverse proportion is a different relationship and is not solved by this calculator.</p>
       <h2 id="applications">Real-world applications</h2>
+      <p>Proportions appear in any situation where a known scale or rate is applied to a new quantity. The six domains below cover the most common setups - each one is a direct proportion where two <a href="/glossary/ratio">ratios</a> stay equal as the numbers change.</p>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Domain</th><th>Example proportion</th></tr></thead>
@@ -223,25 +306,24 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes for solving proportions</h2>
       <h3>Setting up the proportion backwards</h3>
       <p>Proportion direction matters. For "3 workers take 4 days; how long for 6 workers?" the correct proportion is <em>not</em> 3/4 = 6/d (that's inverse proportion). Recognise whether the quantities scale in the same direction (direct) or opposite directions (inverse) before writing the proportion.</p>
-
       <h3>Cross-multiplying the wrong pair</h3>
       <p>In a/b = c/d, the cross-multiplication is a×d = b×c (diagonals). A common error is to multiply a×c or b×d instead.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p><strong>My personal method:</strong> if doubling one quantity should double the other (more workers, more bricks), it's direct. If doubling one quantity should halve the other (more workers, fewer days needed), it's inverse. Getting that question right before writing any equation saves a lot of frustration.</p>
+      <h2 id="faq">FAQs about proportion calculation</h2>
       <h3>How do you solve a proportion?</h3>
       <p>Cross-multiply: a × d = b × c. Isolate the unknown by dividing by its coefficient.</p>
-
       <h3>What is a proportion?</h3>
       <p>An equation stating two ratios are equal: a/b = c/d. Describes quantities that scale together.</p>
-
       <h3>What is the difference between ratio and proportion?</h3>
       <p>A ratio (a:b) compares two quantities. A proportion is an equation equating two ratios (a:b = c:d).</p>
+      <QuizBlock
+        topic="proportions"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/ratio-calculator/proportion"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -251,10 +333,7 @@ const schema = [
         { path: '/math/percentage-calculator/change',  blurb: 'Percentage change between two values.' },
         { path: '/math/fraction-calculator',           blurb: 'The main fraction calculator - all four operations.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/math/ratio-calculator/proportion" />
-
     </div>
   </div>
-
 </CalculatorLayout>

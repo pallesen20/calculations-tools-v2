@@ -591,7 +591,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Fundamentals',
     siteCategory: 'Math',
     shortDef: 'A ratio compares two or more quantities, showing their relative sizes. Written as a:b or a/b, it is the foundation for fractions, percentages, rates, and proportions - the core language of proportional reasoning.',
-    relatedTools: ['/math/ratio-calculator'],
+    relatedTools: ['/math/ratio-calculator', '/math/ratio-calculator/proportion'],
     relatedTerms: ['proportion', 'unit-rate', 'fraction', 'percentage'],
   },
   {
