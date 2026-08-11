@@ -3,6 +3,8 @@ import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import type { Source } from '../../../components/Sources.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   def:     "$$\\text{Unit rate} = \\frac{\\text{Quantity}}{\\text{Number of units}}$$",
@@ -14,14 +16,98 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',    label: 'How to use' },
-  { id: 'definition',    label: 'What is a unit rate?' },
-  { id: 'formula',       label: 'Unit rate formula' },
+  { id: 'definition',          label: 'What is a unit rate?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',             label: 'Unit rate formula' },
   { id: 'examples',      label: 'Worked examples' },
   { id: 'comparing',     label: 'Comparing unit rates for value' },
   { id: 'applications',  label: 'Common applications' },
   { id: 'common-mistakes', label: 'Common mistakes' },
   { id: 'faq',           label: 'FAQs' },
+  { id: 'quiz',          label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'What distinguishes a unit rate from a general ratio?',
+    options: [
+      'It always uses multiplication rather than division',
+      'Its denominator equals 1 - it expresses how much per one unit',
+      'It can only be used to compare prices',
+      'It compares more than two quantities at once',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'A unit rate is a ratio where the second term (denominator) equals 1. It answers "how much per one unit?" - per item, per hour, per kilogram - making different-sized options directly comparable.',
+  },
+  {
+    q: 'A car travels 390 km in 4.5 hours. What is its speed as a unit rate?',
+    options: [
+      '86.67 km/h',
+      '80 km/h',
+      '95 km/h',
+      '75.5 km/h',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: '390 ÷ 4.5 = 86.67 km/h. Divide the total distance by the number of hours to get the rate per one hour.',
+  },
+  {
+    q: 'From the comparing unit rates table, which pack size offers the best value?',
+    options: [
+      '250 g for £1.20 (£0.48 per 100 g)',
+      '500 g for £2.10 (£0.42 per 100 g)',
+      'All three packs offer equal value per gram',
+      '1 kg for £3.80 (£0.38 per 100 g)',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The 1 kg pack has the lowest unit rate at £0.38 per 100 g. When comparing options, always calculate the same unit rate for each and choose the lowest.',
+  },
+  {
+    q: 'A product is priced at £5 per kg. What is the equivalent unit rate per 100 g?',
+    options: [
+      '£0.05 per 100 g',
+      '£0.50 per 100 g',
+      '£5.00 per 100 g',
+      '£50.00 per 100 g',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '1 kg = 1000 g, so £5/kg divided by 10 gives £0.50 per 100 g. The page warns that £/100 g and £/kg are not directly comparable and must be converted to the same base unit first.',
+  },
+  {
+    q: 'According to the applications table, which domain uses kcal per 100 g as its unit rate?',
+    options: [
+      'Transport',
+      'Employment',
+      'Finance',
+      'Nutrition',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The nutrition row uses kcal per 100 g, comparing calorie density across different food products. This is the same structure as price per 100 g - dividing the quantity (calories) by weight.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Ratio',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/Ratio.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Division',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/Division.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Directly Proportional',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/DirectlyProportional.html',
+  },
 ];
 
 const schema = [
@@ -59,7 +145,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Unit Rate Calculator"
   metaTitle="Unit Rate Calculator | Rate Per One Unit"
@@ -70,6 +155,7 @@ const schema = [
   embedSlug="unit-rate-calculator"
   ogFormula="Unit rate = Total value / Number of units"
   ogExample="$45 for 3 items = $45 / 3 = $15 per item"
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -78,7 +164,6 @@ const schema = [
           <h2>Calculate Unit Rate Instantly</h2>
           <p>Find the rate per one unit</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="ur-quantity">Total quantity (e.g. total cost)</label>
           <div class="bmi-input-wrap">
@@ -97,20 +182,17 @@ const schema = [
             <input type="text" inputmode="decimal" id="ur-scale" class="bmi-input" placeholder="e.g. 7" />
           </div>
         </div>
-
         <div id="ur-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="ur-rate">-</span>
           </div>
           <div class="lbm-primary-lbl">Rate per 1 unit</div>
-
           <div class="lbm-cards">
             <div class="lbm-card hidden" id="ur-scale-row">
               <div class="lbm-card-val" id="ur-scaled">-</div>
               <div class="lbm-card-lbl" id="ur-scale-lbl">Total for N units</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -125,46 +207,47 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/unit-rate-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
-        <p>A unit rate expresses <strong>how much per one unit</strong>. Calculate it by dividing the total quantity by the number of units. 12 items for £15.60 → £15.60 ÷ 12 = <strong>£1.30 per item</strong>.</p>
+        <p>A <a href="/glossary/unit-rate">unit rate</a> expresses <strong>how much per one unit</strong>. Calculate it by dividing the total quantity by the number of units. 12 items for £15.60 → £15.60 ÷ 12 = <strong>£1.30 per item</strong>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>One operation only: divide the total quantity by the number of units to get the rate per one unit.</li>
+          <li>To compare options, calculate the same unit rate for each (e.g. price per 100 g) and pick the lowest.</li>
+          <li>Unit mismatch is the biggest trap: £/100 g and £/kg are not directly comparable - convert to the same base unit first.</li>
+          <li>Scaling works in both directions: unit rate × n gives you the total for n units; total ÷ unit rate tells you how many units you can get.</li>
+          <li>Every domain has a natural reference unit: food uses per 100 g, speed uses per hour, fuel uses per litre or per 100 km.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our unit rate calculator</h2>
       <p>Enter the total quantity and the number of units. Optionally enter a scale to project the rate to a different quantity (e.g. total cost for 50 items). The calculator returns the unit rate and the scaled total.</p>
-
       <h2 id="definition">What is a unit rate?</h2>
-      <p>A unit rate is a ratio where the second term (the denominator) equals 1. It answers "how much per one unit?" - per item, per hour, per kilometre, per kilogram. Unit rates standardise different-sized packages or time periods so they can be compared directly.</p>
+      <p>A unit rate is a <a href="/glossary/ratio">ratio</a> where the second term (<a href="/glossary/denominator">the denominator</a>) equals 1. It answers "how much per one unit?" - per item, per hour, per kilometre, per kilogram. Unit rates standardise different-sized packages or time periods so they can be compared directly.</p>
       <p>Common unit rates: price per 100 g (supermarket shelf labels), kilometres per hour (speed), calories per serving, earnings per hour, kilometres per litre (fuel efficiency).</p>
-
+      <h3 id="explained-to-beginner">Unit rate explained to a beginner</h3>
+      <p>Imagine you're at a supermarket choosing between a 400 g jar of coffee for £5.60 and a 200 g jar for £3.00. The prices look different and the sizes are different, so you can't compare them at a glance. Divide each price by its weight: £5.60 ÷ 400 = £0.014 per gram; £3.00 ÷ 200 = £0.015 per gram. The larger jar wins.</p>
+      <p>That single number - cost per gram - is the unit rate. It strips away the packaging size and converts everything to "per one unit" so any two options are immediately comparable. The same idea works for speed (km per hour), pay (£ per hour), or fuel (km per litre). Always divide by whatever the "one" thing is.</p>
       <h2 id="formula">Unit rate formula</h2>
       <Formula expr={f.def} />
       <Formula expr={f.ex1} />
       <Formula expr={f.ex2} />
       <p>To project the rate to any number of units n:</p>
       <Formula expr={f.scale} />
-
-      <h2 id="examples">Worked examples</h2>
-
+      <h2 id="examples">Worked examples for calculating unit rate</h2>
       <h3>Example 1: price per item</h3>
       <p>A bag of 12 oranges costs £2.76. Unit rate: £2.76 ÷ 12 = £0.23 per orange. Cost of 7 oranges: 7 × £0.23 = £1.61.</p>
-
       <h3>Example 2: speed</h3>
       <p>A car travels 390 km in 4.5 hours. Speed: 390 ÷ 4.5 = 86.67 km/h. To convert that result between km/h, mph, knots, and m/s, use the <a href="/conversion/speed-converter">speed converter</a>.</p>
-
       <h3>Example 3: fuel efficiency</h3>
       <p>A car uses 55 litres to travel 825 km. Efficiency: 825 ÷ 55 = 15 km/litre. For a 300 km journey: 300 ÷ 15 = 20 litres needed.</p>
-
       <h3>Example 4: earnings</h3>
       <p>£480 for 32 hours. Unit rate: £480 ÷ 32 = £15/hour. For 40 hours: 40 × 15 = £600.</p>
-
       <h2 id="comparing">Comparing unit rates for value</h2>
       <p>Unit rates are the standard method for finding the best-value option across different pack sizes:</p>
       <Formula expr={f.compare} />
@@ -178,8 +261,8 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="applications">Common applications</h2>
+      <p>When I compare supermarket labels and prices, I always convert to the same base unit before calculating - usually per 100 g or per litre. Shelf labels often already show price per 100 g or per kg, but not always, and a quiet unit mismatch between two otherwise similar products produces a wrong result that looks perfectly plausible.</p>
+      <h2 id="applications">Common applications for unit rates</h2>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Domain</th><th>Quantity</th><th>Units</th><th>Unit rate</th></tr></thead>
@@ -193,25 +276,24 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when calculating unit rates</h2>
       <h3>Dividing in the wrong direction</h3>
       <p>The unit rate is always (quantity ÷ units), not (units ÷ quantity). Price per item = price ÷ items, not items ÷ price.</p>
-
       <h3>Not matching units when comparing</h3>
       <p>Comparing £/100 g with £/kg is not direct. Convert both to the same unit first: 1 kg = 1000 g, so £5/kg = £0.50/100 g.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>The direction error - dividing units by quantity instead of quantity by units - is the most common mistake I see, and it's easy to catch with a spoken sanity check. Your answer should contain the word "per" and make sense out loud: "£1.30 per item" reads naturally, but "0.77 items per pound" is a signal you divided the wrong way.</p>
+      <h2 id="faq">Frequently asked questions for unit rate</h2>
       <h3>What is a unit rate?</h3>
       <p>A rate expressed per one unit - per item, per hour, per kilometre. Calculated by dividing the total by the number of units.</p>
-
       <h3>How do you calculate unit rate?</h3>
       <p>Divide the total quantity by the number of units. Example: 12 items for £15.60 → £15.60 ÷ 12 = £1.30/item.</p>
-
       <h3>How do you use unit rate to find best value?</h3>
       <p>Calculate the unit rate for each option (e.g. price per 100 g) and choose the lowest.</p>
+      <QuizBlock
+        topic="unit rates"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/ratio-calculator/unit-rate"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -221,10 +303,7 @@ const schema = [
         { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions directly.' },
         { path: '/math/percentage-calculator',         blurb: 'Percentage calculator - percentage of a number, increase, decrease.' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/math/ratio-calculator/unit-rate" />
-
     </div>
   </div>
-
 </CalculatorLayout>

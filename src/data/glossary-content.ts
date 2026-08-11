@@ -2019,6 +2019,92 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'phi': {
+    definition: [
+      'Phi (φ), also called the golden ratio, is the unique positive irrational number defined by the proportion $$\\frac{a+b}{a} = \\frac{a}{b} = \\varphi$$. Its exact value is $$\\varphi = \\frac{1 + \\sqrt{5}}{2} \\approx 1.6180339887\\ldots$$ This self-referencing property - a ratio that equals its own reciprocal plus one - produces a number with no exact fractional representation and no repeating decimal digits.',
+      'φ satisfies the quadratic identity $$\\varphi^2 = \\varphi + 1$$, the only positive number for which this holds. Two remarkable consequences follow. Its square (φ² ≈ 2.618) equals φ + 1. Its reciprocal (1/φ ≈ 0.618) equals φ - 1. This means 1/φ and φ share the same decimal part (0.6180339887...), a property unique to φ among all real numbers.',
+      'φ emerges from the Fibonacci sequence (1, 1, 2, 3, 5, 8, 13, 21, 34, 55...) through consecutive ratios. The ratios 13/8 = 1.625, 21/13 ≈ 1.615, 34/21 ≈ 1.619, 55/34 ≈ 1.6176 oscillate above and below φ, converging exponentially. The error shrinks by a factor of φ² ≈ 2.618 with each step. This connection to additive growth explains why φ appears in plant spirals, pine cone scales, and sunflower seed arrangements.',
+    ],
+    whenToUse: 'Use φ when you need proportionally balanced dimensions. Given the longer side (a), divide by φ to get the shorter side (b = a/φ ≈ 0.618a). Given the shorter side, multiply by φ to get the longer. In typography, multiplying the body text size by φ yields a heading size with clear visual hierarchy. In web layout, a 38%:62% column split closely approximates φ. In mathematics, φ appears in regular pentagon diagonals, icosahedral geometry, and continued fraction representations.',
+    examples: {
+      headers: ['Known value', 'Operation', 'Result', 'Use case'],
+      rows: [
+        ['Longer = 100', '÷ φ (÷ 1.618)', '61.8 (shorter side)', 'Golden rectangle dimensions'],
+        ['Shorter = 100', '× φ (× 1.618)', '161.8 (longer side)', 'Golden rectangle dimensions'],
+        ['Total = 100', '÷ φ (÷ 1.618)', '61.8 (longer part)', 'Line segment division'],
+        ['Body text = 16 px', '× φ', '≈ 25.9 px (heading)', 'Typography size scale'],
+        ['Column = 38%', '× φ', '≈ 62% (main column)', 'Web layout sidebar split'],
+      ],
+    },
+    pitfalls: 'The most common mistake is treating φ as a universal design law. Claims that the Parthenon, the Mona Lisa, or the Great Pyramid were deliberately constructed using φ are disputed by modern scholars - the ratios match approximately and the matches are likely coincidental. A precision trap also applies: rounding φ to 1.618 introduces small cumulative errors in iterative calculations. For design work the rounding is harmless, but for mathematical proofs the full irrational value is required.',
+    faqs: [
+      { q: 'Why is φ called the golden ratio?', a: 'The name traces to Luca Pacioli\'s Divina Proportione (1509), which described the proportion as having divine aesthetic properties. The term "golden ratio" became widespread in 19th-century mathematical literature. The Greek letter φ (phi) was adopted in the 20th century in honour of the sculptor Phidias, who is associated with the Parthenon.' },
+      { q: 'Is φ truly irrational?', a: 'Yes. Its exact value is (1 + √5)/2. Since √5 is irrational - it cannot be expressed as a ratio of two integers - neither can φ. Its decimal expansion is infinite and non-repeating, which means no fraction can represent it exactly.' },
+      { q: 'How quickly do Fibonacci ratios converge to φ?', a: 'Very quickly. The ratio 55/34 ≈ 1.6176 is accurate to 3 decimal places, and 4,181/2,584 ≈ 1.61803 is accurate to 5 places. The error shrinks by a factor of φ² ≈ 2.618 with each Fibonacci step - exponential convergence from both sides of φ.' },
+      { q: 'What is a golden rectangle?', a: 'A rectangle whose length-to-width ratio equals φ. If you remove the largest square from one end of a golden rectangle, the remaining piece is another golden rectangle in the same proportion. This self-similarity repeats infinitely, producing a logarithmic spiral - the shape often associated with nautilus shells.' },
+    ],
+    quiz: {
+      topic: 'phi (φ)',
+      questions: [
+        {
+          q: 'Which equation uniquely defines φ among all positive numbers?',
+          options: [
+            'φ = 3.14159...',
+            'φ + 1 = φ²',
+            'φ × 2 = φ + φ',
+            'φ = √2',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states φ satisfies φ² = φ + 1, the only positive number for which this holds. This identity is the source of φ\'s unique mathematical properties, including its self-referencing ratio and the shared decimal part with its reciprocal.',
+        },
+        {
+          q: 'What is 1/φ approximately equal to?',
+          options: [
+            '0.618 (= φ - 1)',
+            '1.382',
+            '0.5',
+            '2.618',
+          ] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: '1/φ = φ - 1 ≈ 0.6180339887. This means φ and 1/φ share the same decimal digits (0.6180...) - a property unique to φ among all real numbers.',
+        },
+        {
+          q: 'From the worked examples, if the longer side of a golden rectangle is 100, what is the shorter side?',
+          options: [
+            '38.2',
+            '100',
+            '161.8',
+            '61.8',
+          ] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The shorter side = longer ÷ φ = 100 ÷ 1.618 ≈ 61.8. This gives the 100:61.8 golden proportion, where the ratio of larger to smaller equals φ.',
+        },
+        {
+          q: 'What do modern scholars say about claims that the Parthenon was designed using φ?',
+          options: [
+            'Confirmed - the Parthenon was built with deliberate golden ratio proportions',
+            'Disputed - the ratios match approximately and are likely coincidental',
+            'Proven false - the Parthenon uses the ratio 1:2, not φ',
+            'Unresolved - archaeologists lack sufficient measurements to judge',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that claims about the Parthenon and similar works are disputed by modern scholars - the matching ratios are approximate and likely coincidental. φ is a useful design guide, not a proven historical construction rule.',
+        },
+        {
+          q: 'The ratio 55/34 from the Fibonacci sequence is accurate to how many decimal places of φ?',
+          options: [
+            '1 decimal place (1.6)',
+            '2 decimal places (1.62)',
+            '3 decimal places (1.618)',
+            '5 decimal places (1.61803)',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The FAQ states 55/34 ≈ 1.6176 is accurate to 3 decimal places of φ ≈ 1.6180. The error shrinks by a factor of φ² ≈ 2.618 with each Fibonacci step.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'ratio': {
     definition: [
       'A ratio expresses the relative sizes of two or more quantities of the same kind. Written as a:b or $$\\frac{a}{b}$$, it answers the question "how many times larger is one quantity than another?" A ratio of 3:1 means the first quantity is three times the second. The two quantities must share the same unit for the ratio to be dimensionless - mixing kilograms and metres produces a rate, not a ratio.',

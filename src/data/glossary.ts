@@ -574,6 +574,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['percentage-change', 'percentage-difference', 'percentage'],
   },
   {
+    slug: 'phi',
+    term: 'Phi (φ)',
+    letter: 'P',
+    category: 'Ratio & Proportion',
+    siteCategory: 'Math',
+    shortDef: 'Phi (φ) ≈ 1.6180339887 is the golden ratio - the unique irrational number satisfying φ² = φ + 1. It defines the proportion (a+b)/a = a/b and appears in Fibonacci sequences, geometry, typography, and design.',
+    formula: '$$\\varphi = \\frac{1 + \\sqrt{5}}{2} \\approx 1.6180339887\\ldots$$',
+    relatedTools: ['/math/ratio-calculator/golden-ratio'],
+    relatedTerms: ['proportion', 'ratio'],
+  },
+  {
     slug: 'proportion',
     term: 'Proportion',
     letter: 'P',
@@ -591,7 +602,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Fundamentals',
     siteCategory: 'Math',
     shortDef: 'A ratio compares two or more quantities, showing their relative sizes. Written as a:b or a/b, it is the foundation for fractions, percentages, rates, and proportions - the core language of proportional reasoning.',
-    relatedTools: ['/math/ratio-calculator', '/math/ratio-calculator/proportion'],
+    relatedTools: ['/math/ratio-calculator', '/math/ratio-calculator/proportion', '/math/ratio-calculator/golden-ratio'],
     relatedTerms: ['proportion', 'unit-rate', 'fraction', 'percentage'],
   },
   {
@@ -602,7 +613,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'The reciprocal of a fraction a/b is b/a - formed by swapping numerator and denominator. Any non-zero number multiplied by its reciprocal equals 1. Reciprocals are the foundation of fraction division: dividing by a fraction is identical to multiplying by its reciprocal (keep-change-flip).',
     formula: '$$\\text{Reciprocal of } \\frac{a}{b} = \\frac{b}{a}, \\quad \\frac{a}{b} \\times \\frac{b}{a} = 1$$',
-    relatedTools: ['/math/fraction-calculator/divide', '/math/fraction-calculator'],
+    relatedTools: ['/math/fraction-calculator/divide', '/math/fraction-calculator', '/math/ratio-calculator/golden-ratio'],
     relatedTerms: ['fraction', 'denominator', 'numerator', 'arithmetic'],
   },
   {

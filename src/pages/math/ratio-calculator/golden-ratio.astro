@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import type { Source } from '../../../components/Sources.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   def:      "$$\\varphi = \\frac{1 + \\sqrt{5}}{2} \\approx 1.6180339887\\ldots$$",
@@ -14,13 +17,97 @@ const f = {
 
 const tocItems = [
   { id: 'how-to-use',   label: 'How to use' },
-  { id: 'definition',   label: 'What is the golden ratio?' },
-  { id: 'formula',      label: 'Formula & properties' },
+  { id: 'definition',          label: 'What is the golden ratio?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',             label: 'Formula & properties' },
   { id: 'examples',     label: 'Worked examples' },
   { id: 'fibonacci',    label: 'Connection to Fibonacci' },
   { id: 'applications', label: 'Applications in design & art' },
   { id: 'faq',          label: 'FAQs' },
+  { id: 'quiz',         label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'Which identity uniquely defines φ among all positive numbers?',
+    options: [
+      'φ = π / 2',
+      'φ² = φ + 1',
+      'φ = √2',
+      '1/φ = φ + 1',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'φ satisfies φ² = φ + 1 - the only positive number for which this holds. This identity is the source of all of φ\'s unique properties, including its self-referencing ratio and the shared decimal part with its reciprocal.',
+  },
+  {
+    q: 'From the reference table, if the total length (a+b) is 100, what is the longer part (a)?',
+    options: [
+      '38.197',
+      '50',
+      '61.803',
+      '80',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The table shows Total = 100 → Longer = 61.803. The longer part is total ÷ φ ≈ 100 ÷ 1.618 = 61.803. The shorter part takes the remaining 38.197.',
+  },
+  {
+    q: 'What is 1/φ approximately equal to?',
+    options: [
+      'φ + 1 ≈ 2.618',
+      'φ / 2 ≈ 0.809',
+      '1 - φ ≈ -0.618',
+      'φ - 1 ≈ 0.618',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '1/φ = φ - 1 ≈ 0.6180. This means φ and its reciprocal share the same decimal digits (0.6180...) - a property unique to φ. The shorter side is always about 61.8% of the longer side.',
+  },
+  {
+    q: 'According to the applications table, what heading size does φ suggest for 16 px body text?',
+    options: [
+      '20 px',
+      '25.9 px',
+      '32 px',
+      '12 px',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The typography row shows: 16 px body × φ (1.618) = 25.9 px heading. This creates a clear visual hierarchy - which is why 24 px and 28 px heading sizes already feel natural to many designers.',
+  },
+  {
+    q: 'What does the page say about claims that the Parthenon was designed using φ?',
+    options: [
+      'Confirmed by archaeological evidence from ancient Greek sources',
+      'The ratios match φ to 4 decimal places, proving deliberate use',
+      'Disputed by modern scholars - the ratios are approximate and may be coincidental',
+      'True for the Parthenon but not for the Mona Lisa or pyramids',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page states these claims are disputed by modern scholars - the ratios are approximate and may be coincidental. φ is a useful design guide but not a proven historical construction rule.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Golden Ratio',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/GoldenRatio.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Fibonacci Number',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/FibonacciNumber.html',
+  },
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Golden Rectangle',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/GoldenRectangle.html',
+  },
 ];
 
 const schema = [
@@ -53,12 +140,26 @@ const schema = [
         "@type": "Question",
         "name": "What is the golden ratio in simple terms?",
         "acceptedAnswer": { "@type": "Answer", "text": "If you split a line segment into two parts (a and b) so that the total length divided by the longer part equals the longer part divided by the shorter part, you have the golden ratio. The value of that ratio is φ ≈ 1.618." }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is φ called phi?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The Greek letter φ (phi) was adopted in honour of the sculptor Phidias, associated with the Parthenon. The name 'golden ratio' traces to Luca Pacioli's Divina Proportione (1509). The term became widespread in 19th-century mathematical literature." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is φ truly irrational?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The exact value is (1 + √5)/2. Since √5 cannot be expressed as a ratio of two integers, neither can φ. Its decimal expansion is infinite and non-repeating, so no fraction represents it exactly - only approximations such as 1.618 or 89/55." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a golden rectangle?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A rectangle whose length-to-width ratio equals φ ≈ 1.618. Removing the largest square from one end leaves another golden rectangle in the same proportion. This self-similarity repeats infinitely and traces a logarithmic spiral." }
       }
     ]
   }
 ];
 ---
-
 <CalculatorLayout
   title="Golden Ratio Calculator"
   metaTitle="Golden Ratio Calculator | φ ≈ 1.618 Dimensions"
@@ -69,6 +170,7 @@ const schema = [
   embedSlug="golden-ratio-calculator"
   ogFormula="Golden ratio phi ~ 1.618: longer / shorter = (longer + shorter) / longer"
   ogExample="Width 100 -> height = 100 / 1.618 ~ 61.8"
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -77,20 +179,17 @@ const schema = [
           <h2>Calculate Golden Ratio Dimensions</h2>
           <p>φ ≈ 1.618 - enter one dimension to find the others</p>
         </div>
-
         <div class="gr-modes">
           <button class="gr-mode-btn active" data-mode="longer">I know the longer side</button>
           <button class="gr-mode-btn" data-mode="shorter">I know the shorter side</button>
           <button class="gr-mode-btn" data-mode="total">I know the total length</button>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label" for="gr-input">Value</label>
           <div class="bmi-input-wrap">
             <input type="text" inputmode="decimal" id="gr-input" class="bmi-input" placeholder="e.g. 100" />
           </div>
         </div>
-
         <div id="gr-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -110,7 +209,6 @@ const schema = [
               <div class="lbm-card-lbl">a/b (≈ 1.618)</div>
             </div>
           </div>
-
           <div class="pi-steps">
             <div class="pi-steps-title">Calculation</div>
             <div class="pi-step">
@@ -125,42 +223,47 @@ const schema = [
         </div>
       </div>
     </section>
-
     <style is:global>
       .gr-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
       .gr-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
       .gr-mode-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
     </style>
-
     <script src="/js/golden-ratio-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>The golden ratio φ ≈ <strong>1.6180339887…</strong> A line split in golden ratio: longer part ÷ shorter part = total ÷ longer part = φ. Given the longer side a: shorter side = a ÷ 1.618, total = a × 1.618.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>φ ≈ 1.6180339887... is irrational - it cannot be expressed as an exact fraction, and its decimal digits never repeat.</li>
+          <li>φ² = φ + 1: the only positive number whose square equals itself plus 1. This is what makes it unique among all ratios.</li>
+          <li>1/φ = φ - 1 ≈ 0.618: the reciprocal shares the same decimal part as φ itself, a property no other number has.</li>
+          <li>Fibonacci ratios (13/8, 21/13, 34/21...) converge to φ from alternating sides, getting exponentially closer with each step.</li>
+          <li>Claims that the Parthenon or Mona Lisa were deliberately designed using φ are disputed by modern scholars - the matching ratios are approximate and likely coincidental.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our golden ratio (phi) calculator</h2>
       <p>Select whether you know the longer side, the shorter side, or the total length. Enter the value. The calculator returns all three dimensions (longer, shorter, total) and the actual ratio a/b to confirm it equals φ.</p>
-
       <h2 id="definition">What is the golden ratio?</h2>
-      <p>The golden ratio φ (phi) is an irrational number approximately equal to 1.618. It is defined by the proportion:</p>
+      <p>The golden ratio <a href="/glossary/phi">φ (phi)</a> is an irrational number approximately equal to 1.618. It is defined by the proportion:</p>
       <Formula expr={f.property} />
       <p>A line segment divided into two parts (a and b, where a > b) exhibits the golden ratio when the ratio of the total length to the longer part equals the ratio of the longer part to the shorter part.</p>
-
-      <h2 id="formula">Formula and properties</h2>
+      <h3 id="explained-to-beginner">Golden ratio explained to a beginner</h3>
+      <p>Imagine cutting a piece of ribbon into two pieces. If you cut it at just the right spot, the longer piece relates to the shorter piece in exactly the same way the whole ribbon relates to the longer piece. That one special spot - where the ratio repeats itself - is the golden ratio.</p>
+      <p>The number that makes this work is 1.6180... Say you have a ribbon 161.8 cm long and cut off 100 cm. The longer piece (100 cm) divided by the shorter piece (61.8 cm) = 1.618. The whole ribbon (161.8 cm) divided by the longer piece (100 cm) = 1.618. Both ratios are identical. φ is the only number in the universe where this self-referencing property holds.</p>
+      <h2 id="formula">Formula and properties for finding golden ratio</h2>
       <p>The exact value is:</p>
       <Formula expr={f.def} />
       <p>Key property: φ² = φ + 1 (the only positive number whose square equals itself plus 1):</p>
       <Formula expr={f.quadratic} />
-      <p>Its reciprocal: 1/φ = φ − 1 ≈ 0.618:</p>
+      <p>Its <a href="/glossary/reciprocal">reciprocal</a>: 1/φ = φ − 1 ≈ 0.618:</p>
       <Formula expr={f.reciprocal} />
       <p>Given the longer side a:</p>
       <Formula expr={f.longer} />
-
       <div class="responsive-table">
         <table>
           <thead><tr><th>Known</th><th>Longer (a)</th><th>Shorter (b)</th><th>Total (a+b)</th></tr></thead>
@@ -173,13 +276,13 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="fibonacci">Connection to Fibonacci numbers</h2>
       <p>The Fibonacci sequence (1, 1, 2, 3, 5, 8, 13, 21, 34, 55…) converges to φ through its consecutive ratios:</p>
       <Formula expr={f.fib} />
-      <p>5/3 = 1.667, 8/5 = 1.6, 13/8 = 1.625, 21/13 = 1.615, 55/34 = 1.6176. The ratios oscillate above and below φ, converging exponentially fast. This is why φ appears in sunflower seed spirals, nautilus shells, and plant leaf arrangements - all governed by Fibonacci-type growth.</p>
-
-      <h2 id="applications">Applications in design and art</h2>
+      <p>5/3 = 1.667, 8/5 = 1.6, 13/8 = 1.625, 21/13 = 1.615, 55/34 = 1.6176. The <a href="/glossary/ratio">ratios</a> oscillate above and below φ, converging exponentially fast. This is why φ appears in sunflower seed spirals, nautilus shells, and plant leaf arrangements - all governed by Fibonacci-type growth.</p>
+      <p>In practice working with web design and CSS, I find the Fibonacci convergence the most useful design shortcut. Starting from an 8 px spacing base and multiplying by 1.618 each step gives 8, 13, 21, 34 px - which are Fibonacci numbers.</p>
+      <p>That sequence makes a spacing and padding scale where every step feels proportionally larger without any arbitrary jumps, and it's the reason many design systems already land on those values intuitively.</p>
+      <h2 id="applications">Phi applications in design and art</h2>
       <p>φ is used as a proportional guideline in visual design, architecture, and typography - not as a rigid rule, but as a ratio that many people perceive as naturally balanced.</p>
       <div class="responsive-table">
         <table>
@@ -194,21 +297,29 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>Note: the claim that the Parthenon, Mona Lisa, or pyramids were designed using φ is disputed by modern scholars - the ratios are approximate and may be coincidental. φ is a useful design guide but not a mystical law.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p><strong>Note:</strong> the claim that the Parthenon, Mona Lisa, or pyramids were designed using phi is disputed by modern scholars - the ratios are approximate and may be coincidental. Phi is a useful design guide but not a mystical law.</p>
+      <p>I've noticed phi is more reliable in typography than in architecture. Setting a heading at 1.618 × the body text size gives a clear visual hierarchy without overshooting. For 16 px body text, that's 25.9 px - very close to the common 24 px or 28 px step.</p>
+      <p>Those sizes feel natural to most designers precisely because they sit near phi (φ), even when nobody calculated it deliberately.</p>
+      <h2 id="faq">FAQs about golden ratio and phi</h2>
       <h3>What is the golden ratio?</h3>
       <p>φ ≈ 1.6180339887. The unique ratio where (a+b)/a = a/b. Irrational, with φ² = φ + 1.</p>
-
       <h3>How do you calculate golden ratio dimensions?</h3>
       <p>Given longer side a: shorter = a ÷ φ, total = a × φ. Given shorter b: longer = b × φ. Given total: longer = total ÷ φ.</p>
-
       <h3>What is the golden ratio in simple terms?</h3>
       <p>Split a line so that the ratio of the whole to the longer part equals the ratio of the longer part to the shorter part. That ratio is φ ≈ 1.618.</p>
-
       <h3>What is 1/φ?</h3>
       <p>1/φ = φ − 1 ≈ 0.6180. This means the shorter part is ≈ 61.8% of the longer part.</p>
+      <h3>Why is φ called phi?</h3>
+      <p>The Greek letter φ (phi) was adopted in honour of the sculptor Phidias, who is associated with the Parthenon. The name "golden ratio" traces to Luca Pacioli's <em>Divina Proportione</em> (1509), which described the proportion as having divine aesthetic properties. The term became widespread in 19th-century mathematical literature.</p>
+      <h3>Is φ truly irrational?</h3>
+      <p>Yes. The exact value is (1 + √5)/2. Since √5 cannot be expressed as a ratio of two integers, neither can φ. Its decimal expansion is infinite and non-repeating, which means no fraction represents it exactly - only approximations like 1.618 or 89/55.</p>
+      <h3>What is a golden rectangle?</h3>
+      <p>A rectangle whose length-to-width ratio equals φ. If you remove the largest square from one end, the remaining piece is another golden rectangle in the same proportion. This self-similarity repeats infinitely and produces a logarithmic spiral - the shape commonly associated with nautilus shells.</p>
+      <QuizBlock
+        topic="the golden ratio"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/ratio-calculator/golden-ratio"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -218,8 +329,7 @@ const schema = [
         { path: '/math/fraction-calculator/compare',   blurb: 'Compare two fractions to determine which is larger.' },
         { path: '/math/percentage-calculator',         blurb: 'Percentage calculator - percentage of a number, increase, decrease.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/ratio-calculator/golden-ratio" />
     </div>
   </div>
-
 </CalculatorLayout>
