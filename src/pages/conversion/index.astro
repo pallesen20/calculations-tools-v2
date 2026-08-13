@@ -46,7 +46,7 @@ const schema = [
       { "@type": "Question", "name": "Do the converters work on mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool is fully responsive and works on phones and tablets without an app." } },
       { "@type": "Question", "name": "How accurate are the unit converters?", "acceptedAnswer": { "@type": "Answer", "text": "All unit converters use exact conversion factors as defined by the International Bureau of Weights and Measures (BIPM) and relevant standards bodies. Results are displayed with enough decimal places for practical use without false precision." } },
       { "@type": "Question", "name": "How accurate is the currency converter?", "acceptedAnswer": { "@type": "Answer", "text": "The currency converter uses live mid-market rates updated once per day. These are the real exchange rates, the same ones shown on financial news sites. Banks and exchange bureaus add their own markup on top of these rates." } },
-      { "@type": "Question", "name": "What is the difference between metric and imperial units?", "acceptedAnswer": { "@type": "Answer", "text": "The metric system (SI) uses base units scaled by powers of 10 - metres, kilograms, litres - and is the standard in most of the world. The imperial system uses units like miles, pounds, and gallons, primarily in the United States. The UK uses a mix: metric for most official purposes but imperial for road distances, pints of beer, and body weight in stone." } },
+      { "@type": "Question", "name": "What is the difference between metric and imperial units?", "acceptedAnswer": { "@type": "Answer", "text": "The metric system (SI) uses base units scaled by powers of 10 - meters, kilograms, litres - and is the standard in most of the world. The imperial system uses units like miles, pounds, and gallons, primarily in the United States. The UK uses a mix: metric for most official purposes but imperial for road distances, pints of beer, and body weight in stone." } },
       { "@type": "Question", "name": "Can I convert between metric and imperial units?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All unit converters support both metric and imperial units in the same tool. Pick your source unit and target unit from the dropdowns and the result appears instantly." } }
     ]
   }
@@ -142,7 +142,7 @@ const schema = [
         <tbody>
           <tr>
             <td>Distance and length</td>
-            <td>km to miles, feet to metres, inches to cm, nautical miles</td>
+            <td>km to miles, feet to meters, inches to cm, nautical miles</td>
             <td><a href="/conversion/length-converter">Length Converter</a></td>
           </tr>
           <tr>
@@ -193,7 +193,7 @@ const schema = [
       <p>Most unit conversion confusion comes from the fact that the world uses two main measurement systems that are not compatible with each other. Knowing which system a value comes from is the first step in converting it correctly.</p>
 
       <h3>The metric system (SI)</h3>
-      <p>The International System of Units (SI) is the modern form of the metric system. It is the official measurement standard in almost every country in the world and the only system used in science and engineering internationally. All units scale by powers of 10 - a kilometre is exactly 1,000 metres, a kilogram is exactly 1,000 grams. This makes arithmetic straightforward: moving between metric units is just moving a decimal point.</p>
+      <p>The International System of Units (SI) is the modern form of the metric system. It is the official measurement standard in almost every country in the world and the only system used in science and engineering internationally. All units scale by powers of 10 - a kilometer is exactly 1,000 meters, a kilogram is exactly 1,000 grams. This makes arithmetic straightforward: moving between metric units is just moving a decimal point.</p>
 
       <h3>The imperial and US customary systems</h3>
       <p>The United States uses a system derived from the old British imperial system. The UK officially moved to metric in the 1960s but retains imperial units in daily life: miles for roads, pints for beer, stone for body weight, and Fahrenheit in some contexts. The US never made the switch and continues to use miles, pounds, gallons, and Fahrenheit as primary units.</p>
@@ -205,13 +205,13 @@ const schema = [
           <tr><th>Measurement</th><th>Metric unit</th><th>Imperial/US unit</th><th>Conversion</th></tr>
         </thead>
         <tbody>
-          <tr><td>Length</td><td>metre (m)</td><td>foot (ft)</td><td>1 m = 3.28084 ft</td></tr>
-          <tr><td>Distance</td><td>kilometre (km)</td><td>mile (mi)</td><td>1 km = 0.621371 mi</td></tr>
+          <tr><td>Length</td><td>meter (m)</td><td>foot (ft)</td><td>1 m = 3.28084 ft</td></tr>
+          <tr><td>Distance</td><td>kilometer (km)</td><td>mile (mi)</td><td>1 km = 0.621371 mi</td></tr>
           <tr><td>Mass</td><td>kilogram (kg)</td><td>pound (lb)</td><td>1 kg = 2.20462 lb</td></tr>
           <tr><td>Speed</td><td>km/h or m/s</td><td>mph</td><td>1 mph = 1.609344 km/h</td></tr>
           <tr><td>Temperature</td><td>Celsius (°C)</td><td>Fahrenheit (°F)</td><td>°F = °C × 9/5 + 32</td></tr>
           <tr><td>Volume (liquid)</td><td>litre (L)</td><td>US gallon (gal)</td><td>1 L = 0.264172 US gal</td></tr>
-          <tr><td>Short distance</td><td>centimetre (cm)</td><td>inch (in)</td><td>1 in = 2.54 cm exactly</td></tr>
+          <tr><td>Short distance</td><td>centimeter (cm)</td><td>inch (in)</td><td>1 in = 2.54 cm exactly</td></tr>
         </tbody>
       </table>
       </div>
@@ -220,13 +220,13 @@ const schema = [
       <p>Most of the time, a small rounding error in a unit conversion is inconsequential. But in some contexts, precision matters:</p>
       <ul>
         <li><strong>Medical dosing:</strong> Drug concentrations and body weight affect dosing calculations. A kg/lb mix-up can result in a dose 2.2 times too large or too small.</li>
-        <li><strong>Engineering and construction:</strong> A foot/metre mix-up in structural calculations caused the loss of the Mars Climate Orbiter in 1999 - a $327 million spacecraft.</li>
+        <li><strong>Engineering and construction:</strong> A foot/meter mix-up in structural calculations caused the loss of the Mars Climate Orbiter in 1999 - a $327 million spacecraft.</li>
         <li><strong>International shipping:</strong> Customs declarations require accurate weight in the destination country's units. Errors can cause clearance delays or fines.</li>
         <li><strong>Currency in invoicing:</strong> Using an outdated exchange rate or confusing similar currencies (such as USD vs AUD or CAD) can create significant discrepancies in international invoices.</li>
       </ul>
 
       <h2 id="accuracy">Accuracy and rounding</h2>
-      <p>All unit converters use exact conversion factors as defined by the International Bureau of Weights and Measures (BIPM) and relevant standards bodies. For example, 1 inch is defined as exactly 2.54 centimetres by international agreement - there is no approximation involved. Results are displayed with enough decimal places for practical use, without showing false precision.</p>
+      <p>All unit converters use exact conversion factors as defined by the International Bureau of Weights and Measures (BIPM) and relevant standards bodies. For example, 1 inch is defined as exactly 2.54 centimeters by international agreement - there is no approximation involved. Results are displayed with enough decimal places for practical use, without showing false precision.</p>
       <p>For currency, rates are sourced from a financial data provider and updated once per day. They reflect the mid-market rate - the rate before any bank or broker markup is applied. For time-sensitive or high-value transactions, always confirm the rate with your actual payment provider.</p>
 
       <h2 id="faq">FAQs</h2>

@@ -78,7 +78,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'The denominator is the bottom number in a fraction - it defines how many equal parts the whole has been divided into. In percentage formulas, the denominator is always the original (reference) value. Using the wrong denominator is the single most common percentage calculation error.',
     formula: '$$\\frac{\\text{Numerator}}{\\text{Denominator}}$$',
-    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/percentage-calculator/decrease', '/math/percentage-calculator/increase', '/math/percentage-calculator/difference', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/divide', '/math/fraction-calculator/simplify', '/math/fraction-calculator/compare', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/fraction-to-decimal', '/math/fraction-calculator/improper-to-mixed', '/math/fraction-calculator/mixed-to-improper'],
+    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/percentage-calculator/decrease', '/math/percentage-calculator/increase', '/math/percentage-calculator/difference', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/divide', '/math/fraction-calculator/simplify', '/math/fraction-calculator/compare', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/fraction-to-decimal', '/math/fraction-calculator/improper-to-mixed', '/math/fraction-calculator/mixed-to-improper', '/math/ratio-calculator/scale'],
     relatedTerms: ['fraction', 'percentage', 'ratio', 'proportion'],
   },
   {
@@ -199,7 +199,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'The GCD (Greatest Common Divisor) of two integers is the largest positive integer that divides both numbers without a remainder. In fraction arithmetic, dividing both numerator and denominator by their GCD reduces a fraction to its lowest terms - a required final step after any fraction calculation.',
     formula: '$$\\gcd(a, b) = \\gcd(b,\\, a \\bmod b)$$',
-    relatedTools: ['/math/fraction-calculator/add', '/math/fraction-calculator/simplify', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/improper-to-mixed'],
+    relatedTools: ['/math/fraction-calculator/add', '/math/fraction-calculator/simplify', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/improper-to-mixed', '/math/ratio-calculator/aspect-ratio'],
     relatedTerms: ['lcm', 'lcd', 'fraction', 'denominator', 'numerator'],
   },
   {
@@ -505,7 +505,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'The numerator is the top number in a fraction - it counts how many equal parts are selected. In a percentage formula, the numerator is the change or the part being measured. It is always paired with the denominator, which defines the total number of parts.',
     formula: '$$\\frac{\\text{Numerator}}{\\text{Denominator}}$$',
-    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/percentage-calculator/difference', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/divide', '/math/fraction-calculator/simplify', '/math/fraction-calculator/compare', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/fraction-to-decimal', '/math/fraction-calculator/improper-to-mixed', '/math/fraction-calculator/mixed-to-improper'],
+    relatedTools: ['/math/fraction-calculator', '/math/percentage-calculator', '/math/percentage-calculator/difference', '/math/fraction-calculator/add', '/math/fraction-calculator/subtract', '/math/fraction-calculator/multiply', '/math/fraction-calculator/divide', '/math/fraction-calculator/simplify', '/math/fraction-calculator/compare', '/math/fraction-calculator/decimal-to-fraction', '/math/fraction-calculator/equivalent', '/math/fraction-calculator/exponent', '/math/fraction-calculator/fraction-to-decimal', '/math/fraction-calculator/improper-to-mixed', '/math/fraction-calculator/mixed-to-improper', '/math/ratio-calculator/scale'],
     relatedTerms: ['denominator', 'fraction', 'percentage', 'ratio'],
   },
   {
@@ -592,7 +592,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Math',
     shortDef: 'A proportion is a statement that two ratios are equal: a/b = c/d. It is solved using cross-multiplication and underlies scaling, unit conversion, recipe adjustment, and similar-triangle geometry.',
     formula: '$$\\frac{a}{b} = \\frac{c}{d} \\implies a \\times d = b \\times c$$',
-    relatedTools: ['/math/ratio-calculator/proportion', '/math/ratio-calculator'],
+    relatedTools: ['/math/ratio-calculator/proportion', '/math/ratio-calculator', '/math/ratio-calculator/aspect-ratio'],
     relatedTerms: ['ratio', 'unit-rate', 'fraction'],
   },
   {
@@ -602,7 +602,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Fundamentals',
     siteCategory: 'Math',
     shortDef: 'A ratio compares two or more quantities, showing their relative sizes. Written as a:b or a/b, it is the foundation for fractions, percentages, rates, and proportions - the core language of proportional reasoning.',
-    relatedTools: ['/math/ratio-calculator', '/math/ratio-calculator/proportion', '/math/ratio-calculator/golden-ratio'],
+    relatedTools: ['/math/ratio-calculator', '/math/ratio-calculator/proportion', '/math/ratio-calculator/golden-ratio', '/math/ratio-calculator/aspect-ratio'],
     relatedTerms: ['proportion', 'unit-rate', 'fraction', 'percentage'],
   },
   {

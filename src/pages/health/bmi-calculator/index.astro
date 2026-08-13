@@ -153,7 +153,7 @@ const schema = [
   title="BMI Calculator by Age and Sex"
   youtubeId="vhF3ayp8ivs"
   youtubeUploadDate="2026-04-29"
-  youtubeSummary="One thing most people get wrong when using this tool: entering height in centimetres without converting to metres first when using metric mode. When you make that mistake, the result looks plausible but it's actually off - and that can mean acting on bad information. The correct approach is: the tool accepts both metric and imperial - use the toggle at the top to switch. In metric enter cm and kg; in imperial enter feet, inches, and pounds. No manual conversion needed. Take an extra ten seconds to get the input right and the output will be spot on."
+  youtubeSummary="One thing most people get wrong when using this tool: entering height in centimeters without converting to meters first when using metric mode. When you make that mistake, the result looks plausible but it's actually off - and that can mean acting on bad information. The correct approach is: the tool accepts both metric and imperial - use the toggle at the top to switch. In metric enter cm and kg; in imperial enter feet, inches, and pounds. No manual conversion needed. Take an extra ten seconds to get the input right and the output will be spot on."
   metaTitle="BMI Calculator by Age & Sex | Body Fat Estimate ᐅ"
   description="Calculate BMI by age and sex. Get your BMI category, estimated body fat %, healthy weight range, and age-specific interpretation - metric or imperial."
   canonical="https://calculations.tools/health/bmi-calculator"
@@ -277,7 +277,7 @@ const schema = [
       <p>BMI does not directly measure body fat. Instead, it uses weight and height as a proxy, based on the observation that weight scales roughly with the square of height in populations. Because it requires only two easily measurable inputs and no equipment, it became the standard epidemiological tool for tracking obesity globally.</p>
       <p>The metric formula is:</p>
       <Formula expr={f.metric} />
-      <p>The imperial formula uses a conversion factor of 703 to account for the difference between kilograms/metres and pounds/inches:</p>
+      <p>The imperial formula uses a conversion factor of 703 to account for the difference between kilograms/meters and pounds/inches:</p>
       <Formula expr={f.imperial} />
       <p>Example - a person weighing 70 kg at 1.75 m:</p>
       <Formula expr={f.example} />
@@ -399,8 +399,8 @@ const schema = [
       <h2 id="how-to-calculate">How to calculate BMI manually</h2>
       <p>To calculate BMI manually in metric units:</p>
       <ol>
-        <li>Convert your height to metres (divide cm by 100). Example: 175 cm = 1.75 m.</li>
-        <li>Square your height in metres: 1.75 × 1.75 = 3.0625.</li>
+        <li>Convert your height to meters (divide cm by 100). Example: 175 cm = 1.75 m.</li>
+        <li>Square your height in meters: 1.75 × 1.75 = 3.0625.</li>
         <li>Divide your weight in kg by that result: 70 ÷ 3.0625 = 22.9.</li>
       </ol>
       <p>To calculate in imperial units:</p>
@@ -414,7 +414,7 @@ const schema = [
       <h2 id="common-mistakes">Common mistakes</h2>
 
       <h3>Using the wrong height unit</h3>
-      <p>The most common calculation error is entering height in cm when the formula expects metres, or forgetting to convert feet + inches to total inches. The calculator on this page handles all unit conversion automatically.</p>
+      <p>The most common calculation error is entering height in cm when the formula expects meters, or forgetting to convert feet + inches to total inches. The calculator on this page handles all unit conversion automatically.</p>
       <p>When testing this tool, the height input was by far the most common source of off results: the output still looked like a valid BMI number (it fell in a plausible range), but the underlying calculation was completely wrong. If your BMI result looks much lower or higher than expected, height units are the first thing to check.</p>
       <h3>Treating BMI as a diagnosis</h3>
       <p>BMI is a screening number, not a health diagnosis. A BMI in the Normal range does not mean a person is healthy, and a BMI slightly outside the Normal range does not mean a person is unhealthy. Blood pressure, blood glucose, cholesterol, physical fitness, and waist circumference are all necessary for a proper health assessment.</p>

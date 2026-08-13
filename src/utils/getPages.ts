@@ -687,7 +687,7 @@ const entries: Entry[] = [
   {
     path: '/conversion/length-converter',
     title: 'Length Converter - Convert km, miles, feet, inches & more',
-    description: 'Convert between metres, kilometres, miles, yards, feet, inches, nautical miles, and more.',
+    description: 'Convert between meters, kilometers, miles, yards, feet, inches, nautical miles, and more.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: '📏',
@@ -707,7 +707,7 @@ const entries: Entry[] = [
   {
     path: '/conversion/height-converter',
     title: 'Height Converter - cm to Feet and Inches',
-    description: 'Convert height between centimetres, feet and inches, metres, and inches. Instant results with a full reference table.',
+    description: 'Convert height between centimeters, feet and inches, meters, and inches. Instant results with a full reference table.',
     changefreq: 'weekly' as const,
     priority: 1.0,
     icon: '📐',

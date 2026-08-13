@@ -2107,7 +2107,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
 
   'ratio': {
     definition: [
-      'A ratio expresses the relative sizes of two or more quantities of the same kind. Written as a:b or $$\\frac{a}{b}$$, it answers the question "how many times larger is one quantity than another?" A ratio of 3:1 means the first quantity is three times the second. The two quantities must share the same unit for the ratio to be dimensionless - mixing kilograms and metres produces a rate, not a ratio.',
+      'A ratio expresses the relative sizes of two or more quantities of the same kind. Written as a:b or $$\\frac{a}{b}$$, it answers the question "how many times larger is one quantity than another?" A ratio of 3:1 means the first quantity is three times the second. The two quantities must share the same unit for the ratio to be dimensionless - mixing kilograms and meters produces a rate, not a ratio.',
       'A ratio does not carry information about absolute magnitudes - only proportions. A 3:1 ratio describes a recipe with 3 cups flour to 1 cup sugar, a business with 3 assets for every 1 unit of liability, or a sample with 3 red marbles to 1 blue marble. The underlying scale is irrelevant to the ratio itself.',
       'Ratios are expressed in simplest form by dividing both terms by their greatest common divisor. The ratio 12:8 simplifies to 3:2. When more than two quantities are compared, extended ratios (a:b:c) are used - a concrete mix of 1:2:4 (cement:sand:gravel) retains the same interpretation: proportional relationships among all listed quantities.',
     ],
@@ -2133,9 +2133,9 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       questions: [
         {
           q: 'What must the two quantities in a ratio share to produce a dimensionless result?',
-          options: ['The same magnitude, so they can be divided without a remainder', 'The same unit - mixing kilograms and metres produces a rate, not a ratio', 'The same sign - mixing positive and negative quantities creates undefined ratios', 'The same scale, expressed in standard international (SI) base units'] as [string, string, string, string],
+          options: ['The same magnitude, so they can be divided without a remainder', 'The same unit - mixing kilograms and meters produces a rate, not a ratio', 'The same sign - mixing positive and negative quantities creates undefined ratios', 'The same scale, expressed in standard international (SI) base units'] as [string, string, string, string],
           correct: 1 as const,
-          explanation: 'The definition states the two quantities must share the same unit for the ratio to be dimensionless. Mixing kilograms and metres produces a rate (a ratio with different units), not a true ratio.',
+          explanation: 'The definition states the two quantities must share the same unit for the ratio to be dimensionless. Mixing kilograms and meters produces a rate (a ratio with different units), not a true ratio.',
         },
         {
           q: 'From the examples table, what does a debt-to-equity ratio of 2:1 mean?',
@@ -2226,7 +2226,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
 
   'unit-rate': {
     definition: [
-      'A unit rate is a ratio in which the denominator is exactly 1, expressing how much of one quantity corresponds to a single unit of another. The formula is: $$\\text{Unit Rate} = \\frac{\\text{Quantity A}}{1 \\text{ unit of Quantity B}}$$ Common examples include speed (kilometres per 1 hour), price (euros per 1 kilogram), fuel efficiency (litres per 1 kilometre), and productivity (units per 1 worker per hour). The "per one" structure makes unit rates the most intuitive form for direct comparison.',
+      'A unit rate is a ratio in which the denominator is exactly 1, expressing how much of one quantity corresponds to a single unit of another. The formula is: $$\\text{Unit Rate} = \\frac{\\text{Quantity A}}{1 \\text{ unit of Quantity B}}$$ Common examples include speed (kilometers per 1 hour), price (euros per 1 kilogram), fuel efficiency (litres per 1 kilometer), and productivity (units per 1 worker per hour). The "per one" structure makes unit rates the most intuitive form for direct comparison.',
       'Unit rates are produced by dividing both terms of any ratio by the denominator. A ratio of 240 km driven on 8 litres of fuel becomes a unit rate of 30 km per litre (240 ÷ 8 = 30). This simplification converts a context-specific ratio into a normalised metric that can be compared across different totals.',
       'Unit rates bridge the concepts of ratio and proportion. A unit rate is a simplified ratio; a proportion uses a unit rate to scale to a new quantity. If a machine produces 45 widgets per hour (unit rate), you find how many it produces in 7 hours by multiplying: 45 × 7 = 315.',
     ],
@@ -2234,9 +2234,9 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     examples: {
       headers: ['Context', 'Raw ratio', 'Unit rate', 'Meaning'],
       rows: [
-        ['Speed', '300 km in 4 h', '75 km/h', 'Kilometres per 1 hour'],
+        ['Speed', '300 km in 4 h', '75 km/h', 'Kilometers per 1 hour'],
         ['Price comparison', '$5.40 for 1.5 kg', '$3.60/kg', 'Cost per 1 kilogram'],
-        ['Fuel efficiency', '48 L for 600 km', '0.08 L/km', 'Litres per 1 kilometre'],
+        ['Fuel efficiency', '48 L for 600 km', '0.08 L/km', 'Litres per 1 kilometer'],
         ['Typing speed', '450 words in 6 min', '75 wpm', 'Words per 1 minute'],
         ['Nutrition label', '820 kJ per 200 g', '4.1 kJ/g', 'Kilojoules per 1 gram'],
       ],
@@ -2288,7 +2288,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
 
   'bmi': {
     definition: [
-      'Body Mass Index (BMI) is a screening metric that estimates whether a person\'s weight is appropriate for their height. It is calculated by dividing body weight in kilograms by the square of height in metres: $$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$',
+      'Body Mass Index (BMI) is a screening metric that estimates whether a person\'s weight is appropriate for their height. It is calculated by dividing body weight in kilograms by the square of height in meters: $$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$',
       'The World Health Organization classifies BMI into four primary categories: below 18.5 is underweight, 18.5–24.9 is normal weight, 25.0–29.9 is overweight, and 30.0 or above is obese. Obesity is further subdivided into Class I (30–34.9), Class II (35–39.9), and Class III (≥40).',
       'For adults aged 65 and over, research consistently shows that the optimal BMI range shifts upward to approximately 23–27.5. A slightly higher BMI in older adults is associated with better survival outcomes, greater bone density, and improved resilience during illness - the standard thresholds do not apply directly to this population.',
     ],
@@ -2315,7 +2315,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       questions: [
         {
           q: 'How is BMI calculated?',
-          options: ['Weight in pounds divided by height in feet squared, multiplied by 703', 'Height in metres divided by weight in kilograms squared', 'Waist circumference divided by height in metres', 'Weight in kilograms divided by height in metres squared'] as [string, string, string, string],
+          options: ['Weight in pounds divided by height in feet squared, multiplied by 703', 'Height in meters divided by weight in kilograms squared', 'Waist circumference divided by height in meters', 'Weight in kilograms divided by height in meters squared'] as [string, string, string, string],
           correct: 3 as const,
           explanation: 'The BMI formula is weight (kg) divided by height (m) squared. It produces a dimensionless number used to screen whether a person\'s weight is appropriate for their height.',
         },
@@ -2464,7 +2464,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
   'ffmi': {
     definition: [
       'Fat-Free Mass Index (FFMI) is a measure of muscularity that expresses lean body mass relative to height, analogous to BMI but using fat-free mass instead of total weight: $$\\text{FFMI} = \\frac{\\text{LBM (kg)}}{\\text{height (m)}^2}$$',
-      'Because FFMI varies slightly with height, a normalised version corrects for this: $$\\text{Normalised FFMI} = \\text{FFMI} + 6.1 \\times (1.8 - \\text{height in metres})$$ This adjustment standardises FFMI to a reference height of 1.80m, making comparisons across individuals of different heights more meaningful.',
+      'Because FFMI varies slightly with height, a normalised version corrects for this: $$\\text{Normalised FFMI} = \\text{FFMI} + 6.1 \\times (1.8 - \\text{height in meters})$$ This adjustment standardises FFMI to a reference height of 1.80m, making comparisons across individuals of different heights more meaningful.',
       'FFMI gained research prominence from a landmark 1995 study by Kouri et al., which found that among a large sample of male athletes, natural (drug-free) competitors almost never exceeded an FFMI of 25. This led to the informal use of 25 as a threshold above which performance-enhancing drug use is considered plausible, though it is not a definitive marker.',
     ],
     whenToUse: 'Use FFMI to assess the degree of muscularity relative to frame size, independent of body fat levels - something BMI cannot do. It is particularly useful for evaluating physique development over time in athletes and for providing context when BMI would be misleading due to high muscle mass. Use normalised FFMI when comparing individuals of substantially different heights.',
@@ -3533,9 +3533,9 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A nautical mile is a unit of distance equal to exactly 1,852 meters (1.852 km or approximately 1.151 statute miles). It is defined as one arcminute (1/60 of a degree) of latitude along any meridian of Earth\'s surface. This geometric relationship to Earth\'s coordinate system is what makes it essential for navigation.',
       'Because one degree of latitude = 60 nautical miles, navigators can read distances directly off the latitude scale on a chart using a compass or dividers - no conversion required. A ship travelling 1 nautical mile has moved exactly 1 arcminute of latitude toward the equator or poles.',
     ],
-    whenToUse: 'Use nautical miles for any oceanic or aviation navigation - measuring distances on charts, filing flight plans, calculating fuel range, and setting waypoints. Combine with knots to express speed: a ship travelling at 20 knots covers 20 nautical miles per hour. For road or land distances, use kilometres or statute miles instead.',
+    whenToUse: 'Use nautical miles for any oceanic or aviation navigation - measuring distances on charts, filing flight plans, calculating fuel range, and setting waypoints. Combine with knots to express speed: a ship travelling at 20 knots covers 20 nautical miles per hour. For road or land distances, use kilometers or statute miles instead.',
     examples: {
-      headers: ['Nautical miles', 'Kilometres', 'Statute miles', 'Context'],
+      headers: ['Nautical miles', 'Kilometers', 'Statute miles', 'Context'],
       rows: [
         ['1 nmi', '1.852 km', '1.151 mi', 'Definition'],
         ['60 nmi', '111.12 km', '69.05 mi', '1 degree of latitude'],

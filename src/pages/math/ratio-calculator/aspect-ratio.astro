@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import type { Source } from '../../../components/Sources.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   ratio:   "$$\\text{Aspect Ratio} = \\frac{W}{\\gcd(W,H)} : \\frac{H}{\\gcd(W,H)}$$",
@@ -11,15 +14,50 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',    label: 'How to use' },
-  { id: 'what-is',       label: 'What is an aspect ratio?' },
-  { id: 'formula',       label: 'Formula & calculation' },
-  { id: 'common-ratios', label: 'Common aspect ratios' },
-  { id: 'resizing',      label: 'Resizing with aspect ratio' },
-  { id: 'applications',  label: 'Applications by domain' },
-  { id: 'faq',           label: 'FAQs' },
-  { id: 'related-tools', label: 'Related tools' },
+  { id: 'how-to-use',           label: 'How to use' },
+  { id: 'what-is',              label: 'What is an aspect ratio?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',              label: 'Formula & calculation' },
+  { id: 'common-ratios',        label: 'Common aspect ratios' },
+  { id: 'resizing',             label: 'Resizing with aspect ratio' },
+  { id: 'applications',         label: 'Applications by domain' },
+  { id: 'faq',                  label: 'FAQs' },
+  { id: 'quiz',                 label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',        label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What is the decimal ratio (W÷H) for a standard 16:9 aspect ratio?',
+    options: ['1.333', '1.778', '2.333', '1.500'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '16÷9 = 1.777..., conventionally rounded to 1.778. This is the quickest way to confirm a rectangle is 16:9 without calculating the GCD.',
+  },
+  {
+    q: 'The GCD of 1920 and 1080 is used to simplify the ratio to 16:9. What is that GCD?',
+    options: ['60', '90', '120', '160'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'GCD(1920, 1080) = 120. Dividing: 1920÷120 = 16 and 1080÷120 = 9, giving the simplified ratio 16:9.',
+  },
+  {
+    q: 'Using the 16:9 resize table on this page, what height corresponds to a new width of 1280 pixels?',
+    options: ['800', '960', '1080', '720'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '1280 × (9/16) = 720. This is the standard HD resolution — the table confirms the width 1280 maps to height 720 in 16:9 format.',
+  },
+  {
+    q: 'According to the applications table, which domain typically uses the 3:2 aspect ratio?',
+    options: ['DSLR and mirrorless cameras', 'Ultrawide monitors and cinema', 'Instagram square posts', 'Mobile video and TikTok'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'The applications table lists 3:2 under photography for DSLR and mirrorless cameras, with example resolutions like 6000×4000.',
+  },
+  {
+    q: 'The page warns that uploading 16:9 footage to a 9:16 slot (TikTok, Reels) most commonly results in:',
+    options: ['The video being rejected by the platform', 'The platform auto-cropping to center, potentially cutting off the subject', 'The video being stretched horizontally to fill the frame', 'Black letterbox bars appearing on the left and right sides'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Platforms auto-crop to the center of the frame, which often cuts off the subject\'s head or feet. Letterboxing (black bars) only appears if the platform preserves the original ratio rather than cropping.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -55,8 +93,31 @@ const schema = [
     ]
   }
 ];
----
 
+const sources: Source[] = [
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Euclidean Algorithm',
+    journal: 'MathWorld - A Wolfram Web Resource',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/EuclideanAlgorithm.html',
+  },
+  {
+    author: 'Wikipedia contributors',
+    title: '16:9 aspect ratio',
+    journal: 'Wikipedia, The Free Encyclopedia',
+    year: 2024,
+    url: 'https://en.wikipedia.org/wiki/16:9_aspect_ratio',
+  },
+  {
+    author: 'Wikipedia contributors',
+    title: 'ISO 216',
+    journal: 'Wikipedia, The Free Encyclopedia',
+    year: 2024,
+    url: 'https://en.wikipedia.org/wiki/ISO_216',
+  },
+];
+---
 <CalculatorLayout
   title="Aspect Ratio Calculator"
   metaTitle="Aspect Ratio Calculator | W:H Ratio from Dimensions"
@@ -65,6 +126,7 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="aspect-ratio-calculator"
+  sources={sources}
   ogFormula="Aspect ratio: W:H simplified by GCD(W, H)"
   ogExample="1920 × 1080: GCD = 120 -> 16:9"
 >
@@ -75,7 +137,6 @@ const schema = [
           <h2>Calculate Aspect Ratio Instantly</h2>
           <p>Enter width and height to find the simplified ratio</p>
         </div>
-
         <div class="input-row">
           <div class="bmi-field">
             <label class="bmi-label" for="ar-w">Width</label>
@@ -91,13 +152,11 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="ar-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="ar-ratio">-</span>
           </div>
           <div class="lbm-primary-lbl">Aspect ratio</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="ar-decimal">-</div>
@@ -108,7 +167,6 @@ const schema = [
               <div class="lbm-card-lbl">Height as % of width</div>
             </div>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -121,7 +179,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div style="margin-top:1.25rem;">
           <div class="ar-mode-label">Resize while preserving ratio</div>
           <div class="ar-modes">
@@ -150,42 +207,49 @@ const schema = [
         </div>
       </div>
     </section>
-
     <style is:global>
-      .ar-x { font-size:1.25rem; font-weight:700; color:rgba(255,255,255,0.5); padding-bottom:0.75rem; }
+      .ar-x { font-size:1.25rem; font-weight:700; color:rgba(255,255,255,0.5); }
       .ar-modes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem; margin-top:0.35rem; }
       .ar-mode-btn { padding:0.3rem 0.65rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
       .ar-mode-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:white; }
       .ar-mode-label { font-size:0.8rem; color:rgba(255,255,255,0.5); margin-bottom:0.25rem; text-transform:uppercase; letter-spacing:0.05em; }
     </style>
-
     <script src="/js/aspect-ratio-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>Divide both dimensions by their GCD to get the simplified ratio. 1920×1080: GCD = 120 → <strong>16:9</strong>. 2560×1440: GCD = 80 → <strong>16:9</strong>. To resize: multiply the known dimension by the opposite side's ratio component.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter the width and height of any rectangle - a screen, image, video frame, canvas, or print size. The calculator returns the simplified aspect ratio, its decimal equivalent, and the height as a percentage of width. Use the resize section to find the corresponding dimension at any new size.</p>
-
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The <a href="/glossary/gcd">GCD</a> is the core operation - both dimensions divide by it to reach the simplest whole-number form. 1920 and 1080 share a GCD of 120, giving 16:9.</li>
+          <li>Same <a href="/glossary/ratio">ratio</a> means same shape. 3840×2160 and 640×360 look identical on the same screen - both are 16:9, just different sizes.</li>
+          <li>Resizing is strictly linear: doubling the width means doubling the height. Any scale factor works the same way.</li>
+          <li>Platforms have fixed requirements: 16:9 for YouTube, 9:16 for TikTok/Reels, 1:1 for Instagram grid, 4:5 for Instagram portrait feed.</li>
+          <li>The decimal ratio (W÷H) is a fast identity check: 1.778 = 16:9, 1.333 = 4:3, 1.000 = square.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our width to height ratio calculator</h2>
+      <p>Enter the width and height of any rectangle - a screen, image, video frame, canvas, or print size. The calculator returns the simplified aspect ratio, its decimal equivalent, and the height as a <a href="/glossary/percentage">percentage</a> of width. Use the resize section to find the corresponding dimension at any new size.</p>
       <h2 id="what-is">What is an aspect ratio?</h2>
-      <p>An aspect ratio is the proportional relationship between the width and height of a rectangle, expressed as W:H. It describes the shape of the rectangle without specifying its size. Two rectangles with different dimensions but the same aspect ratio are geometrically similar - one is a scaled version of the other.</p>
-      <p>The ratio is always simplified to the smallest whole numbers by dividing both dimensions by their greatest common divisor (GCD). 1920:1080 simplifies to 16:9 because GCD(1920, 1080) = 120.</p>
-
-      <h2 id="formula">Formula and calculation</h2>
+      <p>An aspect ratio is the <a href="/glossary/proportion">proportional relationship</a> between the width and height of a rectangle, expressed as W:H. It describes the shape of the rectangle without specifying its size. Two rectangles with different dimensions but the same aspect ratio are geometrically similar - one is a scaled version of the other.</p>
+      <p>The ratio is always simplified to the smallest whole numbers by dividing both dimensions by their <a href="/glossary/gcd">greatest common divisor (GCD)</a>. 1920:1080 simplifies to 16:9 because GCD(1920, 1080) = 120.</p>
+      <h3 id="explained-to-beginner">Aspect ratio explained to a beginner</h3>
+      <p>Think of aspect ratio like the shape of a sandwich box - not its size, just its proportions. A box that is 16 cm wide and 9 cm tall has the same shape as a 1920-pixel-wide screen that is 1080 pixels tall. Scale it up or down and the shape stays identical. The ratio captures the shape, not the size.</p>
+      <p>To find the ratio, you need the GCD - the largest number that divides evenly into both dimensions. For 1920 and 1080, that number is 120. Divide: 1920÷120 = 16, 1080÷120 = 9. Result: 16:9. A quick shortcut: compute W÷H as a decimal. If it equals 1.778, the rectangle is 16:9 regardless of the exact pixel count. That single number tells you the shape instantly.</p>
+      <h2 id="formula">Dimension ratio formula and calculation</h2>
       <p>The aspect ratio formula uses the GCD to reduce to lowest terms:</p>
       <Formula expr={f.ratio} />
       <p>The decimal ratio (W ÷ H) expresses how many units wide the rectangle is per unit of height:</p>
       <Formula expr={f.decimal} />
       <p>To resize while preserving the aspect ratio, scale the new dimension by the ratio of the sides:</p>
       <Formula expr={f.resize} />
-
       <h2 id="common-ratios">Common aspect ratios reference</h2>
+      <p>A handful of ratios dominate modern screens and cameras. Knowing the decimal equivalent of each one lets you identify a ratio instantly - without calculating the GCD - just by dividing width by height.</p>
+      <p>The table below covers the ratios you'll encounter most often, along with their primary use cases and real-world resolutions.</p>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Ratio</th><th>Decimal</th><th>Common use</th><th>Example resolution</th></tr></thead>
@@ -202,7 +266,8 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>When I'm checking whether an image will fit a specific screen, I skip the GCD step entirely and just calculate the decimal ratio (W÷H). If it matches the target's decimal - 1.778 for 16:9, 1.333 for 4:3 - the image fits without cropping.</p>
+      <p>The simplified W:H notation is more readable, but the decimal is faster for quick comparisons when you're working through a batch of assets.</p>
       <h2 id="resizing">Resizing with aspect ratio</h2>
       <p>When resizing an image or video frame, one dimension determines the other. Changing width while preserving a 16:9 ratio:</p>
       <div class="responsive-table">
@@ -219,8 +284,7 @@ const schema = [
         </table>
       </div>
       <p>The relationship is linear: double the width and the height doubles too. This means you can scale by any factor and the ratio remains constant.</p>
-
-      <h2 id="applications">Applications by domain</h2>
+      <h2 id="applications">Aspect ratio applications by domain</h2>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Domain</th><th>Typical ratio</th><th>Why it matters</th></tr></thead>
@@ -234,23 +298,24 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>In my experience, the place where aspect ratio errors cause the most pain is social media uploads. TikTok and Instagram Reels demand 9:16, but most cameras default to 16:9.</p>
+      <p>Uploading 16:9 footage to a 9:16 slot doesn't just letterbox it - the platform auto-crops to center, often cutting off the subject's head or feet. Checking the target ratio before you shoot saves far more time than re-editing after the fact.</p>
+      <h2 id="faq">Frequently asked questions about aspect ratio</h2>
       <h3>What is an aspect ratio?</h3>
       <p>The proportional width-to-height relationship of a rectangle, simplified to the lowest whole-number form using the GCD. Example: 1920:1080 = 16:9.</p>
-
       <h3>How do you calculate an aspect ratio?</h3>
       <p>Find GCD(width, height), then divide both by it. GCD(1920, 1080) = 120; 1920÷120 = 16, 1080÷120 = 9 → 16:9.</p>
-
       <h3>How do you resize an image while keeping the aspect ratio?</h3>
       <p>Multiply the new width by H/W (for height), or the new height by W/H (for width). For 16:9 at width 1280: height = 1280 × 9/16 = 720 px.</p>
-
       <h3>What is a 16:9 aspect ratio in pixels?</h3>
       <p>Any resolution where width ÷ height = 16 ÷ 9 ≈ 1.778. Common examples: 3840×2160, 2560×1440, 1920×1080, 1280×720.</p>
-
       <h3>Is 4:3 or 16:9 better?</h3>
       <p>Neither is inherently better - it depends on the use case. 16:9 matches modern screens and video; 4:3 suits older content, tablets, and certain print formats. The right ratio is the one that fits your output medium.</p>
+      <QuizBlock
+        topic="aspect ratios"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/ratio-calculator/aspect-ratio"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -260,8 +325,7 @@ const schema = [
         { path: '/math/ratio-calculator/golden-ratio', blurb: 'Calculate golden ratio dimensions from any input.' },
         { path: '/math/fraction-calculator/equivalent', blurb: 'Generate equivalent fractions for any fraction.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/ratio-calculator/aspect-ratio" />
     </div>
   </div>
-
 </CalculatorLayout>

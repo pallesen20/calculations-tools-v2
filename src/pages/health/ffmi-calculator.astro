@@ -31,7 +31,7 @@ const quizQuestions = [
     q: 'What does FFMI measure?',
     options: ['Total body weight relative to height squared', 'Lean body mass relative to height squared', 'The ratio of fat mass to total body weight', 'Body fat percentage adjusted for height'] as [string, string, string, string],
     correct: 1 as const,
-    explanation: 'FFMI (Fat-Free Mass Index) is lean body mass in kg divided by height in metres squared - it measures how much muscle you carry relative to your frame, ignoring fat entirely. This makes it more meaningful than BMI for anyone who trains seriously.',
+    explanation: 'FFMI (Fat-Free Mass Index) is lean body mass in kg divided by height in meters squared - it measures how much muscle you carry relative to your frame, ignoring fat entirely. This makes it more meaningful than BMI for anyone who trains seriously.',
   },
   {
     q: 'A person weighs 85 kg, is 180 cm tall, and has 15% body fat. What is their FFMI?',
@@ -111,11 +111,11 @@ const schema = [
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "What is FFMI?", "acceptedAnswer": { "@type": "Answer", "text": "FFMI (Fat-Free Mass Index) is lean body mass in kilograms divided by height in metres squared. It normalises muscle mass for height, the same way BMI normalises total weight. A higher FFMI means more muscle relative to your frame. The normalised version adds a height correction factor (6.1 × (1.8 − height in metres)) so that taller and shorter people can be compared fairly." } },
+      { "@type": "Question", "name": "What is FFMI?", "acceptedAnswer": { "@type": "Answer", "text": "FFMI (Fat-Free Mass Index) is lean body mass in kilograms divided by height in meters squared. It normalises muscle mass for height, the same way BMI normalises total weight. A higher FFMI means more muscle relative to your frame. The normalised version adds a height correction factor (6.1 × (1.8 − height in meters)) so that taller and shorter people can be compared fairly." } },
       { "@type": "Question", "name": "What is a good FFMI?", "acceptedAnswer": { "@type": "Answer", "text": "For men, FFMI 20–22 is Above average, 22–24 is Excellent, 24–26 is Superior, and above 26 exceeds the natural drug-free limit identified by Kouri et al. (1995). For women, FFMI 15–17 is Above average, 17–20 is Excellent, and above 20 is Superior. Most active but non-competitive men fall between 18 and 22." } },
       { "@type": "Question", "name": "Is 25 really the natural FFMI limit?", "acceptedAnswer": { "@type": "Answer", "text": "Kouri et al. (1995) studied 83 male athletes - 41 admitted steroid users and 42 drug-free competitors - and found that all drug-free athletes had normalised FFMI ≤ 25.0, while steroid users commonly exceeded 25. The study has limitations: small sample, self-reported drug use, and only male athletes. The limit of 25 is widely cited but is best understood as a strong indicative threshold, not an absolute biological ceiling." } },
       { "@type": "Question", "name": "What body fat % should I use?", "acceptedAnswer": { "@type": "Answer", "text": "Use the most accurate measurement available: DEXA scanning (most accurate, ±1–2%), hydrostatic weighing, bod pod, or Lange/Harpenden skinfold calipers measured by an experienced technician. Bioelectrical impedance (BIA) on consumer scales varies widely (±3–5%) but is fine for tracking trends. Avoid visual estimates - these carry 5–10% error and introduce significant FFMI calculation error." } },
-      { "@type": "Question", "name": "What is the difference between raw FFMI and normalised FFMI?", "acceptedAnswer": { "@type": "Answer", "text": "Raw FFMI is simply LBM / height². Normalised FFMI adds a height correction: FFMI + 6.1 × (1.8 − height in metres). This correction adjusts for the fact that taller people tend to have proportionally less muscle relative to height² than shorter people, making comparisons between people of different heights fairer. At exactly 180 cm (5'11\"), the two values are identical." } },
+      { "@type": "Question", "name": "What is the difference between raw FFMI and normalised FFMI?", "acceptedAnswer": { "@type": "Answer", "text": "Raw FFMI is simply LBM / height². Normalised FFMI adds a height correction: FFMI + 6.1 × (1.8 − height in meters). This correction adjusts for the fact that taller people tend to have proportionally less muscle relative to height² than shorter people, making comparisons between people of different heights fairer. At exactly 180 cm (5'11\"), the two values are identical." } },
       { "@type": "Question", "name": "Can women reach FFMI 20?", "acceptedAnswer": { "@type": "Answer", "text": "FFMI above 20 is classified as Superior for women and is achievable by competitive female bodybuilders and powerlifters. Women have substantially lower testosterone levels than men, so female FFMI scales use lower thresholds throughout. An FFMI of 17–20 (Excellent) represents a high level of muscular development for a woman training consistently over several years." } },
     ]
   }
@@ -252,7 +252,7 @@ const schema = [
       <p><a href="/glossary/ffmi">Fat-Free Mass Index</a> was introduced by Kouri et al. in 1995 to quantify muscular development independently of body fat and height. The formula separates lean body mass from total weight, then normalises for height the same way BMI does:</p>
       <p>Step 1 - calculate lean body mass from total weight and body fat %:</p>
       <Formula expr={f.lbm} />
-      <p>Step 2 - divide LBM by height in metres squared to get raw FFMI:</p>
+      <p>Step 2 - divide LBM by height in meters squared to get raw FFMI:</p>
       <Formula expr={f.ffmi} />
       <p>Step 3 - apply the Kouri height correction to get normalised FFMI:</p>
       <Formula expr={f.ffmiNorm} />
@@ -355,7 +355,7 @@ const schema = [
       </div>
       <h2 id="faq">FAQs about fat-free mass index</h2>
       <h3>What is FFMI?</h3>
-      <p>FFMI (Fat-Free Mass Index) is lean body mass in kilograms divided by height in metres squared, with an optional height normalisation correction. It measures how much muscle you carry relative to your frame size, independently of body fat.</p>
+      <p>FFMI (Fat-Free Mass Index) is lean body mass in kilograms divided by height in meters squared, with an optional height normalisation correction. It measures how much muscle you carry relative to your frame size, independently of body fat.</p>
       <h3>What is a good FFMI?</h3>
       <p>For men, FFMI above 20 is above average, above 22 is excellent, and above 24 is superior. Above 25 is considered beyond the natural drug-free range based on Kouri et al. (1995). For women, FFMI above 15 is above average, above 17 is excellent, and above 20 is superior.</p>
       <h3>Is 25 really the natural FFMI limit for men?</h3>
