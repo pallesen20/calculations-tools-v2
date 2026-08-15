@@ -3830,6 +3830,97 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'payback-period': {
+    definition: [
+      'The payback period is the time required for an investment\'s cumulative savings - or income - to equal its initial cost. The formula divides the upfront cost by annual savings: a $10,000 machine saving $2,500 per year has a payback period of 4 years. After that point, every additional year of operation is net gain on top of a recovered cost.',
+      'Payback period and ROI are related but answer completely different questions. Payback period asks: "when do I break even?" ROI asks: "how much profit do I make over the investment\'s lifespan?" An investment can have a short payback and modest ROI, or a long payback and exceptional ROI. A solar panel array with an 8-year payback on a 25-year lifespan generates far more total profit than a subscription tool with a 2-month payback on a 2-year lifespan - even though the subscription tool wins on payback period alone. You need both metrics together for a complete picture.',
+      'The standard formula assumes constant annual savings. If savings grow over time - as is common when energy prices rise - the actual payback occurs earlier than the formula suggests. The discounted payback period applies a discount rate to each year\'s cash flows before summing them, giving a more conservative estimate for long-horizon investments. For most everyday decisions, the simple formula is sufficient.',
+    ],
+    beginnerExplain: [
+      'Think of a gym membership. You pay $600 upfront for a year\'s access. The alternative is $8 per class, and you go 3 times a week - 156 classes a year. Pay-per-visit cost: $1,248. Annual saving by buying the membership: $648.',
+      'Payback period: $600 / $648 = 0.93 years - under 11 months. After that, every class is pure saving. That\'s payback period in everyday life: how long until the upfront cost is covered by the recurring benefit.',
+      'ROI is the follow-up question: over the full year, you saved $648 but only paid $600. Net profit = $48. ROI = $48 / $600 = 8%. Payback told you when. ROI tells you how much.',
+    ],
+    whenToUse: 'Use payback period as a first-pass screening filter when evaluating multiple investment options. Any investment that exceeds your maximum acceptable payback threshold can be eliminated quickly without detailed modelling. For investments that pass the screen, always follow up with total ROI (using the investment lifespan) and annualized ROI to understand the full return picture. Do not use payback period as the sole decision criterion - it measures the risk window, not the reward.',
+    examples: {
+      headers: ['Scenario', 'Upfront Cost', 'Annual Savings', 'Payback Period', 'Typical Lifespan'],
+      rows: [
+        ['Solar panels', '$15,000', '$1,800', '8 yr 4 mo', '25 years'],
+        ['Heat pump upgrade', '$8,000', '$1,600', '5 years', '20 years'],
+        ['Business equipment', '$25,000', '$8,000', '3 yr 1 mo', '10 years'],
+        ['SaaS tool vs. manual labor', '$3,600/yr', '$18,000', '2.4 months', '3 years'],
+        ['Insulation upgrade', '$6,000', '$1,200', '5 years', '30 years'],
+      ],
+    },
+    pitfalls: 'The most critical weakness of the payback period is that it ignores everything after break-even. Two investments with identical 3-year payback periods look equivalent under this metric - but one with a 4-year lifespan barely turns a profit, while one with a 20-year lifespan generates 17 years of net returns. A useful ratio is payback / lifespan: a 0.2 ratio means you break even in the first 20% of the product\'s life, a strong position. A 0.9 ratio means you barely recoup the cost before it fails. Also watch for gross vs. net savings: a heat pump saving $3,000 in gas but consuming $800 in extra electricity has net savings of only $2,200 - using the gross figure overstates savings by 36%.',
+    faqs: [
+      { q: 'What is a good payback period?', a: 'It depends on context and lifespan. Business equipment decisions often require payback under 3 years. Home energy investments (solar panels, heat pumps) with 6-10 year payback periods are widely accepted because the products last 20-25 years. SaaS tools replacing manual labor can pay back in weeks. The most useful benchmark is payback relative to lifespan - the lower the ratio, the stronger the investment.' },
+      { q: 'How does the payback period differ from ROI?', a: 'Payback period measures time to break even. ROI measures total profitability over the investment\'s full lifespan. They answer different questions: payback tells you the risk window (how long your capital is exposed before recovery); ROI tells you the reward (how much profit you earn once recovered). A 3-year payback on a 4-year product is very different from a 3-year payback on a 20-year product - identical payback, vastly different ROI.' },
+      { q: 'What is the discounted payback period?', a: 'The discounted payback period applies a discount rate to each year\'s cash flows before summing them. Because $1,000 received in year 5 is worth less than $1,000 today, discounting gives a more conservative break-even estimate. It is used for large capital projects and long-horizon investments where the time value of money is material. For most everyday investments under 10 years, the simple payback formula is a reasonable approximation.' },
+      { q: 'Can the payback period be used for investments with irregular savings?', a: 'Yes, but you need to sum annual cash flows cumulatively until they equal the initial cost, rather than using the simple division formula. List each year\'s savings, accumulate them, and identify the year where the running total crosses the initial investment. The crossover year (and the fraction within it) gives the payback period. The calculator on this site assumes constant savings per period.' },
+    ],
+    quiz: {
+      topic: 'payback period',
+      questions: [
+        {
+          q: 'What does the payback period formula calculate?',
+          options: [
+            'The total profit generated over an investment\'s full lifespan',
+            'The time for cumulative savings to equal the initial investment',
+            'The annualized return rate expressed as a percentage',
+            'The net present value of all future cash flows discounted to today',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The payback period formula - Initial Investment / Annual Savings - calculates the time until cumulative savings equal the upfront cost. It answers "when do I break even?", not how much profit is made or what the annual return rate is.',
+        },
+        {
+          q: 'From the examples table on this page, what is the payback period for a heat pump upgrade costing $8,000 with $1,600 in annual savings?',
+          options: [
+            '3 yr 1 mo',
+            '4 yr 8 mo',
+            '5 years',
+            '6 yr 4 mo',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: '$8,000 / $1,600 = 5.0 years exactly. The examples table confirms 5 years. With a typical lifespan of 20 years, the heat pump generates 15 years of net savings after break-even.',
+        },
+        {
+          q: 'According to this page, what is the key difference between payback period and ROI?',
+          options: [
+            'Payback period uses annual savings; ROI uses daily savings adjusted for compounding',
+            'Payback period applies only to physical assets; ROI applies to financial investments',
+            'Payback period measures when you break even; ROI measures how much profit you make over the full lifespan',
+            'Payback period is expressed in months; ROI is expressed as an annualized percentage',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states: "Payback period asks: when do I break even? ROI asks: how much profit do I make over the investment\'s lifespan?" They answer fundamentally different questions - payback measures the risk window, ROI measures the reward. Both are needed together for a complete investment picture.',
+        },
+        {
+          q: 'The pitfalls section introduces a payback/lifespan ratio. What does a ratio of 0.9 indicate?',
+          options: [
+            'The investment generates a 90% return on capital over its lifetime',
+            'The investment pays back in the first 90 days of operation',
+            'The investment barely recoups its cost before the product reaches end of life',
+            'The investment has a 90% probability of achieving the projected savings',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section explains that a 0.9 payback/lifespan ratio means you break even in 90% of the product\'s life - barely recouping the cost before it fails. By contrast, a 0.2 ratio means break-even in the first 20% of the lifespan, leaving 80% of the product\'s life as net gain.',
+        },
+        {
+          q: 'What does the whenToUse section say payback period should NOT be used as?',
+          options: [
+            'A metric for home energy investments such as solar panels and heat pumps',
+            'A screening tool for eliminating investments that exceed a maximum threshold',
+            'The sole decision criterion, since it measures the risk window but not the reward',
+            'A comparison tool across investments with similar lifespans',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The whenToUse section states: "Do not use payback period as the sole decision criterion - it measures the risk window, not the reward." It should be used as a first-pass filter, always followed by total ROI and annualized ROI for investments that pass the screen.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'sales-tax': {
     definition: [
       'Sales tax is a consumption tax imposed at the point of sale on retail goods and services. The seller adds the tax to the purchase price, collects it from the buyer, and remits it to the state or local government. Rates are set by state legislatures, and most states allow counties and cities to layer additional local rates on top of the state base rate. The Tax Foundation reports that 45 US states plus Washington D.C. levy a statewide sales tax, with rates ranging from 2.9% (Colorado) to 7.25% (California).',

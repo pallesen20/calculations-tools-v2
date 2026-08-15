@@ -1,0 +1,135 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Payback Period Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Payback Period Calculator</h2>
+        <p>Enter investment and savings to see when it pays itself back</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pp-currency">Currency</label>
+        <div class="bmi-input-wrap">
+          <select id="pp-currency" class="bmi-input">
+            <option value="$">$ USD - US Dollar</option>
+            <option value="€">€ EUR - Euro</option>
+            <option value="£">£ GBP - British Pound</option>
+            <option value="¥">¥ JPY - Japanese Yen</option>
+            <option value="C$">C$ CAD - Canadian Dollar</option>
+            <option value="A$">A$ AUD - Australian Dollar</option>
+            <option value="Fr">Fr CHF - Swiss Franc</option>
+            <option value="₹">₹ INR - Indian Rupee</option>
+            <option value="R$">R$ BRL - Brazilian Real</option>
+            <option value="₩">₩ KRW - South Korean Won</option>
+            <option value="kr">kr DKK - Danish Krone</option>
+            <option value="kr">kr NOK - Norwegian Krone</option>
+            <option value="kr">kr SEK - Swedish Krona</option>
+            <option value="S$">S$ SGD - Singapore Dollar</option>
+            <option value="HK$">HK$ HKD - Hong Kong Dollar</option>
+            <option value="NZ$">NZ$ NZD - New Zealand Dollar</option>
+            <option value="R">R ZAR - South African Rand</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pp-initial">Initial Investment</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="pp-initial" class="bmi-input" placeholder="e.g. 5800" />
+        </div>
+      </div>
+
+      <div class="pp-period-label">Savings / income per</div>
+      <div class="pp-periods">
+        <button class="pp-period-btn" data-period="daily">Day</button>
+        <button class="pp-period-btn active" data-period="monthly">Month</button>
+        <button class="pp-period-btn" data-period="annually">Year</button>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pp-savings">Savings per period</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="pp-savings" class="bmi-input" placeholder="e.g. 84" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="pp-lifespan">Investment Lifespan in Years (optional)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="pp-lifespan" class="bmi-input" placeholder="e.g. 15" />
+        </div>
+      </div>
+
+      <div id="pp-result" class="lbm-result hidden">
+        <div class="lbm-primary">
+          <span class="lbm-primary-val" id="pp-payback">-</span>
+        </div>
+        <div class="lbm-primary-lbl">Payback period</div>
+
+        <div id="pp-lifespan-row" class="lbm-cards hidden" style="margin-top:0.75rem;">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="pp-total-savings">-</div>
+            <div class="lbm-card-lbl">Total Savings</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="pp-net-profit">-</div>
+            <div class="lbm-card-lbl">Net Profit</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="pp-roi">-</div>
+            <div class="lbm-card-lbl">Total ROI</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="pp-ann-roi">-</div>
+            <div class="lbm-card-lbl">Annualized ROI</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Annual savings</span>
+            <span class="pi-step-val" id="pp-step1">-</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">Initial / Annual savings</span>
+            <span class="pi-step-val" id="pp-step2">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="pp-table-section" class="hidden" style="margin-top:1.5rem;padding:0 1rem 1rem;">
+    <div class="pi-steps-title" style="margin-bottom:0.5rem;">Year-by-year breakdown</div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+        <thead>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+            <th style="text-align:left;padding:0.4rem 0.6rem;">Period</th>
+            <th style="text-align:left;padding:0.4rem 0.6rem;">Cumulative Savings</th>
+            <th style="text-align:left;padding:0.4rem 0.6rem;">Net Position</th>
+            <th style="padding:0.4rem 0.6rem;"></th>
+          </tr>
+        </thead>
+        <tbody id="pp-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="/js/payback-period-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .pp-periods { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem; }
+  .pp-period-btn { padding:0.3rem 0.7rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
+  .pp-period-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:#fff; }
+  .pp-period-label { font-size:0.78rem; color:rgba(255,255,255,0.45); margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.05em; }
+  .pp-pos { color:#4ade80; }
+  .pp-neg { color:#f87171; }
+  .pp-breakeven-row { background:rgba(139,92,246,0.12); font-weight:600; }
+  .pp-breakeven-row td:last-child { color:#a78bfa; }
+</style>

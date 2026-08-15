@@ -328,7 +328,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'CAGR (Compound Annual Growth Rate) is the annualised rate at which an investment would have grown if it compounded at a steady pace each year. It smooths out year-to-year volatility to give a single comparable growth rate.',
     formula: '$$\\text{CAGR} = \\left(\\frac{\\text{End Value}}{\\text{Start Value}}\\right)^{\\frac{1}{n}} - 1$$',
-    relatedTools: ['/finance/roi-calculator', '/finance/compound-interest-calculator', '/finance/pe-ratio-calculator'],
+    relatedTools: ['/finance/roi-calculator', '/finance/compound-interest-calculator', '/finance/pe-ratio-calculator', '/finance/payback-period-calculator'],
     relatedTerms: ['roi', 'compound-interest'],
   },
   {
@@ -386,6 +386,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['gross-pay', 'net-pay'],
   },
   {
+    slug: 'payback-period',
+    term: 'Payback Period',
+    letter: 'P',
+    category: 'Valuation & Returns',
+    siteCategory: 'Finance',
+    shortDef: 'The payback period is the time required for cumulative savings or income from an investment to equal its upfront cost. It answers "when do I break even?" - not how much profit an investment generates (that is ROI), but simply how long until the cost is fully recovered.',
+    formula: '$$\\text{Payback Period} = \\frac{\\text{Initial Investment}}{\\text{Annual Savings}}$$',
+    relatedTools: ['/finance/payback-period-calculator', '/finance/roi-calculator'],
+    relatedTerms: ['roi', 'irr', 'npv', 'cagr'],
+  },
+  {
     slug: 'principal-and-interest',
     term: 'Principal and Interest (P&I)',
     letter: 'P',
@@ -415,8 +426,8 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'Return on Investment (ROI) measures the net gain or loss on an investment relative to its cost, expressed as a percentage. It is the simplest and most universal metric for comparing the efficiency of different investments.',
     formula: '$$\\text{ROI} = \\frac{\\text{Final Value} - \\text{Initial Cost}}{\\text{Initial Cost}} \\times 100$$',
-    relatedTools: ['/finance/roi-calculator'],
-    relatedTerms: ['cagr', 'net-income', 'contribution-margin', 'roe'],
+    relatedTools: ['/finance/roi-calculator', '/finance/payback-period-calculator'],
+    relatedTerms: ['cagr', 'payback-period', 'net-income', 'contribution-margin', 'roe'],
   },
   {
     slug: 'roe',
@@ -997,7 +1008,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'The Internal Rate of Return (IRR) is the discount rate at which the net present value of all cash flows from an investment equals zero. It is the implied annual return of a project - if IRR exceeds your hurdle rate, the investment creates value.',
     formula: '$$0 = \\sum_{t=0}^{n} \\frac{CF_t}{(1+\\text{IRR})^t}$$',
-    relatedTools: ['/finance/roi-calculator', '/finance/compound-interest-calculator'],
+    relatedTools: ['/finance/roi-calculator', '/finance/compound-interest-calculator', '/finance/payback-period-calculator'],
     relatedTerms: ['npv', 'roi', 'cagr', 'free-cash-flow', 'moic'],
   },
   {
@@ -1018,7 +1029,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'Net Present Value (NPV) is the sum of all investment cash flows discounted to today\'s value using a chosen rate. A positive NPV means the project earns more than its cost of capital and creates value; a negative NPV destroys value.',
     formula: '$$\\text{NPV} = \\sum_{t=0}^{n} \\frac{CF_t}{(1+r)^t}$$',
-    relatedTools: ['/finance/roi-calculator', '/finance/compound-interest-calculator'],
+    relatedTools: ['/finance/roi-calculator', '/finance/compound-interest-calculator', '/finance/payback-period-calculator'],
     relatedTerms: ['irr', 'roi', 'cagr', 'free-cash-flow'],
   },
   {

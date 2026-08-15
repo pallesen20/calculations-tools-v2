@@ -1375,6 +1375,15 @@ const entries: Entry[] = [
     featured: true,
   },
   {
+    path: '/finance/payback-period-calculator',
+    title: 'Payback Period Calculator - Break-Even Analysis',
+    description: 'Calculate when any investment pays itself back. Enter daily, monthly, or annual savings to see payback period, total ROI, net profit, and a year-by-year breakdown.',
+    changefreq: 'weekly',
+    priority: 1.0,
+    icon: '⏱️',
+    short: 'Initial Investment / Annual Savings',
+  },
+  {
     path: '/finance/compound-interest-calculator',
     title: 'Compound Interest Calculator - Formula & Growth Table',
     description: 'Calculate compound interest for any principal, rate, compounding frequency, and time. Shows future value, total interest earned, and a year-by-year growth table.',
@@ -1746,6 +1755,7 @@ const FINANCE_GROUPS: Record<string, string> = {
   'contribution-margin-calculator':     'Margin & Profitability',
   'break-even-calculator':              'Margin & Profitability',
   'roi-calculator':                     'Valuation & Returns',
+  'payback-period-calculator':          'Valuation & Returns',
   'roe-calculator':                     'Valuation & Returns',
   'pe-ratio-calculator':                'Valuation & Returns',
   'enterprise-value-calculator':        'Valuation & Returns',
