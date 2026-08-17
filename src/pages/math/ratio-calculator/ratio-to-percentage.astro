@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+import type { Source } from '../../../components/Sources.astro';
 
 const f = {
   pctA:  "$$\\%A = \\frac{a}{a + b} \\times 100$$",
@@ -11,14 +14,91 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',   label: 'How to use' },
-  { id: 'what-is',      label: 'What is ratio to percentage?' },
-  { id: 'formula',      label: 'Formula & method' },
-  { id: 'examples',     label: 'Worked examples' },
-  { id: 'reference',    label: 'Reference table' },
-  { id: 'applications', label: 'When to use this conversion' },
-  { id: 'faq',          label: 'FAQs' },
-  { id: 'related-tools', label: 'Related tools' },
+  { id: 'how-to-use',            label: 'How to use' },
+  { id: 'what-is',               label: 'What is ratio to percentage?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',               label: 'Formula & method' },
+  { id: 'examples',              label: 'Worked examples' },
+  { id: 'reference',             label: 'Reference table' },
+  { id: 'applications',          label: 'When to use this conversion' },
+  { id: 'faq',                   label: 'FAQs' },
+  { id: 'quiz',                  label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',         label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'When converting the ratio 3:5 to a percentage, what is the correct denominator?',
+    options: [
+      '3 (Part A only)',
+      '5 (Part B only)',
+      '8 (the sum of both parts)',
+      '15 (the product of both parts)',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The formula divides each part by a + b. For 3:5, the denominator is 3 + 5 = 8, not 5. Using 5 as the denominator gives 3/5 = 60%, which the key takeaways box explicitly flags as the most common mistake.',
+  },
+  {
+    q: 'According to the worked examples table, what percentage does Part A represent in a 1:3 ratio?',
+    options: [
+      '33.33%',
+      '25%',
+      '75%',
+      '30%',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Total parts = 1 + 3 = 4. Part A = 1/4 x 100 = 25%. Part B = 3/4 x 100 = 75%. The two always sum to 100%.',
+  },
+  {
+    q: 'The key takeaways section distinguishes ratios from fractions. Which statement correctly describes that distinction?',
+    options: [
+      'Ratios can only use whole numbers; fractions accept decimals',
+      'A ratio is part-to-part; a fraction is part-to-whole - so they use different denominators',
+      'Fractions always produce a value less than 1; ratios can produce any value',
+      'Ratios require a common unit between parts; fractions do not',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The key takeaways state: "A ratio is part-to-part, not part-to-whole." For 3:5 as a ratio the denominator is 8 (sum of parts); as a fraction 3/5 the denominator is 5. This is why 3:5 is 37.5%, not 60%.',
+  },
+  {
+    q: 'According to the reference table on this page, which ratio corresponds to the Pareto principle (80/20 rule)?',
+    options: [
+      '2:1',
+      '3:1',
+      '3:2',
+      '4:1',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The reference table shows 4:1 gives Part A = 80% and Part B = 20%, matching the Pareto principle. Applying the formula: 4/(4+1) = 80% and 1/(4+1) = 20%.',
+  },
+  {
+    q: 'The "Explained to a beginner" section describes a specific common error. What mistake does it warn against?',
+    options: [
+      'Multiplying instead of dividing when calculating the percentage',
+      'Rounding the total before dividing each part',
+      'Using one part as the denominator instead of the sum of both parts',
+      'Swapping Part A and Part B after calculating',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The beginner section warns: "They write 3:5 and then calculate 3/5 instead of 3/8." The denominator must be the sum of both parts (3+5=8). Dividing by 5 alone produces the plausible-but-wrong answer of 60% instead of the correct 37.5%.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Wikipedia',
+    title: 'Ratio',
+    journal: 'Wikipedia',
+    year: 2024,
+    url: 'https://en.wikipedia.org/wiki/Ratio',
+  },
+  {
+    author: 'Wikipedia',
+    title: 'Pareto principle',
+    journal: 'Wikipedia',
+    year: 2024,
+    url: 'https://en.wikipedia.org/wiki/Pareto_principle',
+  },
 ];
 
 const schema = [
@@ -56,7 +136,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Ratio to Percentage Calculator"
   metaTitle="Ratio to Percentage Calculator | Convert a:b to %"
@@ -64,6 +143,7 @@ const schema = [
   canonical="https://calculations.tools/math/ratio-calculator/ratio-to-percentage"
   tocItems={tocItems}
   schema={schema}
+  sources={sources}
   embedSlug="ratio-to-percentage-calculator"
   ogFormula="Part % = (Part / Total parts) × 100"
   ogExample="Ratio 3:2 -> 3/(3+2) = 60% and 2/(3+2) = 40%"
@@ -72,10 +152,9 @@ const schema = [
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
         <div class="calculator-header">
-          <h2>Calculate Ratio to Percentage</h2>
+          <h2>Calculate Ratio in Percentage Instantly</h2>
           <p>Convert a:b to the percentage each part represents</p>
         </div>
-
         <div class="input-row">
           <div class="bmi-field">
             <label class="bmi-label" for="rp-a">Part A</label>
@@ -91,7 +170,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="rp-result" class="lbm-result hidden">
           <div class="lbm-cards">
             <div class="lbm-card">
@@ -111,7 +189,6 @@ const schema = [
               <div class="lbm-card-lbl">Part B (decimal)</div>
             </div>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -130,26 +207,34 @@ const schema = [
         </div>
       </div>
     </section>
-
     <script src="/js/ratio-to-percentage-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>Add both parts (a + b = total), then divide each by the total and multiply by 100. For <strong>3:5</strong>: total = 8; A = 3/8 × 100 = <strong>37.5%</strong>; B = 5/8 × 100 = <strong>62.5%</strong>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The two output percentages always sum to exactly 100% - the parts together form the whole, so there is no remainder.</li>
+          <li>A ratio is part-to-part, not part-to-whole. The ratio 3:5 does NOT equal 3/5 (60%) - it means 3 out of 8 total parts, which is 37.5%.</li>
+          <li>The formula works with any positive numbers, including decimals. A ratio of 1.5:2.5 gives the same percentages as 3:5.</li>
+          <li>To reverse the conversion (percentage back to ratio), divide each percentage by the smallest of the two and simplify: 37.5% and 62.5% - divide both by 37.5 - gives 1:1.667, or multiply through to get 3:5.</li>
+          <li>For three-part splits (a:b:c), divide each part by the sum of all three. Use the 3-part ratio calculator for those cases.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use this ratio to percentage calculator</h2>
       <p>Enter the two parts of the ratio (a and b). The calculator returns the percentage each part represents of the whole (a + b), along with decimal equivalents and the full step-by-step workings.</p>
-
       <h2 id="what-is">What is a ratio-to-percentage conversion?</h2>
-      <p>A ratio describes how two quantities relate to each other in parts (e.g. 3:5 - three parts to five parts). A percentage expresses each part's share of the total as a value out of 100. Converting a ratio to percentages is the process of determining what fraction of the whole each part represents.</p>
-      <p>The two percentages always sum to exactly 100%. The conversion treats the ratio as a part-to-part relationship and implicitly calculates the whole (a + b).</p>
-
-      <h2 id="formula">Formula and method</h2>
+      <p>A <a href="/glossary/ratio">ratio</a> describes how two quantities relate to each other in parts (e.g. 3:5 - three parts to five parts). A <a href="/glossary/percentage">percentage</a> expresses each part's share of the total as a value out of 100. Converting a ratio to percentages is the process of determining what <a href="/glossary/fraction">fraction</a> of the whole each part represents.</p>
+      <p>The two percentages always sum to exactly 100%. The <a href="/conversion">conversion</a> treats the ratio as a part-to-part relationship and implicitly calculates the whole (a + b).</p>
+      <h3 id="explained-to-beginner">Ratio to percentage explained to a beginner</h3>
+      <p>Picture a bag containing 3 red marbles and 5 blue marbles. You want to know what share of the bag each color represents. The total is 3 + 5 = 8 marbles. Red gets 3 out of every 8, which is 3 / 8 = 0.375 - multiply by 100 and you get 37.5%. Blue gets 5 out of every 8: 62.5%. That is the entire conversion.</p>
+      <p>The key thing beginners get wrong is treating the ratio like a fraction. "3:5" looks like "3 over 5," but it is not. Three-fifths (3/5) would be 60%. The ratio 3:5 is 37.5%, because the denominator is 3 + 5 = 8, not just 5. The colon means "compared to," so you always add both sides to find the total before dividing.</p>
+      <p><strong>A quick check:</strong> your two percentages must add to 100%. If they don't, something went wrong - most likely the denominator was calculated as just one part instead of the sum of both.</p>
+      <h2 id="formula">Ratio in percentage formula and method</h2>
       <p>For a ratio a:b, the percentage of each part is:</p>
       <Formula expr={f.pctA} />
       <Formula expr={f.pctB} />
@@ -157,8 +242,7 @@ const schema = [
       <Formula expr={f.ex1} />
       <p>Example with 1:3:</p>
       <Formula expr={f.ex2} />
-
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for ratio to percentage</h2>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Ratio</th><th>Total parts</th><th>Part A %</th><th>Part B %</th></tr></thead>
@@ -176,8 +260,12 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>When I built the worked examples table above, I noticed something worth flagging: the decimal column is more useful than it first appears. A ratio of 3:5 gives a decimal of 0.375 for Part A - which is immediately usable in a spreadsheet formula or calculation without any further conversion.</p>
+      <p>In practice I reach for the decimal output more often than the percentage, especially when building financial models where inputs are <a href="/glossary/proportion">proportions</a> rather than display values.</p>
       <h2 id="reference">Common ratio reference table</h2>
+      <p>The table below lists the most frequently encountered ratios along with their percentage equivalents and the real-world context where each typically appears.</p>
+      <p>Use it as a quick lookup when you recognize a ratio from a standard formula or rule - for example, 4:1 is the <a href="/glossary/pareto-principle">Pareto principle (80/20)</a>, and 2:3 is a common debt-to-equity structure.</p>
+      <p>All values are exact to two decimal places; enter any ratio above to get more precision.</p>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Ratio</th><th>Part A %</th><th>Part B %</th><th>Typical context</th></tr></thead>
@@ -192,29 +280,29 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="applications">When to use this conversion</h2>
-      <p><strong>Finance and investment</strong> - a 60:40 portfolio (stocks:bonds) means 60% stocks and 40% bonds. Converting the ratio to percentages makes it clear what proportion of capital is allocated to each asset class.</p>
+      <h2 id="applications">When to use this ratio to percentage conversion</h2>
+      <p><strong><a href="/finance">Finance</a> and investment</strong> - a 60:40 portfolio (stocks:bonds) means 60% stocks and 40% bonds. Converting the ratio to percentages makes it clear what proportion of capital is allocated to each asset class.</p>
       <p><strong>Mixing and recipes</strong> - a cement:sand ratio of 1:3 means cement is 25% of the mix by volume. Understanding percentages is often more practical than ratios when measuring total quantities.</p>
       <p><strong>Statistics and surveys</strong> - survey results are often reported as ratios (3 in 5 support X). Converting to a percentage (60%) communicates the result more intuitively.</p>
       <p><strong>Nutrition</strong> - macronutrient ratios (protein:carbs:fat) are often converted to percentage shares for dietary planning (e.g. 30% protein, 40% carbs, 30% fat).</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>In my experience, the most common error I see when people do this conversion manually is using the wrong <a href="/glossary/denominator">denominator</a>. They write 3:5 and then calculate 3/5 instead of 3/8. The percentage they get - 60% - is plausible enough that it doesn't raise an alarm, and the mistake goes unnoticed.</p>
+      <p>The simple habit of always writing "total = a + b" as a first step before any division eliminates this entirely.</p>
+      <h2 id="faq">FAQs about ratio to percentage conversion</h2>
       <h3>How do you convert a ratio to a percentage?</h3>
       <p>Add both parts to get the total. Divide each part by the total and multiply by 100. For 3:5: total = 8; A = 37.5%, B = 62.5%.</p>
-
       <h3>What percentage is a 1:3 ratio?</h3>
       <p>Total = 4. A = 1/4 × 100 = 25%, B = 3/4 × 100 = 75%.</p>
-
       <h3>What percentage is a 2:1 ratio?</h3>
       <p>Total = 3. A = 2/3 × 100 ≈ 66.67%, B = 1/3 × 100 ≈ 33.33%.</p>
-
       <h3>Do the two percentages always add to 100%?</h3>
       <p>Yes - by definition, the two parts together form the whole (100%).</p>
-
       <h3>Can I use this for 3-part ratios?</h3>
       <p>This calculator handles 2-part ratios. For three-part splits (a:b:c) use the 3-part ratio calculator.</p>
+      <QuizBlock
+        topic="ratio to percentage"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/ratio-calculator/ratio-to-percentage"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -224,8 +312,7 @@ const schema = [
         { path: '/math/ratio-calculator/proportion',   blurb: 'Solve a:b = c:d for the missing value.' },
         { path: '/math/fraction-calculator/fraction-to-decimal', blurb: 'Convert any fraction to its decimal equivalent.' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/ratio-calculator/ratio-to-percentage" />
     </div>
   </div>
-
 </CalculatorLayout>

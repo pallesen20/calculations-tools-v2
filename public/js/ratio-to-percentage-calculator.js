@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('rp-pct-b').textContent   = fmt(pctB) + '%';
     document.getElementById('rp-dec-a').textContent   = fmt(decA);
     document.getElementById('rp-dec-b').textContent   = fmt(decB);
-    document.getElementById('rp-total').textContent   = fmt(total);
     document.getElementById('rp-step1').textContent   = `Total parts = ${fmt(a)} + ${fmt(b)} = ${fmt(total)}`;
     document.getElementById('rp-step2').textContent   = `A: ${fmt(a)} ÷ ${fmt(total)} × 100 = ${fmt(pctA)}%`;
     document.getElementById('rp-step3').textContent   = `B: ${fmt(b)} ÷ ${fmt(total)} × 100 = ${fmt(pctB)}%`;

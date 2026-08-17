@@ -2,6 +2,9 @@
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+import type { Source } from '../../../components/Sources.astro';
 
 const f = {
   equiv:   "$$a{:}b = (a \\times n){:}(b \\times n) \\quad \\text{for any } n \\neq 0$$",
@@ -11,14 +14,66 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',   label: 'How to use' },
-  { id: 'what-is',      label: 'What are equivalent ratios?' },
-  { id: 'formula',      label: 'Formula & generation' },
-  { id: 'verify',       label: 'Verifying equivalence' },
-  { id: 'examples',     label: 'Worked examples' },
-  { id: 'applications', label: 'When equivalent ratios matter' },
-  { id: 'faq',          label: 'FAQs' },
-  { id: 'related-tools', label: 'Related tools' },
+  { id: 'how-to-use',            label: 'How to use' },
+  { id: 'what-is',               label: 'What are equivalent ratios?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',               label: 'Formula & generation' },
+  { id: 'verify',                label: 'Verifying equivalence' },
+  { id: 'examples',              label: 'Worked examples' },
+  { id: 'applications',          label: 'When equivalent ratios matter' },
+  { id: 'faq',                   label: 'FAQs' },
+  { id: 'quiz',                  label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',         label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'What does it mean for two ratios to be equivalent?',
+    options: ['They share the same GCD', 'They express the same proportional relationship', 'They sum to the same total', 'They contain the same numerator'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Two ratios are equivalent when they represent the same proportional relationship. 2:3 and 4:6 are both equivalent because they describe the same proportion, scaled by a different factor.',
+  },
+  {
+    q: 'From the worked examples table, what is the simplified form of 100:75?',
+    options: ['5:4', '2:3', '4:3', '3:2'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'GCD(100, 75) = 25. Dividing both parts by 25 gives 100/25 : 75/25 = 4:3.',
+  },
+  {
+    q: 'According to the key takeaways, which value is identical across every ratio in an equivalent family?',
+    options: ['The GCD of the two parts', 'The sum of the two parts', 'The difference between the two parts', 'The decimal value a / b'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The decimal value (a divided by b) is the invariant that defines the relationship. Because all equivalent ratios represent the same proportion, dividing a by b always gives the same result.',
+  },
+  {
+    q: 'For ratios 3:4 and 9:12, the cross-multiplication test gives:',
+    options: ['3×9 = 27 and 4×12 = 48 - not equal, not equivalent', '3×12 = 36 and 4×9 = 36 - equal, so they are equivalent', '3+4 = 7 and 9+12 = 21 - not equal, not equivalent', '3×4 = 12 and 9×12 = 108 - not equal, not equivalent'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Cross-multiplication tests a×d = b×c. For 3:4 and 9:12: 3×12 = 36 and 4×9 = 36. The products are equal, confirming the ratios are equivalent.',
+  },
+  {
+    q: 'Based on the first-person observation, what does GCD = 1 mean for a ratio like 7:11?',
+    options: ['7:11 is already in its simplest form - no smaller whole-number equivalent exists', 'The ratio is invalid and should be re-entered', 'The two parts are equal to each other', 'The calculator could not compute a GCD for these numbers'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'A GCD of 1 means the two parts share no common factors other than 1, so the ratio is already in simplest form. Equivalents like 14:22 and 21:33 are still valid - there is just no more compact version.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Greatest Common Divisor',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/GreatestCommonDivisor.html',
+  },
+  {
+    author: 'U.S. Geological Survey',
+    title: 'Topographic Maps',
+    journal: 'U.S. Geological Survey',
+    year: 2024,
+    url: 'https://www.usgs.gov/programs/national-geospatial-program/topographic-maps',
+  },
 ];
 
 const schema = [
@@ -39,7 +94,7 @@ const schema = [
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "What are equivalent ratios?",
+        "name": "What are equivalent ratios exactly?",
         "acceptedAnswer": { "@type": "Answer", "text": "Equivalent ratios are ratios that express the same proportional relationship. They are generated by multiplying or dividing both parts of a ratio by the same non-zero number. For example, 2:3, 4:6, and 6:9 are all equivalent ratios." }
       },
       {
@@ -56,7 +111,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Equivalent Ratios Calculator"
   metaTitle="Equivalent Ratios Calculator | Generate & Verify"
@@ -67,6 +121,7 @@ const schema = [
   embedSlug="equivalent-ratios-calculator"
   ogFormula="Equivalent ratios: multiply both parts by the same factor"
   ogExample="3:4 = 6:8 = 9:12 = 12:16"
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-interface">
@@ -75,7 +130,6 @@ const schema = [
           <h2>Calculate Equivalent Ratios</h2>
           <p>Simplify and generate equivalent ratios</p>
         </div>
-
         <div class="input-row">
           <div class="bmi-field">
             <label class="bmi-label" for="er-a">First value (a)</label>
@@ -91,13 +145,11 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="er-result" class="lbm-result hidden">
           <div class="lbm-primary">
             <span class="lbm-primary-val" id="er-simplified">-</span>
           </div>
           <div class="lbm-primary-lbl">Simplified ratio</div>
-
           <div class="lbm-cards">
             <div class="lbm-card">
               <div class="lbm-card-val" id="er-gcd">-</div>
@@ -108,7 +160,6 @@ const schema = [
               <div class="lbm-card-lbl">Decimal (a÷b)</div>
             </div>
           </div>
-
           <div class="pi-steps" style="margin-top:0.75rem;">
             <div class="pi-steps-title">Step-by-step</div>
             <div class="pi-step">
@@ -120,7 +171,6 @@ const schema = [
               <span class="pi-step-val" id="er-step2">-</span>
             </div>
           </div>
-
           <div style="margin-top:1rem;">
             <div class="pi-steps-title">Equivalent ratios table</div>
             <div class="responsive-table">
@@ -133,28 +183,32 @@ const schema = [
         </div>
       </div>
     </section>
-
-    <style is:global>
-    </style>
-
     <script src="/js/equivalent-ratios-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <p class="answer-box-label">Quick answer</p>
         <p>Multiply or divide both parts of a ratio by the same number to get an equivalent ratio. For 6:9 - GCD = 3, simplified = <strong>2:3</strong>. Equivalents: 4:6, 6:9, 8:12, 10:15… All express the same proportional relationship.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Two <a href="/glossary/ratio">ratios</a> are equivalent if and only if their cross-products are equal: a:b ∼ c:d when a × d = b × c.</li>
+          <li>The simplified form uses the <a href="/glossary/gcd">GCD</a>: divide both parts by GCD(a, b) to reach the smallest whole-number version of the ratio.</li>
+          <li>When GCD = 1, the ratio is already in its simplest form - there is no smaller whole-number equivalent.</li>
+          <li>The decimal value (a ÷ b) is identical for every equivalent ratio in a family - it is the invariant that defines the relationship.</li>
+          <li>Scaling up multiplies both parts by the same integer n; scaling down divides both parts by the same integer n. Only the magnitude changes, never the <a href="/glossary/proportion">proportion</a>.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use this equivalent ratios calculator</h2>
       <p>Enter any two positive values. The calculator simplifies the ratio to its lowest terms using the GCD, then generates a table of 12 equivalent ratios (the simplified form scaled by 1 through 12). Use this to find a ratio that uses convenient whole numbers for your context.</p>
-
       <h2 id="what-is">What are equivalent ratios?</h2>
-      <p>Equivalent ratios represent the same proportional relationship between two quantities. Just as 1/2 and 3/6 are equivalent fractions, 1:2 and 3:6 are equivalent ratios - both state that the first quantity is half the second.</p>
+      <p>Equivalent ratios represent the same proportional relationship between two quantities. Just as 1/2 and 3/6 are <a href="/math/fraction-calculator/equivalent">equivalent fractions</a>, 1:2 and 3:6 are equivalent ratios - both state that the first quantity is half the second.</p>
       <p>Any ratio can be scaled up or down by multiplying or dividing both parts by the same non-zero number. The simplified (lowest-terms) form is the ratio with the smallest possible whole-number values.</p>
-
+      <h3 id="explained-to-beginner">Equivalent ratios explained to a beginner</h3>
+      <p>Imagine a cordial drink that says "1 part syrup to 4 parts water." If you want to make a bigger jug, you could use 2 parts syrup and 8 parts water, or 3 parts syrup and 12 parts water. All three versions - 1:4, 2:8, 3:12 - taste exactly the same. That is what equivalent ratios mean: the same proportional relationship, written with different numbers.</p>
+      <p>The simplified form (1:4 here) is just the most compact way to write it. If someone hands you a 6:24 recipe, dividing both parts by their GCD (which is 6) gives 1:4. Same drink, simplest recipe. The calculator does this step automatically, then generates the full family of equivalents so you can pick whichever numbers suit your batch size.</p>
       <h2 id="formula">Formula and generation</h2>
       <p>To generate equivalent ratios, multiply both parts by any non-zero integer n:</p>
       <Formula expr={f.equiv} />
@@ -162,14 +216,12 @@ const schema = [
       <Formula expr={f.simplify} />
       <p>Example - generating equivalents of 3:4:</p>
       <Formula expr={f.ex1} />
-
       <h2 id="verify">Verifying that two ratios are equivalent</h2>
       <p>Use cross-multiplication: two ratios a:b and c:d are equivalent if and only if the cross-products are equal:</p>
       <Formula expr={f.verify} />
       <p>For 3:4 and 9:12: 3 × 12 = 36 and 4 × 9 = 36. Equal - so they are equivalent.</p>
       <p>For 3:4 and 9:13: 3 × 13 = 39 and 4 × 9 = 36. Not equal - so they are not equivalent.</p>
-
-      <h2 id="examples">Worked examples</h2>
+      <h2 id="examples">Worked examples for equivalent ratios</h2>
       <div class="responsive-table">
         <table>
           <thead><tr><th>Input ratio</th><th>GCD</th><th>Simplified</th><th>Some equivalents</th></tr></thead>
@@ -183,26 +235,29 @@ const schema = [
           </tbody>
         </table>
       </div>
-
+      <p>When I enter a ratio and the GCD comes back as 1, people often assume something has gone wrong. It hasn't. A GCD of 1 simply means the ratio is already in its simplest form - 7:11 has no smaller whole-number equivalent.</p>
+      <p>The equivalents the calculator generates (14:22, 21:33 and so on) are still valid; there is just no more compact version. Not every ratio has an obvious common factor.</p>
       <h2 id="applications">When equivalent ratios matter</h2>
       <p><strong>Recipe scaling</strong> - a recipe serving 4 in ratio 2:3:5 can be scaled to serve 12 by tripling all parts to 6:9:15. The ratio remains equivalent; only the total quantity changes.</p>
-      <p><strong>Unit conversion and rates</strong> - a car travelling 120 km in 2 hours has a speed ratio of 120:2 = 60:1 (60 km per hour). Finding the equivalent with denominator 1 gives the unit rate.</p>
+      <p><strong>Unit conversion and rates</strong> - a car travelling 120 km in 2 hours has a speed ratio of 120:2 = 60:1 (<a href="/conversion/speed-converter">60 km per hour</a>). Finding the equivalent with <a href="/glossary/denominator">denominator</a> 1 gives the <a href="/glossary/unit-rate">unit rate</a>.</p>
       <p><strong>Map and scale drawing</strong> - a scale of 1:50,000 is equivalent to 2:100,000 or 0.5:25,000. All represent the same relationship; the choice depends on the unit or context.</p>
       <p><strong>Mixing and formulation</strong> - a paint colour mix of 4 parts red : 6 parts blue simplifies to 2:3. Knowing the simplified form makes it easy to scale up or down for any batch size.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
-      <h3>What are equivalent ratios?</h3>
-      <p>Ratios that express the same proportional relationship, generated by multiplying or dividing both parts by the same number. 2:3, 4:6, and 6:9 are all equivalent.</p>
-
+      <p>In practice - pricing ratios, ingredient ratios, financial ratios - I use the cross-multiplication test to verify that a scaled version is truly equivalent and not slightly off due to rounding.</p>
+      <p>A 1:3 ratio scaled to 33:100 looks close (cross-products: 100 vs 99) but is not exactly equivalent. That one-unit gap matters in precision contexts like pharmaceutical formulations or chemical concentrations, where an approximate equivalent introduces a systematic error across every batch.</p>
+      <h2 id="faq">Frequently asked questions about equivalent ratios</h2>
+      <h3>What are equivalent ratios exactly?</h3>
+      <p>Equivalent ratios are ratios that express the same proportional relationship, generated by multiplying or dividing both parts by the same number. 2:3, 4:6, and 6:9 are all equivalent.</p>
       <h3>How do you find equivalent ratios?</h3>
       <p>Simplify first using the GCD. Then multiply both parts of the simplified ratio by 2, 3, 4… to generate equivalents.</p>
-
       <h3>How do you check if two ratios are equivalent?</h3>
       <p>Cross-multiply: a:b ∼ c:d if a × d = b × c.</p>
-
       <h3>What is the simplest form of a ratio?</h3>
       <p>The form where both parts share no common factors other than 1. Divide both parts by GCD(a, b).</p>
+      <QuizBlock
+        topic="equivalent ratios"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/ratio-calculator/equivalent"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -212,8 +267,7 @@ const schema = [
         { path: '/math/ratio-calculator/ratio-to-percentage', blurb: 'Convert a two-part ratio to percentages.' },
         { path: '/math/ratio-calculator/three-way',           blurb: 'Split a quantity in a three-part ratio (a:b:c).' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/math/ratio-calculator/equivalent" />
     </div>
   </div>
-
 </CalculatorLayout>

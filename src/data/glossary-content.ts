@@ -3785,6 +3785,110 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'pareto-principle': {
+    definition: [
+      'The Pareto principle, widely known as the 80/20 rule, states that roughly 80% of outcomes are produced by 20% of inputs. Italian economist Vilfredo Pareto first documented this pattern in 1896, observing that 20% of Italy\'s population owned 80% of the land. Management consultant Joseph M. Juran later named the principle after Pareto in the 1940s and applied it to quality control and business management.',
+      'In ratio terms, the 80/20 split is a 4:1 ratio. The high-impact 20% produces four times the output per unit compared to the remaining 80%. Enter 4:1 into the ratio-to-percentage calculator and you recover exactly 80% and 20%. This ratio framing makes it straightforward to compare against other distributions - a 3:1 ratio gives 75/25, a 9:1 ratio gives 90/10.',
+      'The principle is an empirical observation, not a mathematical law. Real distributions vary - 70/30 and 90/10 are both consistent with the underlying idea. The constant is the asymmetry: a minority of inputs accounts for a majority of outputs, almost regardless of domain.',
+    ],
+    beginnerExplain: [
+      'Imagine you run an online store with 100 products. After checking your sales data, you find that 20 of those products generate 80% of all your revenue. The other 80 products together bring in only the remaining 20%. That imbalance - where a small slice of the whole carries most of the weight - is the Pareto principle.',
+      'The same pattern shows up everywhere. A software team finds that 20% of their bug reports cause 80% of the crashes. A teacher notices that 20% of students ask 80% of the questions. The exact numbers shift, but the asymmetry is almost always there.',
+      'Knowing this helps you make better decisions about where to focus your time. Instead of treating all 100 products equally, you concentrate on the 20 that actually move revenue. The goal is not to ignore the rest - it is to recognize where your effort has the most leverage.',
+    ],
+    whenToUse: 'Apply the Pareto principle as a prioritization framework when you have many inputs and limited time or resources. Rank your inputs by output contribution, identify the top 20% (or whatever minority drives the majority), and allocate effort there first. It is a diagnostic and planning heuristic - not a calculation - so always verify with real data before cutting or deprioritizing anything.',
+    examples: {
+      headers: ['Domain', 'The ~20%', 'The ~80% of output'],
+      rows: [
+        ['Business revenue', 'Top 20% of customers', '~80% of total sales'],
+        ['Software quality', '20% of bug types', '~80% of system crashes'],
+        ['Wealth distribution', 'Top 20% of earners', '~80% of total wealth'],
+        ['Productivity', '20% of daily tasks', '~80% of meaningful results'],
+        ['Sports performance', 'Top 20% of players', '~80% of goals/points scored'],
+        ['Website traffic', 'Top 20% of pages', '~80% of organic visits'],
+      ],
+    },
+    pitfalls: 'The 80/20 split is an approximation - do not assume it applies exactly without measuring. Eliminating the "bottom 80%" wholesale is a common mistake: those inputs may provide support functions, referrals, or serve as future high-value contributors that are not visible in a single output metric. The principle also does not compound: you cannot apply it recursively to conclude that 4% of inputs cause 64% of all output - each application must be measured independently against fresh data.',
+    faqs: [
+      {
+        q: 'What ratio does the 80/20 rule correspond to?',
+        a: 'An 80:20 split is a 4:1 ratio. The high-impact group is four times as productive per unit as the low-impact group. Simplified: 80/20 = 4, so the ratio is 4:1. Enter 4:1 in the ratio-to-percentage calculator to verify: Part A = 80%, Part B = 20%.',
+      },
+      {
+        q: 'Is the Pareto principle always exactly 80/20?',
+        a: 'No. The principle describes an asymmetric distribution - a minority of inputs produces a majority of outputs - but the precise split varies by system. Real distributions might be 70/30, 75/25, or 90/10. The 80/20 figure is Pareto\'s original empirical observation about Italian land ownership, generalized as a rule of thumb, not a mathematical constant.',
+      },
+      {
+        q: 'How do I identify the Pareto 20% in my own data?',
+        a: 'Sort your inputs by output contribution in descending order, then calculate the cumulative contribution as a percentage of the total. The point where cumulative contribution crosses 80% marks the boundary of your Pareto set. In a spreadsheet: sort by revenue descending, add a cumulative sum column, and find the row where it passes 80% of the total.',
+      },
+      {
+        q: 'Who invented the Pareto principle?',
+        a: 'Vilfredo Pareto documented the 80/20 pattern in 1896 while studying land distribution in Italy. The term "Pareto principle" was coined by Joseph M. Juran in the 1940s, who applied it to quality management and named it in Pareto\'s honor. Juran\'s work in manufacturing and quality control spread the concept globally.',
+      },
+    ],
+    quiz: {
+      topic: 'the Pareto principle',
+      questions: [
+        {
+          q: 'In ratio terms, what ratio does the standard 80/20 Pareto split correspond to?',
+          options: [
+            '2:1',
+            '4:1',
+            '5:1',
+            '8:2',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'An 80:20 split divides to 4:1. The high-impact group produces 80% of results, which is four times the 20% produced by the remaining group. Enter 4:1 into the ratio-to-percentage calculator and you get exactly 80% and 20%.',
+        },
+        {
+          q: 'Who first documented the 80/20 distribution that became the Pareto principle?',
+          options: [
+            'Joseph M. Juran, while studying manufacturing defects in the 1940s',
+            'Vilfredo Pareto, observing Italian land ownership in 1896',
+            'Frederick Taylor, studying factory worker productivity in 1911',
+            'W. Edwards Deming, analyzing quality control data in the 1950s',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Vilfredo Pareto observed in 1896 that 20% of Italy\'s population owned 80% of the land. Joseph M. Juran later named the principle after Pareto when applying it to quality management in the 1940s - but the original observation was Pareto\'s.',
+        },
+        {
+          q: 'A store has 100 products. According to the Pareto principle, how many products would you expect to generate approximately 80% of revenue?',
+          options: [
+            '5 products',
+            '20 products',
+            '50 products',
+            '80 products',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The 80/20 rule predicts that roughly 20% of inputs (20 out of 100 products) account for about 80% of outputs (revenue). This is a starting approximation - the actual figure should be verified with real sales data, as the split may be 75/25 or 85/15 in practice.',
+        },
+        {
+          q: 'What is the most common mistake when applying the Pareto principle?',
+          options: [
+            'Using it for business decisions instead of only scientific research',
+            'Assuming the split is always exactly 80/20 without measuring actual data',
+            'Applying it to more than three input variables at once',
+            'Using ratio notation (4:1) instead of percentage notation (80/20)',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section flags assuming an exact 80/20 split without measurement. Real distributions vary - 70/30 or 90/10 are equally consistent with the underlying principle. Treating 80/20 as a precise law rather than an empirical approximation leads to misallocated effort.',
+        },
+        {
+          q: 'If a software team applies the Pareto principle and finds that 15 bug types (out of 75 total) cause 80% of crashes, what is the ratio of high-impact to low-impact bugs?',
+          options: [
+            '1:4',
+            '4:1',
+            '1:5',
+            '3:1',
+          ] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: '15 high-impact bugs vs. 60 low-impact bugs is a 15:60 ratio, which simplifies to 1:4. Note the direction: this is the ratio of the small group to the large group. The 80/20 rule (4:1) describes the output ratio (crashes caused), not the input count ratio - the input count here is 1:4 (15 vs. 60).',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'pay-period': {
     definition: [
       'A pay period is the recurring cycle of time for which an employer calculates and pays wages or salary. The most common types in the US are weekly (52 pay cheques/year), bi-weekly (26 pay cheques/year), semi-monthly (24 pay cheques/year), and monthly (12 pay cheques/year). Bi-weekly and semi-monthly are often confused: bi-weekly means every two weeks; semi-monthly means twice a calendar month (e.g., the 1st and 15th).',
