@@ -5,17 +5,20 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../../components/Sources.astro';
 import HealthDisclaimer from '../../../components/HealthDisclaimer.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   metric:   "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
   imperial: "$$\\text{BMI} = \\frac{703 \\times \\text{weight (lb)}}{\\text{height (in)}^2}$$",
   ffmi:     "$$\\text{FFMI} = \\frac{\\text{lean mass (kg)}}{\\text{height (m)}^2}$$",
   leanmass: "$$\\text{Lean mass (kg)} = \\text{weight (kg)} \\times (1 - \\text{body fat fraction})$$",
+  whtr:     "$$\\text{WHtR} = \\frac{\\text{waist circumference}}{\\text{height}} \\quad \\xrightarrow{\\text{e.g.}} \\quad \\frac{88\\,\\text{cm}}{176\\,\\text{cm}} = 0.50 \\;(\\text{boundary})$$",
 };
 
 const tocItems = [
-  { id: 'how-to-use',        label: 'How to use' },
-  { id: 'normal-bmi-men',    label: 'What is a normal BMI for men?' },
+  { id: 'how-to-use',            label: 'How to use' },
+  { id: 'normal-bmi-men',        label: 'What is a normal BMI for men?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'bmi-chart',         label: 'BMI chart for men' },
   { id: 'bmi-by-age',        label: 'BMI by age for men' },
   { id: 'men-vs-women',      label: 'Why BMI reads differently for men' },
@@ -24,6 +27,7 @@ const tocItems = [
   { id: 'testosterone',      label: 'The testosterone connection' },
   { id: 'better-metrics',    label: 'Better metrics for men' },
   { id: 'faq',               label: 'FAQs' },
+  { id: 'quiz',              label: 'Quiz: test your knowledge' },
   { id: 'related-tools',     label: 'Related tools' },
 ];
 
@@ -70,7 +74,67 @@ const sources: Source[] = [
     year: 2013,
     url: 'https://doi.org/10.1001/jama.2012.113905',
   },
+  {
+    author: 'Browning LM, Hsieh SD, Ashwell M',
+    title: 'A systematic review of waist-to-height ratio as a screening tool for the prediction of cardiovascular disease and diabetes: 0.5 could be a suitable global boundary value',
+    journal: 'Nutrition Research Reviews',
+    year: 2010,
+    url: 'https://doi.org/10.1017/S0954422410000144',
+  },
 ];
+
+const quizQuestions = [
+  {
+    q: 'According to CDC data cited on this page, what is the average BMI for American men, and what category does it fall in?',
+    options: [
+      'Approximately 24.9 - at the top of the Normal weight range',
+      'Approximately 27.5 - in the middle of the Overweight range',
+      'Approximately 29.1 - in the Overweight range, with roughly 35% of US men classified as obese',
+      'Approximately 31.0 - in the Obese Class I range',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page states the average BMI for American men is approximately 29.1 (CDC, 2024), placing the average US man in the Overweight category. Roughly 35% of American men are classified as obese (BMI 30+).',
+  },
+  {
+    q: 'A man weighs 85 kg and stands 175 cm tall. What is his BMI, and what does the page say about this result?',
+    options: [
+      'BMI 24.9 - Normal weight, the upper boundary of the healthy range',
+      'BMI 25.4 - just into the Overweight range, warranting a waist check',
+      'BMI 27.8 - Overweight by the formula, but this number could describe a rugby player with 14% body fat or a sedentary worker with 30% - BMI alone cannot tell which',
+      'BMI 30.5 - Obese Class I, indicating high cardiovascular risk regardless of body composition',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The "Explained to a beginner" section uses this exact example: a man weighing 85 kg at 175 cm has a BMI of 27.8 (Overweight), whether he is a semi-professional rugby player with 14% body fat or a sedentary office worker with 30% body fat. The number is identical; the health picture is completely different.',
+  },
+  {
+    q: 'By approximately how much does total testosterone fall for each 1-unit increase in BMI in men with obesity?',
+    options: ['0.5%', '1%', '2%', '5%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The testosterone section states research consistently shows total testosterone drops by approximately 2% for each unit increase in BMI. A man moving from BMI 25 to 35 may experience a testosterone decline equivalent to 10-15 years of normal ageing.',
+  },
+  {
+    q: 'According to the waist circumference thresholds table, at what measurement does a man of European descent enter the "high risk" cardiometabolic category?',
+    options: [
+      'Above 80 cm / 31.5 in',
+      'Above 88 cm / 35 in',
+      'Above 94 cm / 37 in',
+      'Above 102 cm / 40 in',
+    ] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The waist circumference table shows three thresholds for men: below 94 cm (low risk), 94-102 cm (increased risk), and above 102 cm / 40 inches (high risk - substantially elevated cardiovascular and metabolic risk). 94 cm is where increased risk begins, not where high risk starts.',
+  },
+  {
+    q: 'The BMI by age table notes that for men over 65, some research suggests a slightly higher BMI may be associated with better survival outcomes. What range does the page give?',
+    options: [
+      'BMI 18.5-24.9 - the standard normal range still applies with no modification',
+      'BMI 23-28 - reflecting greater muscle and bone reserves; a BMI below 22 in this group may indicate frailty risk',
+      'BMI 25-30 - since older men need more body fat to buffer against illness-related weight loss',
+      'BMI 20-26 - a narrower window that corrects for the muscle loss that occurs with age',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The BMI by age table states that for men 65+, some research suggests BMI 23-28 is associated with better survival outcomes, reflecting greater muscle and bone reserves. The page also notes a BMI below 22 in this group may indicate frailty risk - and explicitly warns not to treat this as a reason to be obese.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -111,7 +175,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="BMI Calculator for Men"
   metaTitle="BMI Calculator for Men | Male Body Mass Index Range by Age ᐅ"
@@ -124,21 +187,17 @@ const schema = [
   ogFormula="BMI = weight (kg) / height² (m²)"
   ogExample="80 kg at 1.80 m: 80 / 3.24 = 24.7 (Normal weight for men)"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
-
         <div class="calculator-header">
           <h2>Male Body Mass Index Calculator</h2>
           <p>Body Mass Index in metric or imperial units</p>
         </div>
-
         <div class="bmi-unit-toggle">
           <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
           <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
         </div>
-
         <div id="bmi-metric" class="bmi-inputs active">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-weight-kg">Weight</label>
@@ -155,7 +214,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-imperial" class="bmi-inputs">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-weight-lb">Weight</label>
@@ -178,7 +236,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-result" class="bmi-result hidden">
           <div class="bmi-value-row">
             <div class="bmi-value" id="bmi-value">-</div>
@@ -205,32 +262,40 @@ const schema = [
             <div class="bmi-detail bmi-detail-hint" id="bmi-next-category"></div>
           </div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/bmi-calculator.js" is:inline></script>
   <HealthDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Normal BMI for men at a glance</div>
-        <p>A <strong>normal BMI for men is 18.5 to 24.9</strong> - the same range used for all adults. The average American man has a BMI of approximately <strong>29.1</strong>, placing him in the Overweight category. Because men carry more muscle and less fat than women at the same BMI, the same number implies a leaner body composition in men - but visceral (abdominal) fat, which men store more than women, raises cardiometabolic risk regardless of overall BMI category.</p>
+        <p>A <strong>normal BMI for men is 18.5 to 24.9</strong> - the same range used for all adults. The average American man has a BMI of approximately <strong>29.1</strong>, placing him in the Overweight category. Because men carry more muscle and less fat than women at the same BMI, the same number implies a <a href="/health/lean-body-mass-calculator">leaner body composition</a> in men - but visceral (abdominal) fat, which men store more than women, raises cardiometabolic risk regardless of overall BMI category.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Select Metric (kg and cm) or Imperial (lbs, feet, inches), enter your weight and height, and your BMI appears instantly. The result shows your BMI value, category, the healthy weight range for your height, and (if outside the normal range) how much to gain or lose to reach it.</p>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The average American man has a BMI of ~29.1 (CDC, 2024) - in the Overweight range. Roughly 35% of US men are classified as obese (BMI 30+).</li>
+          <li>At the same BMI, men average ~8-10 percentage points less body fat than women. A man at BMI 25 is typically around 20% body fat; a woman at BMI 25 is around 30%.</li>
+          <li>Testosterone drops approximately 2% for each 1-unit rise in BMI. Moving from BMI 25 to 35 can produce a hormonal decline equivalent to 10-15 years of normal aging.</li>
+          <li>A waist above 102 cm (40 inches) signals high cardiometabolic risk for men. <a href="/glossary/waist-circumference">Waist circumference</a> catches visceral fat that BMI cannot detect.</li>
+          <li>Muscular men with BMI 25-28 and a waist below 94 cm (37 inches) are very unlikely to have excess body fat - <a href="/glossary/ffmi">FFMI</a> and waist circumference are more reliable metrics than BMI for this group.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our BMI calculator for men</h2>
+      <p>Select <a href="/glossary/metric-system">Metric</a> (kg and cm) or <a href="/glossary/imperial-system">Imperial</a> (lbs, feet, inches), enter your weight and height, and your BMI appears instantly. The result shows your BMI value, category, the <a href="/health/ideal-weight-calculator">healthy weight range</a> for your height, and (if outside the normal range) how much to gain or lose to reach it.</p>
       <p>If you are muscular or very active, read the <a href="#muscle-problem">muscle problem section</a> and the <a href="#waist-circumference">waist circumference check</a> below - for men, these two pieces of context matter as much as the number itself.</p>
-
       <h2 id="normal-bmi-men">What is a normal BMI for men?</h2>
-      <p>A BMI of 18.5 to 24.9 is classified as Normal weight by the World Health Organization. The same formula and the same thresholds apply to men and women equally - but because of fundamental differences in body composition, the same BMI number represents meaningfully different body fat levels in men vs. women.</p>
+      <p>A BMI of 18.5 to 24.9 is classified as normal weight by the World Health Organization. The same formula and the same thresholds apply to men and women equally - but because of fundamental differences in <a href="/glossary/body-composition">body composition</a>, the same BMI number represents meaningfully different <a href="/health/body-fat-calculator">body fat levels</a> in men vs. women.</p>
       <p>In practical terms, a man with a BMI of 22 will typically have noticeably less body fat than a woman with the same BMI. Men have substantially more muscle mass, which is denser than fat and contributes more to weight per unit of volume. This is why BMI's one-number-fits-all approach is particularly prone to misclassifying muscular men as overweight.</p>
-      <p>The average BMI of American men is approximately <strong>29.1</strong>, according to CDC NCHS data. This means the average US man is in the Overweight category - and roughly 35% of American men are classified as obese (BMI 30+). These statistics make a Normal weight BMI a meaningful health goal for the majority of adult men in the US.</p>
-
-      <h2 id="bmi-chart">BMI chart for men</h2>
+      <p>The average BMI of American men is approximately <strong>29.1</strong>, according to <a href="https://www.cdc.gov/nchs/fastats/body-measurements.htm" target="_blank" rel="noopener noreferrer">CDC NCHS data</a>. This means the average US man is in the Overweight category - and roughly 35% of American men are classified as obese (BMI 30+). These statistics make a Normal weight BMI a meaningful health goal for the majority of adult men in the US.</p>
+      <h3 id="explained-to-beginner">Male BMI explained to a beginner</h3>
+      <p>Think of <a href="/glossary/bmi">BMI</a> as a starting clue, not a final verdict. It tells you whether you weigh more or less than average for your height - but it cannot tell you whether that weight is muscle or fat.</p>
+      <p>A man weighing 85 kg at 175 cm has a BMI of 27.8, whether he is a semi-professional rugby player with 14% body fat or a sedentary office worker with 30% body fat. The number is identical; the health picture is completely different.</p>
+      <p>The practical fix for men is to add one more measurement: <a href="/glossary/waist-circumference">waist circumference</a>. If your waist is under 94 cm (37 inches), the extra weight is far more likely to be muscle than dangerous visceral fat. The two numbers together - BMI and waist - give you the picture that BMI alone never can.</p>
+      <h2 id="bmi-chart">Body Mass Index chart for men</h2>
+      <p>The WHO BMI categories below apply to all adult men regardless of age. Each range carries a distinct cardiometabolic risk profile. For men in the Overweight range (25.0-29.9), a waist measurement adds important context - a waist under 94 cm (37 in) substantially lowers the actual risk compared to the label alone.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -246,9 +311,8 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h3>BMI weight reference for men by height</h3>
-      <p>The table below shows the Normal weight range (BMI 18.5-24.9) for common male heights.</p>
+      <p>The table below shows the Normal weight range (BMI 18.5-24.9) for common male heights in both metric and imperial.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -268,7 +332,6 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="bmi-by-age">BMI by age for men</h2>
       <p>The WHO BMI formula and category thresholds do not change with age, but body composition changes significantly across a man's adult life. Interpreting a BMI number without age context can be misleading.</p>
       <div class="responsive-table">
@@ -284,13 +347,12 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>The clinical takeaway: the older the man, the less informative BMI is as a standalone measure. A 60-year-old man with a BMI of 26 may have much more visceral fat and much less muscle than a 30-year-old man with the same BMI.</p>
-
+      <p><strong>The clinical takeaway:</strong> the older the man, the less informative BMI is as a standalone measure. A 60-year-old man with a BMI of 26 may have much more visceral fat and much less muscle than a 30-year-old man with the same BMI.</p>
+      <p>See our <a href="/health/bmi-calculator">bmi calculator by age and gender</a> for a precise BMI calculation.</p>
       <h2 id="men-vs-women">Why BMI reads differently for men than women</h2>
       <p>The BMI formula is identical for both sexes, but the same number carries different implications because men and women have fundamentally different body compositions.</p>
-
       <h3>Body fat percentage gap</h3>
-      <p>At the same BMI, men have substantially less body fat than women. This gap is consistent across the BMI range:</p>
+      <p>At the same BMI, men have substantially less <a href="/glossary/body-fat-percentage">body fat</a> than women. This gap is consistent across the BMI range:</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -305,11 +367,12 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>The reason for this gap: testosterone drives muscle protein synthesis and suppresses fat storage in men. Oestrogen promotes essential fat storage in women, particularly in the hips, thighs, and breasts - fat that is metabolically relatively inert. Men's essential fat requirement is just 2-5% of body weight, compared to 10-13% for women.</p>
-
+      <p>When I look at these <a href="/glossary/percentage">percentages</a> in practice, the gap between men and women at the same BMI has clinical implications that are easy to underestimate.</p>
+      <p>A man at BMI 25 is typically around 20% body fat - what many fitness professionals would describe as lean but not athletic. A woman at the same BMI is around 30% body fat. Writing "Overweight" in identical terms on both lab reports is accurate by the formula, but it describes a fundamentally different physiological situation for each.</p>
+      <p><strong>The reason for this gap:</strong> <a href="/glossary/testosterone">testosterone</a> drives muscle protein synthesis and suppresses fat storage in men. <a href="/glossary/estrogen">Estrogen</a> promotes essential fat storage in women, particularly in the hips, thighs, and breasts - fat that is metabolically relatively inert. Men's essential fat requirement is just 2-5% of body weight, compared to 10-13% for women.</p>
       <h3>Fat distribution pattern</h3>
-      <p>Men store fat preferentially in the <strong>abdomen and visceral regions</strong> (the "apple" pattern), while women store fat preferentially in the <strong>hips, thighs, and buttocks</strong> (the "pear" pattern). Visceral fat - the fat packed around internal organs - is metabolically far more dangerous than subcutaneous fat. Men typically carry 5-10 times more visceral fat than pre-menopausal women of the same age and BMI. This is a primary reason why men face higher cardiovascular disease mortality than women at similar BMI levels.</p>
-
+      <p>Men store fat preferentially in the <strong>abdomen and visceral regions</strong> (the "apple" pattern), while women store fat preferentially in the <strong>hips, thighs, and buttocks</strong> (the "pear" pattern). <a href="/glossary/visceral-fat">Visceral fat</a> - the fat packed around internal organs - is metabolically far more dangerous than subcutaneous fat.</p>
+      <p>Men typically carry 5-10 times more visceral fat than pre-menopausal women of the same age and BMI. This is a primary reason why men face higher cardiovascular disease mortality than women at similar BMI levels.</p>
       <h2 id="muscle-problem">The muscle problem: when BMI misleads men</h2>
       <p>BMI misclassifies muscular men more frequently than any other demographic group. Because the formula only looks at total weight relative to height, a man who has built substantial muscle mass through training will appear heavier for his height than average - pushing his BMI into the Overweight or even Obese category despite having low body fat.</p>
       <p>Examples of typical BMI misclassification in men:</p>
@@ -318,9 +381,8 @@ const schema = [
         <li>Professional strength athletes and bodybuilders routinely have BMIs of 30-35 (Obese) while carrying 10-15% body fat.</li>
         <li>Rugby players, American football linemen, and heavyweight rowers are systematically misclassified by BMI in epidemiological research.</li>
       </ul>
-
       <h3>FFMI: the athlete's alternative</h3>
-      <p><a href="/health/ffmi-calculator">Fat-Free Mass Index (FFMI)</a> was developed as a muscle-adjusted equivalent of BMI, particularly useful for men who train seriously. It calculates lean mass relative to height, removing fat from the equation:</p>
+      <p><a href="/health/ffmi-calculator">Fat-Free Mass Index (FFMI)</a> was developed as a muscle-adjusted equivalent of BMI, particularly useful for men who train seriously. It <a href="/health/lean-body-mass-calculator">calculates lean mass</a> relative to height, removing fat from the equation:</p>
       <Formula expr={f.ffmi} />
       <Formula expr={f.leanmass} />
       <div class="responsive-table">
@@ -338,11 +400,9 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>To calculate your FFMI you need your body fat percentage, which requires a measurement tool (DEXA scan, bioelectrical impedance scale, or skinfold calipers). If your waist circumference is below 90 cm (35.5 in) and you train regularly, a BMI in the 25-28 range is very unlikely to reflect excess fat.</p>
-
+      <p>To calculate your FFMI you need your <a href="/glossary/body-fat-percentage">body fat percentage</a>, which requires a measurement tool (DEXA scan, <a href="/glossary/bioelectrical-impedance-analysis">bioelectrical impedance scale</a>, or skinfold calipers). If your waist circumference is below 90 cm (35.5 in) and you train regularly, a BMI in the 25-28 range is very unlikely to reflect excess fat.</p>
       <h2 id="waist-circumference">Waist circumference for men</h2>
-      <p>Waist circumference is the single most practical companion measurement to BMI for men. Where BMI measures total weight relative to height, waist circumference directly reflects the amount of abdominal and visceral fat - the fat that matters most for cardiovascular and metabolic health.</p>
-
+      <p><a href="/glossary/waist-circumference">Waist circumference</a> is the single most practical companion measurement to BMI for men. Where BMI measures total weight relative to height, waist circumference directly reflects the amount of abdominal and visceral fat - the fat that matters most for cardiovascular and metabolic health.</p>
       <h3>Thresholds for men</h3>
       <div class="responsive-table">
       <table>
@@ -356,9 +416,8 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>For men of South Asian, East Asian, or South-East Asian descent, the WHO recommends lower thresholds: above 90 cm (35.5 in) is considered high risk.</p>
-
-      <h3>How to measure waist circumference correctly</h3>
+      <p>For men of South Asian, East Asian, or South-East Asian descent, the WHO recommends lower thresholds: above <a href="/conversion/length-converter/cm-to-in">90 cm (35.5 in)</a> is considered high risk.</p>
+      <h3>How to measure waist circumference correctly for men</h3>
       <ol>
         <li>Stand upright with your feet shoulder-width apart.</li>
         <li>Exhale normally (do not suck in your stomach).</li>
@@ -366,28 +425,27 @@ const schema = [
         <li>The tape should be snug but not compressing the skin.</li>
       </ol>
       <p>A man with a BMI of 27 (Overweight) and a waist of 88 cm is in a very different health position from a man with the same BMI and a waist of 105 cm. BMI alone cannot show this distinction; waist circumference can.</p>
-
       <h3>Waist-to-height ratio: the simplest check</h3>
-      <p>Divide your waist circumference by your height (both in the same units). A ratio below 0.50 is the target for all adults. This single rule - "keep your waist to less than half your height" - is endorsed by several clinical guidelines as a better predictor of cardiometabolic risk than BMI, and it requires no formula or chart to apply.</p>
-
+      <p>Divide your waist circumference by your height (both in the same units). A ratio below 0.50 is the target for all adults. This single rule - "keep your waist to less than half your height" - is <a href="https://doi.org/10.1017/S0954422410000144" target="_blank" rel="noopener noreferrer">endorsed by several clinical guidelines</a> as a better predictor of cardiometabolic risk than BMI, and it requires no formula or chart to apply.</p>
+      <Formula expr={f.whtr} />
       <h2 id="testosterone">The testosterone connection</h2>
-      <p>The relationship between BMI and testosterone in men is bidirectional - meaning excess body fat lowers testosterone, and low testosterone promotes further fat gain. This feedback loop is one of the most clinically important and least-discussed aspects of male obesity.</p>
-
+      <p>The relationship between BMI and <a href="/glossary/testosterone">testosterone in men</a> is bidirectional - meaning excess body fat lowers testosterone, and low testosterone promotes further fat gain. This feedback loop is one of the most clinically important and least-discussed aspects of male obesity.</p>
       <h3>How excess fat lowers testosterone</h3>
-      <p>Adipose (fat) tissue contains aromatase, an enzyme that converts testosterone to oestrogen. The more visceral fat a man carries, the more aromatase activity occurs, and the lower his free testosterone levels fall. Research consistently shows that total testosterone drops by approximately <strong>2% for each unit increase in BMI</strong> in men with obesity. A man who moves from a BMI of 25 to 35 may experience a testosterone decline equivalent to 10-15 years of normal ageing.</p>
-
+      <p>Adipose (fat) tissue contains aromatase, an enzyme that converts testosterone to <a href="/glossary/estrogen">estrogen</a>. The more <a href="/glossary/visceral-fat">visceral fat</a> a man carries, the more aromatase activity occurs, and the lower his free testosterone levels fall.</p>
+      <p>Research consistently shows that total testosterone drops by approximately <strong>2% for each unit increase in BMI</strong> in men with obesity. A man who moves from a BMI of 25 to 35 may experience a testosterone decline equivalent to 10-15 years of normal ageing.</p>
       <h3>How low testosterone worsens body composition</h3>
       <p>Testosterone is the primary driver of muscle protein synthesis in men. When testosterone falls, the body loses muscle mass and metabolic rate decreases, making fat gain easier and weight loss harder. This creates a self-reinforcing cycle:</p>
       <ul>
-        <li>Excess visceral fat → aromatase converts testosterone to oestrogen</li>
+        <li>Excess visceral fat → aromatase converts testosterone to estrogen</li>
         <li>Lower testosterone → reduced muscle mass and metabolic rate</li>
         <li>Lower metabolic rate → easier fat accumulation</li>
         <li>More fat → further testosterone suppression</li>
       </ul>
+      <p>In my view, the testosterone-fat feedback loop is the most underexplained mechanism in male obesity. Men who struggle to lose weight at a high BMI are often also dealing with suppressed testosterone - which makes it harder to build the muscle that would raise their metabolic rate and make sustained fat loss easier.</p>
+      <p>The cycle has to be broken from both ends: reducing calorie intake to cut fat, and adding resistance training to protect muscle - because weight loss without training frequently takes muscle along with the fat, worsening the hormonal situation rather than improving it.</p>
       <p>The good news: <strong>weight loss reliably raises testosterone in obese men</strong>. Multiple clinical trials show that a 10-15% reduction in body weight produces meaningful increases in serum testosterone - without medication. For men with BMI-related low testosterone, weight loss is the first-line treatment.</p>
-
       <h2 id="better-metrics">Better metrics for men alongside BMI</h2>
-      <p>No single metric tells the whole story. The following measures, used alongside BMI, give a substantially more complete picture of male body composition and health risk:</p>
+      <p>No single metric tells the whole story. The following measures, used alongside BMI, give a substantially more complete picture of <a href="/glossary/body-composition">male body composition</a> and health risk:</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -403,49 +461,41 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>For most men, BMI combined with waist circumference provides adequate screening. Men who lift weights seriously should use body fat percentage or FFMI instead of relying on BMI alone.</p>
-
-      <h2 id="faq">FAQs</h2>
-
+      <p>For most men, BMI combined with waist circumference provides adequate screening. Men who lift weights seriously should use <a href="/health/body-fat-calculator">body fat percentage</a> or <a href="/health/ffmi-calculator">FFMI</a> instead of relying on BMI alone.</p>
+      <h2 id="faq">FAQs for male Body Mass Index</h2>
       <h3>What is a normal BMI for men?</h3>
       <p>18.5 to 24.9, the same range that applies to all adults. The average American man has a BMI of approximately 29.1, which is in the Overweight range. Normal weight is a meaningful health goal for most men; however, muscular men may be misclassified as Overweight despite healthy body fat levels.</p>
-
       <h3>What BMI is overweight for a man?</h3>
       <p>25.0 to 29.9 is Overweight. 30.0 and above is Obese (Class I: 30-34.9, Class II: 35-39.9, Class III: 40+). The average US man sits at the top of the Overweight range with a BMI of approximately 29.1.</p>
-
       <h3>Is BMI calculated differently for men?</h3>
       <p>No - the formula is identical. BMI = weight (kg) / height (m)², or BMI = 703 × weight (lb) / height (in)², for all adults. The thresholds are also the same. The difference is that the same BMI implies less body fat in men than in women, because men have more muscle mass.</p>
-
       <h3>What is a healthy BMI for a man over 40?</h3>
       <p>The standard healthy range (18.5-24.9) applies. However, from age 40 onward, a declining waist circumference becomes an increasingly important companion metric as visceral fat risk rises and muscle mass begins to decline. Men over 65 may find that a slightly higher BMI (up to 27-28) is associated with better health outcomes, reflecting greater muscle and bone reserves.</p>
-
       <h3>Can a muscular man have a high BMI and still be healthy?</h3>
       <p>Yes. BMI cannot distinguish muscle from fat. A regularly training man with a BMI of 27 and a 35-inch waist is very likely in good metabolic health. The FFMI and waist circumference are better metrics for muscular men. If your waist is below 90-94 cm and you train regularly, a BMI slightly above 25 is not a cause for concern.</p>
-
       <h3>Does obesity affect testosterone levels in men?</h3>
-      <p>Yes - and the relationship runs in both directions. Excess visceral fat converts testosterone to oestrogen via aromatase, lowering free testosterone. Lower testosterone then reduces muscle mass and metabolic rate, promoting further fat gain. Weight loss of 10-15% of body weight consistently raises testosterone levels in obese men without medication.</p>
-
+      <p>Yes - and the relationship runs in both directions. Excess visceral fat converts testosterone to estrogen via aromatase, lowering free testosterone. Lower testosterone then reduces muscle mass and metabolic rate, promoting further fat gain. Weight loss of 10-15% of body weight consistently raises testosterone levels in obese men without medication.</p>
       <h3>What waist size is too big for a man?</h3>
       <p>Above 102 cm (40 inches) is the high-risk threshold for men of European descent. For men of South or East Asian descent, the high-risk threshold is lower at approximately 90 cm (35.5 inches). Measure at the navel level after a normal exhale.</p>
-
       <h3>Is waist circumference or BMI better for men?</h3>
       <p>For predicting cardiometabolic risk specifically, waist circumference and waist-to-height ratio are generally better than BMI, particularly in men over 40. BMI is useful for a quick initial screen and for comparing across large populations. The most complete picture uses both: BMI for overall weight status and waist circumference for visceral fat risk.</p>
+      <QuizBlock
+        topic="BMI for men"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/bmi-calculator/men"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/health/bmi-calculator', label: 'BMI Calculator (general)', blurb: 'The main BMI calculator with full background on the formula, categories, limitations, and healthy weight ranges for all adults.' },
+        { path: '/health/body-fat-calculator' },
+        { path: '/health/ffmi-calculator' },
         { path: '/health/bmi-calculator/seniors' },
         { path: '/health/bmi-calculator/women', blurb: 'Women-specific BMI guide covering menopause, normal weight obesity, fat distribution, and the best complementary health metrics for women.' },
         { path: '/health/bmi-calculator/pregnancy', blurb: 'Gestational weight gain recommendations based on pre-pregnancy BMI category, with trimester-by-trimester guidance and complication risk overview.' },
-        { path: '/health/bmi-calculator/weight-loss' },
-        { path: '/health/bmi-calculator/teens' },
-        { path: '/health/bmi-calculator/kids' },
+        { path: '/health/bmi-calculator/weight-loss' }
       ]} />
-
       <RelatedGlossaryTerms toolPath="/health/bmi-calculator/men" />
-
     </div>
   </div>
-
 </CalculatorLayout>
-

@@ -2700,6 +2700,263 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'estrogen': {
+    definition: [
+      'Estrogen is the primary female sex hormone, though it is present and necessary in both sexes. In women, estrogen is produced mainly in the ovaries and regulates the menstrual cycle, reproduction, and fat distribution toward the hips, thighs, and breasts. In men, small amounts are produced in the testes and adrenal glands, but the dominant source is peripheral conversion of testosterone to estradiol - the most potent estrogen - by the aromatase enzyme in adipose tissue.',
+      'In men, estrogen plays important regulatory roles at normal concentrations: it maintains bone mineral density, supports cognitive function, and modulates libido. Problems arise when the testosterone-to-estrogen ratio falls too far - a pattern called relative estrogen excess - which occurs when aromatase activity in excess body fat converts too much testosterone to estradiol. This suppresses the hypothalamic-pituitary-gonadal (HPG) axis and reduces further testosterone production, worsening the imbalance.',
+      'There are three main endogenous estrogens: estradiol (E2, most potent, dominant during reproductive years), estriol (E3, produced during pregnancy), and estrone (E1, dominant after menopause). For body composition and cardiometabolic purposes, estradiol is the clinically relevant marker in both sexes.',
+    ],
+    beginnerExplain: [
+      'Think of estrogen and testosterone as two sides of a hormonal balance. In men, the balance normally tilts heavily toward testosterone. When body fat rises, aromatase in fat tissue acts as a conversion factory - turning testosterone into estrogen and pushing the balance the other way. The result is lower testosterone, easier fat gain, and less muscle - all of which drive more fat gain and more aromatase activity.',
+      'In women, estrogen is the dominant hormone by design. It directs fat storage toward the hips and thighs (subcutaneous fat), which is metabolically safer than the visceral fat men tend to accumulate. After menopause, when estrogen levels fall sharply, women begin accumulating more visceral fat and their cardiometabolic risk rises toward male levels.',
+    ],
+    whenToUse: 'Estrogen is relevant in male body composition when BMI is elevated, because aromatase activity in visceral fat is the mechanism linking obesity to low testosterone. In women, estrogen explains the "pear" fat distribution pattern, the higher essential fat requirement (10-13% vs 2-5% in men), and why post-menopausal women see accelerating visceral fat accumulation as estrogen protection is removed.',
+    examples: {
+      headers: ['Sex', 'Estradiol (E2) range', 'Clinical note'],
+      rows: [
+        ['Men (adult)', '10 - 40 pg/mL', 'Above 40 pg/mL with low testosterone signals excess aromatase activity'],
+        ['Women (follicular)', '12 - 250 pg/mL', 'Rises sharply before ovulation; highly variable across cycle'],
+        ['Women (post-menopause)', '< 10 pg/mL', 'Loss of ovarian production; visceral fat risk rises'],
+      ],
+    },
+    pitfalls: 'Isolated estradiol measurements in men mean little without a corresponding free testosterone value. The clinically relevant signal is the testosterone-to-estradiol ratio. Many symptoms attributed to "high estrogen in men" in popular health content - fatigue, low libido, mood changes - overlap entirely with low testosterone symptoms and cannot distinguish between the two without bloodwork. Self-diagnosis based on symptoms alone is unreliable.',
+    faqs: [
+      { q: 'What is the role of estrogen in men?', a: 'At normal concentrations, estrogen is essential in men: it maintains bone density, supports libido and cognitive function, and plays a role in cardiovascular health. Problems arise from relative excess rather than any absolute amount - when aromatase in fat tissue converts too much testosterone to estradiol, the testosterone-to-estrogen ratio falls, suppressing the HPG axis and degrading body composition.' },
+      { q: 'Why does excess body fat raise estrogen in men?', a: 'Adipose tissue, particularly visceral fat, contains the aromatase enzyme, which converts testosterone to estradiol. The more visceral fat a man carries, the more aromatase activity occurs. This lowers circulating testosterone and raises estradiol, suppressing the pituitary\'s signal to produce more testosterone - a self-reinforcing cycle that worsens with increasing adiposity.' },
+      { q: 'What is a normal estradiol level for men?', a: 'Normal estradiol (E2) in adult men is approximately 10-40 pg/mL. Above 40 pg/mL alongside low or low-normal testosterone is a clinical signal of excess aromatase activity, commonly driven by high visceral fat mass. Estradiol should always be interpreted alongside total and free testosterone, not in isolation.' },
+      { q: 'How does estrogen differ between men and women in terms of fat distribution?', a: 'Estrogen in women directs fat storage toward the hips, thighs, and breasts - subcutaneous depots that are metabolically relatively inert. In men, lower estrogen and higher testosterone favor fat deposition in the abdomen and visceral regions. Post-menopausal women, whose estrogen levels fall sharply, shift toward a more male-like visceral fat distribution pattern and their cardiometabolic risk rises accordingly.' },
+    ],
+    quiz: {
+      topic: 'estrogen',
+      questions: [
+        {
+          q: 'In adult men, what is the primary source of estrogen in the body?',
+          options: [
+            'The adrenal glands, which produce estradiol as a byproduct of cortisol synthesis',
+            'The testes, which produce both testosterone and estrogen in equal proportions',
+            'Peripheral conversion of testosterone to estradiol by the aromatase enzyme in adipose tissue',
+            'The pituitary gland, which secretes estrogen alongside LH and FSH',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states that while small amounts of estrogen are produced in the testes and adrenal glands, the dominant source in adult men is peripheral conversion of testosterone to estradiol by the aromatase enzyme in adipose tissue - which is why higher body fat directly raises estrogen in men.',
+        },
+        {
+          q: 'What happens to the HPG axis when aromatase activity is elevated in men with excess body fat?',
+          options: [
+            'The HPG axis upregulates LH and FSH production to compensate, raising total testosterone',
+            'Excess estradiol from aromatase suppresses the HPG axis, reducing the pituitary signal to produce testosterone',
+            'The HPG axis is unaffected by estradiol levels - it only responds to testosterone concentrations',
+            'Elevated aromatase raises estradiol and simultaneously stimulates testicular testosterone synthesis',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition explains that when aromatase in excess body fat converts too much testosterone to estradiol, this suppresses the hypothalamic-pituitary-gonadal (HPG) axis and reduces further testosterone production - worsening the testosterone-estrogen imbalance.',
+        },
+        {
+          q: 'Why does fat distribution change in women after menopause?',
+          options: [
+            'Post-menopausal women produce more androgens from the adrenal glands, directly shifting fat to the abdomen',
+            'Estrogen levels fall sharply after menopause, removing its role in directing fat to the hips and thighs - visceral fat accumulation accelerates and cardiometabolic risk rises toward male levels',
+            'Metabolic rate increases after menopause, redistributing existing subcutaneous fat to visceral depots',
+            'Higher cortisol levels post-menopause override estrogen-directed fat distribution patterns',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The whenToUse section and beginnerExplain both state that after menopause, when estrogen levels fall sharply, women begin accumulating more visceral fat and their cardiometabolic risk rises toward male levels - because estrogen\'s protective role in directing fat to safer subcutaneous depots is removed.',
+        },
+        {
+          q: 'According to the examples table, what does an estradiol level above 40 pg/mL alongside low testosterone signal in a man?',
+          options: [
+            'Normal age-related hormonal changes that do not require clinical attention',
+            'Primary hypogonadism - a failure of testicular testosterone production unrelated to body fat',
+            'Excess aromatase activity, commonly driven by high visceral fat mass',
+            'A measurement error - estradiol above 40 pg/mL cannot occur in healthy adult men',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table notes that above 40 pg/mL with low testosterone signals excess aromatase activity, commonly driven by high visceral fat mass. The definition explains the mechanism: visceral fat contains aromatase, which converts testosterone to estradiol at a rate proportional to fat mass.',
+        },
+        {
+          q: 'The pitfalls section warns that isolated estradiol measurements are difficult to interpret without what additional value?',
+          options: [
+            'Cortisol, since HPA-axis activity modulates both testosterone and estrogen simultaneously',
+            'Free testosterone - the testosterone-to-estradiol ratio is the clinically relevant signal, not estradiol in isolation',
+            'SHBG, since sex hormone-binding globulin directly determines how much estradiol is biologically active',
+            'LH and FSH, since pituitary hormone levels are needed to distinguish primary from secondary hypogonadism',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that isolated estradiol measurements in men mean little without a corresponding free testosterone value - the clinically relevant signal is the testosterone-to-estradiol ratio. Many symptoms attributed to high estrogen overlap entirely with low testosterone symptoms and cannot be distinguished without full bloodwork.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'visceral-fat': {
+    definition: [
+      'Visceral fat is body fat stored inside the abdominal cavity, surrounding the liver, pancreas, kidneys, and intestines. Unlike subcutaneous fat stored beneath the skin, visceral fat sits within the peritoneal cavity and drains directly into the portal circulation - the blood supply that goes to the liver before anywhere else in the body.',
+      'This anatomical position makes visceral fat metabolically distinct and more harmful than subcutaneous fat. Visceral fat is biologically active: it releases pro-inflammatory cytokines (TNF-alpha, IL-6), free fatty acids, and hormones (including resistin and leptin) directly into the portal vein. This constant inflammatory signal drives insulin resistance, raises triglycerides, lowers HDL cholesterol, and elevates blood pressure - the cluster known as metabolic syndrome. Higher visceral fat mass is independently associated with type 2 diabetes, cardiovascular disease, non-alcoholic fatty liver disease, and certain cancers regardless of total body weight.',
+      'BMI cannot distinguish visceral fat from subcutaneous fat or muscle. Two men with identical BMI and waist circumference may have very different visceral fat volumes depending on genetics, age, sex hormone levels, and lifestyle. CT and MRI imaging are the gold standard for measuring visceral fat; DEXA scanning provides an estimate. In clinical and consumer settings, waist circumference and waist-to-height ratio are the most practical validated proxies.',
+    ],
+    beginnerExplain: [
+      'Think of visceral fat as fat that has VIP access to your liver. Subcutaneous fat - the kind you can pinch - sits quietly under the skin and causes relatively little metabolic harm at moderate levels. Visceral fat, by contrast, is constantly releasing chemicals into the portal vein, which flows straight to the liver. The liver receives these signals continuously and responds by increasing blood sugar, raising triglycerides, and triggering inflammation throughout the body.',
+      'This is why someone can look slim but have serious metabolic problems - if their fat is stored viscerally rather than subcutaneously. And it is why waist circumference is a better health signal than weight alone: a growing waistline usually means growing visceral fat.',
+    ],
+    whenToUse: 'Reference visceral fat when explaining why BMI and body weight alone are insufficient health markers - especially in men, who accumulate visceral fat more readily than pre-menopausal women, and in older adults, where visceral fat increases even at stable body weight as subcutaneous fat and muscle mass decline. Waist circumference above 102 cm (40 in) in men and 88 cm (35 in) in women is the WHO threshold for high cardiometabolic risk from visceral adiposity.',
+    examples: {
+      headers: ['Measurement method', 'What it measures', 'Accessible without clinical tools?'],
+      rows: [
+        ['CT / MRI scan', 'Direct visceral fat volume (cm³)', 'No - requires imaging equipment'],
+        ['DEXA scan', 'Estimated visceral fat area', 'No - clinical setting'],
+        ['Waist circumference', 'Abdominal girth (strong proxy)', 'Yes - tape measure'],
+        ['Waist-to-height ratio', 'Waist as fraction of height (< 0.5 = lower risk)', 'Yes - tape measure + calculator'],
+        ['BMI', 'Weight-for-height (does not distinguish fat type)', 'Yes - but cannot detect visceral fat'],
+      ],
+    },
+    pitfalls: 'A normal waist circumference does not guarantee low visceral fat in all cases. The "normal weight obese" phenotype - individuals with a BMI under 25 and a waist under the high-risk threshold but a high body fat percentage - can carry clinically meaningful visceral fat that standard measurements miss. Also, waist circumference in very tall individuals can exceed thresholds without carrying proportional risk; waist-to-height ratio (keeping waist below half of height) corrects for this.',
+    faqs: [
+      { q: 'What is the difference between visceral fat and subcutaneous fat?', a: 'Subcutaneous fat is stored beneath the skin - the layer you can pinch at the waist, abdomen, or thighs. It is relatively metabolically inert at moderate levels. Visceral fat is stored inside the abdominal cavity, surrounding internal organs, and drains into the portal circulation. Its direct access to the liver makes it far more metabolically harmful per unit of volume than subcutaneous fat.' },
+      { q: 'Why do men accumulate more visceral fat than women?', a: 'Estrogen in pre-menopausal women directs fat storage toward subcutaneous depots in the hips and thighs - the "pear" pattern - and actively limits visceral accumulation. Testosterone favors visceral and abdominal deposition. After menopause, when estrogen falls sharply, women shift toward a male-like fat distribution pattern and visceral fat accumulation accelerates, which is one reason their cardiometabolic risk rises post-menopause.' },
+      { q: 'Can you reduce visceral fat through diet and exercise?', a: 'Yes, and visceral fat responds to calorie deficit faster than subcutaneous fat. Studies consistently show that even modest weight loss of 5-10% of body weight produces a disproportionate reduction in visceral fat relative to total fat lost. Aerobic exercise has the strongest evidence for visceral fat reduction; resistance training adds benefit by raising metabolic rate and improving insulin sensitivity.' },
+      { q: 'What waist circumference indicates high visceral fat risk?', a: 'The WHO defines high cardiometabolic risk thresholds as a waist circumference above 102 cm (40 in) for men and above 88 cm (35 in) for women in European populations. Increased risk begins earlier: above 94 cm (37 in) for men and 80 cm (31.5 in) for women. Lower thresholds apply for South Asian, East Asian, and other ethnic groups, where visceral fat risk increases at smaller waist sizes.' },
+    ],
+    quiz: {
+      topic: 'visceral fat',
+      questions: [
+        {
+          q: 'Why is visceral fat metabolically more harmful than subcutaneous fat?',
+          options: [
+            'Visceral fat contains more calories per gram than subcutaneous fat, making it harder to burn off through exercise',
+            'Visceral fat is located beneath the skin where it compresses nerves and blood vessels directly',
+            'Visceral fat drains into the portal circulation, delivering pro-inflammatory cytokines and free fatty acids directly to the liver before the rest of the body',
+            'Visceral fat is composed of a different type of lipid cell that secretes more leptin than subcutaneous adipocytes',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition explains that visceral fat sits inside the abdominal cavity and drains into the portal vein, which goes straight to the liver. This delivers a continuous stream of pro-inflammatory cytokines, free fatty acids, and hormones to the liver, driving insulin resistance, triglyceride production, and systemic inflammation.',
+        },
+        {
+          q: 'According to the examples table, which measurement directly measures visceral fat volume without requiring a proxy?',
+          options: [
+            'Waist circumference measured with a tape measure at the natural waist',
+            'BMI calculated from weight and height',
+            'CT or MRI scan measuring visceral fat volume in cm³',
+            'Waist-to-height ratio compared to the 0.5 threshold',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The examples table shows that CT and MRI scans directly measure visceral fat volume (cm³) and are the gold standard. All other methods - waist circumference, waist-to-height ratio, BMI - are proxies or do not measure visceral fat at all. CT and MRI require clinical imaging equipment and are not accessible without medical referral.',
+        },
+        {
+          q: 'The beginnerExplain section describes visceral fat as having "VIP access" to which organ, and why does this matter?',
+          options: [
+            'The heart - visceral fat presses on the pericardium, directly straining cardiac output',
+            'The pancreas - visceral fat impairs insulin secretion by direct physical pressure on beta cells',
+            'The liver - visceral fat drains into the portal vein, delivering inflammatory signals continuously and raising blood sugar, triglycerides, and inflammation',
+            'The kidneys - visceral fat impairs filtration by increasing intra-abdominal pressure on renal blood flow',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The beginnerExplain section explains that visceral fat has VIP access to the liver via the portal vein. The liver receives these chemical signals continuously and responds by increasing blood sugar, raising triglycerides, and triggering inflammation throughout the body - which is the core mechanism behind metabolic syndrome.',
+        },
+        {
+          q: 'What does the pitfalls section warn about "normal weight obese" individuals?',
+          options: [
+            'They have a BMI above 30 but waist circumference below 94 cm, making them difficult to classify under standard guidelines',
+            'Their low body weight paradoxically raises visceral fat risk because low muscle mass reduces metabolic rate',
+            'They have a BMI under 25 and waist below risk thresholds but can still carry clinically meaningful visceral fat that standard measurements miss',
+            'They systematically underestimate their caloric intake, making dietary intervention ineffective without supervised meals',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states that the "normal weight obese" phenotype describes individuals with a BMI under 25 and a waist below the high-risk threshold but a high body fat percentage - they can carry clinically meaningful visceral fat that standard BMI and waist measurements miss entirely.',
+        },
+        {
+          q: 'According to the FAQ, what response does visceral fat show to a modest weight loss of 5-10% of body weight compared to subcutaneous fat?',
+          options: [
+            'Visceral fat and subcutaneous fat reduce proportionally - both decrease at the same rate relative to initial volume',
+            'Visceral fat is resistant to dietary restriction and responds mainly to aerobic exercise, not calorie deficit',
+            'Visceral fat is preferentially preserved during weight loss - the body burns subcutaneous fat first to protect organs',
+            'Visceral fat responds faster to calorie deficit than subcutaneous fat - studies show disproportionate visceral fat reduction relative to total fat lost',
+          ] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The FAQ states that visceral fat responds to calorie deficit faster than subcutaneous fat - even modest weight loss of 5-10% of body weight produces a disproportionate reduction in visceral fat relative to total fat lost. Aerobic exercise has the strongest evidence for visceral fat reduction specifically.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'testosterone': {
+    definition: [
+      'Testosterone is the primary male sex hormone, produced mainly in the Leydig cells of the testes under regulation from the hypothalamic-pituitary-gonadal (HPG) axis. Normal total testosterone in adult men ranges from 300 to 1,000 ng/dL (10.4-34.7 nmol/L), with free testosterone - the biologically active fraction not bound to proteins - representing roughly 1-3% of the total.',
+      'Testosterone drives two critical body composition processes: anabolism (stimulating muscle protein synthesis and lean mass accretion) and lipolysis (promoting fat breakdown, especially in visceral depots). This dual action means that well-maintained testosterone levels support a leaner, more metabolically active body composition - while declining levels push body composition in the opposite direction.',
+      'The relationship between body fat and testosterone is bidirectional. Adipose tissue contains aromatase, an enzyme that converts testosterone to estradiol (estrogen). Men with higher visceral fat have more aromatase activity, which lowers free testosterone. Low testosterone then reduces muscle mass and raises fat mass, increasing aromatase activity further. Research shows total testosterone declines by approximately 2% for each 1-unit rise in BMI in men with obesity.',
+    ],
+    beginnerExplain: [
+      'Think of testosterone as the engine that keeps muscle running. The more muscle you have, the faster your metabolism burns calories at rest. When body fat rises, aromatase acts like a drain - it converts testosterone into estrogen, slowing the engine. With less testosterone, muscle becomes harder to maintain, metabolism slows, and fat gain accelerates.',
+      'The practical implication: losing fat raises testosterone, and higher testosterone makes it easier to build the muscle that accelerates further fat loss. The cycle runs in both directions, which is why resistance training - not just calorie restriction - is important for men at a high BMI.',
+    ],
+    whenToUse: 'Testosterone levels are relevant when interpreting BMI or body composition results for men, particularly in the overweight (BMI 25-29.9) and obese ranges. A man losing weight who also adds resistance training is more likely to see testosterone recovery than one who restricts calories alone. Clinically measured low testosterone (hypogonadism, typically below 300 ng/dL total) warrants medical evaluation independent of BMI.',
+    examples: {
+      headers: ['Category', 'Total Testosterone (ng/dL)', 'Clinical implication'],
+      rows: [
+        ['Optimal', '600 - 1,000', 'Strong anabolic drive; lean body composition easier to maintain'],
+        ['Normal', '300 - 600', 'Standard reference range; clinical intervention not typically indicated'],
+        ['Low-normal', '300 - 400', 'Below-average; body composition benefits are reduced'],
+        ['Hypogonadal', 'Below 300', 'Clinical hypogonadism; medical evaluation recommended'],
+      ],
+    },
+    pitfalls: 'Total testosterone can be normal while free testosterone is low, particularly in obese men where sex hormone-binding globulin (SHBG) levels are altered. A man with a total testosterone of 450 ng/dL but high SHBG may have free testosterone well below the normal range - meaning the biologically active fraction is suppressed even though the headline number looks acceptable. Free testosterone or calculated free testosterone should be checked when total testosterone appears borderline.',
+    faqs: [
+      { q: 'What is a normal testosterone level for men?', a: 'The standard clinical reference range for total testosterone in adult men is 300 to 1,000 ng/dL. Levels vary with age: men in their 20s often measure 600-900 ng/dL, while men over 60 commonly fall in the 300-500 ng/dL range as a result of the natural 1-2% per year decline that begins around age 30.' },
+      { q: 'How much does BMI affect testosterone?', a: 'Research consistently shows total testosterone declines by approximately 2% for each 1-unit increase in BMI. A man moving from BMI 25 to BMI 35 may experience a testosterone decline equivalent to 10-15 years of normal aging. The mechanism is aromatase activity in visceral fat, which converts testosterone to estrogen and suppresses HPG-axis production.' },
+      { q: 'What is the difference between total and free testosterone?', a: 'Total testosterone measures all testosterone in the blood. Free testosterone is the small fraction (1-3%) not bound to proteins - primarily sex hormone-binding globulin (SHBG) and albumin. Only free testosterone can enter cells and exert biological effects. In obese men, SHBG can be suppressed, sometimes paradoxically elevating free testosterone despite low total; conversely, high SHBG (common in older men) can leave free testosterone low despite normal total levels.' },
+      { q: 'Can weight loss raise testosterone levels?', a: 'Yes, consistently. Multiple clinical studies show that weight loss in obese men raises total testosterone proportionally to the amount of fat lost. A 10% reduction in body weight is associated with an average 15-25% increase in testosterone. The effect is enhanced when weight loss is accompanied by resistance training, which adds an additional anabolic stimulus independent of fat loss.' },
+    ],
+    quiz: {
+      topic: 'testosterone',
+      questions: [
+        {
+          q: 'What is the primary mechanism by which excess body fat lowers testosterone in men?',
+          options: [
+            'The liver increases testosterone clearance in proportion to body weight, reducing circulating levels',
+            'Adipose tissue contains aromatase, which converts testosterone to estrogen - lowering free testosterone and suppressing HPG-axis production',
+            'Higher insulin levels from a high-calorie diet directly block testosterone receptors in muscle tissue',
+            'The kidneys filter out excess testosterone more rapidly when blood lipids are elevated',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states that adipose tissue contains aromatase, an enzyme that converts testosterone to estradiol (estrogen). Men with more visceral fat have more aromatase activity, which lowers free testosterone and triggers the HPG axis to further reduce production.',
+        },
+        {
+          q: 'By approximately how much does total testosterone decline per 1-unit rise in BMI in men with obesity?',
+          options: ['0.5%', '1%', '2%', '5%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition and examples both state that total testosterone declines by approximately 2% for each 1-unit rise in BMI. Moving from BMI 25 to 35 is therefore associated with a testosterone decline equivalent to 10-15 years of normal aging.',
+        },
+        {
+          q: 'What does the beginnerExplain section identify as the main advantage of adding resistance training alongside calorie restriction for men at a high BMI?',
+          options: [
+            'Resistance training burns more calories than cardio, accelerating the calorie deficit needed for fat loss',
+            'Lifting weights directly stimulates aromatase suppression, raising testosterone independently of fat loss',
+            'Resistance training builds the muscle that raises metabolic rate, and the testosterone-fat cycle runs in both directions - making further fat loss easier',
+            'Weight training raises SHBG, which protects free testosterone from being converted by aromatase',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The beginnerExplain section states the cycle runs in both directions: losing fat raises testosterone, and higher testosterone makes it easier to build the muscle that accelerates further fat loss. Resistance training is important because calorie restriction alone can take muscle along with fat, worsening the hormonal situation.',
+        },
+        {
+          q: 'A man has a total testosterone of 450 ng/dL but reports symptoms of low testosterone. What does the pitfalls section say should be checked?',
+          options: [
+            'Cortisol levels, which can suppress testosterone bioavailability when chronically elevated',
+            'Free testosterone or calculated free testosterone, since high SHBG can leave free testosterone well below normal even when total appears acceptable',
+            'Estradiol levels directly, since high estrogen is a more reliable marker of aromatase activity than free testosterone',
+            'LH and FSH levels from the pituitary to determine whether the HPG axis is suppressed',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section states that a man with a total testosterone of 450 ng/dL but high SHBG may have free testosterone well below the normal range - meaning the biologically active fraction is suppressed even though the headline number looks acceptable. Free testosterone should be checked when total testosterone appears borderline.',
+        },
+        {
+          q: 'According to the FAQ, what average testosterone increase is associated with a 10% reduction in body weight?',
+          options: ['5-10%', '15-25%', '30-40%', '50%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states that a 10% reduction in body weight is associated with an average 15-25% increase in testosterone. The effect is enhanced when weight loss is accompanied by resistance training, which adds an additional anabolic stimulus independent of fat loss.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'waist-circumference': {
     definition: [
       'Waist circumference is a direct measure of abdominal adiposity - the accumulation of fat in the trunk region. It is measured at the narrowest point of the torso, typically at or just above the navel, and is a strong independent predictor of metabolic disease risk beyond what BMI captures.',
