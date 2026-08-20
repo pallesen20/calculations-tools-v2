@@ -5,6 +5,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../../components/Sources.astro';
 import HealthDisclaimer from '../../../components/HealthDisclaimer.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   metric:   "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
@@ -12,9 +13,10 @@ const f = {
 };
 
 const tocItems = [
-  { id: 'how-to-use',        label: 'How to use' },
-  { id: 'normal-bmi-women',  label: 'What is a healthy BMI for women?' },
-  { id: 'bmi-chart',         label: 'BMI chart for women' },
+  { id: 'how-to-use',           label: 'How to use' },
+  { id: 'normal-bmi-women',    label: 'What is a healthy BMI for women?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'bmi-chart',           label: 'BMI chart for women' },
   { id: 'bmi-by-age',        label: 'BMI by age for women' },
   { id: 'body-fat-gap',      label: 'Why women have more body fat at the same BMI' },
   { id: 'hormones-lifecycle', label: 'Hormones and the female lifecycle' },
@@ -22,6 +24,7 @@ const tocItems = [
   { id: 'normal-weight-obesity', label: 'Normal weight obesity in women' },
   { id: 'better-metrics',    label: 'Better metrics for women' },
   { id: 'faq',               label: 'FAQs' },
+  { id: 'quiz',              label: 'Quiz: test your knowledge' },
   { id: 'related-tools',     label: 'Related tools' },
 ];
 
@@ -52,7 +55,7 @@ const sources: Source[] = [
     title: 'Normal weight obesity: a risk factor for cardiometabolic dysregulation and cardiovascular mortality',
     journal: 'European Heart Journal',
     year: 2010,
-    url: 'https://doi.org/10.1093/eurheartj/ehp487',
+    url: 'https://academic.oup.com/eurheartj/article-abstract/31/6/737/418220',
   },
   {
     author: 'Obesity and menopause - a clinical review',
@@ -68,7 +71,61 @@ const sources: Source[] = [
     year: 2011,
     url: 'https://apps.who.int/iris/handle/10665/44583',
   },
+  {
+    author: 'U.S. Office on Women\'s Health',
+    title: 'Menopause basics',
+    journal: 'U.S. Department of Health & Human Services',
+    year: 2021,
+    url: 'https://www.womenshealth.gov/menopause/menopause-basics',
+  },
+  {
+    author: 'Karastergiou K, Smith SR, Greenberg AS, Fried SK',
+    title: 'Sex differences in human adipose tissues - the biology of pear shape',
+    journal: 'Biology of Sex Differences',
+    year: 2012,
+    url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3411490/',
+  },
+  {
+    author: 'National Health Service (NHS)',
+    title: 'Hormone replacement therapy (HRT): Side effects',
+    journal: 'NHS, UK',
+    year: 2023,
+    url: 'https://www.nhs.uk/conditions/hormone-replacement-therapy-hrt/side-effects/',
+  },
 ];
+
+const quizQuestions = [
+  {
+    q: 'According to CDC data cited on this page, what is the average BMI of American women?',
+    options: ['~25.6 (Overweight)', '~27.3 (Overweight)', '~29.6 (Overweight)', '~31.2 (Obese Class I)'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page cites CDC NCHS data showing the average American woman has a BMI of approximately 29.6, placing her in the Overweight category. The average US woman weighs roughly 77 kg (170 lbs) and stands approximately 162 cm (5\'4").',
+  },
+  {
+    q: 'From the body fat percentage comparison table, what is the typical body fat percentage for women at BMI 25?',
+    options: ['~20%', '~25%', '~30%', '~35%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The table shows that at BMI 25, women average ~30% body fat vs ~20% for men. This reflects women\'s higher essential fat requirement (10-13%, vs 2-5% for men) - fat that is biologically necessary, not excess.',
+  },
+  {
+    q: 'Why does menopause make BMI less reliable as a health indicator for women?',
+    options: ['Height shrinks with age, reducing BMI readings artificially', 'After menopause, fat redistributes from hips and thighs to the abdomen, increasing visceral fat even when BMI stays constant', 'Bone density loss after menopause reduces BMI without reducing actual fat', 'WHO updates the BMI thresholds for postmenopausal women'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The menopause section explains that falling estrogen causes fat to shift from subcutaneous hip and thigh depots to visceral abdominal depots - increasing metabolic risk even when total weight and BMI stay the same. A stable BMI through menopause can mask a worsening metabolic profile.',
+  },
+  {
+    q: 'What waist circumference threshold signals HIGH cardiometabolic risk for women, according to the better metrics table?',
+    options: ['Above 70 cm (27.6 in)', 'Above 80 cm (31.5 in)', 'Above 88 cm (34.6 in)', 'Above 94 cm (37 in)'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The better metrics table and FAQ both confirm that above 88 cm (34.6 in) is the high-risk threshold for women. The 80 cm mark is "increased risk"; 88 cm is "high risk." Note that for South and East Asian women, above 80 cm is already classified as high risk.',
+  },
+  {
+    q: 'What percentage of women with a normal BMI does this page report as having normal weight obesity (NWO)?',
+    options: ['About 5%', 'About 15%', 'About 30%', 'About 50%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The NWO section cites research from the European Heart Journal finding NWO in approximately 30% of women with a normal BMI - making it far from rare. NWO occurs when body fat is above 30% despite a normal BMI (18.5-24.9) because BMI cannot distinguish fat from muscle.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -100,7 +157,7 @@ const schema = [
       { "@type": "Question", "name": "What is a healthy BMI for women?", "acceptedAnswer": { "@type": "Answer", "text": "A healthy BMI for women is 18.5 to 24.9 - the same range used for all adults under WHO guidelines. However, because women naturally carry 3 to 5 percentage points more body fat than men at the same BMI, interpreting the number requires understanding female physiology. The average BMI of American women is approximately 29.6, placing the average US woman in the Overweight category." } },
       { "@type": "Question", "name": "What is the average BMI for an American woman?", "acceptedAnswer": { "@type": "Answer", "text": "The average BMI for American women is approximately 29.6, according to CDC National Health and Nutrition Examination Survey data. This places the average US woman in the Overweight category. The average American woman weighs approximately 77 kg (170 lbs) and stands approximately 162 cm (5 foot 4 inches) tall." } },
       { "@type": "Question", "name": "Is BMI calculated differently for women?", "acceptedAnswer": { "@type": "Answer", "text": "No. The BMI formula is identical for men and women: weight (kg) divided by height (m) squared. The same WHO category thresholds (18.5, 25, 30) apply to both sexes. However, the same BMI number implies more body fat in women than in men, because women have less muscle mass and more essential fat. Some researchers have proposed sex-specific thresholds, but standard clinical guidelines use the same cutoffs." } },
-      { "@type": "Question", "name": "Why does BMI not account for menopause?", "acceptedAnswer": { "@type": "Answer", "text": "BMI uses only weight and height and cannot account for the hormonal changes of menopause. After menopause, falling oestrogen levels cause fat to redistribute from the hips and thighs to the abdomen, increasing visceral fat even when BMI stays constant. A postmenopausal woman can have a Normal BMI but carry substantially more metabolically dangerous abdominal fat than she did before menopause. Waist circumference is a better companion measure in this group." } },
+      { "@type": "Question", "name": "Why does BMI not account for menopause?", "acceptedAnswer": { "@type": "Answer", "text": "BMI uses only weight and height and cannot account for the hormonal changes of menopause. After menopause, falling estrogen levels cause fat to redistribute from the hips and thighs to the abdomen, increasing visceral fat even when BMI stays constant. A postmenopausal woman can have a Normal BMI but carry substantially more metabolically dangerous abdominal fat than she did before menopause. Waist circumference is a better companion measure in this group." } },
       { "@type": "Question", "name": "What is a healthy BMI for women over 60?", "acceptedAnswer": { "@type": "Answer", "text": "The standard healthy BMI range (18.5-24.9) applies. However, some research suggests a BMI of 25 to 27 may be associated with better survival outcomes in women over 65, partly due to greater bone and muscle reserves providing a buffer against frailty and osteoporosis. A BMI below 22 in this age group may indicate frailty risk. Above 30, cardiovascular and metabolic risks remain elevated." } },
       { "@type": "Question", "name": "Can a woman have a normal BMI but still have too much body fat?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. This is called normal weight obesity (NWO) and is more common in women than in men. It occurs when body fat percentage is high (above 30% in women) while BMI is in the normal range, typically because muscle mass is low. NWO is associated with the same metabolic risks as obesity - including insulin resistance, elevated triglycerides, and cardiovascular risk - despite a normal BMI reading." } },
       { "@type": "Question", "name": "What waist size is healthy for a woman?", "acceptedAnswer": { "@type": "Answer", "text": "A waist circumference below 80 cm (31.5 inches) is considered low risk for women. Between 80 and 88 cm (31.5 and 34.6 inches) is increased risk. Above 88 cm (34.6 inches) is high risk for cardiometabolic disease. For women of South or East Asian descent, the threshold is lower: above 80 cm (31.5 inches) is considered high risk." } },
@@ -109,11 +166,10 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="BMI Calculator for Women"
   metaTitle="BMI Calculator for Women | Female Body Mass Index Range ᐅ"
-  description="Free BMI calculator for women. See the healthy BMI range for women, BMI by age, how menopause affects BMI, normal weight obesity, and the best complementary health metrics."
+  description="Free BMI calculator for women. Covers hormonal health, menopause, BMI for women over 50, hormone replacement therapy (HRT), normal weight obesity, and the best complementary measures."
   canonical="https://calculations.tools/health/bmi-calculator/women"
   tocItems={tocItems}
   schema={schema}
@@ -122,21 +178,17 @@ const schema = [
   ogFormula="BMI = weight (kg) / height² (m²)"
   ogExample="60 kg at 1.65 m: 60 / 2.7225 = 22.0 (Normal weight for women)"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container bmi-container">
-
         <div class="calculator-header">
           <h2>Female Body Mass Index Calculator</h2>
           <p>Body Mass Index in metric or imperial units</p>
         </div>
-
         <div class="bmi-unit-toggle">
           <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
           <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
         </div>
-
         <div id="bmi-metric" class="bmi-inputs active">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-weight-kg">Weight</label>
@@ -153,7 +205,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-imperial" class="bmi-inputs">
           <div class="bmi-field">
             <label class="bmi-label" for="bmi-weight-lb">Weight</label>
@@ -176,7 +227,6 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="bmi-result" class="bmi-result hidden">
           <div class="bmi-value-row">
             <div class="bmi-value" id="bmi-value">-</div>
@@ -203,39 +253,49 @@ const schema = [
             <div class="bmi-detail bmi-detail-hint" id="bmi-next-category"></div>
           </div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/bmi-calculator.js" is:inline></script>
   <HealthDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Healthy BMI for women at a glance</div>
-        <p>A <strong>healthy BMI for women is 18.5 to 24.9</strong> - the same range used for all adults. The average American woman has a BMI of approximately <strong>29.6</strong>, placing her in the Overweight category. Because women naturally carry 3–5% more body fat than men at the same BMI (due to oestrogen and reproductive function), the number alone tells an incomplete story. For women over 40, waist circumference is an increasingly important companion metric - especially around and after menopause, when fat shifts from hips and thighs to the abdomen.</p>
+        <p>A <strong>healthy BMI for women is 18.5 to 24.9</strong> - the same range used for all adults. The average American woman has a BMI of approximately <strong>29.6</strong>, placing her in the Overweight category.</p>
+        <p>Because women naturally carry 3–5% more body fat than men at the same BMI (due to <a href="/glossary/estrogen">estrogen</a> and reproductive function), the number alone tells an incomplete story. For women over 40, waist circumference is an increasingly important companion metric - especially around and after menopause, when fat shifts from hips and thighs to the abdomen.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Select Metric (kg and cm) or Imperial (lbs, feet, inches), enter your weight and height, and your BMI appears instantly. The result shows your BMI value, category, the healthy weight range for your height, and (if outside the normal range) how much to gain or lose to reach it.</p>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The average American woman has a BMI of ~29.6 (<a href="https://www.cdc.gov/nchs/fastats/body-measurements.htm" target="_blank" rel="noopener noreferrer">CDC, 2024</a>) - in the Overweight range. Roughly 36% of US women are classified as obese (BMI 30+).</li>
+          <li>Women require 10-13% essential body fat for hormonal and reproductive function, vs 2-5% for men. At BMI 25, women average ~30% body fat vs ~20% for men - the higher number is normal, not excess.</li>
+          <li><a href="/glossary/normal-weight-obesity">Normal weight obesity</a> (NWO) affects approximately 30% of women with a normal BMI. A sedentary woman at BMI 22 can carry 32-35% body fat if muscle mass is low - the same metabolic risk profile as clinical obesity, invisible to BMI.</li>
+          <li>Menopause causes fat to redistribute from hips and thighs to the abdomen even when BMI stays constant. A postmenopausal woman at a stable BMI carries substantially more <a href="/glossary/visceral-fat">visceral fat</a> than she did before menopause.</li>
+          <li>A waist above 88 cm (34.6 in) signals high cardiometabolic risk for women. A waist above 80 cm in a woman with normal BMI is a warning sign for NWO - warranting body fat measurement, not reassurance.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our female BMI calculator</h2>
+      <p>Select <a href="/glossary/metric-system">Metric</a> (kg and cm) or <a href="/glossary/imperial-system">Imperial</a> (lbs, feet, inches), enter your weight and height, and your BMI appears instantly. The result shows your <a href="/glossary/bmi">BMI value</a>, category, the <a href="/health/ideal-weight-calculator">healthy weight range</a> for your height, and (if outside the normal range) how much to gain or lose to reach it.</p>
       <p>If you are postmenopausal, over 60, or highly active, also read the <a href="#menopause">menopause section</a> and the <a href="#better-metrics">better metrics section</a> - for women, these two pieces of context can matter as much as the BMI number itself.</p>
-
       <h2 id="normal-bmi-women">What is a healthy BMI for women?</h2>
-      <p>The World Health Organization classifies BMI 18.5 to 24.9 as Normal weight for all adults, regardless of sex. The same formula and the same thresholds apply to men and women - but the same BMI number carries different implications for women because female bodies have fundamentally different body composition norms.</p>
-      <p>The average BMI of American women is approximately <strong>29.6</strong>, according to CDC NCHS data. The average American woman weighs roughly 77 kg (170 lbs) and stands approximately 162 cm (5'4"). This means the average US woman is in the Overweight category. Approximately 36% of American women are classified as obese (BMI 30+).</p>
-      <p>For women of Asian descent, many clinical guidelines recommend lower thresholds: a BMI of 23.0 as the overweight threshold and 27.5 as the obese threshold, reflecting higher body fat percentages and cardiometabolic risk at lower BMI values in these populations.</p>
-
-      <h2 id="bmi-chart">BMI chart for women</h2>
+      <p>The World Health Organization classifies BMI 18.5 to 24.9 as normal weight for all adults, regardless of sex. The same formula and the same thresholds apply to men and women - but the same BMI number carries different implications for women because female bodies have fundamentally different <a href="/glossary/body-composition">body composition</a> norms.</p>
+      <p>The average BMI of American women is approximately <strong>29.6</strong>, according to <a href="https://www.cdc.gov/nchs/fastats/body-measurements.htm" target="_blank" rel="noopener noreferrer">CDC NCHS data</a>. The average American woman weighs roughly <a href="/conversion/weight-converter/kg-to-lb">77 kg (170 lbs)</a> and stands approximately <a href="/conversion/length-converter/cm-to-in">162 cm (5'4")</a>. This means the average US woman is in the overweight category. Approximately 36% of American women are classified as obese (BMI 30+).</p>
+      <p>For women of Asian descent, many clinical guidelines recommend lower thresholds: a BMI of 23.0 as the overweight threshold and 27.5 as the obese threshold, reflecting higher <a href="/glossary/body-fat-percentage">body fat percentages</a> and cardiometabolic risk at lower BMI values in these populations.</p>
+      <h3 id="explained-to-beginner">Female BMI explained to a beginner</h3>
+      <p>Think of BMI as a label on a closed suitcase - it tells you the total weight but not what's inside. Two women can share an identical BMI of 23 and represent completely different health pictures.</p>
+      <p>A 30-year-old who trains regularly might have <a href="/health/body-fat-calculator">20% body fat</a> stored mainly in the hips and thighs. A 55-year-old who is sedentary after menopause might have 34% body fat concentrated in her abdomen. The suitcase weighs the same; the contents are entirely different.</p>
+      <p>The practical addition is <a href="/glossary/waist-circumference">waist circumference</a>. A waist below 80 cm (31.5 inches) alongside a normal BMI is a strong signal that body fat is within a healthy range and well-distributed. A waist above 80 cm - even with a normal BMI - is a signal to look more carefully, particularly after age 45.</p>
+      <h2 id="bmi-chart">Body Mass Index chart for women</h2>
+      <p>The WHO BMI categories below apply to all adult women regardless of age. The "health implications" column reflects female-specific risks at each range - hormonal disruption, fertility effects, and the cardiometabolic consequences of both underweight and excess weight.</p>
+      <p>The normal weight range (18.5-24.9) carries the lowest population-level risk, but as the normal weight obesity section above explains, a woman in this range is not automatically metabolically healthy.</p>
       <div class="responsive-table">
       <table>
         <thead>
           <tr><th>BMI Category</th><th>BMI Range</th><th>Health implications for women</th></tr>
         </thead>
         <tbody>
-          <tr><td>Underweight</td><td>Below 18.5</td><td>Risk of anaemia, bone loss, hormonal disruption, irregular periods, and fertility issues; 30% higher odds of early menopause onset</td></tr>
+          <tr><td>Underweight</td><td>Below 18.5</td><td>Risk of anemia, bone loss, hormonal disruption, irregular periods, and fertility issues; 30% higher odds of early menopause onset</td></tr>
           <tr><td>Normal weight</td><td>18.5 – 24.9</td><td>Lowest cardiometabolic risk in population studies; however, body fat % can still be high in sedentary women (normal weight obesity)</td></tr>
           <tr><td>Overweight</td><td>25.0 – 29.9</td><td>Moderately elevated risk; waist circumference check recommended, especially around perimenopause</td></tr>
           <tr><td>Obese Class I</td><td>30.0 – 34.9</td><td>High risk; elevated cardiovascular, metabolic, and hormonal risks; associated with irregular cycles and reduced fertility</td></tr>
@@ -244,9 +304,8 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h3>Healthy weight range for women by height</h3>
-      <p>The table below shows the Normal weight range (BMI 18.5–24.9) for common female heights.</p>
+      <p>The table below shows the normal weight range (BMI 18.5–24.9) for common female heights.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -266,7 +325,6 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="bmi-by-age">BMI by age for women</h2>
       <p>The WHO BMI formula and category thresholds are the same for all adult ages, but body composition shifts significantly across a woman's life. A BMI interpreted without age context can be misleading.</p>
       <div class="responsive-table">
@@ -276,20 +334,19 @@ const schema = [
         </thead>
         <tbody>
           <tr><td>18–30</td><td>Peak bone density and reproductive hormone levels; fat distributed peripherally (hips, thighs)</td><td>Standard 18.5–24.9 range applies cleanly; BMI is most predictive for body fat in this group</td></tr>
-          <tr><td>30–45</td><td>Gradual muscle loss begins; oestrogen levels start declining in the late 30s–early 40s (perimenopause)</td><td>A woman can maintain normal BMI while body composition worsens if muscle loss equals fat gain in weight terms; waist circumference starts to matter more</td></tr>
-          <tr><td>45–60</td><td>Menopause (average age 51 in the US); oestrogen drops sharply; fat redistributes from hips/thighs to abdomen; visceral fat increases substantially</td><td>BMI increasingly underestimates metabolic risk; waist circumference and waist-to-height ratio become the primary screening tools for this group</td></tr>
+          <tr><td>30–45</td><td>Gradual muscle loss begins; estrogen levels start declining in the late 30s–early 40s (perimenopause)</td><td>A woman can maintain normal BMI while body composition worsens if muscle loss equals fat gain in weight terms; waist circumference starts to matter more</td></tr>
+          <tr><td>45–60</td><td>Menopause (average age 52 in the US); estrogen drops sharply; fat redistributes from hips/thighs to abdomen; visceral fat increases substantially</td><td>BMI increasingly underestimates metabolic risk; waist circumference and waist-to-height ratio become the primary screening tools for this group</td></tr>
           <tr><td>60+</td><td>Significant loss of muscle (sarcopenia) and bone density; osteoporosis risk rises; visceral fat risk continues</td><td>Some research suggests BMI 25–27 may be associated with better survival in women over 65, offering a buffer against frailty and bone fracture risk. A BMI below 22 in this group may indicate frailty risk.</td></tr>
         </tbody>
       </table>
       </div>
-      <p>The clinical takeaway: for women, the older the patient, the less informative BMI is as a standalone measure. A 55-year-old postmenopausal woman with a BMI of 24 may carry substantially more visceral fat and less muscle than a 30-year-old woman with the same BMI.</p>
-
+      <p><strong>The clinical takeaway:</strong> for women, the older the patient, the less informative BMI is as a standalone measure. A 55-year-old postmenopausal woman with a BMI of 24 may carry substantially more visceral fat and less muscle than a 30-year-old woman with the same BMI.</p>
+      <p>See our <a href="/health/bmi-calculator">bmi calculator by age and gender</a> for a precise BMI calculation for women of any age.</p>
       <h2 id="body-fat-gap">Why women have more body fat at the same BMI as men</h2>
       <p>The BMI formula uses identical inputs and thresholds for both sexes, but women and men have fundamentally different body compositions. At any given BMI, women typically have 3–5 percentage points more total body fat than men. This is physiologically normal and serves reproductive functions.</p>
-
       <h3>Essential fat requirements differ by sex</h3>
-      <p>Women require a minimum of <strong>10–13% body fat</strong> for basic physiological function, including hormonal balance, menstrual function, and fertility. Men require only 2–5%. This essential fat - found in bone marrow, organs, and the central nervous system - is not "excess" fat; it is biologically necessary. The practical implication is that a healthy woman will always show a higher body fat percentage than a man at the same BMI.</p>
-
+      <p>Women require a minimum of <strong>10–13% body fat</strong> for basic physiological function, including hormonal balance, menstrual function, and fertility. Men require only 2–5%.</p>
+      <p>This essential fat - found in bone marrow, organs, and the central nervous system - is not "excess" fat; it is biologically necessary. The practical implication is that a healthy woman will always show a higher <a href="/glossary/body-fat-percentage">body fat percentage</a> than a man at the same BMI.</p>
       <h3>Body fat percentage comparison at the same BMI</h3>
       <div class="responsive-table">
       <table>
@@ -305,30 +362,32 @@ const schema = [
         </tbody>
       </table>
       </div>
+      <p>In practice, what this table doesn't convey is how the location of that fat shapes the health picture as much as the quantity does.</p>
+      <p>A woman with 30% body fat stored in the hips and thighs has a cardiometabolic risk profile closer to a lean woman than to one with 30% body fat concentrated in the abdomen.</p>
+      <p>The estrogen-driven pear-shape distribution in pre-menopausal women is a genuine metabolic advantage that BMI cannot show - and one that largely disappears after menopause, which is why that hormonal transition deserves its own section on this page.</p>
       <p>This gap has an important implication: the "Normal weight" BMI range encompasses a wider range of body fat percentages in women. A woman with a BMI of 24 may have 28–31% body fat, while a man with the same BMI likely has 18–21% - yet both are classified the same way by BMI alone.</p>
-
       <h3>Fat distribution: the protective pear shape</h3>
-      <p>Women preferentially store fat in the <strong>hips, thighs, and buttocks</strong> (the "pear" pattern, also called gynoid fat distribution), driven by oestrogen. Men preferentially store fat in the <strong>abdomen and visceral regions</strong> (the "apple" or android pattern). Subcutaneous fat in the hips and thighs is metabolically far less dangerous than visceral fat. This is a primary reason why pre-menopausal women with the same BMI as men typically have lower cardiometabolic risk. After menopause, fat distribution shifts toward the abdominal pattern, erasing much of this protective difference.</p>
-
+      <p>Women preferentially store fat in the <strong>hips, thighs, and buttocks</strong> (the "pear" pattern, also called gynoid fat distribution), driven by <a href="/glossary/estrogen">estrogen</a>. Men preferentially store fat in the <strong>abdomen and visceral regions</strong> (the "apple" or android pattern).</p>
+      <p>Subcutaneous fat in the hips and thighs is metabolically far less dangerous than visceral fat. This is a primary reason why pre-menopausal women with the same BMI as men typically have lower cardiometabolic risk.</p>
+      <p>After menopause, fat distribution shifts toward the abdominal pattern, erasing much of this protective difference.</p>
       <h2 id="hormones-lifecycle">Hormones and the female lifecycle</h2>
       <p>BMI captures weight relative to height at a single point in time. It cannot account for the hormonal fluctuations that affect body composition across a woman's life - fluctuations that are among the most significant factors shaping female health risk.</p>
-
       <h3>Menstrual cycle weight fluctuations</h3>
-      <p>Body weight normally fluctuates by 1–3 kg across the menstrual cycle due to water retention driven by progesterone and oestrogen changes. This fluctuation affects the BMI reading on any given day. For the most representative BMI measurement, weigh yourself at the same point in your cycle each time, or take an average of multiple readings across the month.</p>
-
+      <p>Body weight normally fluctuates by 1–3 kg across the menstrual cycle due to water retention driven by progesterone and estrogen changes. This fluctuation affects the BMI reading on any given day.</p>
+      <p>For the most representative BMI measurement, weigh yourself at the same point in your cycle each time, or take an average of multiple readings across the month.</p>
       <h3>Underweight and hormonal disruption</h3>
-      <p>A BMI consistently below 18.5 can suppress oestrogen production sufficiently to cause irregular or absent periods (amenorrhoea). The hypothalamus responds to low energy availability by reducing gonadotropin-releasing hormone, disrupting the entire menstrual axis. Studies show that underweight women have a <strong>30% higher odds of early menopause onset</strong>. Restoring a healthy weight typically restores hormonal function, though this process can take months.</p>
-
+      <p>A BMI consistently below 18.5 can suppress estrogen production sufficiently to cause irregular or absent periods (amenorrhea). The hypothalamus responds to low energy availability by reducing gonadotropin-releasing hormone, disrupting the entire menstrual axis.</p>
+      <p>Studies show that underweight women have a 30% higher odds of early menopause onset. Restoring a healthy weight typically restores hormonal function, though this process can take months.</p>
       <h3>Obesity and reproductive health</h3>
-      <p>Excess body fat - especially visceral fat - increases aromatase enzyme activity, which converts androgens to oestrogen in peripheral fat tissue. This can create oestrogen excess relative to progesterone, contributing to irregular cycles, polycystic ovary syndrome (PCOS), and reduced fertility. Obesity is associated with <strong>later menopause onset</strong> by approximately 1–2 years, and significantly elevated risk of endometrial cancer due to prolonged oestrogen exposure without progesterone balance.</p>
-
-      <h2 id="menopause">Menopause and BMI</h2>
-      <p>Menopause - defined as 12 consecutive months without a menstrual period - occurs at an average age of 51 in the US. The sharp drop in oestrogen that accompanies menopause is one of the most significant shifts in female body composition, and one that BMI is poorly equipped to detect.</p>
-
+      <p>Excess body fat - especially <a href="/glossary/visceral-fat">visceral fat</a> - increases aromatase enzyme activity, which converts androgens to estrogen in peripheral fat tissue. This can create estrogen excess relative to progesterone, contributing to irregular cycles, polycystic ovary syndrome (PCOS), and reduced fertility.</p>
+      <p>Obesity is associated with later menopause onset by approximately 1–2 years, and significantly elevated risk of endometrial cancer due to prolonged estrogen exposure without progesterone balance.</p>
+      <h2 id="menopause">Menopause and female BMI</h2>
+      <p>Menopause - defined as 12 consecutive months without a menstrual period - occurs at an average age of 52 in the US. The sharp drop in estrogen that accompanies menopause is one of the most significant shifts in <a href="/glossary/body-composition">female body composition</a>, and one that BMI is poorly equipped to detect.</p>
       <h3>How menopause changes body composition</h3>
-      <p>Before menopause, oestrogen promotes fat storage in the hips, thighs, and breasts - the gynoid pattern. After menopause, falling oestrogen causes fat to <strong>redistribute to the abdomen</strong>. Studies consistently show that postmenopausal women gain visceral fat while losing lean muscle mass, even when their total weight - and therefore their BMI - stays roughly constant. A woman who maintained a BMI of 23 for her entire adult life may find that, at 55, that same BMI now corresponds to a meaningfully worse metabolic profile than it did at 35.</p>
-
-      <h3>What changes and what doesn't</h3>
+      <p>Before menopause, estrogen promotes fat storage in the hips, thighs, and breasts - the gynoid pattern. After menopause, falling estrogen causes fat to <strong>redistribute to the abdomen</strong>.</p>
+      <p>Studies consistently show that postmenopausal women gain visceral fat while losing <a href="/health/lean-body-mass-calculator">lean muscle mass</a>, even when their total weight - and therefore their BMI - stays roughly constant.</p>
+      <p>A woman who maintained a BMI of 23 for her entire adult life may find that, at 55, that same BMI now corresponds to a meaningfully worse metabolic profile than it did at 35.</p>
+      <h3>Menopause: what changes and what doesn't</h3>
       <div class="responsive-table">
       <table>
         <thead>
@@ -338,26 +397,39 @@ const schema = [
           <tr><td>Fat distribution</td><td>Peripheral (hips, thighs, breasts)</td><td>Central (abdomen, visceral)</td></tr>
           <tr><td>Visceral fat</td><td>Lower, even at same BMI</td><td>Higher, even at same BMI</td></tr>
           <tr><td>Muscle mass</td><td>Relatively preserved if active</td><td>Accelerated loss without exercise intervention</td></tr>
-          <tr><td>Basal metabolic rate</td><td>Higher (more muscle mass)</td><td>Lower (less muscle, lower oestrogen effect on metabolism)</td></tr>
-          <tr><td>Bone density</td><td>Maintained by oestrogen</td><td>Rapid decline in first 5 years post-menopause</td></tr>
+          <tr><td>Basal metabolic rate</td><td>Higher (more muscle mass)</td><td>Lower (less muscle, lower estrogen effect on metabolism)</td></tr>
+          <tr><td>Bone density</td><td>Maintained by estrogen</td><td>Rapid decline in first 5 years post-menopause</td></tr>
           <tr><td>Cardiometabolic risk at same BMI</td><td>Lower than same-BMI men</td><td>Approaches or equals that of men</td></tr>
         </tbody>
       </table>
       </div>
-      <p>For postmenopausal women, waist circumference above 88 cm (35 inches) is a more clinically meaningful risk signal than BMI alone. Resistance training and adequate protein intake are the primary tools for preserving muscle and bone through the menopausal transition.</p>
-
+      <p>What this table makes clear is that a fixed <a href="/glossary/bmi">BMI number</a> can represent dramatically different metabolic situations at different ages.</p>
+      <p>Body composition research shows that postmenopausal women at BMI 24 can carry more visceral fat than pre-menopausal women at BMI 28 - the standard chart says the older woman is healthier; the visceral fat data says otherwise.</p>
+      <p>This is why waist circumference is not a nice-to-have addition after menopause; it is the primary signal, with BMI playing a supporting role.</p>
+      <p>For postmenopausal women, waist circumference above 88 cm (35 inches) is a more clinically meaningful risk signal than BMI alone.</p>
+      <p>Resistance training and adequate protein intake are the primary tools for preserving muscle and bone through the menopausal transition.</p>
+      <h3>BMI for women over 50</h3>
+      <p>Women in their 50s are typically in perimenopause or early post-menopause - the period of most rapid body composition change. The standard BMI categories apply, but two adjustments in how you interpret the number matter most at this age.</p>
+      <p>First, waist circumference becomes a more reliable signal than BMI as fat redistributes to the abdomen. A stable BMI through this decade often masks rising visceral fat.</p>
+      <p>Second, some evidence suggests a BMI of 25-27 may be associated with better outcomes in women over 60 than the classic 18.5-24.9 target, because higher weight provides a buffer against bone and muscle loss.</p>
+      <p>A BMI below 22 in this decade warrants investigation for frailty risk, regardless of how healthy it looks on a standard chart.</p>
+      <h3>Female BMI and hormone replacement therapy (HRT)</h3>
+      <p><a href="/glossary/hormone-replacement-therapy">Hormone replacement therapy</a> (HRT) does not change the BMI formula or its thresholds, but it does affect how body composition changes after menopause.</p>
+      <p>Estrogen-containing HRT tends to slow visceral fat accumulation and preserve lean muscle mass - the two body composition shifts that make menopause metabolically harmful.</p>
+      <p>A postmenopausal woman on HRT may have a more favorable body composition at the same BMI than an age-matched woman who is not on HRT.</p>
+      <p>Some studies report modest weight change (1-2 kg) in the first year of certain HRT regimens, primarily from fluid retention rather than fat gain. If your BMI rises slightly after starting HRT, waist circumference is a more useful check than BMI alone.</p>
+      <p>A stable or declining waist alongside a slightly higher BMI is generally a favorable signal, not a cause for concern.</p>
       <h2 id="normal-weight-obesity">Normal weight obesity in women</h2>
-      <p>Normal weight obesity (NWO) describes a condition where a person has a BMI in the Normal weight range (18.5–24.9) but a body fat percentage that would be classified as obese - typically above 30% in women. It is more common in women than men, and particularly prevalent in sedentary women who have never built meaningful muscle mass.</p>
-
+      <p><a href="/glossary/normal-weight-obesity">Normal weight obesity (NWO)</a> describes a condition where a person has a BMI in the normal weight range (18.5–24.9) but a body fat percentage that would be classified as obese - typically above 30% in women. It is more common in women than men, and particularly prevalent in sedentary women who have never built meaningful muscle mass.</p>
       <h3>Why NWO happens</h3>
-      <p>BMI misses NWO because it cannot distinguish fat from muscle. A sedentary woman with very little muscle mass may weigh a normal amount for her height but have high body fat, particularly if that fat is concentrated in the abdomen. The classic NWO profile is a woman who has never exercised regularly, has low muscle mass, and carries most of her weight as fat - with a BMI of, say, 22, but 32–35% body fat.</p>
-
-      <h3>Health risks of NWO</h3>
-      <p>Research published in the <em>European Heart Journal</em> found that women with NWO had significantly elevated rates of metabolic syndrome, insulin resistance, dyslipidaemia, and cardiovascular events - comparable to those found in overweight and obese individuals - despite normal BMI readings. In one large study, NWO was present in approximately <strong>30% of women with normal BMI</strong>, making it far from a fringe condition.</p>
-
+      <p>BMI misses NWO because it cannot distinguish fat from muscle. A sedentary woman with very little muscle mass may weigh a normal amount for her height but have high body fat, particularly if that fat is concentrated in the abdomen.</p>
+      <p>The classic NWO profile is a woman who has never exercised regularly, has low muscle mass, and carries most of her weight as fat - with a BMI of, say, 22, but 32–35% body fat.</p>
+      <h3>Health risks of Normal Weight Obesity</h3>
+      <p>Research published in the <a href="https://academic.oup.com/eurheartj/article-abstract/31/6/737/418220" target="_blank" rel="noopener noreferrer">European Heart Journal</a> found that women with NWO had significantly elevated rates of metabolic syndrome, insulin resistance, dyslipidaemia, and cardiovascular events - comparable to those found in overweight and obese individuals - despite normal BMI readings.</p>
+      <p>In one large study, NWO was present in approximately 30% of women with normal BMI, making it far from a fringe condition.</p>
       <h3>How to screen for NWO</h3>
-      <p>Waist circumference is the most accessible screening tool. A waist above 80 cm (31.5 in) in a woman with Normal BMI warrants clinical attention. Body fat percentage measurement (via DEXA scan or bioelectrical impedance analysis) provides the most definitive answer. If you are sedentary, have little muscle, and carry weight around the abdomen despite a Normal BMI, discuss NWO screening with your healthcare provider.</p>
-
+      <p>Waist circumference is the most accessible screening tool. A waist above 80 cm (31.5 in) in a woman with normal BMI warrants clinical attention. Body fat percentage measurement (via DEXA scan or <a href="/glossary/bioelectrical-impedance-analysis">bioelectrical impedance analysis</a>) provides the most definitive answer.</p>
+      <p>If you are sedentary, have little muscle, and carry weight around the abdomen despite a normal BMI, discuss NWO screening with your healthcare provider.</p>
       <h2 id="better-metrics">Better metrics for women alongside BMI</h2>
       <p>BMI is a useful first screen, but women face specific limitations in how well it reflects actual health risk. These complementary measures, used alongside BMI, provide a substantially more complete picture:</p>
       <div class="responsive-table">
@@ -375,7 +447,6 @@ const schema = [
       </table>
       </div>
       <p>For most pre-menopausal women, BMI combined with waist circumference provides adequate screening. For postmenopausal women, or those with low muscle mass, body fat percentage provides the most complete picture.</p>
-
       <h3>How to measure waist circumference correctly</h3>
       <ol>
         <li>Stand upright with your feet shoulder-width apart.</li>
@@ -383,32 +454,32 @@ const schema = [
         <li>Measure at the level of your navel with a flexible, non-stretch tape measure, keeping it parallel to the floor.</li>
         <li>The tape should be snug but not compressing the skin.</li>
       </ol>
-
-      <h2 id="faq">FAQs</h2>
-
+      <h2 id="faq">FAQs for female Body Mass Index</h2>
       <h3>What is a healthy BMI for women?</h3>
       <p>18.5 to 24.9 - the same range that applies to all adults under WHO guidelines. The average American woman has a BMI of approximately 29.6, placing her in the Overweight category. Women naturally carry more body fat than men at the same BMI, which is physiologically normal. For women of Asian descent, some guidelines use a lower threshold of 23.0 for overweight risk.</p>
-
       <h3>What is the average BMI for an American woman?</h3>
       <p>Approximately 29.6, based on CDC NCHS data. The average US woman is in the Overweight category, with an average weight of roughly 77 kg (170 lbs) and height of 162 cm (5'4").</p>
-
       <h3>Is BMI different for women?</h3>
       <p>The formula and thresholds are identical. However, because women have more essential fat and less muscle than men, the same BMI number corresponds to a higher body fat percentage in women. Some researchers argue for sex-specific thresholds, but standard clinical guidelines use the same cutoffs for both sexes.</p>
-
       <h3>Why does menopause make BMI less useful?</h3>
-      <p>After menopause, falling oestrogen causes fat to shift from the hips and thighs to the abdomen, increasing visceral fat even when total weight - and therefore BMI - stays constant. A postmenopausal woman can have a Normal BMI while carrying substantially more metabolically dangerous abdominal fat than she did before menopause. Waist circumference is a better companion measure in this group.</p>
-
+      <p>After menopause, falling estrogen causes fat to shift from the hips and thighs to the abdomen, increasing visceral fat even when total weight - and therefore BMI - stays constant. A postmenopausal woman can have a Normal BMI while carrying substantially more metabolically dangerous abdominal fat than she did before menopause. Waist circumference is a better companion measure in this group.</p>
+      <h3>What is a healthy BMI for women over 50?</h3>
+      <p>The standard range (18.5-24.9) applies, but women in their 50s are often in perimenopause or early post-menopause - the period of fastest body composition change. At this age, waist circumference is at least as important as BMI: above 80 cm signals elevated cardiometabolic risk even within a normal BMI. A BMI below 22 in this decade may indicate frailty risk; a BMI of 25-27 may provide a protective buffer against bone and muscle loss as estrogen declines.</p>
       <h3>What BMI is healthy for women over 60?</h3>
       <p>The standard healthy range (18.5–24.9) applies, but some research suggests that a BMI of 25–27 may be associated with better survival outcomes in women over 65, offering a buffer against frailty and osteoporosis. A BMI below 22 in this age group may indicate frailty risk. Muscle-preserving exercise becomes particularly important in this group.</p>
-
+      <h3>Does hormone replacement therapy (HRT) affect BMI?</h3>
+      <p>HRT does not change BMI thresholds or targets. It can cause a modest weight change of 1-2 kg in the first year - mainly fluid retention, not fat gain. Estrogen-containing HRT tends to slow visceral fat accumulation and preserve muscle mass after menopause, so a woman on HRT may have a more favorable body composition at the same BMI than one who is not. If your BMI rises slightly after starting HRT, check waist circumference rather than focusing on the BMI number alone.</p>
       <h3>Can I have a normal BMI but still be "overfat"?</h3>
       <p>Yes. Normal weight obesity (NWO) affects roughly 30% of women with a Normal BMI. It occurs when body fat is high (above 30%) but muscle mass is low, keeping total weight within the normal range. NWO carries similar metabolic risks to clinical obesity. Waist circumference above 80 cm with a Normal BMI is a key warning sign.</p>
-
       <h3>What waist size is healthy for a woman?</h3>
       <p>Below 80 cm (31.5 in) is low risk. Above 88 cm (34.6 in) is high risk for cardiometabolic disease. For women of South or East Asian descent, above 80 cm is already high risk. Measure at navel level after a normal exhale.</p>
-
       <h3>Is BMI used during pregnancy?</h3>
       <p>Pre-pregnancy BMI is used to determine appropriate gestational weight gain targets. After the first trimester, BMI is not used to classify weight status - expected weight gain makes the number uninterpretable. See the <a href="/health/bmi-calculator/pregnancy">BMI during pregnancy calculator</a> for gestational guidance.</p>
+      <QuizBlock
+        topic="BMI for women"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/bmi-calculator/women"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -420,11 +491,7 @@ const schema = [
         { path: '/health/bmi-calculator/kids' },
         { path: '/health/bmi-calculator/teens' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/health/bmi-calculator/women" />
-
     </div>
   </div>
-
 </CalculatorLayout>
-

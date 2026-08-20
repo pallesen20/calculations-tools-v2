@@ -2957,6 +2957,183 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'normal-weight-obesity': {
+    definition: [
+      'Normal weight obesity (NWO) is a clinical condition in which a person\'s BMI falls within the normal range (18.5-24.9) while their body fat percentage is elevated to levels associated with obesity - typically above 30% in women and above 25% in men. BMI measures weight relative to height, not fat relative to lean tissue, so a person with very low muscle mass can carry substantial fat while remaining within a normal BMI range. Research published in the European Heart Journal found NWO present in approximately 30% of women with normal BMI, making it common rather than exceptional.',
+      'NWO typically develops through a combination of low muscle mass and elevated fat mass, most often in sedentary adults who have never built meaningful lean tissue. The classic profile is a person who weighs a normal amount for their height but has little muscle - resulting in a high fat-to-muscle ratio that BMI cannot detect. Fat in NWO tends to concentrate in the abdomen, meaning visceral fat accumulation can reach clinically significant levels even at a normal total weight.',
+      'The metabolic consequences of NWO are equivalent to those of standard obesity. Studies associate NWO with insulin resistance, elevated triglycerides, reduced HDL cholesterol, hypertension, and increased cardiovascular risk - the same cluster defining metabolic syndrome. This means a person with NWO faces comparable health risks to someone with a BMI of 30+, despite appearing healthy by standard weight-based screening.',
+    ],
+    beginnerExplain: [
+      'Imagine two backpacks that weigh exactly the same. One is packed with textbooks (dense, compact - like muscle). The other is stuffed with foam packing material (light and voluminous - like fat). Both register the same number on a luggage scale, but the foam backpack is taking up far more space and putting far more stress on the seams. BMI is the luggage scale. NWO is what happens when the backpack is mostly foam.',
+      'The most accessible check is waist circumference. A waist above 80 cm (31.5 inches) in a woman with a normal BMI is a warning sign worth investigating, even if the scale looks fine. Body fat percentage measurement - via DEXA scan or bioelectrical impedance - gives the definitive answer. A reading above 30% in a woman with a normal BMI confirms NWO.',
+    ],
+    whenToUse: 'Use NWO when explaining why BMI alone is insufficient for health screening in sedentary adults, postmenopausal women, and older individuals where muscle loss raises the fat-to-muscle ratio without changing total weight. It is most relevant for people with a BMI of 20-24.9 who are sedentary, have never trained regularly, or have lost significant muscle with age. For these groups, waist circumference and body fat percentage provide critical context that BMI cannot.',
+    examples: {
+      headers: ['Profile', 'BMI', 'Body fat %', 'Waist circumference', 'Metabolic risk'],
+      rows: [
+        ['Active woman, normal composition', '22', '22%', '74 cm (29 in)', 'Low'],
+        ['Sedentary woman, normal weight obesity', '22', '33%', '81 cm (32 in)', 'Elevated'],
+        ['Clinical obesity', '31', '40%', '95 cm (37 in)', 'High'],
+      ],
+    },
+    pitfalls: 'The most common misunderstanding is that NWO is treated by weight loss. Since BMI is already normal, further calorie restriction risks losing lean mass and worsening the fat-to-muscle ratio. The correct intervention is resistance training to build muscle and improve body composition, combined with moderate calorie management if visceral fat is elevated. A second pitfall is assuming a waist below the high-risk threshold (88 cm in women, 102 cm in men) rules out NWO - a waist of 82-87 cm can still indicate elevated visceral fat in smaller-framed women. Body fat percentage measurement is more definitive than waist circumference alone.',
+    faqs: [
+      { q: 'What body fat percentage defines normal weight obesity in women?', a: 'NWO in women is generally defined as a body fat percentage above 30% with a BMI in the normal range (18.5-24.9). Some researchers use 35% as a stricter cutoff, but most clinical studies use 30% as the threshold where metabolic risk increases significantly. The threshold for men is lower: above 25% body fat with a normal BMI.' },
+      { q: 'How common is normal weight obesity?', a: 'Research finds NWO in roughly 30% of adults with a normal BMI in developed countries - making it common, not rare. The condition is more prevalent in women than men, in sedentary individuals, and in older adults, particularly postmenopausal women where decades of muscle loss raise the fat-to-muscle ratio without changing body weight.' },
+      { q: 'Does normal weight obesity carry the same health risks as clinical obesity?', a: 'Research consistently associates NWO with the same metabolic syndrome markers as clinical obesity: insulin resistance, elevated triglycerides, low HDL, hypertension, and elevated cardiovascular risk. The risks are driven primarily by visceral fat accumulation, not total body weight, which is why NWO is clinically significant despite a normal BMI reading.' },
+      { q: 'What is the most practical way to screen for NWO without clinical testing?', a: 'Waist circumference is the most accessible tool. In women, a waist above 80 cm (31.5 inches) with a normal BMI is a warning sign warranting further assessment. Body fat percentage via bioelectrical impedance analysis (BIA scales or DEXA scan) provides the definitive measurement. A reading above 30% body fat in a woman with a normal BMI confirms NWO.' },
+    ],
+    quiz: {
+      topic: 'normal weight obesity',
+      questions: [
+        {
+          q: 'What is the defining characteristic of normal weight obesity (NWO)?',
+          options: [
+            'A BMI above 25 combined with a body fat percentage below 20%',
+            'A BMI in the normal range (18.5-24.9) combined with a body fat percentage elevated to obesity levels',
+            'A body fat percentage above 20% in any adult regardless of BMI',
+            'A normal body fat percentage combined with a BMI above 30',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'NWO is defined as a BMI in the normal range (18.5-24.9) while body fat percentage is elevated to obesity levels - above 30% in women and above 25% in men. BMI falls within healthy parameters, but body composition tells a different story.',
+        },
+        {
+          q: 'What body fat percentage threshold generally defines NWO in women?',
+          options: [
+            'Above 20%',
+            'Above 25%',
+            'Above 30%',
+            'Above 40%',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states NWO in women is generally defined as a body fat percentage above 30% with a BMI in the normal range. Some researchers use 35% as a stricter cutoff, but 30% is the most widely used clinical threshold. The threshold for men is lower at above 25%.',
+        },
+        {
+          q: 'Why does BMI fail to detect normal weight obesity?',
+          options: [
+            'BMI uses an outdated formula that underestimates weight in modern populations',
+            'BMI cannot distinguish fat tissue from lean tissue, so a person with low muscle mass can carry high body fat at a normal total weight',
+            'BMI is only accurate for men and systematically underestimates body fat in women',
+            'BMI measurements are unreliable because body weight fluctuates by 1-2 kg throughout the day',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'BMI measures weight relative to height, not fat relative to lean tissue. A person with very low muscle mass can carry substantial fat while remaining within a normal BMI range. This is the core mechanism behind NWO - the fat-to-muscle ratio is the variable BMI cannot detect.',
+        },
+        {
+          q: 'Approximately how common is NWO in adults with a normal BMI in developed countries?',
+          options: [
+            'About 5%',
+            'About 15%',
+            'About 30%',
+            'About 50%',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Research - including data published in the European Heart Journal - consistently finds NWO in roughly 30% of adults with a normal BMI. The condition is common rather than exceptional, and is one reason BMI alone is considered insufficient for comprehensive health screening.',
+        },
+        {
+          q: 'What does the pitfalls section identify as the most common NWO treatment mistake?',
+          options: [
+            'Taking hormonal supplements to raise estrogen levels',
+            'Assuming waist circumference below 88 cm fully rules out NWO',
+            'Treating NWO with weight loss, which risks losing lean mass and worsening the fat-to-muscle ratio',
+            'Relying on BMI measurements taken in the morning vs evening',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section warns that since BMI is already normal, further calorie restriction risks losing lean mass and worsening the fat-to-muscle ratio. The correct intervention is resistance training to build muscle and improve body composition - not weight loss. The goal is to change body composition, not reduce the number on the scale.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'hormone-replacement-therapy': {
+    definition: [
+      'Hormone replacement therapy (HRT) is a medical treatment that restores hormones - primarily estrogen, and in most cases progesterone as well - to reduce the physiological consequences of menopause. At menopause, the ovaries sharply reduce estrogen production, triggering hot flashes, sleep disruption, vaginal atrophy, and accelerated bone loss. For women without specific contraindications, HRT is the recommended treatment in most international guidelines for women below age 60 or within 10 years of menopause onset.',
+      'The body composition effects of HRT are distinct from its symptomatic effects. Estrogen plays a direct role in fat storage location - directing fat toward subcutaneous (hip and thigh) depots in pre-menopausal women and away from visceral depots. After menopause, the loss of this estrogen signal causes fat to redistribute abdominally. Estrogen-containing HRT partially restores this signal, slowing visceral fat accumulation and supporting lean muscle mass preservation at a given body weight. Two women with identical BMIs may have meaningfully different body compositions depending on their HRT status.',
+      'HRT comes in several formulations. Combined HRT includes both estrogen and progesterone (or a synthetic progestogen) and is prescribed to women who have not had a hysterectomy, to protect the uterine lining from unopposed estrogen. Estrogen-only HRT is used by women who have had a hysterectomy. Delivery methods include oral tablets, transdermal patches and gels, vaginal preparations, and implants - and the type, dose, and route of delivery affect both the clinical benefits and the risk profile.',
+    ],
+    beginnerExplain: [
+      'Think of estrogen as a traffic director for fat storage. Before menopause, it routes most fat to the hips, thighs, and breasts - depots that are metabolically quiet. After menopause, without that director, fat increasingly parks in the abdomen instead, where it is metabolically active and harmful. HRT is like reinstating the traffic director at lower authority - it does not fully restore pre-menopausal fat routing, but it slows the abdominal shift considerably.',
+      'The practical BMI implication: a woman on HRT may gain a kilogram or two in the first year - mostly fluid - which can nudge BMI upward slightly. But if waist circumference stays stable or declines during that period, the body composition picture is actually improving. BMI alone misses this distinction entirely.',
+    ],
+    whenToUse: 'Reference HRT when explaining body composition changes after menopause, interpreting BMI in postmenopausal women, or discussing why two women at the same BMI can have different cardiometabolic risk profiles. It is relevant whenever waist circumference or visceral fat is being discussed in the context of the menopausal transition, and when explaining why BMI is a less reliable health indicator for postmenopausal women.',
+    examples: {
+      headers: ['HRT type', 'Typical users', 'Body composition effect'],
+      rows: [
+        ['Combined HRT (estrogen + progesterone)', 'Women with a uterus', 'Slows visceral fat gain; modest fluid retention initially'],
+        ['Estrogen-only HRT', 'Women post-hysterectomy', 'Slows visceral fat gain; supports lean mass preservation'],
+        ['Topical / vaginal estrogen', 'Local symptom relief only', 'Minimal systemic body composition effect'],
+        ['Low-dose testosterone HRT', 'Women with low libido or fatigue', 'May support lean mass; used off-label in some protocols'],
+      ],
+    },
+    pitfalls: 'The most common misunderstanding about HRT and weight is that it causes fat gain. Most controlled studies find no significant difference in total fat mass between HRT users and non-users when controlling for other factors. The 1-2 kg weight change some women notice after starting HRT is primarily water retention, not fat. A second pitfall is using BMI alone to monitor body composition response to HRT - a slight BMI rise may reflect fluid retention while visceral fat is actually declining. Waist circumference is the more reliable monitoring tool during HRT.',
+    faqs: [
+      { q: 'Does HRT cause weight gain?', a: 'Most controlled studies find no significant difference in fat mass between HRT users and non-users. Some women notice 1-2 kg weight change in the first year, primarily from fluid retention rather than fat gain. Estrogen-containing HRT may actually reduce the visceral fat accumulation that typically accompanies menopause, producing a more favorable body composition at the same total weight.' },
+      { q: 'Does estrogen in HRT affect where body fat is stored?', a: 'Yes. Estrogen directs fat toward subcutaneous hip and thigh depots rather than visceral abdominal ones. After menopause, losing this signal causes fat to shift abdominally. Estrogen-containing HRT partially restores this, slowing visceral fat accumulation relative to non-HRT users at the same body weight - meaning two women at identical BMIs can have different visceral fat levels depending on HRT status.' },
+      { q: 'What is the difference between combined HRT and estrogen-only HRT?', a: 'Combined HRT includes estrogen and progesterone and is prescribed to women who have not had a hysterectomy - progesterone protects the uterine lining from unopposed estrogen. Estrogen-only HRT is used by women post-hysterectomy who have no uterine lining to protect. Both forms contain estrogen, so both have similar body composition effects on visceral fat and lean mass.' },
+      { q: 'How does HRT affect BMI interpretation in postmenopausal women?', a: 'HRT does not change the BMI formula or thresholds. However, it changes how body composition relates to BMI: a woman on HRT may have less visceral fat at the same BMI than one not on HRT. This makes BMI an even less reliable indicator of metabolic risk for postmenopausal women on HRT. Waist circumference is the more meaningful companion measure in this group.' },
+    ],
+    quiz: {
+      topic: 'hormone replacement therapy',
+      questions: [
+        {
+          q: 'What hormones does HRT primarily supplement in menopausal women?',
+          options: [
+            'Testosterone and cortisol',
+            'Insulin and glucagon',
+            'Estrogen, and progesterone in most cases',
+            'FSH and LH (gonadotropins)',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'HRT restores primarily estrogen, and progesterone for women with a uterus, to reduce the physiological consequences of menopause. Estrogen is the principal hormone responsible for both symptom relief and the body composition effects described in the definition.',
+        },
+        {
+          q: 'How does estrogen in HRT affect fat distribution after menopause?',
+          options: [
+            'It increases total fat mass by stimulating fat cell growth throughout the body',
+            'It has no meaningful effect on fat storage location, only on total fat quantity',
+            'It routes fat away from visceral abdominal depots toward subcutaneous hip and thigh depots, slowing abdominal fat accumulation',
+            'It converts existing visceral fat directly into subcutaneous fat within three months',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Estrogen plays a direct role in directing fat to subcutaneous (hip and thigh) rather than visceral (abdominal) depots. After menopause, without this signal, fat shifts abdominally. HRT partially restores the signal, slowing visceral fat accumulation relative to non-users at the same body weight.',
+        },
+        {
+          q: 'For which group of women is combined HRT (estrogen + progesterone) recommended over estrogen-only HRT?',
+          options: [
+            'Women over age 65 regardless of surgical history',
+            'Women who have not had a hysterectomy, to protect the uterine lining from unopposed estrogen',
+            'Women with a history of cardiovascular disease',
+            'Women within 5 years of menopause onset only',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Combined HRT adds progesterone to protect the uterine lining from the proliferative effects of unopposed estrogen. Women who have had a hysterectomy have no uterine lining to protect and can use estrogen-only HRT. This distinction is the primary clinical driver of which formulation is prescribed.',
+        },
+        {
+          q: 'According to the pitfalls section, what does the 1-2 kg weight change some women notice after starting HRT most likely represent?',
+          options: [
+            'Increased fat mass from progesterone stimulating fat cell growth',
+            'Lean muscle gain from the anabolic effects of estrogen on skeletal muscle',
+            'Water retention (fluid) - controlled studies show no significant difference in fat mass between HRT and non-HRT users',
+            'Bone density increases from estrogens protective effect on the skeleton',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section states most studies find no significant difference in fat mass between HRT users and non-users. The modest weight change some women experience is primarily water retention, not fat gain. This is why BMI alone is unreliable for assessing body composition response to HRT.',
+        },
+        {
+          q: 'What measurement is described as more reliable than BMI for monitoring body composition in women on HRT?',
+          options: [
+            'Body weight measured at the same time each morning',
+            'Waist circumference',
+            'BMI combined with a visual body shape assessment',
+            'Total calorie intake tracked daily',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section explicitly identifies waist circumference as the more reliable monitoring tool during HRT. A slight BMI rise may reflect fluid retention while visceral fat is actually declining - waist circumference captures this distinction that BMI cannot.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'waist-circumference': {
     definition: [
       'Waist circumference is a direct measure of abdominal adiposity - the accumulation of fat in the trunk region. It is measured at the narrowest point of the torso, typically at or just above the navel, and is a strong independent predictor of metabolic disease risk beyond what BMI captures.',

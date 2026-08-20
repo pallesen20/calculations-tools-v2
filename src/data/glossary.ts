@@ -712,7 +712,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Health',
     shortDef: 'Body fat percentage is the proportion of total body weight that consists of fat tissue. It is a more accurate health marker than BMI because it distinguishes fat mass from lean mass.',
     formula: '$$\\text{Body Fat \\%} = \\frac{\\text{Fat Mass}}{\\text{Total Body Weight}} \\times 100$$',
-    relatedTools: ['/health/body-fat-calculator', '/health/ffmi-calculator', '/health/lean-body-mass-calculator'],
+    relatedTools: ['/health/body-fat-calculator', '/health/ffmi-calculator', '/health/lean-body-mass-calculator', '/health/bmi-calculator/women', '/health/bmi-calculator/men'],
     relatedTerms: ['bmi', 'lean-body-mass', 'body-composition', 'ffmi', 'bioelectrical-impedance-analysis'],
   },
   {
@@ -874,6 +874,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['bmi', 'body-fat-percentage', 'lean-body-mass', 'ffmi', 'waist-circumference'],
   },
   {
+    slug: 'normal-weight-obesity',
+    term: 'Normal Weight Obesity (NWO)',
+    letter: 'N',
+    category: 'Body Composition',
+    siteCategory: 'Health',
+    shortDef: 'Normal weight obesity (NWO) is a condition where BMI falls in the normal range (18.5-24.9) but body fat percentage is clinically elevated - above 30% in women, above 25% in men. Because BMI cannot distinguish fat from muscle, a person with low muscle mass can carry obesity-level body fat at a normal weight.',
+    relatedTools: ['/health/bmi-calculator/women', '/health/bmi-calculator/men', '/health/body-fat-calculator'],
+    relatedTerms: ['bmi', 'body-fat-percentage', 'visceral-fat', 'waist-circumference', 'body-composition'],
+  },
+  {
     slug: 'waist-circumference',
     term: 'Waist Circumference',
     letter: 'W',
@@ -996,6 +1006,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'A heffingskorting is a Dutch tax credit that reduces the income tax owed directly - not the taxable income. The two main credits are the algemene heffingskorting (general credit, max €3,115) and the arbeidskorting (employment credit, max €5,685). Both phase out at higher incomes.',
     relatedTools: ['/tax/income-tax-calculator/eu/netherlands'],
     relatedTerms: ['box-1-income-tax', 'arbeidskorting', 'net-pay'],
+  },
+  {
+    slug: 'hormone-replacement-therapy',
+    term: 'Hormone Replacement Therapy (HRT)',
+    letter: 'H',
+    category: 'Hormones & Metabolism',
+    siteCategory: 'Health',
+    shortDef: 'Hormone replacement therapy (HRT) supplements declining estrogen and progesterone to reduce menopausal symptoms and slow post-menopausal body composition changes. Estrogen-containing HRT tends to reduce visceral fat accumulation and preserve lean muscle mass, meaning two women at the same BMI may have different metabolic risk profiles depending on their HRT status.',
+    relatedTools: ['/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/lean-body-mass-calculator'],
+    relatedTerms: ['estrogen', 'visceral-fat', 'bmi', 'body-fat-percentage', 'normal-weight-obesity'],
   },
   {
     slug: 'hst',
