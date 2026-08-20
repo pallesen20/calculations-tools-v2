@@ -1,0 +1,163 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Menopause BMI & Cardiometabolic Risk Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+
+      <div class="calculator-header">
+        <h2>Menopause Cardiometabolic Risk Calculator</h2>
+        <p>BMI, waist circumference, HRT status, and menopause duration</p>
+      </div>
+
+      <div class="bmi-unit-toggle">
+        <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
+        <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
+      </div>
+
+      <p class="meno-section-label">BMI inputs</p>
+
+      <div id="meno-metric" class="bmi-inputs active">
+        <div class="bmi-field">
+          <label class="bmi-label" for="meno-weight-kg">Weight</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="meno-weight-kg" class="bmi-input" placeholder="65" />
+            <span class="bmi-unit-tag">kg</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="meno-height-cm">Height</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="meno-height-cm" class="bmi-input" placeholder="163" />
+            <span class="bmi-unit-tag">cm</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="meno-imperial" class="bmi-inputs">
+        <div class="bmi-field">
+          <label class="bmi-label" for="meno-weight-lb">Weight</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="meno-weight-lb" class="bmi-input" placeholder="143" />
+            <span class="bmi-unit-tag">lbs</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">Height</label>
+          <div class="bmi-ftin">
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="meno-height-ft" class="bmi-input" placeholder="5" />
+              <span class="bmi-unit-tag">ft</span>
+            </div>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="meno-height-in" class="bmi-input" placeholder="4" />
+              <span class="bmi-unit-tag">in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="meno-section-label">Menopause factors</p>
+
+      <div class="meno-fields-block">
+        <div class="bmi-field" data-unit-show="metric">
+          <label class="bmi-label" for="meno-waist-cm">Waist circumference</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="meno-waist-cm" class="bmi-input" placeholder="82" />
+            <span class="bmi-unit-tag">cm</span>
+          </div>
+        </div>
+        <div class="bmi-field" data-unit-show="imperial" style="display:none">
+          <label class="bmi-label" for="meno-waist-in">Waist circumference</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="meno-waist-in" class="bmi-input" placeholder="32" />
+            <span class="bmi-unit-tag">in</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="meno-years">Years since last period</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="meno-years" class="bmi-input" placeholder="5" />
+            <span class="bmi-unit-tag">yrs</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">HRT status</label>
+          <div class="bmi-unit-toggle meno-hrt-toggle">
+            <button class="bmi-unit-btn meno-hrt-btn active" data-hrt="no">Not on HRT</button>
+            <button class="bmi-unit-btn meno-hrt-btn" data-hrt="yes">Currently on HRT</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="meno-result" class="lbm-result hidden">
+        <div class="meno-risk-primary">
+          <span id="meno-composite-risk" class="meno-risk-label">-</span>
+        </div>
+        <div class="lbm-primary-lbl">Cardiometabolic Risk</div>
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="meno-bmi-value">-</div>
+            <div class="lbm-card-lbl">BMI</div>
+            <span id="meno-bmi-category" class="bmi-category-badge">-</span>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="meno-waist-reading">-</div>
+            <div class="lbm-card-lbl">Waist</div>
+            <span id="meno-waist-risk" class="lbm-card-badge">-</span>
+          </div>
+        </div>
+        <div class="lbm-formula-row meno-guidance" id="meno-guidance"></div>
+      </div>
+
+      <p class="embed-attribution">Powered by <a href="https://calculations.tools/health/bmi-calculator/menopause" target="_blank" rel="noopener noreferrer">calculations.tools</a></p>
+    </div>
+  </section>
+
+  <script src="/js/bmi-calculator-menopause.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .meno-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 0.5rem;
+    display: block;
+  }
+  .meno-fields-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .meno-hrt-toggle { margin-bottom: 0; }
+  .meno-risk-primary {
+    display: flex;
+    justify-content: center;
+    padding: 1.25rem 0 0.25rem;
+  }
+  .meno-risk-label {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .meno-risk-low      { color: rgb(34, 197, 94);  }
+  .meno-risk-moderate { color: rgb(234, 179, 8);  }
+  .meno-risk-elevated { color: rgb(249, 115, 22); }
+  .meno-risk-high     { color: rgb(239, 68, 68);  }
+  .meno-waist-low      { --_c: 34, 197, 94;  }
+  .meno-waist-moderate { --_c: 234, 179, 8;  }
+  .meno-waist-high     { --_c: 239, 68, 68;  }
+  .meno-guidance { color: rgba(255,255,255,0.55); font-size: 0.83rem; }
+  .embed-attribution {
+    font-size: 0.75rem;
+    text-align: center;
+    color: rgba(255,255,255,0.35);
+    margin-top: 1rem;
+  }
+  .embed-attribution a { color: rgba(255,255,255,0.5); }
+</style>

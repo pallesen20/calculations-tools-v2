@@ -595,6 +595,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['percentage-change', 'percentage-difference', 'percentage'],
   },
   {
+    slug: 'perimenopause',
+    term: 'Perimenopause',
+    letter: 'P',
+    category: 'Hormones & Metabolism',
+    siteCategory: 'Health',
+    shortDef: 'Perimenopause is the transitional phase before menopause when ovarian function declines and estrogen levels become irregular. It typically begins in the mid-40s and lasts 4-8 years, during which BMI can remain stable while body fat redistributes and cardiometabolic risk begins to rise.',
+    relatedTools: ['/health/bmi-calculator/menopause', '/health/bmi-calculator/women', '/health/body-fat-calculator'],
+    relatedTerms: ['estrogen', 'hormone-replacement-therapy', 'visceral-fat', 'bmi', 'normal-weight-obesity'],
+  },
+  {
     slug: 'phi',
     term: 'Phi (φ)',
     letter: 'P',
@@ -691,7 +701,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Health',
     shortDef: 'BMI (Body Mass Index) is a weight-to-height ratio used to classify adults as underweight, normal weight, overweight, or obese. It is the most widely used population-level screening tool for weight status.',
     formula: '$$\\text{BMI} = \\frac{\\text{Weight (kg)}}{\\text{Height (m)}^2}$$',
-    relatedTools: ['/health/bmi-calculator', '/health/bmi-calculator/men', '/health/bmi-calculator/women'],
+    relatedTools: ['/health/bmi-calculator', '/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/bmi-calculator/menopause'],
     relatedTerms: ['body-fat-percentage', 'ideal-body-weight', 'body-composition', 'waist-circumference'],
   },
   {
@@ -850,7 +860,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Hormones & Metabolism',
     siteCategory: 'Health',
     shortDef: 'Estrogen is the primary female sex hormone, present in both sexes. In men, the main source is peripheral conversion of testosterone to estradiol by the aromatase enzyme in fat tissue. When body fat rises, aromatase activity increases, shifting the testosterone-to-estrogen balance and suppressing HPG-axis testosterone production.',
-    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator'],
+    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/bmi-calculator/menopause'],
     relatedTerms: ['testosterone', 'visceral-fat', 'bmi', 'body-fat-percentage', 'waist-circumference'],
   },
   {
@@ -860,7 +870,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Body Composition',
     siteCategory: 'Health',
     shortDef: 'Visceral fat is fat stored inside the abdominal cavity, surrounding the liver, pancreas, kidneys, and intestines. Unlike subcutaneous fat beneath the skin, visceral fat releases inflammatory cytokines and free fatty acids directly into the portal circulation, driving insulin resistance, metabolic syndrome, and cardiovascular disease.',
-    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/lean-body-mass-calculator'],
+    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/bmi-calculator/menopause'],
     relatedTerms: ['waist-circumference', 'bmi', 'body-fat-percentage', 'body-composition', 'testosterone'],
   },
   {
@@ -880,7 +890,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Body Composition',
     siteCategory: 'Health',
     shortDef: 'Normal weight obesity (NWO) is a condition where BMI falls in the normal range (18.5-24.9) but body fat percentage is clinically elevated - above 30% in women, above 25% in men. Because BMI cannot distinguish fat from muscle, a person with low muscle mass can carry obesity-level body fat at a normal weight.',
-    relatedTools: ['/health/bmi-calculator/women', '/health/bmi-calculator/men', '/health/body-fat-calculator'],
+    relatedTools: ['/health/bmi-calculator/women', '/health/bmi-calculator/men', '/health/body-fat-calculator', '/health/bmi-calculator/menopause'],
     relatedTerms: ['bmi', 'body-fat-percentage', 'visceral-fat', 'waist-circumference', 'body-composition'],
   },
   {
@@ -1014,7 +1024,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Hormones & Metabolism',
     siteCategory: 'Health',
     shortDef: 'Hormone replacement therapy (HRT) supplements declining estrogen and progesterone to reduce menopausal symptoms and slow post-menopausal body composition changes. Estrogen-containing HRT tends to reduce visceral fat accumulation and preserve lean muscle mass, meaning two women at the same BMI may have different metabolic risk profiles depending on their HRT status.',
-    relatedTools: ['/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/lean-body-mass-calculator'],
+    relatedTools: ['/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/bmi-calculator/menopause'],
     relatedTerms: ['estrogen', 'visceral-fat', 'bmi', 'body-fat-percentage', 'normal-weight-obesity'],
   },
   {

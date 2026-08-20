@@ -3045,6 +3045,64 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'perimenopause': {
+    definition: [
+      'Perimenopause is the transitional phase before menopause during which ovarian function declines and estrogen levels become irregular. It typically begins in the mid-40s and lasts 4-8 years, ending 12 months after the final menstrual period - the formal definition of menopause. The average age of menopause in the United States is 52, meaning many women experience perimenopause from their mid-40s onward.',
+      'The defining hormonal feature of perimenopause is fluctuating estrogen, not simply declining estrogen. Levels can swing between high and low within a single month, producing irregular cycles, hot flashes, and sleep disruption. From a body composition perspective, the first measurable changes - a slow drift toward abdominal fat storage and mild reductions in resting metabolism - begin before estrogen levels fall consistently. BMI may remain stable during perimenopause while body fat percentage and waist circumference gradually increase.',
+      'Perimenopause differs clinically from postmenopause in that the hormonal environment is volatile rather than consistently low. This makes it a window of opportunity for establishing lifestyle habits (resistance training, protein-adequate diet, waist circumference monitoring) that reduce the cardiometabolic impact of the full estrogen withdrawal that follows menopause.',
+    ],
+    beginnerExplain: [
+      'Think of perimenopause as a dimmer switch being turned down slowly - not a light being switched off. The ovaries produce less estrogen on average, but with irregular spikes. Some months feel normal; others bring hot flashes, mood changes, and disrupted sleep. This is distinct from menopause itself, where the dimmer is fully down and stays there.',
+      'From a health measurement standpoint, the key practical point is this: your BMI might not change during perimenopause, but your waist circumference might start creeping upward. That drift is worth monitoring - it signals that fat is beginning to redistribute toward the abdomen, which carries real cardiometabolic implications independent of total body weight.',
+    ],
+    whenToUse: 'Use this term when interpreting BMI or waist circumference in women aged 40-55 who are experiencing menstrual irregularity. Perimenopause complicates BMI interpretation because body composition can shift even when weight stays constant. Waist circumference is the most useful supplementary metric during this phase.',
+    examples: {
+      headers: ['Stage', 'Hormonal pattern', 'Typical BMI change', 'Body composition change', 'Key monitoring metric'],
+      rows: [
+        ['Premenopause (30s-early 40s)', 'Stable estrogen', 'Minimal', 'Gynoid fat pattern (hips/thighs)', 'BMI sufficient'],
+        ['Perimenopause (mid-40s to ~52)', 'Fluctuating estrogen', 'Minimal to moderate', 'Gradual shift toward abdominal fat', 'Waist circumference + BMI'],
+        ['Early postmenopause (0-5 yrs)', 'Low, stable estrogen', 'Modest gain common', 'Accelerated visceral fat shift', 'Waist circumference primary'],
+        ['Late postmenopause (10+ yrs)', 'Very low estrogen', 'Variable', 'Established android pattern', 'Waist + cardiometabolic risk composite'],
+      ],
+    },
+    pitfalls: 'The most common misunderstanding is treating perimenopause as synonymous with menopause. They are distinct phases with different hormonal profiles. During perimenopause, BMI can appear stable while body composition shifts meaningfully - so relying on BMI alone gives a false sense of security. Another common error is dismissing perimenopausal symptoms as normal aging without noting that lifestyle interventions (resistance training, protein intake) are substantially more effective during perimenopause than after menopause is established.',
+    faqs: [
+      { q: 'How long does perimenopause last?', a: 'Perimenopause typically lasts 4-8 years, though the range is wide (1-10+ years). It ends officially when 12 consecutive months have passed without a menstrual period. The final year before that 12-month mark is often the most symptomatic, with the most frequent hot flashes and the most irregular cycles.' },
+      { q: 'Can I still get pregnant during perimenopause?', a: 'Yes. Ovulation still occurs during perimenopause, though less predictably. Conception is possible until menopause is confirmed (12 months after the last period). Contraception remains important during perimenopause if pregnancy is not desired.' },
+      { q: 'Does perimenopause cause weight gain?', a: 'Perimenopause is associated with fat redistribution rather than large weight gain. The average weight gain during the menopausal transition is roughly 2-3 kg (4-6 lbs). More significant is the shift of fat from hips and thighs to the abdomen - a change that can occur even without meaningful changes in BMI.' },
+      { q: 'Is HRT appropriate during perimenopause?', a: 'Yes. Hormone replacement therapy can be appropriate during perimenopause to manage hot flashes, sleep disruption, and early bone loss. Most international guidelines support HRT for perimenopausal women without contraindications, particularly those below age 60. Discuss timing and type with a clinician.' },
+    ],
+    quiz: {
+      topic: 'perimenopause',
+      questions: [
+        {
+          q: 'When does perimenopause officially end?',
+          options: ['When estrogen levels fall below a specific lab threshold', 'When 12 consecutive months have passed without a menstrual period', 'When hot flashes stop', 'At the age of 52'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Perimenopause ends - and menopause begins - when 12 consecutive months have passed without a menstrual period. This is the clinical definition, regardless of estrogen levels or symptom status.',
+        },
+        {
+          q: 'Why might a woman\'s waist circumference increase during perimenopause even if her BMI stays constant?',
+          options: ['BMI formulas are inaccurate for women over 40', 'Declining and fluctuating estrogen begins shifting fat from hips and thighs toward the abdomen', 'Muscle mass increases with age, raising BMI while fat redistributes', 'Waist circumference and BMI are unrelated metrics'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Estrogen plays a direct role in fat distribution. As estrogen becomes irregular during perimenopause, the gynoid (hip and thigh) fat pattern gradually shifts toward android (abdominal) fat storage. BMI, which measures total weight, misses this redistribution entirely.',
+        },
+        {
+          q: 'What is the average age of menopause in the United States, according to this glossary entry?',
+          options: ['48', '50', '52', '55'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The entry cites the average age of menopause in the US as 52. Perimenopause typically begins in the mid-40s and lasts 4-8 years, so many women experience perimenopausal changes starting around age 44-48.',
+        },
+        {
+          q: 'Which is described as the most useful monitoring metric during perimenopause?',
+          options: ['BMI alone', 'Body weight on a scale', 'Waist circumference alongside BMI', 'Resting heart rate'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The entry states that waist circumference is the most useful supplementary metric during perimenopause, because body composition can shift (fat moving abdominally) even when BMI and scale weight remain stable. BMI alone gives a false sense of security during this phase.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'hormone-replacement-therapy': {
     definition: [
       'Hormone replacement therapy (HRT) is a medical treatment that restores hormones - primarily estrogen, and in most cases progesterone as well - to reduce the physiological consequences of menopause. At menopause, the ovaries sharply reduce estrogen production, triggering hot flashes, sleep disruption, vaginal atrophy, and accelerated bone loss. For women without specific contraindications, HRT is the recommended treatment in most international guidelines for women below age 60 or within 10 years of menopause onset.',

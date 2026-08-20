@@ -630,6 +630,16 @@ const entries: Entry[] = [
     short: 'BMI-for-age percentile, ages 13–19',
   },
   {
+    path: '/health/bmi-calculator/menopause',
+    title: 'Menopause BMI & Cardiometabolic Risk Calculator',
+    description: 'BMI calculator for menopausal women that combines BMI, waist circumference, HRT status, and years since menopause into a single cardiometabolic risk rating.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    lastmod: '2026-08-20',
+    icon: '🌡️',
+    short: 'BMI + waist + HRT + menopause stage',
+  },
+  {
     path: '/health/bmi-calculator/weight-loss',
     title: 'BMI Weight Loss Calculator - Target BMI & Weight to Lose',
     description: 'Calculate how much weight you need to lose to reach your target BMI. Get your target weight, estimated time at your chosen weekly pace, and estimated body fat at current and goal weight.',

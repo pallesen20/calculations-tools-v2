@@ -539,4 +539,18 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     proTipFix: 'the weight for each row should be whatever denominator was used when that percentage was calculated - the number of students, total marks available, or impression count. If the underlying count is the same for every group, use the simple average calculator instead',
   },
 
+  'bmi-calculator-menopause': {
+    hookProblem: 'know whether your weight, waist, and menopause history add up to real cardiometabolic risk',
+    character: 'Linda, a 57-year-old office manager 5 years past menopause',
+    exampleSetup: "She's 163 cm tall, weighs 68 kg - that's 5 feet 4 inches and 150 pounds - with a waist of 85 cm (33.5 inches), 5 years since menopause, and not currently on HRT",
+    formulaPlain: 'BMI from weight and height, plus a waist risk score, plus a years-since-menopause score, minus a half-point if on HRT - all combined into a single composite risk tier',
+    exampleWalkthrough: '68 divided by 1.63 squared gives a BMI of 25.6 - Overweight, scoring 1. Waist of 85 cm falls in the increased-risk tier, scoring 1. Five years since menopause scores 0.5. Not on HRT adds nothing. Total: 2.5',
+    exampleResult: 'Elevated Risk - one point away from High',
+    exampleImplication: 'a stable weight and borderline-normal BMI masked a meaningful risk profile driven by waist circumference and menopause duration - the composite view is what triggers action',
+    notableFeature: 'a two-column result showing BMI and waist risk side by side, followed by a large colored composite risk rating with a one-sentence clinical recommendation',
+    proTipMistake: 'leaving the years-since-menopause field at zero when you have been postmenopausal for years',
+    proTipFix: 'count back to your last menstrual period and enter the full number of years - even 8 or 10 years matters in the composite score, because visceral fat accumulation is progressive and not captured by BMI alone',
+    unitNote: 'If you prefer imperial, switch using the Metric / Imperial toggle - enter weight in pounds, height in feet and inches, and waist in inches. The risk calculation is identical.',
+  },
+
 };
