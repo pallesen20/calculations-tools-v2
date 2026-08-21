@@ -595,7 +595,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/bmi-calculator/pregnancy',
-    title: 'BMI Calculator During Pregnancy - Gestational Weight Gain by BMI',
+    title: 'Pregnancy BMI Calculator - Gestational Weight Gain by BMI',
     description: 'Calculate your pre-pregnancy BMI and get recommended gestational weight gain targets based on IOM 2009 guidelines. Covers weight gain by trimester, complications by BMI, and pre-conception guidance.',
     changefreq: 'weekly',
     icon: '🤰',

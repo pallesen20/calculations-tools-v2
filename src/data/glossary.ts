@@ -701,7 +701,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Health',
     shortDef: 'BMI (Body Mass Index) is a weight-to-height ratio used to classify adults as underweight, normal weight, overweight, or obese. It is the most widely used population-level screening tool for weight status.',
     formula: '$$\\text{BMI} = \\frac{\\text{Weight (kg)}}{\\text{Height (m)}^2}$$',
-    relatedTools: ['/health/bmi-calculator', '/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/bmi-calculator/menopause'],
+    relatedTools: ['/health/bmi-calculator', '/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/bmi-calculator/menopause', '/health/bmi-calculator/pregnancy'],
     relatedTerms: ['body-fat-percentage', 'ideal-body-weight', 'body-composition', 'waist-circumference'],
   },
   {
@@ -711,7 +711,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Body Composition',
     siteCategory: 'Health',
     shortDef: 'Body composition is the proportional breakdown of the body into fat mass and lean mass (muscle, bone, water, organs). It is a more complete health indicator than body weight or BMI alone.',
-    relatedTools: ['/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/ffmi-calculator'],
+    relatedTools: ['/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/ffmi-calculator', '/health/bmi-calculator/pregnancy', '/health/bmi-calculator/menopause'],
     relatedTerms: ['bmi', 'body-fat-percentage', 'lean-body-mass', 'ffmi'],
   },
   {
@@ -812,6 +812,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['net-pay', 'fica'],
   },
   {
+    slug: 'gestational-weight-gain',
+    term: 'Gestational Weight Gain',
+    letter: 'G',
+    category: 'Maternal Health',
+    siteCategory: 'Health',
+    shortDef: 'Gestational weight gain (GWG) is the total weight gained from conception to delivery. The IOM 2009 guidelines set category-specific targets based on pre-pregnancy BMI: underweight (12.5-18 kg), normal weight (11.5-16 kg), overweight (7-11.5 kg), and obese (5-9 kg) for singleton pregnancies.',
+    relatedTools: ['/health/bmi-calculator/pregnancy'],
+    relatedTerms: ['ideal-body-weight', 'visceral-fat', 'hormone-replacement-therapy'],
+  },
+  {
     slug: 'net-pay',
     term: 'Net Pay',
     letter: 'N',
@@ -860,7 +870,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Hormones & Metabolism',
     siteCategory: 'Health',
     shortDef: 'Estrogen is the primary female sex hormone, present in both sexes. In men, the main source is peripheral conversion of testosterone to estradiol by the aromatase enzyme in fat tissue. When body fat rises, aromatase activity increases, shifting the testosterone-to-estrogen balance and suppressing HPG-axis testosterone production.',
-    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/bmi-calculator/menopause'],
+    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/bmi-calculator/menopause', '/health/bmi-calculator/pregnancy'],
     relatedTerms: ['testosterone', 'visceral-fat', 'bmi', 'body-fat-percentage', 'waist-circumference'],
   },
   {
@@ -870,7 +880,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Body Composition',
     siteCategory: 'Health',
     shortDef: 'Visceral fat is fat stored inside the abdominal cavity, surrounding the liver, pancreas, kidneys, and intestines. Unlike subcutaneous fat beneath the skin, visceral fat releases inflammatory cytokines and free fatty acids directly into the portal circulation, driving insulin resistance, metabolic syndrome, and cardiovascular disease.',
-    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/bmi-calculator/menopause'],
+    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/bmi-calculator/menopause', '/health/bmi-calculator/pregnancy'],
     relatedTerms: ['waist-circumference', 'bmi', 'body-fat-percentage', 'body-composition', 'testosterone'],
   },
   {

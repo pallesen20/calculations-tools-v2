@@ -6541,4 +6541,76 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'gestational-weight-gain': {
+    definition: [
+      'Gestational weight gain (GWG) is the total weight gained between conception and delivery. It is not simply fat - it includes the weight of the fetus (~3.3 kg at term), placenta (~0.7 kg), amniotic fluid (~0.8 kg), expanded blood volume (~1.5 kg), uterine and breast tissue growth (~1.4 kg combined), extracellular fluid (~1.5 kg), and maternal fat stores (~3-4 kg built as an energy buffer for breastfeeding.',
+      'The Institute of Medicine (IOM) published evidence-based GWG guidelines in 2009, updated from the 1990 version to reflect modern obesity prevalence. These guidelines set total gain targets and per-week rates by pre-pregnancy BMI category, and are endorsed by ACOG, the CDC, and most obstetric bodies worldwide.',
+      'GWG outside the recommended range - either too much or too little - is associated with distinct adverse outcomes. Excessive GWG (which affects approximately 47% of US pregnant women per CDC data) is the more common problem and is linked to macrosomia, C-section delivery, and long-term postpartum weight retention. Insufficient GWG is linked to preterm birth and small-for-gestational-age infants.',
+    ],
+    beginnerExplain: [
+      'Think of GWG targets like a recipe that accounts for your starting pantry. The baby needs roughly the same "ingredients" (nutrients, energy, space to grow) regardless of the mother\'s starting weight. If your pantry is already well-stocked - meaning you have more stored energy from a higher pre-pregnancy BMI - the recipe calls for fewer new ingredients from the store.',
+      'A woman with obesity (BMI 32) has a GWG target of 5-9 kg, not because she should restrict food, but because her body can supply more from existing reserves. A woman who is underweight (BMI 17) has a target of 12.5-18 kg because she needs to build those reserves from scratch. The baby\'s needs are nearly identical in both cases - only the starting balance differs.',
+    ],
+    whenToUse: 'Calculate your pre-pregnancy BMI first using the BMI Calculator for Pregnant Women, then match your BMI category to the IOM table to find your total gain range. The per-week rate applies from the second trimester onward - first trimester gain is typically 0.5-2 kg total and does not follow a fixed weekly rate. Use GWG tracking at prenatal appointments to check whether cumulative gain is on pace, above, or below range.',
+    examples: {
+      headers: ['Pre-pregnancy BMI', 'Category', 'Total gain', 'Per week (2nd + 3rd trimester)'],
+      rows: [
+        ['Below 18.5', 'Underweight', '12.5-18 kg (28-40 lbs)', '0.44-0.58 kg (1.0-1.3 lbs)'],
+        ['18.5-24.9', 'Normal weight', '11.5-16 kg (25-35 lbs)', '0.35-0.50 kg (0.8-1.0 lbs)'],
+        ['25.0-29.9', 'Overweight', '7-11.5 kg (15-25 lbs)', '0.23-0.33 kg (0.5-0.7 lbs)'],
+        ['30.0 and above', 'Obese', '5-9 kg (11-20 lbs)', '0.17-0.27 kg (0.4-0.6 lbs)'],
+        ['Twins, normal weight', 'Multiple', '17-25 kg', 'No fixed weekly rate'],
+        ['Twins, obese', 'Multiple', '11-19 kg', 'No fixed weekly rate'],
+      ],
+    },
+    pitfalls: 'The most common mistake is applying the normal-weight target (11.5-16 kg) to women with overweight or obesity, leading to excess gain. A second pitfall is expecting first-trimester gain to match the per-week rate: the weekly rate applies only from the second trimester; minimal or even negative first-trimester gain due to nausea does not need to be "made up." A third pitfall is treating these as rigid rules - the IOM ranges are population-level guidelines, not individual prescriptions. Fetal growth monitoring, maternal health, and clinical judgment always take precedence over hitting a GWG number.',
+    faqs: [
+      {
+        q: 'What happens if I gain more than the recommended amount during pregnancy?',
+        a: 'Gaining above the IOM range is associated with higher rates of macrosomia (birth weight above 4 kg), C-section delivery, and postpartum weight retention. The absolute risk increase per individual pregnancy is modest. Small excesses are less concerning than consistent excess gain across the second and third trimesters.'
+      },
+      {
+        q: 'Are the IOM 2009 gestational weight gain guidelines still current?',
+        a: 'Yes - the IOM 2009 guidelines remain the standard reference endorsed by ACOG, the CDC, and most obstetric bodies. Some researchers have proposed lower targets for women with severe obesity (BMI 40+), where weight-neutral gain may be safe, but no revised official guidelines have been issued as of 2024.'
+      },
+      {
+        q: 'Does gestational weight gain affect the baby\'s long-term health?',
+        a: 'Yes. Excessive GWG is linked to higher rates of childhood obesity in offspring, partly through epigenetic mechanisms affecting metabolic programming in utero. The effect is not solely explained by birth weight. Insufficient GWG is linked to small-for-gestational-age outcomes and associated developmental risks.'
+      },
+      {
+        q: 'Why do women with obesity have a lower GWG target?',
+        a: 'The fetus needs roughly the same nutritional inputs regardless of maternal BMI. Women with obesity have greater pre-existing fat stores that the body can draw on to meet fetal energy demands, so less new maternal fat accumulation is needed. The lower target reflects starting reserves, not a caloric restriction policy.'
+      },
+    ],
+    quiz: {
+      topic: 'gestational weight gain',
+      questions: [
+        {
+          q: 'According to IOM 2009, what is the recommended total gestational weight gain for a woman with a pre-pregnancy BMI of 27.2 (overweight)?',
+          options: ['11.5-16 kg (25-35 lbs)', '12.5-18 kg (28-40 lbs)', '7-11.5 kg (15-25 lbs)', '5-9 kg (11-20 lbs)'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'BMI 27.2 falls in the overweight range (25.0-29.9), which carries a total recommended gain of 7-11.5 kg (15-25 lbs). The 11.5-16 kg range applies to normal-weight women and is a common mix-up.',
+        },
+        {
+          q: 'What proportion of US pregnant women gain more than the IOM recommends?',
+          options: ['Around 20%', 'Around 35%', 'Around 47%', 'Around 60%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'CDC data show approximately 47% of US pregnant women exceed the IOM-recommended gestational weight gain range. Excessive gain is the more common problem; insufficient gain is relatively less frequent and most common in women with severe nausea or underweight pre-pregnancy BMI.',
+        },
+        {
+          q: 'Why do women with obesity have a lower GWG target than normal-weight women?',
+          options: ['They need fewer calories because pregnancy metabolism is slower at higher BMI', 'Their existing fat stores can supply energy for fetal development, so less new fat accumulation is needed', 'IOM guidelines penalise higher BMI to incentivise pre-conception weight loss', 'The fetus grows more slowly in women with obesity, requiring less total energy'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Women with obesity have greater pre-existing stored energy that the body can draw on to meet fetal demands. The fetus needs roughly the same nutritional inputs regardless of maternal BMI - the lower target reflects a higher starting reserve, not a caloric restriction policy.',
+        },
+        {
+          q: 'The IOM per-week weight gain rate applies from which point in pregnancy?',
+          options: ['From the first prenatal appointment, typically week 8-10', 'From the start of conception, week 1', 'From the second trimester onward (roughly week 14)', 'Only in the third trimester (week 27 onward)'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The weekly rate in the IOM table applies to the second and third trimesters combined. First-trimester total gain is small (0.5-2 kg across all categories) and does not follow a fixed weekly rate. Minimal or negative first-trimester gain due to nausea is normal.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
 };

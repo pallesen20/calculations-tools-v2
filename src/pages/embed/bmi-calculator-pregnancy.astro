@@ -1,0 +1,138 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="BMI Calculator During Pregnancy - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+
+      <div class="calculator-header">
+        <h2>BMI Calculator for Pregnancy</h2>
+        <p>Enter your <strong>pre-pregnancy</strong> weight and height</p>
+      </div>
+
+      <div class="bmi-unit-toggle">
+        <button class="bmi-unit-btn active" data-unit="metric">Metric</button>
+        <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
+      </div>
+
+      <div id="bmi-metric" class="bmi-inputs active">
+        <div class="bmi-field">
+          <label class="bmi-label" for="bmi-weight-kg">Weight</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bmi-weight-kg" class="bmi-input" placeholder="65" />
+            <span class="bmi-unit-tag">kg</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bmi-height-cm">Height</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bmi-height-cm" class="bmi-input" placeholder="163" />
+            <span class="bmi-unit-tag">cm</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="bmi-imperial" class="bmi-inputs">
+        <div class="bmi-field">
+          <label class="bmi-label" for="bmi-weight-lb">Weight</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bmi-weight-lb" class="bmi-input" placeholder="143" />
+            <span class="bmi-unit-tag">lbs</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">Height</label>
+          <div class="bmi-ftin">
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="bmi-height-ft" class="bmi-input" placeholder="5" />
+              <span class="bmi-unit-tag">ft</span>
+            </div>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="bmi-height-in" class="bmi-input" placeholder="4" />
+              <span class="bmi-unit-tag">in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="bmi-result" class="bmi-result hidden">
+        <div class="bmi-value-row">
+          <div class="bmi-value" id="bmi-value">-</div>
+          <div class="bmi-category-badge" id="bmi-category-badge">-</div>
+        </div>
+        <div class="bmi-scale">
+          <div class="bmi-scale-bar">
+            <div class="bmi-seg bmi-seg-underweight"></div>
+            <div class="bmi-seg bmi-seg-normal"></div>
+            <div class="bmi-seg bmi-seg-overweight"></div>
+            <div class="bmi-seg bmi-seg-obese"></div>
+            <div class="bmi-indicator" id="bmi-indicator"></div>
+          </div>
+          <div class="bmi-scale-labels">
+            <span style="left:0%">10</span>
+            <span style="left:28.3%">18.5</span>
+            <span style="left:50%">25</span>
+            <span style="left:66.7%">30</span>
+            <span style="left:100%">40+</span>
+          </div>
+        </div>
+        <div class="bmi-details">
+          <div class="bmi-detail" id="bmi-healthy-range"></div>
+          <div class="bmi-detail bmi-detail-hint" id="bmi-next-category"></div>
+        </div>
+        <div class="preg-gwg">
+          <div class="preg-gwg-lbl">Recommended gestational weight gain (IOM 2009)</div>
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="preg-total">-</div>
+              <div class="lbm-card-lbl">Total gain</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="preg-weekly">-</div>
+              <div class="lbm-card-lbl">Per week (2nd + 3rd trimester)</div>
+            </div>
+          </div>
+          <p class="preg-gwg-note">First trimester: 0.5-2 kg total is typical across all categories. Singleton pregnancies only.</p>
+        </div>
+      </div>
+
+      <p class="embed-attribution">Powered by <a href="https://calculations.tools/health/bmi-calculator/pregnancy" target="_blank" rel="noopener noreferrer">calculations.tools</a></p>
+    </div>
+  </section>
+
+  <script src="/js/bmi-calculator-pregnancy.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .preg-gwg {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .preg-gwg-lbl {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.75rem;
+  }
+  .preg-gwg .lbm-card-val {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .preg-gwg-note {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    margin: 0.75rem 0 0;
+    line-height: 1.4;
+  }
+  .embed-attribution {
+    font-size: 0.75rem;
+    text-align: center;
+    color: rgba(255,255,255,0.35);
+    margin-top: 1rem;
+  }
+  .embed-attribution a { color: rgba(255,255,255,0.5); }
+</style>

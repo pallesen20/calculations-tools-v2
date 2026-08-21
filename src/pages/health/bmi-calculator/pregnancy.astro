@@ -4,6 +4,8 @@ import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import type { Source } from '../../../components/Sources.astro';
 import HealthDisclaimer from '../../../components/HealthDisclaimer.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   metric:   "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
@@ -13,6 +15,7 @@ const f = {
 const tocItems = [
   { id: 'how-to-use',           label: 'How to use' },
   { id: 'pre-pregnancy-bmi',    label: 'Pre-pregnancy BMI' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'weight-gain-guidelines', label: 'Gestational weight gain guidelines' },
   { id: 'trimester-breakdown',  label: 'Weight gain by trimester' },
   { id: 'complications-by-bmi', label: 'Complications by BMI category' },
@@ -20,8 +23,42 @@ const tocItems = [
   { id: 'during-pregnancy',     label: 'Managing weight during pregnancy' },
   { id: 'postpartum',           label: 'Postpartum weight return' },
   { id: 'faq',                  label: 'FAQs' },
+  { id: 'quiz',                 label: 'Quiz: test your knowledge' },
   { id: 'related-tools',        label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'Which BMI figure does the IOM use to set gestational weight gain targets?',
+    options: ['BMI at 20 weeks of pregnancy', 'Pre-pregnancy BMI', 'BMI at the first prenatal appointment', 'Target postpartum BMI'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Pre-pregnancy BMI is the baseline clinicians use. BMI rises with normal gestational weight gain, so any BMI measured during pregnancy is not used for weight classification.',
+  },
+  {
+    q: 'A woman has a pre-pregnancy BMI of 27 (overweight). What is her total recommended gestational weight gain for a singleton pregnancy?',
+    options: ['12.5-18 kg (28-40 lbs)', '11.5-16 kg (25-35 lbs)', '5-9 kg (11-20 lbs)', '7-11.5 kg (15-25 lbs)'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The IOM 2009 guidelines set 7-11.5 kg (15-25 lbs) for the overweight category (BMI 25.0-29.9) in singleton pregnancies, with a weekly rate of 0.23-0.33 kg in the second and third trimesters.',
+  },
+  {
+    q: 'Why do IOM guidelines set a lower total weight gain target for women who enter pregnancy with obesity?',
+    options: ['Fetal development requires less nutrition in obese pregnancies', 'Obese women metabolize nutrients more efficiently', 'Existing body fat stores can help meet some fetal demands, reducing the need for new fat deposition', 'Higher BMI is associated with shorter pregnancies'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page explains that a woman with obesity "starts with a much larger reserve" and her body can draw on existing fat stores to meet part of the fetal energy demand. The baby still needs the same development inputs, but less new weight gain is required to provide them.',
+  },
+  {
+    q: 'Approximately what proportion of pregnant women in the US gain more weight than the IOM recommends?',
+    options: ['About 20%', 'About 35%', 'About 47%', 'About 60%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'According to the page, "approximately 47% of pregnant women in the US gain more than recommended." Gaining above the range, not falling short, is the more common problem.',
+  },
+  {
+    q: 'By how much do caloric needs actually increase in the second trimester?',
+    options: ['About 150 kcal/day', 'About 600 kcal/day - roughly doubling intake', 'No increase until the third trimester', 'About 340 kcal/day'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'IOM figures show caloric needs increase by only ~340 kcal/day in the second trimester and ~450 kcal/day in the third trimester. "Eating for two" is a common misconception that drives excessive gestational weight gain.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const sources: Source[] = [
   {
@@ -72,7 +109,7 @@ const schema = [
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "BMI Calculator During Pregnancy",
+    "name": "Pregnancy BMI Calculator",
     "url": "https://calculations.tools/health/bmi-calculator/pregnancy",
     "applicationCategory": "HealthApplication",
     "operatingSystem": "Any",
@@ -151,7 +188,7 @@ const schema = [
         "name": "What are the risks of being underweight during pregnancy?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pre-pregnancy underweight (BMI below 18.5) is associated with increased risk of preterm birth, low birth weight, iron-deficiency anaemia, and difficulties with breastfeeding. Underweight women are advised to gain more weight during pregnancy (12.5–18 kg) than women of normal weight."
+          "text": "Pre-pregnancy underweight (BMI below 18.5) is associated with increased risk of preterm birth, low birth weight, iron-deficiency anemia, and difficulties with breastfeeding. Underweight women are advised to gain more weight during pregnancy (12.5-18 kg) than women of normal weight."
         }
       },
       {
@@ -159,7 +196,7 @@ const schema = [
         "name": "Does obesity cause miscarriage?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Obesity is associated with a moderately elevated risk of miscarriage, with odds approximately 30% higher than in normal-weight women according to meta-analytic data. The mechanism is thought to involve hormonal imbalance, chronic inflammation, and impaired endometrial receptivity. The absolute risk in any given pregnancy remains low."
+          "text": "Obesity is associated with a moderately elevated risk of miscarriage, with odds approximately 20-30% higher than in normal-weight women according to meta-analytic data. The mechanism is thought to involve hormonal imbalance, chronic inflammation, and impaired endometrial receptivity. The absolute risk in any given pregnancy remains low."
         }
       },
       {
@@ -182,13 +219,12 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
-  title="BMI Calculator During Pregnancy"
-  metaTitle="BMI Calculator During Pregnancy | Gestational Weight Gain by BMI ᐅ"
+  title="Pregnancy BMI Calculator"
+  metaTitle="Pregnancy BMI Calculator | Gestational Weight Gain by BMI ᐅ"
   description="Calculate your pre-pregnancy BMI and get recommended gestational weight gain targets based on IOM 2009 guidelines. Covers weight gain by trimester, complications by BMI, and pre-conception guidance."
   canonical="https://calculations.tools/health/bmi-calculator/pregnancy"
-  embedSlug="bmi-calculator"
+  embedSlug="bmi-calculator-pregnancy"
   tocItems={tocItems}
   sources={sources}
   schema={schema}
@@ -197,7 +233,6 @@ const schema = [
 >
   <div slot="calculator">
     <div class="calculator-container bmi-container">
-
       <div class="calculator-header">
         <h2>BMI Calculator for Pregnant Women</h2>
         <p>Enter your <strong>pre-pregnancy</strong> weight and height</p>
@@ -269,31 +304,65 @@ const schema = [
           <div class="bmi-detail" id="bmi-healthy-range"></div>
           <div class="bmi-detail bmi-detail-hint" id="bmi-next-category"></div>
         </div>
+        <div class="preg-gwg">
+          <div class="preg-gwg-lbl">Recommended gestational weight gain (IOM 2009)</div>
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="preg-total">-</div>
+              <div class="lbm-card-lbl">Total gain</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="preg-weekly">-</div>
+              <div class="lbm-card-lbl">Per week (2nd + 3rd trimester)</div>
+            </div>
+          </div>
+          <p class="preg-gwg-note">First trimester: 0.5-2 kg total is typical across all categories. Singleton pregnancies only.</p>
+        </div>
       </div>
-
     </div>
-
-    <script src="/js/bmi-calculator.js" is:inline></script>
+    <script src="/js/bmi-calculator-pregnancy.js" is:inline></script>
   <HealthDisclaimer />
   </div>
   <div slot="content">
     <div class="seo-container">
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
-        <p>Pre-pregnancy BMI determines how much weight you should gain during pregnancy. According to IOM 2009 guidelines: <strong>Underweight (&lt;18.5): gain 12.5–18 kg</strong> (28–40 lbs); <strong>Normal weight (18.5–24.9): gain 11.5–16 kg</strong> (25–35 lbs); <strong>Overweight (25.0–29.9): gain 7–11.5 kg</strong> (15–25 lbs); <strong>Obese (≥30): gain 5–9 kg</strong> (11–20 lbs). BMI calculated during pregnancy is not used for weight classification - only pre-pregnancy BMI matters.</p>
+        <p>Pre-pregnancy BMI determines how much weight you should gain during pregnancy. According to IOM 2009 guidelines:</p>
+        <ul>
+          <li>Underweight (&lt;18.5): gain 12.5–18 kg (28–40 lbs)</li>
+          <li>Normal weight (18.5–24.9): gain 11.5–16 kg (25–35 lbs)</li>
+          <li>Overweight (25.0–29.9): gain 7–11.5 kg (15–25 lbs)</li>
+          <li>Obese (≥30): gain 5–9 kg (11–20 lbs)</li>
+        </ul>
+        <p>BMI calculated during pregnancy is not used for weight classification - only pre-pregnancy BMI matters.</p>
       </div>
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Enter your <strong>pre-pregnancy weight and height</strong> - the values from before any gestational weight gain began. The calculator shows your pre-pregnancy BMI and category. Use the gestational weight gain table below to find your recommended total gain range and weekly rate for the second and third trimesters. If you are unsure of your pre-pregnancy weight, use the weight you recall from before the first trimester or from your booking appointment.</p>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Only pre-pregnancy <a href="/glossary/bmi">BMI</a> is used for clinical weight classification - BMI during pregnancy rises with normal gestational gain and is not used to set targets (IOM 2009).</li>
+          <li>Around 47% of pregnant women in the US gain more than recommended - exceeding the range, not falling short, is the more common problem.</li>
+          <li>Even a 5-10% reduction in pre-pregnancy weight in women with obesity significantly reduces gestational diabetes and preeclampsia risk before conception.</li>
+          <li>Weight retained at 12 months postpartum predicts long-term trajectory - women who return within 2 kg of pre-pregnancy weight by month 12 almost always stay there.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our pregnancy BMI calculator</h2>
+      <p>Enter your <strong>pre-pregnancy weight and height</strong> - the values from before any <a href="/glossary/gestational-weight-gain">gestational weight gain</a> began. The calculator shows your pre-pregnancy BMI, category, and the IOM gestational weight gain recommendation for your BMI range - including total gain and the per-week rate for the second and third trimesters.</p>
+      <p>If you are unsure of your pre-pregnancy weight, use the weight from before the first trimester or from your booking appointment.</p>
+      <p>To quickly convert between metric and imperial systems, take a look at our <a href="/conversion/weight-converter">weight converter</a> and <a href="/conversion/length-converter">length converter</a>.</p>
       <h2 id="pre-pregnancy-bmi">What pre-pregnancy BMI tells you</h2>
-      <p>BMI (Body Mass Index) is weight in kilograms divided by the square of height in meters. It categorises adults into four groups - Underweight, Normal weight, Overweight, and Obese - based on population-level health risk associations. During pregnancy, BMI loses its value as a classification tool because gestational weight gain naturally and appropriately raises the number. Pre-pregnancy BMI, however, remains meaningful throughout pregnancy and after delivery because it establishes the baseline from which gestational gain is measured.</p>
+      <p><a href="/health/bmi-calculator">BMI (Body Mass Index)</a> is weight in kilograms divided by the square of height in meters. It categorizes adults into four groups - Underweight, Normal weight, Overweight, and Obese - based on population-level health risk associations.</p>
+      <p>During pregnancy, BMI loses its value as a classification tool because gestational weight gain naturally and appropriately raises the number. Pre-pregnancy BMI, however, remains meaningful throughout pregnancy and after delivery because it establishes the baseline from which gestational gain is measured.</p>
       <p>Clinicians use pre-pregnancy BMI for three purposes: to set a personalised gestational weight gain target; to stratify risk for conditions such as gestational diabetes and preeclampsia; and to guide postpartum weight management counselling.</p>
-
       <h3>The BMI formula</h3>
       <Formula expr={f.metric} />
       <Formula expr={f.imperial} />
-
+      <h3 id="explained-to-beginner">Pregnancy BMI explained to a beginner</h3>
+      <p>Think of gestational weight gain targets like a savings account with a starting balance. Your pre-pregnancy BMI tells clinicians how much your body already has in reserve.</p>
+      <p>A normal-weight woman (BMI 22) starts with a modest balance - she needs to deposit the full 11.5-16 kg over nine months to cover the baby's costs: fetal weight (~3.3 kg), placenta (~0.7 kg), amniotic fluid (~0.8 kg), expanded blood volume (~1.5 kg), plus maternal fat stores the body builds as a buffer for breastfeeding.</p>
+      <p>A woman with obesity (BMI 32) starts with a much larger reserve. Her baby still needs the same inputs to develop normally - but her body can draw on existing stores to meet part of that demand. So the IOM target is lower: 5-9 kg rather than 11.5-16 kg.</p>
+      <p>Gaining more than your category's range doesn't help the baby grow better - it mainly adds maternal fat that tends to persist long after delivery.</p>
       <h2 id="weight-gain-guidelines">Gestational weight gain guidelines (IOM 2009)</h2>
-      <p>The most widely used gestational weight gain guidelines are those published by the Institute of Medicine (IOM) in 2009 and endorsed by the American College of Obstetricians and Gynecologists (ACOG). They are based on singleton pregnancies. Twin and triplet pregnancies have separate, higher targets.</p>
+      <p>The most widely used <a href="/glossary/gestational-weight-gain">gestational weight gain</a> guidelines are those published by the Institute of Medicine (IOM) in 2009 and endorsed by the American College of Obstetricians and Gynecologists (ACOG). They are based on singleton pregnancies. Twin and triplet pregnancies have separate, higher targets.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -332,10 +401,17 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>These figures apply to singleton pregnancies. For twin pregnancies, the IOM recommendations are: Normal weight: 17–25 kg; Overweight: 14–23 kg; Obese: 11–19 kg. There are no IOM guidelines for triplets or higher-order multiples.</p>
-
+      <p>These figures apply to singleton pregnancies.</p>
+      <p>For twin pregnancies, the IOM recommendations are:</p>
+      <ul>
+        <li>Normal weight: 17–25 kg</li>
+        <li>Overweight: 14–23 kg</li>
+        <li>Obese: 11–19 kg</li>
+      </ul>
+      <p>There are no IOM guidelines for triplets or higher-order multiples.</p>
       <h2 id="trimester-breakdown">Weight gain by trimester</h2>
-      <p>Gestational weight gain is not linear. Most weight gain occurs in the second and third trimesters as the fetus grows rapidly. In the first trimester, total gain of 0.5–2 kg is typical across all BMI categories - some women lose weight due to morning sickness during this period, which is not cause for concern provided adequate nutrition resumes thereafter.</p>
+      <p>Gestational weight gain is not linear. Most weight gain occurs in the second and third trimesters as the fetus grows rapidly.</p>
+      <p>In the first trimester, total gain of 0.5–2 kg is typical across all BMI categories - some women lose weight due to morning sickness during this period, which is not cause for concern provided adequate nutrition resumes thereafter.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -359,15 +435,25 @@ const schema = [
           <tr>
             <td>Third (weeks 27–40)</td>
             <td>Varies by category - see table above</td>
-            <td>Fetal weight gain (~200 g/week from week 28), continued blood volume expansion, oedema</td>
+            <td>Fetal weight gain (~200 g/week from week 28), continued blood volume expansion, edema</td>
           </tr>
         </tbody>
       </table>
       </div>
-      <p>The composition of gestational weight gain at term in a typical normal-weight pregnancy is approximately: fetus 3.2–3.5 kg, placenta 0.7 kg, amniotic fluid 0.8 kg, uterus 0.9 kg, blood 1.5 kg, extracellular fluid 1.5 kg, breast tissue 0.5 kg, and maternal fat stores 3–4 kg.</p>
-
+      <p>The composition of gestational weight gain at term in a typical normal-weight pregnancy is approximately:</p>
+      <ul>
+        <li>fetus 3.2–3.5 kg</li>
+        <li>placenta 0.7 kg</li>
+        <li>amniotic fluid 0.8 kg</li>
+        <li>uterus 0.9 kg</li>
+        <li>blood 1.5 kg</li>
+        <li>extracellular fluid 1.5 kg</li>
+        <li>breast tissue 0.5 kg</li>
+        <li>maternal fat stores 3–4 kg</li>
+      </ul>
       <h2 id="complications-by-bmi">Complications by pre-pregnancy BMI category</h2>
-      <p>Pre-pregnancy BMI is one of the strongest independent predictors of adverse pregnancy outcomes. The table below summarises the key complication patterns by BMI category based on large-cohort and systematic review data.</p>
+      <p>Pre-pregnancy BMI is one of the strongest independent predictors of adverse pregnancy outcomes.</p>
+      <p>The table below summarises the key complication patterns by BMI category based on large-cohort and systematic review data.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -380,7 +466,7 @@ const schema = [
         <tbody>
           <tr>
             <td>Underweight (&lt;18.5)</td>
-            <td>Anaemia, hyperemesis, preterm labour</td>
+            <td>Anemia, hyperemesis, preterm labor</td>
             <td>Low birth weight (&lt;2.5 kg), small for gestational age, preterm birth</td>
           </tr>
           <tr>
@@ -395,28 +481,31 @@ const schema = [
           </tr>
           <tr>
             <td>Obese Class I (30.0–34.9)</td>
-            <td>GDM (~5× risk), preeclampsia (~3–4×), C-section (~35–40%), obstructive sleep apnoea</td>
-            <td>Macrosomia, stillbirth (~2× risk), congenital anomalies</td>
+            <td>GDM (~4–5× risk), preeclampsia (~3–4×), C-section (~35–40%), obstructive sleep apnea</td>
+            <td>Macrosomia, stillbirth (~1.5× risk), congenital anomalies</td>
           </tr>
           <tr>
             <td>Obese Class II–III (≥35.0)</td>
-            <td>GDM (~10–15× risk), preeclampsia (~7×), thromboembolism, anaesthesia complications</td>
-            <td>Stillbirth (~3× risk), neural tube defects (~2–4×), childhood obesity</td>
+            <td>GDM (~5–8× risk), preeclampsia (~4–5×), thromboembolism, anesthesia complications</td>
+            <td>Stillbirth (~2–3× risk), neural tube defects (~2–3×), childhood obesity</td>
           </tr>
         </tbody>
       </table>
       </div>
-      <p>Risk multiples are approximate and population-averaged. Individual risk depends on age, blood pressure, family history, activity level, and other factors. The risks above are not additive - they share many of the same underlying mechanisms, primarily insulin resistance and systemic inflammation.</p>
-
-      <h2 id="trying-to-conceive">BMI and fertility</h2>
+      <p>Risk multiples are approximate, population-averaged figures derived from large cohort studies and meta-analyses (including Catalano &amp; Shankar, BMJ 2017). Individual risk depends on age, blood pressure, family history, activity level, and other factors. Risk estimates vary across studies; ranges reflect the spread in the published literature.</p>
+      <p>The risks above are not additive - they share many of the same underlying mechanisms, primarily insulin resistance and systemic inflammation driven by excess <a href="/glossary/visceral-fat">visceral fat</a>.</p>
+      <p>What I find most clinically significant about this table is the overweight row. Moving from normal weight to overweight roughly doubles gestational diabetes and preeclampsia risk - yet a BMI of 25.1 and a BMI of 29.8 sit in the same "overweight" category.</p>
+      <p>The 2x risk figure is an average across a 5-point BMI range; the actual gradient is steeper. Women at the upper end of the overweight band face risks much closer to Obese Class I than the table implies, in my opinion.</p>
+      <h2 id="trying-to-conceive">Body Mass Index and fertility</h2>
       <p>Pre-pregnancy BMI affects fertility through its influence on the hypothalamic-pituitary-ovarian (HPO) axis and uterine receptivity.</p>
-
       <h3>Overweight and obesity</h3>
-      <p>Excess adipose tissue produces oestrone (a weak oestrogen) and promotes insulin resistance, both of which disrupt the hormonal signalling needed for regular ovulation. Polycystic ovary syndrome (PCOS) - the leading cause of anovulatory infertility - is strongly associated with obesity, though it also affects lean women. In women with BMI ≥ 30 undergoing IVF, clinical pregnancy rates are approximately 10–15% lower per cycle compared with normal-weight women, and miscarriage rates are higher.</p>
-      <p>The good news: even modest weight loss of 5–10% of body weight before conception significantly improves ovulatory function and reduces gestational complication risk. Three to six months of gradual weight loss before attempting conception is a reasonable minimum timeframe.</p>
-
+      <p>Excess adipose tissue produces estrone (a weak <a href="/glossary/estrogen">estrogen</a>) and promotes insulin resistance, both of which disrupt the hormonal signaling needed for regular ovulation.</p>
+      <p>Polycystic ovary syndrome (PCOS) - the leading cause of anovulatory infertility - is strongly associated with obesity, though it also affects lean women.</p>
+      <p>In women with BMI ≥ 30 undergoing IVF, clinical pregnancy rates are approximately 10-15% lower per cycle compared with normal-weight women, and miscarriage rates are higher.</p>
+      <p><strong>The good news:</strong> even modest weight loss of 5–10% of body weight before conception significantly improves ovulatory function and reduces gestational complication risk. Three to six months of gradual weight loss before attempting conception is a reasonable minimum timeframe.</p>
       <h3>Underweight</h3>
-      <p>Energy deficit suppresses the HPO axis. Women with BMI below 18.5 often experience irregular cycles, delayed ovulation, or functional hypothalamic amenorrhoea (FHA) - particularly those with very low body fat or high energy expenditure. Restoring weight to the normal range typically restores regular menstruation within 3–6 months.</p>
+      <p>Energy deficit suppresses the HPO axis. Women with BMI below 18.5 often experience irregular cycles, delayed ovulation, or functional hypothalamic amenorrhea (FHA) - particularly those with very <a href="/health/body-fat-calculator">low body fat</a> or high energy expenditure.</p>
+      <p>Restoring weight to the normal range typically restores regular menstruation within 3-6 months.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -445,28 +534,29 @@ const schema = [
           <tr>
             <td>30.0 and above</td>
             <td>Significantly reduced - anovulation in 30–50%, lower IVF success</td>
-            <td>Target BMI &lt;30 before conception; 5% weight loss is metabolically meaningful</td>
+            <td>Target BMI &lt;30 before conception; use the <a href="/health/bmi-calculator/weight-loss">BMI Weight Loss Calculator</a> to plan a timeline; 5% weight loss is metabolically meaningful</td>
           </tr>
         </tbody>
       </table>
       </div>
-      <h2 id="during-pregnancy">Managing weight during pregnancy</h2>
-      <p>Weight loss during pregnancy is not recommended for any BMI category. Restricting energy intake below the level needed to support fetal development can reduce birth weight and deprive the fetus of key nutrients, including folate, iron, and essential fatty acids. Even for women with severe obesity, the goal is to gain within the recommended range (5–9 kg), not to lose weight.</p>
-
-      <h3>What helps stay within the recommended range</h3>
+      <h2 id="during-pregnancy">How to manage weight during pregnancy</h2>
+      <p>Weight loss during pregnancy is not recommended for any BMI category. Restricting energy intake below the level needed to support fetal development can reduce birth weight and deprive the fetus of key nutrients, including folate, iron, and essential fatty acids.</p>
+      <p>Even for women with severe obesity, the goal is to gain within the recommended range (5-9 kg), not to lose weight.</p>
+      <p>BMI during pregnancy tells you little about <a href="/glossary/body-composition">body composition</a> - if you want a more complete picture after delivery, the <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a> estimates muscle versus fat mass and is more informative for women returning to exercise postpartum.</p>
+      <h3>What helps stay within the recommended range during pregnancy</h3>
       <ul>
-        <li>Eating to hunger rather than "eating for two" - caloric needs increase by only ~300 kcal/day in the second trimester and ~450 kcal/day in the third trimester</li>
+        <li>Eating to hunger rather than "eating for two" - caloric needs increase by only ~340 kcal/day in the second trimester and ~450 kcal/day in the third trimester (IOM figures)</li>
         <li>Moderate aerobic activity (walking, swimming, prenatal yoga) for 150 minutes per week, unless contraindicated</li>
         <li>Minimising ultra-processed foods, sugary drinks, and refined carbohydrates - these drive rapid gestational weight gain without improving nutritional quality</li>
         <li>Regular glucose monitoring if at elevated GDM risk (BMI ≥ 25, family history of diabetes, previous GDM)</li>
       </ul>
-
       <h3>Excessive and insufficient gestational weight gain</h3>
-      <p>Gaining above the IOM range is the more common problem - approximately 47% of pregnant women in the US gain more than recommended. Excessive gain is associated with macrosomia, C-section, postpartum weight retention, and childhood obesity in the offspring. Gaining below the range is associated with preterm birth and small-for-gestational-age infants, and is more common in women with hyperemesis gravidarum.</p>
-
+      <p>Gaining above the IOM range is the more common problem - approximately 47% of pregnant women in the US gain more than recommended.</p>
+      <p>Excessive gain is associated with macrosomia, C-section, postpartum weight retention, and childhood obesity in the offspring.</p>
+      <p>Gaining below the range is associated with preterm birth and small-for-gestational-age infants, and is more common in women with hyperemesis gravidarum.</p>
       <h2 id="postpartum">Postpartum weight return</h2>
-      <p>Most women return close to their pre-pregnancy weight within 6–12 months of delivery, though most retain a small net gain. Average postpartum weight retention at 12 months is approximately 0.5–3 kg compared with pre-pregnancy weight. Women who gain within the IOM-recommended range tend to retain the least weight postpartum.</p>
-
+      <p>Most women return close to their pre-pregnancy weight within 6–12 months of delivery, though most retain a small net gain.</p>
+      <p>Average postpartum weight retention at 12 months is approximately 0.5–3 kg compared with pre-pregnancy weight. Women who gain within the IOM-recommended range tend to retain the least weight postpartum.</p>
       <p>Key factors that influence postpartum weight retention:</p>
       <ul>
         <li><strong>Gestational weight gain above the IOM range</strong> - the single strongest predictor of higher retention</li>
@@ -474,47 +564,68 @@ const schema = [
         <li><strong>Sleep deprivation</strong> - postpartum sleep disruption elevates cortisol and ghrelin, increasing appetite and reducing motivation for physical activity</li>
         <li><strong>Return to physical activity</strong> - gradual resumption of activity from 6–8 weeks postpartum accelerates weight return</li>
       </ul>
-
-      <p>Weight retained at 12 months postpartum tends to persist. Women who are substantially heavier one year after delivery than before pregnancy have a 3–4 times higher risk of obesity-related complications in a subsequent pregnancy.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>Weight retained at 12 months postpartum tends to persist. Women who are substantially heavier one year after delivery than before pregnancy have a 3-4 times higher risk of obesity-related complications in a subsequent pregnancy.</p>
+      <p>If postpartum weight loss is a goal, the <a href="/health/bmi-calculator/weight-loss">BMI Weight Loss Calculator</a> can help you set a realistic target BMI and estimate a timeline after delivery.</p>
+      <p>Across the cohort studies my wife and I have reviewed, the 12-month postpartum mark is the clearest inflection point in the data. Women who haven't returned close to their pre-pregnancy weight by that point very rarely close the gap without deliberate effort.</p>
+      <p>The practical implication: still more than 3-4 kg above pre-pregnancy weight at 12 months is the moment to act, not wait and see.</p>
+      <h2 id="faq">FAQs about BMI and pregnancy</h2>
       <h3>Should I calculate BMI during pregnancy or before?</h3>
       <p>Pre-pregnancy BMI is the relevant figure. BMI calculated during pregnancy is not useful for weight classification because the number increases with normal, healthy gestational weight gain. Clinicians use pre-pregnancy BMI to determine the appropriate gestational weight gain target. Once you are pregnant, focus on total weight gain rather than BMI.</p>
-
       <h3>How much weight should I gain if I am overweight and pregnant?</h3>
       <p>If your pre-pregnancy BMI is in the overweight range (25.0–29.9), the IOM recommends gaining 7–11.5 kg (15–25 lbs) total during a singleton pregnancy, at approximately 0.23–0.33 kg per week during the second and third trimesters. After a small first-trimester gain of 0.5–2 kg, this means roughly 0.3 kg per week for the remaining 26 weeks.</p>
-
       <h3>What BMI is considered too high to get pregnant?</h3>
-      <p>There is no absolute BMI above which pregnancy cannot occur. However, BMI above 30 is associated with reduced fertility, cycle irregularity, lower IVF success rates, and significantly elevated risks of gestational diabetes, preeclampsia, and C-section. Many fertility clinics decline to initiate IVF in women with BMI above 35 or 40 due to the anaesthetic and obstetric risks. Losing even 5% of body weight before conception measurably reduces these risks.</p>
-
+      <p>There is no absolute BMI above which pregnancy cannot occur. However, BMI above 30 is associated with reduced fertility, cycle irregularity, lower IVF success rates, and significantly elevated risks of gestational diabetes, preeclampsia, and C-section. Many fertility clinics decline to initiate IVF in women with BMI above 35 or 40 due to the anesthetic and obstetric risks. Losing even 5% of body weight before conception measurably reduces these risks.</p>
       <h3>Is it safe to diet or lose weight during pregnancy?</h3>
       <p>No - active weight loss during pregnancy is not recommended. Restricting calories can deprive the developing fetus of essential nutrients. Even for women with obesity, the IOM recommends gaining at least 5–9 kg. If you are concerned about excessive weight gain, the focus should be on food quality and physical activity, not caloric restriction. Discuss any significant dietary changes with your obstetrician or midwife.</p>
-
       <h3>What are the risks of being underweight during pregnancy?</h3>
-      <p>Pre-pregnancy underweight (BMI below 18.5) is associated with increased risk of preterm birth, low birth weight, iron-deficiency anaemia, and difficulties with breastfeeding. Underweight women are advised to gain more weight during pregnancy (12.5–18 kg) than women of normal weight, to ensure both maternal nutritional reserves and adequate fetal growth.</p>
-
+      <p>Pre-pregnancy underweight (BMI below 18.5) is associated with increased risk of preterm birth, low birth weight, iron-deficiency anemia, and difficulties with breastfeeding. Underweight women are advised to gain more weight during pregnancy (12.5-18 kg) than women of normal weight, to ensure both maternal nutritional reserves and adequate fetal growth.</p>
       <h3>Does obesity increase miscarriage risk?</h3>
-      <p>Yes, modestly. Meta-analytic data show that women with obesity have approximately 30% higher odds of miscarriage compared with normal-weight women. The proposed mechanisms include impaired endometrial receptivity, hormonal imbalance (excess oestrogen, insulin resistance), and chromosomal abnormalities associated with poorer egg quality. The absolute risk in any given pregnancy remains relatively low.</p>
-
+      <p>Yes, modestly. Meta-analytic data show that women with obesity have approximately 20-30% higher odds of miscarriage compared with normal-weight women. The proposed mechanisms include impaired endometrial receptivity, hormonal imbalance (excess estrogen, insulin resistance), and chromosomal abnormalities associated with poorer egg quality. The absolute risk in any given pregnancy remains relatively low.</p>
       <h3>How soon should I aim for a healthy BMI before trying to conceive?</h3>
       <p>Three to six months before attempting conception is a practical minimum - it allows time for metabolic improvements following weight loss and lets you begin taking preconception folic acid (400 µg daily) in advance. Losing as little as 5–10% of body weight before conception has been shown to significantly reduce gestational diabetes and preeclampsia risk for women with obesity. Gradual weight loss (0.5–1 kg per week) is preferred over rapid dieting, which can deplete micronutrient stores.</p>
-
       <h3>How much weight do women typically retain after pregnancy?</h3>
       <p>On average, women retain 0.5–3 kg at 12 months postpartum compared with their pre-pregnancy weight. Women who gain within the IOM-recommended range tend to retain less than 1 kg on average. Women who exceed the IOM range by 5 kg or more typically retain significantly more. Most retained weight at 12 months tends to persist into the long term without deliberate intervention.</p>
-
+      <QuizBlock
+        topic="pregnancy BMI"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/bmi-calculator/pregnancy"
+      />
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
-        { path: '/health/bmi-calculator', label: 'BMI Calculator (general)', blurb: 'The main BMI calculator with full background on the formula, categories, limitations, and healthy weight ranges for all adults.' },
         { path: '/health/bmi-calculator/women', blurb: 'Women-specific BMI guide covering menopause, normal weight obesity, fat distribution, and the best complementary health metrics for women.' },
+        { path: '/health/bmi-calculator', label: 'BMI Calculator (general)', blurb: 'The main BMI calculator with full background on the formula, categories, limitations, and healthy weight ranges for all adults.' },
         { path: '/health/bmi-calculator/men', blurb: 'Men-specific BMI guide covering the testosterone-obesity connection, FFMI, waist circumference thresholds, and why BMI misclassifies muscular men.' },
         { path: '/health/bmi-calculator/teens' },
         { path: '/health/bmi-calculator/kids' },
         { path: '/health/bmi-calculator/seniors' },
         { path: '/health/lean-body-mass-calculator' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/health/bmi-calculator/pregnancy" />
     </div>
   </div>
-
 </CalculatorLayout>
+<style is:global>
+  .preg-gwg {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .preg-gwg-lbl {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.75rem;
+  }
+  .preg-gwg .lbm-card-val {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .preg-gwg-note {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    margin: 0.75rem 0 0;
+    line-height: 1.4;
+  }
+</style>
