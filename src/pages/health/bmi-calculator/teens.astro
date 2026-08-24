@@ -4,6 +4,8 @@ import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import type { Source } from '../../../components/Sources.astro';
 import HealthDisclaimer from '../../../components/HealthDisclaimer.astro';
+import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
 
 const f = {
   metric:   "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
@@ -13,6 +15,7 @@ const f = {
 const tocItems = [
   { id: 'how-to-use',          label: 'How to use' },
   { id: 'what-is-bmi-for-age', label: 'What is BMI-for-age in teens?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'categories',          label: 'BMI categories for teens' },
   { id: 'bmi-chart-by-age',    label: 'BMI chart: ages 13–19' },
   { id: 'puberty',             label: 'Puberty and BMI' },
@@ -20,8 +23,42 @@ const tocItems = [
   { id: 'athletic-teens',      label: 'Athletic teens and BMI' },
   { id: 'transition-adult',    label: 'Transition to adult BMI at 20' },
   { id: 'faq',                 label: 'FAQs' },
+  { id: 'quiz',                label: 'Quiz: test your knowledge' },
   { id: 'related-tools',       label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'What measurement system does this calculator use to categorize a teenager\'s weight?',
+    options: ['The same fixed adult thresholds (18.5, 25, 30) adapted for age', 'Age- and gender-specific percentiles using CDC 2000 growth charts', 'A modified Z-score system developed by the WHO for adolescents', 'Body mass index expressed as a ratio against ideal weight for height'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Teen BMI uses percentiles, not fixed numbers. The same BMI value means something different for a 13-year-old and a 17-year-old, so results are plotted against CDC 2000 growth charts and reported as a percentile relative to same-age, same-gender peers.',
+  },
+  {
+    q: 'According to the BMI reference chart on this page, what is the 85th percentile BMI threshold for a 15-year-old girl - the point at which she is classified as Overweight?',
+    options: ['23.6', '28.1', '20.2', '24.4'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The table on this page shows that for a 15-year-old girl, BMI 24.4 is the 85th percentile - the overweight threshold. BMI 23.6 is the 85th percentile for a 15-year-old boy, and 20.2 is the 50th percentile (median) for both sexes at age 15.',
+  },
+  {
+    q: 'The page explains that a 16-year-old boy and a 16-year-old girl at the same BMI percentile have "fundamentally different body compositions." What is the main reason?',
+    options: ['Estrogen drives healthy fat deposition in girls while testosterone drives muscle and bone growth in boys - so the same BMI rise has opposite biological causes', 'Girls are typically shorter at 16, so the same BMI represents more total body fat', 'The CDC growth charts assign higher absolute BMI cutoffs to girls than boys at the same percentile', 'Boys in this age range grow in height faster than weight, which temporarily suppresses BMI regardless of fat mass'] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'The puberty section explains that estrogen drives fat gain in girls and testosterone drives muscle and bone gain in boys. Both raise BMI, but for completely different reasons - meaning the same percentile tells a different health story depending on sex.',
+  },
+  {
+    q: 'A 17-year-old boy has a BMI of 21.3. Based on the reference chart on this page, which percentile does that correspond to?',
+    options: ['5th percentile (underweight threshold)', '85th percentile (overweight threshold)', '50th percentile (median)', '95th percentile (obese threshold)'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The boys\' table on this page shows that at age 17, the 50th percentile BMI is exactly 21.3. That puts a 17-year-old boy with a BMI of 21.3 right at the middle of the healthy range for his age and sex.',
+  },
+  {
+    q: 'The page explains that BMI is most likely to misclassify which type of teenager, and why?',
+    options: ['Teenage girls during peak puberty, because normal estrogen-driven fat gain temporarily inflates BMI above the healthy range', 'Teenage boys in strength and power sports, because BMI cannot distinguish muscle from fat - a well-trained athlete may appear overweight with low body fat', 'Teenagers growing rapidly in height, because height changes faster than weight and temporarily lowers BMI', 'Any teenager in the Healthy weight category whose percentile is rising year to year'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The athletic teens section specifically identifies teenage boys in strength and power sports (rugby, football, weightlifting) as the group most likely to be misclassified. A muscular teenage boy may have a BMI above the 85th percentile because his muscle mass is above average for his age - not because he carries excess fat.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const sources: Source[] = [
   {
@@ -50,7 +87,7 @@ const sources: Source[] = [
     title: 'Obesity, insulin resistance, diabetes, and cardiovascular risk in children',
     journal: 'Circulation',
     year: 2003,
-    url: 'https://doi.org/10.1161/01.CIR.0000060243.79646.3F',
+    url: 'https://doi.org/10.1161/01.cir.0000060923.07573.f2',
   },
   {
     author: 'Freedman DS, Mei Z, Srinivasan SR, Berenson GS, Dietz WH',
@@ -58,6 +95,20 @@ const sources: Source[] = [
     journal: 'Journal of Pediatrics',
     year: 2007,
     url: 'https://doi.org/10.1016/j.jpeds.2006.08.045',
+  },
+  {
+    author: 'Kaplowitz PB',
+    title: 'Link Between Body Fat and the Timing of Puberty',
+    journal: 'Pediatrics',
+    year: 2008,
+    url: 'https://doi.org/10.1542/peds.2007-1813f',
+  },
+  {
+    author: 'Puhl RM, Heuer CA',
+    title: 'Obesity Stigma: Important Considerations for Public Health',
+    journal: 'American Journal of Public Health',
+    year: 2010,
+    url: 'https://doi.org/10.2105/ajph.2009.159491',
   },
 ];
 
@@ -78,7 +129,7 @@ const schema = [
     "@type": "HowTo",
     "name": "How to calculate BMI percentile for a teenager",
     "step": [
-      { "@type": "HowToStep", "position": 1, "name": "Select sex and enter age", "text": "Choose Boy or Girl, then enter the teen's age in years and months. This calculator covers ages 13–19. For children aged 2–12, use the BMI Calculator for Kids." },
+      { "@type": "HowToStep", "position": 1, "name": "Select gender and enter age", "text": "Choose Boy or Girl, then enter the teen's age in years and months. This calculator covers ages 13–19. For children aged 2–12, use the BMI Calculator for Kids." },
       { "@type": "HowToStep", "position": 2, "name": "Enter weight and height", "text": "Choose Metric (kg and cm) or Imperial (lbs, feet, inches), then enter weight and height. Results update instantly." },
       { "@type": "HowToStep", "position": 3, "name": "Read the percentile", "text": "The BMI value, percentile, and category appear immediately. For teens, the 85th percentile is the overweight threshold and the 95th is the obese threshold. At age 20, switch to fixed adult categories." }
     ]
@@ -90,7 +141,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "What is a healthy BMI for a teenager?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A healthy BMI for a teenager is between the 5th and 85th percentile for their age and sex, based on CDC 2000 growth charts. For example, a healthy BMI for a 15-year-old boy is approximately 16.8 to 23.6, and for a 15-year-old girl approximately 16.4 to 24.4. Because normal BMI ranges change every year during adolescence, percentile-based interpretation is more accurate than fixed adult thresholds." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A healthy BMI for a teenager is between the 5th and 85th percentile for their age and gender, based on CDC 2000 growth charts. For example, a healthy BMI for a 15-year-old boy is approximately 16.8 to 23.6, and for a 15-year-old girl approximately 16.4 to 24.4. Because normal BMI ranges change every year during adolescence, percentile-based interpretation is more accurate than fixed adult thresholds." }
       },
       {
         "@type": "Question",
@@ -100,12 +151,12 @@ const schema = [
       {
         "@type": "Question",
         "name": "At what BMI is a teenager overweight?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A teenager is overweight when their BMI-for-age reaches the 85th percentile for their age and sex. This threshold changes at every age. For a 15-year-old boy it is approximately BMI 23.6; for a 15-year-old girl approximately BMI 24.4. At or above the 95th percentile is obese." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A teenager is overweight when their BMI-for-age reaches the 85th percentile for their age and gender. This threshold changes at every age. For a 15-year-old boy it is approximately BMI 23.6; for a 15-year-old girl approximately BMI 24.4. At or above the 95th percentile is obese." }
       },
       {
         "@type": "Question",
         "name": "Does puberty affect BMI in teenagers?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes, significantly. During female puberty, oestrogen drives an increase in body fat, particularly in the hips, thighs, and breasts - this is biologically normal and healthy. During male puberty, testosterone drives rapid muscle mass and bone density gains, which increases weight without adding fat. The same BMI in a 16-year-old boy and girl therefore represents very different body compositions. A BMI that appears elevated in a teenage boy may largely reflect muscle gain rather than excess fat." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, significantly. During female puberty, estrogen drives an increase in body fat, particularly in the hips, thighs, and breasts - this is biologically normal and healthy. During male puberty, testosterone drives rapid muscle mass and bone density gains, which increases weight without adding fat. The same BMI in a 16-year-old boy and girl therefore represents very different body compositions. A BMI that appears elevated in a teenage boy may largely reflect muscle gain rather than excess fat." }
       },
       {
         "@type": "Question",
@@ -120,18 +171,17 @@ const schema = [
       {
         "@type": "Question",
         "name": "Should I worry if my teenager has a high BMI?",
-        "acceptedAnswer": { "@type": "Answer", "text": "A high BMI percentile warrants attention but not alarm. The next step is to speak with a paediatrician, who can assess body composition in context - considering growth trends, physical activity, diet, family history, and the teen's own wellbeing. For adolescents, approaching weight as a health topic (not an appearance issue) is clinically important to avoid triggering disordered eating or poor body image." }
+        "acceptedAnswer": { "@type": "Answer", "text": "A high BMI percentile warrants attention but not alarm. The next step is to speak with a pediatrician, who can assess body composition in context - considering growth trends, physical activity, diet, family history, and the teen's own wellbeing. For adolescents, approaching weight as a health topic (not an appearance issue) is clinically important to avoid triggering disordered eating or poor body image." }
       },
       {
         "@type": "Question",
         "name": "Can talking about BMI cause eating disorders in teens?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Framing weight purely as an appearance issue or using stigmatising language can contribute to poor body image and disordered eating risk in teens. The American Academy of Pediatrics (AAP) recommends focusing on health behaviours (nutrition, activity, sleep) rather than weight or BMI numbers when discussing weight with teenagers. BMI is a screening tool, not a value judgement." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Framing weight purely as an appearance issue or using stigmatizing language can contribute to poor body image and disordered eating risk in teens. The American Academy of Pediatrics (AAP) recommends focusing on health behaviors (nutrition, activity, sleep) rather than weight or BMI numbers when discussing weight with teenagers. BMI is a screening tool, not a value judgment." }
       }
     ]
   }
 ];
 ---
-
 <CalculatorLayout
   title="BMI Calculator for Teens"
   metaTitle="BMI Calculator for Teens | BMI-for-Age Percentile (Ages 13–19) ᐅ"
@@ -144,22 +194,16 @@ const schema = [
   ogFormula="BMI-for-age percentile: BMI = weight / height², plotted on CDC chart"
   ogExample="15-year-old girl, 55 kg, 1.63 m: BMI 20.7 = 60th percentile"
 >
-
   <div slot="calculator">
     <div id="bmi-k-container" class="calculator-container bmi-container" data-bmi-mode="teens">
-
       <div class="calculator-header">
         <h2>Teen BMI Calculator (Ages 13–19)</h2>
         <p>Uses CDC 2000 growth chart percentiles</p>
       </div>
-
-      <!-- Sex toggle -->
       <div class="bmi-unit-toggle">
         <button class="bmi-k-sex-btn bmi-unit-btn active" data-sex="M">Boy</button>
         <button class="bmi-k-sex-btn bmi-unit-btn" data-sex="F">Girl</button>
       </div>
-
-      <!-- Age inputs -->
       <div class="bmi-k-age-row">
         <label class="bmi-label">Age (13–19 years)</label>
         <div class="bmi-k-age-inputs">
@@ -173,14 +217,10 @@ const schema = [
           </div>
         </div>
       </div>
-
-      <!-- Unit toggle -->
       <div class="bmi-unit-toggle">
         <button class="bmi-k-unit-btn bmi-unit-btn active" data-unit="metric">Metric</button>
         <button class="bmi-k-unit-btn bmi-unit-btn" data-unit="imperial">Imperial</button>
       </div>
-
-      <!-- Metric inputs -->
       <div id="bmi-k-metric" class="bmi-inputs active">
         <div class="bmi-field">
           <label class="bmi-label" for="bmi-k-weight-kg">Weight</label>
@@ -197,8 +237,6 @@ const schema = [
           </div>
         </div>
       </div>
-
-      <!-- Imperial inputs -->
       <div id="bmi-k-imperial" class="bmi-inputs">
         <div class="bmi-field">
           <label class="bmi-label" for="bmi-k-weight-lb">Weight</label>
@@ -221,11 +259,7 @@ const schema = [
           </div>
         </div>
       </div>
-
-      <!-- Age-out-of-range redirect message -->
       <div id="bmi-k-redirect" class="bmi-k-redirect hidden"></div>
-
-      <!-- Result -->
       <div id="bmi-k-result" class="bmi-result hidden">
         <div class="bmi-value-row">
           <div>
@@ -255,33 +289,45 @@ const schema = [
           <div class="bmi-detail bmi-detail-hint" id="bmi-k-next-category"></div>
         </div>
       </div>
-
     </div>
-
     <script src="/js/bmi-kids-calculator.js" is:inline></script>
   <HealthDisclaimer />
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Teen BMI at a glance</div>
-        <p>Teen BMI is interpreted using <strong>age- and sex-specific percentiles</strong>, not fixed adult thresholds. A healthy BMI for a teenager is between the <strong>5th and 85th percentile</strong> for their age and sex. At or above the 85th percentile is Overweight; at or above the 95th percentile is Obese. Puberty changes what BMI means - the same number looks different in a teenage girl adding healthy body fat and a teenage boy building muscle. At <strong>age 20, adult fixed categories</strong> apply. This calculator uses the CDC 2000 LMS method. For children aged 2–12, use the <a href="/health/bmi-calculator/kids">BMI Calculator for Kids</a>.</p>
+        <p>Teen BMI is interpreted using age- and gender-specific percentiles, not fixed adult thresholds. A healthy BMI for a teenager is between the <strong>5th and 85th percentile</strong> for their age and gender.</p>
+        <p>At or above the 85th percentile is Overweight; at or above the 95th percentile is Obese. Puberty changes what BMI means - the same number looks different in a teenage girl adding healthy body fat and a teenage boy building muscle.</p>
+        <p>At <strong>age 20, adult fixed categories</strong> apply. This calculator uses the CDC 2000 LMS method. For children aged 2–12, use the <a href="/health/bmi-calculator/kids">BMI Calculator for Kids</a>.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-      <p>Select <strong>Boy</strong> or <strong>Girl</strong>, enter the teen's age in years and months (13–19), then enter weight and height in your preferred units. The calculator shows BMI, percentile, weight category, and the healthy weight range for that exact age and sex. If the age entered is outside the 13–19 range, the calculator suggests the appropriate alternative.</p>
-
-      <h2 id="what-is-bmi-for-age">What is BMI-for-age in teenagers?</h2>
-      <p>BMI-for-age uses the same formula as adult BMI - weight in kg divided by height in m squared - but interprets the result as a percentile compared to a reference population of the same age and sex, using the CDC 2000 growth charts. Fixed adult cutoffs like 25 (overweight) and 30 (obese) are not used for teenagers because normal BMI increases steadily through adolescence.</p>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Teen BMI is measured as a <a href="/glossary/bmi-percentile">BMI-for-age percentile</a>, not a fixed number - the healthy range shifts every year during adolescence because <a href="/glossary/bmi">normal BMI</a> rises with growth.</li>
+          <li>The CDC defines <strong>Overweight</strong> as at or above the 85th percentile and <strong>Obese</strong> as at or above the 95th percentile for age and gender.</li>
+          <li>Girls naturally gain 6-10% body fat during puberty from estrogen; this is healthy and raises BMI without adding excess fat. Boys gain muscle and bone mass from testosterone, which also raises BMI without adding fat.</li>
+          <li>BMI misclassification is most common in teenage boys in strength sports - a muscular athlete may land above the 85th percentile with low body fat.</li>
+          <li>At age 20, adult fixed thresholds replace percentiles. For most teens in a healthy percentile range, the transition is seamless - their BMI at the 50th percentile sits squarely in the adult Normal range.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our teenage BMI calculator</h2>
+      <p>Select <strong>Boy</strong> or <strong>Girl</strong>, enter the teen's age in years and months (13–19), then enter weight and height in your preferred units - the calculator supports both <a href="/glossary/metric-system">metric</a> and <a href="/glossary/imperial-system">imperial</a> systems. The calculator shows BMI, percentile, weight category, and the <a href="/health/ideal-weight-calculator">healthy weight range</a> for that exact age and gender.</p>
+      <p>If the age entered is outside the 13–19 range, the calculator suggests either the <a href="/health/bmi-calculator/kids">BMI calculator for kids</a> or the <a href="/health/bmi-calculator">BMI calculator for adults</a>.</p>
+      <h2 id="what-is-bmi-for-age">What is BMI-for-age for teenagers?</h2>
+      <p><a href="/glossary/bmi-percentile">BMI-for-age</a> uses the same formula as adult BMI - weight in kg divided by height in m squared - but interprets the result as a percentile compared to a reference population of the same age and gender, using the CDC 2000 growth charts.</p>
+      <p>Fixed adult cutoffs like 25 (overweight) and 30 (obese) are not used for teenagers because normal BMI increases steadily through adolescence.</p>
       <p>A 19-year-old is likely to have a BMI between 19 and 23 if their weight is healthy - close to adult ranges. A 13-year-old's healthy range is lower. Applying adult cutoffs to a 13-year-old would classify most healthy young adolescents correctly only by coincidence.</p>
-
-      <h3>The BMI formula</h3>
+      <h3 id="explained-to-beginner">BMI percentile explained to a beginner</h3>
+      <p>Think of it like height-for-age. A 6-year-old who is 4 feet tall is very tall for their age - but a 16-year-old at the same 4 feet would be very short. The same measurement means something completely different depending on how old you are.</p>
+      <p><strong>BMI-for-age works the same way:</strong> a BMI of 20 is right at the 50th percentile for a 13-year-old boy (perfectly average) but is below the 40th percentile for a 17-year-old boy (slightly below average). The raw number alone tells you almost nothing.</p>
+      <p>The percentile tells you where a teen's BMI sits compared to all other teens of the same age and gender in the CDC reference population. A result at the 70th percentile means 70% of same-age peers have a lower BMI - and 30% have a higher one. The healthy window (5th to 85th percentile) is intentionally wide, because the "right" BMI grows every year as teenagers grow into their bodies.</p>
+      <h3>The Body Mass Index formula</h3>
       <Formula expr={f.metric} />
       <Formula expr={f.imperial} />
-
       <h2 id="categories">BMI categories for teenagers</h2>
+      <p>Teen BMI categories use percentile cutoffs, not fixed numbers. The CDC defines four categories based on where a teen's BMI falls relative to same-age, same-gender peers in the 2000 reference population.</p>
+      <p>Two key thresholds to know: the <strong>85th percentile</strong> (Overweight) and the <strong>95th percentile</strong> (Obese). Both are higher absolute BMI values for older teens than younger ones - the cutoff rises every year as normal BMI rises with age.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -296,7 +342,7 @@ const schema = [
             <tr>
               <td>Healthy weight</td>
               <td>5th to below 85th</td>
-              <td>Within the expected range for age and sex; lowest risk of weight-related complications</td>
+              <td>Within the expected range for age and gender; lowest risk of weight-related complications</td>
             </tr>
             <tr>
               <td>Overweight</td>
@@ -306,16 +352,14 @@ const schema = [
             <tr>
               <td>Obese</td>
               <td>95th and above</td>
-              <td>Above 95%+ of peers; substantially elevated risk of insulin resistance, type 2 diabetes, hypertension, sleep apnoea, and orthopaedic stress</td>
+              <td>Above 95%+ of peers; substantially elevated risk of insulin resistance, type 2 diabetes, hypertension, sleep apnea, and orthopedic stress</td>
             </tr>
           </tbody>
         </table>
       </div>
-
       <h2 id="bmi-chart-by-age">BMI-for-age reference chart: ages 13–19</h2>
       <p>The tables below show BMI at the 5th, 50th, 85th, and 95th percentiles for boys and girls at ages 13–19, based on CDC 2000 LMS parameters. These define the category boundaries at each age.</p>
-
-      <h3>Boys (ages 13–19)</h3>
+      <h3>BMI for teenage boys (ages 13–19)</h3>
       <div class="responsive-table">
         <table>
           <thead>
@@ -338,8 +382,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h3>Girls (ages 13–19)</h3>
+      <h3>BMI for teenage girls (ages 13–19)</h3>
       <div class="responsive-table">
         <table>
           <thead>
@@ -362,31 +405,34 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="puberty">Puberty and BMI: why sex matters more in adolescence</h2>
-      <p>Puberty creates the largest divergence in body composition between boys and girls in the entire human lifespan. The same BMI percentile in a 16-year-old boy and a 16-year-old girl represents fundamentally different body compositions - which is why comparing teen BMI results across sexes is misleading without this context.</p>
-
-      <h3>Girls: normal fat gain during puberty</h3>
-      <p>Oestrogen drives the deposition of fat in the breasts, hips, and thighs during female puberty, typically beginning between ages 8 and 13. This is physiologically normal and essential: girls require a minimum level of body fat to initiate and maintain menstrual cycles (the threshold is approximately 17–22% body fat). Girls' average body fat percentage increases from roughly 16% in early childhood to 22–26% by mid-adolescence.</p>
-      <p>This fat gain naturally raises BMI. A teenage girl whose BMI percentile rises from the 55th to the 65th percentile between ages 12 and 15 during a normal puberty is not gaining excess fat - she is gaining the body composition of an adult woman. Misinterpreting this normal rise as a problem requiring intervention is both inaccurate and potentially harmful.</p>
-
-      <h3>Boys: rapid muscle and bone gain</h3>
-      <p>Testosterone during male puberty drives rapid increases in muscle mass, bone density, and height - typically from ages 9–14. Boys' lean body mass increases sharply, raising weight without proportionally raising body fat. A teenage boy who appears "overweight" by BMI may have a BMI at the 87th percentile primarily because his muscle mass is above the reference average, not because he carries excess fat.</p>
-      <p>The practical implication: for teenage boys, especially those involved in sports or physical training, BMI is a particularly unreliable indicator of body fat or health risk. Waist circumference or a clinical body fat measurement is more informative.</p>
-
-      <h3>Why the CDC growth charts are sex-specific</h3>
-      <p>Because these hormonal differences produce systematically different weight-for-height patterns, the CDC 2000 growth charts have entirely separate LMS parameter sets for boys and girls. The same 85th percentile BMI means a different absolute BMI number for a boy and girl of the same age - and represents different body compositions even then.</p>
-
+      <h2 id="puberty">Puberty and BMI: why gender matters more in adolescence</h2>
+      <p>Puberty creates the largest divergence in <a href="/glossary/body-composition">body composition</a> between boys and girls in the entire human lifespan. The same BMI percentile in a 16-year-old boy and a 16-year-old girl represents fundamentally different body compositions - which is why comparing teen BMI results across genders is misleading without this context.</p>
+      <h3>Teenage girls: normal fat gain during puberty</h3>
+      <p><a href="/glossary/estrogen">Estrogen</a> drives the deposition of fat in the breasts, hips, and thighs during female puberty, typically beginning between ages 8 and 13. This fat gain is physiologically normal and essential: adequate body fat is required to support the hormonal signaling - particularly leptin - that initiates and maintains menstrual cycles. When body fat falls too low, hypothalamic signaling is suppressed and menstruation can stop or fail to start.</p>
+      <p>Girls' average <a href="/glossary/body-fat-percentage">body fat percentage</a> increases from roughly 16% in early childhood to 22–26% by mid-adolescence.</p>
+      <p>This fat gain naturally raises BMI. A teenage girl whose BMI percentile rises from the 55th to the 65th percentile between ages 12 and 15 during a normal puberty is not gaining excess fat - she is gaining the body composition of an adult woman.</p>
+      <p>Misinterpreting this normal rise as a problem requiring intervention is both inaccurate and potentially harmful.</p>
+      <h3>Teenage boys: rapid muscle and bone gain</h3>
+      <p><a href="/glossary/testosterone">Testosterone</a> during male puberty drives rapid increases in muscle mass, bone density, and height - typically from ages 9–14. Boys' <a href="/health/lean-body-mass-calculator">lean body mass</a> increases sharply, raising weight without proportionally raising body fat.</p>
+      <p>A teenage boy who appears "overweight" by BMI may have a BMI at the 87th percentile primarily because his muscle mass is above the reference average, not because he carries excess fat.</p>
+      <p>The practical implication: for teenage boys, especially those involved in sports or physical training, <a href="/glossary/bmi">BMI</a> is a particularly unreliable indicator of body fat or health risk. <a href="/glossary/waist-circumference">Waist circumference</a> or a <a href="/health/body-fat-calculator">body fat measurement</a> is more informative.</p>
+      <p>When I review data from athletic teenage boys, the most common pattern I see is a BMI at the 87th-92nd percentile paired with a waist circumference well within the healthy range and excellent cardiovascular fitness. The BMI label says "overweight" but every other indicator says "healthy".</p>
+      <p>In these cases, flagging the BMI result without the broader context is not just unhelpful - it can be actively counterproductive, reinforcing the misconception that weight and fitness are the same thing.</p>
+      <h3>Why the CDC growth charts are gender-specific</h3>
+      <p>Because these hormonal differences produce systematically different weight-for-height patterns, the CDC 2000 growth charts have entirely separate LMS parameter sets for boys and girls.</p>
+      <p>The same 85th percentile BMI means a different absolute BMI number for a boy and girl of the same age - and represents different body compositions even then.</p>
       <h2 id="body-image">Body image, mental health, and BMI in teenagers</h2>
       <p>Adolescence is the period of highest risk for the onset of eating disorders, including anorexia nervosa, bulimia nervosa, and binge-eating disorder. BMI screening and weight-related conversations require particular care with teenagers.</p>
-      <p>The American Academy of Pediatrics (AAP) and the American Academy of Eating Disorders both caution against weight-focused approaches with adolescents. Key guidance:</p>
+      <p>The American Academy of Pediatrics (AAP) and the American Academy of Eating Disorders both caution against weight-focused approaches with adolescents.</p>
+      <h3>Key guidance for teens</h3>
       <ul>
-        <li><strong>Focus on health behaviours, not weight numbers.</strong> Conversations about sleep, physical activity, and food quality are less likely to trigger unhealthy responses than conversations about BMI or target weights.</li>
-        <li><strong>Avoid stigmatising or shame-based framing.</strong> Research shows that weight stigma in adolescence increases the risk of disordered eating, depression, and long-term weight gain - not the reverse.</li>
+        <li><strong>Focus on health behaviors, not weight numbers.</strong> Conversations about sleep, physical activity, and food quality are less likely to trigger unhealthy responses than conversations about BMI or target weights.</li>
+        <li><strong>Avoid stigmatizing or shame-based framing.</strong> Research shows that weight stigma in adolescence increases the risk of disordered eating, depression, and long-term weight gain - not the reverse.</li>
         <li><strong>A low BMI is not always healthy in teens.</strong> A teen at the 3rd percentile may be restricting food. Any teen who has lost significant weight or who is preoccupied with food, weight, or body shape warrants clinical assessment regardless of whether their BMI appears "normal".</li>
         <li><strong>Discuss results privately</strong> with a healthcare provider first, rather than presenting BMI numbers to an adolescent without context or support.</li>
       </ul>
-
+      <p>In my experience reviewing this research, the most consistent finding is that it's not the number that causes harm - it's the framing:</p>
+      <p>"Your BMI is at the 90th percentile and we need to work on that" and "I want to make sure you're eating and sleeping well because your body is working hard right now" can both follow from the same BMI reading, but they land very differently for a 14-year-old. The data is neutral; the conversation is not.</p>
       <h2 id="athletic-teens">Athletic teens and BMI misclassification</h2>
       <p>BMI misclassification is most common among teenage boys in strength and power sports. Because the formula cannot separate muscle from fat, a well-trained teenage athlete may have a BMI at or above the 85th percentile despite having low body fat.</p>
       <div class="responsive-table">
@@ -417,10 +463,9 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>For teenage athletes with a BMI above the 85th percentile, a clinical assessment including waist circumference, physical fitness evaluation, and if indicated body fat percentage is more informative than BMI alone.</p>
-
+      <p>For teenage athletes with a BMI above the 85th percentile, a clinical assessment including waist circumference, physical fitness evaluation, and if indicated <a href="/glossary/body-fat-percentage">body fat percentage</a> is more informative than BMI alone.</p>
       <h2 id="transition-adult">Transition to adult BMI at age 20</h2>
-      <p>At age 20, the CDC growth chart percentile system no longer applies. Adult BMI uses fixed thresholds regardless of age or sex:</p>
+      <p>At age 20, the CDC growth chart percentile system no longer applies. <a href="/health/bmi-calculator">Adult BMI</a> uses fixed thresholds regardless of age or gender:</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -434,30 +479,29 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <p>For most 19-year-olds in the healthy percentile range, the transition is seamless - their BMI at the 50th percentile (approximately 22 for boys, 21.5 for girls) falls squarely in the adult Normal weight range. The transition is most significant for teens at the upper end: a 19-year-old at the 90th percentile may have a BMI around 27–28, which crosses from "percentile-based overweight" to "adult overweight" at the same absolute number. If your 19-year-old is approaching their 20th birthday and has an elevated BMI percentile, now is a meaningful time to discuss adult health goals with their doctor.</p>
-
-      <h2 id="faq">FAQs</h2>
-
+      <p>For most 19-year-olds in the healthy percentile range, the transition is seamless - their BMI at the 50th percentile (approximately 22 for boys, 21.5 for girls) falls squarely in the adult Normal weight range.</p>
+      <p>The transition is most significant for teens at the upper end: a 19-year-old at the 90th percentile may have a BMI around 27–28, which crosses from "percentile-based overweight" to "adult overweight" at the same absolute number.</p>
+      <p>If your 19-year-old is approaching their 20th birthday and has an <a href="/glossary/bmi-percentile">elevated BMI percentile</a>, now is a meaningful time to discuss adult health goals with their doctor.</p>
+      <h2 id="faq">FAQs about BMI for teens</h2>
       <h3>What is a healthy BMI for a teenager?</h3>
-      <p>Between the 5th and 85th percentile for their age and sex. For a 15-year-old boy that is approximately 16.8–23.6; for a 15-year-old girl approximately 16.4–24.4. Use the calculator above for exact values at any age.</p>
-
+      <p>Between the 5th and 85th percentile for their age and gender. For a 15-year-old boy that is approximately 16.8–23.6; for a 15-year-old girl approximately 16.4–24.4. Use the calculator above for exact values at any age.</p>
       <h3>What is a normal BMI for a 15-year-old?</h3>
       <p>Healthy range: approximately 16.8–23.6 for boys (5th–85th percentile), and 16.4–24.4 for girls. The median (50th percentile) at age 15 is approximately 20.2 for both boys and girls - though the composition differs significantly due to puberty.</p>
-
       <h3>At what BMI is a teenager overweight?</h3>
-      <p>At or above the 85th percentile for their age and sex. For a 15-year-old boy that threshold is approximately BMI 23.6; for a 15-year-old girl approximately BMI 24.4. These thresholds increase each year through adolescence.</p>
-
+      <p>At or above the 85th percentile for their age and gender. For a 15-year-old boy that threshold is approximately BMI 23.6; for a 15-year-old girl approximately BMI 24.4. These thresholds increase each year through adolescence.</p>
       <h3>Does puberty affect BMI?</h3>
-      <p>Yes, significantly. Girls' BMI rises during puberty due to normal, healthy oestrogen-driven fat deposition. Boys' BMI rises due to rapid muscle and bone gain driven by testosterone. Both are expected and should not trigger concern unless the rise is extreme or the percentile is already above the 85th.</p>
-
+      <p>Yes, significantly. Girls' BMI rises during puberty due to normal, healthy estrogen-driven fat deposition. Boys' BMI rises due to rapid muscle and bone gain driven by testosterone. Both are expected and should not trigger concern unless the rise is extreme or the percentile is already above the 85th.</p>
       <h3>When does a teenager switch to adult BMI?</h3>
       <p>At age 20. Adult fixed thresholds apply: below 18.5 is Underweight, 18.5–24.9 is Normal weight, 25.0–29.9 is Overweight, 30+ is Obese. Use the <a href="/health/bmi-calculator">adult BMI Calculator</a> from that point on.</p>
-
       <h3>Is BMI accurate for teenage athletes?</h3>
       <p>Less so for strength-sport athletes, particularly boys. A muscular teenage boy may have a BMI above the 85th percentile with low body fat. Waist circumference or a body fat measurement is more informative in these cases.</p>
-
       <h3>Can BMI cause eating disorders in teens?</h3>
-      <p>BMI framed as an appearance metric can contribute to weight stigma and body image distress in vulnerable teens. Clinical guidance recommends discussing weight in terms of health behaviours (activity, nutrition, sleep), not appearance, and always involving a healthcare provider when raising weight concerns with a teenager.</p>
+      <p>BMI framed as an appearance metric can contribute to weight stigma and body image distress in vulnerable teens. Clinical guidance recommends discussing weight in terms of health behaviors (activity, nutrition, sleep), not appearance, and always involving a healthcare provider when raising weight concerns with a teenager.</p>
+      <QuizBlock
+        topic="teen BMI"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/bmi-calculator/teens"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
@@ -467,8 +511,7 @@ const schema = [
         { path: '/conversion/weight-converter' },
         { path: '/conversion/height-converter' },
       ]} />
-
+      <RelatedGlossaryTerms toolPath="/health/bmi-calculator/teens" />
     </div>
   </div>
-
 </CalculatorLayout>

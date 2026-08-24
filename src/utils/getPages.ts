@@ -560,19 +560,19 @@ const entries: Entry[] = [
   {
     path: '/health',
     title: 'Health Calculators - Free BMI & Body Composition Tools',
-    description: 'Free health calculators: BMI by age and sex, specialist BMI tools for men, women, kids, teens, seniors, and pregnancy, BMI weight loss planner, and lean body mass with FFMI for athletes.',
+    description: 'Free health calculators: BMI by age and gender, specialist BMI tools for men, women, kids, teens, seniors, and pregnancy, BMI weight loss planner, and lean body mass with FFMI for athletes.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: '🏥',
   },
   {
     path: '/health/bmi-calculator',
-    title: 'BMI Calculator by Age & Sex - Body Fat Estimate & Chart',
-    description: 'Calculate BMI by age and sex. Get your BMI category, estimated body fat %, healthy weight range, and personalised age-specific interpretation - metric or imperial.',
+    title: 'BMI Calculator by Age & Gender - Body Fat Estimate & Chart',
+    description: 'Calculate BMI by age and gender. Get your BMI category, estimated body fat %, healthy weight range, and personalised age-specific interpretation - metric or imperial.',
     changefreq: 'weekly',
     priority: 1.0,
     icon: '⚤',
-    short: 'Body Mass Index by age & sex',
+    short: 'Body Mass Index by age & gender',
     featured: true,
   },
   {
@@ -605,7 +605,7 @@ const entries: Entry[] = [
   {
     path: '/health/bmi-calculator/kids',
     title: 'BMI Calculator for Kids - BMI-for-Age Percentile (Ages 2–12)',
-    description: 'Free BMI calculator for children aged 2–12. Uses CDC 2000 growth charts to show BMI-for-age percentile and weight category. Healthy weight is the 5th to 85th percentile for your child\'s age and sex.',
+    description: 'Free BMI calculator for children aged 2–12. Uses CDC 2000 growth charts to show BMI-for-age percentile and weight category. Healthy weight is the 5th to 85th percentile for your child\'s age and gender.',
     changefreq: 'weekly',
     icon: '🧒',
     priority: 1.0,
@@ -678,7 +678,7 @@ const entries: Entry[] = [
   },
   {
     path: '/health/ideal-weight-calculator',
-    title: 'Ideal Weight Calculator - IBW by Height & Sex',
+    title: 'Ideal Weight Calculator - IBW by Height & Gender',
     description: 'Calculate your ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas. Compare with the WHO healthy BMI weight range for your height - metric or imperial.',
     changefreq: 'weekly',
     icon: '🎯',

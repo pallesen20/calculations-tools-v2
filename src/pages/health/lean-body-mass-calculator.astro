@@ -49,7 +49,7 @@ const quizQuestions = [
   },
   {
     q: 'Why does the page recommend FFMI over BMI for people who train consistently?',
-    options: ['FFMI accounts for age and sex while BMI does not', 'BMI uses height squared in the denominator, making it unreliable for tall people', 'FFMI is based on LBM rather than total weight, so higher muscle mass raises FFMI instead of incorrectly flagging a muscular person as overweight', 'BMI was only validated for sedentary populations and has never been studied in athletes'] as [string, string, string, string],
+    options: ['FFMI accounts for age and gender while BMI does not', 'BMI uses height squared in the denominator, making it unreliable for tall people', 'FFMI is based on LBM rather than total weight, so higher muscle mass raises FFMI instead of incorrectly flagging a muscular person as overweight', 'BMI was only validated for sedentary populations and has never been studied in athletes'] as [string, string, string, string],
     correct: 2 as const,
     explanation: 'Muscle is roughly 18% denser than fat, so a highly muscular person weighs more at the same tissue volume. BMI treats this extra weight as a problem. FFMI uses LBM - stripping out fat mass before dividing by height squared - so added muscle raises FFMI toward Excellent or Superior rather than pushing BMI into the Overweight range.',
   },
@@ -117,7 +117,7 @@ const schema = [
     "description": "Use this calculator to find your LBM, body fat %, and FFMI in three steps.",
     "step": [
       { "@type": "HowToStep", "position": 1, "name": "Choose your unit system", "text": "Select Metric (kg and cm) or Imperial (lbs, feet, and inches) using the toggle at the top." },
-      { "@type": "HowToStep", "position": 2, "name": "Select your sex", "text": "Choose Male or Female. Sex is required because LBM formulas use different coefficients for men and women due to differences in body composition." },
+      { "@type": "HowToStep", "position": 2, "name": "Select your gender", "text": "Choose Male or Female. Gender is required because LBM formulas use different coefficients for men and women due to differences in body composition." },
       { "@type": "HowToStep", "position": 3, "name": "Enter your weight and height", "text": "Results appear instantly: lean body mass (Boer formula), fat mass, body fat %, normalised FFMI with category, BMI, and a comparison across all three formulas." }
     ]
   },
@@ -164,7 +164,7 @@ const schema = [
           <button class="bmi-unit-btn" data-unit="imperial">Imperial</button>
         </div>
         <div class="bmi-field" style="margin-bottom:1.25rem">
-          <label class="bmi-label">Sex</label>
+          <label class="bmi-label">Gender</label>
           <div class="bmi-sex-toggle">
             <button class="bmi-sex-btn active" data-sex="male">Male</button>
             <button class="bmi-sex-btn" data-sex="female">Female</button>
@@ -248,8 +248,8 @@ const schema = [
         <p>Lean body mass (LBM) is total body weight minus fat mass - the combined weight of muscle, bone, organs, blood, skin, and water. A healthy LBM is typically <strong>75–90%</strong> of total body weight for men and <strong>68–85%</strong> for women. This calculator adds <a href="/health/ffmi-calculator">FFMI (Fat-Free Mass Index)</a>, which tells athletes how much muscle they carry relative to height - a far more meaningful metric than <a href="/glossary/bmi">BMI</a> for anyone who trains.</p>
       </div>
       <h2 id="how-to-use">How to use this LBM calculator</h2>
-      <p>Select your unit system, choose your sex, then enter your weight and height. Results appear instantly: lean body mass (using the Boer formula as primary), fat mass, body fat %, normalised FFMI with category, BMI, and a formula comparison row showing all three LBM estimates side by side.</p>
-      <p>Sex is required because LBM formulas use different coefficients for men and women - men's formula weights weight more heavily while women's formula weights height more heavily, reflecting differences in <a href="/glossary/body-composition">body composition distribution</a>. Age is not required for LBM estimation.</p>
+      <p>Select your unit system, choose your gender, then enter your weight and height. Results appear instantly: lean body mass (using the Boer formula as primary), fat mass, body fat %, normalised FFMI with category, BMI, and a formula comparison row showing all three LBM estimates side by side.</p>
+      <p>Gender is required because LBM formulas use different coefficients for men and women - men's formula weights weight more heavily while women's formula weights height more heavily, reflecting differences in <a href="/glossary/body-composition">body composition distribution</a>. Age is not required for LBM estimation.</p>
       <h2 id="what-is-lbm">What is lean body mass (LBM)?</h2>
       <p><a href="/glossary/lean-body-mass">Lean body mass</a> is the weight of everything in your body except stored fat. It comprises:</p>
       <ul>
@@ -381,7 +381,7 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>Women in the Athletic and Fitness ranges carry higher absolute body fat percentages than men in the same categories. This is physiologically normal - female sex hormones promote higher body fat storage, particularly in the hips and thighs, and this fat serves reproductive and hormonal functions.</p>
+      <p>Women in the Athletic and Fitness ranges carry higher absolute body fat percentages than men in the same categories. This is physiologically normal - female gender hormones promote higher body fat storage, particularly in the hips and thighs, and this fat serves reproductive and hormonal functions.</p>
       <p>The "essential fat" floor for women (14%) is substantially higher than for men (2–5%) for the same reasons.</p>
       <p>The body fat shown in this calculator is derived from LBM using the Boer formula, which is a formula-based estimate. It will be less accurate than direct measurement methods (DEXA scan, hydrostatic weighing, air displacement plethysmography).</p>
       <p>For highly muscular individuals, the formula may slightly overestimate body fat; for very obese individuals it may underestimate.</p>
@@ -436,7 +436,7 @@ const schema = [
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/health/ffmi-calculator' },
-        { path: '/health/bmi-calculator', blurb: 'Standard BMI calculator by age and sex with estimated body fat % - see how BMI compares to your LBM and FFMI.' },
+        { path: '/health/bmi-calculator', blurb: 'Standard BMI calculator by age and gender with estimated body fat % - see how BMI compares to your LBM and FFMI.' },
         { path: '/health/bmi-calculator/weight-loss', blurb: 'Calculate how much weight to lose to reach your target BMI, with time estimate at your chosen weekly pace.' },
         { path: '/health/bmi-calculator/men', blurb: 'Men-specific BMI guide covering FFMI, the testosterone-obesity connection, and waist circumference thresholds.' },
         { path: '/health/bmi-calculator/women' },

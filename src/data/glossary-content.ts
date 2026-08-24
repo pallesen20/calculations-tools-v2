@@ -2566,7 +2566,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'Body fat percentage is the proportion of total body weight that consists of adipose (fat) tissue, expressed as a percentage: $$\\text{Body Fat \\%} = \\frac{\\text{Fat Mass (kg)}}{\\text{Total Body Weight (kg)}} \\times 100$$',
       'Fat tissue serves essential physiological roles: hormone regulation (leptin, oestrogen), organ protection, thermal insulation, and energy storage. The body requires a minimum level of fat - termed essential fat - to maintain these functions: approximately 2–5% in men and 10–13% in women. Below these thresholds, hormonal and organ function are compromised.',
-      'Healthy body fat ranges vary by sex and age. General reference ranges for adults are: men 8–19% (fit to acceptable), women 21–33% (fit to acceptable). Athletes typically fall below these ranges, and body fat naturally increases with age even when weight remains stable, due to the gradual replacement of lean tissue with fat.',
+      'Healthy body fat ranges vary by gender and age. General reference ranges for adults are: men 8–19% (fit to acceptable), women 21–33% (fit to acceptable). Athletes typically fall below these ranges, and body fat naturally increases with age even when weight remains stable, due to the gradual replacement of lean tissue with fat.',
     ],
     whenToUse: 'Use body fat percentage when you need a direct assessment of adiposity that is independent of muscle mass. It is the preferred metric for tracking body composition changes during training, dieting, or clinical weight management programmes - particularly where BMI would be misleading, such as with muscular individuals, post-menopausal women, and the elderly.',
     examples: {
@@ -2614,7 +2614,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
         },
         {
           q: 'According to the FAQ, what determines whether 7% body fat is healthy or causes problems?',
-          options: ['Whether the person is an endurance athlete (may be healthy) or sedentary (may experience hormonal suppression)', 'Whether the person is male or female, since thresholds differ significantly by sex', 'Whether body fat was measured by DEXA or a less accurate estimation method', 'Whether the person is over or under 40 years of age'] as [string, string, string, string],
+          options: ['Whether the person is an endurance athlete (may be healthy) or sedentary (may experience hormonal suppression)', 'Whether the person is male or female, since thresholds differ significantly by gender', 'Whether body fat was measured by DEXA or a less accurate estimation method', 'Whether the person is over or under 40 years of age'] as [string, string, string, string],
           correct: 0 as const,
           explanation: 'The FAQ notes that an endurance athlete at 7% body fat may be healthy, while a sedentary person at the same level may experience hormonal suppression. Healthy body fat is context-dependent, not a fixed universal threshold.',
         },
@@ -2675,7 +2675,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
         },
         {
           q: 'According to the FAQ on natural FFMI limits, what is the estimated natural ceiling for women?',
-          options: ['Approximately 21-22, compared to approximately 25 for men, consistent with women\'s FFMI values running roughly 3-4 points lower across all categories', 'Approximately 25, because the normalised FFMI formula already accounts for sex differences and produces the same ceiling for both sexes', 'Approximately 27-28, because women\'s greater proportion of type 1 muscle fibres allows higher FFMI values than the male reference population', 'Approximately 18-19, which is why the "above average" category for women begins at a lower absolute threshold than the male table'] as [string, string, string, string],
+          options: ['Approximately 21-22, compared to approximately 25 for men, consistent with women\'s FFMI values running roughly 3-4 points lower across all categories', 'Approximately 25, because the normalised FFMI formula already accounts for gender differences and produces the same ceiling for both genders', 'Approximately 27-28, because women\'s greater proportion of type 1 muscle fibres allows higher FFMI values than the male reference population', 'Approximately 18-19, which is why the "above average" category for women begins at a lower absolute threshold than the male table'] as [string, string, string, string],
           correct: 0 as const,
           explanation: 'The FAQ states that for women, the equivalent natural ceiling is estimated at approximately 21-22, compared to approximately 25 for men. The "good FFMI" FAQ confirms that average values for women are roughly 3-4 points lower than men due to physiological differences in muscle mass potential.',
         },
@@ -2685,7 +2685,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
 
   'ideal-body-weight': {
     definition: [
-      'Ideal body weight (IBW) is a clinically estimated target weight derived from height and sex, originally developed to guide drug dosing rather than to define an aesthetic or fitness goal. The most widely used formula is the Devine formula (1974): For men: $$\\text{IBW} = 50 + 2.3 \\times (\\text{height in inches} - 60)$$ For women: $$\\text{IBW} = 45.5 + 2.3 \\times (\\text{height in inches} - 60)$$',
+      'Ideal body weight (IBW) is a clinically estimated target weight derived from height and gender, originally developed to guide drug dosing rather than to define an aesthetic or fitness goal. The most widely used formula is the Devine formula (1974): For men: $$\\text{IBW} = 50 + 2.3 \\times (\\text{height in inches} - 60)$$ For women: $$\\text{IBW} = 45.5 + 2.3 \\times (\\text{height in inches} - 60)$$',
       'Several alternative formulas exist. The Robinson formula (1983) uses slightly different coefficients. The Miller formula (1983) produces lower estimates. The Hamwi formula (1964) is an older rule-of-thumb. All four formulas were empirically derived from population data and produce meaningfully different results, particularly at the extremes of height.',
       'IBW was created for pharmacokinetic applications - specifically for calculating doses of renally-cleared and volume-of-distribution-sensitive drugs in patients where total body weight would lead to overdosing. Its use as a general weight target is a secondary application that has outgrown its original clinical purpose.',
     ],
@@ -2863,9 +2863,9 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
 
   'estrogen': {
     definition: [
-      'Estrogen is the primary female sex hormone, though it is present and necessary in both sexes. In women, estrogen is produced mainly in the ovaries and regulates the menstrual cycle, reproduction, and fat distribution toward the hips, thighs, and breasts. In men, small amounts are produced in the testes and adrenal glands, but the dominant source is peripheral conversion of testosterone to estradiol - the most potent estrogen - by the aromatase enzyme in adipose tissue.',
+      'Estrogen is the primary female gender hormone, though it is present and necessary in both genders. In women, estrogen is produced mainly in the ovaries and regulates the menstrual cycle, reproduction, and fat distribution toward the hips, thighs, and breasts. In men, small amounts are produced in the testes and adrenal glands, but the dominant source is peripheral conversion of testosterone to estradiol - the most potent estrogen - by the aromatase enzyme in adipose tissue.',
       'In men, estrogen plays important regulatory roles at normal concentrations: it maintains bone mineral density, supports cognitive function, and modulates libido. Problems arise when the testosterone-to-estrogen ratio falls too far - a pattern called relative estrogen excess - which occurs when aromatase activity in excess body fat converts too much testosterone to estradiol. This suppresses the hypothalamic-pituitary-gonadal (HPG) axis and reduces further testosterone production, worsening the imbalance.',
-      'There are three main endogenous estrogens: estradiol (E2, most potent, dominant during reproductive years), estriol (E3, produced during pregnancy), and estrone (E1, dominant after menopause). For body composition and cardiometabolic purposes, estradiol is the clinically relevant marker in both sexes.',
+      'There are three main endogenous estrogens: estradiol (E2, most potent, dominant during reproductive years), estriol (E3, produced during pregnancy), and estrone (E1, dominant after menopause). For body composition and cardiometabolic purposes, estradiol is the clinically relevant marker in both genders.',
     ],
     beginnerExplain: [
       'Think of estrogen and testosterone as two sides of a hormonal balance. In men, the balance normally tilts heavily toward testosterone. When body fat rises, aromatase in fat tissue acts as a conversion factory - turning testosterone into estrogen and pushing the balance the other way. The result is lower testosterone, easier fat gain, and less muscle - all of which drive more fat gain and more aromatase activity.',
@@ -2873,7 +2873,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     ],
     whenToUse: 'Estrogen is relevant in male body composition when BMI is elevated, because aromatase activity in visceral fat is the mechanism linking obesity to low testosterone. In women, estrogen explains the "pear" fat distribution pattern, the higher essential fat requirement (10-13% vs 2-5% in men), and why post-menopausal women see accelerating visceral fat accumulation as estrogen protection is removed.',
     examples: {
-      headers: ['Sex', 'Estradiol (E2) range', 'Clinical note'],
+      headers: ['Gender', 'Estradiol (E2) range', 'Clinical note'],
       rows: [
         ['Men (adult)', '10 - 40 pg/mL', 'Above 40 pg/mL with low testosterone signals excess aromatase activity'],
         ['Women (follicular)', '12 - 250 pg/mL', 'Rises sharply before ovulation; highly variable across cycle'],
@@ -2939,7 +2939,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
           options: [
             'Cortisol, since HPA-axis activity modulates both testosterone and estrogen simultaneously',
             'Free testosterone - the testosterone-to-estradiol ratio is the clinically relevant signal, not estradiol in isolation',
-            'SHBG, since sex hormone-binding globulin directly determines how much estradiol is biologically active',
+            'SHBG, since gender hormone-binding globulin directly determines how much estradiol is biologically active',
             'LH and FSH, since pituitary hormone levels are needed to distinguish primary from secondary hypogonadism',
           ] as [string, string, string, string],
           correct: 1 as const,
@@ -2953,7 +2953,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'Visceral fat is body fat stored inside the abdominal cavity, surrounding the liver, pancreas, kidneys, and intestines. Unlike subcutaneous fat stored beneath the skin, visceral fat sits within the peritoneal cavity and drains directly into the portal circulation - the blood supply that goes to the liver before anywhere else in the body.',
       'This anatomical position makes visceral fat metabolically distinct and more harmful than subcutaneous fat. Visceral fat is biologically active: it releases pro-inflammatory cytokines (TNF-alpha, IL-6), free fatty acids, and hormones (including resistin and leptin) directly into the portal vein. This constant inflammatory signal drives insulin resistance, raises triglycerides, lowers HDL cholesterol, and elevates blood pressure - the cluster known as metabolic syndrome. Higher visceral fat mass is independently associated with type 2 diabetes, cardiovascular disease, non-alcoholic fatty liver disease, and certain cancers regardless of total body weight.',
-      'BMI cannot distinguish visceral fat from subcutaneous fat or muscle. Two men with identical BMI and waist circumference may have very different visceral fat volumes depending on genetics, age, sex hormone levels, and lifestyle. CT and MRI imaging are the gold standard for measuring visceral fat; DEXA scanning provides an estimate. In clinical and consumer settings, waist circumference and waist-to-height ratio are the most practical validated proxies.',
+      'BMI cannot distinguish visceral fat from subcutaneous fat or muscle. Two men with identical BMI and waist circumference may have very different visceral fat volumes depending on genetics, age, gender hormone levels, and lifestyle. CT and MRI imaging are the gold standard for measuring visceral fat; DEXA scanning provides an estimate. In clinical and consumer settings, waist circumference and waist-to-height ratio are the most practical validated proxies.',
     ],
     beginnerExplain: [
       'Think of visceral fat as fat that has VIP access to your liver. Subcutaneous fat - the kind you can pinch - sits quietly under the skin and causes relatively little metabolic harm at moderate levels. Visceral fat, by contrast, is constantly releasing chemicals into the portal vein, which flows straight to the liver. The liver receives these signals continuously and responds by increasing blood sugar, raising triglycerides, and triggering inflammation throughout the body.',
@@ -3041,7 +3041,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
 
   'testosterone': {
     definition: [
-      'Testosterone is the primary male sex hormone, produced mainly in the Leydig cells of the testes under regulation from the hypothalamic-pituitary-gonadal (HPG) axis. Normal total testosterone in adult men ranges from 300 to 1,000 ng/dL (10.4-34.7 nmol/L), with free testosterone - the biologically active fraction not bound to proteins - representing roughly 1-3% of the total.',
+      'Testosterone is the primary male gender hormone, produced mainly in the Leydig cells of the testes under regulation from the hypothalamic-pituitary-gonadal (HPG) axis. Normal total testosterone in adult men ranges from 300 to 1,000 ng/dL (10.4-34.7 nmol/L), with free testosterone - the biologically active fraction not bound to proteins - representing roughly 1-3% of the total.',
       'Testosterone drives two critical body composition processes: anabolism (stimulating muscle protein synthesis and lean mass accretion) and lipolysis (promoting fat breakdown, especially in visceral depots). This dual action means that well-maintained testosterone levels support a leaner, more metabolically active body composition - while declining levels push body composition in the opposite direction.',
       'The relationship between body fat and testosterone is bidirectional. Adipose tissue contains aromatase, an enzyme that converts testosterone to estradiol (estrogen). Men with higher visceral fat have more aromatase activity, which lowers free testosterone. Low testosterone then reduces muscle mass and raises fat mass, increasing aromatase activity further. Research shows total testosterone declines by approximately 2% for each 1-unit rise in BMI in men with obesity.',
     ],
@@ -3059,11 +3059,11 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
         ['Hypogonadal', 'Below 300', 'Clinical hypogonadism; medical evaluation recommended'],
       ],
     },
-    pitfalls: 'Total testosterone can be normal while free testosterone is low, particularly in obese men where sex hormone-binding globulin (SHBG) levels are altered. A man with a total testosterone of 450 ng/dL but high SHBG may have free testosterone well below the normal range - meaning the biologically active fraction is suppressed even though the headline number looks acceptable. Free testosterone or calculated free testosterone should be checked when total testosterone appears borderline.',
+    pitfalls: 'Total testosterone can be normal while free testosterone is low, particularly in obese men where gender hormone-binding globulin (SHBG) levels are altered. A man with a total testosterone of 450 ng/dL but high SHBG may have free testosterone well below the normal range - meaning the biologically active fraction is suppressed even though the headline number looks acceptable. Free testosterone or calculated free testosterone should be checked when total testosterone appears borderline.',
     faqs: [
       { q: 'What is a normal testosterone level for men?', a: 'The standard clinical reference range for total testosterone in adult men is 300 to 1,000 ng/dL. Levels vary with age: men in their 20s often measure 600-900 ng/dL, while men over 60 commonly fall in the 300-500 ng/dL range as a result of the natural 1-2% per year decline that begins around age 30.' },
       { q: 'How much does BMI affect testosterone?', a: 'Research consistently shows total testosterone declines by approximately 2% for each 1-unit increase in BMI. A man moving from BMI 25 to BMI 35 may experience a testosterone decline equivalent to 10-15 years of normal aging. The mechanism is aromatase activity in visceral fat, which converts testosterone to estrogen and suppresses HPG-axis production.' },
-      { q: 'What is the difference between total and free testosterone?', a: 'Total testosterone measures all testosterone in the blood. Free testosterone is the small fraction (1-3%) not bound to proteins - primarily sex hormone-binding globulin (SHBG) and albumin. Only free testosterone can enter cells and exert biological effects. In obese men, SHBG can be suppressed, sometimes paradoxically elevating free testosterone despite low total; conversely, high SHBG (common in older men) can leave free testosterone low despite normal total levels.' },
+      { q: 'What is the difference between total and free testosterone?', a: 'Total testosterone measures all testosterone in the blood. Free testosterone is the small fraction (1-3%) not bound to proteins - primarily gender hormone-binding globulin (SHBG) and albumin. Only free testosterone can enter cells and exert biological effects. In obese men, SHBG can be suppressed, sometimes paradoxically elevating free testosterone despite low total; conversely, high SHBG (common in older men) can leave free testosterone low despite normal total levels.' },
       { q: 'Can weight loss raise testosterone levels?', a: 'Yes, consistently. Multiple clinical studies show that weight loss in obese men raises total testosterone proportionally to the amount of fat lost. A 10% reduction in body weight is associated with an average 15-25% increase in testosterone. The effect is enhanced when weight loss is accompanied by resistance training, which adds an additional anabolic stimulus independent of fat loss.' },
     ],
     quiz: {
@@ -3356,7 +3356,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
   'waist-circumference': {
     definition: [
       'Waist circumference is a direct measure of abdominal adiposity - the accumulation of fat in the trunk region. It is measured at the narrowest point of the torso, typically at or just above the navel, and is a strong independent predictor of metabolic disease risk beyond what BMI captures.',
-      'The WHO defines two risk thresholds for each sex. For men: ≥94 cm indicates increased risk; ≥102 cm indicates high risk. For women: ≥80 cm indicates increased risk; ≥88 cm indicates high risk. These thresholds were derived from European populations; some guidelines recommend lower cut-points for South Asian, East Asian, and other ethnic groups where cardiometabolic risk increases at smaller waist sizes.',
+      'The WHO defines two risk thresholds for each gender. For men: ≥94 cm indicates increased risk; ≥102 cm indicates high risk. For women: ≥80 cm indicates increased risk; ≥88 cm indicates high risk. These thresholds were derived from European populations; some guidelines recommend lower cut-points for South Asian, East Asian, and other ethnic groups where cardiometabolic risk increases at smaller waist sizes.',
       'The clinical significance of waist circumference lies in what it captures that BMI cannot: visceral adipose tissue (VAT). Visceral fat surrounds the abdominal organs and is metabolically active in ways that subcutaneous fat is not - it drives insulin resistance, systemic inflammation, dyslipidaemia, and hypertension at higher rates than the same quantity of subcutaneous fat.',
     ],
     whenToUse: 'Use waist circumference alongside BMI to stratify cardiometabolic risk, particularly in individuals with BMI in the overweight range (25–29.9) where clinical significance is ambiguous. It is especially valuable for identifying normal-weight individuals with central adiposity - those with a healthy BMI but an elevated waist measurement - who carry metabolic risk that BMI alone would miss.',
@@ -6805,7 +6805,7 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       },
       {
         q: 'Is geriatric BMI interpretation different for men and women over 65?',
-        a: 'The 23-27.5 optimal range applies to both sexes in most geriatric guidelines. However, women over 65 face additional considerations: postmenopausal estrogen loss accelerates fat redistribution toward the abdomen, and bone density loss raises fracture risk at lower weights. Waist circumference above 88 cm is a specific risk marker for postmenopausal women regardless of BMI category.'
+        a: 'The 23-27.5 optimal range applies to both genders in most geriatric guidelines. However, women over 65 face additional considerations: postmenopausal estrogen loss accelerates fat redistribution toward the abdomen, and bone density loss raises fracture risk at lower weights. Waist circumference above 88 cm is a specific risk marker for postmenopausal women regardless of BMI category.'
       },
       {
         q: 'At what age does geriatric BMI interpretation begin to apply?',

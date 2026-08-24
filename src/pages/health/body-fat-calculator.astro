@@ -50,7 +50,7 @@ const quizQuestions = [
     q: 'According to ACE guidelines, what is the Acceptable body fat range for women?',
     options: ['14-20%', '21-24%', '25-31%', '32% and above'] as [string, string, string, string],
     correct: 2 as const,
-    explanation: 'ACE classifies 25-31% as Acceptable for women. Below that is Fitness (21-24%) and Athletic (14-20%). Above 32% is High. Women naturally carry more body fat than men due to sex-specific fat stores required for hormone production and reproductive function.',
+    explanation: 'ACE classifies 25-31% as Acceptable for women. Below that is Fitness (21-24%) and Athletic (14-20%). Above 32% is High. Women naturally carry more body fat than men due to gender-specific fat stores required for hormone production and reproductive function.',
   },
   {
     q: 'According to this page, why should you not use this calculator during pregnancy?',
@@ -70,7 +70,7 @@ const sources: Source[] = [
   },
   {
     author: 'Deurenberg P, Weststrate JA, Seidell JC',
-    title: 'Body mass index as a measure of body fatness: age- and sex-specific prediction formulas',
+    title: 'Body mass index as a measure of body fatness: age- and gender-specific prediction formulas',
     journal: 'British Journal of Nutrition',
     year: 1991,
     url: 'https://doi.org/10.1079/bjn19910073',
@@ -109,7 +109,7 @@ const schema = [
     "name": "How to calculate body fat % with the Navy method",
     "description": "Use this body fat calculator to measure your body fat percentage with a tape measure in five steps.",
     "step": [
-      { "@type": "HowToStep", "position": 1, "name": "Choose your unit system and sex", "text": "Select Metric or Imperial and choose Male or Female. Sex affects both which measurements are needed and which formula is applied." },
+      { "@type": "HowToStep", "position": 1, "name": "Choose your unit system and gender", "text": "Select Metric or Imperial and choose Male or Female. Gender affects both which measurements are needed and which formula is applied." },
       { "@type": "HowToStep", "position": 2, "name": "Enter height and weight", "text": "Enter your height and weight. Weight is needed to calculate your fat mass and lean body mass in kg or lbs." },
       { "@type": "HowToStep", "position": 3, "name": "Measure your waist", "text": "Men: measure at the level of the navel, standing relaxed. Women: measure at the narrowest point (natural waist, typically above the navel). Record to the nearest 0.5 cm or 0.25 inch." },
       { "@type": "HowToStep", "position": 4, "name": "Measure your neck", "text": "Measure just below the larynx (Adam's apple), with the tape sloping slightly downward to the front. Keep the head straight and looking forward." },
@@ -123,7 +123,7 @@ const schema = [
       { "@type": "Question", "name": "What is a healthy body fat percentage?", "acceptedAnswer": { "@type": "Answer", "text": "For men, 6–17% is the Athletic-to-Fitness range; 18–24% is Acceptable. For women, 14–24% is Athletic-to-Fitness; 25–31% is Acceptable. Essential fat (required for organ function) is 2–5% for men and 10–13% for women. Body fat above 25% for men and 32% for women is classified as High by ACE guidelines." } },
       { "@type": "Question", "name": "How accurate is the Navy body fat method?", "acceptedAnswer": { "@type": "Answer", "text": "The Navy tape method has a margin of error of approximately ±3–4 percentage points compared to DEXA scanning. Accuracy depends heavily on measurement technique - consistent landmark placement (navel for men's waist, narrowest point for women's waist) and a non-stretch tape measure reduce error significantly. Taking the average of three measurements improves precision." } },
       { "@type": "Question", "name": "Why does the Navy formula need neck measurement?", "acceptedAnswer": { "@type": "Answer", "text": "The neck circumference is used as a proxy for lean mass. Subtracting neck from waist (men) or from waist + hip (women) creates a ratio that distinguishes fat mass from lean mass. A larger neck relative to waist indicates more lean upper-body mass; a smaller neck indicates more fat in the midsection. Without this correction, the formula would overestimate body fat in muscular individuals with large necks." } },
-      { "@type": "Question", "name": "What is the difference between the Navy method and BMI-based body fat estimation?", "acceptedAnswer": { "@type": "Answer", "text": "The Navy tape method uses three (men) or four (women) body circumference measurements and produces a direct body fat % estimate without needing age. The Deurenberg BMI-based formula estimates body fat from BMI, age, and sex - it requires age but only needs height and weight measurements. The Navy method is generally more accurate (±3–4%) than Deurenberg (±5%) and is not affected by muscle mass the way BMI-derived estimates are." } },
+      { "@type": "Question", "name": "What is the difference between the Navy method and BMI-based body fat estimation?", "acceptedAnswer": { "@type": "Answer", "text": "The Navy tape method uses three (men) or four (women) body circumference measurements and produces a direct body fat % estimate without needing age. The Deurenberg BMI-based formula estimates body fat from BMI, age, and gender - it requires age but only needs height and weight measurements. The Navy method is generally more accurate (±3–4%) than Deurenberg (±5%) and is not affected by muscle mass the way BMI-derived estimates are." } },
       { "@type": "Question", "name": "Can I use the Navy method if I am pregnant?", "acceptedAnswer": { "@type": "Answer", "text": "No. The Navy formula is not valid during pregnancy. Waist and hip measurements increase significantly during pregnancy for reasons unrelated to fat mass, making the formula produce meaningless results. Use the BMI During Pregnancy calculator for gestational weight guidance instead." } },
       { "@type": "Question", "name": "How is this different from the FFMI Calculator?", "acceptedAnswer": { "@type": "Answer", "text": "The Body Fat Calculator measures your body fat % from tape measurements (Navy method). The FFMI Calculator takes a known body fat % as input and computes your Fat-Free Mass Index (FFMI) - a measure of muscle mass relative to height. Use this calculator first to get your body fat %, then enter it into the FFMI Calculator for the complete picture." } },
     ]
@@ -159,7 +159,7 @@ const schema = [
         </div>
         <div class="bmi-shared-fields">
           <div class="bmi-field">
-            <label class="bmi-label">Sex</label>
+            <label class="bmi-label">Gender</label>
             <div class="bmi-sex-toggle">
               <button class="bmi-sex-btn active" data-sex="male">Male</button>
               <button class="bmi-sex-btn" data-sex="female">Female</button>
@@ -295,7 +295,7 @@ const schema = [
         <p>For men, body fat below <strong>14%</strong> is Athletic, <strong>14–17%</strong> is Fitness, <strong>18–24%</strong> is Acceptable, and <strong>25%+</strong> is High. For women, below <strong>21%</strong> is Athletic, <strong>21–24%</strong> is Fitness, <strong>25–31%</strong> is Acceptable, and <strong>32%+</strong> is High (ACE guidelines). This calculator uses the US Navy tape method - measure your waist, neck, and hip (women) with a soft tape measure for an instant result requiring no lab equipment.</p>
       </div>
       <h2 id="how-to-use">How to use this body fat calculator</h2>
-      <p>Select your unit system and sex, then enter height, weight, and three circumference measurements: waist, neck, and (for women) hip. Results appear instantly: body fat %, category badge, fat mass, lean body mass, and BMI. Optionally enter your age to add a Deurenberg BMI-based estimate for comparison.</p>
+      <p>Select your unit system and gender, then enter height, weight, and three circumference measurements: waist, neck, and (for women) hip. Results appear instantly: body fat %, category badge, fat mass, lean body mass, and BMI. Optionally enter your age to add a Deurenberg BMI-based estimate for comparison.</p>
       <p>Measurement precision matters. Use a non-stretch tape measure and measure to the nearest 0.5 cm (or 0.25 in). Take measurements in the morning before eating, and record the average of two to three readings at each site for best accuracy.</p>
       <h2 id="what-is-bf">What is body fat percentage?</h2>
       <p><a href="/glossary/body-fat-percentage">Body fat percentage</a> is the proportion of your total body weight that is fat tissue. It is a more informative health metric than weight alone because it distinguishes fat mass from lean mass (muscle, bone, organs, and water).</p>
@@ -343,7 +343,7 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <p>Women carry 8–10 percentage points more essential fat than men due to sex-specific fat stores required for hormone production and reproductive function. This is physiologically normal - a woman at 22% body fat is in the Fitness category, not overweight.</p>
+      <p>Women carry 8–10 percentage points more essential fat than men due to gender-specific fat stores required for hormone production and reproductive function. This is physiologically normal - a woman at 22% body fat is in the Fitness category, not overweight.</p>
       <p>One pattern I notice consistently: users in the upper Acceptable range (22-24% for men, 28-31% for women) who are otherwise active often report normal-to-good blood markers. Metabolic health does not fall off a cliff at those levels.</p>
       <p>The jump to High (25%+ for men, 32%+ for women) is where cardiometabolic risk accumulates noticeably in cohort data - that boundary matters more than chasing Athletic percentages. Postmenopausal women crossing into this zone can use the <a href="/health/bmi-calculator/menopause">postmenopausal cardiometabolic risk tool</a> to combine body composition data with waist circumference, HRT status, and years since menopause.</p>
       <p>For most people, the Fitness-to-Acceptable boundary is the more meaningful target.</p>
@@ -378,7 +378,7 @@ const schema = [
           <tr><td>Skinfold calipers (professional)</td><td>±3 – 4%</td><td>Low</td><td>Trained technician + calipers</td></tr>
           <tr><td><strong>Navy tape method</strong></td><td>±3 – 4%</td><td>Free</td><td>Tape measure</td></tr>
           <tr><td>BIA (<a href="/glossary/bioelectrical-impedance-analysis">bioelectrical impedance</a>)</td><td>±3 – 6%</td><td>Low</td><td>BIA scale or device</td></tr>
-          <tr><td>Deurenberg BMI-based estimate</td><td>±4 – 5%</td><td>Free</td><td>Height, weight, age, sex</td></tr>
+          <tr><td>Deurenberg BMI-based estimate</td><td>±4 – 5%</td><td>Free</td><td>Height, weight, age, gender</td></tr>
           <tr><td>Visual estimate</td><td>±5 – 10%</td><td>Free</td><td>Mirror</td></tr>
         </tbody>
       </table>

@@ -721,7 +721,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Health',
     shortDef: 'BMI (Body Mass Index) is a weight-to-height ratio used to classify adults as underweight, normal weight, overweight, or obese. It is the most widely used population-level screening tool for weight status.',
     formula: '$$\\text{BMI} = \\frac{\\text{Weight (kg)}}{\\text{Height (m)}^2}$$',
-    relatedTools: ['/health/bmi-calculator', '/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/bmi-calculator/menopause', '/health/bmi-calculator/pregnancy', '/health/bmi-calculator/kids', '/health/bmi-calculator/seniors'],
+    relatedTools: ['/health/bmi-calculator', '/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/bmi-calculator/menopause', '/health/bmi-calculator/pregnancy', '/health/bmi-calculator/kids', '/health/bmi-calculator/seniors', '/health/bmi-calculator/teens', '/health/bmi-calculator/weight-loss'],
     relatedTerms: ['body-fat-percentage', 'ideal-body-weight', 'body-composition', 'waist-circumference', 'bmi-percentile', 'geriatric-bmi'],
   },
   {
@@ -741,7 +741,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Body Composition',
     siteCategory: 'Health',
     shortDef: 'Body composition is the proportional breakdown of the body into fat mass and lean mass (muscle, bone, water, organs). It is a more complete health indicator than body weight or BMI alone.',
-    relatedTools: ['/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/ffmi-calculator', '/health/bmi-calculator/pregnancy', '/health/bmi-calculator/menopause', '/health/bmi-calculator/kids', '/health/bmi-calculator/seniors'],
+    relatedTools: ['/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/ffmi-calculator', '/health/bmi-calculator/pregnancy', '/health/bmi-calculator/menopause', '/health/bmi-calculator/kids', '/health/bmi-calculator/seniors', '/health/bmi-calculator/teens', '/health/bmi-calculator/weight-loss'],
     relatedTerms: ['bmi', 'body-fat-percentage', 'lean-body-mass', 'ffmi'],
   },
   {
@@ -752,7 +752,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Health',
     shortDef: 'Body fat percentage is the proportion of total body weight that consists of fat tissue. It is a more accurate health marker than BMI because it distinguishes fat mass from lean mass.',
     formula: '$$\\text{Body Fat \\%} = \\frac{\\text{Fat Mass}}{\\text{Total Body Weight}} \\times 100$$',
-    relatedTools: ['/health/body-fat-calculator', '/health/ffmi-calculator', '/health/lean-body-mass-calculator', '/health/bmi-calculator/women', '/health/bmi-calculator/men', '/health/bmi-calculator/seniors'],
+    relatedTools: ['/health/body-fat-calculator', '/health/ffmi-calculator', '/health/lean-body-mass-calculator', '/health/bmi-calculator/women', '/health/bmi-calculator/men', '/health/bmi-calculator/seniors', '/health/bmi-calculator/teens', '/health/bmi-calculator/weight-loss'],
     relatedTerms: ['bmi', 'lean-body-mass', 'body-composition', 'ffmi', 'bioelectrical-impedance-analysis'],
   },
   {
@@ -773,7 +773,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Body Composition',
     siteCategory: 'Health',
     shortDef: 'Ideal Body Weight (IBW) is a clinical estimate of target weight based on height and sex, derived from the Devine, Robinson, Miller, and Hamwi formulas. It was originally developed for drug dosing, not fitness targets.',
-    relatedTools: ['/health/ideal-weight-calculator'],
+    relatedTools: ['/health/ideal-weight-calculator', '/health/bmi-calculator/weight-loss'],
     relatedTerms: ['bmi', 'body-composition', 'lean-body-mass'],
   },
   {
@@ -848,7 +848,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Body Composition',
     siteCategory: 'Health',
     shortDef: 'Geriatric BMI refers to the age-specific interpretation of BMI for adults 65 and over. Geriatric guidelines (ESPEN) recommend an optimal range of 23-27.5 - higher than the standard adult range of 18.5-24.9 - because low body weight carries greater health risk in older adults and a BMI of 25-30 does not carry the same mortality increase as at younger ages.',
-    relatedTools: ['/health/bmi-calculator/seniors', '/health/bmi-calculator'],
+    relatedTools: ['/health/bmi-calculator/seniors', '/health/bmi-calculator', '/health/bmi-calculator/weight-loss'],
     relatedTerms: ['bmi', 'body-composition', 'body-fat-percentage', 'sarcopenia'],
   },
   {
@@ -910,7 +910,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Hormones & Metabolism',
     siteCategory: 'Health',
     shortDef: 'Estrogen is the primary female sex hormone, present in both sexes. In men, the main source is peripheral conversion of testosterone to estradiol by the aromatase enzyme in fat tissue. When body fat rises, aromatase activity increases, shifting the testosterone-to-estrogen balance and suppressing HPG-axis testosterone production.',
-    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/bmi-calculator/menopause', '/health/bmi-calculator/pregnancy'],
+    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/bmi-calculator/menopause', '/health/bmi-calculator/pregnancy', '/health/bmi-calculator/teens'],
     relatedTerms: ['testosterone', 'visceral-fat', 'bmi', 'body-fat-percentage', 'waist-circumference'],
   },
   {
@@ -930,7 +930,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Hormones & Metabolism',
     siteCategory: 'Health',
     shortDef: 'Testosterone is the primary male sex hormone. It drives muscle protein synthesis, suppresses visceral fat storage, and regulates libido and bone density. In men with excess body fat, aromatase converts testosterone to estrogen, creating a feedback loop where high BMI lowers testosterone and low testosterone promotes further fat gain.',
-    relatedTools: ['/health/bmi-calculator/men', '/health/ffmi-calculator', '/health/body-fat-calculator', '/health/lean-body-mass-calculator'],
+    relatedTools: ['/health/bmi-calculator/men', '/health/ffmi-calculator', '/health/body-fat-calculator', '/health/lean-body-mass-calculator', '/health/bmi-calculator/teens'],
     relatedTerms: ['bmi', 'body-fat-percentage', 'lean-body-mass', 'ffmi', 'waist-circumference'],
   },
   {
@@ -950,7 +950,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Body Composition',
     siteCategory: 'Health',
     shortDef: 'Waist circumference measures abdominal girth at the natural waist. It is a direct indicator of visceral fat - the most metabolically harmful fat depot - and predicts cardiometabolic risk independently of BMI.',
-    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/bmi-calculator/seniors'],
+    relatedTools: ['/health/bmi-calculator/men', '/health/bmi-calculator/women', '/health/body-fat-calculator', '/health/bmi-calculator/seniors', '/health/bmi-calculator/teens', '/health/bmi-calculator/kids'],
     relatedTerms: ['bmi', 'body-fat-percentage', 'body-composition'],
   },
   {

@@ -102,7 +102,7 @@ const schema = [
     "description": "Use this FFMI calculator to find your Fat-Free Mass Index in four steps.",
     "step": [
       { "@type": "HowToStep", "position": 1, "name": "Choose your unit system", "text": "Select Metric (kg and cm) or Imperial (lbs, feet, and inches)." },
-      { "@type": "HowToStep", "position": 2, "name": "Select your sex", "text": "Choose Male or Female. Sex determines which FFMI category scale is applied." },
+      { "@type": "HowToStep", "position": 2, "name": "Select your gender", "text": "Choose Male or Female. Gender determines which FFMI category scale is applied." },
       { "@type": "HowToStep", "position": 3, "name": "Enter weight and height", "text": "Type your weight and height. These are used to calculate BMI and to derive LBM from your body fat %." },
       { "@type": "HowToStep", "position": 4, "name": "Enter your measured body fat %", "text": "Type your body fat percentage from a DEXA scan, bioelectrical impedance analysis, skinfold calipers, or Navy tape method. Your FFMI, category, LBM, fat mass, and natural limit note appear instantly." }
     ]
@@ -150,7 +150,7 @@ const schema = [
         </div>
         <div class="bmi-shared-fields">
           <div class="bmi-field">
-            <label class="bmi-label">Sex</label>
+            <label class="bmi-label">Gender</label>
             <div class="bmi-sex-toggle">
               <button class="bmi-sex-btn active" data-sex="male">Male</button>
               <button class="bmi-sex-btn" data-sex="female">Female</button>
@@ -246,7 +246,7 @@ const schema = [
         <p>FFMI (Fat-Free Mass Index) is lean body mass divided by height squared - it measures how much muscle you carry relative to your frame. Unlike BMI, FFMI ignores fat entirely. A normalised FFMI of <strong>20–22</strong> is above average for men; <strong>24–26</strong> is superior. The landmark Kouri et al. (1995) study found that <strong>all drug-free male athletes scored ≤ 25</strong>, making 25 the widely cited natural muscular limit. Enter your body fat % from a DEXA scan, calipers, or BIA device to get your score.</p>
       </div>
       <h2 id="how-to-use">How to use this FFMI calculator</h2>
-      <p>Select your unit system and sex, then enter weight, height, and your measured <a href="/glossary/body-fat-percentage">body fat percentage</a>. The calculator returns your normalised FFMI and category, raw FFMI, lean body mass, fat mass, BMI, and - for men scoring above 24 - a natural limit note referencing the Kouri 1995 thresholds.</p>
+      <p>Select your unit system and gender, then enter weight, height, and your measured <a href="/glossary/body-fat-percentage">body fat percentage</a>. The calculator returns your normalised FFMI and category, raw FFMI, lean body mass, fat mass, BMI, and - for men scoring above 24 - a natural limit note referencing the Kouri 1995 thresholds.</p>
       <p>Body fat % is the critical input. Use the most accurate method available: DEXA scanning (±1–2%), hydrostatic weighing, or professionally measured skinfold calipers. Consumer BIA scales are acceptable for tracking trends but carry ±3–5% error, which translates directly into FFMI error of approximately 0.5–1.5 points.</p>
       <h2 id="what-is-ffmi">What is FFMI?</h2>
       <p><a href="/glossary/ffmi">Fat-Free Mass Index</a> was introduced by Kouri et al. in 1995 to quantify muscular development independently of body fat and height. The formula separates lean body mass from total weight, then normalises for height the same way BMI does:</p>
@@ -262,7 +262,7 @@ const schema = [
       <p>Take two men who both weigh 85 kg at 180 cm. Man A has 15% body fat: his LBM is 85 x (1 - 0.15) = 72.3 kg, giving FFMI 72.3 / 1.80² = 22.3 - Excellent. Man B has 25% body fat: his LBM is 85 x (1 - 0.25) = 63.8 kg, giving FFMI 63.8 / 3.24 = 19.7 - Average. The scale reads the same for both; FFMI reveals that one carries 8.5 kg more muscle than the other.</p>
       <p>This is why FFMI matters for anyone who lifts weights. Two people can have an identical BMI of 26 - one is overweight, the other is lean and muscular. BMI cannot tell them apart. FFMI can.</p>
       <h2 id="ffmi-categories">FFMI categories</h2>
-      <p>FFMI categories differ by sex because testosterone drives substantially higher muscle mass in men. The thresholds below are derived from the Kouri 1995 study and subsequent research on athletic populations.</p>
+      <p>FFMI categories differ by gender because testosterone drives substantially higher muscle mass in men. The thresholds below are derived from the Kouri 1995 study and subsequent research on athletic populations.</p>
       <h3>FFMI for men</h3>
       <div class="responsive-table">
       <table>
