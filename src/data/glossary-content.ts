@@ -2347,6 +2347,167 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'bmi-percentile': {
+    definition: [
+      'BMI percentile is the standard method for assessing weight status in children aged 2-19. Rather than applying the fixed adult thresholds (18.5, 25, 30), a child\'s BMI is compared to a reference population of children the same age and gender. The result is expressed as a percentile - a number from 1 to 99 indicating what proportion of same-age, same-gender peers have a lower BMI.',
+      'The CDC 2000 growth charts define four categories based on percentile: Underweight (below 5th), Healthy weight (5th to below 85th), Overweight (85th to below 95th), and Obese (95th and above). These thresholds correspond to the percentile ranges associated with the lowest long-term cardiometabolic risk in US follow-up studies. The same formula is used as for adults - weight (kg) divided by height (m) squared - but interpretation is entirely different.',
+      'Because children\'s bodies change rapidly, no single BMI number stays in the same percentile category across childhood. A BMI of 17 is near the 30th percentile at age 8 but near the 10th percentile at age 12. This is why pediatricians track percentile over time rather than the raw number - and why a steady upward drift across several visits is often more clinically meaningful than the current percentile alone.',
+    ],
+    beginnerExplain: ['Think of it as a class rank. Line up 100 children of the same age and gender by BMI from lowest to highest - your child\'s percentile tells you their position in that line. A child at the 60th percentile has a higher BMI than 60 of those 100 peers. The healthy range (5th to 85th) is deliberately wide because individual variation in bone density, muscle mass, and frame size is large in childhood, and the thresholds reflect actual health outcomes, not arbitrary cutoffs.'],
+    whenToUse: 'Use BMI percentile at routine pediatric checkups or when interpreting results from a child BMI calculator. The most useful application is tracking the trend across consecutive visits - not the absolute level at any one appointment. A child who has risen from the 45th to the 72nd percentile over two years warrants more attention than one who has been consistently at the 80th percentile since age 3. For children entering puberty, interpret results alongside pubertal development stage, not age alone.',
+    examples: {
+      headers: ['Category', 'Percentile range', 'Recommended action'],
+      rows: [
+        ['Underweight', 'Below 5th', 'Refer for nutritional assessment; check linear growth rate'],
+        ['Healthy weight', '5th to below 85th', 'Continue routine monitoring; support active lifestyle'],
+        ['Overweight', '85th to below 95th', 'Review dietary patterns and activity; set weight maintenance goal'],
+        ['Obese', '95th and above', 'Clinical evaluation recommended; screen for insulin resistance, hypertension'],
+      ],
+    },
+    pitfalls: 'The most common mistake is treating a single percentile reading as definitive. A child who jumps from the 50th to the 82nd percentile in one year needs more attention than a child who has been stable at the 85th percentile for four years. The second major pitfall is using adult BMI thresholds for children - a BMI of 22 is healthy for most adults but can be at the 95th percentile for a 7-year-old. Third: BMI percentile cannot distinguish fat mass from muscle - a muscular 10-year-old and a sedentary peer with identical percentiles have very different metabolic risk profiles.',
+    faqs: [
+      { q: 'What percentile is considered healthy weight for children?', a: 'Healthy weight is defined as the 5th to below 85th percentile for the child\'s age and gender. Below the 5th percentile is underweight; 85th to below 95th is overweight; 95th and above is obese. These thresholds apply to children aged 2-19 using the CDC 2000 growth charts.' },
+      { q: 'Does BMI percentile change as a child grows?', a: 'Yes, significantly. A raw BMI that places a child at the 50th percentile at age 5 may be at the 30th percentile at age 10 because the reference distribution shifts as children grow. This is why percentile - not the raw number - is the correct metric to track. A child should generally stay within a roughly consistent percentile band across childhood.' },
+      { q: 'Can a child be at a high percentile and still be healthy?', a: 'Yes. A muscular, athletic child may fall above the 85th percentile despite low body fat. BMI percentile cannot distinguish muscle from fat. If a child is active and well-nourished with no other risk indicators, a high percentile alone is not a diagnosis - a pediatrician will consider growth trend, physical fitness, blood pressure, and family history.' },
+      { q: 'What is the difference between BMI percentile and z-score?', a: 'Both describe where a child\'s BMI sits relative to the reference population. Percentile (0-99 scale) is more intuitive for parents. Z-score is preferred in research because it can represent values beyond the 99th percentile - important for severely obese children where the standard percentile scale compresses.' },
+    ],
+    quiz: {
+      topic: 'BMI percentile',
+      questions: [
+        {
+          q: 'What percentile range defines healthy weight for children aged 2-19?',
+          options: ['10th to 90th percentile', '5th to below 95th percentile', '5th to below 85th percentile', '15th to 75th percentile'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Healthy weight is the 5th to below 85th percentile on the CDC 2000 growth charts. Below the 5th is underweight; 85th to below 95th is overweight; 95th and above is obese.',
+        },
+        {
+          q: 'A child is at the 88th BMI percentile for their age and gender. Which category does this fall into?',
+          options: ['Healthy weight', 'Underweight', 'Obese', 'Overweight'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The 85th to below 95th percentile is classified as Overweight. The 88th percentile falls within this range. A BMI at or above the 95th percentile would be classified as Obese.',
+        },
+        {
+          q: 'Why is tracking BMI percentile over multiple visits more useful than a single reading?',
+          options: ['Because the CDC updates the reference charts annually, so older readings are invalid', 'Because weight fluctuates too much day-to-day for a single reading to be accurate', 'Because a steady upward drift in percentile across visits is often more clinically significant than any one measurement', 'Because the formula changes depending on which doctor performs the calculation'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'A child who has risen from the 45th to the 72nd percentile over two years warrants more attention than one consistently at the 80th percentile. Trajectory is more informative than the snapshot.',
+        },
+        {
+          q: 'What is the most common mistake when interpreting a child\'s BMI percentile?',
+          options: ['Using metric units instead of imperial for the calculation', 'Treating a single percentile reading as definitive rather than tracking the trend over time', 'Applying percentile thresholds to children under age 5', 'Comparing the percentile to adult BMI thresholds directly'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section identifies treating a single reading as definitive as the most common mistake. A child who jumps from the 50th to the 82nd percentile in one year warrants more concern than one who has been stable at the 85th percentile for four years.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'adiposity-rebound': {
+    definition: [
+      'Adiposity rebound is the natural rise in BMI that follows the early-childhood BMI dip. From birth, a child\'s BMI rises steeply, then falls through toddlerhood and early childhood as height growth outpaces weight gain. It reaches its lowest point - the adiposity nadir - typically between ages 4 and 6, then begins to rise again. This upswing is adiposity rebound. It happens in every child; the clinically relevant question is not whether it occurs but when.',
+      'The timing of rebound is a strong predictor of long-term adiposity. Research by Rolland-Cachera et al. (1984) found that children whose rebound begins before age 5 have a substantially higher risk of adult obesity and metabolic disease compared to those who rebound at age 6 or later - even when their BMI percentile at the time of early rebound looks normal. The mechanism involves earlier and more prolonged proliferation of adipose cells during the sensitive period of fat development.',
+      'Because the risk signal lies in the timing rather than the current percentile, tracking BMI trajectory across multiple pediatric visits is more informative than any single measurement. A child at the 50th percentile who has been rising steeply since age 4 carries more long-term risk than a child who has been stable at the 70th percentile since age 3.',
+    ],
+    beginnerExplain: ['Think of a child\'s BMI like the water level in a bathtub. During toddlerhood, height growth outpaces weight gain so the water drains down. Around age 4-6 it hits the lowest level - the nadir. Then the tub starts filling again. That refilling is adiposity rebound. When it starts early, before age 5, the tub ends up fuller by adulthood than if it had held at the low level for another year or two.'],
+    whenToUse: 'Track adiposity rebound when reviewing a child\'s BMI growth chart across consecutive pediatric visits. The rebound is identified by the inflection point when BMI stops falling and begins to rise. If this occurs before age 5 - even from a low or normal percentile - flag the trend for clinical attention. This is more useful than relying on a single current percentile, which may look reassuring while the underlying trajectory points toward long-term excess adiposity.',
+    examples: {
+      headers: ['Rebound onset age', 'Adult obesity risk', 'Clinical implication'],
+      rows: [
+        ['Before age 5 (early)', 'Substantially elevated, even at a normal current percentile', 'Track closely; focus on diet quality and active play'],
+        ['Ages 5-7 (typical)', 'Average - in line with population norms', 'Continue routine monitoring at each well-child visit'],
+        ['After age 7 (late)', 'Lower than average', 'Generally reassuring; standard monitoring appropriate'],
+      ],
+    },
+    pitfalls: 'The most important pitfall is interpreting a normal current percentile as reassuring without reviewing the trend. A child at the 45th percentile who has jumped from the 20th percentile in one year may be entering early rebound - the snapshot looks fine but the trajectory does not. A second pitfall: adiposity rebound is not pathological in itself. Every child undergoes it. The risk signal is in the timing, not the fact of rebound.',
+    faqs: [
+      { q: 'What is adiposity rebound?', a: 'Adiposity rebound is the natural rise in BMI that occurs after the early-childhood BMI dip. BMI falls from infancy to a minimum (the adiposity nadir) between ages 4 and 6, then rises again. It happens in all children; the clinically significant factor is whether it begins early (before age 5), which is associated with higher adult obesity risk.' },
+      { q: 'Why does early adiposity rebound predict adult obesity?', a: 'Earlier rebound means more years of gradual fat accumulation before adulthood. The mechanism involves earlier onset of adipose cell proliferation during a sensitive developmental window. A child whose rebound starts at age 4 has one to three more years of accumulating fat stores before height growth stabilizes, compared to a child who rebounds at age 6 or 7.' },
+      { q: 'How is adiposity rebound detected?', a: 'By plotting BMI at each well-child visit on a CDC growth chart and identifying the inflection point when BMI stops falling and begins to rise. It cannot be identified from a single measurement - you need at least two or three readings across 12-24 months to see the trend clearly.' },
+      { q: 'What should parents do if their child has early adiposity rebound?', a: 'Early rebound is a risk signal, not a diagnosis. The appropriate response is increased attention to diet quality (reducing ultra-processed foods and sugary drinks), at least 60 minutes of active play daily, and limiting recreational screen time. Caloric restriction is not recommended for growing children and should not be attempted without direct supervision by a pediatrician and dietitian.' },
+    ],
+    quiz: {
+      topic: 'adiposity rebound',
+      questions: [
+        {
+          q: 'What is adiposity rebound?',
+          options: ['The natural rise in BMI that follows the early-childhood BMI dip', 'A sudden weight gain triggered by puberty', 'A rapid drop in BMI percentile seen after children begin dieting', 'The period of rapid height growth between ages 10 and 14'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Adiposity rebound is the natural upswing in BMI that follows the early-childhood dip. BMI falls from infancy to a nadir between ages 4 and 6, then rises again. Every child experiences it; the risk signal lies in how early it begins.',
+        },
+        {
+          q: 'At what age does adiposity rebound typically begin?',
+          options: ['Between 1 and 3 years', 'At puberty - around ages 10-12', 'Between 4 and 6 years', 'Between 8 and 10 years'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Typical adiposity rebound begins between ages 4 and 6, following the adiposity nadir. Children whose rebound begins before age 5 are classified as early rebounders and carry substantially higher adult obesity risk.',
+        },
+        {
+          q: 'What does early adiposity rebound (before age 5) predict, even when the current BMI percentile looks normal?',
+          options: ['Faster linear growth (height) during adolescence', 'Lower cardiovascular fitness in early childhood', 'Earlier onset of puberty in both boys and girls', 'A substantially higher risk of adult obesity and metabolic disease'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'Research by Rolland-Cachera et al. (1984) showed that children whose rebound begins before age 5 have substantially higher adult obesity risk, even when their current BMI percentile appears normal. The timing matters more than the current number.',
+        },
+        {
+          q: 'What is the most important pitfall when monitoring a child for adiposity rebound?',
+          options: ['Using metric units instead of imperial for BMI calculations', 'Interpreting a normal current percentile as reassuring without reviewing the trend over time', 'Comparing boys and girls on the same growth chart', 'Waiting until the 95th percentile to flag an upward BMI trend'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A child at the 45th percentile who has jumped from the 20th in one year may be entering early rebound - the snapshot looks fine but the trajectory does not. Trend over time is the key signal, not the current percentile.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'adiposity-nadir': {
+    definition: [
+      'The adiposity nadir is the lowest point in a child\'s BMI trajectory - the trough of the U-shaped curve that characterizes normal childhood development. From birth, BMI rises steeply, then falls through toddlerhood and early childhood as height growth outpaces weight gain. The nadir is the bottom of this dip, typically occurring between ages 4 and 6.',
+      'After the nadir, BMI begins its long rise through childhood and adolescence - the phase known as adiposity rebound. The age at which the nadir occurs is a key prognostic marker: children who reach their nadir early (before age 5) tend to begin rebound earlier and accumulate more adipose tissue over the following years, compared to children whose nadir occurs at age 6 or later.',
+    ],
+    whenToUse: 'Look for the adiposity nadir when reviewing a child\'s BMI growth chart across consecutive visits. The nadir is the lowest point on that curve - the moment before the upward trend of adiposity rebound begins. Because it can only be identified in retrospect (after the subsequent rise confirms the turning point), tracking BMI at every well-child visit is essential for spotting an early nadir before the trend becomes firmly established.',
+    examples: {
+      headers: ['Nadir age', 'Rebound onset', 'Long-term implication'],
+      rows: [
+        ['Before age 5 (early)', 'Before age 5', 'Early rebound; higher adult obesity risk even at a normal current percentile'],
+        ['Ages 5-6 (typical)', 'Ages 5-7', 'Average trajectory; standard monitoring appropriate'],
+        ['After age 7 (late)', 'After age 7', 'Late rebound; associated with lower adult obesity risk'],
+      ],
+    },
+    pitfalls: 'The adiposity nadir can only be confirmed in retrospect - you cannot know the nadir has been reached until the subsequent upward trend of adiposity rebound makes it clear. A single BMI reading, no matter how low, cannot confirm the nadir. This is why sequential measurement at each well-child visit is essential. A second pitfall: a low nadir BMI value is not inherently protective - what matters clinically is the age of the nadir, not the value.',
+    faqs: [
+      { q: 'What is the adiposity nadir?', a: 'The adiposity nadir is the lowest point in a child\'s BMI curve, typically occurring between ages 4 and 6. It marks the end of the early-childhood fall in BMI and the beginning of the adiposity rebound. The age at which a child hits their nadir is more clinically important than the BMI value at that point.' },
+      { q: 'What is a typical BMI at the adiposity nadir?', a: 'It varies by age and gender. At age 5, the CDC 2000 median (50th percentile) is approximately 15.5 for boys and 15.2 for girls. The nadir is not defined by a specific BMI number but by the inflection point in the child\'s individual growth curve - the value at which BMI stops falling and begins to rise.' },
+      { q: 'Is a lower nadir BMI value better for long-term health?', a: 'Not necessarily. The nadir BMI value is less prognostically important than the age at which it occurs. A child with a low nadir BMI who reaches it before age 5 may carry higher long-term obesity risk than a child with a slightly higher nadir BMI who reaches it at age 6 or 7. Timing is the signal, not the value.' },
+      { q: 'How does the adiposity nadir relate to adiposity rebound?', a: 'They are two phases of the same developmental process. The nadir is the lowest point; adiposity rebound is the subsequent rise. The nadir ends when rebound begins. Clinically, the nadir\'s significance lies entirely in when it occurs - an early nadir (before age 5) means an early rebound and a longer window of gradual fat accumulation before adulthood.' },
+    ],
+    quiz: {
+      topic: 'adiposity nadir',
+      questions: [
+        {
+          q: 'What is the adiposity nadir?',
+          options: ['The highest BMI a child reaches before weight loss begins', 'The lowest point in a child\'s BMI trajectory, typically between ages 4 and 6', 'The percentile at which a child is classified as underweight on the CDC chart', 'The first BMI measurement taken at a newborn checkup'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The adiposity nadir is the lowest point in a child\'s BMI curve. It marks the bottom of the early-childhood BMI dip, typically occurring between ages 4 and 6, before adiposity rebound begins.',
+        },
+        {
+          q: 'After the adiposity nadir, what typically happens to a child\'s BMI?',
+          options: ['It stays stable until puberty triggers growth', 'It decreases further until age 10', 'It rises again in the phase known as adiposity rebound', 'It fluctuates unpredictably with each growth spurt'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'After the nadir, BMI begins a long rise through childhood and adolescence - the phase called adiposity rebound. The nadir and the rebound are two phases of the same normal developmental process.',
+        },
+        {
+          q: 'What makes the age of the adiposity nadir clinically significant?',
+          options: ['Children whose nadir occurs after age 7 are more likely to develop early puberty', 'A later nadir is associated with higher adult obesity risk than an earlier one', 'The nadir BMI value predicts adult height more reliably than any other childhood metric', 'Children with an earlier nadir experience earlier rebound and accumulate more adipose tissue by adulthood'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'An earlier nadir means earlier rebound onset - and more years of gradual fat accumulation before height growth stabilizes in adulthood. The age of the nadir is the prognostic signal, not the BMI value itself.',
+        },
+        {
+          q: 'Why can the adiposity nadir only be identified in retrospect?',
+          options: ['It requires a blood test to confirm the adipose cell count at that point', 'You cannot know the nadir has been reached until the subsequent upward trend of adiposity rebound confirms the turning point', 'The CDC growth charts only display the nadir for children with a BMI above the 50th percentile', 'Parents typically do not weigh children frequently enough to detect it'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The nadir can only be confirmed once the upward trend of adiposity rebound is observed. A single low BMI reading cannot confirm the nadir has been reached. Sequential measurement at each well-child visit is essential.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'body-composition': {
     definition: [
       'Body composition refers to the proportional breakdown of the body into its component tissues. The simplest clinical model is the two-compartment model, which divides body weight into fat mass and fat-free mass (FFM). Fat-free mass encompasses muscle, bone mineral, total body water, and the mass of organs and other non-fat tissues.',
@@ -4517,6 +4678,76 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'sarcopenia': {
+    definition: [
+      'Sarcopenia is the progressive, age-related loss of skeletal muscle mass, strength, and physical performance. The term comes from the Greek words for flesh (sarx) and poverty (penia). Muscle mass loss typically begins around age 40 at a rate of 3-8% per decade and accelerates after age 65; by age 80 many adults have lost 30-40% of their peak muscle mass. Sarcopenia is now formally recognized as a disease (ICD-10 code M62.84) and carries its own diagnostic criteria distinct from simply being underweight.',
+      'The European Working Group on Sarcopenia in Older People (EWGSOP2, 2019) defines sarcopenia by three components: low muscle strength (the primary criterion), low muscle quantity or quality (confirming the diagnosis), and poor physical performance (indicating severity). Practical screening thresholds include grip strength below 27 kg for men or 16 kg for women, and a gait speed below 0.8 meters per second. These can be measured in a clinical setting in under two minutes.',
+      'The critical implication for body weight assessment is that sarcopenia can be invisible on a standard scale or BMI reading. Muscle is replaced by fat during the sarcopenic process without necessarily changing total body weight - so a person can have a normal BMI of 23 while having lost substantial functional muscle and accumulated clinically significant fat mass in its place. This state, sometimes called sarcopenic obesity, carries higher fall, fracture, hospitalization, and mortality risk than either sarcopenia or obesity alone.',
+    ],
+    beginnerExplain: [
+      'Imagine a building whose walls look fine from the outside but the structural beams inside have been quietly replaced with foam. The building looks normal from the street - same height, same footprint, same weight - but it\'s no longer strong enough to handle a storm.',
+      'Sarcopenia works the same way. The number on the scale and the BMI calculation can stay the same while muscle (the "beams") is gradually replaced by fat (the "foam"). The outside looks unremarkable. But functional strength - the ability to catch yourself after a stumble, carry groceries, or get out of a chair - has been quietly eroded. That\'s why grip strength and walking speed matter more than body weight alone in older adults.',
+    ],
+    whenToUse: 'Sarcopenia screening is relevant for any adult aged 60 or over experiencing unexplained fatigue, falls, slow walking pace, or difficulty with daily tasks. The SARC-F questionnaire (5 questions about Strength, Assistance walking, Rising from a chair, Climbing stairs, and Falls) is a validated, zero-equipment screen that takes under a minute. A score of 4 or more suggests sarcopenia risk and warrants clinical evaluation. Grip strength dynamometry and a 4-meter gait speed test are the primary confirmatory tools. Resistance exercise 2-3 times per week and protein intake of 1.2-1.6 g/kg body weight per day are the evidence-based first-line interventions.',
+    examples: {
+      headers: ['Component', 'Definition', 'Threshold (EWGSOP2)'],
+      rows: [
+        ['Muscle strength', 'Grip strength measured with a hand dynamometer', 'Men: below 27 kg | Women: below 16 kg'],
+        ['Muscle quantity', 'Appendicular lean mass relative to height squared (ASM/ht²)', 'Men: below 7.0 kg/m² | Women: below 5.5 kg/m²'],
+        ['Physical performance', 'Gait speed over 4 meters', 'Below 0.8 m/s signals severe sarcopenia'],
+        ['SARC-F screen', '5-question self-report tool for clinical triage', 'Score 4+ suggests sarcopenia - refer for assessment'],
+      ],
+    },
+    pitfalls: 'The biggest pitfall is relying on BMI or body weight to rule out sarcopenia. A person at BMI 24 with excellent fat stores and minimal muscle mass can be profoundly sarcopenic. The second pitfall is conflating sarcopenia with being underweight: sarcopenic obesity - normal or high BMI with low muscle mass - is common in older adults and more dangerous than either condition alone. A third pitfall is assuming sarcopenia is inevitable and untreatable: randomized trials consistently show that resistance exercise 2-3 times per week produces meaningful gains in muscle strength and functional performance even in adults over 80.',
+    faqs: [
+      {
+        q: 'What is the difference between sarcopenia and general muscle weakness?',
+        a: 'Sarcopenia is a specific clinical syndrome defined by low muscle mass, low strength, and low physical performance together - not just feeling weak. General muscle weakness can have many causes (dehydration, illness, poor sleep). Sarcopenia is a structural loss of skeletal muscle tissue that develops over years and is formally diagnosed using grip strength, muscle quantity tests, and gait speed measures (EWGSOP2 criteria).'
+      },
+      {
+        q: 'Can sarcopenia be reversed?',
+        a: 'Sarcopenia can be meaningfully improved - though reversal to peak muscle mass is unlikely. Resistance exercise is the most effective intervention, with randomized trials showing gains in grip strength, leg press strength, and walking speed in adults over 65 and even over 80. Adequate protein intake (1.2-1.6 g/kg/day) is essential to support the muscle-building response to exercise. Early intervention produces better results than starting treatment in advanced sarcopenia.'
+      },
+      {
+        q: 'Why does sarcopenia make BMI misleading in older adults?',
+        a: 'BMI divides weight by height squared - it cannot distinguish what the weight is made of. In sarcopenia, muscle is replaced by fat without necessarily changing total weight. A 70-year-old with sarcopenia may have the same BMI as they did at 40, but their body composition has shifted significantly toward fat and away from functional muscle. This is why waist circumference, grip strength, and gait speed provide information that BMI cannot.'
+      },
+      {
+        q: 'What is sarcopenic obesity?',
+        a: 'Sarcopenic obesity is the coexistence of sarcopenia (low muscle mass and strength) with obesity (excess fat mass). It is common in older adults because weight gain with age often involves simultaneous muscle loss and fat gain. Sarcopenic obesity carries higher mortality and disability risk than either condition alone, partly because standard obesity management (caloric restriction) can worsen sarcopenia if not paired with resistance exercise and adequate protein.'
+      },
+    ],
+    quiz: {
+      topic: 'sarcopenia',
+      questions: [
+        {
+          q: 'According to EWGSOP2, what grip strength reading in a man raises a flag for sarcopenia?',
+          options: ['Below 35 kg', 'Below 30 kg', 'Below 27 kg', 'Below 22 kg'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The EWGSOP2 2019 consensus sets the grip strength threshold for sarcopenia risk at below 27 kg for men and below 16 kg for women. Grip strength is the primary diagnostic criterion - low strength is both the first sign and the most clinically important component of sarcopenia.',
+        },
+        {
+          q: 'Why can sarcopenia be invisible on a standard bathroom scale or BMI calculation?',
+          options: ['Sarcopenic muscle weighs more than fat, inflating the reading', 'The scale only measures bone density, not soft tissue', 'Muscle is replaced by fat without necessarily changing total body weight, so BMI stays the same while body composition deteriorates', 'Sarcopenia causes fluid retention that masks the true muscle deficit'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Sarcopenia replaces muscle with fat - a tissue swap that leaves total body weight nearly unchanged. Because BMI only divides weight by height, it cannot detect this substitution. A person can have a normal BMI of 23 or 24 while being profoundly sarcopenic.',
+        },
+        {
+          q: 'What is the most effective intervention for sarcopenia, according to clinical evidence?',
+          options: ['High-protein diet alone, with no exercise requirement', 'Caloric restriction to reduce body fat and lower metabolic demand on muscles', 'Resistance exercise (strength training) 2-3 times per week, combined with adequate protein intake', 'Aerobic exercise such as walking or swimming at least 5 days per week'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Resistance exercise is the evidence-based first-line intervention for sarcopenia, with randomized trials showing improvements in grip strength, leg strength, and physical performance even in adults over 80. Adequate protein intake (1.2-1.6 g/kg/day) is essential to support the muscle-building response. Aerobic exercise has benefits but does not build muscle the way resistance training does.',
+        },
+        {
+          q: 'What is sarcopenic obesity, and why is it clinically significant?',
+          options: ['Obesity caused exclusively by lack of physical activity, without any dietary component', 'A normal BMI combined with high visceral fat percentage, common in sedentary office workers', 'The coexistence of low muscle mass and high fat mass, which carries higher mortality risk than either condition alone', 'A term for obesity in people who have previously been very muscular athletes'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Sarcopenic obesity is the coexistence of sarcopenia (low muscle mass and strength) with obesity (excess fat mass). It is more dangerous than either condition alone and is common in older adults. Standard obesity management through caloric restriction can worsen the sarcopenic component if not paired with resistance exercise and adequate protein.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'sales-tax': {
     definition: [
       'Sales tax is a consumption tax imposed at the point of sale on retail goods and services. The seller adds the tax to the purchase price, collects it from the buyer, and remits it to the state or local government. Rates are set by state legislatures, and most states allow counties and cities to layer additional local rates on top of the state base rate. The Tax Foundation reports that 45 US states plus Washington D.C. levy a statewide sales tax, with rates ranging from 2.9% (Colorado) to 7.25% (California).',
@@ -6541,6 +6772,76 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'geriatric-bmi': {
+    definition: [
+      'Geriatric BMI refers to the interpretation of Body Mass Index using age-specific thresholds for adults aged 65 and over. The standard WHO BMI cutoffs (Underweight below 18.5, Normal 18.5-24.9, Overweight 25-29.9) were developed from population studies that include all adults and do not reflect how the relationship between BMI and health risk shifts with age. Applying standard thresholds to older adults can give a misleading picture in both directions.',
+      'Most geriatric and clinical nutrition guidelines - including those from ESPEN (European Society for Clinical Nutrition and Metabolism) - recommend an optimal BMI range of 23-27.5 for adults 65 and over. Below 23, and especially below 22, is associated with frailty risk, malnutrition, immune suppression, falls, and higher all-cause mortality. The lower bound is higher than in younger adults because low body weight in older age almost always signals muscle loss, poor nutrition, or chronic disease - not metabolic health.',
+      'The upper bound of 27.5 reflects a finding sometimes called the "obesity paradox": large meta-analyses consistently show that older adults with BMI 25-30 have equal or lower all-cause mortality compared to those in the standard normal range. The most widely accepted explanation is that a moderate weight reserve provides energy and protein buffers during acute illness, hospitalization, or periods of reduced appetite - events that are far more common in older adults than in younger populations.',
+    ],
+    beginnerExplain: [
+      'Imagine two people with exactly the same BMI of 19 - one is 28 years old, the other is 76. For the 28-year-old, BMI 19 is lean but healthy. For the 76-year-old, it is a warning sign: too little body reserve to recover well from surgery, a serious infection, or a few weeks of reduced appetite.',
+      'Standard BMI thresholds were designed with younger adults in mind. Geriatric BMI guidelines shift the safe minimum upward to 23 because the danger zone at age 70+ is being too lean, not too heavy. A 71-year-old at BMI 26 is not overweight by geriatric standards - they are sitting in the optimal range with a reasonable reserve for the unexpected.',
+    ],
+    whenToUse: 'Use geriatric BMI interpretation whenever you are assessing BMI in an adult aged 65 or over. Do not apply the standard adult thresholds (18.5 normal, 25 overweight) to this age group - they will understate the risk of low weight and overstate the risk of moderately elevated weight. The senior BMI calculator at calculations.tools automatically applies the 23-27.5 optimal range alongside the standard category. Waist circumference (above 88 cm for women, 102 cm for men) and grip strength (EWGSOP2 thresholds: below 27 kg for men, 16 kg for women) are important complementary measures that BMI alone cannot capture.',
+    examples: {
+      headers: ['BMI range', 'Senior interpretation', 'Key clinical concern'],
+      rows: [
+        ['Below 22', 'Malnutrition risk (ESPEN/GLIM criterion)', 'Immune suppression, muscle wasting, poor wound healing, falls'],
+        ['22-23', 'Below senior optimal range', 'Frailty risk; weight maintenance is a priority'],
+        ['23-27.5', 'Senior optimal range', 'Lowest all-cause mortality in geriatric population studies'],
+        ['27.5-30', 'Slightly above optimal range', 'Modest increased metabolic risk; monitor waist circumference'],
+        ['30 and above', 'Obese', 'Elevated cardiometabolic risk; mobility limitation; falls risk through different mechanism'],
+      ],
+    },
+    pitfalls: 'The most common mistake is applying the standard adult Normal range (18.5-24.9) to older patients and treating a BMI of 20 or 21 as healthy. In an adult over 70, this range signals undernutrition risk. A second pitfall is ignoring body composition: two people can share the same BMI while one has healthy muscle mass and the other has sarcopenia, where muscle has been replaced by fat without changing weight. A third pitfall is treating geriatric BMI ranges as rigid rules - clinical context, functional status, and trajectory (is weight stable or falling?) matter more than any single number.',
+    faqs: [
+      {
+        q: 'What BMI is considered healthy for a 70-year-old?',
+        a: 'Geriatric guidelines recommend a BMI of 23-27.5 as the optimal range for adults aged 70 and over. A BMI below 23 in this age group is associated with frailty, malnutrition, and higher mortality. A BMI of 25-27, which is classified as overweight in standard adult tables, does not carry elevated mortality risk for older adults.'
+      },
+      {
+        q: 'Why is the healthy BMI range higher for seniors than for younger adults?',
+        a: 'Two reasons: low BMI in older adults signals muscle loss, poor nutrition, and immune decline rather than metabolic health - risks that are more dangerous at this age. And BMI in the standard overweight range (25-30) does not increase all-cause mortality in older adults the way it does in younger people. Both findings push the optimal range upward.'
+      },
+      {
+        q: 'Is geriatric BMI interpretation different for men and women over 65?',
+        a: 'The 23-27.5 optimal range applies to both sexes in most geriatric guidelines. However, women over 65 face additional considerations: postmenopausal estrogen loss accelerates fat redistribution toward the abdomen, and bone density loss raises fracture risk at lower weights. Waist circumference above 88 cm is a specific risk marker for postmenopausal women regardless of BMI category.'
+      },
+      {
+        q: 'At what age does geriatric BMI interpretation begin to apply?',
+        a: 'Most geriatric guidelines use age 65 as the cutoff, which is why the senior BMI calculator applies age-specific interpretation from that point. Some researchers and clinical tools use 70 as the threshold, particularly for the strictest malnutrition criteria (ESPEN defines BMI below 22 as a malnutrition risk factor specifically for adults over 70). Between 65 and 70, clinical judgment is needed based on the individual\'s health status.'
+      },
+    ],
+    quiz: {
+      topic: 'geriatric BMI',
+      questions: [
+        {
+          q: 'What is the geriatric optimal BMI range recommended by most geriatric guidelines for adults aged 65 and over?',
+          options: ['18.5-24.9 (same as the standard adult range)', '20-25', '23-27.5', '25-30'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Most geriatric guidelines - including ESPEN - recommend a BMI of 23-27.5 as the optimal range for adults 65 and over. This is higher than the standard adult range of 18.5-24.9 because low body weight carries greater risk at this age and a BMI of 25-30 does not increase mortality in older adults the way it does in younger people.',
+        },
+        {
+          q: 'What is the "obesity paradox" in the context of geriatric BMI?',
+          options: ['Older adults with obesity live longer because they exercise more', 'Adults 65+ with BMI 25-30 show equal or lower all-cause mortality compared to those in the standard normal range', 'Obesity becomes more common after 65 because metabolic rate slows', 'Overweight seniors have a lower BMI than the scale suggests due to height loss'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The "obesity paradox" refers to the consistent finding from large meta-analyses that older adults with BMI 25-30 have equal or lower all-cause mortality than those with BMI 18.5-24.9. The leading explanation is that moderate weight provides an energy and protein reserve during acute illness - something that matters far more at 70+ than at 35.',
+        },
+        {
+          q: 'At what BMI level does ESPEN define a malnutrition risk factor for adults over 70?',
+          options: ['Below 18.5', 'Below 20', 'Below 21', 'Below 22'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'ESPEN defines a BMI below 22 as a risk factor for malnutrition specifically in adults over 70. More broadly, a BMI below 23 is considered below the senior optimal range and is associated with frailty risk in this age group. This is substantially higher than the standard adult underweight cutoff of 18.5.',
+        },
+        {
+          q: 'Why does sarcopenia make BMI less reliable as a health indicator in older adults?',
+          options: ['Sarcopenia causes BMI to fall rapidly, making the number too low to trust', 'Muscle is denser than fat, so sarcopenia inflates BMI above its true level', 'Sarcopenia replaces muscle with fat without changing body weight, so BMI can appear normal while body composition deteriorates', 'Sarcopenia is only relevant for adults over 80, not for those in their 60s and 70s'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Sarcopenia replaces muscle with fat - a tissue swap that leaves body weight and therefore BMI nearly unchanged while body composition worsens significantly. A person can have a "normal" BMI of 23 while having lost substantial muscle mass and replaced it with fat - a state that BMI cannot detect but that carries real fall, fracture, and functional decline risk.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
   'gestational-weight-gain': {
     definition: [
       'Gestational weight gain (GWG) is the total weight gained between conception and delivery. It is not simply fat - it includes the weight of the fetus (~3.3 kg at term), placenta (~0.7 kg), amniotic fluid (~0.8 kg), expanded blood volume (~1.5 kg), uterine and breast tissue growth (~1.4 kg combined), extracellular fluid (~1.5 kg), and maternal fat stores (~3-4 kg built as an energy buffer for breastfeeding.',

@@ -33,10 +33,10 @@ function getBFCategory(bf, sex) {
 }
 
 function getSeniorRange(bmi) {
-  if (bmi < 23)    return { text: 'Below the 23\u201327.5 senior range \u00b7 frailty risk \u2014 discuss with your doctor', cls: 'bmi-senior-low' };
-  if (bmi <= 27.5) return { text: 'Within the 23\u201327.5 senior optimal range', cls: 'bmi-senior-ok' };
-  if (bmi < 30)    return { text: 'Slightly above the 23\u201327.5 senior range \u00b7 monitor for metabolic risk', cls: 'bmi-senior-high' };
-  return                  { text: 'Well above the senior range \u00b7 cardiometabolic risk is elevated', cls: 'bmi-senior-obese' };
+  if (bmi < 23)    return { text: 'Below the 23\u201327.5 senior BMI range \u00b7 frailty risk \u2014 discuss with your doctor', cls: 'bmi-senior-low' };
+  if (bmi <= 27.5) return { text: 'Within the 23\u201327.5 senior optimal BMI range', cls: 'bmi-senior-ok' };
+  if (bmi < 30)    return { text: 'Slightly above the 23\u201327.5 senior BMI range \u00b7 monitor for metabolic risk', cls: 'bmi-senior-high' };
+  return                  { text: 'Well above the senior BMI range \u00b7 cardiometabolic risk is elevated', cls: 'bmi-senior-obese' };
 }
 
 document.addEventListener('DOMContentLoaded', () => {
