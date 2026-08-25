@@ -1,16 +1,78 @@
 ---
 import CalculatorLayout from '../layouts/CalculatorLayout.astro';
+import type { Source } from '../components/Sources.astro';
+import QuizBlock from '../components/QuizBlock.astro';
 
 const tocItems = [
-  { id: 'how-to-use',        label: 'How to use this tool' },
-  { id: 'how-stats-work',    label: 'How each stat is calculated' },
-  { id: 'word-count-targets', label: 'Word count targets by format' },
-  { id: 'character-limits',  label: 'Character limits by platform' },
-  { id: 'keyword-density',   label: 'Keyword density' },
-  { id: 'seo',               label: 'Word count and SEO' },
-  { id: 'common-mistakes',   label: 'Common mistakes' },
-  { id: 'faq',               label: 'FAQs' },
-  { id: 'related-tools',     label: 'Related tools' },
+  { id: 'how-to-use',          label: 'How to use this tool' },
+  { id: 'how-stats-work',      label: 'How each stat is calculated' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'word-count-targets',  label: 'Word count targets by format' },
+  { id: 'character-limits',    label: 'Character limits by platform' },
+  { id: 'characters-to-words', label: 'Characters to words converter' },
+  { id: 'keyword-density',     label: 'Keyword density' },
+  { id: 'seo',                 label: 'Word count and SEO' },
+  { id: 'common-mistakes',     label: 'Common mistakes' },
+  { id: 'faq',                 label: 'FAQs' },
+  { id: 'quiz',                label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',       label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'At what words-per-minute rate does this tool calculate reading time?',
+    options: ['150 WPM', '180 WPM', '200 WPM', '250 WPM'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The tool uses 200 WPM, the widely accepted average for adult silent reading of general non-technical text. Speaking time uses the separate figure of 150 WPM.',
+  },
+  {
+    q: 'How long does it take to speak 1,000 words aloud at a presentation pace of 150 WPM?',
+    options: ['5 minutes exactly', '5 minutes 30 seconds', '6 minutes 40 seconds', '7 minutes 30 seconds'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '1,000 divided by 150 WPM equals 6.67 minutes, which is 6 minutes and 40 seconds. This is 33% longer than the silent reading time of 5 minutes at 200 WPM.',
+  },
+  {
+    q: 'Which character count should you check against Twitter\'s 280-character limit?',
+    options: ['Characters (no spaces)', 'Characters (including spaces)', 'Word count multiplied by 5', 'Sentence count'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Twitter and most platform limits count spaces as characters. Always use the Characters (including spaces) figure when checking against those limits, not the no-spaces count.',
+  },
+  {
+    q: 'What is the recommended keyword density range for a primary keyword in SEO content?',
+    options: ['0.1-0.5%', '0.5-2%', '3-5%', '5-10%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'A density of 1-2% for your primary keyword is generally considered healthy. Above 3% risks appearing as keyword stuffing, which can negatively affect search rankings.',
+  },
+  {
+    q: 'What triggers a switch from GSM-7 to UCS-2 encoding in SMS, reducing the limit to 70 characters?',
+    options: ['Using more than 10 words', 'Including any number in the message', 'Characters outside the GSM-7 alphabet such as emoji, Arabic, or Chinese', 'Using extension-table characters like the euro sign'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Emoji, Arabic, Chinese, Japanese, and other non-GSM characters trigger UCS-2 (16-bit Unicode) encoding, reducing the single-message limit from 160 to 70 characters. Extension-table characters like the euro sign stay in GSM-7 but cost 2 slots each.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Google',
+    title: 'Google Search spam policies',
+    journal: 'Google Search Central',
+    year: 2024,
+    url: 'https://developers.google.com/search/docs/essentials/spam-policies',
+  },
+  {
+    author: 'Google',
+    title: 'Control your title links in search results',
+    journal: 'Google Search Central',
+    year: 2024,
+    url: 'https://developers.google.com/search/docs/appearance/title-link',
+  },
+  {
+    author: 'Google',
+    title: 'Control your snippets in search results',
+    journal: 'Google Search Central',
+    year: 2024,
+    url: 'https://developers.google.com/search/docs/appearance/snippet',
+  },
 ];
 
 const schema = [
@@ -52,40 +114,35 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Word Counter"
-  metaTitle="Word Counter | Free Online Word & Character Count Tool ᐅ"
+  metaTitle="Word & Character Counter | Online Characters to Words Count ᐅ"
   description="Count words, characters, sentences, paragraphs, reading time, speaking time, and keyword density instantly. Includes platform character limits and word count targets by content type. Free, private, no sign-up."
   canonical="https://calculations.tools/word-counter"
   tocItems={tocItems}
   embedSlug="word-counter"
   schema={schema}
+  sources={sources}
+  ogFormula="Reading time = words / 200 WPM · Speaking time = words / 150 WPM"
+  ogExample="1,000 words = 5 min read / 6 min 40 sec spoken aloud"
 >
-
-  <!-- CALCULATOR WIDGET -->
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
-          <h2>Free Online Word & Character Count Tool</h2>
+          <h2>Online Word & Character Count Tool</h2>
           <p>Paste or type below - stats update as you type</p>
         </div>
-
         <textarea
           id="wc-input"
           class="wc-textarea"
           placeholder="Start typing or paste your text here..."
           rows="8"
         ></textarea>
-
         <div class="wc-actions">
           <button id="wc-copy-stats" class="wc-btn" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="width:1rem;height:1rem"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M5.333 10.667H4a1.333 1.333 0 0 1-1.333-1.333V4A1.333 1.333 0 0 1 4 2.667h5.333A1.333 1.333 0 0 1 10.666 4v1.333m-4 8h5.333A1.333 1.333 0 0 0 13.332 12V6.667a1.333 1.333 0 0 0-1.333-1.333H6.666a1.333 1.333 0 0 0-1.333 1.333V12a1.333 1.333 0 0 0 1.333 1.333"/></svg> Copy stats</button>
           <button id="wc-reset" class="wc-btn wc-btn-ghost" disabled><svg fill="none" stroke="#ffffff" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M2.667 2.667V6h.388m10.237 1.333A5.334 5.334 0 0 0 3.055 6m0 0H6m7.333 7.333V10h-.387m0 0A5.335 5.335 0 0 1 2.708 8.667M12.946 10H10"/></svg> Reset</button>
         </div>
-
-        <!-- Stats grid -->
         <div id="wc-stats-grid" class="wc-stats-grid hidden">
           {[
             { id: 'wc-words',      label: 'Words',                   gradient: 'from-blue-500 to-purple-600' },
@@ -102,57 +159,59 @@ const schema = [
               <div class="wc-stat-value" id={stat.id}>0</div>
             </div>
           ))}
-
           <div id="wc-keyword-card" class="wc-keyword-card hidden">
             <div class="wc-keyword-title">Top keywords</div>
             <div id="wc-keywords" class="wc-keyword-grid"></div>
           </div>
         </div>
-
-        <!-- Empty state -->
         <div id="wc-empty" class="wc-empty">
           <p>Start typing to see your stats</p>
           <p class="wc-empty-sub">Words, characters, reading time and more - all update in real time</p>
         </div>
-
       </div>
     </section>
-
     <script src="/js/word-counter.js" is:inline></script>
   </div>
-
-  <!-- LONG-FORM CONTENT -->
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Paste or type your text into the box above. <strong>Words, characters, sentences, paragraphs, reading time, speaking time, and top keywords</strong> all update instantly as you type. Nothing is sent to a server - all analysis runs in your browser. Use "Copy stats" to grab a summary, or "Reset" to clear and start fresh.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this tool</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Reading time (200 WPM) and speaking time (150 WPM) are not the same stat. A 1,000-word script takes 5 minutes to read silently but 6 minutes 40 seconds to deliver aloud - a 33% gap that will cause a presentation to overrun if you use the wrong figure.</li>
+          <li>Almost all platform character limits count spaces. Use the "Characters" stat - not "Characters (no spaces)" - when checking against Twitter's 280, SMS's 160, or Google's ~60 for meta titles.</li>
+          <li>LinkedIn's algorithm gives better native distribution to posts over 150 words - a threshold that is easy to miss when writing short-form updates.</li>
+          <li>A keyword density of 1-2% for your primary keyword is generally healthy for SEO. Above 3% risks keyword stuffing signals; modern search algorithms penalise unnatural repetition.</li>
+          <li>In SEO, word count is not a direct Google ranking factor, but it correlates with ranking because longer content tends to cover more related questions - which earns more links and satisfies more search intent.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our character counter tool</h2>
       <p>Type or paste your text into the box. Every stat updates as you type - no button to press. The stats grid shows all counts once text is present. "Copy stats" copies a plain-text summary of all counts to your clipboard. "Reset" clears everything.</p>
-
       <h2 id="how-stats-work">How each stat is calculated</h2>
-
       <h3>Word count</h3>
       <p>Any sequence of characters separated by whitespace counts as one word. Hyphenated compounds like "state-of-the-art" count as one word. Numbers count as words. A run of only punctuation or whitespace does not.</p>
-
       <h3>Character count</h3>
       <p>Two counts are shown: Characters (including spaces) and Characters (no spaces). Most platform limits - Twitter, SMS, Google meta fields - count spaces, so use the "Characters" figure when checking against those limits.</p>
-
       <h3>Sentence count</h3>
       <p>Sentences are detected by terminal punctuation: periods, exclamation marks, and question marks. Abbreviations like "Dr." or "e.g." can overcount slightly if they appear mid-sentence, but for practical purposes the count is accurate enough for all common use cases.</p>
-
+      <h3>Paragraph count</h3>
+      <p>A new paragraph is counted each time a blank line separates two blocks of text. A single line break without a blank line does not start a new paragraph. The paragraph count is most useful alongside sentence count - dividing sentences by paragraphs gives your average paragraph length, which is a quick proxy for text density on screen.</p>
+      <h3>Spaces</h3>
+      <p>The total number of space characters in your text. This is identical to the difference between Characters (including spaces) and Characters (no spaces). It has limited standalone use, but confirms that character limits you are checking against - Twitter, SMS, Google meta fields - are using the inclusive Characters figure, not the no-spaces one.</p>
       <h3>Reading time</h3>
       <p>Calculated at <strong>200 words per minute</strong> - a widely accepted average for adult silent reading of general non-technical text. Dense academic or technical content is typically read at 100-150 WPM, so the displayed time may be an underestimate for highly specialised material.</p>
-
       <h3>Speaking time</h3>
       <p>Calculated at <strong>150 words per minute</strong> - a typical pace for presentations, speeches, and formal talks. Conversational speech runs faster (180-200 WPM); slow, deliberate oratory runs slower (120-130 WPM). TED Talks average around 130-150 WPM. For most presentation planning, 150 WPM is a reliable middle estimate.</p>
-
       <h3>Top keywords</h3>
       <p>The five most frequent words in your text, excluding common stop words (the, a, and, is, in, etc.). Each keyword shows its count and its density as a percentage of total word count. This helps you quickly check whether your main topic appears enough - or too often.</p>
-
+      <h2 id="explained-to-beginner">This tool explained to a beginner</h2>
+      <p>This tool gives you three separate measures of the same text, each answering a different question. Words answer "how many ideas did you express?" Characters answer "how much space does this take up?" Time answers "how long does it take to consume?"</p>
+      <p>The reading/speaking split is the one most people get wrong. A 1,000-word article takes exactly 5 minutes to read silently at 200 WPM. But say that same 1,000 words aloud at a presentation pace of 150 WPM and it takes 6 minutes 40 seconds - a full 100 seconds longer.</p>
+      <p>That 33% gap is why experienced presenters always do a timed read-through of a script rather than trusting the word count alone. The word counter shows both figures so you never need to guess.</p>
+      <p>For platform limits, think of characters as luggage rather than passengers. Twitter's 280-character limit doesn't care how many words you use - it measures total space including every space and punctuation mark. "OK" costs 2 characters. "I understand completely" costs 22 characters but is still just 3 words. That's why a short word-count text can still fail a character limit check.</p>
       <h2 id="word-count-targets">Word count targets by format</h2>
       <p>Every writing format has an expected length. Falling significantly short or over affects readability, platform performance, and - for academic or professional work - compliance with requirements.</p>
       <div class="responsive-table">
@@ -179,7 +238,42 @@ const schema = [
         </tbody>
       </table>
       </div>
-
+      <h3>How many words is one page?</h3>
+      <p>Page length depends entirely on font size, line spacing, and margins. These are the standard benchmarks writers use to convert word count to page count:</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Format</th><th>Words per page</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Academic essay (12pt Times New Roman, double-spaced, 1" margins)</td><td>~250-275</td></tr>
+          <tr><td>Single-spaced document (12pt Times New Roman)</td><td>~500-550</td></tr>
+          <tr><td>Published novel (6"×9" trim, 11pt font)</td><td>~250-300</td></tr>
+          <tr><td>Standard business report (12pt, single-spaced)</td><td>~450-500</td></tr>
+          <tr><td>Screenplay (standard format)</td><td>~55 words (1 page = ~1 minute of screen time)</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>To estimate page count for your document: paste your text into the tool above and divide the word count by the relevant figure. A 2,500-word essay in standard academic format is approximately 9-10 double-spaced pages.</p>
+      <h3>How long does it take to write?</h3>
+      <p>Word count targets are more useful when paired with realistic writing speed estimates. Output varies by task type, research load, and writer experience:</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Task type</th><th>Typical output</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Research-heavy technical writing</td><td>300-500 words/hour</td></tr>
+          <tr><td>Standard first draft (blog post, article)</td><td>500-1,000 words/hour</td></tr>
+          <tr><td>Experienced writer in their element</td><td>1,000-2,000 words/hour</td></tr>
+          <tr><td>Editing and revision</td><td>1,000-2,500 words/hour</td></tr>
+          <tr><td>Proofreading</td><td>3,000-5,000 words/hour</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>At 750 words per hour, a 2,000-word blog post takes roughly 2.5-3 hours of writing time - not counting research, outline preparation, or editing passes. Use the word count here to set realistic project time estimates before you start.</p>
+      <p>When I review SEO content for a site in my daily work, I treat the 1,500-2,500 word target as a coverage heuristic, not a word count goal. What I'm really checking is whether the page answers the 8-12 questions a reader in that topic area would naturally have. Pages that do that tend to land in that range organically.</p>
+      <p>I've seen 900-word pages outrank 3,500-word pages because they answered the specific query more directly - and I've seen long pages fail because extra words were filler that added length but no new information. Word count is a useful proxy for depth, not a target to hit for its own sake.</p>
       <h2 id="character-limits">Character limits by platform</h2>
       <p>Character limits are measured including spaces and punctuation unless noted otherwise. All counts below use the standard definition - one character equals one Unicode code point.</p>
       <div class="responsive-table">
@@ -204,10 +298,38 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="keyword-density">Keyword density</h2>
+      <p><strong>SMS note:</strong> The 160-character limit applies when the message uses GSM-7 encoding (standard Latin text). If the message contains any character outside the GSM-7 alphabet - emoji, Arabic, Chinese, Japanese, or some accented Latin characters - the entire message switches to UCS-2 (16-bit Unicode) encoding, which reduces the single-message limit to <strong>70 characters</strong>.</p>
+      <p>Characters in the GSM-7 extension table (€, [, ], ~, ^) stay in GSM-7 encoding but each count as 2 character slots rather than 1.</p>
+      <h2 id="characters-to-words">Characters to words counter</h2>
+      <p>Sometimes you know a character limit and need to estimate how many words fit inside it - or you know a word count target and want to check whether it will breach a character ceiling.</p>
+      <p>This tool shows both counts simultaneously, so you can paste any text and read the exact relationship in real time and instantly get the characters to words count.</p>
+      <h3>Characters to words conversion formula</h3>
+      <p>The average English word is 4.5 letters long. Including the space that follows it, each word occupies roughly 5-6 characters. That gives a reliable rule of thumb: <strong>divide characters by 5.5 to estimate words</strong>, or multiply words by 5.5 to estimate characters.</p>
+      <p>The ratio shifts slightly by content type - technical writing with long terminology runs closer to 6.5 characters per word; casual conversational text runs closer to 4.5.</p>
+      <h3>Character count to word count reference table</h3>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Characters</th><th>Estimated words</th><th>Common context</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>60</td><td>~10-12</td><td>Google meta title limit</td></tr>
+          <tr><td>160</td><td>~27-32</td><td>Single SMS message (GSM-7)</td></tr>
+          <tr><td>280</td><td>~47-56</td><td>Twitter / X post</td></tr>
+          <tr><td>500</td><td>~83-100</td><td>Short email or app notification</td></tr>
+          <tr><td>1,000</td><td>~167-200</td><td>One dense paragraph or a short social post</td></tr>
+          <tr><td>2,200</td><td>~367-440</td><td>Full Instagram caption</td></tr>
+          <tr><td>3,000</td><td>~500-600</td><td>LinkedIn post limit</td></tr>
+          <tr><td>5,000</td><td>~833-1,000</td><td>Medium-length article section</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>These are estimates based on average English prose. To get the exact figure for your specific text, paste it into the tool above - words and characters update together in real time, so you can see the precise ratio for your own writing style and vocabulary.</p>
+      <h3>When to use characters vs words</h3>
+      <p>Use the <strong>character count</strong> when writing for a platform with a hard character ceiling: social media posts, SMS, ad copy, meta titles, and push notifications.</p>
+      <p>Use the <strong>word count</strong> when writing to a content brief, an academic word limit, a script length, or an SEO target. The two figures are related but answer different questions - this tool shows both so you never have to choose.</p>
+      <h2 id="keyword-density">Character count and keyword density</h2>
       <p>Keyword density is the percentage of times a specific word appears relative to the total word count. The top keywords panel shows the five most frequent non-stop words in your text, along with their count and density percentage.</p>
-
       <h3>What density to aim for in SEO content</h3>
       <p>There is no single correct keyword density, but the following ranges reflect current best practice:</p>
       <ul>
@@ -215,57 +337,53 @@ const schema = [
         <li><strong>2-3%:</strong> Borderline. May be fine in very long articles where natural repetition occurs.</li>
         <li><strong>Above 3%:</strong> Risks looking like keyword stuffing to search engine algorithms. This was a common over-optimisation tactic before 2012; it is now more likely to hurt rankings than help.</li>
       </ul>
-      <p>A word appearing 15 times in a 1,000-word article has a density of 1.5% - a reasonable level for a primary keyword. The same word appearing 35 times is at 3.5% - likely excessive. Use the keyword panel to spot-check your main topics before publishing.</p>
-
+      <p>A word appearing 15 times in a 1,000-word article has a density of 1.5% - a reasonable level for a primary keyword. The same word appearing 35 times is at 3.5% - likely excessive.</p>
+      <p>Use the keyword panel to spot-check your main topics before publishing. If you want to calculate a custom density figure manually, the <a href="/math/percentage-calculator">percentage calculator</a> covers that <a href="/glossary/arithmetic">arithmetic</a> directly.</p>
       <h2 id="seo">Word count and SEO</h2>
       <p>Word count alone is not a Google ranking factor, but it correlates with ranking because longer content tends to cover a topic more thoroughly. A 2,000-word guide that answers ten related questions will typically outrank a 300-word page that answers one, because it satisfies more search intent and earns more links.</p>
-
       <h3>Meta titles and descriptions</h3>
       <p>Google truncates meta titles around 580 pixels wide - roughly 50-60 characters. Titles cut off in search results lose context and reduce click-through rates. Meta descriptions truncate around 920 pixels - roughly 150-160 characters. Neither truncation affects rankings directly, but both affect the click-through rate that brings visitors to your page.</p>
-      <p>The character counts panel in this tool gives you the number you need to check against these limits before publishing.</p>
-
+      <p>The character counts panel in this tool gives you the number you need to check against these limits before publishing. To compare two drafts of the same title or description side by side, the <a href="/compare/text">text diff checker</a> highlights exactly what changed between versions.</p>
       <h3>Readability</h3>
-      <p>Shorter sentences and paragraphs improve readability scores, which correlates with lower bounce rates. A paragraph count that is low relative to sentence count suggests very long paragraphs - which can reduce readability on mobile screens. As a rough guide, aim for paragraphs of 3-5 sentences for web content.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <p>Shorter sentences and paragraphs improve readability, which correlates with lower bounce rates on web pages. Two stats in this tool are particularly useful together: sentence count and paragraph count.</p>
+      <p>Divide sentences by paragraphs to get your average paragraph length. For web content, aim for 2-4 sentences per paragraph - longer blocks feel dense on mobile and discourage scanning. Academic writing runs longer, typically 5-8 sentences per paragraph, because the audience expects sustained argument development.</p>
+      <p>Sentence length matters too. Web content reads most comfortably at an average of 15-20 words per sentence - you can estimate this by dividing your word count by your sentence count.</p>
+      <p>Consistently above 25 words per sentence and complex ideas start to get lost. Consistently below 8 and the text feels abrupt. A deliberate mix of short and long sentences reads better than uniform length in either direction.</p>
+      <h2 id="common-mistakes">Common mistakes when using a word counter</h2>
       <h3>Using word count when a platform requires character count</h3>
       <p>Twitter, SMS, and all Google Ads fields enforce character limits, not word limits. A 50-word sentence with long words can easily exceed 280 characters, while a 50-word sentence using short words stays well under. Always check character count for these platforms - word count is irrelevant.</p>
-
       <h3>Forgetting that character limits include spaces</h3>
       <p>Almost all platform character limits count spaces as characters. The "Characters" figure in this tool (not "Characters no spaces") is the one to compare against Twitter's 280, SMS's 160, or Google's ~60 for meta titles.</p>
-
       <h3>Using reading time for presentation planning</h3>
       <p>Reading time (200 WPM) and speaking time (150 WPM) are different. A 1,000-word script takes 5 minutes to read silently but 6-7 minutes to speak aloud. Using the wrong figure leads to presentations that run over time. Always use the Speaking time stat when planning a talk, not the Reading time.</p>
-
-      <h3>Mistaking keyword density for a guaranteed ranking signal</h3>
-      <p>Hitting a specific keyword density percentage does not guarantee better rankings. Modern search algorithms use semantic understanding and hundreds of other signals. Keyword density is useful as a basic sanity check - to confirm a topic is present and not over-repeated - not as a target to optimise toward precisely.</p>
-
-      <h2 id="faq">FAQs</h2>
-
+      <p>In my experience, even the 150 WPM speaking estimate runs about 10-15% fast in practice. Real talks include pauses for emphasis, audience reaction, Q&A moments, and the natural slowing that happens at key points.</p>
+      <p>For a 20-minute conference talk for example, I target a script around 2,500 words - not the theoretical 3,000 that 150 WPM would suggest - to leave space for natural delivery without running over. The speaking time figure in this word and character counter tool is best treated as a lower bound, not a ceiling.</p>
+      <h3>Mistaking keyword density for a guaranteed ranking signal for SEO</h3>
+      <p>Hitting a specific keyword density percentage does not guarantee better rankings. Modern search algorithms use semantic understanding and hundreds of other signals. Keyword density is useful as a basic content check - to confirm a topic is present and not over-repeated - not as a target to optimize toward precisely.</p>
+      <h2 id="faq">FAQs about word and character count</h2>
       <h3>How is reading time calculated?</h3>
       <p>At 200 words per minute, the widely accepted average for adult silent reading of general text. Dense technical or academic content is typically read at 100-150 WPM, so reading time for specialised material will be longer than shown.</p>
-
       <h3>How is speaking time calculated?</h3>
       <p>At 150 words per minute - a standard estimate for presentations, speeches, and formal talks. TED Talks average 130-150 WPM. Conversational speech is faster, around 180-200 WPM. For presentation planning, 150 WPM is a safe middle estimate.</p>
-
       <h3>How many words is a 5-minute speech?</h3>
       <p>At 150 WPM, approximately 750 words. At a faster conversational 180 WPM, around 900 words. For a formal presentation or talk, 750 words is a reliable estimate.</p>
-
       <h3>Are spaces counted in the character count?</h3>
       <p>Both versions are shown. "Characters" includes spaces. "Characters (no spaces)" excludes them. Use "Characters" when checking against platform limits - most platforms (Twitter, SMS, Google meta fields) count spaces.</p>
-
       <h3>What counts as a word?</h3>
       <p>Any sequence of characters separated by whitespace. Hyphenated compounds like "well-known" count as one word. Numbers count as words.</p>
-
       <h3>What is keyword density and why does it matter?</h3>
       <p>Keyword density is how often a word appears as a percentage of total words. The top keywords panel shows your five most frequent non-stop words. A density of 1-2% for your main topic is generally healthy for SEO; above 3% risks looking like keyword stuffing.</p>
-
+      <h3>How many words is one page?</h3>
+      <p>It depends on formatting. A double-spaced academic page (12pt Times New Roman, 1-inch margins) holds roughly 250-275 words. Single-spaced holds around 500-550 words. A published novel page holds 250-300 words. Divide your word count by the relevant figure to estimate page count for your format.</p>
       <h3>Is my text saved or shared anywhere?</h3>
       <p>No. Everything runs locally in your browser. Nothing is sent to any server at any point.</p>
-
       <h3>Does it work on mobile?</h3>
       <p>Yes. The tool is fully responsive and works on phones and tablets without any app download.</p>
+      <QuizBlock
+        topic="word counting"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/word-counter"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
@@ -291,8 +409,6 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
