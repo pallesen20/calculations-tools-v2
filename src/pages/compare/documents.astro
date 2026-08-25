@@ -2,12 +2,15 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const tocItems = [
-  { id: 'how-to-use',   label: 'How to use this tool' },
-  { id: 'how-it-works', label: 'How document text extraction works' },
-  { id: 'limitations',  label: 'Limitations' },
-  { id: 'use-cases',    label: 'Use cases' },
-  { id: 'faq',          label: 'FAQs' },
-  { id: 'related-tools', label: 'Related tools' },
+  { id: 'how-to-use',        label: 'How to use this tool' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'how-it-works',     label: 'How document text extraction works' },
+  { id: 'vs-word-compare',  label: 'This tool vs Word Compare' },
+  { id: 'limitations',      label: 'Limitations' },
+  { id: 'use-cases',        label: 'Use cases' },
+  { id: 'common-mistakes',  label: 'Common mistakes' },
+  { id: 'faq',              label: 'FAQs' },
+  { id: 'related-tools',    label: 'Related tools' },
 ];
 
 const schema = [
@@ -33,7 +36,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Compare Word Documents"
   metaTitle="Compare Word Documents Online Free | .docx Diff Checker ᐅ"
@@ -45,18 +47,14 @@ const schema = [
   ogFormula="DOCX text diff"
   ogExample="Extract & compare text from Word files"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container ce-container">
-
         <div class="calculator-header">
           <h2>Instant .docx Files Comparison</h2>
           <p>Upload two .docx files to compare their text content line by line</p>
         </div>
-
         <div class="ce-grid">
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Original Document</h3>
@@ -74,7 +72,6 @@ const schema = [
               <div class="ce-file-info" id="cd-info-original"></div>
             </div>
           </div>
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Changed Document</h3>
@@ -92,13 +89,10 @@ const schema = [
               <div class="ce-file-info" id="cd-info-changed"></div>
             </div>
           </div>
-
         </div>
-
         <div class="diff-actions">
           <button class="diff-btn-primary" id="cd-btn-compare" onclick="compareDocuments()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
         </div>
-
         <div id="diff-output" class="diff-output">
           <div class="diff-header">
             <div class="diff-stats">
@@ -110,53 +104,103 @@ const schema = [
           </div>
           <div class="ct-diff-container" id="cd-diff-container"></div>
         </div>
-
       </div>
     </section>
-
     <input type="file" id="cd-file-original" style="display:none" accept=".docx" />
     <input type="file" id="cd-file-changed"  style="display:none" accept=".docx" />
     <div class="diff-toast"></div>
     <script src="/js/compare-documents.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Upload your original .docx file on the left and the updated version on the right, then click <strong>Find Differences</strong>. The tool uses mammoth.js to extract plain text from both documents and shows every changed paragraph in color-coded diff output. Formatting changes (bold, font size, color) are not compared - only text content.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this tool</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Files are processed entirely in your browser by mammoth.js - nothing is uploaded to any server.</li>
+          <li>Only <strong>.docx</strong> (Office Open XML) is supported. Older .doc files must be converted in Word or LibreOffice first.</li>
+          <li>Bold, italic, font size, colors, and track changes are not extracted - only the text content of each paragraph.</li>
+          <li>Text in tables is extracted sequentially; table structure (row insertions, column layout) is not compared.</li>
+          <li>For PDF comparison try <a href="/compare/pdf">Compare PDF Files</a>; for plain text try the <a href="/compare/text">Diff Checker</a>.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our .docx diff checker tool</h2>
       <p>Drop each .docx file into its panel and click "Find Differences." The tool loads mammoth.js on demand, extracts the plain text from both documents, and runs a paragraph-level diff. Additions appear in green, removals in red. Empty paragraphs are filtered to keep the output readable.</p>
-
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Imagine printing two copies of the same contract and laying them side by side. You go through each paragraph, circling anything that differs - one word changed, a sentence added, a clause removed. That is exactly what this tool does, but instead of paper you give it two Word files.</p>
+      <p>The key difference from comparing printed pages: this tool only sees the words, not the visual formatting. So "shall pay within <strong>30</strong> days" changed to "shall pay within <strong>45</strong> days" shows up immediately - but if someone switched a clause to bold without changing the wording, you won't see it here.</p>
+      <p>In practice: a 40-page service agreement where a vendor changed one number in clause 12.3 from "$50,000" to "$100,000." Without a diff tool you'd read 40 pages to find it. With this tool, the diff shows the exact paragraph in under five seconds.</p>
       <h2 id="how-it-works">How document text extraction works</h2>
-      <p>This tool uses <a href="https://github.com/mwilliamson/mammoth.js" rel="nofollow">mammoth.js</a> to read .docx files. Mammoth converts the XML structure of a Word document into plain text, preserving the text content of each paragraph. The extracted text from both documents is then compared line by line using an LCS diff algorithm - the same algorithm used by Git's <code>diff</code> command.</p>
-
-      <h2 id="limitations">Limitations</h2>
+      <p>This tool uses <a href="https://github.com/mwilliamson/mammoth.js" rel="nofollow" target="_blank">mammoth.js</a> to read .docx files. Mammoth converts the XML structure of a Word document into plain text, preserving the text content of each paragraph. The extracted text from both documents is then compared line by line using an LCS diff algorithm - the same algorithm used by Git's <code>diff</code> command.</p>
+      <h2 id="vs-word-compare">This tool vs Word's built-in Compare Documents</h2>
+      <p>Word has its own Compare Documents feature (Review tab → Compare). Both tools find differences between two versions of a file, but they serve different situations. Here's when to use each:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>This tool</th>
+              <th>Word's Compare</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Requires Microsoft Word</td><td>No - runs in any browser</td><td>Yes (Word 2013+)</td></tr>
+            <tr><td>Privacy</td><td>Files never leave your browser</td><td>Processed locally in Word</td></tr>
+            <tr><td>Shows formatting changes</td><td>No - text only</td><td>Yes - bold, font, color, spacing</td></tr>
+            <tr><td>Shows track changes</td><td>No</td><td>Yes - integrates with revision history</td></tr>
+            <tr><td>Shows comment changes</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Output format</td><td>Color-coded text diff</td><td>Redlined Word document</td></tr>
+            <tr><td>Best for</td><td>Quick text scan, no Word needed</td><td>Full document audit with formatting</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When I need a quick answer - "did the substance of this document change?" - I reach for this tool first. It takes about 10 seconds. If the text diff shows nothing changed, I'm done. If it shows changes, I open Word's Compare to understand whether the formatting context matters. For a first pass on a redlined contract, speed wins over completeness.</p>
+      <h2 id="limitations">Limitations of comparing .docx files</h2>
       <ul>
         <li><strong>Only .docx format is supported.</strong> Older .doc (Word 97-2003) files are not supported. Convert them to .docx in Word or LibreOffice first.</li>
         <li><strong>Formatting is not compared.</strong> Bold, italic, font changes, colors, and track changes are not part of the text extraction. For formatting comparison, use Word's built-in Compare Documents feature (Review → Compare).</li>
         <li><strong>Tables and complex layouts.</strong> Text in tables is extracted but may not match its visual position in the document. The diff compares text content, not table structure.</li>
+        <li><strong>Headers and footers are not extracted.</strong> Text in page headers, footers, and watermarks is not included in the diff.</li>
+        <li><strong>Text boxes and shapes.</strong> Floating text boxes, SmartArt text, and WordArt are not reliably extracted by mammoth.js.</li>
+        <li><strong>Footnotes and endnotes.</strong> These may appear at the end of the extracted text rather than inline with the paragraph they reference.</li>
       </ul>
-
-      <h2 id="use-cases">Use cases</h2>
+      <h2 id="use-cases">Use cases for a .docx diff checker tool</h2>
       <h3>Contract and agreement redlines</h3>
-      <p>When a Word document is revised and returned, upload both versions to see every paragraph that changed. A single sentence edit or added clause will show clearly in the diff, without having to read both documents word for word.</p>
+      <p>When a Word document is revised and returned, upload both versions to see every paragraph that changed. A single sentence edit or an added clause shows clearly in the diff, without reading both documents word for word.</p>
       <h3>Academic and editorial revisions</h3>
       <p>Compare two drafts of an essay, report, or manuscript to confirm which sections changed between revisions. Useful for writers, editors, and academic supervisors reviewing annotated drafts.</p>
       <h3>Policy and procedure document updates</h3>
       <p>When an organization updates an internal policy or procedure document, comparing the old and new versions immediately shows which sections were added, removed, or reworded - producing a clear audit record of what changed.</p>
-
-      <h2 id="faq">FAQs</h2>
+      <h3>Template compliance checking</h3>
+      <p>When a filled-in contract is returned, compare it against the approved master template to confirm only the designated fields (names, dates, dollar amounts) were changed. Any edits to clause text will appear immediately, without reading the whole document.</p>
+      <p>I've seen this catch problems that Word's comment trail would have missed. A vendor returned a signed services agreement where, alongside the agreed payment terms, two liability clauses had been quietly reworded. The text diff flagged both paragraphs in seconds - something a visual scan of a 28-page document would likely have missed on deadline.</p>
+      <h3>HR and employee handbook versioning</h3>
+      <p>Annual handbook updates often touch dozens of sections across a long document. Compare the outgoing and incoming versions to produce a summary of what changed for all-staff communication - without manually annotating differences across 80 pages.</p>
+      <h2 id="common-mistakes">Common mistakes when comparing Word documents</h2>
+      <h3>Uploading a .doc file</h3>
+      <p>The tool accepts only .docx (Office Open XML). Older .doc files produce empty output or fail silently. Open the file in Microsoft Word or LibreOffice Writer and use File → Save As to convert it to .docx before uploading.</p>
+      <h3>Document has pending track changes</h3>
+      <p>mammoth.js extracts text in its accepted state. If a document has pending Track Changes suggestions visible in Word, those suggested edits are not treated as separate text - the diff shows only the accepted version of the document. Accept or reject all track changes in Word (Review → Accept All / Reject All) before uploading to get a reliable comparison.</p>
+      <h3>Password-protected document</h3>
+      <p>mammoth.js cannot open encrypted .docx files. The tool will produce empty output with no error message. Remove the password in Word first: File → Info → Protect Document → Encrypt with Password → delete the password and save.</p>
+      <h3>Expecting table row insertions to diff cleanly</h3>
+      <p>Table text is extracted sequentially - left to right, top to bottom. If a row is inserted in the middle of a table, every row below it shifts position in the extracted text and will appear as changed in the diff, even if the row content is identical. For documents with complex tables, Word's built-in Compare produces a more accurate result.</p>
+      <h2 id="faq">FAQs about comparing .docx files</h2>
       <h3>Does this compare .doc files?</h3>
       <p>No. Only .docx (Office Open XML) is supported. Convert older .doc files to .docx in Microsoft Word (File → Save As → .docx) or LibreOffice Writer.</p>
       <h3>Are formatting changes shown?</h3>
       <p>No. Only plain text content is compared. For formatting and track changes, use Word's built-in Compare Documents feature under the Review tab.</p>
       <h3>Is my document private?</h3>
       <p>Yes. Everything runs in your browser using mammoth.js. No file content is sent to any server.</p>
-
+      <h3>What happens to tables?</h3>
+      <p>Text in table cells is extracted in reading order - left to right, top to bottom - and treated as regular paragraphs. If a row is inserted or deleted, the rows below will appear as changed in the diff even if their text is identical. For complex table comparison, use Word's built-in Compare Documents.</p>
+      <h3>Are headers and footers included?</h3>
+      <p>No. mammoth.js extracts the main document body only. Page numbers, running headers, footers, and watermarks are not included in the comparison. If your documents differ only in header or footer text, the diff will show no changes.</p>
+      <h3>Can I compare a document that has track changes?</h3>
+      <p>You can upload it, but the results may be misleading. mammoth.js extracts text in its accepted state - pending suggested edits are not visible as tracked changes in the diff. Accept or reject all changes in Word before uploading to ensure the comparison reflects the actual document content.</p>
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -174,12 +218,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .ce-container { max-width: 100% !important; }
 </style>

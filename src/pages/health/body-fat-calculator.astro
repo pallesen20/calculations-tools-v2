@@ -136,7 +136,7 @@ const schema = [
   youtubeId="2r3WArdLIMI"
   youtubeUploadDate="2026-04-30"
   youtubeSummary="One thing most people get wrong when using this tool: measuring the waist at the belly button instead of the narrowest point. When you make that mistake, the result looks plausible but it's actually off - and that can mean acting on bad information. The correct approach is: find the narrowest part of your torso - usually 2 to 3 cm above the navel - for an accurate reading. Take an extra ten seconds to get the input right and the output will be spot on."
-  metaTitle="Body Fat Calculator | Navy Method & BMI Estimate ᐅ"
+  metaTitle="Body Fat Calculator | Navy Tape Test & BMI Estimate ᐅ"
   description="Calculate body fat percentage using the US Navy tape method (waist, neck, hip). Compares with the Deurenberg BMI estimate. Shows fat mass, lean body mass, and body fat category."
   canonical="https://calculations.tools/health/body-fat-calculator"
   tocItems={tocItems}
@@ -311,13 +311,10 @@ const schema = [
       <h3>Waist</h3>
       <p><strong>Men:</strong> Measure horizontally at the level of the navel, standing relaxed (do not suck in). The tape should be snug but not compressing skin.</p>
       <p><strong>Women:</strong> Measure at the narrowest point between the lower ribs and the hip bones - the natural waist, which is typically 2–3 cm above the navel. Do not measure at the navel. Relax normally; do not suck in.</p>
-
       <h3>Neck</h3>
       <p>Stand with head level and looking forward. Place the tape just below the larynx (Adam's apple), with the tape sloping slightly downward to the front. Keep the tape horizontal at the back. Measure to the nearest 0.5 cm.</p>
-
       <h3>Hip (women only)</h3>
       <p>Stand with feet together. Measure at the widest point of the hips and buttocks - typically at the level of the greater trochanter (the bony protrusion at the top of the thigh). The tape should be horizontal all the way around.</p>
-
       <h3>General tips</h3>
       <ul>
         <li>Take measurements in the morning, before eating or drinking.</li>
@@ -326,7 +323,6 @@ const schema = [
         <li>Have a second person help with the neck measurement for best accuracy.</li>
         <li>Use the same time of day and conditions each time you track progress.</li>
       </ul>
-
       <h2 id="bf-categories">Body fat categories</h2>
       <p>Categories below are based on ACE (American Council on Exercise) guidelines, the most widely cited reference for non-clinical body fat classification.</p>
       <div class="responsive-table">
@@ -347,23 +343,18 @@ const schema = [
       <p>One pattern I notice consistently: users in the upper Acceptable range (22-24% for men, 28-31% for women) who are otherwise active often report normal-to-good blood markers. Metabolic health does not fall off a cliff at those levels.</p>
       <p>The jump to High (25%+ for men, 32%+ for women) is where cardiometabolic risk accumulates noticeably in cohort data - that boundary matters more than chasing Athletic percentages. Postmenopausal women crossing into this zone can use the <a href="/health/bmi-calculator/menopause">postmenopausal cardiometabolic risk tool</a> to combine body composition data with waist circumference, HRT status, and years since menopause.</p>
       <p>For most people, the Fitness-to-Acceptable boundary is the more meaningful target.</p>
-
       <h2 id="navy-method">The US Navy method</h2>
       <p>The Navy circumference method was developed by <a href="https://apps.dtic.mil/sti/citations/ADA148699" target="_blank">Hodgdon and Beckett in 1984</a> at the Naval Health Research Center as a practical, equipment-free alternative to underwater weighing for assessing military fitness.</p>
       <p>The key insight is that waist-to-neck ratio (men) and waist+hip-to-neck ratio (women) predicts body density, from which body fat % can be derived using the Siri equation (495 / density − 450).</p>
-
       <h3>Male formula (all measurements in cm)</h3>
       <Formula expr={f.navyMale} />
-
       <h3>Female formula (all measurements in cm)</h3>
       <Formula expr={f.navyFemale} />
-
       <p>The same formulae apply in inches - the log₁₀ ratio is unit-invariant when all measurements use the same unit. This calculator converts imperial inputs to cm before applying the formula.</p>
       <p>If you want to convert inches to centimeters, <a href="/conversion/length-converter/in-to-cm">use this calculator</a>.</p>
       <h3>Why the neck measurement?</h3>
       <p>Neck circumference serves as a proxy for upper-body lean mass. Subtracting it from waist (or waist + hip) creates a ratio that separates midsection fat from total mass.</p>
       <p>A muscular person with a large neck and moderate waist will register lower body fat than the same waist measurement would imply without the neck correction. This is why the Navy method outperforms pure waist-based formulas for people with significant upper-body muscle development.</p>
-
       <h2 id="method-comparison">Body fat measurement methods compared</h2>
       <p>This table below correctly compares the different bodt fat measurements methods.</p>
       <div class="responsive-table">
@@ -413,33 +404,24 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="faq">FAQs</h2>
-
       <h3>What is a healthy body fat percentage?</h3>
       <p>For men, 14–24% is the Fitness-to-Acceptable range and associated with good health; 6–13% is Athletic. For women, 21–31% is Fitness-to-Acceptable; 14–20% is Athletic. Below 5% for men and 13% for women risks hormonal disruption. Above 25% for men and 32% for women correlates with increased metabolic disease risk.</p>
-
       <h3>How accurate is the Navy body fat method?</h3>
       <p>Approximately ±3–4 percentage points compared to DEXA scanning - similar to professional skinfold caliper measurement. Accuracy improves significantly with consistent landmark use: navel for men's waist, narrowest point for women's waist, just below the Adam's apple for neck. Taking the average of two or three measurements at each site further reduces error.</p>
-
       <h3>Why does the formula need my neck measurement?</h3>
       <p>Neck circumference reflects lean upper-body mass. Subtracting it from the waist (or waist + hip for women) creates a ratio that partially corrects for muscularity. Without the neck, a lean muscular person with a 90 cm waist would score the same as a sedentary person with the same waist - despite having a much higher muscle-to-fat ratio. The neck correction improves precision for people with significant upper-body development.</p>
-
       <h3>What is the difference between the Navy method and the Deurenberg estimate?</h3>
       <p>The Navy method uses circumference measurements (waist, neck, hip) and does not require age. The Deurenberg formula uses BMI and age but requires no tape measure. Navy is generally more accurate and is not biased by muscle mass. Deurenberg tends to overestimate body fat in athletic individuals. This calculator shows both when you enter an age so you can compare.</p>
-
       <h3>Can I use this during pregnancy?</h3>
       <p>No - waist and hip circumferences change significantly during pregnancy for reasons unrelated to fat mass. The Navy formula will give invalid results. Use the <a href="/health/bmi-calculator/pregnancy">BMI During Pregnancy</a> calculator instead.</p>
-
       <h3>How is this different from the FFMI Calculator?</h3>
       <p>This calculator <em>measures</em> your body fat % using tape measurements. The <a href="/health/ffmi-calculator">FFMI Calculator</a> takes a <em>known</em> body fat % and computes your Fat-Free Mass Index - a measure of muscularity relative to height. A common workflow: measure body fat % here, then enter it into the FFMI Calculator to see where you stand on the muscular development scale.</p>
-
       <QuizBlock
         topic="body fat"
         questions={quizQuestions}
         pageUrl="https://calculations.tools/health/body-fat-calculator"
       />
-
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/health/ffmi-calculator', blurb: 'Enter your body fat % to calculate FFMI and see how your muscle mass compares to the natural limit.' },
@@ -450,10 +432,7 @@ const schema = [
         { path: '/conversion/weight-converter' },
         { path: '/conversion/height-converter' },
       ]} />
-
       <RelatedGlossaryTerms toolPath="/health/body-fat-calculator" />
-
     </div>
   </div>
-
 </CalculatorLayout>

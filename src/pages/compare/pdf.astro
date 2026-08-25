@@ -2,12 +2,15 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const tocItems = [
-  { id: 'how-to-use',   label: 'How to use this tool' },
-  { id: 'how-it-works', label: 'How PDF text extraction works' },
-  { id: 'limitations',  label: 'Limitations' },
-  { id: 'use-cases',    label: 'Use cases' },
-  { id: 'faq',          label: 'FAQs' },
-  { id: 'related-tools', label: 'Related tools' },
+  { id: 'how-to-use',            label: 'How to use this tool' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'how-it-works',          label: 'How PDF text extraction works' },
+  { id: 'limitations',           label: 'Limitations' },
+  { id: 'text-layer-check',      label: 'Does your PDF have a text layer?' },
+  { id: 'use-cases',             label: 'Use cases' },
+  { id: 'common-mistakes',       label: 'Common mistakes' },
+  { id: 'faq',                   label: 'FAQs' },
+  { id: 'related-tools',         label: 'Related tools' },
 ];
 
 const schema = [
@@ -33,7 +36,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Compare PDF Files"
   metaTitle="Compare PDF Files Online Free | PDF File Diff Checker ᐅ"
@@ -45,18 +47,14 @@ const schema = [
   ogFormula="PDF text diff"
   ogExample="Extract & compare text from two PDFs"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container ce-container">
-
         <div class="calculator-header">
-          <h2>PDF File Diff Checker</h2>
+          <h2>Instant PDF File Diff Checker</h2>
           <p>Upload two PDFs to extract and compare their text content line by line</p>
         </div>
-
         <div class="ce-grid">
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Original PDF</h3>
@@ -74,7 +72,6 @@ const schema = [
               <div class="ce-file-info" id="cp-info-original"></div>
             </div>
           </div>
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Changed PDF</h3>
@@ -92,13 +89,10 @@ const schema = [
               <div class="ce-file-info" id="cp-info-changed"></div>
             </div>
           </div>
-
         </div>
-
         <div class="diff-actions">
           <button class="diff-btn-primary" id="cp-btn-compare" onclick="comparePDFs()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
         </div>
-
         <div id="diff-output" class="diff-output">
           <div class="diff-header">
             <div class="diff-stats">
@@ -110,32 +104,40 @@ const schema = [
           </div>
           <div class="ct-diff-container" id="cp-diff-container"></div>
         </div>
-
       </div>
     </section>
-
     <input type="file" id="cp-file-original" style="display:none" accept=".pdf" />
     <input type="file" id="cp-file-changed"  style="display:none" accept=".pdf" />
     <div class="diff-toast"></div>
     <script src="/js/compare-pdf.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Upload your original PDF on the left and the updated PDF on the right, then click <strong>Find Differences</strong>. The tool extracts the text layer from both files using PDF.js and shows every changed line in color-coded diff output. Works only on text-based PDFs - not scanned images.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this tool</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li><strong>Text-based PDFs only</strong> - scanned PDFs contain images of text, not a text layer, so they produce empty output. Use the <a href="/conversion/image-to-text">Image to Text (OCR)</a> tool first to extract text from scans.</li>
+          <li><strong>100% private</strong> - uses PDF.js (Mozilla's open-source renderer) running entirely in your browser. Your files are never uploaded to any server.</li>
+          <li><strong>Formatting is not compared</strong> - bold, italic, font size, and color are invisible to this tool. Only the character content is diffed.</li>
+          <li><strong>Multi-column layouts may extract out of order</strong> - PDF stores text in internal order, not always visual reading order. Two-column documents and complex tables may produce confusing results.</li>
+          <li>For Word documents (.docx), use the <a href="/compare/documents">Compare Documents</a> tool - it handles .docx natively without needing a PDF export step.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our PDF diff checker tool</h2>
       <p>Drop each PDF file into its panel, or click to browse. Then click "Find Differences." The tool loads PDF.js on demand (no page-weight cost unless you use the tool), extracts the text layer from both files, and runs a line-by-line diff. Additions appear in green, removals in red.</p>
       <p>For large PDFs the extraction step may take a few seconds. The button shows "Extracting text…" while processing. Everything runs in your browser - no files are uploaded to any server.</p>
-
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>A PDF is not like a Word document. Most PDFs store their content in two separate layers: a visual layer (what you see on screen) and a hidden text layer underneath it. The text layer is what search tools use when you press Ctrl+F inside a PDF reader - it's the actual characters, not the picture of them. This tool pulls that hidden text layer out of both PDFs and compares the two strings of text line by line.</p>
+      <p>The catch: if your PDF was created by scanning a physical document - a sheet of paper run through a printer/scanner - there is no text layer. The file is just a photograph of the page. PDF.js cannot extract text from a photograph, so it returns nothing useful.</p>
+      <p>If you're not sure whether your PDF has a text layer, try pressing Ctrl+F in your PDF reader and searching for a word you can see. If the search highlights the word, the text layer exists. If it doesn't find anything, the PDF is a scan.</p>
+      <p><strong>Concrete example:</strong> a 15-page service agreement sent back by a vendor with revisions. Rather than reading all 15 pages twice, upload both PDFs here. In a few seconds you see that one sentence in clause 4.2 was modified, a new sub-clause was inserted at 7.1(c), and the payment terms in section 9 changed from "30 days" to "45 days." The whole check takes under a minute instead of 30 minutes of careful reading.</p>
       <h2 id="how-it-works">How PDF text extraction works</h2>
-      <p>PDFs store content in one of two ways: as an embedded text layer (text-based PDFs) or as rasterized images of text (scanned PDFs). This tool uses <a href="https://mozilla.github.io/pdf.js/" rel="nofollow">PDF.js</a> - Mozilla's open-source PDF renderer - to extract the text layer. The extracted text from each page is concatenated and then compared line by line using an LCS (Longest Common Subsequence) diff algorithm, the same algorithm used by Git.</p>
-
-      <h2 id="limitations">Limitations</h2>
+      <p>PDFs store content in one of two ways: as an embedded text layer (text-based PDFs) or as rasterized images of text (scanned PDFs). This tool uses <a href="https://mozilla.github.io/pdf.js/" rel="nofollow" target="_blank">PDF.js</a> - Mozilla's open-source PDF renderer - to extract the text layer. The extracted text from each page is concatenated and then compared line by line using an LCS (Longest Common Subsequence) diff algorithm, the same algorithm used by Git.</p>
+      <h2 id="limitations">Limitations of PDF comparisons</h2>
       <p>PDF text comparison has inherent limitations you should understand:</p>
       <ul>
         <li><strong>Scanned PDFs produce no text.</strong> If your PDF is a scan (an image of a printed page), PDF.js cannot extract text from it. You will get empty or minimal output. Use the <a href="/conversion/image-to-text">Image to Text (OCR)</a> tool to extract text from the scan first.</li>
@@ -143,23 +145,58 @@ const schema = [
         <li><strong>Formatting is not compared.</strong> Bold, italic, font size, and color are not part of the text extraction. Only the character content is compared.</li>
       </ul>
       <p>For comparing formatted Word documents, the <a href="/compare/documents">Compare Documents</a> tool supports .docx files directly.</p>
-
-      <h2 id="use-cases">Use cases</h2>
+      <p>The multi-column extraction issue trips people up more than any other limitation. I've seen it produce confusing diffs on academic papers - a two-column journal article extracts left-column text from page 1, then right-column text from page 1, then switches to page 2. The diff appears to show half the document moved around when really it's just a reading-order artifact.</p>
+      <p>If your document is multi-column and the diff looks chaotic, copy-paste the text manually from each PDF into the <a href="/compare/text">text diff checker</a> after reorganizing the column order - that gives you a clean comparison of the content itself.</p>
+      <h2 id="text-layer-check">Does your PDF have a text layer?</h2>
+      <p>Before uploading, it's worth confirming your PDFs contain actual text - otherwise the comparison will return empty output and it won't be clear why. There are two quick ways to check:</p>
+      <div class="responsive-table">
+      <table>
+        <thead><tr><th>Method</th><th>How to do it</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td>Ctrl+F search</td><td>Open the PDF in your browser or reader, press Ctrl+F (or Cmd+F on Mac), and search for a word you can see on screen</td><td>If the word highlights, there is a text layer. If nothing is found, the PDF is a scan.</td></tr>
+          <tr><td>Select and copy</td><td>Try to click and drag to select a block of text, then copy it</td><td>If you can paste readable text into a text editor, the PDF has a text layer. If you paste nothing, or a string of symbols, it's a scan or has a corrupted text layer.</td></tr>
+          <tr><td>File size check</td><td>Compare file size: a scanned PDF is usually 1-5 MB per page; a native text PDF is typically under 500 KB total</td><td>A rough indicator only - a text PDF with embedded images can also be large.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>If your PDF is a scan and you need to compare it, use the <a href="/conversion/image-to-text">Image to Text (OCR)</a> tool first to extract the text, then paste both extracted texts into the <a href="/compare/text">text diff checker</a>.</p>
+      <h2 id="use-cases">Common use cases for comparing PDF files</h2>
       <h3>Contract and legal document redlines</h3>
-      <p>When a contract is revised and sent back as a new PDF, paste both versions into this tool to see every changed sentence, clause, or paragraph - without reading both documents in full. Even a single changed word will appear in the diff.</p>
+      <p>When a contract is revised and sent back as a new PDF, upload both versions here to see every changed sentence, clause, or paragraph - without reading both documents in full. Even a single changed word will appear in the diff.</p>
+      <p>The pattern I find this most valuable for is a contract returned with "tracked changes accepted" - the vendor or counterparty sends back a clean PDF with no visible redlines, which makes it easy to assume nothing changed. Running the diff takes 30 seconds and immediately reveals whether that's true.</p>
+      <p>I've caught meaningful changes this way - a liability cap quietly increased from $60,000 to $100,000, an auto-renewal clause added, an indemnification paragraph reworded to shift responsibility. None of it was visible without a direct comparison.</p>
       <h3>Report and white paper versioning</h3>
       <p>Compare two versions of a report to verify which sections changed between drafts, which figures were updated, and whether any text was accidentally removed during editing.</p>
       <h3>Regulatory and compliance submissions</h3>
       <p>Many regulatory filings, technical standards, and compliance documents are distributed as PDFs. Comparing the current version against the previous one produces a clear audit trail of what changed.</p>
-
-      <h2 id="faq">FAQs</h2>
+      <h3>Academic paper revision review</h3>
+      <p>When submitting a revised manuscript to a journal, compare the original submission against the revised version to verify that every change requested by reviewers was actually made - and that no unintended text was altered or removed in the process. This is also useful when comparing two versions of a research paper downloaded from preprint servers like arXiv, where updated versions are uploaded over time.</p>
+      <h3>Insurance policy annual review</h3>
+      <p>Insurance policies are renewed annually as PDFs, and insurers routinely update coverage terms, exclusion lists, or deductible thresholds between renewal years. The changes are rarely highlighted. Upload last year's policy on the left and this year's on the right to see exactly which clauses were reworded, which exclusions were added, and whether any coverage was quietly reduced.</p>
+      <h2 id="common-mistakes">Common mistakes when comparing PDFs</h2>
+      <h3>Uploading a password-protected PDF</h3>
+      <p>PDF.js cannot extract text from an encrypted or password-protected PDF. It will either fail silently and return empty output, or produce an error. If your PDF requires a password to open, you need to unlock it first.</p>
+      <p>In Adobe Acrobat Reader (or the full Acrobat), go to File → Properties → Security, remove the password protection, and re-save the file before uploading.</p>
+      <p>In a pinch, opening the file in Chrome (which prompts for the password), then printing it to PDF using Chrome's built-in printer, produces an unlocked copy - though this sometimes degrades the text layer quality.</p>
+      <h3>Comparing a "print to PDF" file against a native PDF</h3>
+      <p>When a <a href="/compare/documents">Word document</a> is printed to PDF via the browser's built-in PDF printer (rather than saved as PDF directly from Word), the browser serializes text in visual paint order - not reading order. The resulting PDF may have a scrambled text layer where words appear in a different sequence than they read on screen.</p>
+      <p>If one of your files was created this way and the other was a native PDF export, the diff may look chaotic even for documents with identical content.</p>
+      <p><strong>The fix:</strong> re-export both files using the same method - ideally File → Save As → PDF from Word, or File → Download → PDF from Google Docs.</p>
+      <h3>Expecting formatting differences to appear</h3>
+      <p>This tool compares extracted text only. If one PDF has a heading in bold red 18pt and the other has the same heading in plain black 12pt, the diff will show those lines as <em>unchanged</em> because the characters are identical. Formatting changes - font, color, size, spacing, layout - are invisible to text extraction.</p>
+      <p>If you need to verify formatting changes, use a dedicated PDF comparison application that renders both documents visually.</p>
+      <h3>Footnotes and endnotes appearing mid-paragraph</h3>
+      <p>PDF.js extracts footnotes in the position they are stored internally, which is often mid-page rather than at the end. A footnote marker like "¹ See Section 4" may appear in the middle of the paragraph that references it, not at the bottom of the page.</p>
+      <p>If your diff shows text appearing in strange positions within paragraphs, check whether those lines are footnotes or endnotes from the source document.</p>
+      <h2 id="faq">FAQs about comparing PDF files online</h2>
+      <h3>What does PDF stand for?</h3>
+      <p>PDF stands for Portable Document Format. It was developed by Adobe in the early 1990s to create a file format that looks identical on any device or operating system, regardless of the software used to create it. The "portable" part refers to this layout consistency - a PDF printed in Tokyo looks exactly the same as one opened in London.</p>
       <h3>Can this compare scanned PDFs?</h3>
       <p>No. Scanned PDFs contain images of text, not actual text. PDF.js can only extract an embedded text layer. Use the <a href="/conversion/image-to-text">Image to Text (OCR)</a> tool to extract text from the scanned PDF first, then paste the result here to compare.</p>
       <h3>Is my PDF private?</h3>
-      <p>Yes. All processing runs in your browser using PDF.js. Nothing is uploaded to any server at any point.</p>
+      <p>Yes. All processing runs in your browser using PDF.js. Nothing is uploaded to any server at any point. In other words, you have full privacy when uploading your PDF files.</p>
       <h3>What happens with multi-page PDFs?</h3>
       <p>The tool extracts text from all pages and concatenates them before running the diff. Text from page 1 is compared to text from page 1 of the other document, then page 2, and so on, as a continuous text stream.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -177,12 +214,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .ce-container { max-width: 100% !important; }
 </style>

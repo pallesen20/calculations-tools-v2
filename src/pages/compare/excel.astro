@@ -1,9 +1,11 @@
 ---
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 
 const tocItems = [
-  { id: 'how-to-use',      label: 'How to use this tool' },
-  { id: 'color-coding',    label: 'Reading the color coding' },
+  { id: 'how-to-use',           label: 'How to use this tool' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'color-coding',         label: 'Reading the color coding' },
   { id: 'formats',         label: 'Supported formats' },
   { id: 'use-cases',       label: 'Use cases' },
   { id: 'how-it-works',    label: 'How the comparison works' },
@@ -17,18 +19,18 @@ const schema = [
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Excel and CSV File Comparison Tool",
+    "name": "Excel and XLSX File Comparison Tool",
     "url": "https://calculations.tools/compare/excel",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
-    "description": "Compare two Excel, CSV, or spreadsheet files online. Find changed cells, added rows, and removed rows instantly with color-coded results. Free, private, no upload to server.",
+    "description": "Compare two Excel, XLSX, or spreadsheet files online. Find changed cells, added rows, and removed rows instantly with color-coded results. Free, private, no upload to server.",
     "isAccessibleForFree": true,
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
   },
   {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    "name": "How to compare two Excel or CSV files online",
+    "name": "How to compare two Excel or XLSX files online",
     "description": "Use this tool to find every changed cell, added row, and removed row between two spreadsheet files.",
     "step": [
       { "@type": "HowToStep", "position": 1, "name": "Upload your original file", "text": "Drop your original or older spreadsheet into the left panel, or click to browse for the file." },
@@ -50,11 +52,10 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Compare Excel Files"
   metaTitle="Compare Excel Files Online Free | Spreadsheet Diff Checker ᐅ"
-  description="Compare two Excel, CSV, or spreadsheet files online and find every changed cell, added row, and removed row instantly. Color-coded results. Free, private, no upload to server."
+  description="Compare two Excel, XLSX, or spreadsheet files online and find every changed cell, added row, and removed row instantly. Color-coded results. Free, private, no upload to server."
   canonical="https://calculations.tools/compare/excel"
   tocItems={tocItems}
   schema={schema}
@@ -62,21 +63,16 @@ const schema = [
   ogFormula="Cell-by-cell diff"
   ogExample="Find changed cells, added & removed rows"
 >
-
   <div slot="calculator">
     <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" is:inline></script>
-
     <section class="calculator-interface">
       <div class="calculator-container ce-container">
-
         <div class="calculator-header">
-          <h2>Excel & CSV Comparison Tool</h2>
+          <h2>Excel & XLSX Comparison Tool</h2>
           <p>Upload two files to see every changed cell, added row, and removed row</p>
           <p class="ce-formats">Supported: .xlsx .xls .xlsm .xlsb .csv .txt .dif .ods</p>
         </div>
-
         <div class="ce-grid">
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Original File</h3>
@@ -100,7 +96,6 @@ const schema = [
               </div>
             </div>
           </div>
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Changed File</h3>
@@ -124,15 +119,12 @@ const schema = [
               </div>
             </div>
           </div>
-
         </div>
-
         <div class="diff-actions">
           <button class="diff-btn-primary" onclick="compareFiles()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
           <button class="diff-btn-secondary" onclick="swapFiles()">⇄ Swap</button>
           <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
         </div>
-
         <div id="diff-output" class="diff-output">
           <div class="diff-header">
             <div class="diff-stats">
@@ -145,30 +137,38 @@ const schema = [
           </div>
           <div class="ce-diff-table-wrap" id="ce-diff-container"></div>
         </div>
-
       </div>
     </section>
-
     <input type="file" id="ce-file-original" style="display:none" accept=".xls,.xlsx,.xlsm,.xlsb,.csv,.txt,.dif,.ods" />
     <input type="file" id="ce-file-changed"  style="display:none" accept=".xls,.xlsx,.xlsm,.xlsb,.csv,.txt,.dif,.ods" />
     <div class="diff-toast"></div>
     <script src="/js/compare-excel.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Upload your original spreadsheet on the left and the updated version on the right, then click <strong>Find Differences</strong>. Changed cells are highlighted in yellow with the old value shown in parentheses. Added rows are green, removed rows are red. Works with .xlsx, .xls, .csv, .ods, and more. Nothing is ever uploaded to a server - all processing runs in your browser.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this tool</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li><strong>100% private</strong> - all comparison logic runs in your browser using SheetJS. Your files never leave your device.</li>
+          <li><strong>Yellow = changed cell</strong> (old value in parentheses), <strong>green = added row</strong>, <strong>red = removed row</strong>, no highlight = identical.</li>
+          <li><strong>Positional matching</strong> - row N in the original is compared to row N in the changed file. Sort both files by a unique ID column before uploading if rows may have shifted.</li>
+          <li><strong>Cross-format comparison works</strong> - compare .xlsx against .csv, or .xls against .ods. All formats normalize to the same internal grid.</li>
+          <li>For pure CSV files without formulas or multiple sheets, the lighter <a href="/compare/csv">CSV comparison tool</a> loads faster.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our Excel diff checker tool</h2>
       <p>Drop your original (older) spreadsheet into the left panel and the revised (newer) version into the right panel. Then click "Find Differences." The diff output appears below with every change color-coded by type.</p>
       <p>If either file contains multiple sheets, tabs appear below the file preview so you can select which sheet to compare. Each side selects its sheet independently - useful when sheets have been renamed or reordered between file versions.</p>
       <p>The Swap button exchanges the contents of both panels without re-uploading. The Sample button loads a short example spreadsheet. The Copy Diff button copies the full result to your clipboard as tab-separated text.</p>
-
+      <h3 id="explained-to-beginner">Excel diff checker explained to a beginner</h3>
+      <p>Think of it like proofreading two printed copies of the same document by holding them side by side. If a colleague handed you two 500-row price lists and asked you to find every price that changed, you'd have to read both spreadsheets line by line - and it's easy to miss something. This tool does that comparison automatically in about 2 seconds.</p>
+      <p>Here's a concrete example: a supplier sends you an updated product catalog. Your current version has 500 rows. The new one has 503 rows. Without this tool, finding the differences could take 30 minutes of careful reading. Upload both files, click "Find Differences," and you immediately see that 23 prices changed, 4 products were added, and 1 was removed - with the exact old and new values shown side by side.</p>
       <h2 id="color-coding">Reading the color coding</h2>
+      <p>The diff output uses four color states to communicate what happened to each row. A single changed cell is enough to highlight the entire row in yellow - so you can always tell at a glance whether a row was edited, added, removed, or stayed the same.</p>
       <div class="responsive-table">
       <table>
         <thead><tr><th>Color</th><th>Meaning</th><th>Detail</th></tr></thead>
@@ -180,8 +180,8 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="formats">Supported formats</h2>
+      <h2 id="formats">Supported formats for this file comparison tool</h2>
+      <p>The tool accepts all common spreadsheet formats, including both modern and legacy Excel, CSV exports from any application, and OpenDocument files from LibreOffice or Google Sheets exports. You can also compare files of different formats against each other - for example, an .xlsx exported from Excel against a .csv exported from your database.</p>
       <div class="responsive-table">
       <table>
         <thead><tr><th>Format</th><th>Extension</th><th>Notes</th></tr></thead>
@@ -195,35 +195,42 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="use-cases">Use cases</h2>
+      <h2 id="use-cases">Use cases for an Excel diff checker</h2>
       <h3>Financial reporting and reconciliation</h3>
       <p>Compare monthly or quarterly financial reports between the draft and the signed-off version. The diff immediately shows every cell that changed - useful for catching last-minute edits, formula overrides, or figures manually adjusted after the original was shared.</p>
+      <p>For comparing text-based reports or code files, the <a href="/compare/text">text diff checker</a> handles plain-text line-by-line comparison.</p>
       <h3>Data migration verification</h3>
-      <p>After migrating data between systems, export the source data and the migrated data as CSV or Excel and compare them. The diff confirms that every row transferred correctly and no values were dropped, truncated, or reformatted differently.</p>
+      <p>After migrating data between systems, export the source data and the migrated data as <a href="/compare/csv">CSV</a> or Excel and compare them. The diff confirms that every row transferred correctly and no values were dropped, truncated, or reformatted differently.</p>
+      <p>I've personally used this approach after several CRM-to-CRM migrations. The pattern I see most often is reformatting loss - a phone number stored as "555-123-4567" in the source becomes "5551234567" in the destination because the receiving system strips non-numeric characters. The migration "succeeds" without any error, but the data is wrong.</p>
+      <p>A quick spreadsheet diff check catches these silent reformatting issues before they cause downstream problems in your reporting or customer communications.</p>
       <h3>Pricing sheet and inventory updates</h3>
       <p>When a supplier sends an updated price file, compare it against the previous version to see which SKUs changed price, which were added, and which were removed - without reading both files manually.</p>
-
-      <h2 id="how-it-works">How the comparison works</h2>
-      <p>Both files are parsed entirely in your browser using <a href="https://sheetjs.com" rel="nofollow">SheetJS</a>. No data is sent to any server. Rows are matched by position: row 1 from the original is compared to row 1 from the changed file. Within each matched row pair, every cell is compared individually by its string representation.</p>
-
+      <h2 id="how-it-works">How the file comparison works</h2>
+      <p>Both files are parsed entirely in your browser using <a href="https://sheetjs.com" rel="nofollow" target="_blank">SheetJS</a>. No data is sent to any server. Rows are matched by position: row 1 from the original is compared to row 1 from the changed file. Within each matched row pair, every cell is compared individually by its string representation.</p>
       <h2 id="row-matching">Row matching and limitations</h2>
       <p>This tool uses <strong>positional row matching</strong>: row N in the original is always compared to row N in the changed file. If a row was inserted in the middle, every row after it will appear as "changed" due to the position shift. For best results, sort both files by a unique identifier column before uploading, or ensure new rows were only appended at the bottom.</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
+      <p>When I use this Excel diff checker for reconciliation work, the single most common source of confusing output is an unsorted file. A supplier adding one new SKU at row 50 makes every subsequent row appear changed, which floods the diff with hundreds of false positives.</p>
+      <p><strong>The fix takes 10 seconds:</strong> sort both files by SKU or order number before uploading, and the real changes surface cleanly. It's worth building that sort step into your standard workflow before you ever touch the upload buttons.</p>
+      <h2 id="common-mistakes">Common mistakes when comparing Excel files</h2>
       <h3>Uploading files in the wrong order</h3>
       <p>The left panel is "Original" and the right panel is "Changed." If the output looks backwards, use the Swap button to exchange both files without re-uploading.</p>
       <h3>Formula values vs. formula text</h3>
       <p>This tool compares the calculated cell values, not formula strings. If a formula changed but the result is still the same number, the cell will show as unchanged. Use a native Excel tool to compare formula text.</p>
-
-      <h2 id="faq">FAQs</h2>
+      <h3>Trailing spaces making cells appear changed</h3>
+      <p>A cell containing "Active " (with a trailing space) and a cell containing "Active" look identical on screen but produce a mismatch in the diff. This commonly happens when data is exported from a database that pads fields to a fixed length.</p>
+      <p>If you're seeing hundreds of unexpected yellow cells in otherwise identical-looking rows, run a trim operation in both files before uploading - in Excel, a helper column with <code>=TRIM(A1)</code> and paste-as-values back into column A fixes this quickly.</p>
+      <h3>Dates stored in different formats</h3>
+      <p>Excel stores dates internally as serial numbers but displays them as formatted strings. When you export the same date to CSV from two different systems, one might write "1/15/2024" and the other "2024-01-15" - the diff sees two different strings even though they represent the same day. Standardize date formats across both files before comparing. The fastest approach is to select all date columns in Excel, format as "YYYY-MM-DD," and then export to CSV.</p>
+      <h3>Numbers stored as text in one file</h3>
+      <p>A cell containing the number 1234 and a cell containing the text string "1234" compare as different, even though they look the same. This frequently happens when importing from a legacy system or copying data from a web page - numbers arrive as text and Excel doesn't automatically convert them.</p>
+      <p>Look for the small green triangle in the top-left corner of cells, which indicates a number stored as text. Use <em>Data &gt; Text to Columns</em> or the "Convert to Number" option to fix the entire column before uploading.</p>
+      <h2 id="faq">FAQs about Excel diff checker</h2>
       <h3>How do I compare two Excel files?</h3>
       <p>Upload your original .xlsx file on the left and the changed version on the right, then click Find Differences. Changed cells are highlighted in yellow with the previous value shown in parentheses.</p>
       <h3>Is my data safe?</h3>
       <p>Yes. All processing happens entirely in your browser. Your files are never uploaded to any server, never stored, and never shared.</p>
       <h3>Can I compare an .xlsx against a .csv?</h3>
       <p>Yes. The tool normalizes all supported formats to the same internal grid structure before comparing, so you can mix formats freely.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -248,12 +255,10 @@ const schema = [
           </div>
         </li>
       </ul>
-
+      <RelatedGlossaryTerms toolPath="/compare/excel" />
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .ce-container { max-width: 100% !important; }
   .ce-formats { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 0.25rem; }

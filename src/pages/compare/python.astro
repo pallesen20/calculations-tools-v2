@@ -2,11 +2,13 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const tocItems = [
-  { id: 'how-to-use',    label: 'How to use this tool' },
-  { id: 'python-diff',   label: 'What to look for in Python diffs' },
-  { id: 'use-cases',     label: 'Use cases' },
-  { id: 'faq',           label: 'FAQs' },
-  { id: 'related-tools', label: 'Related tools' },
+  { id: 'how-to-use',           label: 'How to use this tool' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'python-diff',          label: 'What to look for in Python diffs' },
+  { id: 'use-cases',            label: 'When to use a Python diff checker' },
+  { id: 'common-mistakes',      label: 'Common mistakes' },
+  { id: 'faq',                  label: 'FAQs' },
+  { id: 'related-tools',        label: 'Related tools' },
 ];
 
 const schema = [
@@ -31,7 +33,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Compare Python Code"
   metaTitle="Compare Python Code Online Free | .py File Diff Checker ᐅ"
@@ -43,11 +44,9 @@ const schema = [
   ogFormula="Python LCS diff"
   ogExample="Find every changed line in .py files"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container ct-container">
-
         <div class="calculator-header">
           <h2>Compare Python Files Line by Line</h2>
           <p>Paste or upload two .py files to compare them line by line</p>
@@ -62,9 +61,7 @@ const schema = [
             </select>
           </div>
         </div>
-
         <div class="ct-editors">
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Original Python</h3>
@@ -85,7 +82,6 @@ const schema = [
               <span id="ct-original-chars">Characters: 0</span>
             </div>
           </div>
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Changed Python</h3>
@@ -106,15 +102,12 @@ const schema = [
               <span id="ct-changed-chars">Characters: 0</span>
             </div>
           </div>
-
         </div>
-
         <div class="diff-actions">
           <button class="diff-btn-primary" onclick="findDifferences()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
           <button class="diff-btn-secondary" onclick="swapTexts()">⇄ Swap</button>
           <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
         </div>
-
         <div id="diff-output" class="diff-output">
           <div class="diff-header">
             <div class="diff-stats">
@@ -132,52 +125,75 @@ const schema = [
           </div>
           <div class="ct-diff-wrap"><div class="ct-diff-container" id="ct-diff-container"></div><div class="ct-scroll-track" id="ct-scroll-track"></div></div>
         </div>
-
       </div>
     </section>
-
     <input type="file" id="ct-file-input" style="display:none" accept=".py,.pyw,.pyx,.ipynb" />
     <div class="diff-toast"></div>
     <script src="/js/compare-code.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Paste your original Python file in the left panel and the updated version in the right panel, then click <strong>Find Differences</strong>. Added lines appear in green, removed in red. Upload .py or .ipynb files directly. All processing runs in your browser - no code is sent to a server.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this tool</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>All code is processed entirely in your browser - nothing is ever sent to a server.</li>
+          <li>In Python, indentation is syntax - a 4-space vs 2-space change shows as a changed line and can break the program at runtime.</li>
+          <li>Supports .py, .pyw, .pyx, and .ipynb; notebook files are compared as raw JSON - export to .py for a cleaner code-only diff.</li>
+          <li>Line-level LCS diff - the same algorithm used by <code>git diff</code>; compares exact strings, not code semantics.</li>
+          <li>For any other language, use the <a href="/compare/code">Compare Code</a> tool with its language selector.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our Python diff checker tool</h2>
       <p>Paste or upload your original Python file on the left and the changed version on the right. Click "Find Differences." The diff shows every line that was added, removed, or unchanged, with line numbers. Toggle between Unified view and Side-by-Side view using the buttons above the output.</p>
       <p>The Sample button loads two versions of a short Python function so you can see how the output looks before pasting your own code. The language is pre-selected as Python, so the file upload dialog filters to .py, .pyw, .pyx, and .ipynb files.</p>
-
-      <h2 id="python-diff">What to look for in Python diffs</h2>
+      <h3 id="explained-to-beginner">Python diff checker explained to a beginner</h3>
+      <p>Python is unusual because whitespace matters to how the code runs. A line indented with 4 spaces and the same line with 2 spaces are different programs - one might run correctly, the other throws an <code>IndentationError</code> before it even starts.</p>
+      <p>Think of a recipe written in numbered groups. If someone changes which group a step belongs to - by indenting it further in or pulling it back out - the dish comes out differently, even though the step's words are identical. That's exactly what happens when Python code is moved inside or outside a loop or <code>if</code> block.</p>
+      <p>When you compare two Python files, you're not just checking what words changed - you're checking how far left or right each line sits. A diff that shows a line "removed" and "added" with identical text but different indentation is not noise; it's a meaningful structural change that may alter what the code does.</p>
+      <h2 id="python-diff">What to look for when you compare Python files</h2>
       <p>Python's syntax has a few properties that affect how diffs read:</p>
-      <h3>Indentation changes</h3>
-      <p>Python uses indentation as syntax. A line moved inside or outside a block will appear as a change even if the code content is identical. Watch for lines that are removed and re-added with different leading whitespace - this usually means a refactor moved a block rather than changing its logic.</p>
+      <h3>Indentation changes in Python code</h3>
+      <p>Python uses indentation as syntax. A line moved inside or outside a block appears as a change even if the code content is identical. Watch for lines that are removed and re-added with different leading whitespace - this usually means a refactor moved a block rather than changing its logic.</p>
+      <p>In my experience reviewing AI-generated Python rewrites, indentation differences are the most common source of silent bugs. The AI often moves a <code>return</code> statement or error handler one level further out than intended.</p>
+      <p>The code looks almost identical at a glance, but the diff immediately shows the changed indentation on that one line. Without the diff, I'd have run the code assuming it was correct.</p>
       <h3>Docstring and comment additions</h3>
       <p>Docstrings (triple-quoted strings) and comments are treated as plain text lines. A newly added docstring will appear as several consecutive green lines, typically at the top of a function or class.</p>
       <h3>f-string and format string updates</h3>
       <p>A change from <code>% formatting</code> to <code>f-strings</code> will show as a removed line and an added line per string. The line counts will match if the logic was not otherwise changed.</p>
-
-      <h2 id="use-cases">Use cases</h2>
-      <h3>Reviewing refactored functions</h3>
+      <h2 id="use-cases">When to use a Python diff checker</h2>
+      <h3>Reviewing refactored Python functions</h3>
       <p>Paste the before and after versions of a refactored Python function to confirm no logic was accidentally dropped or altered. Side-by-side view makes it easy to read both versions in parallel.</p>
       <h3>Comparing scripts between environments</h3>
       <p>When a Python script differs between development and production, paste both versions to immediately see which lines changed - often just configuration constants or logging levels.</p>
-      <h3>Checking AI-assisted edits</h3>
+      <h3>Checking AI-assisted edits to Python code</h3>
       <p>When an LLM rewrites a Python function, paste the original and the new version side by side to verify the logic is preserved and only the requested changes were made.</p>
-
-      <h2 id="faq">FAQs</h2>
+      <h3>Comparing Jupyter notebook versions</h3>
+      <p>Export both notebook versions to .py (File → Download → Python) before diffing. The raw .ipynb JSON diff includes execution counts, cell outputs, and metadata that change on every run - making the diff unreadable even when the code itself didn't change.</p>
+      <p>When comparing two notebook versions, I always export to .py first. The raw JSON comparison works in a pinch, but the output noise from execution counts and cell metadata means you end up hunting for actual code changes inside hundreds of lines of diff clutter. The .py export strips all of that and gives a clean signal.</p>
+      <h2 id="common-mistakes">Common mistakes when comparing Python files</h2>
+      <h3>Uploading .pyc compiled bytecode files</h3>
+      <p>Python compiles .py files to .pyc bytecode stored in <code>__pycache__/</code>. These are binary files, not text. Uploading them produces garbled output. Always upload the .py source file, not its compiled counterpart.</p>
+      <h3>Comparing notebooks without exporting to .py first</h3>
+      <p>Raw .ipynb JSON includes execution count numbers, output cell content, and metadata that change on every notebook run. Even two identical notebooks produce a noisy diff if one was run more times. Export to .py to compare only the code.</p>
+      <h3>Expecting identical logic to produce no diff</h3>
+      <p>Two functions with the same behavior but different variable names, different comment style, or different formatting will show as completely different in the diff. This tool compares what is literally in the file - not what the code does.</p>
+      <h3>Including virtual environment files</h3>
+      <p>If you paste code copied from a virtual environment's <code>site-packages/</code> folder instead of your own source files, you'll compare third-party library code rather than your project. Make sure both files come from your project directory.</p>
+      <h2 id="faq">FAQs about comparing Python code files</h2>
       <h3>Can I compare .ipynb Jupyter notebook files?</h3>
       <p>Yes. Jupyter notebooks are JSON files. The diff will compare the raw JSON content, which includes cell source, outputs, and metadata. For a cleaner diff of just the code, export the notebook as a .py script first (File → Download as → Python).</p>
       <h3>Does this check Python syntax or run the code?</h3>
       <p>No. The tool compares the files as plain text. It does not execute code, check for errors, or validate indentation semantics.</p>
       <h3>Is my Python code private?</h3>
-      <p>Yes. Everything runs in your browser. No code is sent to any server.</p>
-
+      <p>Yes. Everything runs in your browser. No code is sent to any server. Your Python code is 100% private.</p>
+      <h3>Does indentation level affect the diff?</h3>
+      <p>Yes. The tool compares lines as exact strings. A line with 4-space indentation and the same line with 2-space indentation will appear as two changed lines - one removed, one added. In Python, this is almost always a meaningful change, not formatting noise.</p>
+      <h3>Can I compare Python 2 and Python 3 files?</h3>
+      <p>Yes. The tool does not execute or parse code, so it works on any text file regardless of Python version. You'll likely see many differences since Python 2 and Python 3 syntax differs significantly - <code>print</code> statements, <code>unicode</code> handling, integer division, and more.</p>
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -202,12 +218,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .ct-container { max-width: 100% !important; }
   .ct-editors { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.25rem; }

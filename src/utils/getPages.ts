@@ -1296,7 +1296,7 @@ const entries: Entry[] = [
   },
   {
     path: '/compare/html',
-    title: 'Compare HTML Files Online - HTML Diff Tool',
+    title: 'Compare HTML Code Online - HTML Diff Tool',
     description: 'Compare two HTML files online and find every changed element, attribute, and text. Line-by-line color-coded diff. Free, private, runs entirely in your browser.',
     changefreq: 'weekly',
     priority: 0.9,

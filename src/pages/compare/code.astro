@@ -2,12 +2,15 @@
 import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 
 const tocItems = [
-  { id: 'how-to-use',    label: 'How to use this tool' },
-  { id: 'languages',     label: 'Supported languages' },
-  { id: 'use-cases',     label: 'Use cases' },
-  { id: 'algorithm',     label: 'How the diff algorithm works' },
-  { id: 'faq',           label: 'FAQs' },
-  { id: 'related-tools', label: 'Related tools' },
+  { id: 'how-to-use',           label: 'How to use this tool' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'languages',            label: 'Supported languages' },
+  { id: 'vs-git-diff',          label: 'This tool vs git diff' },
+  { id: 'use-cases',            label: 'Use cases' },
+  { id: 'algorithm',            label: 'How the diff algorithm works' },
+  { id: 'common-mistakes',      label: 'Common mistakes' },
+  { id: 'faq',                  label: 'FAQs' },
+  { id: 'related-tools',        label: 'Related tools' },
 ];
 
 const schema = [
@@ -33,7 +36,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Compare Code Online"
   metaTitle="Compare Code Online Free | Code Diff Checker ᐅ"
@@ -45,11 +47,9 @@ const schema = [
   ogFormula="LCS code diff"
   ogExample="Find every addition, removal & change in code"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container ct-container">
-
         <div class="calculator-header">
           <h2>Compare Code Line by Line</h2>
           <p>Paste or upload two code files to compare them line by line</p>
@@ -64,9 +64,7 @@ const schema = [
             </select>
           </div>
         </div>
-
         <div class="ct-editors">
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Original Code</h3>
@@ -87,7 +85,6 @@ const schema = [
               <span id="ct-original-chars">Characters: 0</span>
             </div>
           </div>
-
           <div class="diff-panel">
             <div class="diff-toolbar">
               <h3>Changed Code</h3>
@@ -108,15 +105,12 @@ const schema = [
               <span id="ct-changed-chars">Characters: 0</span>
             </div>
           </div>
-
         </div>
-
         <div class="diff-actions">
           <button class="diff-btn-primary" onclick="findDifferences()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find Differences</button>
           <button class="diff-btn-secondary" onclick="swapTexts()">⇄ Swap</button>
           <button class="diff-btn-secondary" onclick="loadSample()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Sample</button>
         </div>
-
         <div id="diff-output" class="diff-output">
           <div class="diff-header">
             <div class="diff-stats">
@@ -134,7 +128,6 @@ const schema = [
           </div>
           <div class="ct-diff-wrap"><div class="ct-diff-container" id="ct-diff-container"></div><div class="ct-scroll-track" id="ct-scroll-track"></div></div>
         </div>
-
         <div class="cc-lang-cards">
           <div class="cc-lang-cards-label">Language-specific tools</div>
           <div class="cc-lang-cards-grid">
@@ -156,29 +149,38 @@ const schema = [
             </a>
           </div>
         </div>
-
       </div>
     </section>
-
     <input type="file" id="ct-file-input" style="display:none"
       accept=".txt,.js,.ts,.jsx,.tsx,.mjs,.cjs,.py,.pyw,.html,.htm,.css,.scss,.sass,.less,.json,.xml,.md,.php,.rb,.go,.java,.c,.cpp,.h,.sql,.yaml,.yml,.sh,.rs" />
     <div class="diff-toast"></div>
     <script src="/js/compare-code.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Select a language from the dropdown, paste your original code in the left panel and the changed version in the right panel, then click <strong>Find Differences</strong>. Added lines appear in green, removed in red, with line numbers. Upload files directly using the upload icon on each panel. Nothing is sent to a server.</p>
       </div>
 
-      <h2 id="how-to-use">How to use this tool</h2>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>All code is processed entirely in your browser - nothing is ever sent to a server.</li>
+          <li>The LCS diff algorithm is the same principle used by Git's <code>diff</code> command - line-level, order-aware comparison.</li>
+          <li>One space of indentation difference shows as a changed line - the tool compares exact strings, not code semantics.</li>
+          <li>The language selector filters the file upload dialog and loads sample code; it does not change how the comparison works.</li>
+          <li>Language-specific tools: <a href="/compare/python">Python</a>, <a href="/compare/javascript">JavaScript</a>, <a href="/compare/css">CSS</a>, <a href="/compare/html">HTML</a>.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our code diff checker tool</h2>
       <p>Select the language from the dropdown at the top (this filters the file upload dialog and loads language-appropriate samples). Paste or upload your original code on the left and the changed version on the right. Click "Find Differences." The diff output shows every changed line color-coded with line numbers.</p>
       <p>Toggle between Unified view (single column, same format as Git) and Side-by-Side view (two parallel columns). The Copy Diff button copies the full diff as plain text. The Sample button loads a language-specific example based on your selected language.</p>
-
-      <h2 id="languages">Supported languages</h2>
+      <h3 id="explained-to-beginner">Code diff checker explained to a beginner</h3>
+      <p>Imagine you have two printouts of a recipe. A friend made some modifications to their copy. You go through line by line, circling anything that changed. This tool does exactly that - but for code, and it's precise down to every space and punctuation mark.</p>
+      <p><strong>Concrete example:</strong> two versions of a 200-line Python function. Your original had <code>timeout=30</code> on line 47. An AI assistant's rewrite changed it to <code>timeout=60</code> and quietly removed 3 lines of input validation further down. The diff flags those 4 lines in seconds - without re-reading 200 lines to find them.</p>
+      <p>The key thing to understand: this tool compares text, not logic. Two functions that do the same thing but use different variable names will show as entirely different. That's by design - it tells you what literally changed in the file, which is almost always what you actually want to know.</p>
+      <h2 id="languages">Supported code languages</h2>
       <p>The comparison engine works on any text-based language - it does not parse or interpret code syntax, so it handles any file that stores content as plain text. The language selector controls:</p>
       <ul>
         <li>The file upload filter (which file extensions are shown in the browser's file picker)</li>
@@ -196,21 +198,58 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="use-cases">Use cases</h2>
+      <h2 id="vs-git-diff">This code diff checker vs git diff</h2>
+      <p>Git's built-in <code>diff</code> command does the same line-by-line comparison, but it requires a repository. Here's when each option is better:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>This tool</th>
+              <th>git diff</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Requires a git repository</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Compare any two arbitrary files</td><td>Yes - paste or upload</td><td>Harder - requires workarounds</td></tr>
+            <tr><td>Compare files from different repos</td><td>Yes</td><td>No (without setup)</td></tr>
+            <tr><td>Visual interface with color coding</td><td>Yes</td><td>Terminal output only (default)</td></tr>
+            <tr><td>Side-by-side view</td><td>Yes</td><td>Requires <code>--word-diff</code> or a GUI</td></tr>
+            <tr><td>Compare AI-generated output</td><td>Yes - paste directly</td><td>Requires saving to a file first</td></tr>
+            <tr><td>Best for</td><td>Quick checks, no-repo situations, AI review</td><td>Day-to-day development workflow</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When reviewing AI-generated code rewrites, I reach for this tool before running any tests. Pasting both versions and switching to side-by-side view tells me in 10 seconds whether the AI changed the logic or just reformatted.</p>
+      <p>If the only changed lines are whitespace or renamed variables, I move on. If I see removed validation or changed constants, I investigate before touching anything.</p>
+      <h2 id="use-cases">Use cases for comparing code online</h2>
       <h3>Pre-merge code review</h3>
       <p>Compare your working copy against the original to catch unintended changes, missing lines, or accidentally introduced bugs before submitting a pull request. Works without a repository - just paste or upload the two file versions.</p>
       <h3>Reviewing AI-generated code</h3>
       <p>When an AI assistant rewrites a function, paste the original and the AI output side by side to see exactly what changed. This is faster than reading both versions in full and more reliable than trusting the AI's change summary.</p>
       <h3>Configuration file auditing</h3>
       <p>Compare two versions of a configuration file (nginx, Docker Compose, Kubernetes YAML, GitHub Actions) to catch unintended changes between environments or deployments.</p>
+      <p>Configuration diffs are where I find this tool most practically valuable. When an nginx or Docker Compose config stops working after a deployment, comparing the file that worked with the file on the broken server shows the difference immediately - usually a single changed value buried in 200 lines that would take 10 minutes to spot by eye.</p>
       <h3>Tracking incremental rewrites</h3>
       <p>When refactoring a module incrementally, compare the before and after to confirm no logic was accidentally removed or altered during the structural changes.</p>
-
-      <h2 id="algorithm">How the diff algorithm works</h2>
-      <p>The comparison uses a <strong>Longest Common Subsequence (LCS)</strong> algorithm. Both code inputs are split into lines. The algorithm builds a matrix that tracks the longest sequence of lines that appear in both versions in the same order. Lines in this common sequence are "unchanged"; lines outside it are "added" or "removed." This is the same principle used by the Unix <code>diff</code> command and Git. The algorithm compares lines as strings - it does not understand language semantics, so a one-space indentation change will show as a changed line.</p>
-
-      <h2 id="faq">FAQs</h2>
+      <h3>Debugging deployed vs development code</h3>
+      <p>If behavior differs between a local development build and a deployed version, compare the two source files directly to confirm whether the deployed version actually contains your latest changes - or whether a stale file made it through the build.</p>
+      <h3>Comparing API response schemas</h3>
+      <p>Paste two JSON API responses to see exactly which fields were added, removed, or changed between versions. Useful when a third-party API updates without publishing a changelog and your integration starts failing.</p>
+      <h2 id="algorithm">How the code diff algorithm works</h2>
+      <p>The comparison uses a <strong>Longest Common Subsequence (LCS)</strong> algorithm.</p>
+      <p>Both code inputs are split into lines. The algorithm builds a matrix that tracks the longest sequence of lines that appear in both versions in the same order. Lines in this common sequence are "unchanged"; lines outside it are "added" or "removed".</p>
+      <p>This is the same principle used by the Unix <code>diff</code> command and Git. The algorithm compares lines as strings - it does not understand language semantics, so a one-space indentation change will show as a changed line.</p>
+      <h2 id="common-mistakes">Common mistakes when using a code diff checker</h2>
+      <h3>Comparing minified vs unminified code</h3>
+      <p>A minified file is a single very long line. If you compare a minified version against an unminified version, the diff shows the entire file as one changed line - no useful information. Compare dev-to-dev or minified-to-minified so both files use the same format.</p>
+      <h3>Uploading binary files</h3>
+      <p>Compiled executables (.exe, .pyc, .class), images, and other binary files are not text. Uploading them produces garbled output - random characters that look like differences but are not meaningful. The tool works on text-based source files only.</p>
+      <h3>Expecting semantic equality to mean no diff</h3>
+      <p>Two functions with identical behavior can show as completely different if the variable names, formatting, or comment style changed. The tool compares what is literally in the file, not what the code does. A full reformat will flag every line as changed even if no logic changed.</p>
+      <h3>Comparing files with mixed line endings</h3>
+      <p>A file with Windows line endings (CRLF) and the same file with Unix line endings (LF) will show every single line as changed. If you're seeing unexpected differences across all lines, check whether the files come from different operating systems and normalize line endings first.</p>
+      <h2 id="faq">FAQs about comparing code</h2>
       <h3>Can I compare minified code?</h3>
       <p>Yes, but minified files are a single very long line, so the diff will typically show the entire minified output as one changed line. For meaningful diffs, compare non-minified (development) versions of your files.</p>
       <h3>Is indentation compared?</h3>
@@ -219,7 +258,12 @@ const schema = [
       <p>You can upload .ipynb files - they are JSON. The diff will compare the raw JSON structure, which includes cell content, metadata, and outputs. For a cleaner diff, export the notebook to .py first.</p>
       <h3>Is my code private?</h3>
       <p>Yes. All processing runs in your browser. No code is sent to any server at any point.</p>
-
+      <h3>What about whitespace-only changes?</h3>
+      <p>Whitespace changes are shown. A line with trailing spaces and the same line without will appear as changed. If you want to ignore trailing whitespace, trim your files before pasting. There is no built-in "ignore whitespace" option.</p>
+      <h3>Can I use this instead of git diff?</h3>
+      <p>For quick checks on individual files, yes - especially when you don't have a repository or want to compare files from different projects. For day-to-day development (comparing working tree vs HEAD, comparing branches), git diff integrates better with your workflow. This tool is best for arbitrary file-to-file comparisons without a repo.</p>
+      <h3>What if my files are too large to paste?</h3>
+      <p>Use the upload button on each panel to load a file directly from disk. The tool reads the file as text in your browser - there is no size limit imposed by a server upload. Very large files (10,000+ lines) may be slow to diff in older browsers.</p>
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -237,6 +281,20 @@ const schema = [
           </div>
         </li>
         <li>
+          <span class="tool-icon">🎨</span>
+          <div>
+            <a href="/compare/css">Compare CSS</a>
+            <p>Diff checker pre-configured for .css, .scss, and .sass files.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">&lt;/&gt;</span>
+          <div>
+            <a href="/compare/html">Compare HTML</a>
+            <p>Diff checker pre-configured for .html and .htm files.</p>
+          </div>
+        </li>
+        <li>
           <span class="tool-icon">⇄</span>
           <div>
             <a href="/compare/text">Diff Checker</a>
@@ -244,12 +302,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .ct-container { max-width: 100% !important; }
   .ct-editors { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 0.25rem; }
