@@ -810,6 +810,15 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['gcd', 'lcd', 'fraction', 'denominator'],
   },
   {
+    slug: 'leap-year',
+    term: 'Leap Year',
+    letter: 'L',
+    category: 'Time & Calendars',
+    siteCategory: 'Math',
+    shortDef: 'A leap year is a calendar year containing 366 days instead of the standard 365, achieved by adding February 29. The extra day corrects the drift between the 365-day calendar year and the 365.2422-day astronomical year. Without leap years the calendar would drift by roughly one full day every four years - 25 days per century.',
+    relatedTools: ['/date-calculator', '/week-number'],
+  },
+  {
     slug: 'bioelectrical-impedance-analysis',
     term: 'Bioelectrical Impedance Analysis (BIA)',
     letter: 'B',

@@ -6772,6 +6772,73 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'leap-year': {
+    definition: [
+      'A leap year is a calendar year containing 366 days instead of the standard 365. The extra day is added as February 29 - "leap day." This correction keeps the Gregorian calendar synchronized with Earth\'s orbit around the Sun. The astronomical year (one complete Earth orbit) is approximately 365.2422 days. Without the correction, the calendar would drift by roughly 24 days per century.',
+      'The Gregorian rule for determining leap years has three conditions applied in order: a year divisible by 4 is a leap year; however, century years (1700, 1800, 1900) are not leap years even though divisible by 4; except that century years divisible by 400 are leap years (2000 was a leap year, 1900 was not). This three-part rule reduces the remaining calendar error to about 26 seconds per year - accurate enough that no further correction will be needed for several thousand years.',
+      'The name "leap year" refers to the way fixed calendar dates behave. In an ordinary year, any date falls one weekday later than the same date the previous year. In a leap year, dates after February 29 "leap" an extra day - falling two weekdays later than the previous year instead of one. This is why a birthday falling on Tuesday in 2023 would fall on Thursday in 2024 (a leap year) rather than Wednesday.',
+    ],
+    beginnerExplain: [
+      'Think of it like this: Earth takes about 365 and a quarter days to orbit the Sun, but the calendar only has whole days. So we count 365 days per year and bank the leftover quarter-day. After four years, we\'ve saved up four quarters - one full day. We spend that saved day on February 29.',
+      'Without this correction, the calendar would drift. Midsummer holidays would slowly slide into autumn over centuries, and the seasons would no longer line up with the months people expect. The three-part Gregorian rule (divisible by 4, except centuries, except centuries divisible by 400) fine-tunes the correction so the drift is down to 26 seconds per year instead of 11 minutes.',
+    ],
+    whenToUse: 'Relevant whenever you calculate durations spanning February of a potential leap year. Any range that crosses February 29 is exactly 1 day longer than the same range in a non-leap year. Age calculators, date difference calculators, recurring billing systems, and contract duration tools all need to apply the full three-part Gregorian rule - not just the simple "divisible by 4" check.',
+    examples: {
+      headers: ['Year', 'Divisible by 4?', 'Divisible by 100?', 'Divisible by 400?', 'Leap year?'],
+      rows: [
+        ['2024', 'Yes', 'No', '-', 'Yes'],
+        ['2023', 'No', '-', '-', 'No'],
+        ['2000', 'Yes', 'Yes', 'Yes', 'Yes'],
+        ['1900', 'Yes', 'Yes', 'No', 'No'],
+        ['2100', 'Yes', 'Yes', 'No', 'No'],
+        ['2400', 'Yes', 'Yes', 'Yes', 'Yes'],
+      ],
+    },
+    pitfalls: 'The most common programming error is using only year % 4 === 0 and forgetting the century exception. This incorrectly classifies 1900, 2100, 2200, and 2300 as leap years. The correct logic is: (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0. A secondary issue: people born on February 29 have no legal birthday in non-leap years. The UK, New Zealand, and Hong Kong use March 1 as the legal date for age-of-majority calculations; many other jurisdictions use February 28. Always verify the specific rule when leap-day birthdays affect legal age thresholds.',
+    faqs: [
+      { q: 'Why is 2000 a leap year but 1900 is not?', a: 'Both are divisible by 4, but century years only qualify as leap years if also divisible by 400. 2000 divided by 400 is exactly 5, so 2000 qualifies. 1900 divided by 400 is 4.75, so 1900 does not. The same rule excludes 2100, 2200, and 2300 from being leap years.' },
+      { q: 'How does a leap year affect date range calculations?', a: 'Any date range that spans February 29 is exactly 1 day longer than the same range in a non-leap year. For example, January 1 to March 1 is 59 days in 2023 and 60 days in 2024. Ranges that begin and end entirely before March 1, or entirely after February, are unaffected by whether the year is a leap year.' },
+      { q: 'What is the correct code to check for a leap year?', a: 'The full three-part Gregorian rule: (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0. The simple year % 4 === 0 check misclassifies century years like 1900 and 2100 as leap years. Most standard date libraries apply this correctly, but custom implementations should always test against 1900 (not a leap year) and 2000 (a leap year).' },
+      { q: 'How many days are in a 4-year period?', a: 'Exactly 1,461 days: three ordinary years of 365 days (1,095) plus one leap year of 366 days. This 1,461-day block is the fundamental unit underlying the Gregorian calendar\'s correction. A 400-year Gregorian cycle contains exactly 97 leap years and 146,097 days.' },
+      { q: 'What happens to February 29 birthdays in non-leap years?', a: 'Legal practice varies by jurisdiction. The UK, New Zealand, and Hong Kong treat March 1 as the legal birthday for purposes such as driving licenses and the age of majority in non-leap years. Many other countries use February 28. People born on February 29 often celebrate on either date depending on personal preference and local custom.' },
+    ],
+    quiz: {
+      topic: 'leap years',
+      questions: [
+        {
+          q: 'Which of the following years is NOT a leap year according to the Gregorian rule?',
+          options: ['2024', '2000', '1900', '2028'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: '1900 is divisible by 4 but also divisible by 100 - and since it is not divisible by 400, it is not a leap year. 2000 qualifies because it is divisible by 400. 2024 and 2028 are both divisible by 4 and not century years.',
+        },
+        {
+          q: 'What is the correct programming condition to determine whether a year is a leap year?',
+          options: ['year % 4 === 0', 'year % 4 === 0 && year % 100 === 0', '(year % 4 === 0 && year % 100 !== 0) || year % 400 === 0', 'year % 400 === 0'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The three-part Gregorian rule requires all conditions. Divisible by 4 is necessary but not sufficient - century years are excluded unless also divisible by 400. The simple year % 4 === 0 check incorrectly classifies 1900 and 2100 as leap years.',
+        },
+        {
+          q: 'By how many days is January 1 to March 1 longer in a leap year than in a non-leap year?',
+          options: ['0 days - the leap day is added at the end of the year', '1 day', '2 days', '4 days'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Any date range spanning February 29 is exactly 1 day longer in a leap year. January 1 to March 1 is 59 days in a non-leap year and 60 days in a leap year. Ranges that begin and end entirely before March 1 or entirely after February are unaffected.',
+        },
+        {
+          q: 'How many leap years are there in a complete 400-year Gregorian cycle?',
+          options: ['100 - one every four years exactly', '97 - the century exception removes 3 of the 100', '96 - each century loses one leap year', '98 - only years ending in 00 and divisible by 400 are excluded'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A 400-year cycle would have 100 leap years under the simple divisible-by-4 rule. The century exception removes 4 (1700, 1800, 1900, 2100-equivalent), but the divisible-by-400 rule adds one back (the year 2000-equivalent). Net result: 100 - 4 + 1 = 97 leap years per 400-year cycle, giving 146,097 total days.',
+        },
+        {
+          q: 'What calendar drift does the Gregorian rule reduce the annual error to, compared to the Julian calendar\'s 11 minutes per year?',
+          options: ['1 minute per year', '30 seconds per year', 'About 26 seconds per year', '1 second per year'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The definition states the Gregorian rule reduces the remaining calendar error to about 26 seconds per year - accurate enough that no correction will be needed for several thousand years. The Julian calendar\'s simpler rule drifted by 11 minutes per year, accumulating to 1 full day every 128 years.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'geriatric-bmi': {
     definition: [
       'Geriatric BMI refers to the interpretation of Body Mass Index using age-specific thresholds for adults aged 65 and over. The standard WHO BMI cutoffs (Underweight below 18.5, Normal 18.5-24.9, Overweight 25-29.9) were developed from population studies that include all adults and do not reflect how the relationship between BMI and health risk shifts with age. Applying standard thresholds to older adults can give a misleading picture in both directions.',

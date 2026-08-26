@@ -1,16 +1,78 @@
 ---
 import CalculatorLayout from '../layouts/CalculatorLayout.astro';
+import QuizBlock from '../components/QuizBlock.astro';
+import type { Source } from '../components/Sources.astro';
+import RelatedGlossaryTerms from '../components/RelatedGlossaryTerms.astro';
 
 const tocItems = [
-  { id: 'how-to-use',       label: 'How to use this calculator' },
-  { id: 'days-between',     label: 'Days between dates' },
+  { id: 'how-to-use',           label: 'How to use this calculator' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'days-between',         label: 'Days between dates' },
   { id: 'workdays',         label: 'Workdays vs calendar days' },
   { id: 'add-subtract',     label: 'Adding and subtracting days' },
   { id: 'month-arithmetic', label: 'Month and year arithmetic' },
   { id: 'excel-formulas',   label: 'Excel & Sheets formulas' },
   { id: 'common-mistakes',  label: 'Common mistakes' },
   { id: 'faq',              label: 'FAQs' },
+  { id: 'quiz',             label: 'Quiz: test your knowledge' },
   { id: 'related-tools',    label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'This calculator uses "exclusive counting." What does that mean for January 1 to January 5?',
+    options: ['Both dates are counted, giving 5 days', 'Only the start date is counted, giving 1 day', 'The start date is not counted and the end date is, giving 4 days', 'Neither date is counted, giving 3 days'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Exclusive counting means the start date is not counted but the end date is. January 1 to January 5 = 4 days (Jan 2, 3, 4, 5). If your context requires inclusive counting - both dates counted - add 1 to the result.',
+  },
+  {
+    q: 'How many workdays does a standard calendar year typically contain?',
+    options: ['About 250', 'About 255', 'About 261 (range: 260-262)', 'About 270'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'A standard year contains approximately 261 workdays, ranging between 260 and 262 depending on how weekends align with January 1 and December 31. A typical month averages 21-22 workdays.',
+  },
+  {
+    q: 'A Net 30 invoice is issued on a Tuesday. When is payment due under standard payment terms?',
+    options: ['30 workdays later (Mon-Fri only)', '30 calendar days later regardless of weekends', 'The last business day of the following month', '4 weeks later'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Net 30 and similar payment terms count calendar days, not workdays. A 30-day invoice is due exactly 30 calendar days later regardless of weekends or public holidays.',
+  },
+  {
+    q: 'How does Excel\'s NETWORKDAYS(A1,B1) result compare to this calculator\'s workday count for the same range?',
+    options: ['Exactly the same', 'One more - NETWORKDAYS counts both start and end dates as workdays (inclusive)', 'One fewer - NETWORKDAYS excludes the start date', 'Different only when the range crosses a leap year'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'NETWORKDAYS gives an inclusive count, treating both start and end dates as workdays when they fall on weekdays. This calculator uses exclusive counting (start not counted), so NETWORKDAYS returns 1 more than this calculator\'s workday figure when both dates are weekdays.',
+  },
+  {
+    q: 'What is the result of adding one calendar month to January 31?',
+    options: ['March 3', 'March 1', 'February 28 or 29', 'February 1'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '"Add 1 month" and "add 30 days" are different operations. One calendar month from January 31 lands on February 28 or 29 - the last valid day of February. Some programming languages overflow to March 3 instead, which is a common source of billing system bugs.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Wikipedia contributors',
+    title: 'Leap year',
+    journal: 'Wikipedia',
+    year: 2024,
+    url: 'https://en.wikipedia.org/wiki/Leap_year',
+  },
+  {
+    author: 'Microsoft',
+    title: 'DATEDIF function',
+    journal: 'Microsoft Support',
+    year: 2024,
+    url: 'https://support.microsoft.com/en-us/office/datedif-function-25dba1a4-2812-480b-84dd-8b32a451b35c',
+  },
+  {
+    author: 'Microsoft',
+    title: 'WORKDAY function',
+    journal: 'Microsoft Support',
+    year: 2024,
+    url: 'https://support.microsoft.com/en-us/office/workday-function-f764a5b7-05fc-4494-9486-60d494efbf33',
+  },
 ];
 
 const schema = [
@@ -52,7 +114,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Date Calculator"
   metaTitle="Date Calculator | Days Between Dates & Add Subtract Days ᐅ"
@@ -61,24 +122,21 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
   embedSlug="date-calculator"
+  sources={sources}
+  ogFormula="Days between = end date - start date (exclusive) | Add N days = start date + N"
+  ogExample="Jan 1 to Mar 31 = 89 days | Mar 15 + 30 days = Apr 14"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container dc-container">
-
         <div class="calculator-header">
           <h2>Days Between Two Dates</h2>
           <p>Calculate days between dates or add and subtract days from any date</p>
         </div>
-
-        <!-- Tabs -->
         <div class="dc-tabs">
           <button class="dc-tab active" data-panel="dc-diff">Date Difference</button>
           <button class="dc-tab" data-panel="dc-add">Add / Subtract</button>
         </div>
-
-        <!-- Panel 1: Date Difference -->
         <div id="dc-diff" class="dc-panel active">
           <div class="dc-inputs">
             <div class="dc-field">
@@ -97,7 +155,6 @@ const schema = [
               </div>
             </div>
           </div>
-
           <div id="dc-diff-result" class="dc-result hidden">
             <div class="dc-dir-label" id="dc-diff-dir"></div>
             <div class="dc-stats-grid">
@@ -128,8 +185,6 @@ const schema = [
             </div>
           </div>
         </div>
-
-        <!-- Panel 2: Add / Subtract -->
         <div id="dc-add" class="dc-panel">
           <div class="dc-inputs dc-add-inputs">
             <div class="dc-field">
@@ -151,36 +206,43 @@ const schema = [
               <input type="text" inputmode="decimal" id="dc-add-days" class="dc-num-input" min="0" max="99999" value="30" />
             </div>
           </div>
-
           <div id="dc-add-result" class="dc-result dc-add-result-box hidden">
             <div class="dc-add-result-date" id="dc-add-result-date">-</div>
             <div class="dc-add-result-meta" id="dc-add-result-week">-</div>
             <div class="dc-add-result-from-today" id="dc-add-result-from-today">-</div>
           </div>
         </div>
-
       </div>
     </section>
-
     <script src="/js/date-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>Enter two dates in the <strong>Date Difference</strong> tab to instantly see the gap in total days, workdays (Mon-Fri), weeks, and a years-months-days breakdown. Switch to <strong>Add / Subtract</strong> to find the date that is a given number of days before or after any starting date. Both modes update instantly as you type - no button press needed.</p>
       </div>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
-
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Most payment terms - Net 30, Net 60 - count <strong>calendar days</strong>, not workdays. A 30-day invoice issued on a Monday is due 30 calendar days later, regardless of weekends.</li>
+          <li>This calculator uses <strong>exclusive counting</strong>: January 1 to January 5 = 4 days, not 5. If your contract counts the start date as day 1 (inclusive), add 1 to the result.</li>
+          <li>"Add 1 month" and "add 30 days" are different operations. January 31 plus one calendar month = February 28 or 29 - not March 3.</li>
+          <li>Any date range crossing February of a <a href="/glossary/leap-year">leap year</a> is 1 day longer than the same range in a non-leap year - relevant for multi-year contract durations and recurring payment calculations.</li>
+          <li>A standard calendar year holds <strong>260-262 workdays</strong>, depending on how weekends align with January 1 and December 31. This variation matters for annual leave accrual calculations.</li>
+        </ul>
+      </div>
+      <h3 id="explained-to-beginner">Days between dates calculation explained simply</h3>
+      <p>Think of it like hotel nights. Check in on Monday, check out on Friday: you stayed 4 nights, not 5. The day you arrive is day 0; Friday is day 4. This tool uses that same logic, called exclusive counting.</p>
+      <p>Here's why it matters in practice. A contract clause that says "30 days from January 1" ends on <strong>January 31</strong> under exclusive counting (January 1 = day 0, January 31 = day 30). But if the clause means January 1 is day 1, the deadline falls on <strong>February 1</strong> - one day later.</p>
+      <p>One day of ambiguity can be the difference between meeting a legal or financial deadline and missing it. Always check whether your contract counts the start date as day 0 or day 1 before relying on a calculated date.</p>
+      <h2 id="how-to-use">How to use our date to date calculator</h2>
       <h3>Date Difference mode</h3>
-      <p>Enter a start date and end date - the calculator accepts them in either order and always returns a positive result. Use the Today buttons to quickly anchor either date to the current date. The Swap button exchanges both dates without re-entering them. Results show six values simultaneously: total days, weeks (with remaining days), workdays, a years-months-days breakdown, hours, and minutes.</p>
-
+      <p>Enter a start date and end date - the calculator accepts them in either order and always returns a positive result. Use the Today buttons to quickly anchor either date to the current date. The Swap button exchanges both dates without re-entering them.</p>
+      <p>Results show six values simultaneously: total days, weeks (with remaining days), workdays, a years-months-days breakdown, hours, and minutes.</p>
       <h3>Add / Subtract mode</h3>
-      <p>Enter a start date, choose whether to add or subtract, and enter a number of days. The result shows the exact resulting date with its full weekday name, <a href="/week-number">ISO week number</a>, and how many days it is from today. This mode is useful for calculating deadlines ("30 days from contract signing"), expiry dates ("90 days from today"), and notice periods. To find how many days until a future date or since a past date, use Date Difference with Today as one of the inputs.</p>
-
+      <p>Enter a start date, choose whether to add or subtract, and enter a number of days. The result shows the exact resulting date with its full weekday name, <a href="/week-number">ISO week number</a>, and how many days it is from today. This mode is useful for calculating deadlines ("30 days from contract signing"), expiry dates ("90 days from today"), and notice periods.</p>
+      <p>To find how many days until a future date or since a past date, use Date Difference with Today as one of the inputs.</p>
       <h2 id="days-between">Days between dates</h2>
       <p>The number of days between two dates is the count of calendar days from the earlier date to the later date, not counting the start date itself. This is called <strong>exclusive counting</strong> and is the standard mathematical convention:</p>
       <ul>
@@ -188,11 +250,29 @@ const schema = [
         <li>January 1 to February 1 = <strong>31 days</strong> (all of January)</li>
         <li>January 1 to December 31 in a non-leap year = <strong>364 days</strong></li>
       </ul>
-      <p>If you need <strong>inclusive counting</strong> (counting both the start and end date), add 1 to the result. This matters in contexts like "how many days is a 3-day event running from Thursday to Saturday?" - the answer is 3 inclusive (Thu, Fri, Sat), which is 2 by exclusive counting.</p>
-
+      <p>If you need <strong>inclusive counting</strong> (counting both the start and end date), add 1 to the result.</p>
+      <p>This matters in contexts like "how many days is a 3-day event running from Thursday to Saturday?" - the answer is 3 inclusive (Thu, Fri, Sat), which is 2 by exclusive counting.</p>
       <h3>Leap years</h3>
-      <p>February has 29 days in a leap year and 28 in a non-leap year. A year is a leap year if it is divisible by 4, except for century years (1900, 2100), which must also be divisible by 400 (2000 was a leap year; 1900 was not). Any date range that crosses February of a leap year will be 1 day longer than the same range in a non-leap year. This calculator handles leap years automatically.</p>
-
+      <p>February has 29 days in a <a href="/glossary/leap-year">leap year</a> and 28 in a non-leap year. A year is a leap year if divisible by 4, except century years (1900, 2100), which must also be divisible by 400 (2000 was a leap year; 1900 was not).</p>
+      <p>Any date range crossing February of a leap year is 1 day longer than the same range in a non-leap year. This calculator handles leap years automatically.</p>
+      <h3>How old am I in days?</h3>
+      <p>Enter your date of birth as the start date and today as the end date. The total days result is your exact age in days - a figure most people have never seen. It tends to be much larger than expected.</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Age</th><th>Approximate days old</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>10 years</td><td>~3,652</td><td>Includes 2-3 leap days</td></tr>
+          <tr><td>18 years</td><td>~6,574</td><td>Age of majority in most countries</td></tr>
+          <tr><td>25 years</td><td>~9,131</td><td>Approaching the 10,000-day milestone</td></tr>
+          <tr><td>30 years</td><td>~10,957</td><td>10,000 days falls at about age 27 years 4 months</td></tr>
+          <tr><td>40 years</td><td>~14,610</td><td>-</td></tr>
+          <tr><td>65 years</td><td>~23,741</td><td>Typical retirement age in many countries</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The exact count depends on how many leap years fall within your lifetime. The tool handles this automatically, so the result is always precise to the day.</p>
       <h2 id="workdays">Workdays vs calendar days</h2>
       <p>This calculator shows both total calendar days and workdays (Monday through Friday). The two figures answer different questions:</p>
       <div class="responsive-table">
@@ -213,7 +293,9 @@ const schema = [
       </div>
       <p><strong>Public holidays:</strong> This calculator counts Mon-Fri only. It does not exclude public holidays because these vary by country, region, and employer. If you need a holiday-adjusted workday count, subtract the number of public holidays that fall on weekdays within the period from the workday total shown.</p>
       <p>A standard year contains approximately 261 workdays (the exact number varies between 260 and 262 depending on how weekends align with the start and end of the year). A typical month averages 21-22 workdays.</p>
-
+      <p>When I review project plans for example, one thing I always verify upfront is whether timelines use calendar days or business days - because the gap compounds quickly.</p>
+      <p>On a 90-day timeline, the difference between calendar days and workdays is roughly 26 days.</p>
+      <p>Net 30 payment terms are almost always calendar days in standard commercial contracts, while carriers and couriers quote business days. Knowing which clock you're on prevents disputes at both ends of a transaction.</p>
       <h2 id="add-subtract">Adding and subtracting days</h2>
       <p>Adding or subtracting days from a date is straightforward: each day shifts the calendar by exactly one position, regardless of month boundaries or leap years. Common applications:</p>
       <ul>
@@ -224,8 +306,34 @@ const schema = [
         <li><strong>Warranty and returns:</strong> A 30-day return window from a December 1 purchase expires December 31.</li>
         <li><strong>Financial quarters:</strong> Add 90 days to a quarter start to estimate the quarter-end date (actual quarter boundaries are fixed by calendar, so this is approximate).</li>
       </ul>
-      <p>Note that "add 1 month" and "add 30 days" are not the same thing. The Add / Subtract mode in this calculator adds or subtracts calendar days only. For month-based arithmetic, see the section below.</p>
-
+      <p>Note that "add 1 month" and "add 30 days" are not the same thing. The Add / Subtract mode in this calculator adds or subtracts calendar days only. For month-based <a href="/glossary/arithmetic">arithmetic</a>, see the section below.</p>
+      <h3>Days until a date (countdown calculations)</h3>
+      <p>To count down to a future event, use the Date Difference tab. Set the start date to Today (click the Today button) and the end date to the target date. The result shows how many days remain - plus the workday count, which tells you how many working days are left before a deadline.</p>
+      <ul>
+        <li><strong>Days until Christmas:</strong> Today → December 24/25 of this year</li>
+        <li><strong>Days until New Year:</strong> Today → January 1 of next year</li>
+        <li><strong>Days since an event:</strong> enter the past date as start, Today as end - the result is elapsed days</li>
+        <li><strong>Days left in the year:</strong> Today → December 31</li>
+        <li><strong>Days until a project deadline:</strong> Today → the due date; use the workday count to see how many working days remain</li>
+      </ul>
+      <h3>Common date spans at a glance</h3>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Days</th><th>In weeks</th><th>Approx. months</th><th>Common context</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>7</td><td>1 week exactly</td><td>-</td><td>One-week turnaround</td></tr>
+          <tr><td>14</td><td>2 weeks exactly</td><td>-</td><td>Fortnight; standard notice in some contracts</td></tr>
+          <tr><td>30</td><td>4 weeks + 2 days</td><td>~1 month</td><td>Net 30 payment terms</td></tr>
+          <tr><td>60</td><td>8 weeks + 4 days</td><td>~2 months</td><td>Net 60; extended return windows</td></tr>
+          <tr><td>90</td><td>12 weeks + 6 days</td><td>~3 months (1 quarter)</td><td>Net 90; quarterly review periods; 90-day notice</td></tr>
+          <tr><td>180</td><td>25 weeks + 5 days</td><td>~6 months (half year)</td><td>Mid-year review; many visa durations</td></tr>
+          <tr><td>365</td><td>52 weeks + 1 day</td><td>12 months</td><td>One year - non-leap year</td></tr>
+          <tr><td>366</td><td>52 weeks + 2 days</td><td>12 months</td><td>One year - leap year</td></tr>
+        </tbody>
+      </table>
+      </div>
       <h2 id="month-arithmetic">Month and year arithmetic</h2>
       <p>The years-months-days breakdown in the Date Difference result uses exact calendar month counting, which behaves differently from simply dividing days by 30. The rules:</p>
       <ul>
@@ -249,9 +357,12 @@ const schema = [
       </table>
       </div>
       <p>The total days figure is always exact. The years-months-days breakdown is the most natural human-readable interpretation but should not be used for precise contractual calculations where the exact day count matters.</p>
-
+      <h3>Month-end arithmetic</h3>
+      <p>Month-end arithmetic is where I see the most silent bugs in billing and contract software. The question "what is January 31 plus one month?" has at least three defensible answers: February 28 (clamp to the last valid day of the month), March 3 (let the overflow roll forward), or March 1 (snap to the first day of the next month).</p>
+      <h3>Quick tip when programming with date functions</h3>
+      <p>Different programming languages and spreadsheet functions give different answers. If you're building a recurring billing system or contract renewal tracker, always test against January 31, February 28, and February 29 start dates - those three edge cases expose the behavior your users will eventually encounter.</p>
       <h2 id="excel-formulas">Excel and Google Sheets formulas</h2>
-      <p>For automating date calculations in spreadsheets, these are the most useful built-in functions:</p>
+      <p>For automating date calculations in <a href="/compare/google-sheets">spreadsheets</a>, these are the most useful built-in functions:</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -270,47 +381,42 @@ const schema = [
       </table>
       </div>
       <p>Note that <code>NETWORKDAYS</code> counts both the start and end date as workdays if they fall on weekdays, giving an inclusive count. This is 1 more than the workday figure this calculator shows (which uses exclusive counting, matching the total days convention).</p>
-
-      <h2 id="common-mistakes">Common mistakes</h2>
-
+      <h2 id="common-mistakes">Common mistakes when adding days to a date</h2>
       <h3>Off by one: exclusive vs inclusive counting</h3>
-      <p>The most common date calculation mistake is not knowing whether the start date or end date (or both) should be counted. This calculator uses <strong>exclusive</strong> counting: start is not counted, end is counted. So January 1 to January 5 = 4 days. If your context requires inclusive counting (both start and end), add 1 to the days result.</p>
+      <p>The most common date calculation mistake is not knowing whether the start date or end date (or both) should be counted.</p>
+      <p>This calculator uses <strong>exclusive</strong> counting: start is not counted, end is counted. So January 1 to January 5 = 4 days. If your context requires inclusive counting (both start and end), add 1 to the days result.</p>
       <p>Legal and financial contexts often specify "within 30 days" or "30 days from" - always read the contract or statute carefully to determine whether the start date counts as day 0 or day 1.</p>
-
       <h3>Treating all months as 30 days</h3>
-      <p>Dividing a day count by 30 to get "months" is an approximation. February has 28 or 29 days; most other months have 30 or 31. Twelve months is not always 360 days - it is 365 or 366 days. For precise month-based calculations, use the years-months-days breakdown from this calculator or the DATEDIF function in Excel rather than dividing the day count.</p>
-
+      <p>Dividing a day count by 30 to get "months" is an approximation. February has 28 or 29 days; most other months have 30 or 31. Twelve months is not always 360 days - it is 365 or 366 days.</p>
+      <p>For precise month-based calculations, use the years-months-days breakdown from this calculator or the DATEDIF function in <a href="/compare/excel">Excel</a> rather than dividing the day count.</p>
       <h3>Ignoring time zones and Daylight Saving Time</h3>
-      <p>Date calculations based on calendar days do not need to account for time zones or DST. However, if you are calculating a duration in hours or minutes and crossing a DST boundary, a day may be 23 or 25 hours rather than 24. The hours and minutes values in this calculator are derived from the day count multiplied by 24 and 1440, which assumes every day is exactly 24 hours. For high-precision time-of-day calculations, use a dedicated timestamp calculator.</p>
-
+      <p>Date calculations based on calendar days do not need to account for time zones or DST (Daylight Saving Time). However, if you are calculating a duration in hours or minutes and crossing a DST boundary, a day may be 23 or 25 hours rather than 24.</p>
+      <p>The hours and minutes values in this calculator are derived from the day count multiplied by 24 and 1440, which assumes every day is exactly 24 hours. For high-precision time-of-day calculations, use a dedicated timestamp calculator.</p>
       <h3>Confusion between the two workday counting conventions</h3>
-      <p>Excel's NETWORKDAYS counts both the start and end date as workdays if they are weekdays (inclusive). This calculator counts Mon-Fri days in [start, end) - exclusive of the start, inclusive of the end. This matches the total days convention but differs from NETWORKDAYS by 1 when both dates are weekdays. Be consistent in whichever convention you use within a single calculation.</p>
-
-      <h2 id="faq">FAQs</h2>
-
+      <p>Excel's NETWORKDAYS counts both the start and end date as workdays if they are weekdays (inclusive). This calculator counts Mon-Fri days in [start, end) - exclusive of the start, inclusive of the end.</p>
+      <p>This matches the total days convention but differs from NETWORKDAYS by 1 when both dates are weekdays. Be consistent in whichever convention you use within a single calculation.</p>
+      <h2 id="faq">FAQs about calculating days between dates</h2>
       <h3>How do I calculate the number of days between two dates?</h3>
       <p>Enter both dates in the Date Difference tab. The result appears instantly in total days, weeks, workdays, and a years-months-days breakdown. The calculator always returns a positive result regardless of which date you enter first.</p>
-
       <h3>How do I find what date is 90 days from today?</h3>
       <p>Switch to the Add / Subtract tab. Click the Today button to set the start date, choose Add, and type 90 in the days field. The resulting date appears instantly with its weekday name, ISO week number, and how many days it is from today.</p>
-
       <h3>What counts as a workday?</h3>
       <p>Monday through Friday. Weekends (Saturday and Sunday) are excluded. Public holidays are not excluded because they vary by country and employer. Subtract any holidays that fall on weekdays within the period to get a holiday-adjusted figure.</p>
-
       <h3>How many workdays are in a year?</h3>
       <p>Approximately 261, ranging between 260 and 262 depending on the year. Enter January 1 and December 31 of any year in the Date Difference tab to see the exact workday count for that year.</p>
-
       <h3>Does February have 28 or 29 days?</h3>
       <p>29 days in a leap year (divisible by 4, except century years not divisible by 400), 28 days otherwise. This calculator handles leap years automatically.</p>
-
       <h3>Why is "1 month" not the same as 30 days?</h3>
       <p>Because calendar months have different lengths. One calendar month from January 31 is February 28 or 29 (not March 3). The Y/M/D display uses exact calendar month counting, not 30-day approximations.</p>
-
       <h3>How do I calculate days between dates in Excel?</h3>
       <p>Use <code>=B1-A1</code> formatted as a number for calendar days. Use <code>=NETWORKDAYS(A1,B1)</code> for workdays (inclusive of both dates). Use <code>=DATEDIF(A1,B1,"D")</code> for an explicit day count via the DATEDIF function.</p>
-
       <h3>How do I calculate the number of business days between two dates?</h3>
       <p>Use the workdays figure in the Date Difference tab, then subtract any public holidays that fall on weekdays in the period. For spreadsheet use, <code>=NETWORKDAYS(A1,B1,holidays)</code> accepts an optional range of holiday dates to exclude automatically.</p>
+      <QuizBlock
+        topic="date calculation"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/date-calculator"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
@@ -336,8 +442,7 @@ const schema = [
           </div>
         </li>
       </ul>
-
+      <RelatedGlossaryTerms toolPath="/date-calculator" />
     </div>
   </div>
-
 </CalculatorLayout>
