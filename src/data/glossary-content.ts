@@ -5470,6 +5470,74 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'marginal-tax-rate': {
+    definition: [
+      'The marginal tax rate is the tax rate applied to the last dollar of income you earn - the rate for the highest bracket you have reached. The US federal income tax system is progressive: income is split into brackets, and each bracket\'s rate applies only to the portion of income that falls within that range. In 2025, a single filer earning $60,000 reaches the 22% bracket, but only the income above $48,475 is taxed at 22%. Income in lower brackets is taxed at 10% and 12% respectively.',
+      'Because only the marginal income is taxed at the marginal rate, your effective tax rate (total tax divided by total income) is always lower than your marginal rate whenever you span more than one bracket. For the same $60,000 single filer, total 2025 federal income tax works out to roughly $8,100 - an effective rate of about 13.5%, well below the 22% marginal rate. The gap widens at higher incomes because a larger share of income sits in lower brackets.',
+      'Marginal tax rate matters most for decisions about additional income. A freelance project, a capital gain, or a year-end bonus will be taxed at your marginal rate (since it adds to income you\'ve already earned). Contributions to a traditional 401(k) or IRA reduce taxable income from the top, so each dollar contributed saves tax at your marginal rate. Knowing your marginal rate turns abstract tax planning into a concrete dollar calculation.',
+    ],
+    beginnerExplain: [
+      'Think of a stadium with tiered ticket prices: the first 12,000 seats cost $10 each, the next 36,000 cost $12 each, and seats above that cost $22 each. If you buy 60,000 seats total, you pay $10 on the first 12,000, $12 on the next 36,000, and $22 on the last 12,000 - you are not charged $22 on all 60,000 seats just because you bought into that tier. That highest tier price ($22) is your marginal rate. The average you actually paid per seat is much lower.',
+      'Your tax bracket works the same way. A 22% marginal rate means your last dollar was taxed at 22% - not that you owe 22% of your entire income. The IRS taxes your first dollars at 10%, the next slice at 12%, and only the income above the 22% threshold at 22%. Your effective rate is always the weighted average across all the tiers you used.',
+    ],
+    whenToUse: 'Use your marginal tax rate when evaluating additional income: a bonus, freelance payment, stock option exercise, or Roth conversion adds income at the top, so it is taxed at your marginal rate. Use it when deciding how much a tax-deductible expense (mortgage interest, 401(k) contribution, HSA contribution) saves in real dollars - a $5,000 deduction at a 22% marginal rate saves exactly $1,100. Do not use it to estimate total tax owed - use effective rate for that.',
+    examples: {
+      headers: ['2025 Bracket (Single)', 'Income range', 'Rate', 'Tax on this portion'],
+      rows: [
+        ['1st bracket', '$0 - $11,925', '10%', 'Up to $1,193'],
+        ['2nd bracket', '$11,926 - $48,475', '12%', 'Up to $4,386'],
+        ['3rd bracket', '$48,476 - $103,350', '22%', 'Up to $12,075'],
+        ['4th bracket', '$103,351 - $197,300', '24%', 'Up to $22,548'],
+        ['5th bracket', '$197,301 - $250,525', '32%', 'Up to $17,031'],
+        ['6th bracket', '$250,526 - $626,350', '35%', 'Up to $131,558'],
+        ['7th bracket', 'Over $626,350', '37%', 'On every dollar above'],
+      ],
+    },
+    pitfalls: 'The most common misunderstanding is the "bracket trap" myth: people believe that earning just enough to cross into a higher bracket will result in less take-home pay because "all their income" gets taxed at the higher rate. This is incorrect. Crossing a bracket threshold never reduces net income - only the marginal dollars above the threshold are taxed at the higher rate. Earning one more dollar always increases take-home pay, even if that dollar crosses a bracket. A separate real effect is marginal rate on benefits phase-outs (e.g. child tax credit, EV credits, student loan deduction), where the effective marginal rate on a specific dollar of income can temporarily spike above the nominal bracket rate.',
+    faqs: [
+      { q: 'What is the difference between marginal tax rate and effective tax rate?', a: 'Marginal rate is the rate on your last dollar of income - the top bracket you\'ve reached. Effective rate is total tax paid divided by total income. For a single filer earning $60,000 in 2025, the marginal rate is 22% but the effective federal rate is roughly 13.5%. Effective rate is always lower than marginal rate for anyone spanning more than one bracket.' },
+      { q: 'Does earning more money ever reduce my take-home pay?', a: 'No. In a standard progressive bracket system, earning one more dollar always increases net pay - only that marginal dollar is taxed at the higher rate, not your previous income. The "bracket trap" is a myth. The exception is income-tested benefits that phase out sharply (e.g. premium tax credits, child tax credits), where the effective marginal rate on specific income ranges can temporarily spike.' },
+      { q: 'What is the highest US federal marginal income tax rate?', a: 'The top federal income tax rate for individuals is 37% in 2025, applying to single filers earning above $626,350 and married couples filing jointly earning above $751,600. This has remained at 37% since the Tax Cuts and Jobs Act of 2017 lowered it from 39.6%. Most states add their own income tax on top of the federal rate.' },
+      { q: 'How does my marginal tax rate affect the value of a 401(k) contribution?', a: 'A traditional 401(k) contribution reduces your taxable income from the top, so each dollar contributed saves tax at your current marginal rate. At a 22% marginal rate, a $5,000 contribution saves $1,100 in federal income tax this year. At 32%, the same contribution saves $1,600. This is why high earners get more immediate tax benefit from pre-tax contributions than lower earners.' },
+      { q: 'Do state income taxes have marginal rates too?', a: 'Most states with income tax use a progressive bracket system with their own marginal rates, which stack on top of federal brackets. California\'s top marginal rate is 13.3%, giving a combined federal and state marginal rate of 50.3% for the highest earners. Nine states have no income tax at all. The US Income Tax Calculator covers all 50 states and shows combined effective and marginal rates.' },
+    ],
+    quiz: {
+      topic: 'marginal tax rate',
+      questions: [
+        {
+          q: 'A single filer earns $60,000 in 2025. Their highest bracket is 22%. What does this mean?',
+          options: ['They owe 22% of the full $60,000 in federal income tax', 'Only the income above $48,475 is taxed at 22%; lower income is taxed at 10% and 12%', 'Their effective tax rate is 22%', 'They will pay more total tax than a filer earning $48,000 at 12%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition explains that only income above each bracket threshold is taxed at the higher rate. The first $11,925 is taxed at 10%, the next slice at 12%, and only the income above $48,475 is taxed at 22%. The marginal rate applies to the last bracket, not the full income.',
+        },
+        {
+          q: 'Using the 2025 bracket table, what is the total federal income tax for a single filer earning exactly $48,475?',
+          options: ['$5,816', '$1,193 + $4,386 = $5,579', '$48,475 x 12% = $5,817', '$48,475 x 10% = $4,848'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'At $48,475, the filer is at the top of the 12% bracket. Tax = 10% on $11,925 ($1,193) + 12% on ($48,475 - $11,925) = $36,550 x 12% = $4,386. Total: $1,193 + $4,386 = $5,579. No 22% tax applies because income does not exceed $48,475.',
+        },
+        {
+          q: 'What happens to your take-home pay when your income crosses from the 12% bracket into the 22% bracket?',
+          options: ['Take-home pay falls because your entire income is now taxed at 22%', 'Take-home pay is unchanged - bracket changes have no effect until year end', 'Take-home pay still increases because only the income above the threshold is taxed at 22%', 'Take-home pay falls by the bracket rate difference (22% minus 12% = 10%) applied to total income'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section explains the "bracket trap" myth directly: only the marginal income above the threshold is taxed at the higher rate. Earning one more dollar always increases take-home pay - crossing a bracket threshold never reduces net income.',
+        },
+        {
+          q: 'A taxpayer in the 24% federal bracket makes a $6,000 traditional IRA contribution. How much does this save in federal income tax?',
+          options: ['$720', '$1,440', '$1,200', '$960'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ explains that a traditional retirement contribution reduces taxable income from the top, saving tax at the marginal rate. $6,000 x 24% = $1,440 in federal income tax saved. The higher your marginal rate, the more valuable each pre-tax dollar contributed.',
+        },
+        {
+          q: 'According to the FAQ, what is the top US federal marginal income tax rate in 2025, and which law set it?',
+          options: ['39.6%, set by the Affordable Care Act in 2010', '37%, set by the Tax Cuts and Jobs Act of 2017', '35%, set by the Economic Growth and Tax Relief Reconciliation Act of 2001', '40.8%, set by the Inflation Reduction Act of 2022'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The FAQ states the top federal rate is 37% in 2025, and has remained at 37% since the Tax Cuts and Jobs Act of 2017 lowered it from the previous 39.6%. It applies to single filers earning above $626,350.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'regular-rate-of-pay': {
     definition: [
       'The regular rate of pay is the baseline hourly rate used to calculate overtime compensation under the FLSA. For hourly workers it equals the standard hourly wage. For salaried workers it is calculated by dividing the weekly salary by the number of hours the salary is intended to cover.',

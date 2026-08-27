@@ -17,6 +17,7 @@ const tocItems = [
   { id: 'tools',      label: 'All tax tools' },
   { id: 'which-tool', label: 'Which calculator to use' },
   { id: 'faq',        label: 'FAQs' },
+  { id: 'related-tools', label: 'Related tools' },
 ];
 
 const schema = [
@@ -25,7 +26,7 @@ const schema = [
     "@type": "CollectionPage",
     "name": "Tax Calculators",
     "url": "https://calculations.tools/tax",
-    "description": "Free tax calculators for sales tax, reverse tax calculation, and more. Instant results, no registration required.",
+    "description": "Free tax calculators for sales tax, VAT, GST, and income tax. US federal and state income tax, 7 EU countries, reverse tax, and more. Instant results, no registration required.",
     "hasPart": tools.map(t => ({
       "@type": "WebApplication",
       "name": t.title,
@@ -36,32 +37,32 @@ const schema = [
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      { "@type": "Question", "name": "How do I calculate sales tax?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply the pre-tax price by the tax rate divided by 100. For an 8% rate on a $50 item: $50 x 0.08 = $4.00 tax, giving a total of $54.00. Use the Sales Tax Calculator above to calculate any combination of price and rate instantly." } },
+      { "@type": "Question", "name": "How do I calculate sales tax?", "acceptedAnswer": { "@type": "Answer", "text": "Multiply the pre-tax price by the tax rate divided by 100. For an 8% rate on a $50 item: $50 x 0.08 = $4.00 tax, giving a total of $54.00. Use the Sales Tax Calculator to calculate any combination of price and rate instantly." } },
       { "@type": "Question", "name": "Which states have no sales tax?", "acceptedAnswer": { "@type": "Answer", "text": "Five US states have no statewide sales tax: Alaska, Delaware, Montana, New Hampshire, and Oregon. Delaware, Montana, New Hampshire, and Oregon also have no local taxes. Alaska allows local municipalities to levy sales taxes." } },
+      { "@type": "Question", "name": "What is the difference between VAT and sales tax?", "acceptedAnswer": { "@type": "Answer", "text": "Sales tax is collected only at the final point of sale to the consumer, and is common in the US. VAT is collected at every stage of the supply chain, with each business remitting the difference between input and output VAT. Both are consumption taxes, but VAT is standard across Europe and much of the world." } },
+      { "@type": "Question", "name": "How do I calculate income tax in the US?", "acceptedAnswer": { "@type": "Answer", "text": "US income tax uses a progressive bracket system. Federal rates range from 10% to 37% in 2024, and most states add their own income tax on top. The effective tax rate is always lower than the marginal rate because only income above each bracket threshold is taxed at the higher rate." } },
       { "@type": "Question", "name": "Are these tax calculators free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No registration, no usage limits. All calculations run in your browser - no data is sent to any server." } },
     ]
   }
 ];
 ---
-
 <CalculatorLayout
   title="Tax Calculators"
   metaTitle="Free Tax Calculators - Sales Tax & More ᐅ"
-  description="Free tax calculators for sales tax, reverse tax, and more. Instant results, auto-detects your currency. No registration needed."
+  description="Free tax calculators for sales tax, VAT, GST, and income tax. US federal and state, 7 EU countries, reverse tax. Instant results, no registration."
   canonical="https://calculations.tools/tax"
   tocItems={tocItems}
   schema={schema}
+  ogFormula="Sales tax = price x (rate / 100) | Income tax = sum of each bracket x bracket rate"
+  ogExample="$50 at 8% = $4.00 tax ($54.00 total) | $80,000 income, 22% bracket = $13,200 federal tax"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container hi-container">
-
         <div class="calculator-header">
           <h2>Tax Calculator Hub</h2>
           <p>Sales tax, reverse tax, and more - free and instant</p>
         </div>
-
         <div class="hi-stats">
           <div class="hi-stat">
             <div class="hi-stat-val">{totalTools}</div>
@@ -76,7 +77,6 @@ const schema = [
             <div class="hi-stat-lbl">No login · runs in browser</div>
           </div>
         </div>
-
         {groups.map(([groupName, groupTools]) => (
           <div class="hi-group">
             <div class="hi-group-header">
@@ -96,22 +96,18 @@ const schema = [
             </div>
           </div>
         ))}
-
       </div>
     </section>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">What's in the tax section</div>
-        <p>This section contains free tax calculators for everyday use. The <a href="/tax/sales-tax-calculator">Sales Tax Calculator</a> covers both directions: add tax to a pre-tax price, or remove tax from a tax-inclusive total. The <a href="/tax/vat-calculator">VAT Calculator</a> covers European and global VAT rates. The <a href="/tax/gst-calculator">GST Calculator</a> covers Australia, New Zealand, Singapore, Canada (all provinces), and India's four slabs. More tools covering income tax and capital gains are coming soon.</p>
+        <p>This section covers four types of tax calculation. The <a href="/tax/sales-tax-calculator">Sales Tax Calculator</a> works in both directions: add tax to a price or strip tax out of a total. The <a href="/tax/vat-calculator">VAT Calculator</a> covers European and global VAT rates. The <a href="/tax/gst-calculator">GST Calculator</a> covers Australia, New Zealand, Singapore, Canada (all provinces), and India's four slabs.</p>
+        <p>The <a href="/tax/income-tax-calculator/us">US Income Tax Calculator</a> covers US federal and state income tax for all 50 states - with full bracket breakdowns, FICA, filing status, and take-home pay - plus <a href="/tax/income-tax-calculator/eu">7 European countries</a> including Germany, France, Netherlands, Denmark, Sweden, Italy, and Ireland.</p>
       </div>
-
       <h2 id="tools">All tax tools</h2>
       <p>Every tool is free, runs entirely in your browser, and updates as you type. No button press, no registration, no data sent to any server.</p>
-
       <h2 id="which-tool">Which calculator to use</h2>
       <div class="responsive-table">
       <table>
@@ -121,28 +117,53 @@ const schema = [
         <tbody>
           <tr><td>Add sales tax to a price and see the total</td><td><a href="/tax/sales-tax-calculator">Sales Tax Calculator</a></td></tr>
           <tr><td>Remove tax from a total to find the original price</td><td><a href="/tax/sales-tax-calculator">Sales Tax Calculator (Reverse mode)</a></td></tr>
+          <tr><td>Look up rates and calculate for a specific US state</td><td><a href="/tax/sales-tax-calculator/us">US Sales Tax by State</a></td></tr>
           <tr><td>Calculate VAT for a European or global purchase</td><td><a href="/tax/vat-calculator">VAT Calculator</a></td></tr>
           <tr><td>Calculate GST for Australia, NZ, Singapore, Canada, or India</td><td><a href="/tax/gst-calculator">GST Calculator</a></td></tr>
+          <tr><td>Calculate US federal + state income tax and take-home pay</td><td><a href="/tax/income-tax-calculator/us">US Income Tax Calculator</a></td></tr>
+          <tr><td>Calculate European income tax and net salary</td><td><a href="/tax/income-tax-calculator/eu">EU Income Tax Calculators</a></td></tr>
+          <tr><td>Calculate income tax with a custom rate or for any country</td><td><a href="/tax/income-tax-calculator">Income Tax Calculator</a></td></tr>
         </tbody>
       </table>
       </div>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">Frequently asked questions about calculating tax</h2>
       <h3>How do I calculate sales tax?</h3>
       <p>Multiply the pre-tax price by the tax rate divided by 100. A $50 item at 8% tax: $50 x 0.08 = $4.00 tax, total $54.00. The <a href="/tax/sales-tax-calculator">Sales Tax Calculator</a> handles this instantly for any price and rate, and it auto-detects your local currency.</p>
-
       <h3>Which US states have no sales tax?</h3>
       <p>Five states have no statewide sales tax: Alaska, Delaware, Montana, New Hampshire, and Oregon. Delaware, Montana, New Hampshire, and Oregon have no local taxes either. Alaska allows local municipalities to set their own sales tax, so many Alaskan cities do charge one.</p>
-
+      <h3>What is the difference between VAT and sales tax?</h3>
+      <p>Sales tax is collected only at the final point of sale and is common in the US. <a href="/tax/vat-calculator">VAT</a> is collected at every stage of the supply chain - each business pays VAT on purchases and charges VAT on sales, remitting only the difference. Both are consumption taxes, but VAT is the standard in Europe and most of the world.</p>
+      <h3>How do I calculate income tax in the US?</h3>
+      <p>US income tax uses a progressive bracket system - only income above each threshold is taxed at the higher rate. Federal rates run from 10% to 37% in 2024, and most states add their own rate on top. The <a href="/tax/income-tax-calculator/us">US Income Tax Calculator</a> covers all 50 states, FICA contributions, filing status, and standard deductions to show your true take-home pay.</p>
       <h3>Are these tax calculators free?</h3>
       <p>Yes, completely free. No registration, no usage limits, no premium tier. Every calculator runs entirely in your browser - nothing is sent to any server.</p>
-
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💵</span>
+          <div>
+            <a href="/finance/annual-income-calculator">Annual Income Calculator</a>
+            <p>Convert hourly, daily, weekly, or monthly pay to an annual salary figure - useful before applying a tax rate.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📈</span>
+          <div>
+            <a href="/finance/salary-increase-calculator">Salary Increase Calculator</a>
+            <p>Calculate your new salary after a raise and apply a tax rate to see the after-tax difference across all pay periods.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📊</span>
+          <div>
+            <a href="/finance/roi-calculator">ROI Calculator</a>
+            <p>Calculate return on investment before and after tax to see the true net gain on any purchase or project.</p>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style>
   .hi-container { max-width: 100% !important; }
 </style>

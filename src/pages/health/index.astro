@@ -46,7 +46,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Health Calculators"
   metaTitle="Health Calculators | BMI & Body Composition ᐅ"
@@ -55,16 +54,13 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container hi-container">
-
         <div class="calculator-header">
           <h2>Health Calculator Hub</h2>
           <p>BMI, body composition, and health metrics - free and instant</p>
         </div>
-
         <div class="hi-stats">
           <div class="hi-stat">
             <div class="hi-stat-val">{totalTools}</div>
@@ -79,7 +75,6 @@ const schema = [
             <div class="hi-stat-lbl">No login · runs in browser</div>
           </div>
         </div>
-
         {groups.map(([groupName, groupTools]) => (
           <div class="hi-group">
             <div class="hi-group-header">
@@ -99,33 +94,28 @@ const schema = [
             </div>
           </div>
         ))}
-
       </div>
     </section>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">What's in the health section</div>
-        <p>This section contains {totalTools} free health calculators across {totalCategories} categories. <strong>BMI Calculators</strong> cover the standard tool plus specialist variants for men, women, kids, teens, seniors, pregnancy, and weight loss planning. <strong>Body Composition</strong> tools go beyond BMI - the <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a> estimates LBM using three clinical formulas and adds FFMI for athletes.</p>
+        <p>This section contains {totalTools} free health calculators across {totalCategories} categories.</p>
+        <p><strong>BMI Calculators</strong> cover the standard tool plus specialist variants for men, women, kids, teens, seniors, pregnancy, and weight loss planning.</p>
+        <p><strong>Body Composition</strong> tools go beyond BMI - the <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a> estimates <a href="/glossary/lean-body-mass">LBM</a> using three clinical formulas and adds <a href="/health/ffmi-calculator">FFMI for athletes</a>.</p>
       </div>
-
       <h2 id="tools">All health tools</h2>
       <p>Every tool is free, runs entirely in your browser, and supports both metric and imperial units. Results appear as you type - no button press required.</p>
-
       <h2 id="bmi-vs-body">BMI vs body composition</h2>
       <p>BMI and body composition tools answer different questions. Understanding the difference helps you choose the right tool for your goal.</p>
-
       <h3>What BMI measures</h3>
-      <p>Body Mass Index is a ratio of weight to height squared. It is quick to calculate, requires no equipment, and correlates well with health risk at the population level. Its main limitation is that it treats all weight the same - a kilogram of muscle and a kilogram of fat both increase BMI identically. This is why athletes and bodybuilders routinely register as "Overweight" or even "Obese" despite excellent body composition.</p>
-      <p>The BMI calculators on this site add age and gender to estimate body fat percentage using the Deurenberg formula, and provide age-appropriate context (adjusted thresholds for seniors, growth chart percentiles for children and teens). Specialist pages add further context relevant to each group.</p>
-
+      <p><a href="/glossary/bmi">Body Mass Index</a> is a <a href="/glossary/ratio">ratio</a> of weight to height squared. It is quick to calculate, requires no equipment, and correlates well with health risk at the population level.</p>
+      <p>Its main limitation is that it treats all weight the same - a kilogram of muscle and a kilogram of fat both increase BMI identically. This is why athletes and bodybuilders routinely register as "Overweight" or even "Obese" despite excellent <a href="/glossary/body-composition">body composition</a>.</p>
+      <p>The BMI calculators on this site add age and gender to estimate <a href="/glossary/body-fat-percentage">body fat percentage</a> using the Deurenberg formula, and provide age-appropriate context (adjusted thresholds for <a href="/health/bmi-calculator/seniors">seniors</a>, growth chart percentiles for <a href="/health/bmi-calculator/kids">children</a> and <a href="/health/bmi-calculator/teens">teens</a>). Specialist pages add further context relevant to each group.</p>
       <h3>What lean body mass measures</h3>
-      <p>Lean body mass (LBM) is total weight minus fat mass - it includes muscle, bone, organs, and water. LBM is more informative than BMI for anyone who trains regularly, because it quantifies the thing BMI cannot: how much of your weight is actually metabolically active tissue.</p>
-      <p>The <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a> extends LBM to FFMI (Fat-Free Mass Index), which normalises LBM for height exactly as BMI normalises total weight. FFMI is the standard metric used in research on natural muscular potential - a normalised FFMI above 25 in men is considered above the natural limit.</p>
-
+      <p><a href="/glossary/lean-body-mass">Lean body mass (LBM)</a> is total weight minus fat mass - it includes muscle, bone, organs, and water. LBM is more informative than BMI for anyone who trains regularly, because it quantifies the thing BMI cannot: how much of your weight is actually metabolically active tissue.</p>
+      <p>The <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a> extends LBM to <a href="/glossary/ffmi">FFMI (Fat-Free Mass Index)</a>, which normalises LBM for height exactly as BMI normalises total weight. FFMI is the standard metric used in research on natural muscular potential - a normalised FFMI above 25 in men is considered above the natural limit.</p>
       <div class="responsive-table">
       <table>
         <thead>
@@ -139,7 +129,6 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="which-tool">Which tool to use</h2>
       <div class="responsive-table">
       <table>
@@ -160,29 +149,20 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="faq">FAQs</h2>
-
+      <h2 id="faq">FAQs about our health calculators</h2>
       <h3>Are these health calculators free?</h3>
       <p>Yes, completely free. No registration, no usage limits, no premium tier. All tools run entirely in your browser - no data is transmitted to any server.</p>
-
       <h3>Which BMI calculator should I use?</h3>
       <p>The main <a href="/health/bmi-calculator">BMI Calculator</a> works for most adults and adds age and gender context automatically. Use the specialist tools for more tailored guidance: men's waist thresholds and muscle context, women's menopause and fat distribution guidance, children's and teenagers' CDC growth chart percentiles, seniors' adjusted thresholds, gestational weight gain targets, or a target BMI weight loss plan.</p>
-
       <h3>What is the difference between BMI and lean body mass?</h3>
       <p>BMI is a single ratio (weight ÷ height²) that cannot distinguish fat from muscle. Lean Body Mass is the weight of everything except fat. BMI is the right starting point for most people; lean body mass and FFMI are more useful for athletes and anyone who strength trains, because BMI systematically misclassifies muscular people as overweight.</p>
-
       <h3>How accurate are these calculators?</h3>
       <p>BMI itself is mathematically exact given your inputs. The body fat percentage estimate uses the Deurenberg formula (1991) with a margin of error of approximately ±3–5 percentage points. Lean body mass formulas (Boer, Hume, James) are regression equations derived from cadaver studies with similar precision. For clinical or medical decisions, these estimates should be treated as screening tools and confirmed by a healthcare professional.</p>
-
       <h3>Do the tools work on mobile?</h3>
       <p>Yes. Every tool is fully responsive and works on any phone, tablet, or desktop. No app required.</p>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style>
   .hi-container { max-width: 100% !important; }
 </style>

@@ -9,12 +9,13 @@ const tocItems = [
   { id: 'how-to-use', label: 'How to use this calculator' },
   { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'income-vs-tax', label: 'Income tax vs. payroll tax' },
+  { id: 'filing-status', label: 'Filing status and tax brackets' },
   { id: 'global-rates', label: 'Income tax rates around the world' },
   { id: 'effective-marginal', label: 'Effective vs. marginal tax rate' },
   { id: 'reduce-tax', label: 'How to reduce your tax bill' },
   { id: 'faq', label: 'FAQs' },
   { id: 'quiz', label: 'Quiz: test your knowledge' },
-  { id: 'us-calculator', label: 'US income tax calculator' },
+  { id: 'related-tools', label: 'Related tools' },
 ];
 
 const quizQuestions = [
@@ -206,13 +207,14 @@ const schema = [
     <div class="seo-container">
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
-        <p>Income tax is calculated by applying progressive bracket rates to your taxable income (gross income minus deductions). To estimate your after-tax income quickly, enter your gross income and effective rate above. For a full US paycheck calculation including federal, state, and FICA taxes, use our <a href="/tax/income-tax-calculator/us">US state income tax calculators</a>.</p>
+        <p>Income tax is calculated by applying progressive bracket rates to your taxable income (gross income minus deductions). To estimate your after-tax income quickly, enter your gross income and effective rate above.</p>
+        <p>For a full US paycheck calculation including federal, state, and FICA taxes, use our <a href="/tax/income-tax-calculator/us">US state income tax calculators</a>.</p>
       </div>
       <div class="answer-box">
         <p class="answer-box-label">Key takeaways</p>
         <ul>
-          <li>Progressive taxation means only the income within each bracket is taxed at that bracket's rate - a raise never reduces your after-tax income by pushing you into a higher bracket.</li>
-          <li>Your effective tax rate (total tax / gross income) is always lower than your marginal rate and is the right number to use for budgeting and take-home pay estimates.</li>
+          <li>Progressive taxation means only the income within each bracket is taxed at that bracket's rate - a raise never reduces your <a href="/glossary/net-pay">after-tax income</a> by pushing you into a higher bracket.</li>
+          <li>Your <a href="/glossary/effective-tax-rate">effective tax rate</a> (total tax / gross income) is always lower than your <a href="/glossary/marginal-tax-rate">marginal rate</a> and is the right number to use for budgeting and take-home pay estimates.</li>
           <li>Pre-tax contributions to a 401(k), HSA, or FSA reduce your taxable income dollar-for-dollar, lowering both your income tax and your effective rate without reducing your total compensation.</li>
         </ul>
       </div>
@@ -238,6 +240,25 @@ const schema = [
         </table>
       </div>
       <p>This simple calculator uses a single effective rate for easy estimation. Our <a href="/tax/income-tax-calculator/us">US state calculators</a> calculate all four components separately and give you the precise breakdown.</p>
+      <h3>Self-employment and freelance income</h3>
+      <p>Self-employed workers and freelancers pay income tax the same way as employees, but they also owe self-employment (SE) tax: 15.3% of net self-employment income (12.4% Social Security + 2.9% <a href="/glossary/fica">Medicare</a>). This replaces the employer's share that salaried workers never see - because the employer normally pays half of FICA on their behalf.</p>
+      <p>A freelancer earning $80,000 in net profit owes roughly $11,304 in SE tax before income tax is calculated. You can deduct 50% of SE tax from your adjusted gross income, which reduces your taxable income slightly. The net effect is that self-employed earners typically pay 8-10 percentage points more in total federal tax than an employee at the same gross income level.</p>
+      <h2 id="filing-status">How filing status affects your income tax brackets</h2>
+      <p>Your filing status is one of the biggest levers in your tax bill. It determines both the size of your standard deduction and how quickly your income climbs through the brackets. In 2025, the four federal statuses produce meaningfully different outcomes:</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Filing status</th><th>2025 standard deduction</th><th>10% bracket ends at</th><th>22% bracket starts at</th></tr></thead>
+          <tbody>
+            <tr><td>Married Filing Jointly (MFJ)</td><td>$30,000</td><td>$23,850</td><td>$96,950</td></tr>
+            <tr><td>Head of Household (HOH)</td><td>$22,500</td><td>$17,000</td><td>$64,850</td></tr>
+            <tr><td>Single</td><td>$15,000</td><td>$11,925</td><td>$48,475</td></tr>
+            <tr><td>Married Filing Separately (MFS)</td><td>$15,000</td><td>$11,925</td><td>$48,475</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><a href="/glossary/mfj">MFJ</a> brackets are nearly double the single brackets, which is why most married couples benefit from filing jointly.</p>
+      <p><a href="/glossary/hoh">HOH</a> provides a meaningfully wider 10% band and larger deduction than single filing - worth $1,000-$2,500 in annual tax savings for eligible single parents.</p>
+      <p><a href="/glossary/mfs">MFS</a> almost always results in a higher combined tax bill than MFJ and loses access to several credits entirely.</p>
       <h2 id="global-rates">Income tax rates around the world</h2>
       <p>Top marginal income tax rates vary dramatically across countries. Nordic countries tend toward high rates to fund comprehensive welfare states, while many Asian economies opt for lower rates to attract capital and skilled workers.</p>
       <div class="responsive-table">
@@ -264,10 +285,14 @@ const schema = [
         </table>
       </div>
       <p>Source: <a href="https://taxsummaries.pwc.com/" target="_blank" rel="noopener noreferrer">PwC Worldwide Tax Summaries</a>; <a href="https://taxfoundation.org/research/global-tax/" target="_blank" rel="noopener noreferrer">Tax Foundation Global Tax Data 2026</a>.</p>
+      <p>When I look at this table, the figure that consistently gets misread is the income threshold at which the top rate kicks in. Finland's 56.9% sounds extreme, but it only applies to income above roughly €85,000 - and most Finnish earners pay an effective rate of 30-35% in practice.</p>
+      <p>Top marginal rate is a useful shorthand for cross-country comparison, but effective rate is the number that tells you how much of total income actually goes to government. The two can differ by 15-20 percentage points at median income levels in high-rate countries.</p>
       <h2 id="effective-marginal">Effective tax rate vs. marginal tax rate</h2>
       <p>Understanding the difference between effective and marginal tax rates is crucial for tax planning.</p>
-      <p>Your <strong>marginal tax rate</strong> is the rate applied to your next dollar of income - the highest bracket you've reached. Your <strong>effective tax rate</strong> is total tax paid divided by gross income. For most earners, effective rate is significantly lower than marginal rate because only the income within each bracket is taxed at that bracket's rate.</p>
-      <p><strong>Example:</strong> A US single filer earning $100,000 in 2025 has a marginal federal rate of 22% (the bracket from $48,475 to $103,350). But their federal effective rate is approximately 14%, because the first $15,000 is sheltered by the standard deduction, the first $11,925 of taxable income is taxed at 10%, and the next $36,550 at 12% - before reaching the 22% bracket.</p>
+      <p>Your <a href="/glossary/marginal-tax-rate">marginal tax rate</a> is the rate applied to your next dollar of income - the highest bracket you've reached. Your <a href="/glossary/effective-tax-rate">effective tax rate</a> is total tax paid divided by gross income.</p>
+      <p>For most earners, effective rate is significantly lower than marginal rate because only the income within each bracket is taxed at that bracket's rate.</p>
+      <h3>Example of difference between effective tax rate and marginal tax rate</h3>
+      <p>A US single filer earning $100,000 in 2025 has a marginal federal rate of 22% (the bracket from $48,475 to $103,350). But their federal effective rate is approximately 14%, because the first $15,000 is sheltered by the standard deduction, the first $11,925 of taxable income is taxed at 10%, and the next $36,550 at 12% - before reaching the 22% bracket.</p>
       <p>Use the effective rate for planning and comparing your actual tax burden. Use the marginal rate to evaluate whether extra income or a deduction is worthwhile.</p>
       <p>The most common tax misconception I personally encounter is the fear that a raise will "push you into a higher bracket and you'll end up with less money." This cannot happen under a progressive system.</p>
       <p>A higher bracket applies only to the slice of income inside it. A $48,475 earner who gets a $2,000 raise pays the higher rate on those $2,000 alone - the income below the threshold is unaffected. No raise has ever reduced after-tax income by pushing into a higher bracket.</p>
@@ -285,6 +310,10 @@ const schema = [
       <p>Mortgage interest, state and local taxes (capped at $10,000), charitable contributions, medical expenses above 7.5% of AGI.</p>
       <p>One strategy I see systematically underused among earners near the standard deduction threshold is deduction bunching. If your typical itemized deductions land just above $15,000, you're barely benefiting from itemizing.</p>
       <p>By deferring charitable donations one year and doubling them the next, you alternate between a large itemized deduction year and a standard deduction year - effectively converting deductions that were doing nothing into real tax savings over the two-year cycle without spending any more money.</p>
+      <h3>Tax credits vs. tax deductions: what's the actual difference?</h3>
+      <p>A deduction reduces your taxable income; a credit reduces your tax bill directly. At a 22% marginal rate, a $5,000 deduction saves $1,100. A $5,000 tax credit saves $5,000 - regardless of your bracket. Credits are almost always more valuable dollar-for-dollar.</p>
+      <p>Common US tax credits in 2025: Child Tax Credit ($2,000 per qualifying child), Earned Income Tax Credit (up to $7,830 for families with 3+ children), American Opportunity Tax Credit ($2,500 for the first four years of college), Lifetime Learning Credit ($2,000 for tuition), and the Saver's Credit (up to $1,000 for low- and moderate-income retirement contributions).</p>
+      <p>Unlike deductions, non-refundable credits can only reduce your tax bill to zero - they won't generate a refund beyond that. Refundable credits (like the EITC) can produce a refund even if you owe no tax.</p>
       <h2 id="faq">Frequently asked questions about income tax</h2>
       <h3>What is the difference between gross and net income?</h3>
       <p>Gross income is your total income before any taxes or deductions. <a href="/glossary/net-income">Net income (take-home pay)</a> is what you receive after all taxes - income tax, FICA, and any other withholdings. The difference between gross and net can be 25-45% for median earners in high-tax states.</p>
@@ -299,8 +328,7 @@ const schema = [
         questions={quizQuestions}
         pageUrl="https://calculations.tools/tax/income-tax-calculator"
       />
-
-      <h2 id="us-calculator">US income tax by state</h2>
+      <h2 id="related-tools">Related tools</h2>
       <p>For a full US paycheck breakdown - federal income tax, state income tax, Social Security, and Medicare - use our state-specific calculators. Each state page includes 2026 tax brackets, filing status options, deduction inputs, and a take-home pay breakdown.</p>
       <ul class="related-tools-list">
         <li>
@@ -308,6 +336,13 @@ const schema = [
           <div>
             <a href="/tax/income-tax-calculator/us">US Income Tax Calculator - All 50 States</a>
             <p>Interactive map and state-by-state income tax hub. Includes 2026 brackets for every state.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🇪🇺</span>
+          <div>
+            <a href="/tax/income-tax-calculator/eu">European Income Tax Calculators</a>
+            <p>Calculate net salary and income tax for Germany, France, Netherlands, Denmark, Sweden, Italy, and Ireland.</p>
           </div>
         </li>
         <li>

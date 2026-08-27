@@ -164,7 +164,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     siteCategory: 'Finance',
     shortDef: 'The Effective Tax Rate is the actual percentage of pre-tax income (EBT) paid in income tax. It differs from the statutory rate because of deductions, credits, loss carry-forwards, and deferred tax items.',
     formula: '$$\\text{Effective Tax Rate} = \\frac{\\text{Tax Expense}}{\\text{EBT}} \\times 100$$',
-    relatedTools: ['/finance/ebt-calculator'],
+    relatedTools: ['/finance/ebt-calculator', '/tax/income-tax-calculator'],
     relatedTerms: ['ebt', 'net-income'],
   },
   {
@@ -1065,6 +1065,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'Married Filing Separately (MFS) is a US federal tax filing status where each spouse files an independent return using single-style tax brackets and a $15,000 standard deduction. MFS nearly always produces a higher combined tax bill than MFJ but can lower individual AGI for income-driven student loan repayment or protect one spouse from the other\'s tax liabilities.',
     relatedTools: ['/tax/income-tax-calculator/us'],
     relatedTerms: ['mfj', 'hoh', 'effective-tax-rate', 'gross-pay'],
+  },
+  {
+    slug: 'marginal-tax-rate',
+    term: 'Marginal Tax Rate',
+    letter: 'M',
+    category: 'Tax',
+    siteCategory: 'Finance',
+    shortDef: 'The marginal tax rate is the rate applied to the next dollar of income earned - the highest tax bracket you currently fall into. Because the US uses a progressive bracket system, only the income above each threshold is taxed at the higher rate. A $60,000 single filer in 2025 has a 22% marginal rate but pays an effective rate of roughly 13.5%.',
+    formula: '$$\\text{Marginal Tax Rate} = \\text{tax rate on the last bracket of taxable income}$$',
+    relatedTools: ['/tax/income-tax-calculator', '/tax/income-tax-calculator/us'],
+    relatedTerms: ['effective-tax-rate', 'mfj', 'mfs', 'hoh', 'fica'],
   },
   {
     slug: 'hoh',

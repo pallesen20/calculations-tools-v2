@@ -43,7 +43,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Math Calculators"
   metaTitle="Free Online Math Calculators ᐅ"
@@ -52,16 +51,13 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container hi-container">
-
         <div class="calculator-header">
           <h2>Math Calculator Hub</h2>
           <p>Percentage tools and more - free and instant</p>
         </div>
-
         <div class="hi-stats">
           <div class="hi-stat">
             <div class="hi-stat-val">{totalTools}</div>
@@ -76,7 +72,6 @@ const schema = [
             <div class="hi-stat-lbl">No login · runs in browser</div>
           </div>
         </div>
-
         {groups.map(([groupName, groupTools]) => (
           <div class="hi-group">
             <div class="hi-group-header">
@@ -96,22 +91,17 @@ const schema = [
             </div>
           </div>
         ))}
-
       </div>
     </section>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">What's in the math section</div>
         <p>This section contains {totalTools} free math calculators across {totalCategories} {totalCategories === 1 ? 'category' : 'categories'}. The <a href="/math/percentage-calculator">Percentage Calculator</a> hub covers basic percentages, increases, decreases, and comparisons. Dedicated tools handle percentage increase, decrease, change, difference, average, fraction-to-percent, decimal-to-percent, and percentage-of-a-percentage - each with worked examples and formula explanations.</p>
       </div>
-
       <h2 id="tools">All math tools</h2>
       <p>Every tool is free, runs entirely in your browser, and produces results as you type. No button press, no registration, no data sent to any server.</p>
-
       <h2 id="which-tool">Which tool to use</h2>
       <div class="responsive-table">
       <table>
@@ -131,23 +121,17 @@ const schema = [
         </tbody>
       </table>
       </div>
-
-      <h2 id="faq">FAQs</h2>
-
+      <h2 id="faq">FAQs about our math calculators</h2>
       <h3>Are these math calculators free?</h3>
       <p>Yes, completely free. No registration, no usage limits, no premium tier. Every tool runs entirely in your browser.</p>
-
       <h3>Do the calculators work on mobile?</h3>
       <p>Yes. Every tool is fully responsive and works on any phone, tablet, or desktop without an app.</p>
-
       <h3>What is the difference between percentage change and percentage difference?</h3>
-      <p>Percentage change has a direction and a known starting point - the original value is always the denominator. Percentage difference is symmetric - it uses the average of the two values as the base and produces an unsigned result. Use percentage change for before-and-after comparisons; use percentage difference when comparing two independent figures with no defined reference point.</p>
-
+      <p><a href="/math/percentage-calculator/change">Percentage change</a> has a direction and a known starting point - the original value is always the <a href="/glossary/denominator">denominator</a>. <a href="/math/percentage-calculator/difference">Percentage difference</a> is symmetric - it uses the average of the two values as the base and produces an unsigned result.</p>
+      <p>Use percentage change for before-and-after comparisons; use percentage difference when comparing two independent figures with no defined reference point.</p>
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style>
   .hi-container { max-width: 100% !important; }
 </style>

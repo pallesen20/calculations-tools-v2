@@ -52,7 +52,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Online Conversion Tools"
   metaTitle="Free Online Conversion Tools | Unit Converters ᐅ"
@@ -61,16 +60,13 @@ const schema = [
   tocItems={tocItems}
   schema={schema}
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container hi-container">
-
         <div class="calculator-header">
           <h2>Conversion Tools Hub</h2>
           <p>Unit converters, speed converters, currency, and text tools - free and instant</p>
         </div>
-
         <div class="hi-stats">
           <div class="hi-stat">
             <div class="hi-stat-val">{totalTools}</div>
@@ -85,7 +81,6 @@ const schema = [
             <div class="hi-stat-lbl">No login · runs in browser</div>
           </div>
         </div>
-
         {groups.map(([groupName, groupTools]) => (
           <div class="hi-group">
             <div class="hi-group-header">
@@ -116,22 +111,20 @@ const schema = [
             )}
           </div>
         ))}
-
       </div>
     </section>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">What's in the conversion section</div>
-        <p>This section contains {totalTools} free converters across {totalCategories} categories. <strong>Unit Converters</strong> handle <a href="/conversion/length-converter">length</a>, <a href="/conversion/weight-converter">weight</a>, <a href="/conversion/height-converter">height</a>, and <a href="/conversion/temperature-converter">temperature</a>. <strong>Speed Converters</strong> include the <a href="/conversion/speed-converter">full multi-unit speed hub</a> plus dedicated pair pages for mph to km/h, knots to mph, m/s to km/h, and more. <strong>Currency</strong> and <strong>Text Tools</strong> cover live exchange rates, text case, and OCR.</p>
+        <p>This section contains {totalTools} free converters across {totalCategories} categories.</p>
+        <p><strong>Unit Converters</strong> handle <a href="/conversion/length-converter">length</a>, <a href="/conversion/weight-converter">weight</a>, <a href="/conversion/height-converter">height</a>, and <a href="/conversion/temperature-converter">temperature</a>.</p>
+        <p><strong>Speed Converters</strong> include the <a href="/conversion/speed-converter">full multi-unit speed hub</a> plus dedicated pair pages for <a href="/conversion/speed-converter/mph-to-kmh">mph to km/h</a>, <a href="/conversion/speed-converter/knots-to-mph">knots to mph</a>, <a href="/conversion/speed-converter/ms-to-kmh">m/s to km/h</a>, and more.</p>
+        <p><strong>Currency</strong> and <strong>Text Tools</strong> cover <a href="/conversion/currency-converter">live exchange rates</a>, <a href="/conversion/case-converter">text case</a>, and <a href="/conversion/image-to-text">OCR</a>.</p>
       </div>
-
       <h2 id="tools">All conversion tools</h2>
       <p>Every tool is free, runs entirely in your browser, and produces results as you type. No button press, no registration, no data sent to any server.</p>
-
       <h2 id="which-converter">Which converter to use</h2>
       <p>Not sure which tool you need? Use this table to match your conversion task to the right tool.</p>
       <div class="responsive-table">
@@ -188,17 +181,16 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h2 id="metric-vs-imperial">Metric vs imperial</h2>
       <p>Most unit conversion confusion comes from the fact that the world uses two main measurement systems that are not compatible with each other. Knowing which system a value comes from is the first step in converting it correctly.</p>
-
       <h3>The metric system (SI)</h3>
-      <p>The International System of Units (SI) is the modern form of the metric system. It is the official measurement standard in almost every country in the world and the only system used in science and engineering internationally. All units scale by powers of 10 - a kilometer is exactly 1,000 meters, a kilogram is exactly 1,000 grams. This makes arithmetic straightforward: moving between metric units is just moving a decimal point.</p>
-
+      <p>The International System of Units (SI) is the modern form of <a href="/glossary/metric-system">the metric system</a>. It is the official measurement standard in almost every country in the world and the only system used in science and engineering internationally.</p>
+      <p>All units scale by powers of 10 - a kilometer is exactly 1,000 meters, a kilogram is exactly 1,000 grams. This makes <a href="/glossary/arithmetic">arithmetic</a> straightforward: moving between metric units is just moving a decimal point.</p>
       <h3>The imperial and US customary systems</h3>
-      <p>The United States uses a system derived from the old British imperial system. The UK officially moved to metric in the 1960s but retains imperial units in daily life: miles for roads, pints for beer, stone for body weight, and Fahrenheit in some contexts. The US never made the switch and continues to use miles, pounds, gallons, and Fahrenheit as primary units.</p>
+      <p>The United States uses a system derived from the old British <a href="/glossary/imperial-system">imperial system</a>.</p>
+      <p>The UK officially moved to metric in the 1960s but retains imperial units in daily life: miles for roads, pints for beer, stone for body weight, and Fahrenheit in some contexts. The US never made the switch and continues to use miles, pounds, gallons, and Fahrenheit as primary units.</p>
       <p>US customary and imperial units look similar but are not identical. The US gallon (3.785 L) is smaller than the UK imperial gallon (4.546 L). This distinction matters for fuel economy, brewing, and shipping calculations.</p>
-
+      <h3>Measurements compared between metric and imperial</h3>
       <div class="responsive-table">
       <table>
         <thead>
@@ -215,7 +207,6 @@ const schema = [
         </tbody>
       </table>
       </div>
-
       <h3>When conversion errors matter most</h3>
       <p>Most of the time, a small rounding error in a unit conversion is inconsequential. But in some contexts, precision matters:</p>
       <ul>
@@ -224,36 +215,26 @@ const schema = [
         <li><strong>International shipping:</strong> Customs declarations require accurate weight in the destination country's units. Errors can cause clearance delays or fines.</li>
         <li><strong>Currency in invoicing:</strong> Using an outdated exchange rate or confusing similar currencies (such as USD vs AUD or CAD) can create significant discrepancies in international invoices.</li>
       </ul>
-
       <h2 id="accuracy">Accuracy and rounding</h2>
-      <p>All unit converters use exact conversion factors as defined by the International Bureau of Weights and Measures (BIPM) and relevant standards bodies. For example, 1 inch is defined as exactly 2.54 centimeters by international agreement - there is no approximation involved. Results are displayed with enough decimal places for practical use, without showing false precision.</p>
-      <p>For currency, rates are sourced from a financial data provider and updated once per day. They reflect the mid-market rate - the rate before any bank or broker markup is applied. For time-sensitive or high-value transactions, always confirm the rate with your actual payment provider.</p>
-
-      <h2 id="faq">FAQs</h2>
-
+      <p>All unit converters use exact conversion factors as defined by the International Bureau of Weights and Measures (BIPM) and relevant standards bodies.</p>
+      <p>For example, 1 inch is defined as exactly 2.54 centimeters by international agreement - there is no approximation involved. Results are displayed with enough decimal places for practical use, without showing false precision.</p>
+      <p>For <a href="/conversion/currency-converter">currency</a>, rates are sourced from a financial data provider and updated once per day. They reflect the <a href="/glossary/mid-market-rate">mid-market rate</a> - the rate before any bank or broker markup is applied. For time-sensitive or high-value transactions, always confirm the rate with your actual payment provider.</p>
+      <h2 id="faq">FAQs about our conversion tools</h2>
       <h3>Are these converters free?</h3>
       <p>Yes, completely. No registration, no usage limits, no premium tiers. Every tool on this site is free to use.</p>
-
       <h3>Do the converters work on mobile?</h3>
       <p>Yes. Every tool is fully responsive and works on phones and tablets without an app download.</p>
-
       <h3>How accurate are the unit converters?</h3>
       <p>All converters use exact conversion factors as defined by BIPM and relevant standards bodies. For example, 1 inch = 2.54 cm exactly; 1 pound = 0.45359237 kg exactly. Results are rounded to a practical number of decimal places to avoid false precision.</p>
-
       <h3>What is the difference between metric and imperial?</h3>
       <p>The metric system (SI) uses units that scale by powers of 10 and is the international standard for science and most everyday use worldwide. Imperial units (miles, pounds, Fahrenheit) are primarily used in the United States and partially in the UK. The two systems are not compatible - you always need a conversion factor to move between them.</p>
-
       <h3>Can I convert between metric and imperial?</h3>
       <p>Yes. All unit converters support both metric and imperial units in the same tool. Pick your source and target unit from the dropdowns, enter a value, and the result appears instantly.</p>
-
       <h3>Why does the height converter have a separate tool from length?</h3>
       <p>The height converter includes a dedicated feet-and-inches input mode (5 ft 11 in as two separate fields) and a reference table of common adult heights. This makes it faster and less error-prone for the specific task of converting personal height, which has different UX needs from general length conversion.</p>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style>
   .hi-container { max-width: 100% !important; }
 </style>

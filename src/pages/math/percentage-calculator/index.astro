@@ -3,6 +3,8 @@ import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
 import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+import type { Source } from '../../../components/Sources.astro';
 
 const f = {
   basic:      "$$\\text{Result} = N \\times \\frac{P}{100}$$",
@@ -26,7 +28,65 @@ const tocItems = [
   { id: 'formulas', label: 'All percentage formulas' },
   { id: 'common-pitfalls', label: 'Common mistakes' },
   { id: 'faq', label: 'FAQs' },
+  { id: 'quiz', label: 'Quiz: test your knowledge' },
   { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'Which formula correctly calculates "X% of a number N"?',
+    options: ['N + X / 100', 'N × (X / 100)', 'X / N × 100', '(N - X) / 100'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The basic percentage formula is Result = N × (P / 100). Multiplying the base number by the decimal form of the percentage gives the portion it represents. Example from the page: 15% of 80 = 80 × 0.15 = 12.',
+  },
+  {
+    q: 'A salary rises from $50,000 to $58,000. What is the percentage increase?',
+    options: ['13.8%', '16%', '14.9%', '8%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Percentage increase = (New - Old) / Old × 100 = (58,000 - 50,000) / 50,000 × 100 = 8,000 / 50,000 × 100 = 16%. The denominator is always the original (old) value, not the new one.',
+  },
+  {
+    q: 'When calculating percentage increase or decrease, which value must always be the denominator?',
+    options: ['The new value', 'The average of old and new values', 'The original (old) value', 'The absolute difference between the two values'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The page states "always divide by the original value, not the new one." Using the new value as the denominator produces a smaller and incorrect result - the page identifies this as the most common calculation error in financial reporting.',
+  },
+  {
+    q: 'Product A costs $120 and Product B costs $150. What is the percentage difference between them?',
+    options: ['25%', '20%', '22.2%', '30%'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Percentage difference uses the average as the base: |120 - 150| / ((120 + 150) / 2) × 100 = 30 / 135 × 100 = 22.2%. This example appears directly in the page under the percentage difference formula section.',
+  },
+  {
+    q: 'A supplier offers a 30% trade discount plus an extra 10% loyalty discount. What is the actual combined saving?',
+    options: ['40% - because 30 + 10 = 40', '38%', '35%', '37% - because the 10% applies to the already-discounted price'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The page explains that the 10% loyalty discount applies to the price after the 30% trade discount, not the original price. So the combined saving is 37%, not 40%. Stacking percentages with different bases cannot be added directly.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'Weisstein, Eric W.',
+    title: 'Percent',
+    journal: 'Wolfram MathWorld',
+    year: 2024,
+    url: 'https://mathworld.wolfram.com/Percent.html',
+  },
+  {
+    author: 'Purplemath',
+    title: 'Percent of a Number',
+    journal: 'Purplemath',
+    year: 2024,
+    url: 'https://www.purplemath.com/modules/percntof.htm',
+  },
+  {
+    author: 'Purplemath',
+    title: 'Percentages: Converting Percentages, Decimals, and Fractions',
+    journal: 'Purplemath',
+    year: 2024,
+    url: 'https://www.purplemath.com/modules/percents.htm',
+  },
 ];
 
 const schema = [
@@ -128,6 +188,7 @@ const schema = [
   tocItems={tocItems}
   embedSlug="percentage-calculator"
   schema={schema}
+  sources={sources}
 >
   <div slot="calculator">
     <section class="calculator-types" aria-label="Calculator type">
@@ -186,7 +247,7 @@ const schema = [
         <li><strong>What Percentage:</strong> find what percentage one number is of another</li>
       </ul>
       <h2 id="basic-percentage">Calculate basic percentage</h2>
-      <p>A basic percentage calculation returns the portion that a given percentage represents of a whole number. It answers: "What is X% of N?"</p>
+      <p>A basic <a href="/glossary/percentage">percentage</a> calculation returns the portion that a given percentage represents of a whole number. It answers: "What is X% of N?"</p>
       <Formula expr={f.basic} />
       <p>Where <strong>N</strong> is the base number and <strong>P</strong> is the percentage.</p>
       <p><strong>Example:</strong> What is 15% of 80?</p>
@@ -197,7 +258,7 @@ const schema = [
       <Formula expr={f.increase} />
       <p><strong>Example:</strong> A salary rises from 50,000 to 58,000.</p>
       <Formula expr={f.increaseEx} />
-      <p>The denominator is always the <em>original</em> (old) value. Using the new value as the base is the most common error in these calculations.</p>
+      <p>The <a href="/glossary/denominator">denominator</a> is always the <em>original</em> (old) value. Using the new value as the base is the most common error in these calculations.</p>
       <h2 id="percentage-decrease">Calculate percentage decrease</h2>
       <p><a href="/math/percentage-calculator/decrease">Percentage decrease</a> measures how much a value has fallen relative to its original value.</p>
       <Formula expr={f.decrease} />
@@ -246,8 +307,8 @@ const schema = [
       </table>
       </div>
       <h3>Percentage change vs. percentage difference</h3>
-      <p><strong><a href="/math/percentage-calculator/change">Percentage change</a></strong> has a direction. You know which value is the starting point, and the original is always the base. Use it for before-and-after comparisons: an old price vs. a new price, or last year's revenue vs. this year's.</p>
-      <p><strong><a href="/math/percentage-calculator/difference">Percentage difference</a></strong> is used when neither value is clearly the original. The base is the average of the two values:</p>
+      <p><a href="/math/percentage-calculator/change">Percentage change</a> has a direction. You know which value is the starting point, and the original is always the base. Use it for before-and-after comparisons: an old price vs. a new price, or last year's <a href="/glossary/revenue">revenue</a> vs. this year's.</p>
+      <p><a href="/math/percentage-calculator/difference">Percentage difference</a> is used when neither value is clearly the original. The base is the average of the two values:</p>
       <Formula expr={f.pctDiff} />
       <p>Use percentage difference when comparing two independent measurements with no defined reference point, for example the prices of two competing products where neither is the baseline.</p>
       <p>If Product A costs $120 and Product B costs $150:</p>
@@ -280,6 +341,11 @@ const schema = [
       <p>Divide the numerator by the denominator, then multiply by 100. Example: 3 ÷ 4 = 0.75 × 100 = 75%.</p>
       <h3>How do you convert a decimal to a percentage?</h3>
       <p>Multiply by 100. Example: 0.45 × 100 = 45%.</p>
+      <QuizBlock
+        topic="percentages"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/percentage-calculator"
+      />
       <h2 id="related-tools">Related tools</h2>
       <RelatedTools tools={[
         { path: '/math/percentage-calculator/increase', blurb: 'Dedicated calculator for percentage increases - shows the formula, absolute change, and step-by-step workings.' },
