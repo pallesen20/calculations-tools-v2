@@ -1,0 +1,204 @@
+---
+interface Props {
+  canonical: string;
+  variant?: 'sidebar' | 'blog';
+}
+
+const { canonical, variant = 'sidebar' } = Astro.props;
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL ?? '';
+const supabaseKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? '';
+const enabled = supabaseUrl && supabaseKey;
+---
+
+{enabled && (
+  <div
+    class={`helpful-vote helpful-vote--${variant}`}
+    id="hv-root"
+    data-path={canonical}
+    data-url={supabaseUrl}
+    data-key={supabaseKey}
+  >
+    <p class="hv-count-line" id="hv-count-line" aria-live="polite"></p>
+    <div class="hv-buttons">
+      <button class="hv-btn hv-up" id="hv-up" aria-label="This was helpful" disabled>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        <span id="hv-btn-label">Helpful</span>
+      </button>
+      <button class="hv-btn hv-down" id="hv-down" aria-label="This was not helpful" disabled>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
+      </button>
+    </div>
+    <div class="hv-tooltip" id="hv-tooltip" role="tooltip" aria-hidden="true">
+      Got feedback? <a href="/contact" class="hv-contact-link">Let us know</a> - we read every message.
+    </div>
+  </div>
+)}
+
+<script>
+  const root = document.getElementById('hv-root') as HTMLElement | null;
+  if (!root) throw new Error();
+
+  const path      = root.dataset.path!;
+  const sbUrl     = root.dataset.url!;
+  const sbKey     = root.dataset.key!;
+  const storageKey = `hv_voted_${path}`;
+
+  const upBtn      = document.getElementById('hv-up') as HTMLButtonElement;
+  const downBtn    = document.getElementById('hv-down') as HTMLButtonElement;
+  const countLine  = document.getElementById('hv-count-line')!;
+  const btnLabel   = document.getElementById('hv-btn-label')!;
+  const tooltip    = document.getElementById('hv-tooltip')!;
+
+  const headers = { 'apikey': sbKey, 'Authorization': `Bearer ${sbKey}`, 'Content-Type': 'application/json' };
+
+  function renderCount(n: number, voted: boolean) {
+    if (n === 0 && !voted) {
+      countLine.textContent = 'Was this page helpful?';
+    } else {
+      countLine.textContent = `${n.toLocaleString()} ${n === 1 ? 'person finds' : 'people find'} this helpful`;
+    }
+    if (voted) {
+      upBtn.classList.add('hv-voted');
+      upBtn.disabled = true;
+      downBtn.disabled = true;
+      btnLabel.textContent = 'Thanks!';
+    } else {
+      upBtn.disabled = false;
+      downBtn.disabled = false;
+    }
+  }
+
+  async function fetchCount(): Promise<number> {
+    const encoded = encodeURIComponent(path);
+    const res = await fetch(`${sbUrl}/rest/v1/page_votes?path=eq.${encoded}&select=count`, { headers });
+    if (!res.ok) return 0;
+    const data = await res.json() as { count: number }[];
+    return data[0]?.count ?? 0;
+  }
+
+  async function vote(): Promise<number> {
+    const res = await fetch(`${sbUrl}/rest/v1/rpc/increment_vote`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ page_path: path }),
+    });
+    if (!res.ok) return 0;
+    return (await res.json() as number) ?? 0;
+  }
+
+  (async () => {
+    const alreadyVoted = localStorage.getItem(storageKey) === '1';
+    try {
+      const count = await fetchCount();
+      renderCount(count, alreadyVoted);
+    } catch {
+      renderCount(0, alreadyVoted);
+    }
+  })();
+
+  upBtn.addEventListener('click', async () => {
+    if (localStorage.getItem(storageKey) === '1') return;
+    upBtn.disabled = true;
+    downBtn.disabled = true;
+    try {
+      const newCount = await vote();
+      localStorage.setItem(storageKey, '1');
+      renderCount(newCount, true);
+    } catch {
+      upBtn.disabled = false;
+      downBtn.disabled = false;
+    }
+  });
+
+  let tooltipOpen = false;
+  downBtn.addEventListener('click', () => {
+    tooltipOpen = !tooltipOpen;
+    tooltip.classList.toggle('hv-tooltip-visible', tooltipOpen);
+    tooltip.setAttribute('aria-hidden', String(!tooltipOpen));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (tooltipOpen && !root.contains(e.target as Node)) {
+      tooltipOpen = false;
+      tooltip.classList.remove('hv-tooltip-visible');
+      tooltip.setAttribute('aria-hidden', 'true');
+    }
+  });
+</script>
+<style>
+  .helpful-vote {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .helpful-vote--sidebar {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .helpful-vote--blog {
+    margin-top: .75rem;
+  }
+  .hv-count-line {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+    min-height: 1em;
+  }
+  .hv-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .hv-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 7px;
+    color: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+    font-size: 0.78rem;
+    padding: 0.4rem 0.7rem;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .hv-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.13);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  .hv-btn:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+  .hv-up.hv-voted {
+    background: rgba(134, 239, 172, 0.12);
+    border-color: rgba(134, 239, 172, 0.3);
+    color: rgba(134, 239, 172, 0.9);
+    opacity: 1;
+  }
+  .hv-down:hover:not(:disabled) {
+    background: rgba(248, 113, 113, 0.1);
+    border-color: rgba(248, 113, 113, 0.25);
+    color: rgba(248, 113, 113, 0.85);
+  }
+  .hv-tooltip {
+    display: none;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.4;
+    padding-top: 0.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  .hv-tooltip-visible {
+    display: block;
+  }
+  .hv-contact-link {
+    color: rgba(167, 139, 250, 0.9);
+    text-decoration: underline;
+  }
+  .hv-contact-link:hover {
+    color: white;
+  }
+</style>

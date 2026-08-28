@@ -5,6 +5,7 @@ import Sources from '../components/Sources.astro';
 import type { Source } from '../components/Sources.astro';
 import { socials } from '../data/socials';
 import YouTubeEmbed from '../components/YouTubeEmbed.astro';
+import HelpfulVote from '../components/HelpfulVote.astro';
 
 interface TocItem {
   id: string;
@@ -149,6 +150,7 @@ const iframeSnippet = embedUrl
               </ul>
             </nav>
           )}
+          <HelpfulVote canonical={canonical ?? '/'} variant="sidebar" />
           {embedUrl && (
             <div class="embed-section">
               <button class="embed-button" id="embedToggle"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.5rem"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Embed this tool
@@ -240,13 +242,12 @@ const iframeSnippet = embedUrl
   }
   .page-header     { grid-area: header; }
   .page-calculator { grid-area: calculator; min-width: 0; align-self: center; }
-  .page-sidebar    { grid-area: sidebar; position: sticky; top: 1.5rem; }
+  .page-sidebar    { grid-area: sidebar; position: sticky; top: 1rem; display: grid; gap: .75rem; }
   .page-content    { grid-area: content; min-width: 0; }
   .info-box {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 1rem;
-    margin-bottom: 1rem;
   }
   .info-box aside {
     display: grid;
@@ -292,9 +293,8 @@ const iframeSnippet = embedUrl
   }
   .toc {
     background: rgba(255,255,255,0.05);
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 1.25rem;
-    margin-bottom: 1rem;
     user-select: none;
   }
   .toc-title {
@@ -321,7 +321,6 @@ const iframeSnippet = embedUrl
     transition: color 0.2s;
   }
   .toc-link:hover { color: white; }
-  .embed-section { margin-top: 1rem; }
   .embed-button {
     width: 100%;
     padding: 0.6rem 1rem;

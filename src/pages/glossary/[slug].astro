@@ -5,6 +5,7 @@ import RelatedTools from '../../components/RelatedTools.astro';
 import QuizBlock from '../../components/QuizBlock.astro';
 import { GLOSSARY_TERMS } from '../../data/glossary';
 import { GLOSSARY_CONTENT } from '../../data/glossary-content';
+import HelpfulVote from '../../components/HelpfulVote.astro';
 
 export function getStaticPaths() {
   return GLOSSARY_TERMS.map(t => ({ params: { slug: t.slug } }));
@@ -76,7 +77,7 @@ const schema = [
     {content?.quiz && (
       <a href="#quiz" class="glossary-quiz-cta">Try the {term.term} Quiz →</a>
     )}
-
+    <HelpfulVote canonical={`https://calculations.tools/glossary/${slug}`} variant="blog" />
     <h2 class="gl-what-is">What is {term.term}?</h2>
     {content?.definition.map(para => <p>{para}</p>)}
 
