@@ -33,7 +33,6 @@ const enabled = supabaseUrl && supabaseKey;
     </div>
   </div>
 )}
-
 <script>
   const root = document.getElementById('hv-root') as HTMLElement | null;
   if (!root) throw new Error();
@@ -150,6 +149,7 @@ const enabled = supabaseUrl && supabaseKey;
     display: flex;
     gap: 0.5rem;
   }
+  .hv-btn svg { pointer-events: none; }
   .hv-btn {
     display: flex;
     align-items: center;
