@@ -1,0 +1,408 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Pregnancy Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container preg-container">
+
+      <div class="calculator-header">
+        <h2>Pregnancy Calculator</h2>
+        <p>Calculate from last period, conception, due date, ultrasound, or IVF</p>
+      </div>
+
+      <div class="preg-tabs" role="tablist">
+        <button class="preg-tab active" data-mode="lmp" role="tab">Last Period</button>
+        <button class="preg-tab" data-mode="conception" role="tab">Conception</button>
+        <button class="preg-tab" data-mode="due-date" role="tab">Due Date</button>
+        <button class="preg-tab" data-mode="ultrasound" role="tab">Ultrasound</button>
+        <button class="preg-tab" data-mode="ivf" role="tab">IVF Transfer</button>
+      </div>
+
+      <div class="preg-inputs">
+        <div class="preg-mode active" id="preg-mode-lmp">
+          <div class="bmi-field">
+            <label class="bmi-label" for="preg-lmp-date">First day of last menstrual period</label>
+            <input type="date" id="preg-lmp-date" class="bmi-input" />
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="preg-cycle">Average cycle length</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="preg-cycle" class="bmi-input" value="28" />
+              <span class="bmi-unit-tag">days</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="preg-mode" id="preg-mode-conception">
+          <div class="bmi-field">
+            <label class="bmi-label" for="preg-conception-date">Conception date</label>
+            <input type="date" id="preg-conception-date" class="bmi-input" />
+          </div>
+        </div>
+
+        <div class="preg-mode" id="preg-mode-due-date">
+          <div class="bmi-field">
+            <label class="bmi-label" for="preg-known-due">Your known due date</label>
+            <input type="date" id="preg-known-due" class="bmi-input" />
+          </div>
+        </div>
+
+        <div class="preg-mode" id="preg-mode-ultrasound">
+          <div class="bmi-field">
+            <label class="bmi-label" for="preg-us-date">Ultrasound date</label>
+            <input type="date" id="preg-us-date" class="bmi-input" />
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label">Gestational age shown at scan</label>
+            <div class="bmi-ftin">
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="preg-us-weeks" class="bmi-input" placeholder="22" />
+                <span class="bmi-unit-tag">wks</span>
+              </div>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="preg-us-days" class="bmi-input" placeholder="0" />
+                <span class="bmi-unit-tag">days</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="preg-mode" id="preg-mode-ivf">
+          <div class="bmi-field">
+            <label class="bmi-label" for="preg-ivf-date">Embryo transfer date</label>
+            <input type="date" id="preg-ivf-date" class="bmi-input" />
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label">Embryo age at transfer</label>
+            <div class="preg-age-btns">
+              <button class="preg-age-btn" data-age="3">Day 3</button>
+              <button class="preg-age-btn active" data-age="5">Day 5</button>
+              <button class="preg-age-btn" data-age="6">Day 6</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="preg-result" class="preg-result hidden">
+        <div class="preg-result-grid">
+          <div class="preg-card preg-card-edd">
+            <div class="preg-card-label">Estimated Due Date</div>
+            <div class="preg-card-value" id="preg-edd">-</div>
+          </div>
+          <div class="preg-card">
+            <div class="preg-card-label">Gestational Age</div>
+            <div class="preg-card-value" id="preg-ga">-</div>
+          </div>
+          <div class="preg-card">
+            <div class="preg-card-label">Trimester</div>
+            <div class="preg-card-value" id="preg-trimester">-</div>
+            <div class="preg-card-sub" id="preg-trimester-sub"></div>
+          </div>
+          <div class="preg-card">
+            <div class="preg-card-label" id="preg-days-left-label">Days remaining</div>
+            <div class="preg-card-value" id="preg-days-left">-</div>
+          </div>
+          <div class="preg-card">
+            <div class="preg-card-label">Halfway Point</div>
+            <div class="preg-card-value" id="preg-halfway">-</div>
+            <div class="preg-card-sub" id="preg-halfway-sub"></div>
+          </div>
+        </div>
+
+        <div class="preg-progress-wrap">
+          <div class="preg-progress-bar">
+            <div class="preg-progress-fill" id="preg-progress-fill"></div>
+          </div>
+          <div class="preg-progress-label" id="preg-progress-label">0% complete</div>
+        </div>
+
+        <div class="preg-size-card hidden" id="preg-size-card">
+          <div class="preg-size-emoji" id="preg-size-emoji">🍓</div>
+          <div class="preg-size-info">
+            <div class="preg-size-top">Baby is the size of <span id="preg-size-article">a</span></div>
+            <div class="preg-size-name" id="preg-size-name">raspberry</div>
+            <div class="preg-size-week" id="preg-size-week">at week 8</div>
+            <div class="preg-size-detail" id="preg-size-detail">~16 mm · ~1 g</div>
+          </div>
+        </div>
+
+        <div class="preg-section-label">Upcoming milestones</div>
+        <div class="preg-timeline" id="preg-timeline"></div>
+
+        <div class="preg-section-label" style="margin-top: 1.25rem;">Key dates</div>
+        <div class="preg-dates-grid" id="preg-dates-grid"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="/js/pregnancy-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .preg-container {
+    max-width: 600px;
+  }
+  .preg-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 1.25rem;
+  }
+  .preg-tab {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.35rem 0.75rem;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .preg-tab:hover {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.85);
+  }
+  .preg-tab.active {
+    background: rgba(167,139,250,0.18);
+    border-color: rgba(167,139,250,0.4);
+    color: rgba(167,139,250,1);
+  }
+  .preg-mode {
+    display: none;
+  }
+  .preg-mode.active {
+    display: block;
+  }
+  .preg-result {
+    margin-top: 1.25rem;
+  }
+  .preg-result.hidden {
+    display: none;
+  }
+  .preg-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .preg-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+  }
+  .preg-card-edd {
+    grid-column: 1 / -1;
+    background: rgba(167,139,250,0.1);
+    border-color: rgba(167,139,250,0.25);
+  }
+  .preg-card-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 0.3rem;
+  }
+  .preg-card-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .preg-card-edd .preg-card-value {
+    font-size: 1.5rem;
+    color: rgba(167,139,250,1);
+  }
+  .preg-card-sub {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.2rem;
+  }
+  .preg-progress-wrap {
+    margin-bottom: 1.25rem;
+  }
+  .preg-progress-bar {
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    height: 12px;
+    overflow: hidden;
+    margin-bottom: 0.35rem;
+  }
+  .preg-progress-fill {
+    background: linear-gradient(90deg, rgba(139,92,246,0.9), rgba(167,139,250,1));
+    border-radius: 8px;
+    height: 100%;
+    transition: width 0.4s ease;
+    width: 0%;
+    box-shadow: 0 0 10px rgba(167,139,250,0.45);
+  }
+  .preg-progress-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    text-align: right;
+  }
+  .preg-size-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .preg-size-card.hidden {
+    display: none;
+  }
+  .preg-size-emoji {
+    font-size: 2.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .preg-size-top {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+  }
+  .preg-size-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: capitalize;
+  }
+  .preg-size-week {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+  }
+  .preg-size-detail {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.55);
+    margin-top: 0.2rem;
+  }
+  .preg-size-imperial {
+    color: rgba(255,255,255,0.38);
+    font-size: 0.85em;
+  }
+  input[type="date"].bmi-input {
+    border: 1px solid rgba(255,255,255,0.18);
+    color-scheme: dark;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 0.65;
+    cursor: pointer;
+  }
+  .preg-section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.6rem;
+  }
+  .preg-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .preg-milestone {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .preg-milestone-past {
+    opacity: 0.45;
+  }
+  .preg-milestone-now {
+    background: rgba(167,139,250,0.08);
+    border-color: rgba(167,139,250,0.25);
+  }
+  .preg-milestone-week {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: rgba(167,139,250,0.8);
+    min-width: 36px;
+    padding-top: 0.1rem;
+    white-space: nowrap;
+  }
+  .preg-milestone-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+  }
+  .preg-milestone-date {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.15rem;
+  }
+  .preg-dates-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .preg-date-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.45rem 0.7rem;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.03);
+    font-size: 0.78rem;
+  }
+  .preg-date-row:last-child {
+    background: rgba(167,139,250,0.08);
+    border: 1px solid rgba(167,139,250,0.2);
+  }
+  .preg-date-past {
+    opacity: 0.45;
+  }
+  .preg-date-label {
+    color: rgba(255,255,255,0.6);
+  }
+  .preg-date-val {
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    text-align: right;
+  }
+  .preg-age-btns {
+    display: flex;
+    gap: 0.4rem;
+  }
+  .preg-age-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 500;
+    padding: 0.35rem 0.7rem;
+    transition: background 0.15s, color 0.15s;
+  }
+  .preg-age-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.85);
+  }
+  .preg-age-btn.active {
+    background: rgba(167,139,250,0.18);
+    border-color: rgba(167,139,250,0.4);
+    color: rgba(167,139,250,1);
+  }
+  @media (max-width: 420px) {
+    .preg-result-grid {
+      grid-template-columns: 1fr;
+    }
+    .preg-card-edd {
+      grid-column: 1;
+    }
+  }
+</style>

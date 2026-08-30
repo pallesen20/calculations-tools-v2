@@ -687,6 +687,17 @@ const entries: Entry[] = [
     featured: true,
   },
   {
+    path: '/health/pregnancy-calculator',
+    title: 'Pregnancy Calculator - Due Date & Gestational Age',
+    description: 'Calculate your pregnancy due date and gestational age from last period, conception date, due date, ultrasound, or IVF transfer. See fetal size and key milestones.',
+    changefreq: 'monthly',
+    priority: 1.0,
+    lastmod: '2026-08-30',
+    icon: '🤰',
+    short: 'Due date, GA, fetal size & milestones',
+    featured: true,
+  },
+  {
     path: '/conversion',
     title: 'Online Conversion Tools - Free Unit Converters',
     description: 'Free online unit converters for length, weight, temperature, currency, text case, and more. Fast, accurate, no registration needed.',

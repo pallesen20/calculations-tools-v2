@@ -15,6 +15,7 @@ const TOOLS: ToolMeta[] = [
   { slug: 'ffmi-calculator',           name: 'FFMI Calculator',                  path: '/health/ffmi-calculator',                   category: 'Health',      priority: 1 },
   { slug: 'ideal-weight-calculator',   name: 'Ideal Weight Calculator',          path: '/health/ideal-weight-calculator',           category: 'Health',      priority: 1 },
   { slug: 'lean-body-mass-calculator', name: 'Lean Body Mass Calculator',        path: '/health/lean-body-mass-calculator',         category: 'Health',      priority: 1 },
+  { slug: 'pregnancy-calculator',     name: 'Pregnancy Calculator',             path: '/health/pregnancy-calculator',              category: 'Health',      priority: 1 },
   { slug: 'bmi-calculator-menopause', name: 'Menopause BMI & Cardiometabolic Risk Calculator', path: '/health/bmi-calculator/menopause', category: 'Health', priority: 2 },
   { slug: 'loan-payment-calculator',      name: 'Loan Payment Calculator',       path: '/finance/loan-payment-calculator',          category: 'Finance',     priority: 2 },
   { slug: 'compound-interest-calculator', name: 'Compound Interest Calculator',  path: '/finance/compound-interest-calculator',     category: 'Finance',     priority: 2 },

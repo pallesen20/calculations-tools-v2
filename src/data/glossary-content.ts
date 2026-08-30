@@ -4981,6 +4981,106 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'obstetrics': {
+    definition: [
+      'Obstetrics is the branch of medicine focused on pregnancy, labor, delivery, and the postpartum period - typically the first six weeks after birth. An obstetrician (OB) is a physician who completes a four-year residency in obstetrics and gynecology after medical school. Most OBs practice as OB/GYNs, handling both obstetric care (pregnancy-related) and gynecologic care (reproductive health more broadly).',
+      'Obstetric care spans three distinct phases: prenatal (before birth), intrapartum (during labor and delivery), and postpartum (after birth). Each phase involves standardized monitoring protocols - prenatal visits follow a scheduled frequency that increases as the due date approaches, intrapartum care monitors contractions and fetal heart rate, and postpartum care checks for complications such as postpartum hemorrhage, infection, and mood disorders.',
+    ],
+    beginnerExplain: [
+      'Think of obstetrics as project management for pregnancy. The obstetrician is the project lead who monitors progress at regular checkpoints, spots problems early, and coordinates the final delivery. Just as a project manager does not build the product themselves but ensures everything stays on track and handles crises, the OB does not grow the baby - they monitor the process, interpret the data, and step in when something needs clinical attention.',
+    ],
+    whenToUse: 'See an obstetrician when your pregnancy is classified as high-risk (multiple pregnancy, chronic health conditions, prior complications, age over 35, or IVF conception), when a complication is identified during prenatal care, or when you need a planned cesarean section. Low-risk pregnancies can often be managed by a midwife in collaboration with an OB. In both cases, obstetric involvement is standard at delivery in a hospital setting.',
+    examples: {
+      headers: ['Obstetric term', 'What it means', 'When it matters'],
+      rows: [
+        ['Prenatal care', 'Scheduled appointments monitoring mother and fetus throughout pregnancy', 'From confirmation of pregnancy to delivery'],
+        ['Estimated Due Date (EDD)', 'The calculated date of expected delivery, 40 weeks from LMP', 'Used to schedule screenings and plan delivery'],
+        ['Nuchal translucency scan', 'Ultrasound at 10-13 weeks measuring fluid behind the fetal neck', 'First-trimester screening for chromosomal conditions'],
+        ['Anatomy scan', 'Detailed ultrasound at 18-22 weeks checking fetal structure', 'Identifies anatomical abnormalities and confirms growth'],
+        ['Induction of labor', 'Medically initiated labor before it begins spontaneously', 'Offered at 41-42 weeks or when complications arise'],
+        ['Cesarean section (C-section)', 'Surgical delivery through the abdomen and uterus', 'Planned or emergency when vaginal delivery is not safe'],
+        ['Postpartum hemorrhage', 'Heavy bleeding after delivery, the leading cause of maternal mortality worldwide', 'Managed immediately after birth by the obstetric team'],
+      ],
+    },
+    pitfalls: 'Obstetrics and gynecology are closely related but distinct. Gynecology covers the female reproductive system generally - menstrual disorders, contraception, STIs, and non-pregnancy pelvic conditions. Obstetrics covers only the pregnancy-related period. Because most physicians train in both simultaneously, the terms OB and OB/GYN are often used interchangeably in conversation, but the distinction matters when understanding which type of appointment or specialist is being discussed.',
+    faqs: [
+      { q: 'What is the difference between an obstetrician and a midwife?', a: 'An obstetrician is a physician (MD or DO) who can perform surgery, manage high-risk pregnancies, and handle complications. A midwife is a specialist in normal pregnancy and birth who provides care for low-risk pregnancies. In many countries, midwives manage the majority of uncomplicated births; obstetricians are consulted for complications or planned surgical delivery.' },
+      { q: 'How often do you see an obstetrician during pregnancy?', a: 'The standard prenatal visit schedule in the US is approximately monthly until week 28, every two weeks from weeks 28-36, and weekly from week 36 to delivery. This gives roughly 10-15 visits for a 40-week pregnancy. High-risk pregnancies involve more frequent monitoring and may include specialist referrals to maternal-fetal medicine (MFM) physicians.' },
+      { q: 'What does "obstetric history" mean on a medical form?', a: 'Obstetric history is a summary of all previous pregnancies and their outcomes. It is commonly recorded using the G/P notation: G (gravida) = total number of pregnancies, P (para) = number of deliveries at or beyond 20 weeks. For example, G3P2 means 3 pregnancies and 2 deliveries. A more detailed TPAL notation adds full-term, preterm, abortion, and living children counts.' },
+    ],
+    quiz: {
+      topic: 'obstetrics',
+      questions: [
+        {
+          q: 'What does the "P" in the obstetric notation G3P2 represent?',
+          options: ['Number of pregnancies', 'Number of deliveries at or beyond 20 weeks', 'Number of prenatal appointments', 'Number of postpartum complications'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'In obstetric notation, G stands for gravida (total pregnancies) and P stands for para (deliveries at or beyond 20 weeks). G3P2 means the patient has had 3 pregnancies and 2 deliveries. The difference (G-P) often represents pregnancy losses before 20 weeks, though the detailed TPAL system breaks this down further.',
+        },
+        {
+          q: 'At approximately what gestational age is the anatomy scan performed?',
+          options: ['10-13 weeks', '14-16 weeks', '18-22 weeks', '28-32 weeks'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The anatomy scan (also called the mid-pregnancy or anomaly scan) is performed between 18 and 22 weeks of gestational age. At this stage the fetus is large enough for detailed structural imaging but still in a position that allows comprehensive views. It checks fetal organs, limbs, spine, and growth against gestational age.',
+        },
+        {
+          q: 'Which specialist handles high-risk pregnancies requiring subspecialty obstetric care?',
+          options: ['Neonatologist', 'Maternal-fetal medicine (MFM) physician', 'Reproductive endocrinologist', 'Pediatric cardiologist'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Maternal-fetal medicine (MFM) physicians, sometimes called perinatologists, are obstetricians who have completed additional subspecialty training in high-risk pregnancies. They manage conditions such as preeclampsia, fetal anomalies, multiple gestations, and pregnancies complicated by chronic disease. General OB/GYNs refer to MFM for complex cases.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+  'naegeles-rule': {
+    definition: [
+      "Naegele's rule is the standard formula for calculating a pregnancy's estimated due date (EDD): add 280 days (40 weeks) to the first day of the last menstrual period (LMP). An equivalent formulation is to add one calendar year, subtract three months, and add seven days to the LMP date. The rule was published by German obstetrician Franz Karl Naegele in 1812 and remains the universal clinical standard for estimating due dates more than 200 years later.",
+      "The formula is based on the observation that most pregnancies last approximately 280 days from the LMP in a woman with a standard 28-day cycle. Because ovulation and conception typically occur around day 14 of the cycle, the actual fetal development period is about 266 days (38 weeks) - but gestational age, the universal clinical measure, starts from the LMP. For cycles longer or shorter than 28 days, the EDD is adjusted by the difference from 28 days.",
+    ],
+    beginnerExplain: [
+      "Think of Naegele's rule as a pregnancy countdown timer with a built-in 2-week head start. You set the timer on the first day of your last period - before you were even pregnant. Then you count forward 280 days. The extra 2 weeks at the start account for the time between your period and when ovulation and conception actually happen. It's a clever workaround for the fact that nobody knows the exact moment they conceived, but almost everyone knows when their last period started.",
+    ],
+    whenToUse: "Use Naegele's rule as the starting point for any pregnancy due date calculation. It applies when you know your LMP date and have a roughly regular cycle. If your cycle differs significantly from 28 days, adjust by the difference: a 35-day cycle means your EDD is 7 days later than the basic formula gives. The rule is superseded by first-trimester ultrasound if the two methods differ by more than 7 days - in that case, the ultrasound measurement takes precedence.",
+    examples: {
+      headers: ['LMP date', 'Naegele formula (+280 days)', 'Estimated due date'],
+      rows: [
+        ['January 1, 2026', '+ 280 days', 'October 8, 2026'],
+        ['March 15, 2026', '+ 280 days', 'December 20, 2026'],
+        ['June 1, 2026', '+ 280 days', 'March 8, 2027'],
+        ['September 10, 2026', '+ 280 days (+ 2 days for 30-day cycle)', 'June 19, 2027'],
+      ],
+    },
+    pitfalls: "Naegele's rule assumes a 28-day cycle with ovulation on day 14. Women with irregular cycles, PCOS, or cycles longer than 35 days will find LMP-based dating less reliable, and their due date should be confirmed or adjusted by first-trimester ultrasound. The rule also does not account for IVF pregnancies, where the exact transfer date is known and gives a more precise estimate.",
+    faqs: [
+      { q: "How accurate is Naegele's rule?", a: "Naegele's rule is accurate to within about 2 weeks for most women with regular cycles. Only about 5% of babies are born on the exact EDD. First-trimester ultrasound improves accuracy to within 5-7 days by measuring actual embryo size rather than relying on cycle assumptions. Most providers confirm or adjust the Naegele estimate with an early scan." },
+      { q: "What if my cycle is not 28 days?", a: "Adjust the due date by the difference between your cycle length and 28 days. A 30-day cycle means ovulation happens around day 16 instead of day 14, so your EDD shifts 2 days later. A 25-day cycle moves it 3 days earlier. The pregnancy calculator on this page applies this adjustment automatically when you enter your cycle length in the Last Period mode." },
+      { q: "Is Naegele's rule still used today?", a: "Yes - it's still the universal starting point for obstetric dating worldwide. ACOG, the WHO, and virtually every maternity care system begin with Naegele's rule and then adjust using ultrasound if the two methods differ by more than the allowed tolerance (7 days at under 14 weeks, 10 days at 14-28 weeks, 14 days after 28 weeks)." },
+    ],
+    quiz: {
+      topic: "Naegele's rule",
+      questions: [
+        {
+          q: "According to Naegele's rule, how many days are added to the LMP to estimate the due date?",
+          options: ['266 days', '270 days', '280 days', '294 days'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: "Naegele's rule adds 280 days (40 weeks) to the first day of the last menstrual period. The 280-day window includes roughly 14 days before conception (the pre-ovulation phase of the cycle) plus approximately 266 days of fetal development. The rule was established in 1812 and remains the universal clinical standard.",
+        },
+        {
+          q: "If a woman's LMP was January 1, what is her estimated due date using Naegele's rule?",
+          options: ['September 1', 'October 8', 'October 1', 'November 8'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: "Adding 280 days to January 1 gives October 8 (January has 31 days, leaving 249 more days to reach 280; counting through February, March, April, May, June, July, August, September, and into October lands on October 8). The equivalent shorthand is: add 1 year, subtract 3 months, add 7 days - January 1, 2026 becomes October 8, 2026.",
+        },
+        {
+          q: "A woman has a 35-day cycle. How should her due date be adjusted from the basic Naegele calculation?",
+          options: ['Subtract 7 days', 'Add 7 days', 'No adjustment needed', 'Add 14 days'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: "Naegele's rule assumes a 28-day cycle. A 35-day cycle is 7 days longer, meaning ovulation happens around day 21 instead of day 14. Conception therefore occurs 7 days later than the standard formula assumes, so the due date should be pushed 7 days later (add 7 days to the basic calculation).",
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'net-pay': {
     definition: [
       'Net pay, also called take-home pay, is the amount deposited into your bank account after all deductions are removed from gross pay. Mandatory deductions include federal income tax, state income tax (where applicable), Social Security (6.2% up to the wage base), and Medicare (1.45%). Voluntary deductions include health insurance premiums, dental, vision, 401k contributions, and HSA contributions.',
@@ -6973,6 +7073,107 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
           options: ['Sarcopenia causes BMI to fall rapidly, making the number too low to trust', 'Muscle is denser than fat, so sarcopenia inflates BMI above its true level', 'Sarcopenia replaces muscle with fat without changing body weight, so BMI can appear normal while body composition deteriorates', 'Sarcopenia is only relevant for adults over 80, not for those in their 60s and 70s'] as [string, string, string, string],
           correct: 2 as const,
           explanation: 'Sarcopenia replaces muscle with fat - a tissue swap that leaves body weight and therefore BMI nearly unchanged while body composition worsens significantly. A person can have a "normal" BMI of 23 while having lost substantial muscle mass and replaced it with fat - a state that BMI cannot detect but that carries real fall, fracture, and functional decline risk.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+  'fetal-age': {
+    definition: [
+      'Fetal age - also called embryonic age, fertilization age, or conceptional age - is the age of an embryo or fetus counted from the date of fertilization. It is approximately two weeks less than gestational age, because gestational counting starts at the last menstrual period, roughly two weeks before ovulation and conception occur.',
+      'At term (week 40 gestational age), a baby is approximately 38 weeks fetal age. Fetal age is the measure used in embryology and developmental biology - when a textbook says "the heart begins beating at week 4," it typically means week 4 of fetal age (week 6 of gestational age). Understanding which system a source uses prevents misinterpreting developmental milestones by two full weeks.',
+    ],
+    beginnerExplain: [
+      'Imagine you are baking bread. The recipe says "rise for 2 hours," but the clock on the wall started running 2 hours before you even mixed the ingredients. Fetal age is like the actual baking time - it starts when the dough was made (fertilization). Gestational age is like the wall clock - it started running earlier, before anything was in the bowl. The bread takes the same time to bake either way; the two clocks just disagree on what time it is.',
+    ],
+    whenToUse: 'Use fetal age when reading embryology or IVF laboratory reports, which frequently state "embryonic age" or "days post-fertilization." IVF clinics use fetal age precisely - a Day-5 blastocyst is 5 days of fetal age. Consumer pregnancy apps vary: some label weeks in gestational age, others in fetal age, so always check which system an app uses when comparing it to information from your obstetrician.',
+    examples: {
+      headers: ['Fetal age', 'Gestational age', 'Key milestone'],
+      rows: [
+        ['2 weeks', '4 weeks', 'Implantation in the uterine wall'],
+        ['4 weeks', '6 weeks', 'Heartbeat detectable by transvaginal ultrasound'],
+        ['8 weeks', '10 weeks', 'Embryonic period ends; fetal period begins'],
+        ['10-11 weeks', '12-13 weeks', 'End of first trimester; highest-risk period over'],
+        ['18 weeks', '20 weeks', 'Halfway point; anatomy scan window'],
+        ['35 weeks', '37 weeks', 'Full term begins'],
+        ['38 weeks', '40 weeks', 'Estimated due date'],
+      ],
+    },
+    pitfalls: 'The most common error is mixing up fetal age and gestational age when reading about fetal development. A source that says "at 8 weeks the fetus looks distinctly human" is almost certainly using fetal age (gestational age 10 weeks). If you see a claim that conflicts with what your doctor told you by about 2 weeks, the source is probably using the other counting system. IVF clinics and embryology textbooks use fetal age; obstetricians and midwives always use gestational age.',
+    faqs: [
+      { q: 'Why do embryology books and OB/GYN doctors use different counting systems?', a: 'Embryologists count from fertilization because they are studying biological development, where the starting event (fertilization) is precisely defined. Obstetricians count from the LMP because patients rarely know the exact fertilization date, and the LMP is a consistent, observable event that standardizes screening and viability timelines across all pregnancies.' },
+      { q: 'Does fetal age matter for IVF pregnancies?', a: 'Yes, and IVF is the one context where fetal age is clinically used. The embryo transfer record states the embryo\'s age in days (Day 3, Day 5, or Day 6), which is the fetal age at the moment of transfer. Gestational age on transfer day is calculated by adding 14 days to the embryo age, because the equivalent LMP would have been 14 days before fertilization.' },
+      { q: 'Is "fetal age" and "conceptual age" the same thing?', a: 'Yes. Fetal age, embryonic age, fertilization age, and conceptional age all refer to the same measurement: age counted from fertilization. The term varies by source - clinical labs tend to say "days post-fertilization," embryology texts say "embryonic age," and some patient-facing resources say "fetal age." They all describe the same number.' },
+    ],
+    quiz: {
+      topic: 'fetal age',
+      questions: [
+        {
+          q: 'If a baby is 40 weeks of gestational age at birth, what is the approximate fetal age?',
+          options: ['36 weeks', '38 weeks', '40 weeks', '42 weeks'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Fetal age is approximately 2 weeks less than gestational age, because gestational counting starts at the LMP - about 2 weeks before fertilization. A term baby at 40 weeks gestational age has been developing for approximately 38 weeks of fetal age.',
+        },
+        {
+          q: 'An embryology textbook states "the heart begins beating at week 4." In which counting system is this stated?',
+          options: ['Gestational age', 'Fetal age', 'Lunar age', 'Trimester age'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Embryology and developmental biology textbooks use fetal age (counted from fertilization). Week 4 of fetal age corresponds to week 6 of gestational age - which is when a transvaginal ultrasound can first detect the heartbeat. Obstetricians would describe the same event as occurring "at 6 weeks."',
+        },
+        {
+          q: 'A Day-5 IVF blastocyst is transferred. What is the gestational age on transfer day?',
+          options: ['0 weeks, 5 days', '2 weeks, 0 days', '2 weeks, 5 days', '1 week, 5 days'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'On transfer day, the embryo\'s fetal age is 5 days. Gestational age adds 14 days (2 weeks) to account for the pre-ovulation phase. So gestational age on Day-5 transfer day is 14 + 5 = 19 days, or 2 weeks and 5 days.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+  'gestational-age': {
+    definition: [
+      'Gestational age is the age of a pregnancy measured in weeks and days from the first day of the last menstrual period (LMP), not from the date of conception. A full-term pregnancy is 40 weeks of gestational age. This counting method starts about two weeks before fertilization actually occurs, because ovulation and conception happen roughly two weeks after the LMP begins.',
+      'All obstetric milestones are expressed in gestational weeks: viability is established around week 24, full term begins at week 37, and post-term is week 42 or later. A baby delivered at 40 weeks gestational age has been developing as an embryo or fetus for approximately 38 weeks - the two figures differ because gestational age includes the pre-conception phase of the menstrual cycle.',
+    ],
+    beginnerExplain: [
+      'Imagine a race where the clock starts two minutes before the runners leave the starting line. The runners are not actually moving for those first two minutes, but the official race time includes them anyway. Gestational age works the same way - the pregnancy "clock" starts at your last period, not when conception happened. So when your doctor says you are 10 weeks pregnant, the baby has only existed for about 8 weeks.',
+    ],
+    whenToUse: 'Gestational age is the number your obstetrician, midwife, and every pregnancy app uses for scheduling screenings and interpreting growth measurements. Use it when reading ultrasound reports, scheduling the anatomy scan (weeks 18-22), understanding test windows, and tracking fetal size milestones. The pregnancy calculator on this page calculates gestational age from whichever input you provide.',
+    examples: {
+      headers: ['Gestational age', 'Approximate fetal age', 'Clinical milestone'],
+      rows: [
+        ['6 weeks', '4 weeks', 'Heartbeat detectable by transvaginal ultrasound'],
+        ['10-13 weeks', '8-11 weeks', 'First trimester screening and nuchal translucency scan'],
+        ['20 weeks', '18 weeks', 'Halfway point; anatomy scan window'],
+        ['24 weeks', '22 weeks', 'Viability threshold'],
+        ['37 weeks', '35 weeks', 'Full term begins'],
+        ['40 weeks', '38 weeks', 'Estimated due date'],
+      ],
+    },
+    pitfalls: 'Do not confuse gestational age with fetal age (also called embryonic age or fertilization age). Gestational age is always about 2 weeks more than fetal age. When a pregnancy website says "your baby at week 8," check whether it means gestational week 8 (fetal age ~6 weeks, embryo about the size of a raspberry) or fetal week 8 (gestational age ~10 weeks, about the size of a kumquat). The difference is a full trimester of development on some consumer apps.',
+    faqs: [
+      { q: 'Why does gestational age start at the last period and not conception?', a: 'Most people know when their last period started, but few know the exact date of conception. The LMP date is a reliable, observable event that can be recorded consistently. Counting from the LMP also means all providers use the same starting point, keeping screening timelines and viability thresholds standardized across all pregnancies worldwide.' },
+      { q: 'Can gestational age be wrong if my cycles are irregular?', a: 'Yes. LMP-based gestational age assumes ovulation on day 14 of a 28-day cycle. If you have longer cycles (e.g., 35 days), ovulation happens around day 21, so LMP dating overestimates gestational age by about a week. A first-trimester ultrasound corrects for this by measuring the embryo directly, and ACOG recommends adjusting the due date if ultrasound differs by more than 7 days.' },
+      { q: 'What is the difference between gestational age and fetal age?', a: 'Gestational age is measured from the LMP and includes the two weeks before conception. Fetal age (embryonic age) is measured from fertilization and is always about 2 weeks less than gestational age. Clinicians universally use gestational age; fetal age appears more often in embryology textbooks and some consumer pregnancy apps.' },
+    ],
+    quiz: {
+      topic: 'gestational age',
+      questions: [
+        {
+          q: 'A full-term pregnancy is defined as how many weeks of gestational age?',
+          options: ['38 weeks', '39 weeks', '40 weeks', '42 weeks'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'A full-term pregnancy is 40 weeks of gestational age, counted from the first day of the last menstrual period. "Full term" as a clinical label refers to 37-41 weeks. 38 weeks is the approximate fetal age at term - 2 weeks less than gestational age because gestational counting starts before conception.',
+        },
+        {
+          q: 'If a woman is 12 weeks gestational age, approximately how long has the fetus been developing?',
+          options: ['10 weeks', '12 weeks', '14 weeks', '8 weeks'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Gestational age is approximately 2 weeks more than fetal (developmental) age. At 12 weeks gestational age, the embryo/fetus has been developing for about 10 weeks, since gestational counting starts at the LMP - about 2 weeks before ovulation and conception actually occur.',
+        },
+        {
+          q: 'Why is gestational age measured from the LMP rather than from conception?',
+          options: ['Because LMP is more biologically meaningful than conception', 'Because the LMP is a known, observable date while exact conception is rarely known', 'Because LMP predicts birth weight more accurately', 'Because conception is not a recognized medical event'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The LMP is used because it is a known, recorded date - most people can recall or check when their last period started. The exact date of conception is rarely known from natural intercourse. Using a consistent, observable starting point allows all providers worldwide to use the same timeline for screening windows and viability thresholds.',
         },
       ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
     },

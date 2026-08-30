@@ -539,6 +539,19 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     proTipFix: 'the weight for each row should be whatever denominator was used when that percentage was calculated - the number of students, total marks available, or impression count. If the underlying count is the same for every group, use the simple average calculator instead',
   },
 
+  'pregnancy-calculator': {
+    hookProblem: "find out exactly when your baby is due and how far along you are right now",
+    character: 'Emma, a 31-year-old first-time mom',
+    exampleSetup: "Her last menstrual period started on June 1st and she has a regular 28-day cycle",
+    formulaPlain: "add 280 days - that is exactly 40 weeks - to the first day of the last menstrual period. This is called Naegele's rule and it has been the clinical standard for over 200 years",
+    exampleWalkthrough: "June 1st plus 280 days. June has 30 days, so 29 remaining after June 1st. Plus 31 in July, 31 in August, 30 in September, 31 in October, 30 in November - that brings us to November 30th with 280 days total, landing on March 7th",
+    exampleResult: "Due date: March 7th. Currently 10 weeks and 4 days pregnant. First trimester. 200 days remaining. Baby is the size of a kumquat at about 31 mm",
+    exampleImplication: "Emma now knows her anatomy scan window (October 19 to November 26), her glucose screening window (October 1 to December 1), and that her due date falls in the optimal 39-40 week birth window",
+    notableFeature: "a live pregnancy progress bar plus a scrolling milestone timeline showing upcoming key dates - nuchal scan, anatomy scan, viability, full term - each with the exact calendar date",
+    proTipMistake: "entering the date of your most recent period instead of the first day of your last complete period before your positive test",
+    proTipFix: "look back at your calendar or period-tracking app and find the first day your last normal period started - before you got pregnant. That date, not a recent spotting date, is what goes in the Last Period field",
+  },
+
   'bmi-calculator-menopause': {
     hookProblem: 'know whether your weight, waist, and menopause history add up to real cardiometabolic risk',
     character: 'Linda, a 57-year-old office manager 5 years past menopause',
