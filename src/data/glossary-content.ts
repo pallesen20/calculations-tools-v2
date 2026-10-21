@@ -322,6 +322,72 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'deflation': {
+    definition: [
+      'Deflation is a sustained decrease in the general price level of goods and services - the opposite of inflation. When the year-on-year change in the Consumer Price Index (CPI) falls below 0%, the economy is in deflation: the same unit of currency buys more goods than it did a year ago. Deflation is distinct from disinflation, which is inflation slowing but remaining positive.',
+      'Despite raising purchasing power, economists consider prolonged deflation more dangerous than moderate inflation. As prices fall, consumers and businesses delay purchases expecting further drops - reducing demand, cutting revenues, and pushing companies to lay off workers. This self-reinforcing cycle, called a "deflation trap" or "debt deflation spiral," is extremely difficult for central banks to escape. Japan\'s experience from the mid-1990s to the 2010s is the most studied modern case.',
+    ],
+    beginnerExplain: [
+      'Imagine a TV that costs $500 today. If deflation sets in at 5% a year, that TV costs $475 next year and $451 the year after. That sounds good - until you realize the store owner can\'t cover payroll because revenue keeps shrinking, and the manufacturer stops hiring because it\'s not worth producing TVs at lower prices each year.',
+      'This is why central banks target 2% inflation rather than 0%: mild inflation keeps money moving through the economy. Deflation can freeze it. The phrase "cash is king" becomes literally true - money held under a mattress grows in purchasing power without any investment - which is exactly the behavior central banks need to prevent.',
+    ],
+    whenToUse: 'Use the Inflation Calculator to spot deflation directly: any blue bar in the annual inflation rate chart means prices fell that year. Japan shows multiple blue bars between 1999 and 2012. Switzerland shows blue bars in 2012-2016. The US shows sharp deflation during 1929-1933 (the Great Depression).',
+    examples: {
+      headers: ['Country / Period', 'Peak deflation rate', 'Duration', 'Primary cause'],
+      rows: [
+        ['US, 1929-1933 (Great Depression)', '-10.3% (1932)', '4 years', 'Banking collapse, demand crash'],
+        ['Japan, 1999-2012 (Lost Decade)', '-1.4% (2009)', '~13 years', 'Asset bubble burst, weak demand'],
+        ['Eurozone, 2015', '-0.1%', 'Brief (months)', 'Oil price collapse, weak recovery'],
+        ['Switzerland, 2012-2016', '-1.4% (2015)', '4 years', 'Strong CHF, cheap imports'],
+        ['Ireland, 2009-2010', '-4.5% (2009)', '2 years', 'Post-financial-crisis deleveraging'],
+      ],
+    },
+    pitfalls: 'Falling prices in one sector - consumer electronics, oil in 2014-15, airfares - is not deflation. It is relative price change driven by supply and technology. True deflation requires the overall price index to fall. Disinflation (inflation slowing from 5% to 2%) is also frequently misreported as deflation.',
+    faqs: [
+      { q: 'What is the difference between deflation and disinflation?', a: 'Disinflation is inflation slowing but staying positive - prices still rise, just more slowly. Deflation is a negative inflation rate: prices fall on average. Disinflation is generally considered healthy. Deflation is considered dangerous because it discourages spending and investment, and makes fixed debts harder to repay in real terms.' },
+      { q: 'Why is deflation considered worse than mild inflation?', a: 'Deflation creates a "wait and buy later" mindset: if prices fall today, they may fall further tomorrow. This delays consumption and investment, reducing business revenues, triggering layoffs, and depressing demand further - a spiral. Debt becomes harder to repay as nominal income falls while loan balances stay fixed. Mild inflation (2%) keeps money moving and gives central banks room to cut interest rates.' },
+      { q: 'How do central banks fight deflation?', a: 'The main tool is lowering interest rates to near zero, making borrowing cheap and saving less attractive. When rates hit zero, central banks turn to quantitative easing (QE) - buying government bonds to inject money into the economy. Japan, the ECB, and the Federal Reserve all used QE after the 2008 crisis partly to prevent deflation. Forward guidance - promising low rates for longer - is also used to shift expectations.' },
+    ],
+    quiz: {
+      topic: 'deflation',
+      questions: [
+        {
+          q: 'What is the key distinction between deflation and disinflation?',
+          options: [
+            'Disinflation affects only food prices; deflation affects all prices',
+            'Deflation means prices fall (negative inflation rate); disinflation means inflation slows but stays positive',
+            'Deflation is caused by central banks; disinflation is caused by markets',
+            'Disinflation occurs only in recessions; deflation can occur in any economy',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Deflation is a negative CPI change - prices on average fall. Disinflation is inflation decelerating but remaining above 0%. Japan\'s CPI going from +2% to -0.5% crosses from disinflation into deflation at the zero point.',
+        },
+        {
+          q: 'Which country\'s experience is considered the defining modern case study of a deflation trap?',
+          options: [
+            'United States (1929-1933)',
+            'Germany (1923 hyperinflation aftermath)',
+            'Japan (1990s-2010s Lost Decade)',
+            'Greece (2010-2015 debt crisis)',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Japan\'s sustained deflation from roughly 1999 to 2012 is the most studied modern example. Despite near-zero interest rates and repeated QE programs, Japan struggled to exit deflation for over a decade - making it the textbook case for central banks studying deflation risks.',
+        },
+        {
+          q: 'According to the examples table, which period saw the steepest deflation rate listed?',
+          options: [
+            'Japan, 2009 (-1.4%)',
+            'Switzerland, 2015 (-1.4%)',
+            'US, 1932 (-10.3%)',
+            'Ireland, 2009 (-4.5%)',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The US in 1932 hit -10.3% deflation at the worst point of the Great Depression - by far the steepest in the table. Banking system collapse caused a catastrophic demand crash. The Federal Reserve\'s failure to prevent bank runs made the spiral far worse than it needed to be.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'depreciation-amortization': {
     definition: [
       'Depreciation is the systematic allocation of a tangible asset\'s cost over its useful life. When a company buys a machine for $500,000 with a 10-year useful life, it records $50,000 of depreciation expense each year rather than expensing the full cost immediately. Amortization is the same concept applied to intangible assets: patents, customer lists, trademarks, and software.',
@@ -7245,6 +7311,157 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
           options: ['From the first prenatal appointment, typically week 8-10', 'From the start of conception, week 1', 'From the second trimester onward (roughly week 14)', 'Only in the third trimester (week 27 onward)'] as [string, string, string, string],
           correct: 2 as const,
           explanation: 'The weekly rate in the IOM table applies to the second and third trimesters combined. First-trimester total gain is small (0.5-2 kg across all categories) and does not follow a fixed weekly rate. Minimal or negative first-trimester gain due to nausea is normal.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'inflation': {
+    definition: [
+      'Inflation is the rate at which the general level of prices for goods and services rises over time, reducing the purchasing power of money. It is measured using a price index - most commonly the Consumer Price Index (CPI) - which tracks the cost of a fixed basket of typical household purchases month by month.',
+      'Central banks in most developed economies target roughly 2% annual inflation. Mild inflation is considered healthy because it encourages spending (items cost more later, so buy now) and allows businesses to adjust wages and prices gradually. Deflation - falling prices - is generally considered more dangerous because it triggers delayed purchases and debt deflation spirals.',
+    ],
+    beginnerExplain: ['Imagine a coffee costs $2 today. If inflation runs at 3% per year, that same coffee costs $2.06 next year, $2.25 in five years, and $4.85 in thirty years. Your dollar has not disappeared - but it buys less each year.', 'A 3% annual inflation rate halves the purchasing power of your money in about 24 years. This is why savings accounts that pay below the inflation rate are quietly losing real value.'],
+    whenToUse: 'Use the inflation rate when comparing prices, wages, or values from different time periods. A salary of $50,000 in 1990 was worth far more in real terms than $50,000 in 2025 - adjusting for CPI gives the true comparison. Inflation data is also central to interest rate policy, bond pricing, pension planning, and any real vs. nominal return analysis.',
+    examples: {
+      headers: ['Year', 'US CPI-U', 'Annual rate', 'Value of $100 (in 2025 $)'],
+      rows: [
+        ['1913', '9.9', 'baseline', '$3,238'],
+        ['1950', '24.1', '+3.1%', '$1,329'],
+        ['1973', '44.4', '+6.2%', '$721'],
+        ['1980', '82.4', '+13.5%', '$389'],
+        ['2000', '172.2', '+3.4%', '$186'],
+        ['2010', '218.1', '+1.6%', '$147'],
+        ['2022', '292.7', '+8.0%', '$109'],
+        ['2025', '320.6', '+2.3%', '$100'],
+      ],
+    },
+    pitfalls: 'CPI measures the average price change for a typical household basket. Your personal inflation rate may differ significantly depending on your spending pattern. Homeowners experience different inflation than renters; heavy commuters are hit harder by fuel price spikes. Core inflation (excluding food and energy) is a separate measure used by central banks to filter out volatile items. Do not confuse the inflation rate (%) with the price level (index): an inflation rate of 0% does not mean prices fell - it means they stopped rising.',
+    faqs: [
+      { q: 'What is the difference between CPI and core inflation?', a: 'CPI measures all items in the household basket, including food and energy, which are volatile. Core inflation removes food and energy to give a cleaner signal of underlying price trends. Central banks focus on core inflation because supply shocks in food or oil markets are temporary - monetary policy cannot fix a crop failure. The Fed targets PCE inflation (a related but different index) rather than CPI directly.' },
+      { q: 'Is a 2% inflation target standard worldwide?', a: 'Not universally, but 2% has become the de facto global standard for developed economies. The US Federal Reserve, European Central Bank, Bank of England, Bank of Japan, and Reserve Bank of Australia all target approximately 2% annual CPI or PCE inflation. Emerging markets often target higher rates - India targets 4%, Brazil has a 3% target. The 2% threshold balances the benefits of mild inflation against the risks of deflation.' },
+      { q: 'Why does inflation hurt people on fixed incomes most?', a: 'Fixed-income recipients - retirees on fixed pensions, holders of fixed-rate bonds, workers without cost-of-living adjustments - receive the same nominal payment each year. As prices rise, each payment buys less. A $2,000 monthly pension in 2000 had the buying power of roughly $3,360 by 2024. Without a COLA adjustment, the pensioner effectively took a 40% real pay cut over that period.' },
+    ],
+    quiz: {
+      topic: 'inflation',
+      questions: [
+        {
+          q: 'What does a CPI reading of 300 mean when the base year was set at 100?',
+          options: ['Prices have increased by 300% since the base year', 'Prices have tripled since the base year', 'The economy grew by 300 units since the base year', 'The money supply expanded by a factor of 3'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A CPI of 300 with a base of 100 means prices have tripled (increased by 200%). The index represents the current cost of the basket as a percentage of its base-year cost. CPI 300 = the basket costs 3x more than in the base year, not 300% more.',
+        },
+        {
+          q: 'Which of these best describes "deflation"?',
+          options: ['Inflation slowing down but still positive', 'Prices falling on average across the economy', 'A reduction in the money supply by the central bank', 'Wages falling faster than prices'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Deflation is a negative inflation rate - the general price level falls. It is distinct from disinflation (inflation slowing but remaining positive). Japan experienced sustained deflation from the late 1990s through the 2010s. It is considered dangerous because falling prices encourage consumers to delay purchases, which depresses economic activity.',
+        },
+        {
+          q: 'According to the examples table, approximately what was the value of $100 in 1980 money when expressed in 2025 dollars?',
+          options: ['$150', '$250', '$389', '$721'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: '$100 in 1980 US dollars is worth approximately $389 in 2025 terms, reflecting the roughly 4x rise in the CPI-U from 82.4 in 1980 to 320.6 in 2025. The 1970s and early 1980s saw extremely high inflation which significantly eroded earlier purchasing power.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'consumer-price-index': {
+    definition: [
+      'The Consumer Price Index (CPI) is a statistical measure that tracks the average change over time in the prices paid by urban consumers for a representative basket of goods and services. The basket typically includes food, housing, clothing, transportation, healthcare, education, and recreation. National statistics agencies update prices monthly by surveying thousands of retail outlets and service providers.',
+      'CPI is expressed as an index number relative to a base period set at 100. The US BLS uses a 1982-84 average as the base for CPI-U; the UK ONS uses 2015=100 for CPIH; Eurostat uses 2015=100 for HICP. The choice of base year affects the magnitude of the numbers but not the inflation rate calculated between any two years.',
+    ],
+    beginnerExplain: ['Think of CPI as the price tag on a very specific shopping cart. Statisticians fill this cart with the same items every month - a loaf of bread, a gallon of petrol, one month of rent, a doctor visit, a pair of jeans. They track exactly how much that fixed cart costs.', 'When the cart costs 3% more than last year, CPI rose 3% and inflation was 3%. The cart does not change - only its price.'],
+    whenToUse: 'Use CPI when converting a historical amount to present-day money (or vice versa). The formula is: Adjusted Value = Original x (CPI later / CPI earlier). CPI is also used to index tax brackets, Social Security benefits, rental contracts, wage agreements, and inflation-protected securities (TIPS). When comparing salaries or prices from different decades, always convert to real (CPI-adjusted) terms first.',
+    examples: {
+      headers: ['CPI measure', 'Country', 'Base year', 'Coverage', 'Used for'],
+      rows: [
+        ['CPI-U', 'United States', '1982-84', 'Urban consumers (~93% of population)', 'Most widely cited US measure'],
+        ['CPIH', 'United Kingdom', '2015', 'All households including owner-occupiers', 'ONS headline measure since 2017'],
+        ['HICP', 'Eurozone', '2015', 'Harmonised across EU countries', 'ECB policy target'],
+        ['CPI', 'Japan', '2020', 'All Japan', 'BoJ policy reference'],
+        ['CPI', 'Canada', '2002', 'Urban households', 'BoC 2% target reference'],
+        ['PCE deflator', 'United States', '2017', 'All personal consumption', 'Fed preferred inflation measure'],
+      ],
+    },
+    pitfalls: 'CPI uses a fixed basket, which means it cannot fully account for substitution - when prices rise, consumers often switch to cheaper alternatives. This can make CPI overstate true inflation slightly. The PCE deflator (used by the US Fed) uses a flexible basket that adjusts for substitution, which is why PCE typically runs 0.3-0.5 percentage points lower than CPI. Neither measure is "wrong" - they answer slightly different questions.',
+    faqs: [
+      { q: 'Why are there different CPI measures (CPI-U, CPI-W, CPI-E)?', a: 'Different measures use different population baskets. CPI-U covers all urban consumers; CPI-W covers urban wage earners and clerical workers and is used to adjust Social Security; CPI-E covers Americans 62 and over. Older households spend more on healthcare and housing, so CPI-E tends to rise slightly faster than CPI-U, meaning Social Security adjustments may understate actual cost increases for retirees.' },
+      { q: 'How is CPI different from the GDP deflator?', a: 'CPI tracks prices paid by consumers for a fixed basket of goods. The GDP deflator tracks the price of everything produced in the economy and adjusts the basket each year to reflect current output. CPI tends to overstate inflation slightly (fixed basket, no substitution); the GDP deflator covers a broader scope. For personal purchasing power calculations, CPI is more relevant.' },
+      { q: 'Does CPI include housing costs?', a: 'Yes, but indirectly. The US CPI-U measures housing using "owners equivalent rent" (OER) - what a homeowner would charge to rent their own home. This is a survey-based estimate, not an actual transaction price. OER is the largest single component of US CPI at roughly 26% of the basket. Because OER lags actual home price changes by 12-18 months, CPI can understate housing inflation during rapid price surges.' },
+    ],
+    quiz: {
+      topic: 'Consumer Price Index',
+      questions: [
+        {
+          q: 'What does a CPI basket actually contain?',
+          options: ['A sample of stock prices weighted by market capitalisation', 'A fixed set of goods and services representing typical household purchases', 'The prices of all goods exported from a country', 'A random sample of retail prices collected each quarter'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The CPI basket is a representative fixed set of goods and services - food, housing, transport, healthcare, clothing, etc. - reflecting what a typical urban household buys. Prices are collected monthly from thousands of retail outlets. The basket composition is reviewed periodically (every 2-10 years depending on the country) but stays fixed between reviews.',
+        },
+        {
+          q: 'If CPI in 2000 was 172.2 and CPI in 2024 was 314.2, what is the inflation-adjusted equivalent of $500 in 2000?',
+          options: ['$591', '$829', '$913', '$1,026'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: '$500 x (314.2 / 172.2) = $500 x 1.825 = $912.50, closest to $913. This is the standard CPI adjustment formula: multiply the original amount by the ratio of the later CPI to the earlier CPI. $829 would imply a smaller ratio; $1,026 would imply more inflation than occurred.',
+        },
+        {
+          q: 'Which US CPI measure does the Federal Reserve use as its primary inflation target?',
+          options: ['CPI-U (Consumer Price Index for All Urban Consumers)', 'CPI-W (Consumer Price Index for Urban Wage Earners)', 'PCE (Personal Consumption Expenditures deflator)', 'GDP deflator from the Bureau of Economic Analysis'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The Federal Reserve targets PCE inflation, not CPI. PCE uses a flexible basket that adjusts for substitution effects, which makes it a better measure of actual consumer inflation in the Fed\'s view. PCE typically runs 0.3-0.5 percentage points lower than CPI-U. The 2% Fed target refers to PCE inflation, not CPI.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'purchasing-power': {
+    definition: [
+      'Purchasing power is the quantity of goods and services that a unit of currency can buy at a given time. As prices rise through inflation, each unit of currency purchases less - its purchasing power falls. As prices fall through deflation, purchasing power rises. Central banks target stable, mild inflation specifically to maintain predictable purchasing power over time.',
+      'Purchasing power parity (PPP) extends this concept internationally: it compares the purchasing power of different currencies by measuring what the same basket of goods costs in each country. PPP exchange rates are used by the World Bank and IMF to compare living standards across countries more accurately than market exchange rates.',
+    ],
+    beginnerExplain: ['Imagine $100 in 1990 and $100 today. Both are $100. But in 1990, $100 filled a grocery cart that would cost over $240 today. The $100 bill looks the same, but it has lost more than half its purchasing power over 35 years.', 'The inflation calculator on this site measures exactly this: it tells you that your 1990 $100 has only 42% of its original purchasing power left - or equivalently, that it takes $240 today to buy what $100 bought then.'],
+    whenToUse: 'Use purchasing power analysis when comparing values across time (salary history, historical prices, pension adequacy) or across countries (international cost comparisons, PPP-adjusted GDP per capita). Purchasing power is the key concept behind real vs. nominal returns: a 5% investment return with 3% inflation yields only 2% real purchasing power gain. Any long-term financial plan must account for purchasing power erosion.',
+    examples: {
+      headers: ['$100 in year', 'Purchasing power in 2025 ($)', 'Power remaining (%)'],
+      rows: [
+        ['1913', '$3,238', '3.1%'],
+        ['1950', '$1,329', '7.5%'],
+        ['1970', '$841', '11.9%'],
+        ['1980', '$389', '25.7%'],
+        ['1990', '$240', '41.7%'],
+        ['2000', '$186', '53.8%'],
+        ['2010', '$147', '68.0%'],
+        ['2020', '$124', '80.6%'],
+      ],
+    },
+    pitfalls: 'Purchasing power calculations assume the CPI basket accurately reflects your personal spending. If you spend a higher-than-average share on housing, healthcare, or education - all of which have inflated faster than the general CPI - your real purchasing power has eroded faster than the index suggests. Conversely, technology goods (electronics, computing) have deflated sharply, so heavy tech spenders have seen less erosion.',
+    faqs: [
+      { q: 'What is purchasing power parity (PPP)?', a: 'Purchasing power parity compares the purchasing power of different currencies by measuring the cost of an identical basket of goods in each country. If a basket costs $100 in the US and £80 in the UK, PPP implies $1 = £0.80 - regardless of the market exchange rate. The World Bank uses PPP-adjusted GDP to compare living standards internationally, since market exchange rates can distort cross-country income comparisons.' },
+      { q: 'How does inflation affect purchasing power of savings?', a: 'Inflation erodes the purchasing power of cash savings held at rates below inflation. At 3% inflation, $10,000 in a 0% savings account loses roughly $300 per year in real terms - the money is there nominally but buys less. The rule of 70 gives a quick estimate: divide 70 by the inflation rate to find how many years it takes to halve purchasing power. At 3% inflation, purchasing power halves in roughly 23 years.' },
+      { q: 'Is purchasing power the same as real income?', a: 'They are closely related. Real income is nominal income adjusted for inflation - it measures how much purchasing power your income represents. If wages rise 4% while inflation runs at 5%, real income fell 1%, meaning workers can afford less than before even though they earn more in nominal terms. This distinction is central to wage bargaining, pension indexing, and standard-of-living analysis.' },
+    ],
+    quiz: {
+      topic: 'purchasing power',
+      questions: [
+        {
+          q: 'If a basket of goods cost $1,000 in 2000 and $1,825 in 2024, what percentage of its 2000 purchasing power does $1,000 retain in 2024?',
+          options: ['82.5%', '54.8%', '45.2%', '100%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: '$1,000 today buys what $548 bought in 2000 terms (1,000/1,825 = 0.548 = 54.8%). Alternatively, purchasing power remaining = CPI earlier / CPI later = 1,000/1,825 = 54.8%. The $1,000 still exists nominally but buys only about 55% of what it used to.',
+        },
+        {
+          q: 'What does "purchasing power parity" (PPP) compare?',
+          options: ['The inflation rates of two countries over the same period', 'The cost of an identical basket of goods across different countries', 'The exchange rate between two currencies on the open market', 'The relative interest rates set by two central banks'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'PPP compares the cost of an identical basket of goods in different countries. If the basket costs $100 in the US and €82 in Germany, PPP says $1 = €0.82 regardless of the market rate. The World Bank uses PPP-adjusted GDP per capita to compare living standards internationally, since pure market exchange rates can distort comparisons.',
+        },
+        {
+          q: 'Using the rule of 70, approximately how many years does it take for purchasing power to halve at 4% annual inflation?',
+          options: ['10 years', '17.5 years', '28 years', '35 years'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The rule of 70: divide 70 by the inflation rate. 70 / 4 = 17.5 years. This is an approximation of the time for purchasing power to be halved (or equivalently, for the price level to double). At 2% inflation, it takes 35 years; at 7%, about 10 years.',
         },
       ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
     },

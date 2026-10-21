@@ -1,0 +1,95 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Inflation Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>Inflation Calculator</h2>
+        <p>Adjust any amount for inflation across 20 countries</p>
+      </div>
+
+      <div class="inf-top-row">
+        <div class="bmi-field" style="flex:1.5;min-width:0">
+          <label class="bmi-label" for="inf-country">Country / Currency</label>
+          <div class="bmi-input-wrap">
+            <select id="inf-country" class="bmi-input"></select>
+          </div>
+        </div>
+        <div class="bmi-field" style="flex:1;min-width:0">
+          <label class="bmi-label" for="inf-amount">Amount</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="inf-amount" class="bmi-input" value="100" />
+          </div>
+        </div>
+      </div>
+
+      <div class="inf-top-row inf-year-row" style="margin-top:0.75rem">
+        <div class="bmi-field" style="flex:1;min-width:0">
+          <label class="bmi-label" for="inf-from-year">From year</label>
+          <div class="bmi-input-wrap">
+            <select id="inf-from-year" class="bmi-input"></select>
+          </div>
+        </div>
+        <div class="inf-arrow">&#8594;</div>
+        <div class="bmi-field" style="flex:1;min-width:0">
+          <label class="bmi-label" for="inf-to-year">To year</label>
+          <div class="bmi-input-wrap">
+            <select id="inf-to-year" class="bmi-input"></select>
+          </div>
+        </div>
+      </div>
+
+      <div id="inf-shortcuts" class="inf-shortcuts"></div>
+
+      <div id="inf-result" class="inf-result hidden">
+        <div class="inf-result-label" id="inf-result-label"></div>
+        <div class="inf-result-value" id="inf-result-value"></div>
+        <div class="inf-stats-grid">
+          <div class="inf-stat"><div class="inf-stat-label">Total inflation</div><div class="inf-stat-val" id="inf-stat-inflation">-</div></div>
+          <div class="inf-stat"><div class="inf-stat-label">Annual rate</div><div class="inf-stat-val" id="inf-stat-annual">-</div></div>
+          <div class="inf-stat"><div class="inf-stat-label">Span</div><div class="inf-stat-val" id="inf-stat-years">-</div></div>
+          <div class="inf-stat"><div class="inf-stat-label">Purchasing power</div><div class="inf-stat-val" id="inf-stat-power" style="font-size:0.9rem">-</div></div>
+        </div>
+      </div>
+
+      <div class="inf-chart-section">
+        <div class="inf-chart-label">Annual inflation rate (%)</div>
+        <canvas id="inf-rate-canvas" class="inf-canvas"></canvas>
+        <div class="inf-chart-label" id="inf-power-label" style="display:none;margin-top:1rem">Purchasing power over time</div>
+        <canvas id="inf-power-canvas" class="inf-canvas" style="display:none"></canvas>
+      </div>
+
+      <div class="inf-source-note">Data: <span id="inf-source"></span></div>
+    </div>
+  </section>
+
+  <script src="/js/inflation-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .bmi-container { max-width: 600px; }
+  .bmi-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .bmi-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(255,255,255,0.45); }
+  .bmi-input { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: #fff; font-size: 0.95rem; padding: 0.55rem 0.75rem; width: 100%; box-sizing: border-box; }
+  .inf-top-row { display: flex; gap: 0.75rem; align-items: flex-end; }
+  .inf-arrow { color: rgba(255,255,255,0.4); padding-bottom: 0.6rem; font-size: 1.1rem; flex-shrink: 0; }
+  .inf-shortcuts { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0 1rem; }
+  .inf-sc-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 0.75rem; font-weight: 500; padding: 0.3rem 0.65rem; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+  .inf-sc-btn:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); }
+  .inf-sc-btn.active { background: rgba(167,139,250,0.18); border-color: rgba(167,139,250,0.4); color: rgba(167,139,250,1); }
+  .inf-result { background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.22); border-radius: 8px; padding: 1rem 1.1rem; margin-bottom: 1.25rem; }
+  .inf-result.hidden { display: none; }
+  .inf-result-label { font-size: 0.72rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+  .inf-result-value { font-size: 2rem; font-weight: 700; color: rgba(167,139,250,1); margin-bottom: 0.75rem; line-height: 1.2; }
+  .inf-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .inf-stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 0.5rem 0.7rem; }
+  .inf-stat-label { font-size: 0.68rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.04em; }
+  .inf-stat-val { font-size: 1rem; font-weight: 600; color: #fff; margin-top: 0.15rem; }
+  .inf-chart-section { margin-top: 1rem; }
+  .inf-chart-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+  .inf-canvas { width: 100%; height: 160px; display: block; border-radius: 8px; background: rgba(255,255,255,0.02); }
+  .inf-source-note { font-size: 0.68rem; color: rgba(255,255,255,0.3); margin-top: 0.75rem; text-align: right; }
+  @media (max-width: 600px) { .inf-top-row { flex-direction: column; align-items: stretch; } .inf-year-row { flex-direction: row; align-items: flex-end; } .inf-arrow { display: none; } }
+</style>

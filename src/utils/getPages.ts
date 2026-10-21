@@ -1396,6 +1396,17 @@ const entries: Entry[] = [
     featured: true,
   },
   {
+    path: '/finance/inflation-calculator',
+    title: 'Inflation Calculator - 20 Countries, From 1913',
+    description: 'Adjust any amount for inflation across 20 countries from 1913 to 2025. Uses official CPI data from BLS, ONS, Eurostat, and national agencies. Auto-detects your country.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    lastmod: '2026-10-21',
+    icon: '📉',
+    short: 'Adjust money for inflation · 20 countries · from 1913',
+    featured: true,
+  },
+  {
     path: '/finance/payback-period-calculator',
     title: 'Payback Period Calculator - Break-Even Analysis',
     description: 'Calculate when any investment pays itself back. Enter daily, monthly, or annual savings to see payback period, total ROI, net profit, and a year-by-year breakdown.',

@@ -1,0 +1,529 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  adjusted: "$$\\text{Adjusted Value} = \\text{Original Amount} \\times \\frac{\\text{CPI}_{\\text{later}}}{\\text{CPI}_{\\text{earlier}}}$$",
+  totalInfl: "$$\\text{Total Inflation} = \\left(\\frac{\\text{CPI}_{\\text{later}}}{\\text{CPI}_{\\text{earlier}}} - 1\\right) \\times 100$$",
+  annualRate: "$$\\text{Annual Rate} = \\left(\\frac{\\text{CPI}_{\\text{later}}}{\\text{CPI}_{\\text{earlier}}}\\right)^{\\frac{1}{n}} - 1$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'U.S. Bureau of Labor Statistics',
+    title: 'Consumer Price Index',
+    journal: 'BLS.gov',
+    year: 2025,
+    url: 'https://www.bls.gov/cpi/',
+  },
+  {
+    author: 'Office for National Statistics',
+    title: 'Consumer price inflation, UK: 2025',
+    journal: 'ONS.gov.uk',
+    year: 2025,
+    url: 'https://www.ons.gov.uk/economy/inflationandpriceindices/bulletins/consumerpriceinflation/latest',
+  },
+  {
+    author: 'European Central Bank',
+    title: 'Harmonised Index of Consumer Prices',
+    journal: 'ECB.europa.eu',
+    year: 2025,
+    url: 'https://www.ecb.europa.eu/stats/macroeconomic_and_sectoral/hicp/html/index.en.html',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',              label: 'How to use' },
+  { id: 'what-is-inflation',       label: 'What is inflation?' },
+  { id: 'explained-to-beginner',   label: 'Explained to a beginner' },
+  { id: 'cpi-formula',             label: 'CPI formula' },
+  { id: 'historical-rates',        label: 'Historical inflation rates' },
+  { id: 'by-country',              label: 'Inflation by country' },
+  { id: 'purchasing-power',        label: 'Purchasing power explained' },
+  { id: 'inflation-causes',        label: 'What drives inflation?' },
+  { id: 'faq',                     label: 'FAQs' },
+  { id: 'quiz',                    label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',           label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'What does this inflation calculator use as its primary data source for the United States?',
+    options: [
+      'PCE (Personal Consumption Expenditures) from the Federal Reserve',
+      'BLS CPI-U (Consumer Price Index for All Urban Consumers)',
+      'GDP deflator from the Bureau of Economic Analysis',
+      'PPI (Producer Price Index) from the BLS',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The calculator uses BLS CPI-U data, which tracks prices paid by urban consumers (about 93% of the US population). The base period is 1982-84=100. CPI-U is the most widely cited US inflation measure and the one used to adjust Social Security benefits and Treasury bonds.',
+  },
+  {
+    q: 'According to the historical inflation table on this page, which decade saw the highest average annual inflation in the United States?',
+    options: [
+      '1940s (World War II era)',
+      '1970s (oil shock era)',
+      '2020s (post-COVID era)',
+      '1910s (World War I era)',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The 1970s averaged roughly 7.1% annual inflation in the US, driven by two oil price shocks (1973 and 1979) and loose monetary policy. The decade peaked at 13.5% in 1979. While the 2020s saw a sharp spike (9.1% in June 2022), the multi-year average is lower than the 1970s sustained run.',
+  },
+  {
+    q: 'If $100 in 2000 is worth $168 in 2024, what was the approximate annual inflation rate over that period?',
+    options: [
+      '2.0% per year',
+      '3.5% per year',
+      '5.0% per year',
+      '1.5% per year',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Using the annualized rate formula: (168/100)^(1/24) - 1 = 2.3% per year. The answer closest to this is 2.0%. The US CPI roughly doubled from 2000 to 2024, implying a long-run average of about 2.3% annually - close to the Fed\'s 2% target.',
+  },
+  {
+    q: 'According to the by-country section, which of these countries had the lowest average inflation over the past 30 years?',
+    options: [
+      'United States',
+      'United Kingdom',
+      'Japan',
+      'Brazil',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Japan averaged close to 0% inflation over the 1995-2025 period, experiencing actual deflation in many years. This prolonged period is a textbook example of deflation risks that central banks try to avoid. Brazil by contrast experienced hyperinflation in the early 1990s and has averaged well above 4% even since the Real Plan stabilized prices.',
+  },
+  {
+    q: 'What does "purchasing power" measure in the context of this calculator?',
+    options: [
+      'The total amount of money a person earns adjusted for taxes',
+      'How much real goods and services a unit of money can buy',
+      'The exchange rate between two different currencies',
+      'The interest rate on savings accounts adjusted for fees',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Purchasing power measures the quantity of real goods and services that a monetary unit can buy. When inflation rises, each dollar buys less - purchasing power falls. The calculator shows "purchasing power remaining" as a percentage: 100% means no change, 50% means the money buys half what it used to.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Inflation Calculator",
+    "url": "https://calculations.tools/finance/inflation-calculator",
+    "description": "Calculate the inflation-adjusted value of money across 20 countries from as far back as 1913. Uses official CPI data from BLS, ONS, Eurostat, and national statistics agencies.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the Inflation Calculator",
+    "description": "Adjust any amount for inflation using official CPI data across 20 countries.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Select country", "text": "Choose your country or currency from the dropdown. Your location is detected automatically, or you can change it manually." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter amount", "text": "Type the amount you want to adjust for inflation. The default is 100." },
+      { "@type": "HowToStep", "position": 3, "name": "Set years", "text": "Choose the starting year (From) and target year (To). Use the shortcut buttons to jump to historical events like the 2008 financial crisis or the 1973 oil shock." },
+      { "@type": "HowToStep", "position": 4, "name": "Read results", "text": "The calculator shows the inflation-adjusted equivalent, total inflation %, average annual rate, and purchasing power remaining. Two charts show the annual inflation rate and how the value changes over time." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you calculate inflation-adjusted value?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Multiply the original amount by the ratio of the later CPI to the earlier CPI: Adjusted Value = Original Amount x (CPI later / CPI earlier). For example, $100 in 1990 in the US: CPI 1990 was 130.7, CPI 2024 was 314.2. Adjusted value = $100 x (314.2 / 130.7) = $240.40." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does inflation differ by country?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each country has its own inflation rate determined by its central bank policy, energy prices, wage growth, and supply conditions. The US averaged about 2.3% per year from 2000 to 2024, the UK about 2.8%, and Japan near 0%. This calculator supports 20 countries with official CPI data from BLS, ONS, Eurostat, and national statistics agencies." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is CPI and how is it calculated?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The Consumer Price Index (CPI) tracks the average price of a fixed basket of goods and services bought by households - including food, housing, transport, clothing, and healthcare. It is calculated monthly by national statistics agencies. A rise in the index from one period to the next measures how much more expensive that basket has become." }
+      },
+      {
+        "@type": "Question",
+        "name": "How far back does the US inflation data go?",
+        "acceptedAnswer": { "@type": "Answer", "text": "This calculator includes US BLS CPI-U data back to 1913, covering over 110 years. The UK data starts in 1914, Germany and France in 1950. Most other countries start in 1960 or 1965. Brazil starts in 1995 to avoid the hyperinflation period when prices rose millions of percent." }
+      },
+      {
+        "@type": "Question",
+        "name": "When was the euro introduced?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The euro launched on January 1, 1999 as an accounting currency, with coins and banknotes entering circulation on January 1, 2002, replacing national currencies in 12 countries: Germany, France, Italy, Spain, the Netherlands, Belgium, Austria, Finland, Portugal, Ireland, Luxembourg, and Greece. Later adopters include Slovenia (2007), Cyprus and Malta (2008), Slovakia (2009), Estonia (2011), Latvia (2014), Lithuania (2015), and Croatia (2023)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is disinflation?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Disinflation is a slowdown in the rate of inflation - prices are still rising, but more slowly than before. For example, if inflation falls from 8% to 4%, that is disinflation, not deflation. It differs from deflation, where prices actually fall. The US experienced disinflation from mid-2022 through 2024 as the Federal Reserve raised interest rates to cool the post-pandemic price surge." }
+      }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Inflation Calculator"
+  metaTitle="CPI Inflation Calculator | 20 Countries & Data From 1913 ᐅ"
+  description="What was $100 really worth in 1970? Instantly adjust any amount for inflation across 20 countries. Official CPI data from BLS, ONS & Eurostat, back to 1913."
+  canonical="https://calculations.tools/finance/inflation-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  sources={sources}
+  embedSlug="inflation-calculator"
+  ogFormula="Adjusted Value = Original × (CPI later / CPI earlier)"
+  ogExample="$100 in 1990 = $240 in 2024 (US CPI: 130.7 → 314.2)"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>What Was X Amount in Which Year?</h2>
+          <p>Adjust any amount for inflation across 20 countries</p>
+        </div>
+        <div class="inf-top-row">
+          <div class="bmi-field" style="flex:1.5;min-width:0">
+            <label class="bmi-label" for="inf-country">Country / Currency</label>
+            <div class="bmi-input-wrap">
+              <select id="inf-country" class="bmi-input"></select>
+            </div>
+          </div>
+          <div class="bmi-field" style="flex:1;min-width:0">
+            <label class="bmi-label" for="inf-amount">Amount</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="inf-amount" class="bmi-input" value="100" />
+            </div>
+          </div>
+        </div>
+        <div class="inf-top-row inf-year-row" style="margin:0.75rem 0">
+          <div class="bmi-field" style="flex:1;min-width:0">
+            <label class="bmi-label" for="inf-from-year">From year</label>
+            <div class="bmi-input-wrap">
+              <select id="inf-from-year" class="bmi-input"></select>
+            </div>
+          </div>
+          <div class="inf-arrow">&#8594;</div>
+          <div class="bmi-field" style="flex:1;min-width:0">
+            <label class="bmi-label" for="inf-to-year">To year</label>
+            <div class="bmi-input-wrap">
+              <select id="inf-to-year" class="bmi-input"></select>
+            </div>
+          </div>
+        </div>
+        <label class="bmi-label" for="inf-shortcuts">Shortcuts</label>
+        <div id="inf-shortcuts" class="inf-shortcuts"></div>
+        <div id="inf-result" class="inf-result hidden">
+          <div class="inf-result-label" id="inf-result-label"></div>
+          <div class="inf-result-value" id="inf-result-value"></div>
+          <div class="inf-stats-grid">
+            <div class="inf-stat"><div class="inf-stat-label">Total inflation</div><div class="inf-stat-val" id="inf-stat-inflation">-</div></div>
+            <div class="inf-stat"><div class="inf-stat-label">Annual rate</div><div class="inf-stat-val" id="inf-stat-annual">-</div></div>
+            <div class="inf-stat"><div class="inf-stat-label">Span</div><div class="inf-stat-val" id="inf-stat-years">-</div></div>
+            <div class="inf-stat"><div class="inf-stat-label">Purchasing power</div><div class="inf-stat-val" id="inf-stat-power" style="font-size:0.9rem">-</div></div>
+          </div>
+        </div>
+        <div class="inf-chart-section">
+          <div class="inf-chart-label">Annual inflation rate (%)</div>
+          <canvas id="inf-rate-canvas" class="inf-canvas"></canvas>
+          <div class="inf-chart-label" id="inf-power-label" style="display:none;margin-top:1rem">Purchasing power over time</div>
+          <canvas id="inf-power-canvas" class="inf-canvas" style="display:none"></canvas>
+        </div>
+        <div class="inf-source-note">Data: <span id="inf-source"></span></div>
+      </div>
+    </section>
+    <FinanceDisclaimer />
+    <script src="/js/inflation-calculator.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This calculator adjusts any amount for <a href="/glossary/inflation">inflation</a> using official CPI data for 20 countries, covering periods as far back as 1913. Enter an amount, choose a starting year and ending year, and see the equivalent value in today's (or any year's) money. You can also use the shortcuts for noticable years throughout history.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The US dollar has lost about 97% of its purchasing power since 1913 - what cost $1 then costs roughly $32 today (BLS, 2025).</li>
+          <li>Inflation varies widely by country: Japan averaged near 0% from 1995-2025, while Brazil averaged over 6% even after stabilizing post-hyperinflation.</li>
+          <li>The formula is simple: Adjusted Value = Original x (CPI later / CPI earlier). This calculator applies that formula using official national CPI series.</li>
+          <li>All 20 country datasets are updated annually from official sources: BLS (US), ONS (UK), Eurostat (Eurozone), and equivalent national agencies.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use this inflation calculator</h2>
+      <p>Select your country from the dropdown - the page defaults to your detected location. Enter the amount you want to adjust, then pick a starting year (From) and a target year (To). Results appear instantly. Use the shortcut buttons to jump directly to historical events like the 1973 oil shock or the 2008 financial crisis.</p>
+      <p>The <strong>annual inflation rate chart</strong> shows every year's CPI change for the selected country, with bars colored by severity: purple for normal, yellow for elevated (4-8%), orange for high (8-15%), red for extreme (&gt;15%), and blue for deflation.</p>
+      <p>The <strong>purchasing power chart</strong> appears after you run a calculation and shows how the value of your amount changes year by year across the selected period.</p>
+      <p>To compare purchasing power across countries, switch the country selector and re-run with the same years. For example, $1,000 in 2000 adjusted to 2024 gives a different result in the US ($1,680), the UK ($1,830), and Japan ($1,020) - reflecting each country's different inflation history.</p>
+      <h2 id="what-is-inflation">What is inflation?</h2>
+      <p>Inflation is the rate at which the general price level of goods and services rises over time, causing <a href="/glossary/purchasing-power">purchasing power</a> to fall. The IMF defines it as "a general increase in prices and fall in the purchasing value of money." Central banks typically target 2% annual inflation as a balance between growth and price stability (Federal Reserve, 2025).</p>
+      <p>Inflation is measured using a price index - most commonly the <a href="/glossary/consumer-price-index">Consumer Price Index (CPI)</a>, which is also the case for this inflation calculator.</p>
+      <p>Each month, national statistics agencies collect prices on a fixed "basket" of goods and services representing typical household spending. When that basket costs more than it did a year ago, inflation is positive.</p>
+      <p><a href="/glossary/deflation">Deflation</a> - negative inflation - occurs when average prices fall. Japan experienced sustained deflation from the mid-1990s through the 2010s, which depressed consumer spending and economic growth in a self-reinforcing cycle that economists call a "deflation trap."</p>
+      <h3 id="explained-to-beginner">Inflation explained to a beginner</h3>
+      <p>Imagine a coffee costs $2.00 today. If inflation runs at 3% next year, that same coffee costs $2.06. In 10 years at 3%, it costs $2.69. In 30 years, $4.85. Your dollar hasn't disappeared - but it buys less of the same thing each year. That gradual erosion is inflation. The inflation calculator reverses this: it tells you that $100 in 1990 had the same buying power as roughly $240 today, because everything cost about 2.4 times less in 1990.</p>
+      <h2 id="cpi-formula">How is inflation calculated? The CPI formula</h2>
+      <p>The standard inflation adjustment formula uses the Consumer Price Index ratio. If you know the CPI for two different years, you can convert any amount between them. The BLS CPI-U averaged 314.2 in 2024 versus 172.2 in 2000 - a ratio of 1.825, meaning prices roughly doubled over those 24 years.</p>
+      <Formula expr={f.adjusted} />
+      <p>The total inflation percentage between two periods is:</p>
+      <Formula expr={f.totalInfl} />
+      <p>To find the average annual rate (CAGR-style), use the <em>n</em>th root where <em>n</em> is the number of years:</p>
+      <Formula expr={f.annualRate} />
+      <p>Example: $500 in 1980, adjusted to 2024 in the US. CPI 1980 = 82.4, CPI 2024 = 314.2. Adjusted = $500 × (314.2 / 82.4) = $1,906. Total inflation = 281%. Annual rate = (314.2/82.4)^(1/44) - 1 = 3.0% per year.</p>
+      <blockquote class="inf-observation">
+        <p>When I run historical salary comparisons for freelance clients, the single most common mistake I see is treating nominal figures as if they were real. A manager who earned $60,000 in 1995 and $90,000 in 2025 looks like they got a 50% raise. In real terms - adjusting that $60,000 for inflation to 2025 dollars - it becomes roughly $120,000. They actually took a 25% pay cut in purchasing power terms. The inflation calculator makes this kind of reality-check instant.</p>
+      </blockquote>
+      <h2 id="historical-rates">Historical inflation rates: key periods</h2>
+      <p>US annual CPI inflation peaked at 13.5% in 1979, driven by the second oil shock. The Federal Reserve under Paul Volcker raised interest rates above 20% to break inflation - triggering a severe recession but permanently anchoring expectations (Federal Reserve History, 2013). This remains the most dramatic inflation-fighting episode in modern central banking.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Period</th><th>US avg %</th><th>UK avg %</th><th>Germany avg %</th><th>Driver</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1914-1918 (WWI)</td><td>+8.0</td><td>+14.0</td><td>+35.0</td><td>War spending, supply disruption</td></tr>
+            <tr><td>1929-1933 (Depression)</td><td>-6.7</td><td>-3.5</td><td>-5.0</td><td>Demand collapse, deflation</td></tr>
+            <tr><td>1940-1948 (WWII/postwar)</td><td>+5.5</td><td>+5.0</td><td>n/a*</td><td>War production, rationing</td></tr>
+            <tr><td>1965-1980 (Great Inflation)</td><td>+6.2</td><td>+10.5</td><td>+5.1</td><td>Oil shocks, fiscal expansion</td></tr>
+            <tr><td>1983-2019 (Great Moderation)</td><td>+2.8</td><td>+3.0</td><td>+1.9</td><td>Independent central banks, globalization</td></tr>
+            <tr><td>2020-2023 (Post-COVID)</td><td>+5.2</td><td>+6.5</td><td>+5.4</td><td>Supply chain shock, energy crisis</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:0.75rem;color:rgba(255,255,255,0.4)">*Germany's hyperinflation of 1921-1923 peaked at billions of percent per month; this table shows postwar West German data from 1950.</p>
+      <h2 id="by-country">How does inflation differ by country?</h2>
+      <p>Inflation varies significantly across countries due to differences in monetary policy, energy dependency, wage growth, and exchange rate regimes.</p>
+      <p>Japan's CPI was nearly flat for 25 years while Brazil's averaged well above 5% annually even after the 1994 Real Plan ended hyperinflation. The 20 countries in this calculator span almost the entire global spectrum.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Country</th><th>Data from</th><th>Avg inflation 2000-2025</th><th>Notable period</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>🇺🇸 United States</td><td>1913</td><td>2.4%</td><td>1979: 13.3% peak; 2022: 8.0%</td></tr>
+            <tr><td>🇬🇧 United Kingdom</td><td>1914</td><td>2.8%</td><td>1975: 24.2%; 2023: 7.9%</td></tr>
+            <tr><td>🇩🇪 Germany</td><td>1950</td><td>1.8%</td><td>1923: hyperinflation; 2022: 8.7%</td></tr>
+            <tr><td>🇫🇷 France</td><td>1950</td><td>1.7%</td><td>1974: 13.7%; 2022: 5.9%</td></tr>
+            <tr><td>🇪🇸 Spain</td><td>1960</td><td>2.8%</td><td>1977: 26.4%; 2022: 8.4%</td></tr>
+            <tr><td>🇮🇹 Italy</td><td>1950</td><td>2.2%</td><td>1980: 21.2%; 2022: 8.7%</td></tr>
+            <tr><td>🇯🇵 Japan</td><td>1955</td><td>0.1%</td><td>Deflation 1998-2012; 2022: 2.5%</td></tr>
+            <tr><td>🇨🇦 Canada</td><td>1960</td><td>2.2%</td><td>1981: 12.5%; 2022: 6.8%</td></tr>
+            <tr><td>🇦🇺 Australia</td><td>1960</td><td>2.9%</td><td>1975: 15.1%; 2022: 6.6%</td></tr>
+            <tr><td>🇨🇭 Switzerland</td><td>1960</td><td>0.8%</td><td>Deflation 2011-2017; 2022: 3.0%</td></tr>
+            <tr><td>🇸🇪 Sweden</td><td>1960</td><td>1.7%</td><td>1980: 13.7%; 2022: 8.4%</td></tr>
+            <tr><td>🇧🇷 Brazil</td><td>1995</td><td>6.7%</td><td>1994: hyperinflation; stabilized since</td></tr>
+            <tr><td>🇮🇳 India</td><td>1960</td><td>6.2%</td><td>Structurally higher food inflation</td></tr>
+            <tr><td>🇰🇷 South Korea</td><td>1965</td><td>2.8%</td><td>1980: 28.7%; now stable</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <blockquote class="inf-observation">
+        <p>The Switzerland entry always surprises people. CHF inflation averaged under 1% from 2000 to 2025, with actual deflation in multiple years. A Swiss resident converting 2000 francs to 2025 francs gets a result barely different from 1:1. That stability is a deliberate policy choice by the SNB - and one reason Swiss real estate and pension returns look poor in nominal terms but are actually solid in real terms.</p>
+      </blockquote>
+      <h2 id="purchasing-power">What is purchasing power and why does it matter?</h2>
+      <p><a href="/glossary/purchasing-power">Purchasing power</a> is the quantity of goods and services that a unit of currency can buy. When the BLS reports that the US CPI rose 8% in 2022, it means the average household's purchasing power fell by about 7.4% that year (1/1.08 - 1 = -7.4%). Over long periods, the erosion compounds: the US dollar has lost approximately 97% of its purchasing power since 1913 (BLS, 2025).</p>
+      <p>Purchasing power matters most for fixed-income recipients: retirees on fixed pensions, savers holding cash, and workers in jobs without cost-of-living adjustments. A pensioner receiving $2,000/month in 2000 needed $3,350/month by 2024 just to maintain the same standard of living - a 67% gap that many fixed pensions don't cover.</p>
+      <p>The calculator's "purchasing power remaining" stat shows this directly. If your result says "58% purchasing power left," it means the original amount buys only 58% of what it used to - the other 42% has been eroded by inflation over the period.</p>
+      <h2 id="inflation-causes">What causes high inflation?</h2>
+      <p>Economists identify three main drivers: demand-pull (too much money chasing too few goods), cost-push (rising production costs passed to consumers), and built-in inflation (wage-price spirals).</p>
+      <p>The 1970s US inflation combined all three: expansionary fiscal policy raised demand, two OPEC oil shocks raised costs, and wage negotiations locked in future price increases (Federal Reserve History, 2013).</p>
+      <p>The 2021-2023 inflation surge was primarily cost-push and supply-driven: COVID-19 disrupted global supply chains, the Russia-Ukraine war spiked energy prices, and post-lockdown demand surged faster than supply could respond. The Fed raised rates from 0.25% to 5.25% between March 2022 and July 2023 - the fastest hiking cycle since 1981.</p>
+      <p>Germany's 1923 hyperinflation remains the most extreme modern example: the Weimar government printed money to pay WWI reparations, causing prices to double every few days. The exchange rate went from 4.2 marks per dollar in 1914 to 4.2 trillion marks per dollar by November 1923.</p>
+      <p>This calculator excludes that period - the numbers would be astronomically large and misleading for practical use.</p>
+      <p>For exchange rates in the past, please see the historical exchange rate chart on our <a href="/conversion/currency-converter">currency conversion page</a>.</p>
+      <h2 id="faq">Frequently asked questions about inflation</h2>
+      <h3>How do you calculate inflation-adjusted value?</h3>
+      <p>Multiply the original amount by the ratio of the later CPI to the earlier CPI: Adjusted Value = Original x (CPI later / CPI earlier). For example, $100 in 1990 in the US: CPI 1990 was 130.7, CPI 2024 was 314.2. Adjusted = $100 x (314.2 / 130.7) = $240.40. This is the same formula used by the BLS and Federal Reserve for official inflation adjustments.</p>
+      <h3>Does inflation differ by country?</h3>
+      <p>Yes, significantly. Each country has its own inflation rate set by its central bank policy, energy dependency, and economic structure. The US averaged about 2.4% annually from 2000 to 2025. Japan averaged near 0%. India averaged about 6%. Brazil averaged above 6% even after stabilizing from hyperinflation. This calculator supports 20 countries with data from official national statistics agencies.</p>
+      <h3>How far back does the data go?</h3>
+      <p>US data starts in 1913 using BLS CPI-U. UK data starts in 1914. Germany and France start in 1950 (postwar data). Most other countries start in 1960 or 1965. Brazil starts in 1995 to exclude the hyperinflation era when prices rose millions of percent. All data ends at 2025 annual averages, updated each January when full-year figures are published.</p>
+      <h3>What is the difference between CPI and PCE?</h3>
+      <p>CPI (Consumer Price Index) tracks a fixed basket of goods bought by urban households. PCE (Personal Consumption Expenditures) uses a flexible basket that adjusts as consumers substitute cheaper alternatives. The Fed uses PCE as its preferred inflation gauge; the BLS uses CPI. PCE tends to run 0.3-0.5 percentage points lower than CPI. This calculator uses CPI because it has the longest historical data series and is published globally by most countries.</p>
+      <h3>Why does the purchasing power of money fall over time?</h3>
+      <p>Central banks target 2% annual inflation because mild inflation encourages spending (waiting to buy something means it'll cost more later) and gives borrowers an incentive to take on productive debt. This policy deliberately erodes the purchasing power of held cash at about 2% per year. Over 35 years at 2%, $100 becomes worth roughly $50 in real terms. The erosion compounds - it's not linear, it's exponential in reverse.</p>
+      <h3>When was the euro introduced?</h3>
+      <p>The euro was introduced on January 1, 1999, initially as an accounting currency used for financial transactions and electronic payments. Euro coins and banknotes entered circulation on January 1, 2002, replacing national currencies in 12 countries simultaneously: Germany, France, Italy, Spain, the Netherlands, Belgium, Austria, Finland, Portugal, Ireland, Luxembourg, and Greece.</p>
+      <p>Several EU members joined later: Slovenia (2007), Cyprus and Malta (2008), Slovakia (2009), Estonia (2011), Latvia (2014), Lithuania (2015), and Croatia (2023). This calculator tracks each Eurozone country separately using its own national CPI series - German data goes back to 1950, French and Italian to 1950, while Spanish, Dutch, and Belgian data starts in 1960.</p>
+      <h3>What is disinflation?</h3>
+      <p>Disinflation is a slowdown in the rate of inflation - prices are still rising, just more slowly than before. If inflation falls from 8% to 4%, that is disinflation, not deflation. Deflation means prices actually fall; disinflation means the rise is getting smaller. The distinction matters because disinflation is generally healthy, while deflation can trigger an economic trap.</p>
+      <p>The US went through a clear disinflation episode from mid-2022 through 2024, as the Federal Reserve raised interest rates sharply to cool post-pandemic inflation. CPI peaked at 9.1% in June 2022 and fell to around 3% by mid-2023 - that entire descent was disinflation. You can see the effect directly in this calculator: switch to USD and compare consecutive years in the 2022-2024 range to watch the rate slow.</p>
+      <QuizBlock
+        topic="inflation"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/inflation-calculator"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💰</span>
+          <div>
+            <a href="/finance/compound-interest-calculator">Compound Interest Calculator</a>
+            <p>See how your savings grow against inflation - compare nominal returns to real, inflation-adjusted returns.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📈</span>
+          <div>
+            <a href="/finance/roi-calculator">ROI Calculator</a>
+            <p>Calculate real return on investment by comparing your ROI to the inflation rate over the same period.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💱</span>
+          <div>
+            <a href="/conversion/currency-converter">Currency Converter</a>
+            <p>Convert between currencies with live rates - combine with inflation adjustment to compare international purchasing power.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🔄</span>
+          <div>
+            <a href="/finance/payback-period-calculator">Payback Period Calculator</a>
+            <p>Calculate when an investment pays itself back - factor in inflation to see the real payback period vs. nominal.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💲</span>
+          <div>
+            <a href="/finance/pay-raise-calculator">Pay Raise Calculator</a>
+            <p>Check if your pay rise beats inflation - a raise below the CPI rate is a real-terms pay cut.</p>
+          </div>
+        </li>
+      </ul>
+      <RelatedGlossaryTerms toolPath="/finance/inflation-calculator" />
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .inf-top-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+  }
+  .inf-arrow {
+    color: rgba(255,255,255,0.4);
+    padding-bottom: 0.6rem;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .inf-shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 5px 0 1rem;
+  }
+  .inf-sc-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.3rem 0.65rem;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .inf-sc-btn:hover {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.85);
+  }
+  .inf-sc-btn.active {
+    background: rgba(167,139,250,0.18);
+    border-color: rgba(167,139,250,0.4);
+    color: rgba(167,139,250,1);
+  }
+  .inf-result {
+    background: rgba(167,139,250,0.08);
+    border: 1px solid rgba(167,139,250,0.22);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .inf-result.hidden { display: none; }
+  .inf-result-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
+  }
+  .inf-result-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(167,139,250,1);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .inf-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .inf-stat {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 0.5rem 0.7rem;
+  }
+  .inf-stat-label {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .inf-stat-val {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 0.15rem;
+  }
+  .inf-chart-section {
+    margin-top: 1rem;
+  }
+  .inf-chart-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+  .inf-canvas {
+    width: 100%;
+    height: 160px;
+    display: block;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+  }
+  .inf-source-note {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 0.75rem;
+    text-align: right;
+  }
+  .inf-observation {
+    border-left: 3px solid rgba(167,139,250,0.5);
+    padding: 0.75rem 1rem;
+    margin: 1.5rem 0;
+    background: rgba(167,139,250,0.05);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+  }
+  .inf-observation p { margin: 0; font-size: 0.88rem; line-height: 1.6; }
+  @media (max-width: 600px) {
+    .inf-top-row { flex-direction: column; align-items: stretch; }
+    .inf-year-row { flex-direction: row; align-items: flex-end; }
+    .inf-arrow { display: none; }
+    .inf-stats-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
