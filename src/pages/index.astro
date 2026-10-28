@@ -22,7 +22,15 @@ const schema = [
     "name": "Calculations.tools",
     "url": "https://calculations.tools/",
     "description": "Free online calculators and converters for health, percentages, unit conversion, text analysis, currency, and more.",
-    "publishingPrinciples": "https://calculations.tools/editorial-standards"
+    "publishingPrinciples": "https://calculations.tools/editorial-standards",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://calculations.tools/?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
   }
 ];
 ---
@@ -103,7 +111,7 @@ const schema = [
 
       <div class="seo-container">
         <h2>Free Online Calculators for Health, Math & Conversions</h2>
-        <p>Calculations.tools is a free collection of {siteToolCount} calculators and converters across {totalCategories} categories. Every tool runs entirely in your browser - no registration, no data sent to any server, instant results as you type.</p>
+        <p>Calculations.tools is a free collection of {siteToolCount} calculators and converters across {totalCategories} categories. Every tool runs entirely in your browser - no registration, no data sent to any server, instant results as you type. All tools are built and maintained by <a href="/about-us/jesper-pallesen">Jesper Pallesen</a>, a Business &amp; Economics graduate and data analytics specialist.</p>
 
         <h3>Health Calculators</h3>
         <p>The <a href="/health">health section</a> covers BMI, body composition, and fitness metrics. The <a href="/health/bmi-calculator">BMI Calculator</a> adds age and gender context, estimated body fat %, and a healthy weight range. Specialist variants cover <a href="/health/bmi-calculator/men">men</a>, <a href="/health/bmi-calculator/women">women</a>, <a href="/health/bmi-calculator/kids">children</a>, <a href="/health/bmi-calculator/teens">teenagers</a>, <a href="/health/bmi-calculator/seniors">seniors</a>, and <a href="/health/bmi-calculator/pregnancy">pregnancy</a>. The <a href="/health/pregnancy-calculator">Pregnancy Calculator</a> estimates due dates and gestational age from LMP, ultrasound, or IVF transfer date. Body composition tools include the <a href="/health/lean-body-mass-calculator">Lean Body Mass Calculator</a>, the <a href="/health/ffmi-calculator">FFMI Calculator</a>, the <a href="/health/body-fat-calculator">Body Fat Calculator</a>, and the <a href="/health/ideal-weight-calculator">Ideal Weight Calculator</a>.</p>

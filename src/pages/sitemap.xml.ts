@@ -8,7 +8,7 @@ export const GET: APIRoute = async () => {
   const urls = pages.map(p => `
   <url>
     <loc>${p.url}</loc>
-    <lastmod>${buildDate}</lastmod>
+    <lastmod>${p.lastmod ?? buildDate}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority.toFixed(1)}</priority>
   </url>`).join('');

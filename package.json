@@ -6,12 +6,23 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync": "npm run build && npx cap sync",
+    "open:ios": "npx cap open ios",
+    "open:android": "npx cap open android",
+    "deploy:app": "npm run build && npx capgo upload"
   },
   "dependencies": {
+    "@capacitor-community/admob": "^8.2.1",
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/cli": "^8.5.3",
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/ios": "^8.5.3",
+    "@capgo/capacitor-updater": "^8.54.0",
     "astro": "^6.0.5"
   },
   "devDependencies": {
+    "typescript": "^5.9.3",
     "us-zips": "^2022.9.1",
     "zipcodes": "^8.0.0"
   }
