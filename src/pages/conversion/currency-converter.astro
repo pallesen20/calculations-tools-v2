@@ -190,6 +190,9 @@ const schema = [
   schema={schema}
   sources={sources}
   credential="Live rates sourced from ECB via Frankfurter"
+  youtubeId="iaVtApqDgIY"
+  youtubeUploadDate="2026-10-29"
+  youtubeSummary="The rate shown here is the mid-market rate - the wholesale price banks use when trading with each other. No retail customer receives it. To find the real cost of any exchange, multiply your amount by the mid-market rate shown here to get the maximum you could receive, then compare to your bank or transfer provider's quote. The gap - whether labeled a 'fee' or hidden in the rate - is what the conversion actually costs you."
 >
   <div slot="calculator">
     <section class="calculator-interface" id="cc-calculator">
@@ -213,9 +216,7 @@ const schema = [
           </div>
           <div class="cc-swap-wrap">
             <button id="cp-swap" class="cc-swap" title="Swap currencies">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="18" height="18">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#fff" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4 4 4m6 0v12m0 0 4-4m-4 4-4-4"/></svg>
             </button>
           </div>
           <div class="cc-field">
@@ -233,6 +234,10 @@ const schema = [
             <div id="cc-pair-link" class="cc-pair-link" style="display:none">
               <a id="cc-pair-link-anchor" href="#" class="cc-pair-link-a"></a>
             </div>
+            <button class="cc-watch-btn" onclick="document.querySelector('.yt-embed')?.scrollIntoView({behavior:'smooth',block:'start'})">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+              Watch video tutorial
+            </button>
           </div>
         </div>
         <div class="cc-table-card" id="cc-table-card">
@@ -499,4 +504,25 @@ const schema = [
   .pair-links-grid { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; margin: 0; }
   .pair-links-grid a { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 0.3rem 0.75rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none !important; white-space: nowrap; }
   .pair-links-grid a:hover { background: rgba(255,255,255,0.12); color: white; }
+  .cc-watch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.8rem;
+    padding: 0.32rem 0.9rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 2rem;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .cc-watch-btn:hover {
+    background: rgba(255,255,255,0.16);
+    border-color: rgba(255,255,255,0.45);
+    color: #fff;
+  }
 </style>
