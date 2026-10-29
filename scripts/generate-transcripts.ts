@@ -38,6 +38,7 @@ const TOOLS: ToolMeta[] = [
   { slug: 'overtime-calculator',                name: 'Overtime Calculator',                path: '/finance/overtime-calculator',                category: 'Finance', priority: 3 },
   { slug: 'pe-ratio-calculator',                name: 'P/E Ratio Calculator',               path: '/finance/pe-ratio-calculator',                category: 'Finance', priority: 3 },
   { slug: 'roe-calculator',                     name: 'ROE Calculator',                     path: '/finance/roe-calculator',                     category: 'Finance', priority: 3 },
+  { slug: 'roce-calculator',                    name: 'ROCE Calculator',                    path: '/finance/roce-calculator',                    category: 'Finance', priority: 3 },
   { slug: 'working-capital-calculator',         name: 'Working Capital Calculator',         path: '/finance/working-capital-calculator',         category: 'Finance', priority: 3 },
   { slug: 'case-converter',        name: 'Case Converter',        path: '/conversion/case-converter',        category: 'Conversion', priority: 4 },
   { slug: 'currency-converter',    name: 'Currency Converter',    path: '/conversion/currency-converter',    category: 'Conversion', priority: 4 },

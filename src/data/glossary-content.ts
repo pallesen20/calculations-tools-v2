@@ -204,6 +204,68 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'capital-employed': {
+    definition: [
+      'Capital Employed is the total long-term capital a business has committed to its operations, measured at a point in time from the balance sheet. The standard formula is Total Assets minus Current Liabilities. The result represents all assets funded by permanent or long-term sources - shareholders\' equity and long-term debt - rather than by short-term creditors.',
+      'An equivalent formula gives the same result: Shareholders\' Equity plus Long-term Debt. Both definitions are mathematically identical because of the balance sheet equation (Assets = Liabilities + Equity). Most analysts use Total Assets minus Current Liabilities because both figures appear explicitly on the face of most balance sheets.',
+      'Capital Employed is the denominator in ROCE (Return on Capital Employed): ROCE = EBIT / Capital Employed x 100. This makes it central to capital efficiency analysis across capital-intensive industries such as utilities, manufacturing, oil and gas, and infrastructure.',
+    ],
+    beginnerExplain: [
+      'Think of a restaurant owner who bought their premises for $400,000 using $150,000 of their own savings and a $250,000 bank loan, while owing $20,000 in short-term unpaid supplier bills. Total Assets = $400,000. Current Liabilities (supplier bills) = $20,000. Capital Employed = $400,000 - $20,000 = $380,000. This is the permanent capital at work: the owner\'s equity ($150,000) plus the long-term loan ($250,000). The supplier credit is excluded because it will be repaid in weeks, not years - it is not permanently deployed capital.',
+    ],
+    whenToUse: 'Use Capital Employed when calculating ROCE, setting internal hurdle rates, or comparing the productive use of long-term capital across businesses or divisions. It is especially relevant for capital-intensive companies where the asset base is large and the mix of debt versus equity financing varies significantly between peers.',
+    examples: {
+      headers: ['Company', 'Total Assets', 'Current Liabilities', 'Capital Employed', 'Breakdown'],
+      rows: [
+        ['Manufacturing firm', '$320M', '$80M', '$240M', 'Equity $120M + LT Debt $120M'],
+        ['Software company', '$85M', '$25M', '$60M', 'Equity $55M + LT Debt $5M'],
+        ['Utility provider', '$9,200M', '$1,200M', '$8,000M', 'Equity $3,200M + LT Debt $4,800M'],
+        ['Retail chain', '$600M', '$200M', '$400M', 'Equity $280M + LT Debt $120M'],
+      ],
+    },
+    pitfalls: 'Capital Employed shrinks as assets depreciate, even without operational improvements. A company with fully written-down plant and equipment shows a smaller denominator than a peer that recently invested in new machinery, inflating its apparent ROCE. For businesses with large mid-year acquisitions or disposals, analysts often use average Capital Employed - opening plus closing divided by two - to avoid timing distortions. Always check asset age and recent investment cycles before comparing Capital Employed figures across companies.',
+    faqs: [
+      { q: 'What is the difference between Capital Employed and Working Capital?', a: 'Working Capital is Current Assets minus Current Liabilities - a short-term liquidity measure. Capital Employed is Total Assets minus Current Liabilities - a measure of long-term capital deployed. Working Capital is embedded within Capital Employed (current assets net of current liabilities), but Capital Employed also covers non-current assets like property, plant and equipment.' },
+      { q: 'Is Capital Employed the same as total equity?', a: 'No. Capital Employed equals Shareholders\' Equity plus Long-term Debt. Total equity includes only the shareholders\' portion. A business funded 50% by equity and 50% by long-term debt has Capital Employed twice the size of its equity base.' },
+      { q: 'Can Capital Employed be negative?', a: 'In theory yes, but it is rare and typically signals a data issue. Negative Capital Employed means Current Liabilities exceed Total Assets, implying technical insolvency. Some asset-light retailers with very high current liabilities can approach this. A genuinely negative Capital Employed figure always warrants closer scrutiny of the balance sheet.' },
+    ],
+    quiz: {
+      topic: 'capital employed',
+      questions: [
+        {
+          q: 'What is the standard formula for Capital Employed?',
+          options: ['Total Assets minus Current Liabilities', 'Total Assets minus Long-term Debt', 'Current Assets minus Current Liabilities', 'Shareholders\' Equity minus Retained Earnings'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Capital Employed = Total Assets minus Current Liabilities. This equals Shareholders\' Equity plus Long-term Debt. Current liabilities are excluded because they represent short-term funding that turns over within 12 months, not permanent invested capital.',
+        },
+        {
+          q: 'A company has Total Assets of $320M and Current Liabilities of $80M. What is its Capital Employed?',
+          options: ['$400M', '$80M', '$240M', '$320M'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Capital Employed = Total Assets - Current Liabilities = $320M - $80M = $240M. This represents the long-term capital funded by shareholders\' equity and long-term debt rather than by short-term creditors.',
+        },
+        {
+          q: 'Why are Current Liabilities excluded from Capital Employed?',
+          options: ['Because current liabilities appear on a separate financial statement from total assets', 'Because they represent short-term funding that cycles through the business within 12 months, not permanent invested capital', 'Because current liabilities include only tax payable, which is not a financing instrument', 'Because GAAP requires Capital Employed to exclude all liabilities from the calculation'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Current liabilities - trade payables, accrued expenses, short-term overdrafts - cycle through the business within 12 months and are not permanent capital. Including them would overstate the capital base and make companies that rely more on supplier credit appear less capital-efficient than they are.',
+        },
+        {
+          q: 'According to the pitfalls section, how does accumulated depreciation affect Capital Employed over time?',
+          options: ['Depreciation increases Capital Employed by adding accumulated charges to the balance sheet', 'Depreciation has no effect on Capital Employed since it flows only through the income statement', 'Depreciation reduces Capital Employed only when assets are fully written off and removed from the register', 'Capital Employed shrinks as assets depreciate, which can inflate ROCE without any operational improvement'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section states that Capital Employed shrinks as assets depreciate, even without operational improvements. A company with fully written-down equipment shows a smaller denominator than a peer that recently invested in new machinery, artificially inflating its ROCE. Always check asset age before comparing Capital Employed figures.',
+        },
+        {
+          q: 'Capital Employed is the denominator in which profitability metric?',
+          options: ['ROCE (Return on Capital Employed)', 'ROE (Return on Equity)', 'ROA (Return on Assets)', 'EBITDA margin'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Capital Employed is the denominator in ROCE: ROCE = EBIT / Capital Employed x 100. ROE uses shareholders\' equity; ROA uses total assets. ROCE is capital-structure neutral because EBIT (before interest and tax) is used as the numerator.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'cdn': {
     definition: [
       'A Content Delivery Network (CDN) is a geographically distributed network of servers designed to serve files to end users from the location closest to them. Instead of every request travelling to a single origin server, a CDN caches and serves copies of files from dozens or hundreds of edge locations worldwide. This reduces the physical distance data must travel, lowering latency and improving load speed.',
@@ -6840,6 +6902,68 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
     },
   },
+
+  'wacc': {
+    definition: [
+      'The Weighted Average Cost of Capital (WACC) is the blended rate of return a company must earn on its total invested capital to satisfy both its debt holders and equity investors. It weights the cost of each capital source - equity and debt - by that source\'s proportion of the total capital structure. WACC represents the minimum return threshold: any investment earning above WACC creates value; anything below destroys it.',
+      'The formula is WACC = (E/V) x Re + (D/V) x Rd x (1 - T), where E is the market value of equity, D is the market value of debt, V = E + D, Re is the required return on equity, Rd is the cost of debt, and T is the corporate tax rate. The (1 - T) adjustment reflects that interest payments are tax-deductible, reducing the effective cost of debt to the company.',
+      'Cost of equity is not directly observable - it must be estimated using a model such as CAPM (Re = Rf + Beta x Equity Risk Premium). Cost of debt is the weighted average interest rate on outstanding debt, adjusted downward for the tax shield. Because equity investors bear more risk than lenders, the cost of equity is always higher than the cost of debt.',
+    ],
+    beginnerExplain: [
+      'Imagine you borrow $6,000 from a bank at 6% interest and take $4,000 from an investor who wants 10% returns, to fund a $10,000 food stall. The bank\'s effective cost is 4.5% after tax savings (6% x 75% if you\'re in a 25% tax bracket). Your blended funding cost is: (60% x 4.5%) + (40% x 10%) = 2.7% + 4.0% = 6.7%. That 6.7% is your WACC - the minimum your food stall must earn on its $10,000 to keep both the bank and the investor satisfied. Earn more than 6.7% and you create value; earn less and you are destroying it.',
+    ],
+    whenToUse: 'Use WACC as the discount rate in discounted cash flow (DCF) valuations and as the benchmark against which ROCE is measured. If ROCE consistently exceeds WACC, the business creates economic value; if ROCE falls below WACC, it destroys value despite showing positive accounting profits. WACC also evaluates individual projects: a project with an expected IRR above WACC adds value; below WACC, it does not.',
+    examples: {
+      headers: ['Capital source', 'Amount', 'Pre-tax cost', 'After-tax cost', 'Weight', 'Weighted cost'],
+      rows: [
+        ['Long-term debt', '$6,000,000', '6.0%', '4.5% (25% tax)', '60%', '2.7%'],
+        ['Equity', '$4,000,000', 'n/a', '10.0% (CAPM)', '40%', '4.0%'],
+        ['WACC', '$10,000,000', '-', '-', '100%', '6.7%'],
+      ],
+    },
+    pitfalls: 'WACC is highly sensitive to the cost of equity, which must be estimated - usually via CAPM - and small changes in the equity risk premium or beta assumption can shift WACC by 200-300 basis points, materially changing valuations. A second common error is using book values rather than market values to calculate weights: if a company\'s equity trades far above book value, using book values understates the equity weight and overstates the debt weight, producing a misleadingly low WACC. Always use current market prices for the weights.',
+    faqs: [
+      { q: 'What is the difference between WACC and cost of equity?', a: 'Cost of equity is the return equity investors require (estimated via CAPM or dividend discount models) and covers only the equity portion of the capital structure. WACC blends cost of equity and after-tax cost of debt, weighted by each source\'s proportion. Because debt is cheaper than equity and generates a tax shield, WACC is always lower than the standalone cost of equity.' },
+      { q: 'Why is the cost of debt multiplied by (1 - tax rate) in the WACC formula?', a: 'Interest on debt is tax-deductible in most jurisdictions. A company with a 25% tax rate paying 6% interest effectively pays only 4.5% after the tax saving - the government subsidizes part of the interest cost. The (1 - T) adjustment captures this benefit, so WACC uses the true after-tax cost of debt rather than the contractual rate.' },
+      { q: 'Can WACC change over time?', a: 'Yes. WACC changes whenever market conditions shift: rising interest rates increase the cost of debt; changes in stock price or market risk alter the cost of equity; and refinancing or capital raises shift the debt and equity weights. Companies typically recalculate WACC annually and more frequently during major capital structure changes or valuation work.' },
+    ],
+    quiz: {
+      topic: 'WACC',
+      questions: [
+        {
+          q: 'What does WACC represent?',
+          options: ['The total interest expense a company pays on its outstanding debt', 'The blended rate of return a company must earn on invested capital to satisfy both debt holders and equity investors', 'The minimum dividend yield required by shareholders before they will invest', 'The average borrowing rate across all of a company\'s outstanding loan facilities'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'WACC is the minimum return threshold for the whole business - the blended cost of all capital sources, weighted by their share of the total structure. Any investment earning above WACC creates economic value; earning below WACC destroys it.',
+        },
+        {
+          q: 'A company has $6M of debt at a 4.5% after-tax cost and $4M of equity at a 10% cost. What is the WACC?',
+          options: ['7.2%', '8.0%', '6.7%', '5.4%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: '(60% x 4.5%) + (40% x 10%) = 2.7% + 4.0% = 6.7%. The 60% weight comes from $6M / $10M total capital; the 40% weight from $4M / $10M. Debt is cheaper than equity, pulling the blended rate below the equity cost of 10%.',
+        },
+        {
+          q: 'Why is the cost of debt multiplied by (1 - tax rate) in the WACC formula?',
+          options: ['Because interest is tax-deductible, reducing the effective cost of debt to the company by the tax savings', 'Because debt providers accept lower returns than equity investors due to their senior claim in liquidation', 'Because the tax rate represents the risk premium demanded by lenders over the risk-free rate', 'Because corporate tax law requires all debt costs to be stated on an after-tax basis for accounting purposes'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Interest on debt is tax-deductible. A company paying 6% interest with a 25% tax rate has an effective cost of only 4.5% - the government subsidizes the difference. The (1 - T) term captures this tax shield, ensuring WACC reflects the true economic cost of debt.',
+        },
+        {
+          q: 'According to the pitfalls section, what type of values should be used to weight debt and equity in WACC?',
+          options: ['Book values from the balance sheet, which are audited and verifiable', 'Nominal values stated in original debt covenants and share subscription agreements', 'Moving averages of historical book and market values to smooth short-term price volatility', 'Market values of debt and equity - using book values can significantly distort the weights when equity trades far above book value'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'The pitfalls section states that using book values rather than market values is a common error. If equity trades far above book value, using book values understates the equity weight and overstates the debt weight, producing a misleadingly low WACC. Always use current market prices.',
+        },
+        {
+          q: 'According to the definition, when does a business create economic value?',
+          options: ['When ROCE exceeds the company\'s Return on Equity (ROE)', 'When ROCE exceeds WACC - meaning the business earns more from its capital than it costs to fund that capital', 'When EBITDA margin exceeds the industry average WACC of 8%', 'When net income exceeds total interest payments by a ratio of at least 2:1'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition states that any investment earning above WACC creates value; earning below WACC destroys it even with positive accounting profits. This ROCE vs WACC comparison is the core framework for evaluating whether a business is genuinely productive with its capital.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
   'gcd': {
     definition: [
       'The GCD (Greatest Common Divisor) of two positive integers is the largest integer that divides both numbers exactly, leaving no remainder. It is also called the Greatest Common Factor (GCF) or Highest Common Factor (HCF). GCD(12, 8) = 4 because 4 divides both 12 and 8 perfectly, and no integer larger than 4 does the same.',

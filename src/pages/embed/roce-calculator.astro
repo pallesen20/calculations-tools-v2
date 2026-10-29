@@ -1,0 +1,80 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="ROCE Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>ROCE Calculator</h2>
+        <p>Enter EBIT and balance sheet figures to calculate Return on Capital Employed</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="roc-ebit">EBIT (Earnings Before Interest &amp; Tax)</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="roc-ebit" class="bmi-input" placeholder="e.g. 48000000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="roc-assets">Total Assets</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="roc-assets" class="bmi-input" placeholder="e.g. 320000000" />
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="roc-liabilities">Current Liabilities</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="roc-liabilities" class="bmi-input" placeholder="e.g. 80000000" />
+        </div>
+      </div>
+
+      <div id="roc-result" class="lbm-result hidden">
+        <div class="lbm-cards">
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="roc-card-ce">-</div>
+            <div class="lbm-card-lbl">Capital Employed</div>
+          </div>
+          <div class="lbm-card">
+            <div class="lbm-card-val" id="roc-card-roce">-</div>
+            <div class="lbm-card-lbl">ROCE</div>
+          </div>
+        </div>
+
+        <div class="pi-steps" style="margin-top:0.75rem;">
+          <div class="pi-steps-title">Calculation</div>
+          <div class="pi-step">
+            <span class="pi-step-label">Total Assets - Current Liabilities = Capital Employed</span>
+            <span class="pi-step-val" id="roc-step1">-</span>
+          </div>
+          <div class="pi-step">
+            <span class="pi-step-label">EBIT / Capital Employed × 100 = ROCE</span>
+            <span class="pi-step-val" id="roc-step2">-</span>
+          </div>
+        </div>
+
+        <div style="margin-top:0.75rem;text-align:center;">
+          <span id="roc-badge" class="roc-badge"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/roce-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .roc-badge {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .roc-badge--good { background: #d1fae5; color: #065f46; }
+  .roc-badge--moderate { background: #fef3c7; color: #92400e; }
+  .roc-badge--low { background: #fee2e2; color: #991b1b; }
+  .roc-badge--negative { background: #fce7f3; color: #9d174d; }
+</style>

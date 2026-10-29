@@ -1653,6 +1653,16 @@ const entries: Entry[] = [
     short: 'Net Income / Shareholders\' Equity × 100',
   },
   {
+    path: '/finance/roce-calculator',
+    title: 'ROCE Calculator - Return on Capital Employed',
+    description: 'Calculate ROCE (Return on Capital Employed) from EBIT, Total Assets, and Current Liabilities. Shows Capital Employed, ROCE %, and interpretation against industry benchmarks.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    lastmod: '2026-10-28',
+    icon: '📊',
+    short: 'EBIT / (Total Assets - Current Liabilities) × 100',
+  },
+  {
     path: '/finance/salary-to-hourly-calculator',
     title: 'Salary to Hourly Calculator - All Pay Periods',
     description: 'Convert any salary to an hourly rate instantly. Supports annual, monthly, bi-weekly, weekly, and daily pay periods. Auto-detects your currency. Adjust hours per week and weeks per year.',

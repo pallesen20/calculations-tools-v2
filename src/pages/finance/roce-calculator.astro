@@ -1,0 +1,362 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  roce:  "$$\\text{ROCE} = \\frac{\\text{EBIT}}{\\text{Capital Employed}} \\times 100$$",
+  ce:    "$$\\text{Capital Employed} = \\text{Total Assets} - \\text{Current Liabilities}$$",
+  ceAlt: "$$\\text{Capital Employed} = \\text{Shareholders' Equity} + \\text{Long-term Debt}$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'CFA Institute',
+    title: 'Capital Investments and Capital Allocation',
+    journal: 'CFA Institute Professional Learning',
+    year: 2026,
+    url: 'https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/capital-investments-and-capital-allocation',
+  },
+  {
+    author: 'Corporate Finance Institute',
+    title: 'Return on Capital Employed (ROCE)',
+    journal: 'Corporate Finance Institute',
+    year: 2024,
+    url: 'https://corporatefinanceinstitute.com/resources/accounting/return-on-capital-employed-roce',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',           label: 'How to use' },
+  { id: 'what-is-roce',         label: 'What is ROCE?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',              label: 'ROCE formula' },
+  { id: 'examples',             label: 'Worked examples' },
+  { id: 'benchmarks',           label: 'Industry benchmarks' },
+  { id: 'vs-other',             label: 'ROCE vs ROE vs ROA' },
+  { id: 'mistakes',             label: 'Common mistakes' },
+  { id: 'faq',                  label: 'FAQs' },
+  { id: 'quiz',                 label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',        label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'What does ROCE stand for?',
+    options: [
+      'Rate of Capital Equity',
+      'Return on Capital Employed',
+      'Ratio of Capital to Earnings',
+      'Return on Core Earnings',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'ROCE stands for Return on Capital Employed. It measures how much EBIT (operating profit before interest and tax) a business generates per dollar of long-term capital deployed - equity plus long-term debt.',
+  },
+  {
+    q: 'A company has EBIT of $48M, Total Assets of $320M, and Current Liabilities of $80M. What is the ROCE?',
+    options: ['15.0%', '20.0%', '25.0%', '16.7%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Capital Employed = Total Assets - Current Liabilities = $320M - $80M = $240M. ROCE = $48M / $240M x 100 = 20%. This is in the "strong" range for most non-financial industries.',
+  },
+  {
+    q: 'Why does ROCE use EBIT rather than net income as the numerator?',
+    options: [
+      'EBIT is always higher than net income, making the ratio look better for investors',
+      'EBIT is the only metric available in quarterly reports, while net income is annual',
+      'Using EBIT removes the effect of interest costs and taxes, making ROCE independent of how the business is financed and where it is taxed',
+      'EBIT is defined under GAAP, while net income can be adjusted by management',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'EBIT is used because it removes financing decisions (interest) and tax jurisdiction effects (taxes). This makes ROCE independent of capital structure, allowing fair comparison between companies with different debt levels or operating in different countries.',
+  },
+  {
+    q: 'According to the ROCE vs ROE vs ROA table on this page, which metric uses only shareholders\' equity in the denominator?',
+    options: ['ROCE', 'ROE', 'ROA', 'Both ROE and ROA'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'ROE (Return on Equity) uses only shareholders\' equity in the denominator and net income in the numerator. ROCE uses Capital Employed (equity + long-term debt); ROA uses Total Assets. ROE is the most sensitive to financial leverage of the three.',
+  },
+  {
+    q: 'According to the industry benchmarks section, which sector typically achieves the highest ROCE?',
+    options: [
+      'Utilities (regulated infrastructure)',
+      'Oil & Gas (upstream exploration)',
+      'Software / Technology (asset-light)',
+      'Manufacturing (capital-intensive)',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Software and technology companies are asset-light - they require very little physical capital to operate. This keeps the Capital Employed denominator small, producing high ROCE (often 30-60%+). Capital-intensive sectors like utilities and oil & gas have large asset bases, compressing their ROCE to 8-15%.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ROCE Calculator",
+    "url": "https://calculations.tools/finance/roce-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate Return on Capital Employed (ROCE) from EBIT, Total Assets, and Current Liabilities. Shows Capital Employed and ROCE % with interpretation.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate ROCE",
+    "description": "Calculate Return on Capital Employed using EBIT and balance sheet figures.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter EBIT", "text": "Type in the company's EBIT (Earnings Before Interest and Tax) from the income statement." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter Total Assets", "text": "Enter the Total Assets figure from the balance sheet - typically the bottom-line total on the asset side." },
+      { "@type": "HowToStep", "position": 3, "name": "Enter Current Liabilities", "text": "Enter Current Liabilities from the balance sheet. These are obligations due within one year." },
+      { "@type": "HowToStep", "position": 4, "name": "Read the result", "text": "The calculator computes Capital Employed (Total Assets minus Current Liabilities) and ROCE (EBIT / Capital Employed x 100), with an interpretation badge." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is ROCE?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROCE (Return on Capital Employed) measures how much operating profit (EBIT) a company generates per dollar of long-term capital deployed. Capital Employed equals Total Assets minus Current Liabilities. ROCE is unaffected by capital structure because it uses EBIT (pre-interest, pre-tax), making it the standard comparison metric for capital-intensive industries like utilities and manufacturing." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the ROCE formula?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROCE = (EBIT / Capital Employed) x 100. Capital Employed = Total Assets - Current Liabilities, which is equivalent to Shareholders' Equity + Long-term Debt. EBIT is earnings before interest and tax, taken from the income statement. Total Assets and Current Liabilities come from the balance sheet." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good ROCE?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROCE above 20% is generally considered strong for most non-financial industries. More precisely, ROCE should exceed the company's WACC (Weighted Average Cost of Capital): if ROCE is above WACC the business creates economic value; below WACC it destroys value even with positive accounting profits. Always compare within the same industry - utilities at 10% may be excellent, while software at 10% would be poor." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between ROCE and ROE?",
+        "acceptedAnswer": { "@type": "Answer", "text": "ROCE uses EBIT (pre-interest, pre-tax) and includes long-term debt in the denominator, giving a leverage-neutral view of operating efficiency. ROE uses net income (after interest and tax) and uses only shareholders' equity, showing the return to shareholders after paying lenders. ROCE is better for comparing companies with different capital structures; ROE is better for evaluating shareholder returns." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is capital employed?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Capital Employed = Total Assets - Current Liabilities. This equals Shareholders' Equity plus Long-term Debt - it represents the long-term capital the business has committed to operations. Current liabilities are excluded because they are short-term funding (supplier credit, overdrafts) that turns over within a year, rather than permanent invested capital." }
+      }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Return on Capital Employed Calculator"
+  metaTitle="ROCE Calculator - Return on Capital Employed ᐅ"
+  description="Calculate ROCE (Return on Capital Employed) from EBIT, Total Assets, and Current Liabilities. Shows Capital Employed, ROCE %, and interpretation against industry benchmarks."
+  canonical="https://calculations.tools/finance/roce-calculator"
+  tocItems={tocItems}
+  embedSlug="roce-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="ROCE = EBIT / (Total Assets - Current Liabilities) × 100"
+  ogExample="EBIT $48M / Capital Employed $240M = 20% ROCE"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate ROCE Instantly</h2>
+          <p>Enter EBIT and balance sheet figures to see Return on Capital Employed</p>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="roc-ebit">EBIT (Earnings Before Interest &amp; Tax)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roc-ebit" class="bmi-input" placeholder="e.g. 48000000" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="roc-assets">Total Assets</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roc-assets" class="bmi-input" placeholder="e.g. 320000000" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="roc-liabilities">Current Liabilities</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="roc-liabilities" class="bmi-input" placeholder="e.g. 80000000" />
+          </div>
+        </div>
+        <div id="roc-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="roc-card-ce">-</div>
+              <div class="lbm-card-lbl">Capital Employed</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="roc-card-roce">-</div>
+              <div class="lbm-card-lbl">ROCE</div>
+            </div>
+          </div>
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Total Assets - Current Liabilities = Capital Employed</span>
+              <span class="pi-step-val" id="roc-step1">-</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">EBIT / Capital Employed &times; 100 = ROCE</span>
+              <span class="pi-step-val" id="roc-step2">-</span>
+            </div>
+          </div>
+          <div style="margin-top:0.75rem;text-align:center;">
+            <span id="roc-badge" class="roc-badge"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/roce-calculator.js" is:inline></script>
+    <FinanceDisclaimer />
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p><strong>ROCE = EBIT / Capital Employed &times; 100</strong>. Capital Employed = Total Assets &minus; Current Liabilities. Example: EBIT $48M / ($320M &minus; $80M) = <strong>20% ROCE</strong>. ROCE above 20% is strong for most non-financial industries.</p>
+      </div>
+      <div class="answer-box">
+        <p class="answer-box-label">Key takeaways</p>
+        <ul>
+          <li>ROCE uses EBIT (pre-interest, pre-tax), making it unaffected by capital structure - the standard cross-company metric for capital-intensive industries (<a href="https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/capital-investments-and-capital-allocation" target="_blank" rel="noopener noreferrer">CFA Institute, 2026</a>).</li>
+          <li>Capital Employed = Total Assets &minus; Current Liabilities = Shareholders' Equity + Long-term Debt.</li>
+          <li>ROCE above your company's <a href="/glossary/wacc">WACC</a> creates economic value; below WACC destroys value even with positive accounting profits.</li>
+          <li>Software and technology companies routinely achieve 30-60%+ ROCE; utilities and infrastructure typically run 8-12%.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use this ROCE calculator</h2>
+      <p>Enter three figures from the financial statements: <strong>EBIT</strong> (income statement), <strong>Total Assets</strong> (balance sheet), and <strong>Current Liabilities</strong> (balance sheet). Use the same currency unit throughout - all in thousands, all in millions, or the raw number. The calculator computes Capital Employed and ROCE instantly, with a color-coded interpretation badge.</p>
+      <p>All three figures appear in any annual report or quarterly filing. EBIT is often labeled "Operating Profit" or "Earnings from Operations" on the face of the income statement. Total Assets and Current Liabilities are line items on the consolidated balance sheet.</p>
+      <h2 id="what-is-roce">What is return on capital employed?</h2>
+      <p><a href="/glossary/roce">Return on capital employed (ROCE)</a> measures how efficiently a company uses its long-term capital to generate <a href="/glossary/operating-profit">operating profit</a>. It answers the question: for every dollar of capital permanently committed to this business, how much operating profit does it produce?</p>
+      <p>According to the CFA Institute (2026), return metrics like ROCE are central to capital allocation analysis because they distinguish businesses that earn above their cost of capital from those that don't.</p>
+      <p>Two companies with identical revenue and identical net income can show very different ROCE if their capital bases differ. A software company with $5M EBIT on $20M of capital employed generates 25% ROCE. A manufacturing firm with $5M EBIT on $100M of capital generates 5% ROCE. Same <a href="/finance/operating-profit-margin-calculator">operating profit margin</a>, very different capital efficiency.</p>
+      <p>Because ROCE uses <a href="/glossary/ebit">EBIT</a> rather than <a href="/glossary/net-income">net income</a>, it is independent of how the business is financed (debt vs. equity) and what tax rate it faces. This makes it the preferred comparison metric when two companies have different capital structures or operate in different tax jurisdictions.</p>
+      <h3 id="explained-to-beginner">ROCE explained to a beginner</h3>
+      <p>Imagine a taxi driver who spent $40,000 buying a car (their "<a href="/glossary/capital-employed">capital employed</a>"). Each year they earn $8,000 in operating profit before paying their car loan interest and taxes. Their ROCE is $8,000 / $40,000 = 20%.</p>
+      <p>Now imagine a second driver who spent $80,000 on a nicer car but earns the same $8,000. Their ROCE is only 10%. Same profits, half the capital efficiency. ROCE tells you which business is getting more output from the assets it controls - not just how much profit it makes in absolute terms.</p>
+      <p>If the bank charges 7% interest on the car loan (the "cost of capital"), the first driver creates value (20% &gt; 7%); the second driver creates less value but still earns above the cost of capital. That comparison between ROCE and cost of capital is the backbone of <a href="/glossary/ebitda">Economic Value Added</a> analysis.</p>
+      <h2 id="formula">The return on capital employed formula</h2>
+      <p>ROCE has two components: the <a href="/glossary/numerator">numerator</a> (EBIT) from the income statement, and the <a href="/glossary/denominator">denominator</a> (Capital Employed) from the balance sheet.</p>
+      <Formula expr={f.roce} />
+      <p>Capital Employed is calculated as:</p>
+      <Formula expr={f.ce} />
+      <p>An equivalent definition that gives the same result:</p>
+      <Formula expr={f.ceAlt} />
+      <p>The two definitions are mathematically identical because of the balance sheet equation. Use whichever is easier to read from the filing you have. Most practitioners use Total Assets minus Current Liabilities because both line items appear explicitly on the face of most balance sheets.</p>
+      <p>Some analysts use <strong>average Capital Employed</strong> - the mean of opening and closing balance sheet figures - to smooth out large movements within the year. This is worth doing for businesses that made significant acquisitions or disposals mid-year.</p>
+      <p>See the <a href="/finance/working-capital-calculator">working capital calculator</a> for how current liabilities fit into short-term liquidity analysis alongside the capital employed figure.</p>
+      <h2 id="examples">Worked examples for ROCE</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Company</th><th>EBIT</th><th>Total Assets</th><th>Current Liabilities</th><th>Capital Employed</th><th>ROCE</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Manufacturing firm</td><td>$48M</td><td>$320M</td><td>$80M</td><td>$240M</td><td>20.0%</td></tr>
+            <tr><td>Software company</td><td>$30M</td><td>$85M</td><td>$25M</td><td>$60M</td><td>50.0%</td></tr>
+            <tr><td>Utility provider</td><td>$600M</td><td>$9,200M</td><td>$1,200M</td><td>$8,000M</td><td>7.5%</td></tr>
+            <tr><td>Retail chain</td><td>$120M</td><td>$600M</td><td>$200M</td><td>$400M</td><td>30.0%</td></tr>
+            <tr><td>Startup (loss-making)</td><td>-$5M</td><td>$40M</td><td>$10M</td><td>$30M</td><td>-16.7%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The utility row illustrates why industry context matters. At 7.5%, this utility's ROCE looks weak in isolation. But regulated utilities typically face capital costs of 5-7%, so a 7.5% ROCE is still value-creating. Judging that number against a 20% threshold would be misleading.</p>
+      <blockquote class="blockquote-observation">
+      <p>When I see a software company with 50%+ ROCE alongside a utility at 8%, the instinct is to prefer the software business - and usually that's right. But the asset-light structure that produces high ROCE also means the software company can be replicated faster by a competitor. ROCE tells you about current capital efficiency, not durability of that efficiency.</p>
+      </blockquote>
+      <h2 id="benchmarks">What is a good ROCE? Industry benchmarks</h2>
+      <p>There's no single "good" return on capital employed threshold. The right benchmark depends on the sector's capital intensity, its competitive dynamics, and the prevailing cost of capital.</p>
+      <p>The most useful rule is that ROCE should exceed the company's WACC (Weighted Average Cost of Capital) - if it does, the business creates economic value; if it doesn't, it destroys value even while showing positive accounting profits (<a href="https://corporatefinanceinstitute.com/resources/accounting/return-on-capital-employed-roce/" target="_blank" rel="noopener noreferrer">Corporate Finance Institute, 2024</a>).</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Industry</th><th>Typical ROCE range</th><th>Capital intensity</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Software / Technology</td><td>30% - 60%+</td><td>Very low</td><td>Minimal fixed assets; high margins</td></tr>
+            <tr><td>Consumer Staples</td><td>15% - 30%</td><td>Low-medium</td><td>Strong brands; moderate asset base</td></tr>
+            <tr><td>Healthcare</td><td>12% - 25%</td><td>Medium</td><td>R&D-heavy; patent protection matters</td></tr>
+            <tr><td>Retail</td><td>12% - 25%</td><td>Medium</td><td>Working capital intensive; real estate matters</td></tr>
+            <tr><td>Manufacturing</td><td>10% - 20%</td><td>High</td><td>Large PP&amp;E base compresses ROCE</td></tr>
+            <tr><td>Oil &amp; Gas</td><td>8% - 15%</td><td>Very high</td><td>Cyclical; exploration assets inflate capital</td></tr>
+            <tr><td>Utilities</td><td>6% - 12%</td><td>Very high</td><td>Regulated returns; stable but capped</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>One subtlety worth noting: ROCE is sensitive to asset age. A company with old, fully depreciated assets shows inflated ROCE because the capital employed denominator has shrunk through accumulated depreciation - even if operating efficiency has not improved.</p>
+      <p>Always compare companies at similar points in their <a href="/glossary/capex">capital expenditure cycles</a>. For context on how sector margins compare, see the <a href="/finance/ebitda-margin-calculator">EBITDA Margin</a> benchmarks by industry.</p>
+      <h2 id="vs-other">How does ROCE differ from ROE and ROA?</h2>
+      <p>ROCE, <a href="/finance/roe-calculator">ROE (Return on Equity)</a>, and <a href="/glossary/roa">ROA (Return on Assets)</a> all measure profitability but from different angles. Understanding when to use each one is essential for sound financial analysis.</p>
+      <p>According to Corporate Finance Institute (2024), ROCE is the most useful when comparing companies with materially different debt-to-equity ratios.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Numerator</th><th>Denominator</th><th>Leverage effect</th><th>Best used for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ROCE</td><td>EBIT</td><td>Total Assets - Current Liabilities</td><td>None (leverage-neutral)</td><td>Cross-company operational comparison</td></tr>
+            <tr><td>ROE</td><td>Net Income</td><td>Shareholders' Equity</td><td>High (amplified by debt)</td><td>Shareholder return measurement</td></tr>
+            <tr><td>ROA</td><td>Net Income</td><td>Total Assets</td><td>Moderate</td><td>Asset efficiency across industries</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A highly leveraged company can show a very high ROE simply because its equity base is small - not because it operates efficiently. ROCE strips this out by using the full capital base.</p>
+      <p>For this reason, private equity analysts and lenders typically focus on ROCE and <a href="/finance/ebitda-calculator">EBITDA</a> metrics rather than ROE when evaluating operating performance.</p>
+      <h2 id="mistakes">Common ROCE mistakes</h2>
+      <ul>
+        <li><strong>Comparing across sectors:</strong> A 12% ROCE at a utility may be excellent; a 12% ROCE at a software company is poor. Always compare against sector peers, not an absolute number.</li>
+        <li><strong>Using net income instead of EBIT:</strong> Net income includes <a href="/glossary/interest-expense">interest expense</a> and taxes, which vary with financing choices and geography. EBIT is the correct numerator for a leverage-neutral metric.</li>
+        <li><strong>Ignoring asset age:</strong> Heavily depreciated assets reduce <a href="/glossary/capital-employed">Capital Employed</a> artificially. A company's return on capital employed can rise over time simply because old assets shrink the denominator, without any operational improvement.</li>
+        <li><strong>Not comparing to WACC:</strong> A 15% ROCE looks healthy. But if the company's <a href="/glossary/wacc">cost of capital</a> is 14%, it is barely creating value. The spread between ROCE and WACC is the real signal.</li>
+        <li><strong>Using a single year:</strong> ROCE fluctuates with the business cycle and <a href="/glossary/capex">capex</a> timing. A three-to-five-year average provides a more reliable picture of underlying capital efficiency.</li>
+      </ul>
+      <h2 id="faq">Frequently asked questions about ROCE</h2>
+      <h3>What is ROCE?</h3>
+      <p>ROCE (Return on Capital Employed) measures how much operating profit (EBIT) a company generates per dollar of long-term capital. Capital Employed = Total Assets - Current Liabilities. ROCE uses EBIT (pre-interest, pre-tax), making it independent of capital structure and ideal for comparing companies with different debt levels.</p>
+      <h3>What is the ROCE formula?</h3>
+      <p>ROCE = EBIT / Capital Employed &times; 100. Capital Employed = Total Assets - Current Liabilities (equivalent to Shareholders' Equity + Long-term Debt). Example: EBIT $48M and Capital Employed $240M gives ROCE = 48 / 240 &times; 100 = 20%.</p>
+      <h3>What is a good ROCE?</h3>
+      <p>ROCE should exceed the company's WACC to be value-creating. As a rough guide, ROCE above 20% is strong for most non-financial industries. Utilities at 8-12% may be excellent for their sector; software below 20% is generally considered poor. Always compare within the same industry and against multiple years, not a single period.</p>
+      <h3>What is the difference between ROCE and ROE?</h3>
+      <p>ROCE uses EBIT and includes long-term debt in the denominator - giving a leverage-neutral view. <a href="/finance/roe-calculator">ROE</a> uses net income and only equity - showing returns after interest costs, amplified by leverage. ROCE is better for operational comparisons; ROE is better for measuring shareholder returns.</p>
+      <h3>Can ROCE be negative?</h3>
+      <p>Yes. Negative ROCE means EBIT is negative - the business is making an operating loss before interest and tax. This is common in early-stage companies and cyclical businesses during downturns. Negative ROCE signals that the core operation is not yet profitable, regardless of how it is financed.</p>
+      <QuizBlock
+        topic="ROCE"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/roce-calculator"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/roe-calculator',            blurb: 'Return on Equity - measures shareholder returns after interest and tax.' },
+        { path: '/finance/ebit-calculator',           blurb: 'Calculate EBIT (operating profit) as the numerator in your ROCE calculation.' },
+        { path: '/finance/ebitda-calculator',         blurb: 'EBITDA from Net Income, Interest, Tax, and D&A - the pre-depreciation earnings view.' },
+        { path: '/finance/enterprise-value-calculator', blurb: 'Enterprise Value combines equity value and net debt - often paired with ROCE in acquisition analysis.' },
+        { path: '/finance/roi-calculator',            blurb: 'ROI for one-off investment decisions where ROCE is not applicable.' },
+      ]} />
+      <RelatedGlossaryTerms toolPath="/finance/roce-calculator" />
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .roc-badge {
+    display: inline-block;
+    padding: 0.3rem 0.85rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .roc-badge--good { background: #d1fae5; color: #065f46; }
+  .roc-badge--moderate { background: #fef3c7; color: #92400e; }
+  .roc-badge--low { background: #fee2e2; color: #991b1b; }
+  .roc-badge--negative { background: #fce7f3; color: #9d174d; }
+</style>

@@ -552,6 +552,19 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     proTipFix: "look back at your calendar or period-tracking app and find the first day your last normal period started - before you got pregnant. That date, not a recent spotting date, is what goes in the Last Period field",
   },
 
+  'roce-calculator': {
+    hookProblem: 'know whether a business is actually creating value from the capital it controls, not just making profit',
+    character: 'Daniel, a 41-year-old equity analyst',
+    exampleSetup: 'He is comparing two manufacturing firms. Firm A has EBIT of $48M, Total Assets of $320M, and Current Liabilities of $80M',
+    formulaPlain: 'EBIT divided by Capital Employed, then multiplied by 100 to get a percentage - where Capital Employed is Total Assets minus Current Liabilities',
+    exampleWalkthrough: 'Capital Employed is $320M minus $80M, which equals $240M. Then $48M divided by $240M, times 100, gives 20%',
+    exampleResult: '20% ROCE - in the Strong range for manufacturing',
+    exampleImplication: 'at 20%, Firm A is extracting strong returns from its asset base - well above typical industry cost of capital, which signals genuine value creation rather than just accounting profit',
+    notableFeature: 'a color-coded interpretation badge that instantly labels the result as Strong, Moderate, Low, or Negative based on the ROCE output',
+    proTipMistake: 'using net income instead of EBIT as the numerator',
+    proTipFix: 'always use EBIT - earnings before interest and tax - because it removes the effect of how the business is financed and what country it pays tax in, giving a fair cross-company comparison',
+  },
+
   'bmi-calculator-menopause': {
     hookProblem: 'know whether your weight, waist, and menopause history add up to real cardiometabolic risk',
     character: 'Linda, a 57-year-old office manager 5 years past menopause',
