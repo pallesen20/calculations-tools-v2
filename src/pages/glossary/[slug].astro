@@ -23,6 +23,19 @@ const relatedTermObjects = (term.relatedTerms ?? [])
   .map(s => GLOSSARY_TERMS.find(t => t.slug === s))
   .filter(Boolean) as typeof GLOSSARY_TERMS;
 
+const ogFormulaText = term.formula
+  ? term.formula
+      .replace(/\$\$?/g, '')
+      .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '$1 / $2')
+      .replace(/\\text\{([^}]+)\}/g, '$1')
+      .replace(/\\cdot/g, '×')
+      .replace(/\\[a-zA-Z]+/g, '')
+      .replace(/[{}]/g, '')
+      .trim()
+  : '';
+
+const ogImage = `https://calculations-image-generator.vercel.app/api/og-glossary?category=${encodeURIComponent(term.siteCategory)}&term=${encodeURIComponent(term.term)}&formula=${encodeURIComponent(ogFormulaText)}&definition=${encodeURIComponent(term.shortDef.slice(0, 300))}`;
+
 const schema = [
   {
     "@context": "https://schema.org",
@@ -54,6 +67,7 @@ const schema = [
   description={term.shortDef}
   canonical={`https://calculations.tools/glossary/${slug}`}
   schema={schema}
+  ogImage={ogImage}
 >
   <div class="gl-term-page">
 
@@ -64,12 +78,6 @@ const schema = [
 
     <h1 class="gl-term-h1">{term.term}</h1>
 
-    {term.formula && (
-      <div class="gl-formula-box">
-        <Formula expr={term.formula} />
-      </div>
-    )}
-
     {(term.relatedTools ?? []).length > 0 && (
       <a href={(term.relatedTools ?? [])[0]} class="glossary-tool-cta">Use the {term.term} Calculator →</a>
     )}
@@ -77,6 +85,27 @@ const schema = [
     {content?.quiz && (
       <a href="#quiz" class="glossary-quiz-cta">Try the {term.term} Quiz →</a>
     )}
+
+    <div class="answer-box">
+      <span class="answer-box-label">Definition</span>
+      <p>{term.shortDef}</p>
+    </div>
+
+    {content?.keyTakeaways && content.keyTakeaways.length > 0 && (
+      <div class="gl-key-takeaways answer-box">
+        <span class="answer-box-label">Key takeaways</span>
+        <ul>
+          {content.keyTakeaways.map(item => <li>{item}</li>)}
+        </ul>
+      </div>
+    )}
+
+    {term.formula && (
+      <div class="gl-formula-box">
+        <Formula expr={term.formula} />
+      </div>
+    )}
+
     <HelpfulVote canonical={`https://calculations.tools/glossary/${slug}`} variant="blog" />
     <h2 class="gl-what-is">What is {term.term}?</h2>
     {content?.definition.map(para => <p>{para}</p>)}
@@ -119,6 +148,13 @@ const schema = [
         <h2>Common pitfalls</h2>
         <p>{content.pitfalls}</p>
       </>
+    )}
+
+    {content?.fastFact && (
+      <div class="gl-fast-fact">
+        <span class="gl-fast-fact-label">Fast fact</span>
+        <p>{content.fastFact}</p>
+      </div>
     )}
 
     {content?.faqs?.length > 0 && (
@@ -206,6 +242,41 @@ const schema = [
     margin-bottom: 1.25rem;
     overflow-x: auto;
   }
+  .gl-key-takeaways ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .gl-key-takeaways li {
+    color: rgba(255,255,255,0.82);
+    font-size: 0.925rem;
+    line-height: 1.55;
+  }
+  .gl-fast-fact {
+    background: rgba(234,179,8,0.06);
+    border: 1px solid rgba(234,179,8,0.2);
+    border-left: 3px solid rgba(234,179,8,0.7);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+  }
+  .gl-fast-fact p {
+    margin: 0;
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .gl-fast-fact-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(234,179,8,0.9);
+    margin-bottom: 0.5rem;
+  }
   .gl-what-is {
     margin-top: 2rem;
   }
@@ -230,7 +301,7 @@ const schema = [
     color: white;
     font-size: 0.875rem;
     font-weight: 600;
-    margin-top: .75rem;
+    margin: .75rem 0;
     transition: background 0.3s;
 }
   a.glossary-quiz-cta:hover {

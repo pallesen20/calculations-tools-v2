@@ -12,6 +12,8 @@ export interface QuizQuestion {
 
 export interface GlossaryContent {
   definition: string[];
+  keyTakeaways?: string[];
+  fastFact?: string;
   beginnerExplain?: string[];
   whenToUse: string;
   examples?: GlossaryExample;
@@ -27,6 +29,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Adjusted EBITDA starts with reported EBITDA and adds back (or removes) items that management and analysts consider non-recurring, non-cash, or unrepresentative of the ongoing business. Common adjustments include restructuring charges, litigation settlements, stock-based compensation, one-time bonuses, gains or losses on asset sales, and the costs of a completed acquisition.',
       'The purpose is to show what normalised, repeatable EBITDA looks like - the number that will recur year after year under steady-state operations. This is what private equity buyers, lenders, and strategic acquirers use to set valuations and determine debt capacity.',
       'Adjusted EBITDA is not defined by GAAP or IFRS, which means companies have significant discretion over what they add back. Two companies with identical reported EBITDA can present very different Adjusted EBITDA figures depending on their adjustment policies.',
+    ],
+    keyTakeaways: [
+      'Adjusted EBITDA adds back non-recurring or non-cash items to reported EBITDA to reveal the normalised, repeatable earnings a business generates under steady-state conditions.',
+      'Common add-backs include restructuring charges, litigation settlements, stock-based compensation, one-time bonuses, and gains or losses on asset sales.',
+      'Adjusted EBITDA is not defined by GAAP or IFRS, giving companies significant discretion over which items they classify as non-recurring.',
+      'Private equity buyers, lenders, and strategic acquirers use Adjusted EBITDA to set valuations and determine how much debt a business can service.',
+      'When Adjusted EBITDA is materially higher than reported EBITDA over multiple consecutive years, it is a red flag that recurring costs are being misclassified as one-time.',
     ],
     whenToUse: 'Use Adjusted EBITDA when valuing a business for acquisition, setting leverage ratios in a debt covenant, or benchmarking against peers - provided all parties agree on the definition of adjustments. Always request a full reconciliation from reported EBITDA to Adjusted EBITDA and scrutinise each add-back.',
     examples: {
@@ -87,6 +96,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Arithmetic is the branch of mathematics concerned with numbers and the four fundamental operations: addition (+), subtraction (-), multiplication (×), and division (÷). Every more advanced mathematical concept - percentages, fractions, algebra, and statistics - is built on top of these four operations and the rules that govern them.',
       'Each operation has an inverse that undoes it: subtraction reverses addition; division reverses multiplication. This pairing is the foundation of equation solving - to isolate an unknown, you apply the inverse operation to both sides until the unknown stands alone.',
       'When an expression contains multiple operations, the order in which they are evaluated matters. The standard convention - called PEMDAS in the US and BODMAS in the UK - specifies: Parentheses first, then Exponents, then Multiplication and Division (left to right), then Addition and Subtraction (left to right). The expression 3 + 4 × 2 evaluates to 11, not 14, because multiplication is applied before addition.',
+    ],
+    keyTakeaways: [
+      'The four basic arithmetic operations are addition, subtraction, multiplication, and division; each has an inverse that undoes it.',
+      'PEMDAS (US) or BODMAS (UK) defines the order of operations: Parentheses, Exponents, Multiplication and Division left to right, then Addition and Subtraction left to right.',
+      'In the expression 3 + 4 x 2, multiplication takes priority over addition, producing 11, not 14.',
+      'Division by zero is undefined because no number multiplied by zero can equal a non-zero value.',
     ],
     beginnerExplain: [
       'Think of a grocery store. When you add prices in your head at checkout, that\'s addition. Figuring out your change is subtraction. Calculating the cost of six identical items is multiplication. Splitting the total equally with three friends is division. Those four actions - add, subtract, multiply, divide - are arithmetic.',
@@ -152,6 +167,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'CapEx is categorised as maintenance CapEx (spending to keep existing assets operational) or growth CapEx (spending to expand capacity or enter new markets). Growth CapEx is an investment in future revenue; maintenance CapEx is essentially a cash cost of running the current business.',
       'Because EBITDA excludes depreciation, it effectively excludes CapEx as well - making EBITDA a poor proxy for free cash flow in capital-intensive businesses. A telecom company or manufacturer with high EBITDA but equally high maintenance CapEx may generate very little actual free cash.',
     ],
+    keyTakeaways: [
+      'CapEx is spending on assets with a useful life greater than one year; it is capitalised on the balance sheet and expensed gradually as depreciation, not immediately as an income statement cost.',
+      'Maintenance CapEx keeps existing assets running; growth CapEx expands capacity or enters new markets.',
+      'Free Cash Flow = Operating Cash Flow minus CapEx, making CapEx the primary deduction from operating cash flow.',
+      'In a mature business, maintenance CapEx should roughly equal annual depreciation and amortization.',
+      'A SaaS company may convert 90%+ of EBITDA to free cash flow; a telecom operator may convert only 25-35% because of its heavy CapEx requirements.',
+    ],
+    beginnerExplain: [
+      'Think of buying a delivery van for $50,000. You do not expense the whole $50,000 in month one - you put it on the company\'s asset list and charge $10,000 a year for five years as depreciation. That initial $50,000 payment is CapEx: spending on something that will be used for years, not just this month.',
+      'Compare that to paying $500 for printer paper. You expense it immediately - that is OpEx. The distinction matters because CapEx does not reduce this year\'s profit, but it does consume cash. A business can look highly profitable on paper while quietly running out of cash if it is spending heavily on CapEx.',
+    ],
     whenToUse: 'Use CapEx analysis when assessing whether a business\'s EBITDA is truly convertible to cash (low CapEx = high conversion; high CapEx = lower conversion). Maintenance CapEx should be roughly equal to annual D&A in a mature business. If CapEx consistently exceeds D&A, the business is growing its asset base.',
     examples: {
       headers: ['Company type', 'Annual EBITDA', 'CapEx', 'Free Cash Flow', 'FCF Conversion'],
@@ -209,6 +235,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Capital Employed is the total long-term capital a business has committed to its operations, measured at a point in time from the balance sheet. The standard formula is Total Assets minus Current Liabilities. The result represents all assets funded by permanent or long-term sources - shareholders\' equity and long-term debt - rather than by short-term creditors.',
       'An equivalent formula gives the same result: Shareholders\' Equity plus Long-term Debt. Both definitions are mathematically identical because of the balance sheet equation (Assets = Liabilities + Equity). Most analysts use Total Assets minus Current Liabilities because both figures appear explicitly on the face of most balance sheets.',
       'Capital Employed is the denominator in ROCE (Return on Capital Employed): ROCE = EBIT / Capital Employed x 100. This makes it central to capital efficiency analysis across capital-intensive industries such as utilities, manufacturing, oil and gas, and infrastructure.',
+    ],
+    keyTakeaways: [
+      'Capital Employed = Total Assets minus Current Liabilities, which is mathematically equivalent to Shareholders\' Equity plus Long-term Debt.',
+      'Current liabilities are excluded because they represent short-term funding that cycles through the business within 12 months, not permanent invested capital.',
+      'Capital Employed is the denominator in ROCE (Return on Capital Employed = EBIT / Capital Employed x 100).',
+      'As assets depreciate over time, Capital Employed shrinks, which can inflate ROCE without any genuine operational improvement.',
+      'For businesses with large mid-year acquisitions, analysts often use average Capital Employed (opening plus closing divided by 2) to avoid timing distortions.',
     ],
     beginnerExplain: [
       'Think of a restaurant owner who bought their premises for $400,000 using $150,000 of their own savings and a $250,000 bank loan, while owing $20,000 in short-term unpaid supplier bills. Total Assets = $400,000. Current Liabilities (supplier bills) = $20,000. Capital Employed = $400,000 - $20,000 = $380,000. This is the permanent capital at work: the owner\'s equity ($150,000) plus the long-term loan ($250,000). The supplier credit is excluded because it will be repaid in weeks, not years - it is not permanently deployed capital.',
@@ -272,6 +305,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'CDNs are most commonly used to deliver static assets: JavaScript libraries, CSS files, fonts, images, and video. Large open-source libraries such as Tesseract.js (OCR), SheetJS (Excel processing), and PDF.js (PDF rendering) are routinely served from public CDNs because distributing multi-megabyte bundles with every page load would be slow and expensive for small sites.',
       'When this site mentions that a tool "loads from CDN," it means the browser fetches a third-party library file from an external CDN provider (such as jsDelivr or unpkg) the first time you use that tool. Only the library code is fetched - none of your files or data are sent anywhere. After the first load, the browser caches the file, so repeat visits in the same session skip the download entirely.',
     ],
+    keyTakeaways: [
+      'A CDN serves files from the edge server geographically closest to the user, reducing latency compared to a single origin server.',
+      'Only library code is fetched from a CDN - your files, text, and input data never leave your browser.',
+      'After the first download, the browser caches CDN files so repeat visits in the same session skip the network request entirely.',
+      'The main trade-off of CDN loading is a dependency on a third-party service: if the CDN is unreachable, the tool cannot load its library.',
+      'Tesseract.js (OCR) is approximately 25 MB from CDN because it includes the language model; simpler libraries like KaTeX are under 0.5 MB.',
+    ],
+    beginnerExplain: [
+      'Imagine a library with one central branch downtown and ten local branches around the city. If you need a book, it is much faster to walk to the nearest local branch than to travel downtown. A CDN works the same way: instead of every user\'s browser fetching a file from one server on the other side of the world, the browser fetches it from a nearby server in its own region.',
+      'On this site, CDN loading means a specialised JavaScript file - for example, the program that reads text out of images - is fetched from that nearby server the first time you use the tool. Your actual files and data stay entirely on your device.',
+    ],
     whenToUse: 'Understanding CDN loading matters when you are on a slow or metered connection, or using a browser with strict content-security policies. If a tool states it "requires no CDN," it means all code is already bundled with the page - nothing external is fetched, and the tool works offline.',
     examples: {
       headers: ['Library', 'Used for', 'CDN size (approx.)'],
@@ -332,6 +376,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'COGS is the first deduction from Revenue on an income statement: Revenue − COGS = Gross Profit. The lower the COGS relative to revenue, the higher the gross margin - and the more resources available to fund operations, R&D, and profit.',
       'What counts as COGS varies by industry and accounting policy. Software companies often count only hosting costs and customer support as COGS. Professional service firms count only billable hours. Retailers count the wholesale cost of goods sold. Understanding what a company includes in COGS is essential for cross-company margin comparisons.',
     ],
+    keyTakeaways: [
+      'COGS covers only direct production costs - materials, direct labour, and manufacturing overhead - not sales, marketing, or administrative expenses.',
+      'Revenue minus COGS equals Gross Profit, the first profitability figure on an income statement.',
+      'For a retailer, COGS = Beginning Inventory + Purchases minus Ending Inventory.',
+      'A SaaS company\'s COGS typically consists of only hosting and customer support costs, producing gross margins of 65-80%.',
+      'Companies can improve reported gross margins by reclassifying costs from COGS to operating expenses - a sudden unexplained margin jump warrants scrutiny.',
+    ],
+    fastFact: 'Average gross margins across S&P 500 companies range from roughly 20% in retail and manufacturing to over 70% in software, reflecting how dramatically COGS composition differs by business model. (NYU Stern Damodaran Database, 2023)',
+    beginnerExplain: [
+      'Imagine you bake and sell cookies. Each batch uses $2 of flour, sugar, and eggs, plus $1 of your time mixing and baking - that is $3 of COGS per batch. If you sell each batch for $8, your gross profit is $5. You have not paid your rent, your marketing, or your delivery costs yet - those come later. COGS is just the direct cost of making the thing you sold.',
+      'The reason businesses track COGS separately is to understand unit economics: are we making money on each item before we even think about overhead? A business where COGS alone exceeds the selling price is in trouble, regardless of how much it sells.',
+    ],
     whenToUse: 'Use COGS to calculate Gross Profit and Gross Profit Margin - the first indicators of unit economics and pricing power. Analyse COGS trends over time to identify whether input costs (materials, labour) are rising relative to revenue, which squeezes margins. In due diligence, verify the composition of COGS to ensure no operating costs are being hidden below the gross profit line.',
     examples: {
       headers: ['Business type', 'Revenue', 'COGS components', 'COGS', 'Gross Profit'],
@@ -389,6 +445,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Deflation is a sustained decrease in the general price level of goods and services - the opposite of inflation. When the year-on-year change in the Consumer Price Index (CPI) falls below 0%, the economy is in deflation: the same unit of currency buys more goods than it did a year ago. Deflation is distinct from disinflation, which is inflation slowing but remaining positive.',
       'Despite raising purchasing power, economists consider prolonged deflation more dangerous than moderate inflation. As prices fall, consumers and businesses delay purchases expecting further drops - reducing demand, cutting revenues, and pushing companies to lay off workers. This self-reinforcing cycle, called a "deflation trap" or "debt deflation spiral," is extremely difficult for central banks to escape. Japan\'s experience from the mid-1990s to the 2010s is the most studied modern case.',
     ],
+    keyTakeaways: [
+      'Deflation is a sustained decrease in the general price level, meaning the year-on-year change in the Consumer Price Index falls below 0%.',
+      'Deflation is distinct from disinflation, which is inflation slowing but remaining positive.',
+      'The US experienced -10.3% deflation in 1932 at the worst point of the Great Depression, driven by banking collapse and a catastrophic demand crash.',
+      'Central banks fight deflation primarily through near-zero interest rates and quantitative easing (QE) to make borrowing cheap and discourage hoarding cash.',
+      'Japan\'s deflation from roughly 1999 to 2012 is the most studied modern case of a sustained deflation trap.',
+    ],
+    fastFact: 'Japan\'s GDP deflator fell for 15 of the 17 years between 1995 and 2012, making it the longest sustained peacetime deflation episode in any major economy since the Great Depression. (Bank of Japan, 2023)',
     beginnerExplain: [
       'Imagine a TV that costs $500 today. If deflation sets in at 5% a year, that TV costs $475 next year and $451 the year after. That sounds good - until you realize the store owner can\'t cover payroll because revenue keeps shrinking, and the manufacturer stops hiring because it\'s not worth producing TVs at lower prices each year.',
       'This is why central banks target 2% inflation rather than 0%: mild inflation keeps money moving through the economy. Deflation can freeze it. The phrase "cash is king" becomes literally true - money held under a mattress grows in purchasing power without any investment - which is exactly the behavior central banks need to prevent.',
@@ -456,6 +520,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'D&A is a non-cash charge: it reduces reported profit on the income statement without any cash leaving the business in that period. The cash left when the asset was purchased. This is why analysts add D&A back to Net Income when calculating EBITDA - to reveal cash-generative ability without the distortion of accounting depreciation schedules.',
       'The choice of depreciation method (straight-line vs. accelerated) affects how quickly an asset\'s cost is expensed. Straight-line spreads the cost evenly. Accelerated methods (like double-declining balance) front-load depreciation, which reduces reported profit in early years and increases it later. Two companies with identical assets can report very different profits depending on their depreciation method.',
     ],
+    keyTakeaways: [
+      'Depreciation allocates the cost of a tangible asset over its useful life; amortization does the same for intangible assets like patents and customer lists.',
+      'D&A is a non-cash charge - it reduces reported profit without any cash leaving the business in the period it is recorded.',
+      'EBITDA adds D&A back to Net Income because D&A is non-cash; EBIT retains D&A as a cost and reflects the true economic impact of using assets.',
+      'Straight-line depreciation spreads the cost evenly; accelerated methods front-load it, reducing profit in early years and raising it later.',
+      'D&A is a real economic cost even though it is non-cash: an asset that depreciates to zero must eventually be replaced, often at a higher cost.',
+    ],
+    fastFact: 'U.S. tax law (MACRS - Modified Accelerated Cost Recovery System) allows businesses to depreciate most equipment over 5 or 7 years for tax purposes, often faster than the 10-20 year useful lives used in GAAP financial statements, creating a recurring deferred tax liability. (IRS Publication 946)',
+    beginnerExplain: [
+      'Suppose you buy a commercial oven for your bakery for $20,000. You do not write off $20,000 as a cost the day you buy it. Instead, you spread that cost over its 10-year life: $2,000 per year. That annual $2,000 entry is depreciation. It shows up as an expense on your income statement each year, reducing your profit, even though no cash left your account that year.',
+      'This matters because it means a business\'s profit on paper can look lower than the cash it actually generates. If a business earns $50,000 in profit but includes $10,000 of depreciation, its actual cash generated is closer to $60,000. EBITDA adds that depreciation back to give a clearer picture of cash earnings.',
+    ],
     whenToUse: 'Pay close attention to D&A when comparing EBITDA vs EBIT: the gap between them equals D&A. Asset-heavy businesses (telecom, manufacturing, oil & gas) have large D&A charges, making EBITDA much higher than EBIT - and therefore making EBITDA-based valuation look cheaper than EBIT-based valuation. Also track whether annual D&A approximates CapEx - if CapEx consistently exceeds D&A, the company is growing its asset base.',
     examples: {
       headers: ['Asset', 'Cost', 'Useful life', 'Annual depreciation (straight-line)', 'Method'],
@@ -514,6 +590,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'EBIT (Earnings Before Interest and Tax) is Operating Profit - the income generated from a company\'s core business activities after deducting COGS and all operating expenses (including depreciation and amortization), but before accounting for how the business is financed (interest) or taxed.',
       'EBIT is used interchangeably with "Operating Profit" and "Operating Income" in most contexts. It sits between Gross Profit (which only deducts COGS) and EBT (which further deducts interest) on the income statement. The difference between EBIT and EBITDA is depreciation and amortization - adding D&A to Net Income stops at EBIT before reaching EBITDA.',
       'EBIT is the cleanest measure of operational performance when comparing companies with similar asset bases. Unlike EBITDA, it does not ignore the cost of using long-lived assets. Unlike Net Income, it removes the distortion of different capital structures and tax environments.',
+    ],
+    keyTakeaways: [
+      'EBIT (Earnings Before Interest and Tax) is the same as Operating Profit and Operating Income - the three terms are used interchangeably.',
+      'EBITDA = EBIT + Depreciation + Amortization; the difference between the two metrics equals the D&A charge.',
+      'Two companies with identical EBIT but different debt levels will show very different EBT and Net Income, illustrating why EBIT strips out capital structure differences.',
+      'EBIT is more conservative than EBITDA because it treats depreciation as a real cost of using assets.',
+      'EBIT is preferred over EBITDA for operational comparisons when companies have similar capital intensity.',
+    ],
+    fastFact: 'In a typical S&P 500 industrial company, the gap between EBIT margin and EBITDA margin is 4-8 percentage points, representing the D&A charge as a share of revenue. (Damodaran, NYU Stern, 2023)',
+    beginnerExplain: [
+      'Imagine two lemonade stands that both earn $500 from selling lemonade, both pay $200 in ingredients and $100 in supplies. Each stand has $200 in EBIT - the profit from actually running the stand, before you account for any loans or taxes. But Stand A borrowed money to set up and pays $80 in loan interest; Stand B used savings and pays nothing. Their EBIT is identical, but their final profit after interest differs. EBIT lets you compare how well the operations run, separate from how they were funded.',
     ],
     whenToUse: 'Use EBIT to compare the operational efficiency of companies with similar capital intensity but different financing structures. It is particularly useful when a company has recently refinanced its debt (changing interest expense) or when comparing companies across different countries with different tax rates.',
     examples: {
@@ -578,6 +665,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The metric was popularised in the 1980s by leveraged buyout analysts who needed to assess how much debt a target company could service. Today it is the universal language of business valuation: investment bankers quote deals as multiples of EBITDA (e.g. "acquired at 8× EBITDA"), private equity firms measure portfolio company performance in EBITDA, and lenders set debt covenants relative to EBITDA (e.g. "net debt may not exceed 4× EBITDA").',
       'EBITDA is calculated using the bottom-up method: start with Net Income and add back Interest Expense, Tax Expense, Depreciation, and Amortization. The top-down method starts with Revenue and subtracts only cash operating costs, arriving at the same figure.',
     ],
+    keyTakeaways: [
+      'EBITDA = Net Income + Interest + Tax + Depreciation + Amortization; it strips out financing decisions, tax policy, and non-cash accounting charges.',
+      'It was popularised in the 1980s by leveraged buyout analysts who needed to assess how much debt a target company could service.',
+      'EBITDA multiples (EV/EBITDA) are the standard language of M&A valuation; SaaS companies trade at 10-25x, manufacturers at 5-8x.',
+      'EBITDA is not cash flow - it ignores CapEx requirements and working capital changes that can consume significant cash.',
+      'EBITDA is not a GAAP metric, so always request a reconciliation from Net Income when comparing across companies.',
+    ],
+    fastFact: 'Global M&A deal multiples averaged approximately 10.5x EBITDA in 2022, with technology transactions averaging over 14x, according to S&P Global Market Intelligence data cited in the 2023 Kroll Valuation Handbook.',
     whenToUse: 'Use EBITDA when comparing the operating performance of companies with different capital structures, depreciation policies, or tax jurisdictions - or when estimating the debt capacity of a business. It is the standard metric for M&A valuation (EV/EBITDA multiple), leveraged buyout modelling, and bank covenant testing.',
     examples: {
       headers: ['Company', 'Net Income', '+ Interest', '+ Tax', '+ D&A', '= EBITDA'],
@@ -637,6 +732,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The margin is scale-independent: a $1M EBITDA on $3M revenue (33% margin) represents a more profitable business than $10M EBITDA on $200M revenue (5% margin), even though the absolute EBITDA is ten times larger. This makes EBITDA Margin the preferred metric for cross-company comparisons within an industry.',
       'Investors and acquirers use EBITDA Margin to benchmark a target company against sector peers. A significantly lower margin than peers signals a cost problem or a pricing problem. A significantly higher margin may indicate a competitive moat or superior operating leverage.',
     ],
+    keyTakeaways: [
+      'EBITDA Margin = EBITDA / Revenue x 100; it measures what percentage of each revenue dollar becomes EBITDA.',
+      'It is scale-independent: a 33% margin on $5M revenue is more efficient than a 5% margin on $200M revenue, even though the absolute EBITDA is much larger.',
+      'Typical ranges by industry: SaaS 15-30%, telecom 30-40%, retail 5-10%, grocery 3-8%.',
+      'A high EBITDA Margin is not automatically positive - some high-margin businesses underinvest in growth or maintenance CapEx.',
+      'EBITDA Margin is preferred over Net Profit Margin for cross-company comparisons because it removes the distortion of different capital structures and tax environments.',
+    ],
+    fastFact: 'Microsoft reported an EBITDA margin of approximately 53% in fiscal year 2023, illustrating the extreme operating leverage possible in large-scale software businesses where marginal delivery costs approach zero. (Microsoft FY2023 Annual Report)',
     whenToUse: 'Use EBITDA Margin when comparing the operational efficiency of companies within the same sector - particularly in M&A, private equity portfolio management, or competitive benchmarking. It is less useful for cross-industry comparisons because margin norms differ dramatically (5–10% for grocery, 20–35% for SaaS).',
     examples: {
       headers: ['Company', 'EBITDA', 'Revenue', 'EBITDA Margin', 'Sector assessment'],
@@ -695,6 +798,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'EBT (Earnings Before Tax), also called Pre-Tax Income or Pre-Tax Profit, is the profit a company earns after all operating costs and interest expenses, but before income tax is applied. It sits one line above Net Income on the income statement: EBT × (1 − Tax Rate) = Net Income.',
       'The primary use of EBT is cross-jurisdictional comparison. Because corporate tax rates vary significantly between countries (and even between states within a country), Net Income is influenced by geography as much as operations. EBT strips out this variable, revealing how profitable the business is on a pre-tax basis regardless of where it is domiciled.',
       'EBT is also the base for calculating a company\'s Effective Tax Rate: Tax Expense / EBT × 100. This ratio shows the actual percentage of pre-tax income paid in taxes - which often differs from the statutory rate due to deductions, credits, and deferred tax items.',
+    ],
+    keyTakeaways: [
+      'EBT (Earnings Before Tax) equals Net Income plus Tax Expense, or equivalently EBIT minus Interest Expense.',
+      'It is the base for calculating the Effective Tax Rate: Tax Expense / EBT x 100.',
+      'EBT is preferred over Net Income for cross-jurisdictional comparisons because it strips out the tax variable.',
+      'A company with negative EBT (pre-tax loss) typically pays zero tax or records a deferred tax asset.',
+      'The gap between EBIT and EBT equals Interest Expense; the gap between EBT and Net Income equals Tax Expense.',
     ],
     whenToUse: 'Use EBT when comparing companies across different tax jurisdictions - multinational corporations, cross-border M&A targets, or sector peers domiciled in different countries. EBT eliminates the tax rate variable, leaving only the operational and financing differences between companies.',
     examples: {
@@ -755,6 +865,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The gap between statutory and effective rates arises from tax deductions, credits, loss carry-forwards, tax-exempt income, accelerated depreciation allowances, R&D credits, and the mix of income across different tax jurisdictions. Large multinationals often have effective rates significantly below statutory rates by routing income through lower-tax jurisdictions.',
       'The effective tax rate fluctuates year to year based on the profit mix across jurisdictions, the availability of deferred tax assets, one-time tax credits, and changes in tax law. A sudden change in effective tax rate - up or down - often requires explanation in a company\'s financial statements.',
     ],
+    keyTakeaways: [
+      'Effective Tax Rate = Tax Expense / EBT x 100; it shows the actual percentage of pre-tax income paid as tax, often well below the statutory rate.',
+      'The gap between statutory and effective rates arises from deductions, credits, loss carry-forwards, and profit allocation to lower-tax jurisdictions.',
+      'Large multinationals can achieve effective rates significantly below statutory rates by routing income through low-tax territories.',
+      'An unusually low effective tax rate should be investigated - if it depends on temporary credits or arrangements under regulatory scrutiny, it may not persist.',
+      'A negative effective tax rate is possible in rare cases when tax credits or deferred tax benefits exceed the gross tax liability.',
+    ],
+    fastFact: 'The statutory U.S. federal corporate tax rate is 21%, yet the average effective tax rate for S&P 500 companies was approximately 18% in 2022 due to deductions, R&D credits, and international income allocation. (Institute on Taxation and Economic Policy, 2023)',
     whenToUse: 'Use the Effective Tax Rate when reconciling EBT to Net Income, or when assessing the sustainability of a company\'s after-tax profitability. An unusually low effective rate should prompt investigation into whether it is sustainable (e.g. from permanent credits) or temporary (e.g. from a one-time deferred tax release).',
     examples: {
       headers: ['Company', 'EBT', 'Tax Expense', 'Effective Tax Rate', 'Statutory Rate'],
@@ -813,6 +931,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Enterprise Value (EV) is the total economic value of a company - what it would theoretically cost an acquirer to buy the entire business, including taking on its debt and receiving its cash. It is calculated as Market Capitalisation plus Total Debt minus Cash and Cash Equivalents.',
       'EV provides a capital-structure-neutral view of value: it does not matter whether a company has financed itself with debt or equity - the EV represents the value of the underlying business regardless. This makes EV the correct numerator when calculating valuation multiples like EV/EBITDA, EV/EBIT, and EV/Revenue, which are used in M&A and investment analysis.',
       'Market cap alone (Equity Value) is insufficient for comparing companies with different capital structures. A company with $100M market cap and $50M debt is actually worth $150M to an acquirer (who must assume the debt). Another company with $100M market cap and $50M in cash is worth only $50M net (the buyer gets $50M cash back). EV captures both of these correctly.',
+    ],
+    keyTakeaways: [
+      'Enterprise Value = Market Capitalisation + Total Debt minus Cash and Cash Equivalents.',
+      'Cash is subtracted because an acquirer receives it as part of the deal, reducing the net cost of the business.',
+      'EV is capital-structure-neutral and is the correct numerator for valuation multiples like EV/EBITDA and EV/EBIT.',
+      'Never divide EV by Net Income - that is the P/E ratio, which uses Equity Value (market cap) as the numerator, not EV.',
+      'Equity Value = EV minus Net Debt (Debt minus Cash); this bridge converts EV to the actual equity offer price in an M&A deal.',
+    ],
+    fastFact: 'The median EV/EBITDA multiple for U.S. public company acquisitions in 2022 was approximately 12.5x, according to S&P Global Market Intelligence, meaning acquirers paid roughly 12.5 years of EBITDA for the full businesses including net debt.',
+    beginnerExplain: [
+      'Imagine you want to buy a house listed at $400,000. But the house has a $200,000 mortgage you must take over, and there is $10,000 cash sitting in an account that transfers with the house. The true cost to you is $400,000 + $200,000 - $10,000 = $590,000. Enterprise Value works exactly like this: start with the market cap (the listing price), add the debt you take on, subtract the cash you receive. It is the true all-in cost of buying the business.',
     ],
     whenToUse: 'Use EV when computing valuation multiples for M&A, comparable company analysis (comps), or precedent transaction analysis. EV is always paired with an income metric that is also capital-structure-neutral - EBITDA, EBIT, or Revenue. Never divide EV by Net Income (that is the P/E ratio, which uses Equity Value).',
     examples: {
@@ -875,6 +1004,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'EV/EBITDA is the most widely used valuation multiple in M&A and private equity. Unlike the Price-to-Earnings (P/E) ratio, EV/EBITDA is capital-structure-neutral - both EV and EBITDA remove the effects of interest and tax, making it valid for comparing companies regardless of their debt levels or tax rates.',
       'The multiple varies significantly by industry, growth rate, and margin profile. High-growth, high-margin businesses (SaaS, pharma) trade at premium multiples. Mature, lower-margin businesses (manufacturing, retail) trade at lower multiples. The appropriate multiple for any business reflects the market\'s expectation of future EBITDA growth and margin sustainability.',
     ],
+    keyTakeaways: [
+      'EV/EBITDA = Enterprise Value / EBITDA; it answers how many years of current EBITDA the buyer is paying for the entire business.',
+      'It is capital-structure-neutral: both EV and EBITDA remove the effects of interest and tax, enabling valid comparisons across different debt levels.',
+      'Typical ranges: SaaS 10-25x, healthcare services 10-18x, manufacturing 5-9x, grocery/food retail 4-7x.',
+      'In M&A, NTM (Next Twelve Months) EBITDA is used because buyers pay for future performance; LTM (Last Twelve Months) is used for historical benchmarking.',
+      'Two companies with identical EV/EBITDA but different CapEx requirements are not equally valued - always also calculate EV/EBIT and EV/FCF to triangulate.',
+    ],
+    fastFact: 'The average EV/EBITDA multiple for technology sector acquisitions globally reached approximately 20x in 2021 before declining to around 14x in 2023 as rising interest rates compressed valuation multiples. (S&P Global Market Intelligence, 2023)',
+    beginnerExplain: [
+      'Imagine a corner shop earns $100,000 profit per year (EBITDA). If someone offers $800,000 to buy it, they are paying 8x EBITDA. The question the multiple answers is: how many years of current profits am I paying? An 8x deal pays back in 8 years at current earnings - assuming nothing changes. A 20x deal takes 20 years. Higher multiples make sense for businesses whose earnings are expected to grow rapidly, compressing the real payback period.',
+    ],
     whenToUse: 'Use EV/EBITDA when valuing a business for acquisition, benchmarking against public market comparables, or assessing exit values in a leveraged buyout model. Always use forward EBITDA (the next twelve months\'  estimate) for an acquisition context, and trailing EBITDA for historical comparisons.',
     examples: {
       headers: ['Industry', 'Typical EV/EBITDA range', 'Key driver of multiple'],
@@ -935,6 +1075,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'In absolute dollar terms, Gross Profit represents the pool of money available to cover all other business expenses and ultimately generate net profit. A business with $10M revenue and $7M COGS has $3M Gross Profit - $3M to cover SG&A, R&D, and debt service before generating net income.',
       'Gross Profit alone is useful but incomplete - it must be read alongside Gross Profit Margin (the percentage) to understand efficiency. A high absolute Gross Profit on a large revenue base may still represent a thin margin if COGS is proportionally high.',
     ],
+    keyTakeaways: [
+      'Gross Profit = Revenue minus COGS; it is the first profitability figure on the income statement, before operating expenses, interest, or tax.',
+      'It represents the pool of money available to cover all overhead, invest in growth, and ultimately generate net profit.',
+      'A negative Gross Profit (COGS exceeds Revenue) means the business sells products for less than they cost to produce - a critical unit economics failure.',
+      'Gross Profit must be read alongside Gross Profit Margin - absolute dollars can grow while the percentage margin shrinks if COGS grows faster than revenue.',
+      'For SaaS companies, Gross Profit is particularly high (60-80%+ margins) because the marginal cost of serving one more customer is near zero.',
+    ],
+    beginnerExplain: [
+      'Imagine you buy 10 shirts for $8 each ($80 total) and sell them for $15 each ($150 total). Your gross profit is $70. You have not paid your rent, your staff, or your transport yet - that comes later. Gross profit is just: what did the product itself earn before you factor in running the business?',
+      'The reason it is tracked first is that it tells you whether the core trade makes sense. If you were selling those shirts for $7 each (less than the $8 you paid), no amount of efficiency elsewhere would save you. Gross profit is the foundation everything else is built on.',
+    ],
     whenToUse: 'Use Gross Profit as the starting point for income statement analysis. Track it over time to see whether the absolute dollar amount is growing (a revenue growth driver) or shrinking (a pricing or cost problem). Use Gross Profit Margin for cross-company efficiency comparisons.',
     examples: {
       headers: ['Company', 'Revenue', 'COGS', 'Gross Profit', 'Gross Margin'],
@@ -993,6 +1144,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Gross Profit Margin is Gross Profit expressed as a percentage of Revenue. It measures what proportion of each revenue dollar remains after paying the direct costs of producing goods or services. A 40% Gross Profit Margin means 40 cents of every dollar of revenue is available to cover operating expenses and generate profit.',
       'Gross Profit Margin is the first and most fundamental test of a business\'s unit economics. It reflects pricing power (can the company charge a premium?), production efficiency (can it make things cheaply?), and input cost exposure (how vulnerable is it to raw material price increases?).',
       'Gross Profit Margin varies enormously by industry and business model. Software companies with near-zero marginal delivery costs can achieve 70–80%+ margins. Grocery retailers with thin mark-ups on commodity goods often achieve only 20–25%. Cross-industry comparison is therefore less meaningful than benchmarking within a sector.',
+    ],
+    keyTakeaways: [
+      'Gross Profit Margin = Gross Profit / Revenue x 100; it measures the percentage of each revenue dollar remaining after direct production costs.',
+      'Industry benchmarks: SaaS 65-80%, pharma 60-75%, specialty retail 35-55%, manufacturing 20-40%, grocery 20-30%, construction 15-25%.',
+      'A sudden unexplained improvement in gross margin should be investigated - it may reflect genuine efficiency gains or COGS reclassification to OpEx.',
+      'Three main levers for improving gross margin: raising prices, reducing input costs, and shifting the product mix toward higher-margin items.',
+      'Cross-industry comparisons of gross margin are misleading; always benchmark against direct sector peers.',
+    ],
+    fastFact: 'Apple\'s gross margin expanded from approximately 38% in 2019 to over 44% in fiscal year 2023, driven by a growing share of high-margin Services revenue (which carries 70%+ margins) within its overall product mix. (Apple 10-K, FY2023)',
+    beginnerExplain: [
+      'If you run a lemonade stand and earn $2 from selling a cup that cost $0.50 to make, your gross margin is 75% - you kept 75 cents of every revenue dollar after covering direct costs. If your competitor uses more expensive lemons and only keeps 50 cents, their gross margin is 50%. Same price, same cups sold, different unit economics.',
+      'Gross margin is the first test of whether a business model is inherently profitable at the unit level. A company with a very low gross margin needs enormous volume to survive - any rise in input costs can immediately threaten the entire business. A company with a high gross margin has far more room to invest, grow, and absorb cost shocks.',
     ],
     whenToUse: 'Use Gross Profit Margin to assess pricing power and production efficiency relative to industry peers. Track it over time to detect margin compression (rising input costs or pricing pressure) or expansion (cost reduction or pricing power gains). In due diligence, drill into what a company includes in COGS to ensure consistent definitions.',
     examples: {
@@ -1054,6 +1217,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Net Income (also called Net Profit, Net Earnings, or "the bottom line") is a company\'s profit after deducting every cost: COGS, operating expenses (SG&A, R&D), interest expense, and income tax. It is the final line of the income statement and represents what is left for shareholders after all obligations are met.',
       'Net Income flows into the balance sheet through Retained Earnings (if not distributed as dividends). For public companies, Net Income divided by shares outstanding gives Earnings Per Share (EPS) - the most widely followed profitability metric in equity markets.',
       'Net Income can be positive (profitable) or negative (a net loss). Sustained negative Net Income requires external financing (new debt or equity) to fund ongoing operations. Growth companies often run at a net loss deliberately, investing in future revenue at the expense of near-term profitability.',
+    ],
+    keyTakeaways: [
+      'Net Income = Revenue minus COGS, operating expenses, interest, and tax - the final "bottom line" representing what shareholders actually earn.',
+      'Net Income flows into Retained Earnings on the balance sheet when not distributed as dividends.',
+      'Dividing Net Income by shares outstanding gives Earnings Per Share (EPS), the most widely followed profitability metric in equity markets.',
+      'Net Income is the most susceptible earnings metric to accounting manipulation via revenue recognition timing, expense deferral, and impairment reversals.',
+      'Always cross-check Net Income against operating cash flow - a persistent gap between the two can signal earnings quality issues.',
+    ],
+    fastFact: 'Amazon reported negative or near-zero Net Income for most years between 2012 and 2017 despite growing revenue from roughly $61B to $178B, demonstrating how growth-stage companies deliberately trade near-term profitability for market share. (Amazon Annual Reports)',
+    beginnerExplain: [
+      'Imagine a food truck that earns $5,000 in a month from selling food. It pays $2,000 for ingredients (COGS), $1,500 for the driver and fuel (operating expenses), $200 in loan interest, and $150 in taxes. Net Income = $5,000 - $2,000 - $1,500 - $200 - $150 = $1,150. That $1,150 is what the truck owner actually keeps - the true bottom line after everything has been paid.',
+      'Net Income is the most complete measure of profitability, but it is also the easiest to distort. A company can delay expenses, recognise revenue early, or sell assets to boost a single year\'s Net Income. That is why analysts cross-check it against operating cash flow - actual cash does not lie.',
     ],
     whenToUse: 'Use Net Income to calculate Net Profit Margin, EPS, and return on equity (ROE). It is the most comprehensive measure of what shareholders actually earn from the business. For operational comparisons (stripping out financing and tax), use EBIT or EBITDA instead.',
     examples: {
@@ -1119,6 +1294,16 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Unlike Gross Profit Margin (which only deducts COGS) or EBITDA Margin (which strips out interest, tax, and D&A), Net Profit Margin hides nothing. A business that looks profitable at the gross margin level may be unprofitable at the net margin level if it carries excessive overhead or debt.',
       'Net Profit Margin is most meaningful within an industry, not across industries. Grocery retailers operating at 1–3% net margins are not necessarily worse businesses than software companies at 20–30% - they have different unit economics, capital requirements, and growth profiles. The margin must be evaluated in the context of return on equity and asset turnover.',
     ],
+    keyTakeaways: [
+      'Net Profit Margin = Net Income / Revenue x 100; it is the most comprehensive profitability ratio because it deducts every cost including interest and tax.',
+      'Industry benchmarks: SaaS 15-30%, financial services 20-35%, manufacturing 5-15%, retail 2-8%, grocery 1-4%.',
+      'Use normalised (adjusted) net margin over a 3-5 year period rather than a single year, because non-recurring items significantly distort annual figures.',
+      'Two companies with identical operations but different debt levels will show different Net Profit Margins because interest expense is included.',
+      'EBIT Margin is a better comparison for operational efficiency when capital structures differ; Net Profit Margin is most useful within a sector peer group.',
+    ],
+    beginnerExplain: [
+      'If a bakery earns $100,000 in revenue but pays $40,000 in ingredients, $30,000 in wages, $8,000 in rent, $5,000 in loan interest, and $3,000 in taxes, its net profit is $14,000 - a net margin of 14%. For every dollar of revenue, 14 cents end up as actual profit. A grocery store might have a 2% net margin on vastly more revenue; a software company might have 25%. Neither is inherently better - it depends on the industry\'s cost structure and asset requirements.',
+    ],
     whenToUse: 'Use Net Profit Margin to assess overall bottom-line efficiency, calculate EPS sensitivities in financial models, and compare profitability across peers within the same sector. It is the most relevant metric for shareholders focused on reported earnings rather than operational cash flow.',
     examples: {
       headers: ['Company type', 'Net Income', 'Revenue', 'Net Margin', 'Context'],
@@ -1178,6 +1363,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'OpEx is distinct from CapEx: CapEx is spending on long-lived assets (recorded on the balance sheet, expensed via depreciation), while OpEx is immediately expensed in the period incurred. This distinction matters for tax and for understanding the true cash cost of operating the business.',
       'The relationship between revenue growth and OpEx growth is critical to understanding operating leverage. If revenue grows faster than OpEx, operating leverage is positive - margins expand. If OpEx grows faster than revenue (as in aggressive growth investments), margins compress. Most growth company financial models include explicit assumptions about when OpEx will scale more slowly than revenue.',
     ],
+    keyTakeaways: [
+      'Operating Expenses appear between Gross Profit and Operating Profit (EBIT) on the income statement; they include SG&A, R&D, and depreciation of operating assets.',
+      'OpEx differs from COGS: COGS covers direct production costs that vary with output; OpEx covers overhead and period costs that do not directly scale with units produced.',
+      'When revenue grows faster than OpEx, operating leverage is positive and margins expand - the core dynamic of scaling a business.',
+      'Companies can temporarily suppress OpEx (cutting marketing, delaying R&D) to boost short-term margins, but this damages future growth.',
+      'Cloud computing has shifted many IT costs from CapEx (servers) to OpEx (subscriptions), reducing reported CapEx but increasing operating expenses.',
+    ],
+    beginnerExplain: [
+      'Think of a pizza restaurant. The cheese, dough, and tomato sauce that go into each pizza are COGS - they scale directly with how many pizzas you sell. The manager\'s salary, the restaurant\'s electricity bill, and your advertising spend are OpEx - they stay roughly the same whether you sell 50 or 150 pizzas a month. OpEx is the overhead that keeps the business running, not the direct cost of making the product.',
+      'The interesting thing about OpEx is what happens as you grow. If your revenue doubles but your manager\'s salary and rent stay the same, those costs become a smaller share of revenue - that is operating leverage working in your favor. It is why established businesses tend to have better margins than new ones: the fixed overhead is spread over more revenue.',
+    ],
     whenToUse: 'Analyse OpEx to understand cost structure and operating leverage. Break it into its components (SG&A, R&D) to understand where the business is investing. Track the OpEx-to-revenue ratio over time - declining ratios indicate improving efficiency; rising ratios require explanation (growth investment vs. cost inflation).',
     examples: {
       headers: ['OpEx component', 'Typical percentage of revenue', 'Nature'],
@@ -1236,6 +1432,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Operating Profit (also called EBIT - Earnings Before Interest and Tax, or Operating Income) is the profit generated from a company\'s core business operations after deducting COGS and all operating expenses, but before accounting for how the business is financed (interest) or taxed. It is the third major profit figure on an income statement, below Gross Profit and above EBT.',
       'Operating Profit is the clearest signal of how well management runs the core business, independent of the financing and tax decisions made at the corporate level. Two identical businesses - one debt-free and one heavily leveraged - will show the same Operating Profit but very different EBT and Net Income.',
       'Operating Profit is closely related to EBITDA, differing only by the inclusion of depreciation and amortization: EBITDA = Operating Profit + D&A. Operating Profit is a more conservative measure of performance because it treats depreciation as a real cost of using assets, which it is.',
+    ],
+    keyTakeaways: [
+      'Operating Profit, EBIT, and Operating Income are three names for the same metric: profit from core operations before interest and tax.',
+      'EBITDA = Operating Profit + D&A; Operating Profit is more conservative because it retains depreciation as a real cost of using assets.',
+      'Two businesses with identical operations but different debt levels show the same Operating Profit but very different EBT and Net Income.',
+      'Operating Profit Margin is preferred over EBITDA Margin when comparing companies with similar capital intensity and similar depreciation levels.',
+      'The gap between Gross Profit and Operating Profit equals total operating expenses (SG&A + R&D + D&A).',
+    ],
+    beginnerExplain: [
+      'Imagine two coffee shops that are otherwise identical - same revenue, same coffee costs, same rent and salaries. Shop A has no loans; Shop B borrowed money to renovate and pays $1,000 a month in interest. Both shops show the same Operating Profit because operating profit is calculated before loan interest. But Shop B will show lower pre-tax and after-tax profit because its interest payments are deducted later in the income statement.',
+      'This is why operating profit is useful for comparing how well a business is run, separate from how it was funded. It isolates the question: is the operation itself profitable? Financing choices come later.',
     ],
     whenToUse: 'Use Operating Profit when comparing the operational efficiency of businesses with similar capital intensity but different financing structures. It is preferred over EBITDA when asset intensity is similar across the peer group, and over Net Income when the goal is to isolate management\'s operational performance from financing and tax decisions.',
     examples: {
@@ -1300,6 +1507,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Operating Profit Margin sits between Gross Profit Margin (which only deducts COGS) and Net Profit Margin (which deducts everything). The gap between Gross Margin and Operating Margin reflects the weight of SG&A and R&D. The gap between Operating Margin and Net Margin reflects the cost of debt (interest) and the tax burden.',
       'The margin is capital-structure-neutral: a highly leveraged company and a debt-free company with identical operations will show the same Operating Profit Margin but different Net Profit Margins. This makes it a fair basis for operational benchmarking across peers with different financing histories.',
     ],
+    keyTakeaways: [
+      'Operating Profit Margin = Operating Profit (EBIT) / Revenue x 100; it is identical to EBIT Margin.',
+      'It is capital-structure-neutral: companies with different debt levels but identical operations show the same Operating Profit Margin.',
+      'Industry benchmarks: SaaS/cloud 20-35%, financial services 30-45%, pharma 20-30%, manufacturing 8-15%, retail 5-12%.',
+      'The gap between Gross Margin and Operating Margin reveals the weight of SG&A and R&D; the gap between Operating Margin and Net Margin reveals the cost of debt and taxes.',
+      'In high-D&A industries, Operating Profit Margin looks weaker than EBITDA Margin - check the D&A-to-revenue ratio before concluding the operations are underperforming.',
+    ],
+    beginnerExplain: [
+      'If a business earns $1,000,000 in revenue and its Operating Profit (after COGS and all overhead, but before paying interest and taxes) is $200,000, its Operating Profit Margin is 20%. This means 20 cents of every revenue dollar survive all the operating costs of running the business. The remaining 80 cents went to ingredients, staff, rent, and other day-to-day costs.',
+      'Think of Operating Profit Margin as the efficiency score for the business operations themselves - not for how it was financed or where it is headquartered. Two businesses in the same industry with very different Operating Margins are running their operations very differently, regardless of their debt.',
+    ],
     whenToUse: 'Use Operating Profit Margin to benchmark operational efficiency across companies with different capital structures or in cross-border M&A where tax rates differ. It is more conservative than EBITDA Margin (includes depreciation) and more comparable than Net Profit Margin (excludes financing and tax effects).',
     examples: {
       headers: ['Industry', 'Typical operating margin', 'Key driver'],
@@ -1360,6 +1578,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Every profitability ratio - Gross Margin, EBITDA Margin, Net Profit Margin - divides a profit figure by Revenue. Revenue is therefore the common denominator of business performance measurement. Growing revenue while maintaining or improving margins is the primary value creation path for most businesses.',
       'Revenue recognition rules (GAAP ASC 606, IFRS 15) determine when revenue is recorded. The principle is that revenue is recognised when a performance obligation is satisfied - not necessarily when cash is received. This creates the possibility of revenue being booked before cash is collected (accounts receivable) or after cash is received (deferred revenue).',
     ],
+    keyTakeaways: [
+      'Revenue (also called "the top line," sales, or turnover) is the total income earned from primary business activities before any costs are deducted.',
+      'Every profitability ratio - Gross Margin, EBITDA Margin, Net Margin - uses Revenue as the denominator.',
+      'Revenue is recognised when a performance obligation is satisfied (under ASC 606/IFRS 15), not when cash is received.',
+      'Recurring subscription revenue (SaaS) commands premium valuation multiples because it is predictable; transactional and project revenue is less visible and valued lower.',
+      'Revenue growth without gross margin expansion or positive unit economics is not inherently valuable - discounting or high acquisition costs can inflate revenue while destroying value.',
+    ],
+    fastFact: 'Global SaaS revenue reached approximately $195 billion in 2023, up from $31 billion in 2015, growing at a compound annual rate of roughly 26%, driven by the shift from perpetual licence to recurring subscription models. (Gartner, 2023)',
+    beginnerExplain: [
+      'Revenue is the easiest concept in finance: it is simply the total amount customers paid you for your products or services, before you subtract any costs. If a bakery sells 200 loaves at $5 each, its revenue is $1,000. If 50 of those customers are regulars who prepay monthly, that $250 is still revenue - it was earned by delivering the bread.',
+      'Revenue is called "the top line" because it literally sits at the top of the income statement. Every other financial metric - gross profit, operating profit, net income - is derived by subtracting costs from it. Growing revenue is the primary way most businesses create value, but only if each additional dollar of revenue leaves more profit behind after costs.',
+    ],
     whenToUse: 'Use Revenue as the starting point for every income statement analysis. Track its growth rate (year-over-year % change) as the primary measure of commercial momentum. Break it into components - by product, geography, customer segment, or channel - to understand quality, sustainability, and concentration risk.',
     examples: {
       headers: ['Revenue type', 'Example', 'Characteristics'],
@@ -1413,6 +1643,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'SG&A (Selling, General & Administrative expenses) is the collective label for all operating costs that are not directly related to producing goods or services. Selling expenses include the sales force, sales commissions, marketing, and customer acquisition costs. General & Administrative (G&A) expenses cover executive salaries, finance and legal functions, HR, IT infrastructure, office rent, and insurance.',
       'SG&A sits below Gross Profit on the income statement and is the primary driver of the gap between Gross Profit Margin and Operating Profit Margin. A business with 60% Gross Margin and 25% SG&A-to-revenue ratio will have a 35% Operating Margin. One with the same Gross Margin but 45% SG&A will have only 15% Operating Margin.',
       'SG&A is often the largest lever for margin improvement in mature businesses. Cost reduction programmes, shared service centres, and automation all target SG&A. In growth-stage companies, however, elevated SG&A is intentional - heavy sales and marketing investment to acquire customers and grow revenue faster than costs.',
+    ],
+    keyTakeaways: [
+      'SG&A (Selling, General & Administrative) covers all operating costs not directly tied to production - it appears below Gross Profit and above Operating Profit (EBIT) on the income statement.',
+      'The gap between Gross Profit Margin and Operating Profit Margin is driven entirely by SG&A (plus separately reported R&D in tech and pharma sectors).',
+      'A declining SG&A-to-revenue ratio as revenue grows signals positive operating leverage - fixed overhead is spreading across a larger base.',
+      'Selling expenses (sales force, marketing, CAC) are growth investments; G&A (finance, HR, legal, IT) is overhead - separating the two reveals whether SG&A is productive spend or administrative bloat.',
+      'SaaS companies routinely run SG&A at 50-80% of revenue during growth phases because customer acquisition costs (CAC) are expensed immediately while the resulting subscription revenue accrues over years.',
+    ],
+    beginnerExplain: [
+      'Think of SG&A as every cost your business incurs that is not directly making the product. If you run a bakery, the flour and the baker who bakes the bread are cost of goods sold. But the receptionist at the front desk, the Google Ads budget, the salesperson who visits restaurant clients, the accountant who handles taxes - those are all SG&A. They keep the business functioning and growing, but they do not go into each loaf of bread.',
+      'The reason SG&A matters is it tells you how efficiently a business converts its gross profit into operating profit. Two bakeries with the same 60% gross margin end up at very different operating profits if one spends 15% of revenue on admin and sales while the other spends 45%. SG&A is where most companies either win or lose the profitability battle once the product itself is established.',
     ],
     whenToUse: 'Analyse SG&A as a percentage of revenue to assess overhead efficiency. A declining SG&A-to-revenue ratio (as revenue grows) indicates positive operating leverage. Track the split between Selling (growth investment) and G&A (overhead) to understand whether SG&A is productive investment or administrative bloat.',
     examples: {
@@ -1473,6 +1714,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'R&D expense covers all costs directly associated with research (generating new knowledge) and development (converting that knowledge into products or processes). Under US GAAP (ASC 730), nearly all R&D costs must be expensed as incurred - meaning they reduce profit in the period they occur rather than being capitalised as an asset. This treatment depresses reported earnings in the current period even when R&D spending generates long-lived competitive advantages.',
       'R&D sits as a separate line item below Gross Profit on the income statement, alongside SG&A, and above Operating Profit (EBIT). Unlike COGS (which varies with production volume) and SG&A (which covers overhead and sales), R&D is a discretionary investment in future capability. A company can cut R&D to hit a short-term earnings target - but doing so sacrifices the product pipeline and long-term competitiveness.',
       'R&D intensity (R&D as a percentage of revenue) varies enormously by industry. Pharmaceutical and biotech companies may spend 15-25% of revenue on R&D to advance drug pipelines. Semiconductor companies run at 15-20%. Enterprise software runs at 10-20%. By contrast, consumer staples and retail may spend under 2%. When comparing EBIT margins across companies, always check whether differences in R&D intensity explain part of the gap.',
+    ],
+    keyTakeaways: [
+      'R&D expense covers research (generating new knowledge) and development (converting knowledge into products); under US GAAP (ASC 730), nearly all R&D is expensed immediately rather than capitalised as an asset.',
+      'R&D sits below Gross Profit alongside SG&A, so it reduces Operating Profit (EBIT) but does not affect Gross Margin - critical when comparing margins across R&D-intensive and non-R&D peers.',
+      'R&D intensity (R&D / Revenue) ranges from under 2% in consumer staples to 15-25% in pharmaceuticals and semiconductors; always compare within sector, not across industries.',
+      'Under IFRS (IAS 38), development costs (not research) may be capitalised if six specific criteria are met, creating a GAAP/IFRS divergence that inflates reported EBIT for IFRS-reporting peers.',
+      'Cutting R&D to hit a short-term earnings target immediately improves reported profit while quietly depleting the future product pipeline and competitive position.',
+    ],
+    fastFact: 'Global pharmaceutical R&D spending reached approximately $245 billion in 2022, up from $137 billion a decade earlier, reflecting the escalating cost of bringing new drugs through regulatory approval - a typical new drug now requires over $2 billion and 10-15 years from discovery to approval. (IQVIA Institute, 2023)',
+    beginnerExplain: [
+      'Imagine you run a bakery and you hire a baker specifically to experiment with new recipes - trying different ingredients, testing new ovens, developing a gluten-free line. Those wages do not go into the cost of today\'s bread. Instead, the entire experimentation cost is written off as an expense immediately, even though the resulting recipe might generate revenue for years.',
+      'That is essentially what R&D expense is: money a company spends on experiments that might - or might not - become profitable products in the future. Under US accounting rules, almost all R&D is expensed immediately, which depresses current profits even when the spending is building real future value. This is why pharmaceutical companies can report operating losses while simultaneously building drug pipelines worth tens of billions of dollars.',
     ],
     whenToUse: 'Compare R&D-to-revenue ratios across direct peers to assess investment intensity and strategic posture. When analysing EBIT, consider what profitability would look like at a lower R&D level - but recognise this would reduce future innovation. In valuation, some analysts use R&D capitalisation models to estimate the intangible asset value of accumulated R&D investment on the balance sheet.',
     examples: {
@@ -1536,6 +1789,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Positive Working Capital means a company has more short-term assets than short-term obligations - generally a sign of financial health. Negative Working Capital (more liabilities than current assets) can signal liquidity stress, but it is actually the norm in some business models: retailers like supermarkets collect cash from customers immediately while paying suppliers on 30–60 day terms, generating negative Working Capital as a structural feature.',
       'Changes in Working Capital affect operating cash flow. If accounts receivable grows faster than revenue (customers paying more slowly), Working Capital consumes cash. If accounts payable grows (suppliers extending terms), Working Capital releases cash. This is why a company can have positive net income but negative operating cash flow if Working Capital is building up.',
     ],
+    keyTakeaways: [
+      'Working Capital = Current Assets - Current Liabilities; it measures a company\'s net short-term financial resources available for the next 12 months of operations.',
+      'Negative Working Capital is not always bad - retailers and subscription businesses that collect cash before paying suppliers use it as interest-free funding, a structural feature rather than a flaw.',
+      'Growing Working Capital consumes cash even if the business is profitable; a fast-growing company can face a cash crisis - the "Working Capital trap" - while its income statement looks healthy.',
+      'The Cash Conversion Cycle (DSO + DIO - DPO) provides a granular measure of how many days of cash are tied up in the operating cycle.',
+      'In M&A, Working Capital normalisation defines the target level expected at closing; deviations above or below trigger purchase price adjustments - a major deal mechanic in most transactions.',
+    ],
+    fastFact: 'Amazon has operated with negative working capital throughout most of its history - in 2022, its current liabilities exceeded current assets by over $30 billion - because it collects from customers days before paying suppliers, effectively using supplier credit as interest-free funding. (Amazon 10-K, 2022)',
     whenToUse: 'Monitor Working Capital trends to assess liquidity and cash conversion efficiency. Use the Cash Conversion Cycle (Days Sales Outstanding + Days Inventory Outstanding − Days Payables Outstanding) for a more granular view. In M&A, analyse Working Capital normalisation - the target Working Capital level that a buyer would expect at closing.',
     examples: {
       headers: ['Current Asset / Liability', 'Typical range (% of revenue)', 'What it signals'],
@@ -1597,6 +1858,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The gap between EBITDA and FCF can be vast in capital-intensive or fast-growing businesses. A manufacturer with strong EBITDA that is simultaneously expanding capacity can have negative FCF for years. A software company with minimal CapEx and stable working capital converts nearly all of its EBITDA into cash.',
       'FCF represents the discretionary cash available to the firm after it has paid all operating costs and reinvested in its business. This cash can be returned to equity holders via dividends or buybacks, used to repay debt, or deployed into acquisitions. It is the purest measure of economic value generation available from public financial statements.',
     ],
+    keyTakeaways: [
+      'Free Cash Flow (FCF) = Operating Cash Flow - Capital Expenditure; it is the cash remaining after the business has funded all reinvestment required to maintain and grow its asset base.',
+      'EBITDA and FCF can diverge enormously: CapEx, working capital investment, and cash taxes are the three main claims that separate reported EBITDA from actual cash generation.',
+      'FCF yield (FCF / Market Capitalization) is a valuation metric comparable to earnings yield but far more resistant to accounting manipulation because it is anchored to actual cash movements.',
+      'Asset-light businesses (SaaS, professional services) typically convert 70-90% of EBITDA to FCF; capital-intensive businesses (utilities, manufacturing) may convert only 15-30% after heavy equipment investment.',
+      'If CapEx is persistently below depreciation, the business may be under-investing - near-term FCF looks high while the underlying asset base quietly deteriorates.',
+    ],
+    fastFact: 'Alphabet (Google) generated approximately $69 billion in free cash flow in 2023, representing a FCF margin of roughly 23% on $307 billion of revenue - illustrating the exceptional cash conversion of asset-light digital advertising and cloud businesses. (Alphabet 10-K, 2023)',
     whenToUse: 'Use FCF - rather than net income or EBITDA - when you want to assess how much economic value a business is actually creating for its owners after accounting for reinvestment requirements. Use FCF yield (FCF / Market Cap) as a valuation metric comparable to earnings yield but more resistant to accounting manipulation. Use FCF when stress-testing a leveraged company\'s ability to service debt, since interest and principal must be paid in cash, not accounting profit.',
     examples: {
       headers: ['Company type', 'EBITDA', 'CapEx', 'ΔWorking Capital', 'Cash taxes', 'FCF', 'FCF / EBITDA'],
@@ -1655,6 +1924,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Operating Cash Flow (OCF) is the cash generated by a company\'s core business operations in an accounting period - before any capital expenditure or financing activities. It appears as the subtotal of the "Cash from Operating Activities" section of the three-part cash flow statement. The starting point is net income; non-cash charges such as depreciation and amortisation are added back because they reduced reported income but consumed no cash; changes in working capital accounts (receivables, inventory, payables) are then adjusted because cash collection and payment timing differs from when revenue and expenses are recognised under accrual accounting.',
       'The core equation is OCF = Net Income + Depreciation & Amortisation - Increase in Working Capital. Working capital changes are the most variable and often misunderstood component. When receivables grow (more sales on credit, not yet collected), cash is consumed even though revenue is already booked - OCF falls below net income. When a company collects subscriptions in advance, deferred revenue (a liability) rises and OCF exceeds net income. Inventory build, payables stretch, and prepaid expenses all affect OCF without appearing on the income statement.',
       'OCF is the input for Free Cash Flow: FCF = OCF - CapEx. It is also used independently to test quality of earnings. An OCF-to-Net Income ratio consistently above 1.0x indicates cash earnings are exceeding accrual earnings - a mark of financial quality. A ratio persistently below 0.8x in a mature business signals that accrual profits may be overstated relative to actual cash generation.',
+    ],
+    keyTakeaways: [
+      'Operating Cash Flow (OCF) = Net Income + Depreciation & Amortisation - Increase in Working Capital; it measures actual cash from core operations before capital expenditure or financing.',
+      'The OCF-to-Net Income ratio is the simplest quality-of-earnings check: consistently above 1.0x signals strong cash conversion; persistently below 0.8x in a mature business suggests accrual profits may be overstated.',
+      'OCF is not the same as Free Cash Flow: FCF = OCF - CapEx; for capital-intensive businesses, strong OCF can still produce thin FCF after heavy equipment spending.',
+      'Subscription businesses collecting in advance generate OCF above net income because deferred revenue (a liability) rises - this is a positive quality signal, not a distortion.',
+      'Accounts payable stretching temporarily boosts OCF by delaying cash outflows, but if Days Payable Outstanding keeps extending each quarter, the inflated OCF will eventually reverse.',
     ],
     beginnerExplain: ['Think of OCF as the cash that actually lands in your business bank account from running the business, before you buy any equipment. Your income statement might show a $50,000 profit for the month, but if $30,000 of that is sitting in unpaid customer invoices, only $20,000 arrived as actual cash. OCF captures that difference: it adjusts accounting profit for items that were counted as income or cost but did not yet move as cash.'],
     whenToUse: 'Use OCF to verify that reported net income is backed by real cash generation - the OCF-to-Net Income ratio is the simplest quality-of-earnings check available from public financials. Use it as the starting point for FCF analysis: once you know how much cash operations produce, subtract CapEx to find what is truly free. Compare OCF trends over time against EBITDA trends: if EBITDA grows but OCF does not, working capital is absorbing the earnings growth - often a warning sign in fast-growing businesses.',
@@ -1718,6 +1994,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Fractions are classified by the relationship between numerator and denominator. A proper fraction has a numerator smaller than the denominator ($$\\frac{3}{4}$$) and represents a value less than 1. An improper fraction has a numerator equal to or greater than the denominator ($$\\frac{7}{4}$$) and represents 1 or more. A mixed number combines a whole-number part with a proper fraction ($$1\\frac{3}{4}$$) and is the human-readable form of an improper fraction.',
       'Arithmetic with fractions requires attention to the denominator. Multiplication and division operate directly on numerators and denominators. Addition and subtraction require a common denominator first - the least common denominator (LCD) is the smallest integer divisible by all denominators in the expression.',
     ],
+    keyTakeaways: [
+      'A fraction a/b represents a part of a whole; the denominator defines each equal part\'s size, the numerator counts how many parts are taken.',
+      'Fractions are exact - unlike decimals, which may require infinite digits for values like 1/3, a fraction represents the quantity precisely without rounding.',
+      'Proper fractions (numerator < denominator) have a value less than 1; improper fractions (numerator ≥ denominator) have a value of 1 or more; mixed numbers (e.g., 2¾) express the same as improper fractions in human-readable form.',
+      'Multiplication and division operate directly on numerators and denominators; addition and subtraction require a common denominator first.',
+      'Adding fractions by adding both numerators AND both denominators (1/3 + 1/4 = 2/7) is the most common fraction error - the correct result is 7/12 after finding the LCD.',
+    ],
+    beginnerExplain: [
+      'Think of a fraction as cutting a pizza into equal slices. The denominator tells you how many slices the whole pizza is divided into; the numerator tells you how many slices you have. If the pizza is cut into 8 slices and you have 3, you have 3/8 of the pizza.',
+      'The reason you cannot add fractions by just adding top and bottom is that the slices are different sizes. Adding 1/4 + 1/3 is like adding a quarter-slice to a third-slice - they are not the same size. You first need to recut everything into equal pieces (find a common denominator) before you can count the total. For 1/4 + 1/3, the common denominator is 12: 3/12 + 4/12 = 7/12.',
+    ],
     whenToUse: 'Use fractions when exact rational representation is required and rounding is unacceptable - engineering tolerances, probability calculations, and algebraic manipulation all benefit from fractions over decimals. Use decimals when inputting values into digital systems or when communicating measurements where decimal notation is the convention.',
     examples: {
       headers: ['Type', 'Example', 'Decimal', 'Notes'],
@@ -1771,6 +2058,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A percentage is a dimensionless ratio expressed as a fraction of 100. The word derives from the Latin "per centum," meaning "by the hundred." It is the universal language for expressing proportions because it places all comparisons on a common scale - 40 out of 80 and 50 out of 100 are both immediately legible as 50% without further calculation.',
       'Percentages, decimals, and fractions are three representations of the same underlying ratio. A percentage divides the numerator by the denominator and multiplies by 100; a decimal divides without the multiplication; a fraction leaves the division unexpressed. Converting between them is routine, but context determines which form is most communicable: financial reports favour percentages, engineering calculations favour decimals, and exact computation favours fractions.',
       'A critical property of percentages is their asymmetry under reversal. A 50% increase followed by a 50% decrease does not return to the original value - it leaves you at 75% of the start, because each percentage is applied to a different base. Understanding base effects is essential for interpreting compounding, discounts, and sequential changes correctly.',
+    ],
+    keyTakeaways: [
+      'A percentage is a ratio expressed as a fraction of 100; it places all proportions on a common scale so that comparisons across different-sized totals are immediately legible.',
+      'Percentages, decimals, and fractions are equivalent representations of the same ratio - choose the form that best communicates to your audience.',
+      'A 50% increase followed by a 50% decrease does not return to the original value; the result is 75% of the start because each percentage applies to a different base.',
+      'The base matters every time: always identify what the "100%" reference is before performing or interpreting any percentage calculation.',
+      'Percentages can exceed 100% (when the part is larger than the whole) and can be negative (negative returns, values below a reference point).',
+    ],
+    beginnerExplain: [
+      'A percentage is just a way of saying "out of 100." If 30 students out of 120 passed a test, divide 30 by 120 (which gives 0.25) and multiply by 100 to get 25%. You have converted "30 out of 120" into a number everyone can instantly compare - regardless of how big the class is.',
+      'That standardization is the whole point of percentages: they make proportions from completely different-sized groups directly comparable. A 25% pass rate in a class of 120 and a 25% pass rate in a class of 4,000 describe the same proportion, even though the absolute numbers are completely different.',
     ],
     whenToUse: 'Use percentages when communicating proportions to a general audience or when comparing parts of different-sized wholes on a common scale. Use decimals when inputting values into formulas or calculations. Use fractions when exact rational representation is required without rounding error.',
     examples: {
@@ -1826,6 +2124,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'This directionality is what distinguishes percentage change from percentage difference. Percentage change has a clear temporal or causal order - there is a "before" and an "after." When that order does not exist (two independent measurements, two simultaneous observations), percentage difference using the average as the base is the appropriate metric.',
       'Sequential percentage changes do not add linearly. A 30% increase followed by a 20% decrease yields a net change of 4% - not 10% - because the second change is applied to the already-modified value. Percentage changes must be multiplied as growth factors (1.30 × 0.80 = 1.04) rather than summed.',
     ],
+    keyTakeaways: [
+      'Percentage change = (New - Old) / |Old| × 100; the original value anchors the denominator and gives the result its direction: positive = increase, negative = decrease.',
+      'Sequential percentage changes multiply as growth factors, not add: a 30% increase followed by a 20% decrease yields +4%, not +10% (1.30 × 0.80 = 1.04).',
+      'Percentage change is undefined when the original value is zero (division by zero); report the absolute change only in that case.',
+      'Percentage change is asymmetric: the change from 80 to 100 is +25%, but from 100 back to 80 is -20% - each percentage uses a different base.',
+      'Use percentage change when there is a clear reference point (a prior period, a baseline, an original value); use percentage difference when neither value is privileged.',
+    ],
+    beginnerExplain: [
+      'Percentage change tells you how much something grew or shrank relative to where it started. The starting value is always the yardstick. If your salary goes from $2,000 to $2,500, the increase is $500. Divide that by the original $2,000: 500 ÷ 2,000 = 25%.',
+      'If you mistakenly divided by the new salary ($2,500) you would get 20% - a different answer. The starting point is the only fair reference because that is what you were actually comparing against. This same principle explains why a 50% increase followed by a 50% decrease does not net to zero: the second 50% is taken from the larger, new number.',
+    ],
     whenToUse: 'Use percentage change when there is a clear reference point - a prior period, a baseline measurement, or an original value - and you want to express how much it has grown or shrunk. Use percentage difference instead when comparing two values with no defined starting point. Use percentage points when comparing two percentage figures directly.',
     examples: {
       headers: ['Scenario', 'Old value', 'New value', 'Calculation', 'Result'],
@@ -1878,6 +2187,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A percentage decrease is a special case of percentage change where the new value is strictly less than the original. It expresses how much a quantity has fallen relative to its starting point: $$\\text{Percentage Decrease} = \\frac{\\text{Old} - \\text{New}}{\\text{Old}} \\times 100$$ The result is always a positive number representing the magnitude of the decline.',
       'The original value always anchors the denominator. This means the largest possible percentage decrease is 100% - when a value falls to zero. A value cannot decrease by more than 100% of itself, because there is nothing left to remove. Statements like "profits fell 150%" are mathematically incoherent unless the starting value was already negative.',
       'Because the base shifts after each change, percentage decreases do not undo percentage increases of the same magnitude. A 33.3% decrease exactly reverses a 50% increase, not a 33.3% increase. Reversing a percentage increase always requires a smaller percentage decrease.',
+    ],
+    keyTakeaways: [
+      'Percentage decrease = (Old - New) / Old × 100; the result is always positive, expressing the magnitude of the decline relative to the original value.',
+      'The maximum possible percentage decrease for a positive original value is 100% (when the value falls to zero); a quantity cannot decrease by more than 100% of itself.',
+      'To find the original value after a known decrease: Original = New / (1 - Decrease% / 100); e.g., a price of $80 after a 20% decrease started at $80 / 0.80 = $100.',
+      'Reversing a percentage increase always requires a smaller percentage decrease: to undo a 25% increase, you need only a 20% decrease (25 / 125 × 100 = 20%).',
+      'When a value crosses from positive to negative, the standard formula breaks down conceptually; always report the absolute change alongside the percentage in those cases.',
+    ],
+    beginnerExplain: [
+      'A percentage decrease answers: "by what fraction of the original did it shrink?" If a $100 jacket goes on sale for $75, the decrease is $25. Divide that by the original $100 - not the sale price - to get 25%.',
+      'The original is always the denominator because that is what the new price is being compared against. This also explains why a 50% increase followed by a 50% decrease does not return to the start: the second 50% is calculated from the higher new price, so it removes a bigger absolute amount than the increase added.',
     ],
     whenToUse: 'Use percentage decrease when quantifying losses, declines, or reductions where the original (higher) value is the reference point. Pairing the percentage decrease with the absolute change prevents misreading - a 50% decrease on a small number is not the same impact as a 10% decrease on a large number.',
     examples: {
@@ -1933,6 +2253,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The symmetry property is what distinguishes percentage difference from percentage change. Percentage change is asymmetric: the change from 80 to 100 is +25%, but the change from 100 to 80 is −20%. Percentage difference between 80 and 100 is 22.2% regardless of order. Use this when symmetry is analytically correct - comparing two lab measurements, two regional prices, or two competing products.',
       'Percentage difference does not convey direction. It is always expressed as a positive number representing the magnitude of the gap. If direction (which is larger) matters, state it separately as an observation alongside the percentage difference figure.',
     ],
+    keyTakeaways: [
+      'Percentage difference uses the arithmetic mean as the denominator: |V1 - V2| / ((V1 + V2) / 2) × 100; swapping V1 and V2 gives the same answer.',
+      'The result is always positive and carries no direction; if direction matters, state which value is larger separately alongside the percentage difference figure.',
+      'Use percentage difference when neither value has a privileged role as "original" - two simultaneous measurements, two independent groups, two competing suppliers.',
+      'Do not use percentage difference when one value is a baseline, prior period, or standard; in those cases, percentage change (with the reference as denominator) is correct.',
+      'Percentage change is asymmetric (from 80 to 100 is +25%; from 100 to 80 is -20%); percentage difference is symmetric (22.2% either way) - choose based on whether your comparison has a natural direction.',
+    ],
+    beginnerExplain: [
+      'Imagine comparing the price of the same product at two stores, neither of which is the "original" or "correct" price. If Store A charges $90 and Store B charges $110, which store do you use as the base? Percentage difference solves this by using the average ($100) as the base: |$110 - $90| / $100 = 20%.',
+      'This way it does not matter which store you call "first" - you always get 20%. It is the fair midpoint comparison for when neither value has more authority than the other. Whenever there is a natural before-and-after (a price change over time, a salary raise), use percentage change instead.',
+    ],
     whenToUse: 'Use percentage difference when comparing two values with no defined temporal or causal order - two prices from different suppliers, two sensor readings, two survey results from independent groups. Use percentage change instead when one value is clearly the starting point and the other is an outcome or later measurement.',
     examples: {
       headers: ['Value 1', 'Value 2', 'Absolute difference', 'Mean', 'Percentage difference'],
@@ -1986,6 +2317,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The choice of base - the original value - is what makes percentage increase a relative measure rather than an absolute one. A $10 increase on a $20 item (50% increase) communicates something very different from a $10 increase on a $1,000 item (1% increase), even though the absolute gain is identical.',
       'Percentage increases compound multiplicatively. If a value increases by 20% and then by 30%, the combined effect is not 50% but 56%, because the second increase applies to the already-enlarged base: 1.20 × 1.30 = 1.56. For small percentages the difference is negligible, but for large percentages or long time horizons the compounding effect becomes significant.',
     ],
+    keyTakeaways: [
+      'Percentage increase = (New - Old) / Old × 100; the result is always positive, expressing growth relative to the original (lower) starting value.',
+      'A 100% increase means the value has doubled; a 200% increase means it has tripled - "increase by N%" means the multiplier is (1 + N/100).',
+      'Percentage increases compound multiplicatively: a 20% increase followed by a 30% increase yields +56%, not +50% (1.20 × 1.30 = 1.56).',
+      'Reversing a percentage increase always requires a smaller percentage decrease: to undo a 25% increase you need a 20% decrease (formula: P / (100 + P) × 100).',
+      'Use CAGR when growth compounds over multiple periods to account for the multiplicative nature of sequential percentage increases.',
+    ],
+    beginnerExplain: [
+      'A percentage increase tells you how much bigger something got relative to where it started. A $500 item rising to $600 is a $100 increase. Divide by the original $500 to get 20%. The key word is "original" - you always divide by what it was before, not what it became.',
+      'This is why a 50% increase and a 50% decrease do not cancel out: the decrease is calculated from the higher new value, so it removes a larger absolute amount than the increase added. Starting at $100, a 50% increase gives $150. A 50% decrease on $150 gives $75 - a net loss of 25%, not zero.',
+    ],
     whenToUse: 'Use percentage increase when reporting growth, gains, or improvements where the original (lower) value is the natural reference point. Use it when communicating with a non-technical audience who needs context for absolute changes. When comparing growth across different-sized bases, percentage increase is the fair metric.',
     examples: {
       headers: ['Original value', 'New value', 'Absolute increase', 'Percentage increase'],
@@ -2038,6 +2380,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A percentage point (pp) is the arithmetic difference between two percentage values. If a central bank raises its benchmark rate from 3% to 5%, the increase is 2 percentage points. This is a unit of measurement, not a relative change. It is distinct from saying the rate increased "by 2%" - that phrasing would mean 2% of the original 3%, which equals 0.06 percentage points, a fundamentally different magnitude.',
       'The confusion between percentage points and percentage change is pervasive in journalism, politics, and business reporting, and it materially changes the meaning of a statement. An interest rate rising from 1% to 2% is a 1 percentage point increase but a 100% relative increase. Whether you use percentage points or percentage change can make the same event appear trivially small or dramatically large.',
       'Percentage points are dimensionless and absolute - they represent the raw difference on the percentage scale. They are most useful when the underlying percentages are of the same type and are being compared directly, such as comparing rates across time or groups.',
+    ],
+    keyTakeaways: [
+      'A percentage point (pp) is the arithmetic difference between two percentage values: going from 3% to 5% is a 2 pp increase, not a "2% increase."',
+      'A rise from 1% to 2% is simultaneously a 1 pp increase and a 100% relative increase - two completely different descriptions of the same event.',
+      'One basis point equals 0.01 percentage points; central banks and bond markets use basis points (bps) to eliminate the ambiguity between percentage points and percentage change.',
+      'Use percentage points when the absolute gap between two rates matters; use percentage change when expressing how much a rate has grown relative to its own prior level.',
+      'In media and political reporting, "the rate increased by 2%" almost always means 2 percentage points - the ambiguity causes widespread misreading of economic and financial data.',
+    ],
+    beginnerExplain: [
+      'Percentage points measure the gap between two percentages as a simple subtraction. If unemployment falls from 6% to 4%, it fell by 2 percentage points. But it also fell by 33% relative to its previous level (2 ÷ 6 = 33%). These are two completely different statements about the same event.',
+      'The confusion matters enormously in the real world. "Inflation fell by 2%" could mean it dropped from 5% to 4.9% (barely noticeable) or from 5% to 3% (very significant), depending on whether "2%" means a 2 percentage point drop or a 2% relative decline. Saying "2 percentage points" removes that ambiguity entirely.',
     ],
     whenToUse: 'Use percentage points when you want to express the arithmetic gap between two percentage values without implying a relative magnitude. Use percentage change when expressing how much one percentage has grown or shrunk relative to its own original level. Ideally, report both for full context.',
     examples: {
@@ -2099,6 +2452,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The fundamental property of a proportion is the cross-multiplication rule: if $$\\frac{a}{b} = \\frac{c}{d}$$, then $$a \\times d = b \\times c$$. This allows any one unknown to be solved as long as the other three values are known. Direct proportion (as x increases, y increases proportionally) is distinguished from inverse proportion (as x increases, y decreases proportionally, so that x × y = k).',
       'Proportional reasoning is one of the most broadly applicable mathematical skills across disciplines. It underlies dosage calculation in medicine, stress-load analysis in engineering, scaling in architecture, and price normalisation in economics.',
     ],
+    keyTakeaways: [
+      'A proportion is a statement that two ratios are equal: a/b = c/d; it is an equation, not just an expression - a single ratio alone is not a proportion.',
+      'The cross-multiplication rule: if a/b = c/d, then a × d = b × c; use this to solve for any one unknown when the other three values are known.',
+      'Direct proportion: both quantities increase or decrease together at a constant ratio. Inverse proportion: one increases as the other decreases, with a constant product (x × y = k).',
+      'Proportions are the foundation of recipe scaling, unit conversion, map reading, drug dosage calculation, and similar triangle geometry.',
+      'Applying a direct proportion to an inverse relationship is the most common error: if 4 pumps drain a tank in 6 hours, doubling the pumps halves the time (not doubles it).',
+    ],
+    beginnerExplain: [
+      'A proportion is two fractions set equal to each other: "this rate here equals that rate there." If a recipe uses 2 cups of flour for 4 servings and you want 10 servings, write 2/4 = x/10 and solve for x.',
+      'Cross-multiply: 2 × 10 = 4 × x, so x = 20/4 = 5 cups. The cross-multiplication trick works because if two fractions are truly equal, their cross-products must be equal too - it is the mathematical equivalent of saying "the same proportion, just scaled up." Once you have set up the proportion correctly, you can always solve for the missing value.',
+    ],
     whenToUse: 'Use direct proportion when two quantities grow or shrink together at a constant rate. Use inverse proportion when one quantity increases as the other decreases at a constant product. When scaling a quantity by a known ratio - recipe scaling, map reading, currency conversion - set up a proportion and solve for the unknown term via cross-multiplication.',
     examples: {
       headers: ['Application', 'Known ratio', 'Scaled ratio', 'Answer'],
@@ -2152,6 +2516,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Phi (φ), also called the golden ratio, is the unique positive irrational number defined by the proportion $$\\frac{a+b}{a} = \\frac{a}{b} = \\varphi$$. Its exact value is $$\\varphi = \\frac{1 + \\sqrt{5}}{2} \\approx 1.6180339887\\ldots$$ This self-referencing property - a ratio that equals its own reciprocal plus one - produces a number with no exact fractional representation and no repeating decimal digits.',
       'φ satisfies the quadratic identity $$\\varphi^2 = \\varphi + 1$$, the only positive number for which this holds. Two remarkable consequences follow. Its square (φ² ≈ 2.618) equals φ + 1. Its reciprocal (1/φ ≈ 0.618) equals φ - 1. This means 1/φ and φ share the same decimal part (0.6180339887...), a property unique to φ among all real numbers.',
       'φ emerges from the Fibonacci sequence (1, 1, 2, 3, 5, 8, 13, 21, 34, 55...) through consecutive ratios. The ratios 13/8 = 1.625, 21/13 ≈ 1.615, 34/21 ≈ 1.619, 55/34 ≈ 1.6176 oscillate above and below φ, converging exponentially. The error shrinks by a factor of φ² ≈ 2.618 with each step. This connection to additive growth explains why φ appears in plant spirals, pine cone scales, and sunflower seed arrangements.',
+    ],
+    keyTakeaways: [
+      'Phi (φ) ≈ 1.6180339887...; it is the only positive number satisfying φ² = φ + 1 and the self-referencing ratio (a+b)/a = a/b = φ.',
+      'The reciprocal of φ equals φ - 1 ≈ 0.618, meaning φ and 1/φ share the exact same decimal digits - a property unique to φ among all real numbers.',
+      'Fibonacci ratios (e.g., 55/34 ≈ 1.6176) converge exponentially to φ, with the error shrinking by a factor of φ² ≈ 2.618 with each successive Fibonacci pair.',
+      'Claims that ancient architecture (the Parthenon, the Great Pyramid) was deliberately built using φ are disputed by modern scholars - approximate matches are likely coincidental.',
+      'A golden rectangle has sides in the ratio 1:φ; removing the largest square from one end always leaves another golden rectangle, generating an infinite self-similar logarithmic spiral.',
+    ],
+    beginnerExplain: [
+      'The golden ratio is a number (about 1.618) with a remarkable self-referencing property: divide a line into two parts so that the longer-to-shorter ratio equals the ratio of the whole line to the longer part, and you get φ. It is like a proportion that perfectly reproduces itself.',
+      'It shows up naturally in the Fibonacci sequence (1, 1, 2, 3, 5, 8, 13, 21...) because consecutive Fibonacci numbers have a ratio that gets closer and closer to φ - 89/55 ≈ 1.618. Plants use this spacing pattern when growing seeds and leaves to pack them most efficiently. For practical design, a rectangle with sides in the ratio 1:1.618 has proportions that many people find naturally balanced.',
     ],
     whenToUse: 'Use φ when you need proportionally balanced dimensions. Given the longer side (a), divide by φ to get the shorter side (b = a/φ ≈ 0.618a). Given the shorter side, multiply by φ to get the longer. In typography, multiplying the body text size by φ yields a heading size with clear visual hierarchy. In web layout, a 38%:62% column split closely approximates φ. In mathematics, φ appears in regular pentagon diagonals, icosahedral geometry, and continued fraction representations.',
     examples: {
@@ -2239,6 +2614,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A ratio does not carry information about absolute magnitudes - only proportions. A 3:1 ratio describes a recipe with 3 cups flour to 1 cup sugar, a business with 3 assets for every 1 unit of liability, or a sample with 3 red marbles to 1 blue marble. The underlying scale is irrelevant to the ratio itself.',
       'Ratios are expressed in simplest form by dividing both terms by their greatest common divisor. The ratio 12:8 simplifies to 3:2. When more than two quantities are compared, extended ratios (a:b:c) are used - a concrete mix of 1:2:4 (cement:sand:gravel) retains the same interpretation: proportional relationships among all listed quantities.',
     ],
+    keyTakeaways: [
+      'A ratio a:b expresses the relative sizes of two same-unit quantities; both terms must share the same unit for the ratio to be dimensionless.',
+      'A ratio expresses proportion only - it carries no information about absolute magnitudes; a 3:1 ratio is the same proportional relationship regardless of scale.',
+      'Simplify ratios by dividing all terms by their greatest common divisor (GCD): 12:8 simplifies to 3:2.',
+      'Order matters and is not interchangeable: a debt-to-equity ratio of 3:1 represents a fundamentally different capital structure from 1:3.',
+      'When quantities have different units, the result is a rate (km per hour), not a ratio - the distinction matters in scientific and financial analysis.',
+    ],
+    beginnerExplain: [
+      'A ratio is a comparison that says "for every X of this, there is Y of that." A recipe with a 3:1 flour-to-sugar ratio means 3 cups of flour for every 1 cup of sugar. The ratio does not tell you how large the batch is - it only captures the proportion.',
+      'You could make a tiny batch (3 tablespoons flour, 1 tablespoon sugar) or a giant batch (3 kg flour, 1 kg sugar) and the ratio stays the same. The denominator in a ratio does not need to be the "total" - that is what makes a ratio different from a fraction, where the denominator represents the whole.',
+    ],
     whenToUse: 'Use ratios when comparing the relative sizes of two or more same-unit quantities and the proportion is what matters, not the absolute values. Use a fraction when expressing a part-to-whole relationship. Use a rate when the quantities have different units (e.g., distance per time). Use a percentage when communicating a proportion to a general audience.',
     examples: {
       headers: ['Context', 'Ratio', 'Interpretation'],
@@ -2292,6 +2678,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The reciprocal of a fraction a/b is b/a - formed by swapping numerator and denominator. For whole numbers, the reciprocal of n is 1/n. Every non-zero number has exactly one reciprocal, and a number multiplied by its reciprocal always equals 1: $$\\frac{a}{b} \\times \\frac{b}{a} = \\frac{ab}{ab} = 1$$ Zero has no reciprocal because 1/0 is undefined.',
       'Reciprocals are the foundation of fraction division. Dividing by any fraction is identical to multiplying by its reciprocal: $$\\frac{a}{b} \\div \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c}$$ The keep-change-flip method taught in school is simply a name for this reciprocal substitution - keep the first fraction, change ÷ to ×, flip the second fraction.',
       'For negative fractions, the reciprocal carries the same sign: the reciprocal of -3/4 is -4/3. For mixed numbers, you must convert to an improper fraction first: the reciprocal of 2½ is not ½/2. Convert to 5/2, then flip to get 2/5.',
+    ],
+    keyTakeaways: [
+      'The reciprocal of a/b is b/a; multiplying a number by its reciprocal always equals 1 - this is the multiplicative inverse property.',
+      'Dividing by a fraction is identical to multiplying by its reciprocal: a/b ÷ c/d = a/b × d/c; "keep-change-flip" is the common classroom name for this substitution.',
+      'Zero is the only number with no reciprocal, because 1/0 is undefined.',
+      'For mixed numbers, always convert to an improper fraction first before taking the reciprocal: the reciprocal of 2½ is 2/5, not ½/2 = 1/4.',
+      'For negative fractions, the reciprocal carries the same sign: the reciprocal of -3/4 is -4/3.',
     ],
     beginnerExplain: [
       'Think of a reciprocal as the "flip" of a fraction. If you have 3/4, flipping it gives 4/3. Multiply them together: 3/4 × 4/3 = 12/12 = 1. That "comes back to 1" property is what makes reciprocals so useful - it\'s how division gets turned into multiplication.',
@@ -2358,6 +2751,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Unit rates are produced by dividing both terms of any ratio by the denominator. A ratio of 240 km driven on 8 litres of fuel becomes a unit rate of 30 km per litre (240 ÷ 8 = 30). This simplification converts a context-specific ratio into a normalised metric that can be compared across different totals.',
       'Unit rates bridge the concepts of ratio and proportion. A unit rate is a simplified ratio; a proportion uses a unit rate to scale to a new quantity. If a machine produces 45 widgets per hour (unit rate), you find how many it produces in 7 hours by multiplying: 45 × 7 = 315.',
     ],
+    keyTakeaways: [
+      'A unit rate is a ratio where the denominator is exactly 1, expressing how much of one quantity corresponds to a single unit of another (speed, price per kg, fuel efficiency).',
+      'Any ratio becomes a unit rate by dividing both terms by the denominator: 240 km on 8 litres becomes 30 km per litre (240 ÷ 8).',
+      'Unit rates are the correct tool for comparing quantities measured over different totals - different package sizes, different distances, different team sizes.',
+      'Multiplying a unit rate by any quantity solves the corresponding proportion instantly: 45 widgets/hour × 7 hours = 315 widgets.',
+      'Unit rates with different denominator units (price per 100g vs. price per kg) cannot be compared directly; always verify denominator units match before comparing.',
+    ],
+    beginnerExplain: [
+      'A unit rate is a ratio simplified down to "per one." If a car travels 300 km in 4 hours, you do not yet know how far it goes in 1 hour until you divide: 300 ÷ 4 = 75 km/h. That "per hour" is the unit rate.',
+      'It is the most natural way to compare things because everything is expressed as "X per single unit" - making it immediately clear which car is faster, which store is cheaper, or which worker is more productive, without any mental math needed. Most everyday rates (prices on grocery labels, speed limits, fuel economy ratings) are unit rates for exactly this reason.',
+    ],
     whenToUse: 'Use unit rates when comparing quantities measured over different totals - comparing prices of different package sizes, speeds over different distances, or productivity of different team sizes. Unit rates are the correct tool whenever you need a normalised, per-one metric.',
     examples: {
       headers: ['Context', 'Raw ratio', 'Unit rate', 'Meaning'],
@@ -2420,6 +2824,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The World Health Organization classifies BMI into four primary categories: below 18.5 is underweight, 18.5–24.9 is normal weight, 25.0–29.9 is overweight, and 30.0 or above is obese. Obesity is further subdivided into Class I (30–34.9), Class II (35–39.9), and Class III (≥40).',
       'For adults aged 65 and over, research consistently shows that the optimal BMI range shifts upward to approximately 23–27.5. A slightly higher BMI in older adults is associated with better survival outcomes, greater bone density, and improved resilience during illness - the standard thresholds do not apply directly to this population.',
     ],
+    keyTakeaways: [
+      'BMI = weight (kg) / height (m)²; the WHO defines four categories: underweight (<18.5), normal weight (18.5-24.9), overweight (25-29.9), and obese (≥30).',
+      'BMI cannot distinguish fat mass from muscle mass - a heavily muscled athlete may appear overweight despite very low body fat, severely limiting individual-level interpretation.',
+      'For adults 65 and over, the optimal BMI range shifts upward to approximately 23-27.5, associated with better survival, bone density, and resilience during illness.',
+      'South Asian and East Asian populations have higher cardiometabolic risk at lower BMI values; some guidelines recommend an overweight threshold of 23 (instead of 25) for these groups.',
+      'BMI is a population-level screening tool; pair it with waist circumference, body fat percentage, or DEXA for a complete individual assessment.',
+    ],
+    fastFact: 'A 2016 UCLA study found that approximately 54 million Americans classified as "overweight" or "obese" by BMI were actually metabolically healthy, while approximately 21 million people in the "normal weight" BMI range had poor cardiometabolic health markers - illustrating BMI\'s well-documented limitations as an individual diagnostic. (Tomiyama et al., International Journal of Obesity, 2016)',
+    beginnerExplain: [
+      'BMI is a simple formula: divide your weight in kilograms by your height in meters squared. A person who is 70 kg and 1.75 m tall has a BMI of 70 ÷ (1.75 × 1.75) = 70 ÷ 3.06 ≈ 22.9 - "normal weight" by WHO standards.',
+      'The formula was invented as a quick population-level screen, not a precise individual health tool - which is why a stocky, muscular rugby player and a sedentary person with identical numbers can have completely different health profiles. Think of BMI as the first signal in a longer investigation, not the final answer.',
+    ],
     whenToUse: 'Use BMI as a rapid, population-level screening tool to flag individuals who may warrant further metabolic risk assessment. It is appropriate for tracking weight trends in clinical and epidemiological settings. Do not use BMI alone to diagnose obesity or assess cardiovascular risk - pair it with waist circumference, body fat percentage, or DEXA for a complete picture.',
     examples: {
       headers: ['Category', 'BMI range', 'Clinical interpretation'],
@@ -2481,6 +2897,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The CDC 2000 growth charts define four categories based on percentile: Underweight (below 5th), Healthy weight (5th to below 85th), Overweight (85th to below 95th), and Obese (95th and above). These thresholds correspond to the percentile ranges associated with the lowest long-term cardiometabolic risk in US follow-up studies. The same formula is used as for adults - weight (kg) divided by height (m) squared - but interpretation is entirely different.',
       'Because children\'s bodies change rapidly, no single BMI number stays in the same percentile category across childhood. A BMI of 17 is near the 30th percentile at age 8 but near the 10th percentile at age 12. This is why pediatricians track percentile over time rather than the raw number - and why a steady upward drift across several visits is often more clinically meaningful than the current percentile alone.',
     ],
+    keyTakeaways: [
+      'BMI percentile compares a child\'s BMI to a reference population of same-age, same-gender peers; the CDC 2000 growth charts define healthy weight as the 5th to below 85th percentile.',
+      'The same BMI formula is used as for adults (weight (kg) / height (m)²), but the interpretation is entirely different - fixed thresholds like 25 or 30 do not apply to children.',
+      'A single percentile reading is far less informative than the trend: a child rising steadily from the 45th to the 72nd percentile over two years warrants more attention than one stable at the 80th percentile for four years.',
+      'BMI percentile cannot distinguish muscle from fat - a muscular child and a sedentary child with identical percentiles have very different metabolic risk profiles.',
+      'For children entering puberty, interpret BMI percentile alongside pubertal development stage, not age alone - puberty timing significantly affects weight-to-height ratios.',
+    ],
     beginnerExplain: ['Think of it as a class rank. Line up 100 children of the same age and gender by BMI from lowest to highest - your child\'s percentile tells you their position in that line. A child at the 60th percentile has a higher BMI than 60 of those 100 peers. The healthy range (5th to 85th) is deliberately wide because individual variation in bone density, muscle mass, and frame size is large in childhood, and the thresholds reflect actual health outcomes, not arbitrary cutoffs.'],
     whenToUse: 'Use BMI percentile at routine pediatric checkups or when interpreting results from a child BMI calculator. The most useful application is tracking the trend across consecutive visits - not the absolute level at any one appointment. A child who has risen from the 45th to the 72nd percentile over two years warrants more attention than one who has been consistently at the 80th percentile since age 3. For children entering puberty, interpret results alongside pubertal development stage, not age alone.',
     examples: {
@@ -2536,6 +2959,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The timing of rebound is a strong predictor of long-term adiposity. Research by Rolland-Cachera et al. (1984) found that children whose rebound begins before age 5 have a substantially higher risk of adult obesity and metabolic disease compared to those who rebound at age 6 or later - even when their BMI percentile at the time of early rebound looks normal. The mechanism involves earlier and more prolonged proliferation of adipose cells during the sensitive period of fat development.',
       'Because the risk signal lies in the timing rather than the current percentile, tracking BMI trajectory across multiple pediatric visits is more informative than any single measurement. A child at the 50th percentile who has been rising steeply since age 4 carries more long-term risk than a child who has been stable at the 70th percentile since age 3.',
     ],
+    keyTakeaways: [
+      'Adiposity rebound is the natural upswing in BMI that follows the early-childhood dip; it occurs in every child - the clinical question is whether it starts early (before age 5) or at the typical age of 5-7.',
+      'Children with early rebound (before age 5) have substantially higher adult obesity risk even when their current BMI percentile appears normal - timing matters more than the current number.',
+      'The mechanism: earlier rebound means more years of adipose cell proliferation during the sensitive window of fat development, leading to greater adult fat mass.',
+      'Adiposity rebound is only identifiable in retrospect by plotting BMI across at least 2-3 consecutive visits - a single measurement cannot confirm whether the nadir has been reached.',
+      'Early rebound is a risk signal, not a diagnosis; appropriate responses are improved diet quality and physical activity, not caloric restriction in growing children.',
+    ],
     beginnerExplain: ['Think of a child\'s BMI like the water level in a bathtub. During toddlerhood, height growth outpaces weight gain so the water drains down. Around age 4-6 it hits the lowest level - the nadir. Then the tub starts filling again. That refilling is adiposity rebound. When it starts early, before age 5, the tub ends up fuller by adulthood than if it had held at the low level for another year or two.'],
     whenToUse: 'Track adiposity rebound when reviewing a child\'s BMI growth chart across consecutive pediatric visits. The rebound is identified by the inflection point when BMI stops falling and begins to rise. If this occurs before age 5 - even from a low or normal percentile - flag the trend for clinical attention. This is more useful than relying on a single current percentile, which may look reassuring while the underlying trajectory points toward long-term excess adiposity.',
     examples: {
@@ -2588,6 +3018,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'The adiposity nadir is the lowest point in a child\'s BMI trajectory - the trough of the U-shaped curve that characterizes normal childhood development. From birth, BMI rises steeply, then falls through toddlerhood and early childhood as height growth outpaces weight gain. The nadir is the bottom of this dip, typically occurring between ages 4 and 6.',
       'After the nadir, BMI begins its long rise through childhood and adolescence - the phase known as adiposity rebound. The age at which the nadir occurs is a key prognostic marker: children who reach their nadir early (before age 5) tend to begin rebound earlier and accumulate more adipose tissue over the following years, compared to children whose nadir occurs at age 6 or later.',
+    ],
+    keyTakeaways: [
+      'The adiposity nadir is the lowest point in a child\'s BMI trajectory, typically occurring between ages 4 and 6; the age of the nadir is more clinically significant than the BMI value at that point.',
+      'The nadir can only be confirmed in retrospect - after the subsequent upswing (adiposity rebound) makes the turning point clear; sequential measurements are essential.',
+      'Children who reach their nadir before age 5 (early nadir) begin adiposity rebound sooner, accumulating more adipose tissue over the following years.',
+      'A low nadir BMI value is not inherently protective; what matters is when it occurs - an early nadir at a low percentile still predicts higher adult obesity risk than a later nadir.',
+      'The nadir is a reference point for identifying adiposity rebound onset; always review the full BMI growth chart, not a single reading.',
     ],
     whenToUse: 'Look for the adiposity nadir when reviewing a child\'s BMI growth chart across consecutive visits. The nadir is the lowest point on that curve - the moment before the upward trend of adiposity rebound begins. Because it can only be identified in retrospect (after the subsequent rise confirms the turning point), tracking BMI at every well-child visit is essential for spotting an early nadir before the trend becomes firmly established.',
     examples: {
@@ -2642,6 +3079,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The four-compartment (4C) model is the research gold standard. It measures fat mass, bone mineral content, total body water, and residual protein mass independently, rather than lumping them into a single fat-free compartment. This matters because methods that assume a fixed density for fat-free mass introduce errors when an individual\'s bone density or hydration deviates from population averages.',
       'DEXA (dual-energy X-ray absorptiometry) scanning is the most practical clinical gold standard, providing a close approximation of the 4C model with ±1–2% accuracy, segmental data (arms, legs, trunk), and a measure of bone mineral density - all in a single 10-minute scan.',
     ],
+    keyTakeaways: [
+      'Body composition divides body weight into fat mass and fat-free mass (FFM); the two-compartment model is used clinically, while the four-compartment (4C) model is the research gold standard.',
+      'DEXA scanning is the most practical clinical gold standard (±1-2% accuracy), measuring fat mass, lean mass by segment, and bone mineral density in a single 10-minute scan.',
+      'Never switch measurement methods mid-programme - results are not interchangeable between DEXA, BIA, and caliper methods, making progress tracking unreliable if methods change.',
+      'BIA (bioimpedance) devices can shift by 3-5 percentage points on the same person in the same day due to hydration; always measure under standardised conditions (morning, fasted, post-void, no prior exercise).',
+      'Body composition is superior to BMI for detecting sarcopenic obesity (normal-weight individuals with high fat and low muscle mass), a risk profile BMI cannot identify.',
+    ],
+    beginnerExplain: [
+      'Body composition answers a question that weight alone cannot: what are you actually made of? Two people can weigh exactly the same but have completely different bodies - one could be 30% fat and sedentary, the other 12% fat and highly muscular. Same weight, completely different health picture.',
+      'The most practical way to measure it is a DEXA scan, which uses low-dose X-rays to distinguish fat, muscle, and bone in each part of your body. Consumer smart scales use bioelectrical impedance (BIA) - a small electrical current - which is convenient but much less accurate, sometimes varying by 5% depending on whether you just drank a glass of water.',
+    ],
     whenToUse: 'Use body composition assessment rather than weight or BMI alone whenever the goal is to distinguish changes in fat mass from changes in lean mass - during a recomposition programme, rehabilitation after injury, or clinical management of sarcopenic obesity (high fat, low muscle in a normal-weight individual). Body composition is the appropriate metric for evaluating whether an intervention is achieving its intended physiological effect.',
     examples: {
       headers: ['Method', 'Accuracy', 'Cost', 'Practicality', 'Notes'],
@@ -2695,6 +3143,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Body fat percentage is the proportion of total body weight that consists of adipose (fat) tissue, expressed as a percentage: $$\\text{Body Fat \\%} = \\frac{\\text{Fat Mass (kg)}}{\\text{Total Body Weight (kg)}} \\times 100$$',
       'Fat tissue serves essential physiological roles: hormone regulation (leptin, oestrogen), organ protection, thermal insulation, and energy storage. The body requires a minimum level of fat - termed essential fat - to maintain these functions: approximately 2–5% in men and 10–13% in women. Below these thresholds, hormonal and organ function are compromised.',
       'Healthy body fat ranges vary by gender and age. General reference ranges for adults are: men 8–19% (fit to acceptable), women 21–33% (fit to acceptable). Athletes typically fall below these ranges, and body fat naturally increases with age even when weight remains stable, due to the gradual replacement of lean tissue with fat.',
+    ],
+    keyTakeaways: [
+      'Body fat percentage = (Fat Mass / Total Body Weight) × 100; it is a direct measure of adiposity independent of muscle mass - the key limitation of BMI.',
+      'Essential fat minimums are approximately 2-5% in men and 10-13% in women; below these thresholds, hormonal and organ function are compromised.',
+      'Healthy ranges for most adults: men 8-19% (fit to acceptable), women 21-33%; athletes typically fall below these ranges due to higher lean mass.',
+      'BIA devices (consumer smart scales) are convenient but sensitive to hydration, varying by 3-5 percentage points on the same person; DEXA is the clinical gold standard at ±1-2% accuracy.',
+      'Whether a given body fat percentage is "healthy" is context-dependent: an endurance athlete at 7% may be healthy, while a sedentary person at the same level may experience hormonal suppression.',
     ],
     whenToUse: 'Use body fat percentage when you need a direct assessment of adiposity that is independent of muscle mass. It is the preferred metric for tracking body composition changes during training, dieting, or clinical weight management programmes - particularly where BMI would be misleading, such as with muscular individuals, post-menopausal women, and the elderly.',
     examples: {
@@ -2755,6 +3210,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Fat-Free Mass Index (FFMI) is a measure of muscularity that expresses lean body mass relative to height, analogous to BMI but using fat-free mass instead of total weight: $$\\text{FFMI} = \\frac{\\text{LBM (kg)}}{\\text{height (m)}^2}$$',
       'Because FFMI varies slightly with height, a normalised version corrects for this: $$\\text{Normalised FFMI} = \\text{FFMI} + 6.1 \\times (1.8 - \\text{height in meters})$$ This adjustment standardises FFMI to a reference height of 1.80m, making comparisons across individuals of different heights more meaningful.',
       'FFMI gained research prominence from a landmark 1995 study by Kouri et al., which found that among a large sample of male athletes, natural (drug-free) competitors almost never exceeded an FFMI of 25. This led to the informal use of 25 as a threshold above which performance-enhancing drug use is considered plausible, though it is not a definitive marker.',
+    ],
+    keyTakeaways: [
+      'FFMI = Lean Body Mass (kg) / Height (m)²; it measures muscularity relative to height using only the fat-free component of weight, unlike BMI which uses total body weight.',
+      'A normalised FFMI adjusts for height using: FFMI + 6.1 × (1.8 - height in meters), standardising comparisons to a 1.80m reference frame.',
+      'The Kouri 1995 study found natural male athletes rarely exceeded FFMI 25; this threshold is a statistical observation from one study, not a diagnostic criterion for PED use.',
+      'FFMI for men: below 18 (below average) to 25+ (suspected PED range); women\'s values run roughly 3-4 points lower across all categories.',
+      'FFMI requires accurate body fat measurement as an input - errors in body fat estimation directly distort the calculated FFMI value.',
     ],
     whenToUse: 'Use FFMI to assess the degree of muscularity relative to frame size, independent of body fat levels - something BMI cannot do. It is particularly useful for evaluating physique development over time in athletes and for providing context when BMI would be misleading due to high muscle mass. Use normalised FFMI when comparing individuals of substantially different heights.',
     examples: {
@@ -2817,6 +3279,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Several alternative formulas exist. The Robinson formula (1983) uses slightly different coefficients. The Miller formula (1983) produces lower estimates. The Hamwi formula (1964) is an older rule-of-thumb. All four formulas were empirically derived from population data and produce meaningfully different results, particularly at the extremes of height.',
       'IBW was created for pharmacokinetic applications - specifically for calculating doses of renally-cleared and volume-of-distribution-sensitive drugs in patients where total body weight would lead to overdosing. Its use as a general weight target is a secondary application that has outgrown its original clinical purpose.',
     ],
+    keyTakeaways: [
+      'Ideal body weight (IBW) was originally developed for pharmacokinetics (drug dosing), not as a personal weight goal; its use as a fitness target is a secondary application that has outgrown its original purpose.',
+      'The Devine formula (1974) is the most widely used: 50 + 2.3 × (height in inches - 60) for men; 45.5 + 2.3 × (height in inches - 60) for women.',
+      'The four major IBW formulas (Devine, Robinson, Miller, Hamwi) can differ by 5-10 kg for the same person - no formula is universally superior.',
+      'IBW does not account for body composition, frame size, age, ethnicity, or fitness level; a muscular individual may be well above their IBW while in excellent health.',
+      'For individual weight management, BMI combined with body fat percentage and waist circumference provides more meaningful personal targets than IBW alone.',
+    ],
+    beginnerExplain: [
+      'Ideal body weight gives you a rough target weight based only on your height and gender. A man who is 5\'9" (175cm) has a Devine IBW of about 68.6 kg - but that number was originally invented by a doctor in 1974 to help calculate medication doses, not to define a fitness goal.',
+      'The important thing to understand is that IBW has no knowledge of how much of your weight is muscle versus fat. A muscular athlete at 80 kg and a sedentary person at 80 kg would both be equally "above their IBW" by 11 kg, but they have completely different health profiles. Use IBW as one rough reference point, not a hard target.',
+    ],
     whenToUse: 'Use IBW as a reference baseline when calculating adjusted body weight for drug dosing in obese patients, or as a starting point for nutritional assessment in clinical settings. For general weight management, use IBW alongside BMI, body fat percentage, and waist circumference rather than as a precise personal target.',
     examples: {
       headers: ['Height', 'Devine IBW (men)', 'Devine IBW (women)', 'Robinson IBW (men)', 'Robinson IBW (women)'],
@@ -2876,6 +3349,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'LBM is the primary determinant of basal metabolic rate (BMR): more lean mass means a higher resting energy expenditure. It is also the basis for drug dosing in pharmacokinetics, as many medications distribute through lean tissue rather than fat - using total body weight for dosing in obese patients would result in dangerous over-dosing of these agents.',
       'The Boer formula is the most widely cited clinical estimation method. For men: $$\\text{LBM} = 0.407W + 0.267H - 19.2$$ For women: $$\\text{LBM} = 0.252W + 0.473H - 48.3$$ where W is weight in kg and H is height in cm. The James and Hume formulas are alternatives used in specific clinical contexts.',
     ],
+    keyTakeaways: [
+      'LBM = Total Body Weight - Fat Mass; it includes muscle, bone mineral, organs, blood, skin, and total body water - not just muscle.',
+      'LBM is the primary determinant of basal metabolic rate (BMR): more lean mass means higher resting energy expenditure.',
+      'Drug dosing for renally-cleared medications uses LBM rather than total weight in obese patients - using total weight would cause dangerous overdosing of drugs that distribute in lean tissue.',
+      'LBM is commonly confused with muscle mass, but skeletal muscle is only about 40-50% of LBM in men and 35-40% in women; the rest is bone, organs, blood, and water.',
+      'LBM decreases with age (sarcopenia) at approximately 3-8% per decade after age 30 without deliberate training; progressive resistance training and protein intake of 1.6-2.2g/kg/day are the primary countermeasures.',
+    ],
     whenToUse: 'Use LBM when calculating drug doses for antibiotics, anaesthetic agents, or chemotherapy drugs that distribute in lean tissue. Use it to set protein intake targets in athletic or clinical nutrition (typically 1.6–2.2g protein per kg LBM for resistance-trained individuals). Use it as an input to FFMI to assess muscularity relative to height independently of body fat level.',
     examples: {
       headers: ['Individual', 'Total weight', 'Body fat %', 'Fat mass', 'Lean body mass'],
@@ -2933,6 +3413,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Bioelectrical Impedance Analysis (BIA) estimates body composition by passing a low-level alternating electrical current - typically 50 kHz at 0.8 mA, far below the threshold of sensation - through the body. The core physics: fat tissue has high electrical resistance (low water content, poor conductor), while skeletal muscle and organs have low resistance (high water content, good conductors). The device measures the total impedance (Z) of the path the current travels, then applies validated regression equations to estimate total body water (TBW). From TBW, fat-free mass and body fat percentage are derived.',
       'Consumer BIA devices fall into several categories based on electrode placement. Foot-to-foot devices (bathroom scales) pass current only through the lower body; hand-to-hand handhelds pass current through the upper body; hand-to-foot devices or 4-electrode segmental devices pass current through the full body and are considered more accurate. High-end clinical devices such as the InBody 770 use 8 electrodes at multiple frequencies (multi-frequency BIA) to separate intracellular water from extracellular water, achieving accuracy within ±2-3 percentage points of DEXA in controlled conditions.',
       'The most significant limitation of BIA is its sensitivity to hydration. Because the method derives body fat from estimated body water, anything that shifts the body\'s water distribution - dehydration, recent exercise, a large meal, alcohol, or the menstrual cycle - directly alters the reading. On a typical consumer scale, measured body fat can vary by 2-4 percentage points between morning and evening on the same person without any actual change in fat tissue.',
+    ],
+    keyTakeaways: [
+      'BIA estimates body composition by measuring how much a low-level electrical current is impeded as it travels through the body: fat resists current (low water), muscle conducts it (high water).',
+      'Consumer foot-to-foot scales carry ±3-6% error vs DEXA; clinical multi-frequency BIA devices (e.g., InBody) achieve ±2-3% under controlled conditions.',
+      'Body fat readings can vary by 2-4 percentage points between morning and evening on the same person without any actual change in fat tissue - hydration is the primary source of variability.',
+      'Always measure under standardised conditions: morning, before eating or drinking, after using the bathroom, no prior exercise. Never compare readings across different BIA brands or devices.',
+      'BIA tends to overestimate body fat in athletes because athletic muscle has higher water density than the population averages used in the device\'s regression equations.',
     ],
     beginnerExplain: ['Think of your body as a pipe full of water. Electricity travels easily through water - and muscle is roughly 75% water - but travels slowly through fat, which has almost no water. A BIA device sends a tiny current from one electrode to another (you cannot feel it at all) and measures how much the body resists the flow. High resistance means more fat; low resistance means more muscle. The device then uses a formula to convert that resistance reading into a body fat percentage estimate. The catch: if you are dehydrated, there is less water in your tissues, resistance goes up, and the device will overestimate your body fat - even though nothing about your actual fat tissue has changed.'],
     whenToUse: 'BIA is best used for tracking directional trends over weeks or months, not for accurate one-off measurements. To minimise variability: always measure at the same time of day (ideally morning before eating, after using the toilet), under the same hydration conditions, and use the same device. Do not compare results between different BIA devices - each uses its own proprietary prediction equations and the absolute numbers are not comparable across brands. If you need a single accurate body fat measurement rather than a trend, the Navy tape method or a DEXA scan are more reliable.',
@@ -2994,6 +3481,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Estrogen is the primary female gender hormone, though it is present and necessary in both genders. In women, estrogen is produced mainly in the ovaries and regulates the menstrual cycle, reproduction, and fat distribution toward the hips, thighs, and breasts. In men, small amounts are produced in the testes and adrenal glands, but the dominant source is peripheral conversion of testosterone to estradiol - the most potent estrogen - by the aromatase enzyme in adipose tissue.',
       'In men, estrogen plays important regulatory roles at normal concentrations: it maintains bone mineral density, supports cognitive function, and modulates libido. Problems arise when the testosterone-to-estrogen ratio falls too far - a pattern called relative estrogen excess - which occurs when aromatase activity in excess body fat converts too much testosterone to estradiol. This suppresses the hypothalamic-pituitary-gonadal (HPG) axis and reduces further testosterone production, worsening the imbalance.',
       'There are three main endogenous estrogens: estradiol (E2, most potent, dominant during reproductive years), estriol (E3, produced during pregnancy), and estrone (E1, dominant after menopause). For body composition and cardiometabolic purposes, estradiol is the clinically relevant marker in both genders.',
+    ],
+    keyTakeaways: [
+      'Estrogen is present and necessary in both genders: in women it regulates the menstrual cycle and directs fat to hips and thighs; in men it maintains bone density, libido, and cognitive function.',
+      'In men, aromatase in adipose tissue converts testosterone to estradiol; high visceral fat raises aromatase activity, lowering testosterone and raising estradiol in a self-reinforcing cycle.',
+      'The three main estrogens are estradiol (E2, most potent, dominant in reproductive years), estriol (E3, pregnancy), and estrone (E1, dominant post-menopause).',
+      'Post-menopausal women shift toward a more male-like visceral fat distribution as estrogen levels fall, explaining why cardiometabolic risk rises sharply after menopause.',
+      'Isolated estradiol measurements in men are meaningless without a concurrent testosterone value; interpret the testosterone-to-estradiol ratio, not either in isolation.',
     ],
     beginnerExplain: [
       'Think of estrogen and testosterone as two sides of a hormonal balance. In men, the balance normally tilts heavily toward testosterone. When body fat rises, aromatase in fat tissue acts as a conversion factory - turning testosterone into estrogen and pushing the balance the other way. The result is lower testosterone, easier fat gain, and less muscle - all of which drive more fat gain and more aromatase activity.',
@@ -3082,6 +3576,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Visceral fat is body fat stored inside the abdominal cavity, surrounding the liver, pancreas, kidneys, and intestines. Unlike subcutaneous fat stored beneath the skin, visceral fat sits within the peritoneal cavity and drains directly into the portal circulation - the blood supply that goes to the liver before anywhere else in the body.',
       'This anatomical position makes visceral fat metabolically distinct and more harmful than subcutaneous fat. Visceral fat is biologically active: it releases pro-inflammatory cytokines (TNF-alpha, IL-6), free fatty acids, and hormones (including resistin and leptin) directly into the portal vein. This constant inflammatory signal drives insulin resistance, raises triglycerides, lowers HDL cholesterol, and elevates blood pressure - the cluster known as metabolic syndrome. Higher visceral fat mass is independently associated with type 2 diabetes, cardiovascular disease, non-alcoholic fatty liver disease, and certain cancers regardless of total body weight.',
       'BMI cannot distinguish visceral fat from subcutaneous fat or muscle. Two men with identical BMI and waist circumference may have very different visceral fat volumes depending on genetics, age, gender hormone levels, and lifestyle. CT and MRI imaging are the gold standard for measuring visceral fat; DEXA scanning provides an estimate. In clinical and consumer settings, waist circumference and waist-to-height ratio are the most practical validated proxies.',
+    ],
+    keyTakeaways: [
+      'Visceral fat sits inside the abdominal cavity and drains into the portal vein, delivering pro-inflammatory cytokines and free fatty acids directly to the liver before the rest of the body.',
+      'Visceral fat drives metabolic syndrome (insulin resistance, high triglycerides, low HDL, elevated blood pressure) and is independently associated with type 2 diabetes, CVD, and NAFLD regardless of total body weight.',
+      'BMI cannot detect visceral fat; waist circumference and waist-to-height ratio (keeping waist below half of height) are the most practical validated proxies in clinical and consumer settings.',
+      'WHO high-risk waist thresholds: >102 cm (40 in) for men and >88 cm (35 in) for women; elevated risk begins earlier at >94 cm (men) and >80 cm (women) in European populations.',
+      'Visceral fat responds to calorie deficit faster than subcutaneous fat; even 5-10% body weight loss produces a disproportionate reduction in visceral fat volume.',
     ],
     beginnerExplain: [
       'Think of visceral fat as fat that has VIP access to your liver. Subcutaneous fat - the kind you can pinch - sits quietly under the skin and causes relatively little metabolic harm at moderate levels. Visceral fat, by contrast, is constantly releasing chemicals into the portal vein, which flows straight to the liver. The liver receives these signals continuously and responds by increasing blood sugar, raising triglycerides, and triggering inflammation throughout the body.',
@@ -3173,6 +3674,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Testosterone drives two critical body composition processes: anabolism (stimulating muscle protein synthesis and lean mass accretion) and lipolysis (promoting fat breakdown, especially in visceral depots). This dual action means that well-maintained testosterone levels support a leaner, more metabolically active body composition - while declining levels push body composition in the opposite direction.',
       'The relationship between body fat and testosterone is bidirectional. Adipose tissue contains aromatase, an enzyme that converts testosterone to estradiol (estrogen). Men with higher visceral fat have more aromatase activity, which lowers free testosterone. Low testosterone then reduces muscle mass and raises fat mass, increasing aromatase activity further. Research shows total testosterone declines by approximately 2% for each 1-unit rise in BMI in men with obesity.',
     ],
+    keyTakeaways: [
+      'Normal total testosterone in adult men: 300-1,000 ng/dL; free testosterone (the biologically active fraction) is only 1-3% of the total but is the clinically meaningful measure.',
+      'Testosterone drives both anabolism (muscle protein synthesis) and lipolysis (fat breakdown); declining levels push body composition toward more fat and less muscle.',
+      'The testosterone-body fat relationship is bidirectional: high visceral fat raises aromatase activity, lowering testosterone; low testosterone further raises fat mass, creating a self-reinforcing cycle.',
+      'Total testosterone declines approximately 2% for each 1-unit rise in BMI in obese men, equivalent to 10-15 years of normal aging when BMI rises from 25 to 35.',
+      'Always interpret total testosterone alongside free testosterone; high SHBG (common in older men) can leave free testosterone low despite a normal total, masking true hypogonadism.',
+    ],
     beginnerExplain: [
       'Think of testosterone as the engine that keeps muscle running. The more muscle you have, the faster your metabolism burns calories at rest. When body fat rises, aromatase acts like a drain - it converts testosterone into estrogen, slowing the engine. With less testosterone, muscle becomes harder to maintain, metabolism slows, and fat gain accelerates.',
       'The practical implication: losing fat raises testosterone, and higher testosterone makes it easier to build the muscle that accelerates further fat loss. The cycle runs in both directions, which is why resistance training - not just calorie restriction - is important for men at a high BMI.',
@@ -3251,6 +3759,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Normal weight obesity (NWO) is a clinical condition in which a person\'s BMI falls within the normal range (18.5-24.9) while their body fat percentage is elevated to levels associated with obesity - typically above 30% in women and above 25% in men. BMI measures weight relative to height, not fat relative to lean tissue, so a person with very low muscle mass can carry substantial fat while remaining within a normal BMI range. Research published in the European Heart Journal found NWO present in approximately 30% of women with normal BMI, making it common rather than exceptional.',
       'NWO typically develops through a combination of low muscle mass and elevated fat mass, most often in sedentary adults who have never built meaningful lean tissue. The classic profile is a person who weighs a normal amount for their height but has little muscle - resulting in a high fat-to-muscle ratio that BMI cannot detect. Fat in NWO tends to concentrate in the abdomen, meaning visceral fat accumulation can reach clinically significant levels even at a normal total weight.',
       'The metabolic consequences of NWO are equivalent to those of standard obesity. Studies associate NWO with insulin resistance, elevated triglycerides, reduced HDL cholesterol, hypertension, and increased cardiovascular risk - the same cluster defining metabolic syndrome. This means a person with NWO faces comparable health risks to someone with a BMI of 30+, despite appearing healthy by standard weight-based screening.',
+    ],
+    keyTakeaways: [
+      'Normal weight obesity (NWO) is a BMI in the normal range (18.5-24.9) with body fat elevated to obesity levels - above 30% in women and above 25% in men - occurring in approximately 30% of normal-BMI adults.',
+      'NWO develops from low muscle mass combined with elevated fat mass; the classic profile is a sedentary person at a normal weight who has never built significant lean tissue.',
+      'The metabolic consequences are equivalent to standard obesity: insulin resistance, elevated triglycerides, low HDL, hypertension, and elevated cardiovascular risk.',
+      'NWO is not treated with weight loss (BMI is already normal); the correct intervention is resistance training to rebuild lean mass, improving the fat-to-muscle ratio.',
+      'Waist circumference above 80 cm in women or body fat percentage above 30% with a normal BMI are the practical screening signals for NWO.',
     ],
     beginnerExplain: [
       'Imagine two backpacks that weigh exactly the same. One is packed with textbooks (dense, compact - like muscle). The other is stuffed with foam packing material (light and voluminous - like fat). Both register the same number on a luggage scale, but the foam backpack is taking up far more space and putting far more stress on the seams. BMI is the luggage scale. NWO is what happens when the backpack is mostly foam.',
@@ -3340,6 +3855,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The defining hormonal feature of perimenopause is fluctuating estrogen, not simply declining estrogen. Levels can swing between high and low within a single month, producing irregular cycles, hot flashes, and sleep disruption. From a body composition perspective, the first measurable changes - a slow drift toward abdominal fat storage and mild reductions in resting metabolism - begin before estrogen levels fall consistently. BMI may remain stable during perimenopause while body fat percentage and waist circumference gradually increase.',
       'Perimenopause differs clinically from postmenopause in that the hormonal environment is volatile rather than consistently low. This makes it a window of opportunity for establishing lifestyle habits (resistance training, protein-adequate diet, waist circumference monitoring) that reduce the cardiometabolic impact of the full estrogen withdrawal that follows menopause.',
     ],
+    keyTakeaways: [
+      'Perimenopause typically begins in the mid-40s and lasts 4-8 years, ending when 12 consecutive months have passed without a menstrual period - the formal marker of menopause.',
+      'The defining hormonal pattern is fluctuating estrogen (swinging high and low within a month), not simply declining estrogen - this distinguishes perimenopause from postmenopause.',
+      'BMI may remain stable during perimenopause while body fat percentage and waist circumference gradually increase, making BMI alone an insufficient monitoring metric during this phase.',
+      'Perimenopause is an actionable window: resistance training and adequate protein intake during this phase reduce the cardiometabolic impact of the full estrogen withdrawal that follows menopause.',
+      'The average age of menopause in the US is 52, meaning perimenopause typically spans from the mid-40s to the early 50s for most women.',
+    ],
     beginnerExplain: [
       'Think of perimenopause as a dimmer switch being turned down slowly - not a light being switched off. The ovaries produce less estrogen on average, but with irregular spikes. Some months feel normal; others bring hot flashes, mood changes, and disrupted sleep. This is distinct from menopause itself, where the dimmer is fully down and stays there.',
       'From a health measurement standpoint, the key practical point is this: your BMI might not change during perimenopause, but your waist circumference might start creeping upward. That drift is worth monitoring - it signals that fat is beginning to redistribute toward the abdomen, which carries real cardiometabolic implications independent of total body weight.',
@@ -3397,6 +3919,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Hormone replacement therapy (HRT) is a medical treatment that restores hormones - primarily estrogen, and in most cases progesterone as well - to reduce the physiological consequences of menopause. At menopause, the ovaries sharply reduce estrogen production, triggering hot flashes, sleep disruption, vaginal atrophy, and accelerated bone loss. For women without specific contraindications, HRT is the recommended treatment in most international guidelines for women below age 60 or within 10 years of menopause onset.',
       'The body composition effects of HRT are distinct from its symptomatic effects. Estrogen plays a direct role in fat storage location - directing fat toward subcutaneous (hip and thigh) depots in pre-menopausal women and away from visceral depots. After menopause, the loss of this estrogen signal causes fat to redistribute abdominally. Estrogen-containing HRT partially restores this signal, slowing visceral fat accumulation and supporting lean muscle mass preservation at a given body weight. Two women with identical BMIs may have meaningfully different body compositions depending on their HRT status.',
       'HRT comes in several formulations. Combined HRT includes both estrogen and progesterone (or a synthetic progestogen) and is prescribed to women who have not had a hysterectomy, to protect the uterine lining from unopposed estrogen. Estrogen-only HRT is used by women who have had a hysterectomy. Delivery methods include oral tablets, transdermal patches and gels, vaginal preparations, and implants - and the type, dose, and route of delivery affect both the clinical benefits and the risk profile.',
+    ],
+    keyTakeaways: [
+      'HRT is recommended in most international guidelines for women without contraindications who are under 60 or within 10 years of menopause onset to manage hot flashes, bone loss, and body composition changes.',
+      'Estrogen directs fat to subcutaneous hip/thigh depots; without it after menopause, fat shifts abdominally. Estrogen-containing HRT partially restores this signal, slowing visceral fat accumulation.',
+      'The 1-2 kg weight change some women notice after starting HRT is primarily water retention, not fat - controlled studies find no significant increase in total fat mass between HRT users and non-users.',
+      'Combined HRT (estrogen + progesterone) is used by women with a uterus; estrogen-only HRT is for women post-hysterectomy. Both have similar body composition effects on visceral fat.',
+      'Two women at identical BMIs can have meaningfully different cardiometabolic risk profiles depending on HRT status - making waist circumference a more reliable monitoring metric than BMI for postmenopausal women.',
     ],
     beginnerExplain: [
       'Think of estrogen as a traffic director for fat storage. Before menopause, it routes most fat to the hips, thighs, and breasts - depots that are metabolically quiet. After menopause, without that director, fat increasingly parks in the abdomen instead, where it is metabolically active and harmful. HRT is like reinstating the traffic director at lower authority - it does not fully restore pre-menopausal fat routing, but it slows the abdominal shift considerably.',
@@ -3487,6 +4016,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The WHO defines two risk thresholds for each gender. For men: ≥94 cm indicates increased risk; ≥102 cm indicates high risk. For women: ≥80 cm indicates increased risk; ≥88 cm indicates high risk. These thresholds were derived from European populations; some guidelines recommend lower cut-points for South Asian, East Asian, and other ethnic groups where cardiometabolic risk increases at smaller waist sizes.',
       'The clinical significance of waist circumference lies in what it captures that BMI cannot: visceral adipose tissue (VAT). Visceral fat surrounds the abdominal organs and is metabolically active in ways that subcutaneous fat is not - it drives insulin resistance, systemic inflammation, dyslipidaemia, and hypertension at higher rates than the same quantity of subcutaneous fat.',
     ],
+    keyTakeaways: [
+      'WHO high-risk thresholds are ≥102 cm for men and ≥88 cm for women; increased-risk thresholds are ≥94 cm for men and ≥80 cm for women.',
+      'Waist circumference captures visceral adipose tissue (VAT), which drives insulin resistance, inflammation, and dyslipidemia - metabolic harms that BMI cannot detect because it does not distinguish fat distribution.',
+      'Waist circumference predicts type 2 diabetes, cardiovascular disease, and all-cause mortality independently of BMI - adding it reclassifies a meaningful proportion of individuals into different risk categories.',
+      'The waist-to-height ratio (WHtR) below 0.5 is associated with lower cardiometabolic risk across a broad range of ethnic groups and is an alternative to absolute thresholds.',
+      'WHO thresholds were derived from European populations; South Asian, East Asian, and other ethnic groups face elevated cardiometabolic risk at smaller waist sizes, so ethnicity-specific cut-points should be applied.',
+    ],
     whenToUse: 'Use waist circumference alongside BMI to stratify cardiometabolic risk, particularly in individuals with BMI in the overweight range (25–29.9) where clinical significance is ambiguous. It is especially valuable for identifying normal-weight individuals with central adiposity - those with a healthy BMI but an elevated waist measurement - who carry metabolic risk that BMI alone would miss.',
     examples: {
       headers: ['Risk category', 'Men (waist)', 'Women (waist)', 'Associated health risk'],
@@ -3544,6 +4080,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Return on Investment (ROI) measures how much an investment gains or loses relative to its cost. It is calculated by subtracting the initial cost from the final value, dividing by the initial cost, and multiplying by 100 to express the result as a percentage. A positive ROI means the investment was profitable; a negative ROI means it lost money.',
       'ROI\'s power lies in its universality: it reduces any investment - a stock purchase, a marketing campaign, a factory machine, or a new hire - to a single comparable percentage. A marketing campaign that cost $10,000 and generated $40,000 in attributable revenue has an ROI of 300%, making it directly comparable to a $50,000 equipment upgrade that saves $15,000 per year (30% annual ROI).',
       'The main limitation of simple ROI is that it ignores time. An ROI of 50% is excellent in one year but mediocre over a decade. For multi-year investments, CAGR (Compound Annual Growth Rate) is the more useful companion metric, as it converts total ROI into an annualised rate that accounts for the time value of money.',
+    ],
+    keyTakeaways: [
+      'ROI = (Final Value - Initial Cost) / Initial Cost x 100. A 45% ROI means you earned $0.45 for every $1 invested.',
+      'ROI ignores time - a 100% ROI over 10 years is far less impressive than a 100% ROI over 1 year. Use CAGR to compare returns across different time horizons.',
+      'Always use fully-loaded costs: a marketing ROI calculation that omits agency fees and staff time will be inflated and misleading.',
+      'Compare ROI against the company\'s WACC: a 10% ROI is not attractive if the cost of capital is 12%, because the investment destroys value.',
+      'The only valid universal benchmark for ROI is the opportunity cost - what else could the same capital have earned in the next-best alternative.',
+    ],
+    fastFact: 'Stock market investors have historically earned approximately 7-10% annualized ROI (inflation-adjusted) over long holding periods, making this the informal baseline against which other investment returns are compared. (Damodaran, NYU Stern, 2024)',
+    beginnerExplain: [
+      'ROI answers one question: did I get more back than I put in? If you spend $1,000 on a course and it leads to a $5,000 raise, you earned $4,000 net on a $1,000 investment - an ROI of 400%. The formula is just net profit divided by cost.',
+      'The thing ROI does not tell you is how long it took. A 400% ROI is extraordinary if it happened in a year; it is unremarkable if it took 20 years. That is why ROI is almost always paired with a time dimension - either the holding period stated explicitly, or CAGR which converts the total return into a per-year rate you can compare fairly across investments.',
     ],
     whenToUse: 'Use ROI as a first-pass filter to compare mutually exclusive investments or marketing channels. Pair it with CAGR for any investment spanning more than one year. Do not use standalone ROI to compare investments with very different time horizons without also computing the annualised rate.',
     examples: {
@@ -3604,6 +4152,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The formula uses exponents: the ratio of End Value to Start Value is raised to the power of 1/n (where n is the number of years), and 1 is subtracted. This is the inverse of the compound interest formula - instead of calculating future value from a known rate, CAGR derives the implied rate from known values.',
       'CAGR is the standard language of investment performance. When a fund says it has "returned 12% annually over 10 years," that is a CAGR. It is equally applicable to revenue growth ("our revenues CAGR\'d at 25% over 5 years"), user growth, or any time-series metric where you want to describe the average annual pace of change.',
     ],
+    keyTakeaways: [
+      'CAGR smooths variable year-to-year growth into a single representative annual rate, enabling fair comparison between investments held for different periods.',
+      'CAGR always ignores path - an investment that doubles then halves has a CAGR of 0%, yet the investor experienced significant volatility. Always pair CAGR with standard deviation or max drawdown for volatile assets.',
+      'The S&P 500 has historically delivered roughly 10% nominal CAGR (7% inflation-adjusted) over long periods, making this the standard baseline for equity investment benchmarking.',
+      'CAGR is the geometric mean, not the arithmetic mean. For volatile investments, CAGR is always lower than the simple average of annual returns - the gap widens with volatility.',
+      'High-growth startups often target 40-100%+ CAGR in early years; established companies are typically valued on 10-20% revenue CAGR relative to industry peers.',
+    ],
+    fastFact: 'A $10,000 investment growing at a CAGR of 10% for 30 years becomes approximately $174,494 - demonstrating how compounding over time dwarfs the initial principal, a relationship captured by CAGR but invisible in simple ROI. (Standard compound growth calculation)',
+    beginnerExplain: [
+      'Think of CAGR as the steady pace of a race. If a runner covers 10 miles in 2 hours, their average pace is 5 mph - even if they actually ran 6 mph for the first mile and 4 mph for the last. CAGR does the same thing for money: it tells you the smooth, consistent annual rate that would have produced the actual result, regardless of how bumpy the actual path was.',
+      'Where CAGR is useful: comparing two investments over different time periods. If one investment returned 80% over 4 years and another returned 50% over 2 years, the simple totals are misleading. CAGR converts them both to annual rates - 16% and 22.5% respectively - making the comparison honest and fair.',
+    ],
     whenToUse: 'Use CAGR whenever you need to compare growth rates across different time periods or different investments. It is the right tool when evaluating fund performance, revenue growth trajectories, or multi-year ROI on capital projects. Do not use CAGR to represent volatile investments where interim drawdowns are important - CAGR ignores path, showing only start and end.',
     examples: {
       headers: ['Scenario', 'Start Value', 'End Value', 'Years', 'CAGR'],
@@ -3662,6 +4222,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Compound interest is interest calculated on the accumulated balance, not just the original principal. Each period, the interest earned is added to the principal, and the next period\'s interest is then earned on this larger combined balance. This creates a compounding feedback loop: the more you have, the more you earn, the more you have.',
       'The standard formula is A = P(1 + r/n)^(nt), where A is the final amount, P is the principal, r is the annual interest rate (as a decimal), n is the number of compounding periods per year, and t is the number of years. Monthly compounding (n = 12) produces a slightly higher return than annual compounding (n = 1) for the same stated annual rate.',
       'Compounding frequency matters significantly over long time horizons. $100,000 invested at 8% per year for 30 years grows to $1,006,266 with annual compounding, but to $1,020,808 with daily compounding - a difference of $14,542 simply from the compounding schedule. At higher rates and longer periods, this gap widens substantially.',
+    ],
+    keyTakeaways: [
+      'Compound interest earns interest on previously earned interest, not just on the original principal - creating exponential rather than linear growth over time.',
+      'A 12% annual rate compounding monthly has an effective annual rate (EAR) of 12.68% - the true annual cost, which is always higher than the stated nominal rate when compounding is more frequent than annually.',
+      'Monthly compounding of $10,000 at 6% over 20 years produces $33,102 versus $32,071 with annual compounding - a $1,031 difference from compounding frequency alone.',
+      'The Rule of 72: divide 72 by the annual interest rate to estimate the number of years required to double your money (72 ÷ 6% = 12 years to double).',
+      'Compounding works against borrowers on debt: credit card debt at 20% APR compounding monthly grows a $1,000 balance to $2,653 after 5 years with no payments.',
+    ],
+    fastFact: '$10,000 invested at 8% for 30 years grows to approximately $100,627 with annual compounding - the compound interest alone ($90,627) is more than 9 times the original principal, illustrating why Einstein reportedly called compounding "the eighth wonder of the world." (Standard compound growth calculation)',
+    beginnerExplain: [
+      'Imagine a snowball rolling downhill. It starts small, but as it rolls, it picks up more snow - and the bigger it gets, the more snow it picks up each rotation. Compound interest works the same way: your money earns interest, that interest is added to your balance, and next period your larger balance earns even more interest.',
+      'The practical implication is time is your most powerful lever. $10,000 invested at 7% for 10 years grows to about $19,672. Leave it for 30 years and it becomes $76,123 - nearly four times more, from twice as many years. Starting 10 years earlier often matters more than saving more money later.',
     ],
     whenToUse: 'Use compound interest calculations for any long-term savings, investment, or debt scenario. For investments, use it to project what a lump sum grows to, or reverse-engineer the rate required to reach a target. For debt (mortgages, credit cards, student loans), compound interest explains why carrying balances is so costly - interest accrues on interest.',
     examples: {
@@ -3722,6 +4294,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A current ratio above 1.0 means the company can theoretically meet all short-term obligations using its liquid assets. A ratio below 1.0 - sometimes called a working capital deficit - means current liabilities exceed current assets, which signals reliance on future cash generation or credit facilities to meet near-term payments.',
       'The current ratio is one of three core liquidity ratios. The quick ratio (or acid test) excludes inventory, which may not be quickly liquidable. The cash ratio is the most stringent, counting only cash and cash equivalents. Each gives a progressively more conservative view of short-term solvency.',
     ],
+    keyTakeaways: [
+      'A current ratio of 1.5-2.5 is generally healthy for industrial companies; below 1.0 signals a working capital deficit where current liabilities exceed current assets.',
+      'A very high current ratio (5.0+) is not always positive - it may indicate poor capital efficiency from excess idle cash or slow-moving inventory.',
+      'The quick ratio (acid test) is more conservative than the current ratio because it excludes inventory - useful when inventory is slow-moving or illiquid.',
+      'Retailers can operate below 1.0 profitably because they collect cash from customers before paying suppliers - context and industry peers always matter more than the absolute number.',
+      'Lenders and credit analysts set short-term debt covenants around the current ratio - a covenant breach often triggers technical default even if the business is operationally healthy.',
+    ],
+    beginnerExplain: [
+      'The current ratio is a simple liquidity check: if every short-term bill came due today, could the company pay? A ratio of 2.0 means for every $1 owed in the next year, the company has $2 in liquid assets. A ratio of 0.8 means it cannot cover everything from existing assets alone - it would need to borrow or generate new cash quickly.',
+      'The most common mistake is treating a higher ratio as always better. A ratio of 5 might mean the company is sitting on piles of unused cash rather than investing it productively. And a ratio below 1.0 is not automatically alarming for a large supermarket chain - they collect customer cash daily and pay suppliers on 30-60 day terms, so they often run a negative working capital cycle by design.',
+    ],
     whenToUse: 'Use the current ratio for a quick liquidity health check when reviewing a company\'s balance sheet. A ratio of 1.5–2.5 is generally considered healthy for most industrial companies. For retail businesses with fast inventory turnover, 1.2 may be adequate. SaaS and service businesses with minimal inventory often maintain ratios above 3. Lenders and credit analysts use it to set short-term debt covenants.',
     examples: {
       headers: ['Current Assets', 'Current Liabilities', 'Current Ratio', 'Liquidity Signal'],
@@ -3780,6 +4363,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The break-even point (BEP) is the exact level of sales volume at which total revenue equals total costs - the business earns no profit and incurs no loss. Below the break-even point, the business runs at a loss. Above it, every additional unit sold generates pure profit equal to the contribution margin per unit.',
       'Break-even analysis separates costs into two types: fixed costs (rent, salaries, insurance - unchanged regardless of volume) and variable costs (materials, commissions - rising proportionally with volume). The key derived metric is the contribution margin: Price minus Variable Cost Per Unit. This is the amount each sold unit contributes toward covering fixed costs before generating profit.',
       'Break-even can be expressed in units (how many to sell) or in revenue (what sales volume to achieve). The revenue break-even is useful when the business sells a mix of products at different price points. Both rely on the same underlying logic: fixed costs divided by contribution margin in the relevant units.',
+    ],
+    keyTakeaways: [
+      'Break-Even Units = Fixed Costs / Contribution Margin per Unit. If fixed costs are $50,000 and CM per unit is $15, you need to sell 3,333 units to break even.',
+      'A price increase raises the contribution margin, directly reducing break-even units - raising price from $25 to $28 on a $10 variable cost product cuts break-even units by 17%.',
+      'The margin of safety - (Actual Revenue - Break-Even Revenue) / Actual Revenue - shows how much sales can decline before losses begin; below 10% is considered precarious.',
+      'Break-even analysis assumes constant price and constant variable cost per unit - conditions that rarely hold at high volumes due to bulk discounts and step-fixed-cost increases.',
+      'For multi-product businesses, break-even requires a sales-mix assumption; a change in product mix can move the actual break-even even if unit-level economics do not change.',
+    ],
+    beginnerExplain: [
+      'Think of a lemonade stand. You spend $30 on a table, signs, and supplies - those are your fixed costs. Each cup costs $0.50 to make and you sell it for $2.00, so each cup contributes $1.50 toward paying back your $30. Break-even is $30 / $1.50 = 20 cups. Cup 21 is pure profit.',
+      'The same logic scales to any business. A restaurant with $40,000 in monthly fixed costs (rent, staff, equipment) and an average contribution margin of $12 per cover needs 3,333 customers per month to break even. Every customer above that number goes straight to profit. Every one below costs the owner money.',
     ],
     whenToUse: 'Use break-even analysis before launching a new product, service, or business to determine the minimum viable volume. It is equally useful for pricing decisions (what happens to BEP if price increases by 10%?), capacity planning, and evaluating the impact of a cost structure change. The margin of safety - actual sales minus break-even sales - shows how much revenue can decline before the business enters a loss.',
     examples: {
@@ -3840,6 +4434,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Contribution Margin Ratio (CM Ratio) expresses CM as a percentage of revenue, showing how many cents out of every revenue dollar are available to cover fixed costs and profit. A 60% CM Ratio means for every $100 in sales, $60 is available for fixed costs and profit - the other $40 is consumed by variable costs.',
       'CM differs from Gross Profit in an important way: COGS typically includes some fixed manufacturing overhead, while CM\'s variable cost definition includes only truly variable expenses. For decision-making - whether to accept a specific order, which product to prioritise, what happens if volume changes - CM is more decision-relevant than gross profit.',
     ],
+    keyTakeaways: [
+      'CM = Revenue - Variable Costs only. CM Ratio = CM / Revenue, showing what fraction of each revenue dollar covers fixed costs and profit.',
+      'CM is more decision-relevant than gross profit for incremental decisions because COGS includes fixed overhead that does not change with the specific decision.',
+      'Accept any incremental order priced above variable cost - it contributes something toward fixed costs even if it is below full cost.',
+      'SaaS companies typically have CM Ratios of 60-80%; manufacturing 30-50%; retail and distribution 20-40%. Context and industry peers matter more than absolute benchmarks.',
+      'Break-even units = Fixed Costs / CM per Unit. Improving CM is one of the most powerful levers for reducing break-even volume and improving business model resilience.',
+    ],
+    beginnerExplain: [
+      'Contribution margin answers: after paying the costs that go up with each sale, how much is left to pay the bills that are fixed? If a coffee shop charges $5 for a latte and the milk, coffee, and cup cost $1.50, the contribution margin is $3.50 per cup. Every cup sold puts $3.50 toward rent, staff, and equipment - and after enough cups, starts generating profit.',
+      'The CM Ratio extends this thinking to percentages. A 70% CM Ratio means 70 cents from every dollar of sales is free to cover overhead. A 20% CM Ratio means only 20 cents is free. A high CM Ratio gives the business more cushion - it can still be profitable with fewer sales if something goes wrong.',
+    ],
     whenToUse: 'Use Contribution Margin for product mix decisions (which products to prioritise with limited capacity), pricing analysis (is a discounted order still worth accepting?), break-even calculations, and evaluating the profit impact of volume changes. The rule: accept any incremental order priced above variable cost - it contributes something toward fixed costs even if it is below full cost.',
     examples: {
       headers: ['Product', 'Price', 'Variable Cost', 'CM / Unit', 'CM Ratio', 'Fixed Allocation', 'Full-Cost Profit'],
@@ -3897,6 +4502,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The P/E Ratio (Price-to-Earnings) is calculated by dividing a company\'s current stock price by its Earnings Per Share (EPS). It is the most widely cited equity valuation multiple because it directly answers the investor\'s most fundamental question: how much am I paying for each dollar of annual profit?',
       'The trailing P/E uses the most recent 12 months of reported EPS (also called LTM - last twelve months). The forward P/E uses consensus analyst estimates for the next 12 months of expected EPS. Forward P/E is typically lower than trailing P/E for growing companies (because earnings are expected to rise) and is the more decision-relevant figure for forward-looking investors.',
       'The inverse of the P/E - EPS divided by Price - is the earnings yield, expressed as a percentage. It makes P/E directly comparable to bond yields. A P/E of 20 implies a 5% earnings yield. If a 10-year government bond yields 4.5%, the equity risk premium is modest. If bonds yield 2%, the equity risk premium is more comfortable.',
+    ],
+    keyTakeaways: [
+      'P/E = Stock Price / EPS. A P/E of 25 means you are paying $25 for every $1 of annual earnings. The inverse (1/25 = 4%) is the earnings yield, comparable to bond yields.',
+      'The Shiller CAPE (10-year inflation-adjusted P/E) has historically averaged 16-17 for the S&P 500, providing a long-run baseline for market-level valuation.',
+      'A high P/E requires high future earnings growth to justify - if growth disappoints, multiple compression can cause large stock price declines even when the business remains operationally sound.',
+      'P/E is undefined (not negative) when earnings are negative. For loss-making companies, use Price/Sales, EV/Revenue, or DCF instead.',
+      'EV/EBITDA is preferred over P/E for comparing companies with different leverage because it is capital-structure neutral; P/E is distorted by interest expense and tax differences.',
+    ],
+    fastFact: 'The Shiller CAPE (cyclically adjusted P/E) for the S&P 500 has averaged approximately 16-17 over its full history since 1871, though it has traded well above this level for much of the period since 2010. (Shiller, Yale, 2024)',
+    beginnerExplain: [
+      'The P/E ratio tells you what the market is currently willing to pay per dollar of earnings. If a company earns $5 per share and the stock trades at $100, the P/E is 20 - you are paying $20 for each $1 of annual profit. If a peer earns the same $5 but trades at $50, its P/E is 10. The higher P/E company is "more expensive" per dollar of earnings.',
+      'Why would anyone pay more? Because they expect faster earnings growth. A 20 P/E can be fair if earnings double in 3 years; it is expensive if earnings are flat. This is why a company trading at a P/E of 35 when peers average 15 is not automatically overvalued - it just means investors are betting on faster-than-average growth. The bet may or may not pay off.',
     ],
     whenToUse: 'Use P/E as a first-pass relative valuation: compare a company\'s P/E to its own historical range, to sector peers, and to the broader market index. A company trading at a P/E of 35 when peers average 18 is either higher quality, higher growth - or overvalued. Use forward P/E for growth companies where trailing earnings understate future profit potential.',
     examples: {
@@ -3957,6 +4574,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Basic EPS uses the weighted average shares outstanding during the period. Diluted EPS - the figure that typically receives more analytical attention - adjusts for all dilutive instruments: stock options, restricted stock units, convertible bonds, and warrants. Diluted EPS is always equal to or lower than basic EPS and represents a fully converted worst-case scenario for existing shareholders.',
       'EPS is the direct input to the P/E ratio (P/E = Price / EPS) and the earnings yield (Earnings Yield = EPS / Price). It is also used to calculate EPS growth rates - one of the most watched metrics in equity analysis. Consensus analyst EPS estimates for future quarters are a central driver of short-term share price movements, as beats and misses against these estimates cause significant price reactions.',
     ],
+    keyTakeaways: [
+      'Always use diluted EPS (not basic) for P/E calculations - it assumes all dilutive instruments are converted and represents the worst-case per-share figure for existing shareholders.',
+      'A company spending $500M on buybacks can show 10% EPS growth with zero improvement in actual profitability - always compare EPS growth to net income growth to distinguish real earnings from financial engineering.',
+      'The payout ratio = Dividends Per Share / EPS. A ratio consistently above 100% means the company is paying more in dividends than it earns, which is unsustainable without borrowing.',
+      'EPS beats and misses against analyst consensus estimates are a primary driver of short-term stock price movements, often more than the absolute EPS level itself.',
+      'For companies with heavy equity compensation, dilution from basic to diluted EPS can be 10-15%+ - meaning significantly fewer earnings per share than headline numbers suggest.',
+    ],
+    beginnerExplain: [
+      'EPS is the simplest version of "how profitable is this company per share I own?" If a company earns $10 million total and has 10 million shares outstanding, EPS is $1.00. If another company earns the same $10 million but has 100 million shares, its EPS is $0.10. Same profits, very different per-share numbers - and that difference matters when you\'re deciding how much to pay per share.',
+      'The diluted version matters because companies often promise future shares - through employee stock options, convertible debt, and similar instruments. If all those promises were fulfilled today, there would be more shares dividing the same earnings. Diluted EPS shows what the per-share figure would be in that fully diluted scenario, giving you a more conservative and realistic number for analysis.',
+    ],
     whenToUse: 'Use diluted EPS (not basic) for P/E ratio calculations and equity analysis - it reflects the economic reality of full share dilution. Track EPS growth over multiple years to identify companies compounding earnings consistently. Compare EPS growth against revenue growth: EPS growing faster than revenue implies margin expansion or share buybacks; slower implies dilution or margin compression.',
     examples: {
       headers: ['Metric', 'Company A', 'Company B'],
@@ -4015,6 +4643,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
 
   'roe': {
     beginnerExplain: ['Think of shareholders\' equity as your personal down payment on a business. If you invest $100,000 of your own money to buy a franchise (with a $400,000 bank loan covering the rest), and the franchise earns $20,000 in net profit that year, your ROE is 20%. The $20,000 is divided by your $100,000 contribution - the bank\'s portion is not in the denominator. This is why two businesses can show the same ROE for very different reasons: one earned it through a high-margin product, the other by borrowing heavily to amplify a thin-margin operation.'],
+    keyTakeaways: [
+      'ROE = Net Income / Shareholders\' Equity. A sustained ROE above 15-20% is considered strong for established companies; Warren Buffett targets above 20% without excessive leverage.',
+      'The DuPont formula breaks ROE into Net Profit Margin x Asset Turnover x Equity Multiplier - revealing whether ROE is driven by profitability, operational efficiency, or financial leverage.',
+      'ROE below the cost of equity means the company is destroying shareholder value - it earns less on invested capital than the minimum return shareholders require.',
+      'Three common distortions inflate ROE artificially: high leverage reducing equity denominator, share buybacks funded by debt, and goodwill write-downs permanently reducing equity.',
+      'A luxury brand may achieve 20% ROE through high margins and low leverage; a bank achieves the same 20% through thin margins and 10x leverage - identical ROE, fundamentally different risk profiles.',
+    ],
     definition: [
       'Return on Equity (ROE) measures how many dollars of net income a company generates for each dollar of shareholders\' equity. Shareholders\' equity - also called book value - is the accounting value of assets minus liabilities: what would be left for equity holders if all assets were liquidated at book value and all debts paid. ROE converts this ownership stake into an efficiency ratio.',
       'ROE is best understood through the DuPont decomposition, which breaks it into three multiplicative components: Net Profit Margin × Asset Turnover × Equity Multiplier. Net Profit Margin (Net Income / Revenue) shows profitability efficiency. Asset Turnover (Revenue / Total Assets) shows how productively assets generate revenue. The Equity Multiplier (Total Assets / Equity) reflects financial leverage - how much of the asset base is funded by debt.',
@@ -4080,6 +4715,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The relationship between ROA and ROE is direct: ROE = ROA x Equity Multiplier. The equity multiplier (Total Assets / Equity) is the leverage factor. A company with ROA of 5% and an equity multiplier of 4x reports ROE of 20%. Two companies with identical ROA can show very different ROE simply because one uses more debt financing than the other.',
       'ROA is most useful when comparing companies within the same industry that carry different debt levels, or when tracking a single company\'s operational efficiency over time while abstracting away changes in its capital structure.',
     ],
+    keyTakeaways: [
+      'ROA = Net Income / Total Assets. Unlike ROE, ROA is unaffected by financial leverage because total assets include both debt- and equity-funded portions of the business.',
+      'ROE = ROA x Equity Multiplier. A company with 5% ROA and 4x leverage reports 20% ROE - the gap between ROE and ROA directly reflects the impact of borrowing.',
+      'ROA benchmarks are highly industry-specific: asset-light software can achieve 15-30%+; manufacturers 5-10%; banks 1.0-1.5% (due to their structurally large asset bases).',
+      'IFRS 16 / ASC 842 capitalised lease assets from 2019, inflating total assets for heavy lessees and depressing ROA relative to pre-2019 figures or asset-owning peers.',
+      'Large goodwill from acquisitions inflates total assets and depresses ROA - an organically built competitor with identical operations will show higher ROA than an acquisition-heavy peer.',
+    ],
     beginnerExplain: ['Imagine you run a delivery business. You have a van worth $50,000 bought with $10,000 of your own savings and a $40,000 bank loan. At year end the business earned $5,000 net profit. ROA = $5,000 / $50,000 = 10% - the van earned 10 cents for every dollar of asset, regardless of who funded it. ROE = $5,000 / $10,000 = 50% - but that 50% is partly because you borrowed most of the van\'s cost. ROA strips out that borrowing effect and tells you how hard the actual asset is working.'],
     whenToUse: 'Use ROA when comparing companies with different capital structures - for example two banks, two retailers, or two airlines - where ROE comparisons are distorted by different leverage levels. ROA is also useful for tracking whether a company is becoming more or less efficient at deploying its asset base over time, independent of debt decisions made by management.',
     examples: {
@@ -4140,6 +4782,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'ROCE is the preferred profitability metric for capital-intensive industries - utilities, oil & gas, mining, manufacturing, and infrastructure - where businesses routinely hold billions in fixed assets financed by a mixture of debt and equity. For these businesses, ROE is distorted by leverage variation; ROCE provides a clean comparison of how productively the core asset base is working.',
       'A useful benchmark is to compare ROCE to the Weighted Average Cost of Capital (WACC). If ROCE exceeds WACC, the business is creating economic value; if ROCE falls below WACC, it is destroying value even if accounting profits look positive. This relationship is the foundation of Economic Value Added (EVA) analysis.',
     ],
+    keyTakeaways: [
+      'ROCE = EBIT / Capital Employed (Total Assets - Current Liabilities). Using EBIT rather than net income makes ROCE capital-structure and tax-neutral, unlike ROE.',
+      'ROCE must exceed WACC to create economic value. A business with 10% ROCE and 12% WACC is destroying value even if net income is positive.',
+      'ROCE is sensitive to asset age: old, fully depreciated assets artificially inflate ROCE; new capex cycles depress it before the assets generate revenue.',
+      'A commonly cited ROCE benchmark is above 15% for most non-financial industries; regulated utilities at 8-12% can be excellent given their risk profile.',
+      'Capital Employed = Non-current Assets + Working Capital = Shareholders\' Equity + Long-term Debt. Current liabilities are excluded as they represent short-term funding, not invested capital.',
+    ],
     beginnerExplain: ['Think of ROCE as the yield on the total capital a business controls - like working out the interest rate your savings account is effectively earning, but for an entire company. If a factory costs $10 million to build and run (funded by $6M of your own money and $4M of bank debt), and it generates $1.5M in operating profit before paying the bank\'s interest, your ROCE is 15%. That 15% is the raw productivity of the factory, before anyone - shareholders or lenders - takes their cut.'],
     whenToUse: 'Use ROCE when comparing capital-intensive businesses where debt levels vary significantly - two utilities or two mining companies may have very different leverage, but a ROCE comparison tells you which one extracts more value from its asset base. ROCE is also useful for internal capital allocation decisions: which business unit or project earns the highest return on the capital it consumes?',
     examples: {
@@ -4199,6 +4848,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A knot is a unit of speed equal to one nautical mile per hour. It is defined as exactly 1.852 km/h (approximately 1.15078 mph or 0.51444 m/s). Despite not being part of the SI metric system, the knot is the universally accepted speed unit in aviation and maritime navigation.',
       'The word "knot" originates from a 17th-century navigation technique called the chip log. Sailors cast a knotted rope attached to a wooden float overboard and counted how many knots passed through their hands in a set time interval (typically 28 seconds). The count gave the ship\'s speed directly in nautical miles per hour.',
     ],
+    keyTakeaways: [
+      '1 knot = exactly 1.852 km/h = approximately 1.151 mph. It is the standard speed unit in all aviation and maritime navigation worldwide.',
+      '"Knots per hour" is incorrect - a knot already means nautical miles per hour. The unit is simply "knots."',
+      'Knots and km/h differ by nearly double: 35 knots is 64.8 km/h, not 35 km/h - a common source of dangerous confusion in weather and navigation contexts.',
+      'Aviation uses knots because nautical miles align directly with Earth\'s latitude grid (1 degree = 60 nautical miles), simplifying navigation chart calculations.',
+      'A commercial airliner typically cruises at approximately 490 knots (907.5 km/h); a cargo ship averages around 15 knots (27.8 km/h).',
+    ],
+    beginnerExplain: [
+      'A knot is simply a speed - one nautical mile per hour. It sounds exotic but converts simply: multiply knots by 1.852 to get km/h, or by 1.151 to get mph. A 20-knot wind is 37 km/h. A 200-knot aircraft is 370 km/h.',
+      'Why does aviation use a different speed unit? Because the nautical mile is designed around the Earth\'s geometry. One nautical mile equals one arcminute of latitude, which makes distance calculations on navigation charts direct and simple. When a pilot says they are 60 nautical miles from a waypoint, that is exactly 1 degree of latitude. The knot follows from using nautical miles for distance.',
+    ],
     whenToUse: 'Use knots when reading or reporting aviation airspeed, wind speeds in meteorological reports, ship speeds, and any speed displayed on nautical charts or flight instruments. All aviation weather (TAFs, METARs) and ATC communications worldwide use knots. For everyday driving contexts, convert to km/h or mph.',
     examples: {
       headers: ['Speed in knots', 'km/h', 'mph', 'Context'],
@@ -4255,6 +4915,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'A Mach number is the ratio of an object\'s speed to the local speed of sound in the surrounding medium. Mach 1 means the object is travelling at the speed of sound. Mach 0.5 is half the speed of sound; Mach 2 is twice the speed of sound.',
       'The speed of sound varies with temperature and the medium it travels through. At sea level and 15°C in air, Mach 1 is approximately 340.3 m/s (1,225 km/h or 761 mph). At cruising altitude (~10,000 m), where temperatures reach around -50°C, Mach 1 drops to about 295 m/s (1,062 km/h). This is why airliner cruise speeds are quoted in Mach - the aircraft\'s aerodynamic behaviour depends on Mach number, not absolute speed.',
+    ],
+    keyTakeaways: [
+      'Mach 1 at sea level (15°C) = 340.3 m/s = 1,225 km/h. At cruising altitude (10,000 m, -50°C) Mach 1 = 295 m/s = 1,062 km/h - never convert without specifying altitude and temperature.',
+      'Speed categories: Subsonic below Mach 0.8; Transonic Mach 0.8-1.2; Supersonic Mach 1.2-5; Hypersonic Mach 5 and above.',
+      'Commercial airliners cruise at approximately Mach 0.85 (1,041 km/h at sea-level reference). The Concorde cruised at Mach 2; the Space Shuttle re-entered at around Mach 25.',
+      'Aerodynamic behaviour depends on Mach number, not absolute speed - making Mach the natural unit for describing aircraft performance at altitude.',
+      'Mach is named after Ernst Mach (1838-1916), the Austrian physicist who studied shock waves from supersonic projectiles.',
+    ],
+    beginnerExplain: [
+      'A Mach number answers: how fast are you moving compared to sound? Sound travels at about 1,225 km/h at sea level. An aircraft at Mach 0.85 is travelling at 85% of the speed of sound - roughly 1,041 km/h. A fighter jet at Mach 2 is moving at twice the speed of sound.',
+      'The reason pilots use Mach instead of km/h is that the aircraft "feels" speed differently depending on how close it is to the speed of sound. At Mach 0.85, shock waves are starting to form on the wings and affect handling - even if you are still technically subsonic. At Mach 1.2 those waves behave very differently. So the Mach number is a better description of the aerodynamic environment the aircraft is operating in than raw km/h.',
     ],
     whenToUse: 'Use Mach numbers when describing aircraft performance, particularly for jet aircraft, supersonic vehicles, and anything where compressibility effects in air matter (above approximately Mach 0.3). For subsonic vehicles like cars, trains, and ships, use km/h, mph, or knots instead.',
     examples: {
@@ -4314,6 +4985,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A nautical mile is a unit of distance equal to exactly 1,852 meters (1.852 km or approximately 1.151 statute miles). It is defined as one arcminute (1/60 of a degree) of latitude along any meridian of Earth\'s surface. This geometric relationship to Earth\'s coordinate system is what makes it essential for navigation.',
       'Because one degree of latitude = 60 nautical miles, navigators can read distances directly off the latitude scale on a chart using a compass or dividers - no conversion required. A ship travelling 1 nautical mile has moved exactly 1 arcminute of latitude toward the equator or poles.',
     ],
+    keyTakeaways: [
+      '1 nautical mile = exactly 1,852 meters = 1.151 statute miles. It is about 15% longer than a land statute mile.',
+      'One nautical mile = one arcminute of latitude. One degree of latitude = 60 nautical miles. This direct link to Earth\'s coordinate grid is why it is essential for navigation.',
+      'Paris to New York is approximately 3,600 nautical miles; Earth\'s circumference is approximately 21,600 nautical miles.',
+      'A nautical mile is not officially SI, but its definition (exactly 1,852 m) was fixed by international agreement in 1929 and is permitted alongside SI units for maritime and aviation use.',
+      'Combine with knots for speed: a vessel doing 20 knots covers 20 nautical miles per hour.',
+    ],
+    beginnerExplain: [
+      'A nautical mile is longer than a regular (statute) mile: 1,852 meters versus 1,609 meters - about 15% longer. On a map, it is the distance you travel when you move one arcminute (one sixtieth of a degree) up or down a line of longitude.',
+      'The practical value is elegance: on any nautical chart, the latitude scale on the side is your ruler. Place a compass at one degree of latitude and spread it: that span is exactly 60 nautical miles. Ancient navigators could measure ocean distances with no calculator, just dividers on a chart. That convenience is why the unit still dominates global aviation and shipping despite the metric system.',
+    ],
     whenToUse: 'Use nautical miles for any oceanic or aviation navigation - measuring distances on charts, filing flight plans, calculating fuel range, and setting waypoints. Combine with knots to express speed: a ship travelling at 20 knots covers 20 nautical miles per hour. For road or land distances, use kilometers or statute miles instead.',
     examples: {
       headers: ['Nautical miles', 'Kilometers', 'Statute miles', 'Context'],
@@ -4364,6 +5046,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'Gross pay is the total compensation earned during a pay period before any deductions are applied. It includes base salary or hourly wages, overtime, bonuses, commissions, and other taxable compensation. When an employer quotes a salary of $60,000 per year, that is a gross pay figure.',
       'Gross pay is distinct from net pay (take-home pay). Federal income tax, state income tax, Social Security (6.2%), Medicare (1.45%), health insurance premiums, and retirement contributions (e.g. 401k) are all deducted from gross pay to arrive at the amount actually deposited into your account.',
+    ],
+    keyTakeaways: [
+      'Gross pay = all compensation before any deductions: base salary, overtime, bonuses, and commissions. It is not the amount you receive - it is the amount you earn.',
+      'For most US workers earning $40,000-$100,000, net (take-home) pay is approximately 65-75% of gross pay; higher earners in high-tax states may keep as little as 55-60%.',
+      'A $60,000 annual salary is $5,000/month gross but roughly $3,200-$3,800/month net after taxes and deductions - never use gross pay for monthly expense budgeting.',
+      'Social Security is 6.2% of gross pay (up to the wage base); Medicare is 1.45%. These FICA deductions are mandatory and predictable regardless of filing status.',
+      'Use gross pay for: comparing job offers, calculating hourly equivalents, and tax filings. Use net pay for: monthly budget planning and cash flow.',
+    ],
+    beginnerExplain: [
+      'Gross pay is the number your employer uses to describe your compensation - "$60,000 a year" or "$30 an hour." Net pay is the smaller number that actually hits your bank account. The difference goes to the government (income tax, Social Security, Medicare) and sometimes to your employer\'s benefits programs (health insurance, 401k).',
+      'For a $60,000 salary, gross bi-weekly pay is about $2,308. After federal tax, FICA, and typical health insurance, you might take home around $1,473. That is roughly 64 cents on the dollar. The practical rule: when you get a salary offer, mentally multiply by about 0.65-0.70 to estimate your actual monthly cash in hand, then verify with a paycheck calculator.',
     ],
     whenToUse: 'Use gross pay when comparing job offers, calculating your hourly equivalent salary, or filing tax returns. Use net pay when planning your monthly budget or cash flow, since that is the actual amount available to spend.',
     examples: {
@@ -4425,6 +5118,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'RPM (Revenue Per Mille, from the Latin for "thousand") is the estimated earnings a publisher receives for every 1,000 page views on an ad-supported website. It is calculated by dividing total earnings by page views, then multiplying by 1,000. A site earning $50 from 10,000 page views has an RPM of $5.00.',
       'RPM is the most practical metric for comparing ad monetisation performance because it combines both click-through rate (CTR) and cost per click (CPC) into a single number. A publisher with a high CPC but low CTR may have the same RPM as one with a lower CPC but higher CTR. Finance sites typically earn $15-40 RPM; general content sites average $2-8 RPM.',
     ],
+    keyTakeaways: [
+      'RPM = (Total Earnings / Total Page Views) x 1,000. A site earning $50 from 10,000 page views has an RPM of $5.00.',
+      'Finance and insurance content earns $15-40 RPM; entertainment and gaming typically earns $1-5 RPM - niche selection is the biggest RPM lever.',
+      'RPM is your net publisher share, not the gross advertiser spend. Google keeps approximately 32% and pays publishers approximately 68% of advertiser spend on content ads.',
+      'Always analyze RPM over 30+ days - a single day with unusual traffic can distort the figure significantly.',
+      'RPM = CPC x CTR x 1,000. Improving CPC (by targeting higher-value keywords) is typically more impactful than improving CTR, since a 2x CPC increase doubles earnings without needing more traffic.',
+    ],
+    beginnerExplain: [
+      'RPM answers: how much do I earn for every 1,000 people who visit my site? If your site gets 10,000 views per month and earns $80 in ad revenue, your RPM is $8. A site with $25 RPM in the finance niche earns more than three times as much per visitor as a $8 RPM lifestyle site, even at the same traffic volume.',
+      'The formula is simple: divide your total earnings by your total page views, then multiply by 1,000. It combines two things - how often people click ads (CTR) and how much each click is worth (CPC) - into one number that lets you compare content performance fairly. If one article earns $30 RPM and another earns $5 RPM, the first article is six times more valuable per visitor.',
+    ],
     whenToUse: 'Use RPM to benchmark your monetisation performance across different content types, traffic sources, or time periods. Compare your RPM against niche averages to identify whether your CTR, CPC, or ad placement is the limiting factor.',
     examples: {
       headers: ['Niche', 'Typical RPM'],
@@ -4476,6 +5180,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'CPC (Cost Per Click) is the amount a publisher earns each time a visitor clicks an ad on their page. In Google AdSense, the CPC shown in your reports is the net figure - your share after Google\'s revenue split. Google keeps approximately 32% and pays publishers approximately 68% of what advertisers spend on content ads.',
       'CPC varies enormously by niche and geography. Finance, insurance, and legal keywords can produce CPCs of $5-50+, while entertainment and lifestyle keywords typically yield $0.05-$0.50. A single click from a US-based visitor on a finance keyword can be worth more than 100 clicks from a low-income-country visitor on a general content page.',
+    ],
+    keyTakeaways: [
+      'CPC in AdSense is your net publisher share - approximately 68% of what the advertiser paid; Google retains about 32%.',
+      'Finance, insurance, and legal keywords yield $1-$50+ CPC; entertainment and gaming typically pay $0.05-$0.50. Niche and audience geography are the primary CPC drivers.',
+      'A 2x CPC improvement doubles revenue without needing any additional traffic - making high-CPC niche content one of the highest-ROI monetization strategies.',
+      'CPC is an average across all clicks in a period; individual clicks vary widely and strategy should never be based on a single click\'s value.',
+      'US, UK, Canadian, and Australian audiences deliver significantly higher CPCs than most other geographies due to higher advertiser spend in English-language markets.',
+    ],
+    beginnerExplain: [
+      'CPC answers: how much do I earn per ad click? If your page gets 100 ad clicks per month and AdSense pays an average $0.50 per click, you earn $50 that month. If you could increase your average CPC to $1.00 - by targeting more valuable financial content, for example - you would earn $100 without any change in traffic or click rate.',
+      'The geography factor surprises many publishers. A visitor from the US clicking a finance ad might earn you $3-$5. A visitor from a lower-income country clicking the same ad might earn $0.05-$0.10. Advertisers bid on ad inventory based on how valuable they expect a visitor from that location to be to their business - so audience origin and content niche are the two biggest levers for CPC improvement.',
     ],
     whenToUse: 'Use CPC alongside CTR to calculate your Page RPM and forecast AdSense earnings. When optimising for revenue, improving CPC (by targeting higher-value content) is often more impactful than improving CTR, since a 2x CPC increase doubles earnings without needing any more traffic.',
     examples: {
@@ -4529,6 +5244,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'CTR (Click-Through Rate) is the percentage of ad impressions that result in a click. It is calculated by dividing total clicks by total impressions and multiplying by 100. If 10,000 ads are displayed and 200 are clicked, the CTR is 2%. For Google AdSense, CTR is typically measured at the page level: clicks divided by page views.',
       'A typical AdSense CTR for banner ads on content sites is 1-3%. CTR depends heavily on ad placement, ad format, and how relevant the ads are to the content. Ads placed within the content body near the top of the page consistently outperform sidebar and footer ads. Responsive ad units that adapt to device size typically achieve higher CTR than fixed-size units.',
     ],
+    keyTakeaways: [
+      'CTR = (Clicks / Impressions) x 100. A typical AdSense CTR for content sites is 1-3%; below 0.5% usually indicates poor ad placement or audience mismatch.',
+      'CTR above 10% can trigger an AdSense account review for invalid traffic - high click rates may signal artificially inflated or deceptive placement.',
+      'Ads placed within the content body (especially after the first paragraph) consistently outperform sidebar and footer placements for CTR.',
+      'Page RPM = CTR x CPC x 1,000. When CPC is already strong, optimizing CTR through better placement is the highest-leverage remaining improvement.',
+      'Responsive ad units that adapt to device size typically achieve higher CTR than fixed-size units by matching the display environment of each visitor.',
+    ],
+    beginnerExplain: [
+      'CTR tells you: out of everyone who saw your ad, what fraction actually clicked it? A 2% CTR means 2 out of every 100 ad impressions resulted in a click. That sounds small, but at high traffic volumes it drives significant revenue.',
+      'Ad placement has a bigger effect on CTR than most publishers expect. An ad embedded in your article text after the first paragraph might get 3% CTR. The same ad in your sidebar might get 0.3%. Same site, same visitor, 10x different result - purely from where the ad sits on the page. That is why in-content ad placement is the first optimization most publishers should try before any other change.',
+    ],
     whenToUse: 'Use CTR with CPC to calculate your Page RPM and forecast AdSense earnings. When optimising for revenue, focus on CTR if your CPC is already strong - in that case, improving ad placement and format can significantly increase earnings without changing your content strategy.',
     pitfalls: 'A very high CTR (above 10%) can trigger a Google AdSense review for invalid traffic. Google monitors CTR patterns and may suspend accounts where clicks appear to be artificially inflated. Always aim for natural CTR from genuinely interested visitors rather than trying to maximise clicks through misleading placement. CTR above 3% through good placement is excellent; above 10% raises flags.',
     faqs: [
@@ -4571,6 +5297,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The Pareto principle, widely known as the 80/20 rule, states that roughly 80% of outcomes are produced by 20% of inputs. Italian economist Vilfredo Pareto first documented this pattern in 1896, observing that 20% of Italy\'s population owned 80% of the land. Management consultant Joseph M. Juran later named the principle after Pareto in the 1940s and applied it to quality control and business management.',
       'In ratio terms, the 80/20 split is a 4:1 ratio. The high-impact 20% produces four times the output per unit compared to the remaining 80%. Enter 4:1 into the ratio-to-percentage calculator and you recover exactly 80% and 20%. This ratio framing makes it straightforward to compare against other distributions - a 3:1 ratio gives 75/25, a 9:1 ratio gives 90/10.',
       'The principle is an empirical observation, not a mathematical law. Real distributions vary - 70/30 and 90/10 are both consistent with the underlying idea. The constant is the asymmetry: a minority of inputs accounts for a majority of outputs, almost regardless of domain.',
+    ],
+    keyTakeaways: [
+      'The 80/20 rule means approximately 80% of outcomes come from 20% of inputs - a 4:1 ratio where the high-impact minority is four times more productive per unit than the rest.',
+      'The principle is an empirical observation, not a mathematical law. Real splits vary (70/30, 90/10) - the constant is the asymmetry, not the exact numbers.',
+      'Never eliminate the "bottom 80%" wholesale: those inputs may provide support functions, referrals, or be future high-value contributors invisible in a single output metric.',
+      'The principle does not compound recursively: you cannot apply 80/20 twice to claim that 4% of inputs produce 64% of output - each application must be measured independently.',
+      'Pareto first observed the pattern in Italian land ownership in 1896; Joseph M. Juran named and popularized it in the 1940s through quality control and business management applications.',
     ],
     beginnerExplain: [
       'Imagine you run an online store with 100 products. After checking your sales data, you find that 20 of those products generate 80% of all your revenue. The other 80 products together bring in only the remaining 20%. That imbalance - where a small slice of the whole carries most of the weight - is the Pareto principle.',
@@ -4675,6 +5408,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A pay period is the recurring cycle of time for which an employer calculates and pays wages or salary. The most common types in the US are weekly (52 pay cheques/year), bi-weekly (26 pay cheques/year), semi-monthly (24 pay cheques/year), and monthly (12 pay cheques/year). Bi-weekly and semi-monthly are often confused: bi-weekly means every two weeks; semi-monthly means twice a calendar month (e.g., the 1st and 15th).',
       'Pay period choice does not affect total annual income - only how and when that income is distributed. A $62,400 annual salary pays out as $1,200/week, $2,400 bi-weekly, $2,600 semi-monthly, or $5,200/month. Bi-weekly workers receive two "extra" pay cheques per year compared to semi-monthly workers, which can help with budgeting for irregular expenses.',
     ],
+    keyTakeaways: [
+      'Bi-weekly = every two weeks = 26 pay periods/year. Semi-monthly = twice a calendar month = 24 pay periods/year. These are not the same despite sounding similar.',
+      'Multiplying a bi-weekly paycheck by 24 instead of 26 underestimates annual income by 7.7%. Always multiply bi-weekly pay by 26, semi-monthly by 24.',
+      'Pay period frequency does not change total annual income - only the amount and timing of each payment.',
+      'Bi-weekly is the most common US private-sector schedule (26 periods/year), followed by semi-monthly (24 periods/year), according to the Bureau of Labor Statistics.',
+      'When comparing job offers with different pay schedules, always convert to annual salary first - per-paycheck amounts are misleading without knowing the frequency.',
+    ],
+    beginnerExplain: [
+      'A pay period is simply how often you get paid. Weekly means 52 checks a year - one every 7 days. Bi-weekly means 26 checks - one every 14 days. Semi-monthly means 24 checks - twice a month on fixed dates like the 1st and 15th.',
+      'The confusion between bi-weekly and semi-monthly is common. The key: bi-weekly gives you 26 checks, semi-monthly gives you 24. At the same $60,000 salary, bi-weekly gives you $2,307 per check, semi-monthly gives you $2,500 per check. Bi-weekly checks are smaller, but you get two extra per year. Total annual pay is identical - the distribution across the year differs.',
+    ],
     whenToUse: 'Use pay period when converting between hourly and annual income, calculating payroll costs, or comparing job offers that quote salary on different schedules. Always confirm which type a new employer uses - bi-weekly and semi-monthly pay produce different per-cheque amounts even at the same annual salary.',
     examples: {
       headers: ['Pay Period', 'Cheques/Year', '$62,400 annual salary'],
@@ -4720,6 +5464,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The payback period is the time required for an investment\'s cumulative savings - or income - to equal its initial cost. The formula divides the upfront cost by annual savings: a $10,000 machine saving $2,500 per year has a payback period of 4 years. After that point, every additional year of operation is net gain on top of a recovered cost.',
       'Payback period and ROI are related but answer completely different questions. Payback period asks: "when do I break even?" ROI asks: "how much profit do I make over the investment\'s lifespan?" An investment can have a short payback and modest ROI, or a long payback and exceptional ROI. A solar panel array with an 8-year payback on a 25-year lifespan generates far more total profit than a subscription tool with a 2-month payback on a 2-year lifespan - even though the subscription tool wins on payback period alone. You need both metrics together for a complete picture.',
       'The standard formula assumes constant annual savings. If savings grow over time - as is common when energy prices rise - the actual payback occurs earlier than the formula suggests. The discounted payback period applies a discount rate to each year\'s cash flows before summing them, giving a more conservative estimate for long-horizon investments. For most everyday decisions, the simple formula is sufficient.',
+    ],
+    keyTakeaways: [
+      'Payback period = Initial Cost / Annual Savings. A $10,000 machine saving $2,500/year has a 4-year payback period.',
+      'Payback period measures when you break even - not how profitable the investment is. Always pair with ROI using the full investment lifespan for a complete picture.',
+      'A key ratio: payback / lifespan. A 0.2 ratio means break-even in the first 20% of the product\'s life - a strong position. A 0.9 ratio means you barely recoup cost before failure.',
+      'The discounted payback period adjusts each year\'s cash flows for the time value of money, giving a more conservative estimate for long-horizon investments.',
+      'Watch for gross vs. net savings: an energy upgrade saving $3,000 in gas but consuming $800 in extra electricity has net savings of $2,200 - using gross figures overstates by 36%.',
     ],
     beginnerExplain: [
       'Think of a gym membership. You pay $600 upfront for a year\'s access. The alternative is $8 per class, and you go 3 times a week - 156 classes a year. Pay-per-visit cost: $1,248. Annual saving by buying the membership: $648.',
@@ -4812,6 +5563,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The European Working Group on Sarcopenia in Older People (EWGSOP2, 2019) defines sarcopenia by three components: low muscle strength (the primary criterion), low muscle quantity or quality (confirming the diagnosis), and poor physical performance (indicating severity). Practical screening thresholds include grip strength below 27 kg for men or 16 kg for women, and a gait speed below 0.8 meters per second. These can be measured in a clinical setting in under two minutes.',
       'The critical implication for body weight assessment is that sarcopenia can be invisible on a standard scale or BMI reading. Muscle is replaced by fat during the sarcopenic process without necessarily changing total body weight - so a person can have a normal BMI of 23 while having lost substantial functional muscle and accumulated clinically significant fat mass in its place. This state, sometimes called sarcopenic obesity, carries higher fall, fracture, hospitalization, and mortality risk than either sarcopenia or obesity alone.',
     ],
+    keyTakeaways: [
+      'Muscle mass loss begins around age 40 at 3-8% per decade and accelerates after 65; by age 80 many adults have lost 30-40% of peak muscle mass.',
+      'EWGSOP2 diagnostic thresholds: grip strength below 27 kg (men) or 16 kg (women); gait speed below 0.8 m/s indicates severe sarcopenia.',
+      'Sarcopenia is invisible on BMI: muscle replaced by fat can leave total weight unchanged while functional strength is severely reduced - a person at BMI 23 can be profoundly sarcopenic.',
+      'Sarcopenic obesity (low muscle + high fat) is more dangerous than either condition alone; standard caloric restriction can worsen sarcopenia if not paired with resistance exercise.',
+      'Resistance exercise 2-3 times per week with 1.2-1.6 g/kg/day protein is the evidence-based first-line intervention - randomized trials show meaningful gains even in adults over 80.',
+    ],
     beginnerExplain: [
       'Imagine a building whose walls look fine from the outside but the structural beams inside have been quietly replaced with foam. The building looks normal from the street - same height, same footprint, same weight - but it\'s no longer strong enough to handle a storm.',
       'Sarcopenia works the same way. The number on the scale and the BMI calculation can stay the same while muscle (the "beams") is gradually replaced by fat (the "foam"). The outside looks unremarkable. But functional strength - the ability to catch yourself after a stumble, carry groceries, or get out of a chair - has been quietly eroded. That\'s why grip strength and walking speed matter more than body weight alone in older adults.',
@@ -4881,6 +5639,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Sales tax is a consumption tax imposed at the point of sale on retail goods and services. The seller adds the tax to the purchase price, collects it from the buyer, and remits it to the state or local government. Rates are set by state legislatures, and most states allow counties and cities to layer additional local rates on top of the state base rate. The Tax Foundation reports that 45 US states plus Washington D.C. levy a statewide sales tax, with rates ranging from 2.9% (Colorado) to 7.25% (California).',
       'Unlike income tax (which taxes earnings) or property tax (which taxes assets), sales tax taxes spending at the moment of purchase. It is often described as regressive because lower-income households spend a larger proportion of their income on taxable goods, so the effective burden falls more heavily on them as a share of income.',
     ],
+    keyTakeaways: [
+      '45 US states plus DC levy statewide sales tax, with rates from 2.9% (Colorado) to 7.25% (California). Five states have no statewide sales tax: Alaska, Delaware, Montana, New Hampshire, and Oregon.',
+      'To reverse out sales tax from a total price, divide by (1 + rate), not subtract. For a $108 total at 8%: $108 / 1.08 = $100.00 - subtracting $8.64 gives the wrong answer.',
+      'Most states allow counties and cities to layer additional local rates on top of the state rate - always use the combined state plus local rate for accurate calculations.',
+      'Sales tax is regressive: lower-income households spend a larger share of income on taxable goods, so the effective burden is proportionally heavier on them.',
+      'Sales tax is collected by the seller at the point of sale and remitted to the government. The buyer pays it at purchase; the seller is the collection agent.',
+    ],
+    beginnerExplain: [
+      'Sales tax is the extra percentage added to a purchase price. If a shirt costs $40 and the sales tax is 8%, you pay $40 x 1.08 = $43.20 at checkout. The $3.20 goes to the state government; the store keeps the $40.',
+      'The reverse calculation catches many people out. If your receipt shows a total of $54 and the rate was 8%, the pre-tax price was not $54 - ($54 x 0.08) = $49.68. It was $54 / 1.08 = $50.00. The tax was $4.00, not $4.32. Always divide by (1 + rate) to reverse-engineer the original price.',
+    ],
     whenToUse: 'Use the sales tax formula when pricing products for sale, checking a receipt, estimating the total cost of a large purchase, or reverse-calculating the original price from a tax-inclusive total. Always use the combined state plus local rate for your specific location, not just the state-level rate.',
     examples: {
       headers: ['Pre-tax price', 'Tax rate', 'Tax amount', 'Total price'],
@@ -4938,6 +5707,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'Value Added Tax (VAT) is a multi-stage consumption tax. Unlike sales tax, which is collected only at the final retail sale, VAT is collected at every stage of production and distribution. A manufacturer pays VAT when buying raw materials, a wholesaler pays VAT when buying finished goods, and a retailer pays VAT when buying stock - but each claims back the VAT it paid on its inputs from the government. Only the net value added at each stage is actually taxed.',
       'The end consumer bears the full VAT cost because they cannot reclaim it. For a business, VAT is broadly neutral - they collect it on sales and reclaim it on purchases. Over 175 of 193 UN member countries use VAT as their primary consumption tax, with standard rates ranging from 4.5% (Andorra) to 27% (Hungary). The EU average standard rate is 21.9% (Tax Foundation, 2026). The United States is the only major economy that does not have a federal VAT.',
+    ],
+    keyTakeaways: [
+      'VAT is collected at every stage of the supply chain; each business reclaims VAT paid on inputs. Only the end consumer cannot reclaim - they bear the full cost.',
+      'Over 175 of 193 UN member countries use VAT as their primary consumption tax. The US is the only major economy without a federal VAT, using state-level sales tax instead.',
+      'To reverse out VAT from a gross price, divide by (1 + rate): £120 gross at 20% VAT = £120 / 1.20 = £100 net. Subtracting 20% of the gross gives the wrong answer.',
+      'VAT and GST are the same tax with different names: Europe and the UK call it VAT; Australia, Canada, India, New Zealand, and Singapore call it GST.',
+      'Standard VAT rates range from 4.5% (Andorra) to 27% (Hungary). The EU average standard rate is approximately 21.9%.',
+    ],
+    beginnerExplain: [
+      'VAT works like a relay race where the government collects a small amount at each handoff. A raw material supplier adds 20% VAT to their invoice. A factory buys those materials, pays the VAT, then reclaims it from the government. When the factory sells to a retailer, it adds 20% VAT again - and the retailer reclaims that. At the end of the chain, the customer buys the product, pays the VAT, and has nobody to reclaim it from. So the customer ends up paying the full 20% on the final value.',
+      'For a business, VAT is mostly paperwork - money in, money out, net effect roughly zero. For consumers, it is a real cost built into every price. When a UK business quotes a price "ex-VAT" or "net of VAT," they mean before adding the 20%. The £100 net price becomes £120 once VAT is included. Always clarify whether a quoted price includes VAT.',
     ],
     whenToUse: 'Use the VAT formula when creating invoices (add VAT to a net price), pricing products for sale in a VAT country, or reverse-calculating the net price from a tax-inclusive total. Businesses registered for VAT must always show the net price, VAT amount, and gross price separately on invoices.',
     examples: {
@@ -4997,6 +5777,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'GST (Goods and Services Tax) is the name used in Australia, Canada, India, New Zealand, and Singapore for a tax that works identically to VAT. It is a multi-stage consumption tax collected at each step of production and distribution. Each business in the supply chain pays GST on its purchases and collects GST on its sales, remitting only the difference to the government. End consumers bear the full cost because they cannot reclaim it.',
       "The key rates vary by country: Australia applies a flat 10% GST, New Zealand 15%, Singapore 9% (raised from 8% in January 2024), Canada's federal GST is 5% (combined with provincial taxes up to 15%), and India uses a multi-rate structure of 5%, 12%, 18%, and 28%. Despite the different name, any VAT calculator works for GST calculations, since the formula is identical.",
     ],
+    keyTakeaways: [
+      'GST and VAT are the same tax with different names. Australia, Canada, India, New Zealand, and Singapore use GST; Europe and the UK use VAT. The formula is identical.',
+      'Key GST rates: Australia 10%, New Zealand 15%, Singapore 9%, Canada federal 5% (combined with provincial up to 15%), India 5-28% (multi-rate by category).',
+      'Canada\'s combined GST rate ranges from 5% (Alberta) to 15% (New Brunswick, Newfoundland, Nova Scotia, PEI) due to provincial taxes layered on top of the federal 5%.',
+      'To reverse GST from a price, divide by (1 + rate): AU$110 / 1.10 = AU$100 net. Never subtract the rate percentage directly from the gross.',
+      'In Australia and New Zealand, consumer prices are usually shown GST-inclusive. In India, prices are often quoted net (excluding GST) - always confirm which convention applies.',
+    ],
+    beginnerExplain: [
+      'GST is just VAT with a different name. Both work the same way: a tax is added to each sale along the supply chain, businesses reclaim what they paid, and the end consumer pays the full accumulated tax with no way to get it back.',
+      'For everyday purchases: if a product costs AU$100 before GST and the rate is 10%, you pay AU$110 at the register. To reverse it - if a receipt shows AU$110 including GST - divide by 1.10 to get the pre-GST price of AU$100. Simple once you know the trick: always divide by (1 + rate), never subtract the percentage.',
+    ],
     whenToUse: 'Use GST calculations when invoicing in Australia, Canada, India, New Zealand, or Singapore; when pricing goods for sale in those markets; or when checking whether a quoted price includes or excludes GST. In Australia and New Zealand, consumer prices are usually shown GST-inclusive; in India, prices are often shown net (excluding GST).',
     examples: {
       headers: ['Country', 'GST rate', 'Net price', 'GST amount', 'Gross price'],
@@ -5054,6 +5845,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'HST (Harmonised Sales Tax) is a blended federal-provincial consumption tax used in five Canadian provinces. Rather than collecting the 5% federal GST and a separate provincial sales tax (PST) in two distinct streams, participating provinces merged both into a single rate administered by the Canada Revenue Agency (CRA). Ontario applies 13% (5% federal + 8% provincial); New Brunswick, Newfoundland and Labrador, Nova Scotia, and Prince Edward Island each apply 15% (5% federal + 10% provincial).',
       'Like GST and VAT, HST is a multi-stage tax with input tax credits. Registered businesses collect HST on taxable sales and recover it on business purchases by claiming Input Tax Credits (ITCs). Only end consumers bear the full economic cost, since they cannot reclaim HST. The calculation formula is identical to GST and VAT - the only differences are the rate and the fact that both the federal and provincial components arrive in a single charge.',
+    ],
+    keyTakeaways: [
+      'HST combines the 5% federal GST with a provincial portion into one tax: Ontario 13% (5%+8%), New Brunswick/Newfoundland/Nova Scotia/PEI 15% (5%+10%).',
+      'Five provinces use HST. Alberta has no provincial sales tax (federal GST only at 5%). BC, Manitoba, Saskatchewan, and Quebec use separate provincial taxes alongside federal GST.',
+      'The HST formula is identical to GST and VAT. Businesses claim Input Tax Credits (ITCs) on purchases; only end consumers bear the full cost.',
+      'One practical advantage of HST: a single registration and one CRA remittance, rather than separate federal and provincial filings.',
+      'Quebec uses its own QST (Quebec Sales Tax) at 9.975% on top of the 5% federal GST - also administered separately from the federal system.',
+    ],
+    beginnerExplain: [
+      'HST is Canada\'s simplified tax system in five provinces: instead of paying federal GST (5%) separately from provincial sales tax, they are combined into one single charge. In Ontario that combined rate is 13%; in New Brunswick and most Atlantic provinces it is 15%.',
+      'Not all Canadian provinces use HST. If you invoice a customer in Alberta, there is no provincial tax - just 5% federal GST. In British Columbia or Manitoba, you charge the 5% federal GST but also a separate provincial sales tax (PST). Always check which province your customer is in before applying a tax rate.',
     ],
     whenToUse: 'Use HST rates when invoicing customers in Ontario, New Brunswick, Newfoundland and Labrador, Nova Scotia, or Prince Edward Island. For customers in Alberta, British Columbia, Manitoba, Quebec, or Saskatchewan, apply the 5% federal GST separately alongside any applicable provincial tax - those provinces do not participate in the harmonised system.',
     examples: {
@@ -5114,6 +5916,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Obstetrics is the branch of medicine focused on pregnancy, labor, delivery, and the postpartum period - typically the first six weeks after birth. An obstetrician (OB) is a physician who completes a four-year residency in obstetrics and gynecology after medical school. Most OBs practice as OB/GYNs, handling both obstetric care (pregnancy-related) and gynecologic care (reproductive health more broadly).',
       'Obstetric care spans three distinct phases: prenatal (before birth), intrapartum (during labor and delivery), and postpartum (after birth). Each phase involves standardized monitoring protocols - prenatal visits follow a scheduled frequency that increases as the due date approaches, intrapartum care monitors contractions and fetal heart rate, and postpartum care checks for complications such as postpartum hemorrhage, infection, and mood disorders.',
     ],
+    keyTakeaways: [
+      'Obstetric care covers three phases: prenatal (before birth), intrapartum (labor and delivery), and postpartum (first six weeks after birth).',
+      'Most OBs practice as OB/GYNs - the OB component covers pregnancy-related care; the GYN component covers broader reproductive health independent of pregnancy.',
+      'High-risk pregnancies - multiple pregnancy, chronic conditions, age over 35, IVF conception, or prior complications - require direct obstetrician involvement rather than midwife-only care.',
+      'Postpartum hemorrhage (heavy bleeding after delivery) is the leading cause of maternal mortality worldwide and is managed immediately after birth by the obstetric team.',
+      'The nuchal translucency scan (10-13 weeks) and anatomy scan (18-22 weeks) are the two standard obstetric ultrasounds used for chromosomal screening and fetal anatomy assessment.',
+    ],
     beginnerExplain: [
       'Think of obstetrics as project management for pregnancy. The obstetrician is the project lead who monitors progress at regular checkpoints, spots problems early, and coordinates the final delivery. Just as a project manager does not build the product themselves but ensures everything stays on track and handles crises, the OB does not grow the baby - they monitor the process, interpret the data, and step in when something needs clinical attention.',
     ],
@@ -5165,6 +5974,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       "Naegele's rule is the standard formula for calculating a pregnancy's estimated due date (EDD): add 280 days (40 weeks) to the first day of the last menstrual period (LMP). An equivalent formulation is to add one calendar year, subtract three months, and add seven days to the LMP date. The rule was published by German obstetrician Franz Karl Naegele in 1812 and remains the universal clinical standard for estimating due dates more than 200 years later.",
       "The formula is based on the observation that most pregnancies last approximately 280 days from the LMP in a woman with a standard 28-day cycle. Because ovulation and conception typically occur around day 14 of the cycle, the actual fetal development period is about 266 days (38 weeks) - but gestational age, the universal clinical measure, starts from the LMP. For cycles longer or shorter than 28 days, the EDD is adjusted by the difference from 28 days.",
     ],
+    keyTakeaways: [
+      "Naegele's rule: EDD = LMP + 280 days, or equivalently LMP + 1 year - 3 months + 7 days. It assumes a 28-day cycle with ovulation on day 14.",
+      "Only about 5% of babies are born on the exact EDD. First-trimester ultrasound improves accuracy to within 5-7 days; if it differs from the Naegele estimate by more than 7 days (before 14 weeks), ultrasound takes precedence.",
+      "For cycles not equal to 28 days, adjust the EDD by the difference: a 35-day cycle shifts the due date 7 days later; a 25-day cycle shifts it 3 days earlier.",
+      "IVF pregnancies use the transfer date rather than LMP for dating, providing more precise gestational age from the start.",
+      "Published in 1812 by German obstetrician Franz Karl Naegele, the rule remains the universal clinical standard for due date estimation more than 200 years later.",
+    ],
     beginnerExplain: [
       "Think of Naegele's rule as a pregnancy countdown timer with a built-in 2-week head start. You set the timer on the first day of your last period - before you were even pregnant. Then you count forward 280 days. The extra 2 weeks at the start account for the time between your period and when ovulation and conception actually happen. It's a clever workaround for the fact that nobody knows the exact moment they conceived, but almost everyone knows when their last period started.",
     ],
@@ -5214,6 +6030,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Net pay, also called take-home pay, is the amount deposited into your bank account after all deductions are removed from gross pay. Mandatory deductions include federal income tax, state income tax (where applicable), Social Security (6.2% up to the wage base), and Medicare (1.45%). Voluntary deductions include health insurance premiums, dental, vision, 401k contributions, and HSA contributions.',
       'Net pay is the figure that matters for day-to-day budgeting. It is always lower than gross pay - sometimes significantly so. For a $60,000 annual salary, net pay for a single filer in a median-tax US state is typically $42,000-$46,000 per year, or $1,600-$1,770 bi-weekly.',
     ],
+    keyTakeaways: [
+      'Net pay = gross pay minus all deductions: mandatory (federal/state income tax, Social Security 6.2%, Medicare 1.45%) and voluntary (health insurance, 401k, HSA).',
+      'For a $60,000 salary, a single filer in a median-tax US state typically takes home $42,000-$46,000/year - roughly 70-77 cents on the dollar.',
+      'Traditional 401k contributions reduce taxable income, so a $200/paycheck contribution may only reduce net pay by $140-$160 depending on marginal tax rate.',
+      'Net pay is not the same as disposable income - fixed expenses (rent, loan payments) reduce what is truly discretionary further.',
+      'Use net pay for monthly budgeting and rent-to-income calculations. Use gross pay for comparing job offers.',
+    ],
+    beginnerExplain: [
+      'Net pay is the real number - what actually lands in your account. Gross pay is the number your employer advertises; net pay is what remains after taxes and deductions are taken out. For most people earning $50,000-$100,000 in the US, the difference between gross and net is roughly 25-35%.',
+      'Your paycheck stub itemizes every deduction. Federal and state income tax, Social Security (6.2%), and Medicare (1.45%) are mandatory and automatic. Then come voluntary deductions you enrolled in: health insurance premiums, 401k contributions, HSA deposits. Each reduces your take-home amount. The stub shows gross at the top and net at the bottom - the math in between explains every dollar that did not reach you.',
+    ],
     whenToUse: 'Use net pay for monthly budgeting, rent-to-income calculations, and savings planning. Use gross pay for comparing job offers and calculating your market hourly rate.',
     pitfalls: 'Do not confuse net pay with disposable income. Net pay is after tax and statutory deductions, but you may still have fixed expenses (rent, car payment, loan repayments) that reduce what is truly discretionary.',
     faqs: [
@@ -5255,6 +6082,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'A merit increase is a salary raise tied directly to an individual employee\'s job performance, distinct from automatic cost-of-living adjustments or across-the-board increases. Employers budget a merit pool - typically 3-5% of total payroll - and allocate larger raises to high performers, smaller ones to average performers, and nothing to below-average performers.',
       'Merit increases are usually applied during annual performance review cycles. A typical distribution gives the top 10-20% of performers 5-8% raises, middle performers 3-4%, and bottom performers 0-2%. The dollar impact scales with base salary, meaning the same percentage raise delivers more money to higher earners.',
+    ],
+    keyTakeaways: [
+      'Employers budget a merit pool of typically 3-5% of total payroll and distribute it based on individual performance - high performers get above-pool allocations, low performers get below or zero.',
+      'Merit increases compound: a 5% vs 3% raise is only a $1,200 difference in year one on a $60,000 salary, but the gap grows significantly over 10 years. Negotiate each raise as if it is permanent.',
+      'A raise of only 2-3% when inflation is 3% is effectively a cost-of-living adjustment with no merit component - it preserves purchasing power but does not reflect performance.',
+      'Top performers typically receive 6-10% merit increases; "meets expectations" performers receive 2.5-3.5%; below-expectations performers receive 0%.',
+      'Compare your increase against the stated merit pool: receiving 5% from a 3.5% pool signals your manager allocated more than your average share - a strong performance signal.',
+    ],
+    beginnerExplain: [
+      'A merit increase is a raise for doing your job well, not just for continuing to show up. Companies allocate a fixed pot of money - say 3.5% of total payroll - and managers divide it based on how each person performed. If your team has 10 people and two are standouts, those two might get 6% each while others get 2-3% and the budget still balances.',
+      'The number that matters long-term is not just this year\'s raise but the base it creates for future raises. A 5% raise now means next year\'s raise is a percentage of a higher starting number. Over a 10-year career, the employee who consistently negotiates 1-2% above the average pool ends up with meaningfully more in base salary than the person who accepts average each year - even if they start at the same place.',
     ],
     whenToUse: 'Compare your merit increase against the company\'s stated merit pool percentage. If the pool is 3.5% and you receive 3%, you are slightly below average. If you receive 5-6% from a 3.5% pool, your manager is allocating more than your share - a strong signal of above-average performance standing.',
     examples: {
@@ -5313,6 +6151,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A cost-of-living adjustment (COLA) is an automatic increase to wages, salaries, or benefits designed to offset inflation - keeping purchasing power stable as the general price level rises. The adjustment is typically tied to a price index, most commonly the Consumer Price Index for All Urban Consumers (CPI-U) in the United States.',
       'Social Security benefits receive an official COLA each year determined by the SSA. For 2026, the COLA was 2.8%, based on Q3 2025 CPI data. Many private employers also issue a COLA - sometimes bundled into a single annual increase with a merit component, sometimes paid as a separate flat adjustment for all employees.',
     ],
+    keyTakeaways: [
+      'A COLA offsets inflation to preserve purchasing power - it is not performance-based and is not a raise in real terms. A raise exactly matching COLA leaves you no better off in purchasing power.',
+      'A raise below the COLA is a real-terms pay cut even if the dollar amount is higher: a 3.5% raise in 2022 (when CPI was 8.0%) was a -4.5% real income loss.',
+      'Social Security COLA is calculated by comparing the average CPI-W in Q3 of the current year against Q3 of the prior year; the 2026 COLA was 2.8%.',
+      'Private employers are not required to give COLA increases; it is mandatory for Social Security and some government pension plans.',
+      'When negotiating salary, ask employers to separate the COLA component from the merit component so you can evaluate real performance recognition independently.',
+    ],
+    beginnerExplain: [
+      'If a loaf of bread costs $3 today and $3.09 next year (3% inflation), you need a 3% raise just to buy the same loaf. That is all a COLA does - it prevents your pay from quietly shrinking in real terms as prices rise. If your employer gives you a 3% COLA and inflation is 3%, you are exactly where you started. Not better, not worse.',
+      'The confusion arises when employers bundle COLA and merit into one number. A "4% raise" sounds good until you learn inflation is 3.5% - your real income improved by only 0.5%. Knowing how much of your raise is COLA versus performance-based is the key to understanding whether you are actually getting ahead.',
+    ],
     whenToUse: 'Use COLA as a baseline when evaluating any annual salary increase. A raise that exactly matches COLA preserves your current standard of living but provides no real income growth. A raise below COLA is a real-terms pay cut even if the dollar amount is higher.',
     examples: {
       headers: ['Year', 'US CPI change', 'SSA COLA applied', 'Real gain from a 3.5% raise'],
@@ -5364,6 +6213,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Overtime pay is the additional compensation employees earn for hours worked beyond a standard threshold - most commonly 40 hours per workweek in the United States. Under the Fair Labor Standards Act (FLSA), non-exempt employees must receive at least 1.5 times their regular rate of pay for every overtime hour.',
       'The overtime premium - the extra amount above base pay - is the key financial benefit of working overtime. At 1.5x, a $20/hr worker earns an extra $10 for each overtime hour on top of their normal $20, making the total overtime rate $30/hr.',
     ],
+    keyTakeaways: [
+      'Under the US FLSA, non-exempt employees receive at least 1.5x their regular rate for all hours beyond 40 per workweek. California also adds daily rules: 1.5x after 8 hours/day, 2x after 12 hours/day.',
+      'Overtime pay is taxed as ordinary income - there is no special higher rate. Higher withholding on overtime paychecks is a timing difference from payroll annualization, not a permanent tax increase.',
+      'Salaried workers earning below $684/week ($35,568/year) are entitled to FLSA overtime regardless of job title. Above that threshold, exemption depends on job duties, not title alone.',
+      'The overtime premium (the extra 0.5x) is the marginal benefit. A $20/hr worker earns $30/hr for overtime - the extra $10 over 10 hours adds $100 to weekly pay.',
+      'Compare overtime value against time-off-in-lieu: for most non-exempt workers, 1.5x pay is more valuable than one hour of comp time for each overtime hour worked.',
+    ],
+    beginnerExplain: [
+      'Overtime pay kicks in when you work more than 40 hours in a week (in the US). Every hour above 40 must be paid at "time and a half" - your normal hourly rate multiplied by 1.5. If you earn $20/hour normally, each overtime hour earns $30.',
+      'Overtime is taxed the same as your regular pay. You might see higher withholding on a paycheck with overtime, but that is just your employer estimating higher annual income for that paycheck cycle. At year-end, your total tax bill is the same whether the income came from overtime or regular hours - it is all ordinary income.',
+    ],
     whenToUse: 'Calculate overtime pay whenever you work beyond the standard threshold for your country or employment contract. Use the overtime rate to verify your paycheck, compare the value of overtime versus time-off-in-lieu, or plan your earnings for a high-hours week.',
     examples: {
       headers: ['Scenario', 'Regular pay', 'Overtime pay', 'Total'],
@@ -5413,6 +6273,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'Time and a half is an overtime pay rate equal to 1.5 times an employee\'s regular hourly wage. It is the minimum overtime rate required by the US Fair Labor Standards Act for non-exempt employees working more than 40 hours in a workweek.',
       'The name refers to the structure of the payment: you receive your normal time (1x) plus an additional half (0.5x), totalling 1.5x. At $20/hr, time and a half is $30/hr for each overtime hour.',
+    ],
+    keyTakeaways: [
+      'FLSA requires non-exempt US employees to receive at least 1.5x their regular rate for every hour over 40 in a workweek. At $20/hr, each overtime hour earns $30 - an extra $10 per hour above normal pay.',
+      'California adds daily overtime rules on top of the federal weekly rule: 1.5x after 8 hours/day, 2x after 12 hours/day. Employees in multi-state workforces must be paid under whichever standard is more generous.',
+      'Time and a half is taxed as ordinary income at your regular marginal rate - there is no special overtime tax. Higher withholding on a large overtime paycheck is a timing artifact of annualized payroll math, not a permanent extra tax.',
+      'Non-discretionary bonuses tied to attendance or production targets must be included in the regular rate before applying the 1.5x multiplier, which can push the effective overtime rate above the nominal 1.5x of base wages.',
+      'Outside the US, 1.5x is not universal. France starts at 1.25x for hours 36-43, Japan uses 1.25x standard overtime, and India requires 2x. Always verify the applicable jurisdiction when working across borders.',
+    ],
+    fastFact: 'The US Department of Labor recovered approximately $274 million in back wages owed to around 163,000 workers for overtime and minimum wage violations in fiscal year 2023, with food service and retail accounting for the largest share of cases. (US DOL Wage and Hour Division, FY2023)',
+    beginnerExplain: [
+      'Your regular hourly rate is your normal time - 1x. Time and a half adds half of that on top, bringing it to 1.5x. At $20/hr, multiply by 1.5 to get $30/hr. The shortcut: $20 + ($20 / 2) = $20 + $10 = $30. The extra $10 is the half.',
+      'If you work 45 hours in a week, you earn your flat $20/hr for the first 40 hours ($800), then $30/hr for the extra 5 hours ($150). Weekly total: $950. Without overtime, it would have been $900. The difference is exactly 5 hours x $10 premium = $50.',
     ],
     whenToUse: 'Use time and a half as your default overtime multiplier when calculating US overtime pay unless your employer, state law, or employment contract specifies a higher rate. California requires double time (2x) in certain daily overtime situations.',
     examples: {
@@ -5465,6 +6337,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'FICA (Federal Insurance Contributions Act) taxes are mandatory payroll taxes withheld from every US W-2 paycheck. The total employee rate is 7.65%: 6.2% for Social Security and 1.45% for Medicare. Social Security is capped - once wages exceed the annual wage base ($176,100 in 2025), no further Social Security tax is withheld for the rest of the year. Medicare has no cap; the 1.45% applies to all wages. High earners also owe an Additional Medicare Tax of 0.9% on wages above $200,000 for single filers ($250,000 for married filing jointly), paid only by the employee.',
       'Employers pay a matching 7.65% on top of each employee\'s wages - 6.2% Social Security and 1.45% Medicare. This means the combined FICA contribution on a paycheck is 15.3%. From an employer\'s perspective, a $100,000 salary actually costs $107,650 before any other benefits. Unlike income tax, which varies by bracket and deductions, FICA is a flat percentage applied mechanically to wages.',
       'Self-employed individuals pay both halves of FICA themselves as the "self-employment tax" of 15.3% on net self-employment income. To offset the extra burden, the IRS allows them to deduct half of the self-employment tax (7.65%) from gross income when calculating federal income tax. FICA does not apply to distributions from S-corporations, partnerships, or pass-through entities - only to wages and salaries.',
+    ],
+    keyTakeaways: [
+      'FICA = 6.2% Social Security + 1.45% Medicare = 7.65% employee contribution. Social Security is capped at the $176,100 wage base in 2025 - once you cross that threshold, no further Social Security is withheld for the rest of the year.',
+      'Employers match your 7.65% on top of your salary. A $100,000 salary actually costs the employer at least $107,650 in wages alone - a number most employees never see but every employer calculates before making a hire.',
+      'Self-employed individuals pay both halves as the 15.3% self-employment tax on net earnings. The IRS allows them to deduct half (7.65%) from gross income when computing federal income tax, partially offsetting the extra burden.',
+      'High earners pay an Additional Medicare Tax of 0.9% on wages above $200,000 (single) or $250,000 (MFJ). This extra 0.9% is employee-only - employers do not match it, and many paycheck calculators omit it.',
+      'FICA is not reduced by the standard deduction or itemized deductions - it applies to gross wages before any income tax adjustments. Some W-2 workers with low incomes pay more in FICA than in federal income tax.',
+    ],
+    fastFact: 'In 2023, FICA and self-employment taxes generated approximately $1.33 trillion - the second-largest source of US federal revenue after individual income taxes, funding Social Security and Medicare benefits for about 70 million recipients. (US Social Security Administration, 2024 Annual Report)',
+    beginnerExplain: [
+      'Think of FICA as two automatic deductions from every paycheck, routed into two separate government programs. The first - Social Security (6.2%) - funds retirement and disability benefits. The second - Medicare (1.45%) - funds hospital insurance for people 65 and older. You cannot opt out; they come off every dollar of wages before you see the money.',
+      'What you see on your paystub is only half the story. Your employer sends a matching 7.65% on top of your salary to the same two programs. On a $50,000 salary, you contribute $3,825 and your employer contributes another $3,825 - a combined $7,650 in FICA on your payroll, though only half of it appears on your pay stub.',
     ],
     whenToUse: 'Use FICA estimates when comparing job offers by true take-home value, calculating the real employer cost of a hire (wages plus 7.65% FICA match), or planning self-employment income where you owe the full 15.3% self-employment tax. Also use it when evaluating whether to defer income into pre-tax accounts - traditional 401(k) and HSA contributions reduce FICA taxable wages as well as income tax.',
     examples: {
@@ -5526,6 +6410,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The MFJ benefit is largest when income is unequal between spouses. If one partner earns $120,000 and the other earns $0, filing jointly keeps the higher income in lower brackets. When both spouses earn similar high incomes, the so-called "marriage penalty" can arise - their combined income pushes them into higher brackets than they would face as two single filers. The marriage penalty is most pronounced in the 32%, 35%, and 37% brackets where MFJ thresholds are less than double the single thresholds.',
       'MFJ is one of four federal filing statuses: single, married filing jointly, married filing separately (MFS), and head of household (HoH). Most married couples choose MFJ because it provides broader brackets and a higher standard deduction than MFS. Filing separately is sometimes advantageous when one spouse has significant medical expenses (subject to a 7.5% AGI floor), student loan income-driven repayment plans, or legal liability concerns.',
     ],
+    keyTakeaways: [
+      'MFJ uses a $30,000 standard deduction in 2025 - double the $15,000 single amount. The 22% bracket for MFJ starts at $94,300 combined income (vs. $47,150 for single), which alone can save hundreds to thousands of dollars for couples with unequal incomes.',
+      'The marriage penalty applies when both spouses earn similar high incomes - combined income pushes them into higher brackets than two separate single returns would. It is most pronounced in the 32-37% brackets where MFJ thresholds are less than double the single thresholds.',
+      'Both spouses are jointly and severally liable for all taxes, interest, and penalties on a joint return - even if only one spouse earned or reported the income. If you have concerns about a spouse\'s tax compliance, filing separately protects you from their liability.',
+      'Some tax benefits phase out at lower thresholds for MFJ than for single filers. Roth IRA contributions for MFJ phase out between $236,000 and $246,000 MAGI in 2025, partially offsetting the bracket advantage at high incomes.',
+      'The Roth IRA marriage penalty is especially notable: the MFJ phase-out range is not double the single range. At $246,000 MAGI, MFJ filers are fully phased out, while single filers have the same limit at $165,000 - not proportional to the 2x bracket advantage.',
+    ],
+    fastFact: 'Approximately 60% of US federal income tax returns are filed as Married Filing Jointly, making it the most common filing status by revenue contribution - jointly-filed returns generate over half of all individual federal income tax collected annually. (IRS Statistics of Income, 2022)',
+    beginnerExplain: [
+      'Filing jointly is like switching from two individual gym memberships to a couples plan - you pool everything on one account and often pay a lower combined rate. For couples with unequal incomes, the higher earner\'s income fills the lower brackets first, and MFJ brackets are wider so more of it sits at lower rates.',
+      'The pooling works best when incomes are unequal. If one spouse earns $150,000 and the other earns nothing, MFJ is almost certainly the right choice. If both earn $100,000, run both scenarios - combined income can push into brackets where MFJ is less efficient, creating the marriage penalty.',
+    ],
     whenToUse: 'Use MFJ if you are legally married and want the lowest combined federal tax bill in most situations. Run a comparison with married filing separately if one spouse has high medical expenses, significant miscellaneous deductions, or an income-driven student loan repayment plan that benefits from a lower individual AGI.',
     examples: {
       headers: ['Filing status', '$180,000 combined income', 'Standard deduction', 'Taxable income', 'Estimated federal tax'],
@@ -5583,6 +6479,17 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Married Filing Separately (MFS) is a US federal tax filing status that lets married couples file independent returns instead of a joint return. Each spouse reports only their own income, deductions, and credits. MFS uses the same bracket thresholds as single filers and the same $15,000 standard deduction. Because MFJ brackets are designed for two incomes and are roughly double the single thresholds, choosing MFS over MFJ almost always raises the combined tax bill for a couple.',
       'MFS does, however, have specific strategic uses. For borrowers on income-driven student loan repayment plans (IBR, SAVE, PAYE), MFS excludes the other spouse\'s income from the repayment calculation, which can cut monthly loan payments significantly - sometimes enough to outweigh the higher tax cost. MFS can also reduce the AGI of the spouse with large medical expenses: since unreimbursed medical costs are only deductible above 7.5% of your own AGI, a lower individual AGI means a lower floor.',
       'Several tax benefits are completely unavailable under MFS: the Earned Income Credit, the child and dependent care credit, the American Opportunity Tax Credit, the Lifetime Learning Credit, and most education deductions. The Roth IRA contribution limit phases out between $0 and $10,000 MAGI for MFS filers (versus $150,000-$165,000 for single filers in 2025). One additional restriction: if one spouse itemizes deductions, the other must also itemize - they cannot mix strategies.',
+    ],
+    keyTakeaways: [
+      'MFS uses the same $15,000 standard deduction and single-filer bracket thresholds. Since MFJ brackets are nearly double the single thresholds, MFS almost always produces a higher combined tax bill than MFJ for the same household income.',
+      'The Roth IRA phase-out for MFS starts at $0 MAGI and phases out by $10,000 - meaning virtually all MFS filers earning any income are barred from contributing to a Roth IRA, compared to the $150,000-$165,000 range for single filers.',
+      'MFS is most advantageous when one spouse has federal student loans on an income-driven repayment plan. Filing separately keeps the non-borrowing spouse\'s income out of the monthly payment calculation, which can cut loan payments enough to outweigh the extra tax.',
+      'If one spouse itemizes deductions on an MFS return, the other must also itemize - they cannot mix strategies. One spouse\'s large deductible expenses force a potentially unfavorable election on the other.',
+      'Several credits are entirely unavailable under MFS: the Earned Income Credit, child and dependent care credit, American Opportunity Credit, and Lifetime Learning Credit are all disallowed, regardless of income level.',
+    ],
+    beginnerExplain: [
+      'MFS is like buying two separate gym memberships when a couples plan would be cheaper. You get your own return, your own deductions, your own account - but you lose the bulk discount that comes with filing jointly. Most of the time that means paying more in total tax.',
+      'The one scenario where MFS makes financial sense is when one spouse has large federal student loans under an income-driven repayment plan. Filing separately keeps the other spouse\'s income out of the repayment formula. If that reduces the monthly payment by $300 and the extra tax costs $200 annually, the net result is $1,400 in combined annual savings - a real win even though the tax bill is higher.',
     ],
     whenToUse: 'Consider MFS when one spouse is on an income-driven student loan repayment plan and keeping their AGI low materially reduces monthly payments. Also consider it when one spouse has large unreimbursed medical expenses relative to their own income, or when there are legal or liability concerns about signing a joint return. In all other cases, compare the exact tax liability under both statuses before deciding - MFJ is usually lower.',
     examples: {
@@ -5644,6 +6551,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'HOH provides meaningfully better tax treatment than single filing. The 2025 standard deduction is $22,500 for HOH versus $15,000 for single - a $7,500 difference that alone saves $825 to $1,650 in tax depending on your bracket. HOH brackets are also wider: the 10% rate applies up to $17,000 (vs $11,925 for single) and the 12% bracket runs to $64,850 (vs $48,475 for single). For a single parent earning $55,000, filing HOH instead of single typically saves $1,500-$2,500 per year.',
       'Married filers can qualify for HOH if they are considered unmarried - meaning they lived apart from their spouse for all of the last six months of the tax year, paid more than half the home costs, and had a qualifying child. This rule helps separated spouses who have not yet completed a divorce but are effectively living as single parents. Legal marital status alone does not prevent HOH if the considered-unmarried test is met.',
     ],
+    keyTakeaways: [
+      'HOH provides a $22,500 standard deduction in 2025 - $7,500 more than the $15,000 single deduction. At a 22% marginal rate, that extra $7,500 saves $1,650 in federal income tax before any bracket differences are even counted.',
+      'HOH brackets are wider than single: the 12% bracket for HOH runs to $64,850 (vs. $48,475 for single). For a $55,000 earner, HOH status typically saves $1,500-$2,500 per year in federal income tax compared to filing as single.',
+      'Three tests must all be met: be unmarried (or considered unmarried) on December 31; pay more than half the home maintenance cost; and have a qualifying person who lived with you for more than half the year.',
+      'Only the custodial parent - the one with whom the child lives for more nights per year - can claim HOH in a divorce. A noncustodial parent may receive dependency rights via Form 8332, but this does not transfer HOH filing status.',
+      'Incorrectly claiming HOH triggers back taxes, a 20% accuracy penalty, and a two-year ban from claiming the status. The IRS audits HOH claims regularly and requires documentation of the qualifying person\'s residency and the home maintenance costs.',
+    ],
+    fastFact: 'Approximately 13 million US tax filers claimed Head of Household status in tax year 2021, representing about 8-9% of all individual returns - primarily single parents and unmarried caregivers supporting a qualifying dependent. (IRS Statistics of Income, 2021)',
+    beginnerExplain: [
+      'HOH is the tax code\'s acknowledgment that running a household as a single parent is more expensive than being a single person with no dependents. In exchange for proving you really are maintaining a home and supporting someone, you get a bigger standard deduction and lower tax rates.',
+      'Think of it as a middle option between single and married: better than single, not as good as married filing jointly. The extra $7,500 deduction and the wider brackets translate into real dollars saved - but you have to earn them by meeting three specific tests every year you claim the status.',
+    ],
     whenToUse: 'Use HOH if you are unmarried (or considered unmarried), paid more than half the cost of your home, and a qualifying child lived with you for more than six months. It is the most advantageous status available to single parents. Always verify the qualifying-person requirements before claiming HOH - the IRS audits HOH claims regularly, and incorrect filing can trigger back taxes, penalties, and a two-year ban on claiming the status.',
     examples: {
       headers: ['Tax rate', 'Single (2025)', 'Head of Household (2025)', 'HOH advantage'],
@@ -5704,6 +6623,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Because only the marginal income is taxed at the marginal rate, your effective tax rate (total tax divided by total income) is always lower than your marginal rate whenever you span more than one bracket. For the same $60,000 single filer, total 2025 federal income tax works out to roughly $8,100 - an effective rate of about 13.5%, well below the 22% marginal rate. The gap widens at higher incomes because a larger share of income sits in lower brackets.',
       'Marginal tax rate matters most for decisions about additional income. A freelance project, a capital gain, or a year-end bonus will be taxed at your marginal rate (since it adds to income you\'ve already earned). Contributions to a traditional 401(k) or IRA reduce taxable income from the top, so each dollar contributed saves tax at your marginal rate. Knowing your marginal rate turns abstract tax planning into a concrete dollar calculation.',
     ],
+    keyTakeaways: [
+      'The marginal rate applies only to the last dollar of income - not the full amount. A $60,000 earner in the 22% bracket does not owe 22% of $60,000. Only income above the 22% threshold is taxed at 22%; lower income sits in the 10% and 12% brackets.',
+      'Effective rate is always lower than marginal rate for anyone spanning more than one bracket. A single filer earning $60,000 has a 22% marginal rate but roughly 13.5% effective federal rate. The gap widens at higher incomes.',
+      'Each traditional 401(k) or IRA dollar contributed reduces taxable income from the top, saving tax at the marginal rate. At a 22% marginal rate, a $5,000 pre-tax contribution saves $1,100 in federal income tax this year.',
+      'The top US federal marginal rate is 37% in 2025 for single filers earning above $626,350. Combined with California state income tax (up to 13.3%), high earners in that state face a combined marginal rate of approximately 50.3%.',
+      'The bracket trap myth - that earning into a higher bracket reduces take-home pay - is false. Only the dollars above the new threshold are taxed at the higher rate. Earning one more dollar always increases after-tax income in a standard progressive system.',
+    ],
+    fastFact: 'The top US federal marginal income tax rate has ranged from 7% in 1913 to 94% during World War II (1944). It stood at 70% as recently as 1980 before being cut to 28% by the Tax Reform Act of 1986. (US Internal Revenue Service historical data)',
     beginnerExplain: [
       'Think of a stadium with tiered ticket prices: the first 12,000 seats cost $10 each, the next 36,000 cost $12 each, and seats above that cost $22 each. If you buy 60,000 seats total, you pay $10 on the first 12,000, $12 on the next 36,000, and $22 on the last 12,000 - you are not charged $22 on all 60,000 seats just because you bought into that tier. That highest tier price ($22) is your marginal rate. The average you actually paid per seat is much lower.',
       'Your tax bracket works the same way. A 22% marginal rate means your last dollar was taxed at 22% - not that you owe 22% of your entire income. The IRS taxes your first dollars at 10%, the next slice at 12%, and only the income above the 22% threshold at 22%. Your effective rate is always the weighted average across all the tiers you used.',
@@ -5771,6 +6698,16 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The regular rate of pay is the baseline hourly rate used to calculate overtime compensation under the FLSA. For hourly workers it equals the standard hourly wage. For salaried workers it is calculated by dividing the weekly salary by the number of hours the salary is intended to cover.',
       'The regular rate must include most forms of compensation - base wages, shift differentials, and non-discretionary bonuses - but excludes purely discretionary bonuses, overtime premiums already paid, and certain benefit payments.',
     ],
+    keyTakeaways: [
+      'The regular rate is not just base wages - it must include non-discretionary bonuses, shift differentials, and other non-excludable compensation. Paying overtime based on base wage alone when bonuses exist is an FLSA violation.',
+      'For a salaried non-exempt employee: divide the weekly salary by the hours the salary covers. A $1,200 weekly salary for 40 hours = $30/hr regular rate. Each overtime hour must then be paid at $45/hr (1.5 x $30).',
+      'Purely discretionary bonuses paid at the employer\'s sole discretion - not tied to a formula or performance target - are excluded from the regular rate and do not affect overtime calculations.',
+      'The regular rate concept exists to prevent employers from understating the overtime base by routing pay outside the hourly wage. The DOL and courts look at total weekly compensation, not just the stated hourly rate.',
+    ],
+    beginnerExplain: [
+      'Your regular rate is the true all-in hourly cost of a work hour - including formula-based bonuses. If you earn $800 in base wages plus a $100 weekly production bonus, your regular rate is $900 / 40 = $22.50/hr, not $20/hr. Every overtime hour must be paid at $33.75 (1.5 x $22.50), not $30.',
+      'This rule exists because without it, employers could shift compensation into bonuses to lower the overtime base. The FLSA closes that gap: most extra pay tied to a formula or performance metric must be counted as wages for overtime purposes.',
+    ],
     whenToUse: 'Use the regular rate of pay when computing overtime for any worker whose compensation includes more than a simple hourly wage. If a worker earns a bonus, commission, or shift premium, these amounts are added to base wages before dividing by hours to determine the correct regular rate.',
     examples: {
       headers: ['Worker type', 'Weekly earnings', 'Hours', 'Regular rate'],
@@ -5820,6 +6757,16 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'A heffingskorting is a Dutch tax credit that reduces the income tax owed - not the taxable income. This makes it more valuable than a deduction: a €1,000 credit saves exactly €1,000 in tax regardless of your bracket, whereas a €1,000 deduction saves only €355-€495 depending on which bracket you are in.',
       'The two main heffingskortingen for employees are the algemene heffingskorting (general tax credit) and the arbeidskorting (employment credit). Both are calculated as a function of income and phase out at higher incomes. They are applied after Box 1 income tax is computed.',
+    ],
+    keyTakeaways: [
+      'A heffingskorting is a direct tax credit, not a deduction. A €1,000 credit saves exactly €1,000 in tax, regardless of your bracket. A €1,000 deduction saves only €355-€495 because it merely reduces the income taxed, not the tax itself.',
+      'The two main employee credits are the algemene heffingskorting (AHK, available to all Dutch taxpayers below state pension age) and the arbeidskorting (available only to workers with employment income).',
+      'Both credits are non-refundable - they can reduce income tax to zero but cannot generate a cash payout. Once your tax bill reaches zero, any remaining credit is lost.',
+      'Both credits phase out at higher incomes. At €80,000 gross, the AHK has fully phased out to €0 and only the arbeidskorting (€2,109 at that income) remains. Many online salary calculators miss one or both credits, producing inaccurate net-pay estimates.',
+    ],
+    beginnerExplain: [
+      'In most tax systems, a deduction reduces the income you are taxed on. A Dutch heffingskorting goes one step further - it directly reduces the tax bill itself. If your calculated Box 1 tax is €10,000 and you have €3,000 in combined credits, your final tax is €7,000.',
+      'The employer estimates and applies the AHK through monthly payroll deductions. The full picture - including the arbeidskorting - is reconciled when you file your annual aangifte (Dutch tax return) with the Belastingdienst. This is why many Dutch employees receive a small annual refund: the credits were only partially applied through payroll.',
     ],
     whenToUse: 'Use when calculating Dutch net salary from gross. Both credits reduce your final income tax bill. If the combined credits exceed your income tax, the excess is generally not refundable - you cannot pay negative tax. Use the Netherlands income tax calculator to compute your exact credits automatically.',
     examples: {
@@ -5877,6 +6824,16 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The arbeidskorting is a Dutch employment tax credit that reduces income tax for people with wages, salary, or other employment income. It is designed to make work financially more rewarding compared to benefits, by lowering the effective tax rate on earned income.',
       'For 2026 the credit builds in four segments: it grows from 0 to €996 on income up to €11,965 (at 8.324%), continues growing to a peak of €5,685 at €45,592, then phases out at 6.51% per euro until it reaches zero at €132,920. Above €132,920 the credit is nil.',
     ],
+    keyTakeaways: [
+      'The arbeidskorting rewards employment income. It is only available to people with wages or salary - self-employed individuals using the zelfstandigenaftrek, benefit recipients, and pensioners have different credits.',
+      'The credit peaks at €5,685 at a gross employment income of €45,592 (2026), then phases out at 6.51 cents per euro until it reaches zero at €132,920.',
+      'The phase-out creates a hidden effective marginal tax effect: each euro earned above €45,592 costs 6.51 cents in lost arbeidskorting, adding to the nominal Box 1 bracket rate in the phase-out range.',
+      'Together the arbeidskorting and the AHK substantially reduce the effective tax rate at middle incomes. A €50,000 earner typically receives around €4,747 in arbeidskorting plus ~€1,178 in AHK, cutting their ~€18,800 gross tax bill by about 31%.',
+    ],
+    beginnerExplain: [
+      'The arbeidskorting is a reward from the Dutch government for having a job. The idea: working should pay more than not working. So the tax system gives employed people a credit that reduces their income tax bill directly - money they would otherwise owe goes back to them.',
+      'The credit is not fixed. It builds as your income rises, peaks at around €45,000, then gradually shrinks above that point. At €133,000 it disappears entirely. The practical result is that middle earners in the Netherlands pay substantially less income tax than the headline Box 1 bracket rates suggest, once both the arbeidskorting and the AHK are applied.',
+    ],
     whenToUse: 'Apply the arbeidskorting whenever computing Dutch net salary for an employee. It is one of the two credits that directly reduce Box 1 income tax. It is not available to self-employed individuals using the zelfstandigenaftrek (entrepreneur deduction), benefit recipients, or pensioners - they have different credits.',
     examples: {
       headers: ['Gross income', 'Arbeidskorting', 'Notes'],
@@ -5928,6 +6885,16 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Box 1 is the Dutch income tax category for income from employment and home ownership (work and home - werk en woning). It covers wages, freelance income, business profit, and the imputed rental value of an owner-occupied home. Most employees only have Box 1 income.',
       'In 2026 Box 1 has three rate brackets. The first bracket (35.75% up to €38,883) is a combined rate including income tax plus social insurance premiums: AOW state pension (17.90%), ANW survivor benefit (0.10%), and WLZ long-term care (9.65%). Brackets 2 and 3 are pure income tax.',
     ],
+    keyTakeaways: [
+      'Box 1 covers employment and business income. Most employees only have Box 1 income. Investment income goes in Box 3; substantial company stakes (5%+) go in Box 2.',
+      'The 35.75% first-bracket rate is not pure income tax. It bundles income tax (8.10%) with three social insurance premiums: AOW state pension (17.90%), ANW survivor benefit (0.10%), and WLZ long-term care (9.65%).',
+      'AOW recipients do not pay the 17.90% AOW premium, dropping their first-bracket rate from 35.75% to approximately 17.85%. Using the standard rate for pensioners overstates their tax burden by nearly 18 percentage points on income up to €38,883.',
+      'The top Box 1 rate is 49.50% (above €78,426) - one of the highest marginal rates in the developed world. After applying heffingskortingen, the effective rate is substantially lower at all income levels below the top bracket.',
+    ],
+    beginnerExplain: [
+      'Box 1 is where your employment income lives for Dutch tax purposes. Think of it as the main drawer - wages, self-employment income, and the notional rental value of your own home all go in here. Investment income has its own drawer (Box 3); business shareholding income has another (Box 2).',
+      'The first-bracket rate of 35.75% looks steep but is misleading - most of it is not income tax. It is a combined cost bundling three social insurance programs. After applying the arbeidskorting and the AHK, the effective net tax rate a typical employee actually pays is significantly lower than the headline brackets suggest.',
+    ],
     whenToUse: 'Use Box 1 rates whenever computing the income tax and social insurance burden for a Dutch employee or self-employed person earning wages or business profits. For investment income use Box 3 (wealth tax). For substantial interest in a company (5%+) use Box 2.',
     examples: {
       headers: ['Income bracket (2026)', 'Rate', 'Includes social insurance?'],
@@ -5978,6 +6945,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The Internal Rate of Return (IRR) is the discount rate at which the net present value (NPV) of all cash flows from an investment equals exactly zero. Put simply: it is the implied annual return embedded in a project\'s cash flow schedule. If you invest $100,000 today and receive $40,000, $40,000, and $40,000 over the next three years, IRR is the single annual rate that makes those future receipts worth exactly $100,000 in present-value terms.',
       'IRR has no closed-form algebraic solution for most real-world cash flow schedules - it must be found by numerical iteration. Spreadsheets (Excel IRR function) and financial calculators do this automatically by guessing a rate, computing NPV, and adjusting until NPV reaches zero. This iterative nature is why IRR cannot easily be back-of-envelope calculated for complex projects.',
       'The decision rule is straightforward: if IRR exceeds the project\'s hurdle rate (the minimum required return, often the company\'s weighted average cost of capital), the investment creates value and should be accepted. If IRR falls below the hurdle rate, the project destroys value. When ranking competing projects, higher IRR is generally preferable - but this breaks down when projects differ significantly in scale, duration, or have unusual cash flow patterns.',
+    ],
+    keyTakeaways: [
+      'IRR is the discount rate at which NPV = 0 - the implied annual return embedded in a set of cash flows. If IRR exceeds the hurdle rate (usually WACC), the project creates value and should be accepted.',
+      'IRR has no algebraic solution for most real cash flow schedules. Spreadsheets find it iteratively by computing NPV at a trial rate and adjusting until NPV reaches zero. The Excel IRR() function does this automatically.',
+      'Always pair IRR with MOIC: IRR measures how fast money compounds; MOIC measures total value returned. A high IRR on a small deal can generate far less total value than a moderate IRR on a large deal.',
+      'The reinvestment rate assumption is IRR\'s hidden flaw: it implicitly assumes all interim cash flows are reinvested at the IRR rate itself. For high-IRR projects this is unrealistic. MIRR or NPV is more reliable in these cases.',
+      'Multiple IRRs occur when a project has alternating positive and negative cash flows - for example, a mine that generates cash for years then requires expensive remediation at closure. The polynomial has multiple roots, making IRR ambiguous. Use NPV instead.',
+    ],
+    fastFact: 'Private equity funds globally reported a median net IRR of approximately 14-16% for 2015-2020 vintage funds, according to Cambridge Associates benchmark data. Top-quartile funds in the same period achieved 20%+ net IRR - roughly double the long-run public equity return.',
+    beginnerExplain: [
+      'Think of IRR as asking: if this investment were a savings account earning a fixed annual interest rate, what rate would it need to pay to match exactly these cash flows? That implied rate is the IRR.',
+      'If that implied rate (IRR) beats your minimum requirement (the hurdle rate), take the investment. If IRR is 18% and the hurdle is 10%, the project earns 8 percentage points above your cost of capital - clearly worthwhile. If IRR is 8% and the hurdle is 10%, you are better off putting the capital elsewhere.',
     ],
     whenToUse: 'Use IRR when evaluating a single project against a known hurdle rate, or comparing projects with similar scale and time horizon. It is the standard return language in private equity and venture capital: when a fund reports a "25% net IRR," it means that 25% annually is the rate at which the timing-adjusted value of all capital contributions and distributions break even. Pair IRR with MOIC to capture both the efficiency (IRR) and the magnitude (MOIC) of returns. Do not rely on IRR alone when comparing projects of very different sizes - a 40% IRR on $100K may generate far less value than a 20% IRR on $5M.',
     examples: {
@@ -6037,6 +7016,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The avoirdupois system is the standard system of weights used for everyday commercial and domestic purposes in the United States, United Kingdom, and most English-speaking countries. Its foundational unit is the pound (lb), defined since 1959 as exactly 453.59237 grams. The pound divides into 16 ounces (oz); each ounce divides into 16 drams. Larger units build upward: 14 pounds make 1 stone (used in the UK for body weight), 100 pounds make 1 US short hundredweight, and 2,000 pounds make 1 US short ton.',
       'The name comes from the Old French phrase "aveir de peis" meaning "goods of weight" - a medieval trading term for bulk commodities sold by weight rather than by the piece. The system was formally standardized in England during the 14th century and spread globally through British colonial trade.',
       'Avoirdupois is one of three historical weight systems that share unit names but use different values. The troy system - used for precious metals such as gold and silver - uses a heavier ounce (31.1035 g vs 28.3495 g) and a lighter pound (12 troy ounces vs 16 avoirdupois ounces). The apothecary system, historically used in pharmacy, has been entirely replaced by metric in modern clinical contexts.',
+    ],
+    keyTakeaways: [
+      'The avoirdupois pound is exactly 453.59237 grams - a legally precise definition set by the 1959 International Yard and Pound Agreement. The pound divides into 16 ounces; each ounce into 16 drams.',
+      'The avoirdupois ounce (28.35 g) and the troy ounce (31.10 g) differ by 9.7%. Using the wrong ounce in precious metals calculations introduces a nearly 10% error. Outside precious metals and gemstones, any English-language "ounce" almost certainly means avoirdupois.',
+      'Three "tons" are in everyday use: the US short ton (2,000 lb / 907 kg), the UK long ton (2,240 lb / 1,016 kg), and the metric tonne (1,000 kg / 2,205 lb). All three are casually written as "ton" - always verify which is intended in commodity contracts.',
+      'The UK still uses the stone (14 lb) informally for body weight - an avoirdupois unit found almost nowhere else in the world. A person weighing 11 stone is 154 pounds or approximately 70 kg.',
     ],
     beginnerExplain: [
       'If you have ever weighed yourself, bought meat at a grocery store, or shipped a parcel, you used the avoirdupois system. It is the default meaning of "pound" and "ounce" in everyday English. When a recipe calls for 8 oz of flour, that is avoirdupois.',
@@ -6105,6 +7090,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The imperial system is the traditional British system of units, codified in the British Weights and Measures Act of 1824. It covers length (inches, feet, yards, miles), mass (ounces, pounds, stones, hundredweights, tons), volume (fluid ounces, pints, quarts, gallons), and area (acres, square feet, square miles). Each quantity has its own set of conversion ratios - 12 inches per foot, 16 ounces per pound, 8 pints per gallon - none of which share a common decimal base.',
       'The British Empire spread these units across its colonies. After decolonisation, most countries adopted metric, leaving three notable holdouts: the United States (which uses a close variant called US customary units), Myanmar, and Liberia. The UK officially converted to metric for most purposes but still uses miles for road distances, pints for draught beer and milk, and stones for body weight.',
       'The US customary system is related to but not identical to imperial. The two systems share unit names for most quantities but differ for volume: a US gallon is 3.785 litres, while an imperial gallon is 4.546 litres. A US fluid pint is 473 mL; an imperial pint is 568 mL.',
+    ],
+    keyTakeaways: [
+      'The imperial system uses irregular conversion ratios: 12 inches per foot, 3 feet per yard, 1,760 yards per mile, 16 ounces per pound, 20 fluid ounces per imperial pint. There is no single decimal multiplier linking units within any quantity.',
+      'A US gallon (3.785 L) and an imperial gallon (4.546 L) differ by 20% despite sharing the same name. A US pint is 473 mL; an imperial pint is 568 mL. Using the wrong variant in cooking or manufacturing introduces a significant volume error.',
+      'Only three countries primarily use imperial-derived units for everyday measurement: the United States (US customary), Myanmar, and Liberia. The UK officially uses metric but retains miles for road distances, pints for draught beer, and stones and pounds for body weight.',
+      'A US short ton (2,000 lb / 907 kg), a UK long ton (2,240 lb / 1,016 kg), and a metric tonne (1,000 kg / 2,205 lb) all appear as "ton" in informal writing - a persistent source of errors in international shipping and commodity contracts.',
     ],
     beginnerExplain: [
       'The simplest way to think about imperial is "units with historical names and irregular conversion ratios." There is no single multiplier that links inches to feet to yards to miles the way metric links millimeters to centimeters to meters to kilometers.',
@@ -6183,6 +7174,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The discount rate used in NPV analysis represents the investor\'s required return or the company\'s opportunity cost of capital. This rate reflects the time value of money: a dollar received in the future is worth less than a dollar today because the dollar today could be invested to earn a return. Discounting converts all future cash flows into a common "present-day dollar" basis, making cash flows from different time periods directly comparable.',
       'NPV and IRR are the two dominant discounted cash flow (DCF) methods and are mathematically linked: IRR is the specific discount rate at which NPV equals exactly zero. For a standard project (cash out first, cash in later), NPV is positive whenever the actual discount rate is below the IRR, and negative whenever it exceeds the IRR. NPV is preferred by financial academics because it measures absolute value creation in dollars, not just a percentage rate.',
     ],
+    keyTakeaways: [
+      'NPV discounts every future cash flow to present value at a chosen rate; a positive result confirms the investment earns more than the required return in today\'s dollar terms.',
+      'IRR is the exact discount rate at which NPV equals zero; NPV is positive whenever the actual rate is below the IRR, and negative when it exceeds it.',
+      'Terminal value typically accounts for 60-80% of total NPV in DCF models, making it the single most important and most uncertain assumption to stress-test separately.',
+      'NPV is expressed in absolute dollars and is additive across a portfolio; IRR is a percentage rate that cannot be averaged across investments, which is why NPV is academically preferred.',
+      'A 1% change in discount rate can shift NPV by 5-10% on a 10-year project - always run a sensitivity analysis varying the rate by at least 1-2 percentage points.',
+    ],
+    fastFact: 'Terminal value accounts for 60-80% of total NPV in a typical discounted cash flow model, meaning the assumed long-run growth rate dominates the entire valuation output (NYU Stern School of Business, 2023).',
+    beginnerExplain: [
+      'Imagine you have a choice: $100 today, or $110 a year from now. If you can earn 8% on your money, $100 today grows to $108. The $110 offer is worth $110 / 1.08 = $101.85 in today\'s dollars. The NPV of taking the offer is $101.85 - $100 = $1.85. A positive NPV means accept the deal.',
+      'For a business investment, you do the same calculation for every future cash flow. Convert each to today\'s dollars, add them all up, and subtract the initial cost. If the total is positive, the investment earns more than your required rate - the positive number is the NPV, the extra dollar value created above the minimum return you demanded.',
+    ],
     whenToUse: 'Use NPV when comparing projects with different scales or very different cash flow timing, where IRR can mislead. NPV directly answers "how many dollars of value does this project create today?" and can be added across projects in a portfolio (IRR cannot be averaged). In capital budgeting, always pair NPV with a sensitivity analysis - known as an NPV profile - showing how the result changes as the discount rate varies. If NPV turns negative at only a small rate increase, the project is fragile.',
     examples: {
       headers: ['Project', 'CF Year 0', 'CF Year 1', 'CF Year 2', 'CF Year 3', 'Discount Rate', 'NPV'],
@@ -6241,6 +7244,18 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Multiple on Invested Capital (MOIC) - also called Money-on-Money Multiple (MoM) or investment multiple - measures the total value returned by an investment relative to the total capital invested, expressed as a simple multiple. A 3.0x MOIC means every dollar invested returned three dollars in total (the original dollar plus two dollars of gain). MOIC is the primary return metric in private equity, venture capital, and real estate private markets.',
       'MOIC is deliberately simple: it ignores time. A 3.0x MOIC realised in three years and the same 3.0x realised over ten years are reported identically as "3.0x" - despite representing dramatically different annualised returns (roughly 44% vs 12% IRR respectively). This is why MOIC and IRR are always presented together in private markets: MOIC shows how much capital was returned; IRR shows how quickly. Neither metric alone tells the full story.',
       'MOIC is calculated as Total Value Received divided by Total Capital Invested. Total value includes all distributions (dividends, proceeds from partial sales, loan repayments) plus any residual unrealised value (the current estimated value of unsold assets). Capital invested is the sum of all capital drawdowns - the actual cash committed to the investment. On a fund level, MOIC is calculated across the entire portfolio.',
+    ],
+    keyTakeaways: [
+      'MOIC measures total capital returned divided by total capital invested as a simple multiple, with no adjustment for how long the investment took.',
+      'A 3.0x MOIC realised in 3 years is roughly 44% IRR; the same 3.0x realised over 10 years is only roughly 12% IRR - MOIC alone cannot distinguish the two.',
+      'Gross MOIC (before fees) typically exceeds Net MOIC by 0.3x-0.7x over a 10-year fund life due to management fees and carried interest charges.',
+      'Industry benchmarks: below 1.0x means loss of capital; 2.0x-3.0x is adequate to good for a standard 5-year PE hold; above 3.0x is strong performance.',
+      'MOIC treats unrealised (paper) value identically to distributed cash - always confirm how much of the reported multiple has been received vs. remains estimated.',
+    ],
+    fastFact: 'The median net MOIC for US buyout funds across 2000-2015 vintage years was approximately 1.9x, according to Cambridge Associates benchmarking data (2023).',
+    beginnerExplain: [
+      'Imagine you invest $10 in a friend\'s food truck. Two years later, the truck sells and you receive $30 back. Your MOIC is 3.0x ($30 / $10). The "3.0x" tells you how many dollars you got for every dollar you put in - before thinking about timing.',
+      'MOIC and IRR always go together because MOIC ignores time. That same 3.0x returned over 10 years instead of 2 years would be a much lower annualised return. MOIC is the "how much?" answer; IRR is the "how fast?" answer. Private equity investors need both numbers to fully assess a deal.',
     ],
     whenToUse: 'Use MOIC as the primary return lens for private equity, venture capital, or real estate investments where timing is less predictable and liquidity events are discrete. It directly answers: "did we get our money back, and by how much?" A gross MOIC above 2.0x is generally considered the minimum acceptable return for a typical 5-year private equity hold (compensating for illiquidity and risk). 3.0x-5.0x gross MOIC is considered strong performance. Always combine MOIC with IRR to assess both the magnitude and the pace of returns.',
     examples: {
@@ -6302,6 +7317,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Interest expense is the mechanism by which financial leverage affects reported earnings. A business with $2M EBIT will report very different EBT depending on whether it is debt-free ($2M EBT) or carrying $20M of debt at 8% ($400K interest expense, $1.6M EBT). Higher debt loads compress EBT and amplify the volatility of Net Income across the business cycle.',
       'Interest expense should not be confused with interest paid. Under accrual accounting, interest expense is recognised as it accrues - regardless of when cash changes hands. A semi-annual coupon bond records monthly interest accruals even though the cash payment occurs twice a year. This timing difference between interest expense and cash interest paid can matter in cash flow analysis.',
     ],
+    keyTakeaways: [
+      'Interest expense sits between EBIT and EBT on the income statement - it is the only line separating these two metrics, and its size depends entirely on the company\'s debt load.',
+      'A debt-free company with $2M EBIT keeps all $2M as EBT; a highly leveraged peer with $1.2M in interest expense reduces EBT to just $800K from the same $2M EBIT.',
+      'The interest coverage ratio (EBIT / Interest Expense) is the key stress metric: above 3.0x is comfortable, below 2.0x is a warning, and below 1.0x means operations cannot service the debt.',
+      'Interest expense differs from interest paid when accrual timing and cash payment timing do not align - relevant in bond analysis and cash flow reconciliation.',
+      'Capitalised interest on construction projects is excluded from the income statement and folded into asset cost - this flatters EBIT and requires a check of the notes for a complete picture.',
+    ],
+    fastFact: 'S&P 500 companies paid a combined $330 billion in net interest expense in 2023, up from $188 billion in 2021, reflecting the impact of rising rates on corporate borrowing costs (S&P Global, 2024).',
     beginnerExplain: ['Imagine you borrow $10,000 from a bank to buy a car at a 6% annual interest rate. You owe $600 in interest for the year - that\'s your interest expense. For a company it works the same way: every loan, bond, or credit line has an interest rate, and the annual cost of those borrowings shows up on the income statement as interest expense. It comes out of profits before the tax bill is calculated.'],
     whenToUse: 'Focus on interest expense when comparing two companies that look similar at the EBIT level but diverge at EBT or Net Income. The difference is often debt. Track the interest coverage ratio (EBIT / Interest Expense) as the key stress indicator: above 3.0x is comfortable, below 2.0x is a warning, below 1.0x means the company cannot cover interest from operating profit alone.',
     examples: {
@@ -6362,6 +7385,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The split between principal and interest is not fixed. Because interest is charged on the remaining balance, and that balance is at its maximum on day one, early payments are heavily weighted toward interest. As each payment is made, the balance falls slightly, reducing the next interest charge by a small amount. This compounds over time: in the final years of a 30-year mortgage, the interest portion is tiny because the balance has fallen so low. The process of gradually shifting from interest-heavy to principal-heavy payments is called amortisation.',
       'For a standard 30-year fixed-rate mortgage at 7%, the monthly payment is fixed for all 360 months. But only $246 of Month 1\'s $1,996 payment (12%) reduces the balance; $1,750 (88%) is interest. By Month 180, roughly $696 goes to principal and $1,300 to interest. By Month 360, nearly the entire payment is principal. Over the life of the loan, $418,527 in total interest is paid on the original $300,000 - the lender earns 1.4 times the loan amount in interest charges alone.',
     ],
+    keyTakeaways: [
+      'On a 30-year mortgage at 7%, only 12% of Month 1\'s payment reduces the loan balance; 88% goes to interest because interest is charged on the full outstanding balance.',
+      'Over 30 years at 7%, a $300,000 mortgage generates $418,527 in total interest - the lender collects 1.4 times the original loan amount in interest charges alone.',
+      'After 5 years of payments totaling roughly $120,000, a $300,000 mortgage balance has fallen by only about $17,600 - more than 85 cents of every early dollar went to interest.',
+      'Extra principal payments made in Years 1-5 save far more total interest than the same payment in Year 20, because they reduce the balance on which interest compounds for the entire remaining term.',
+      'For a fixed-rate loan, extra payments shorten the term without changing the monthly payment amount - the loan simply ends earlier.',
+    ],
+    fastFact: 'A borrower with a $400,000, 30-year fixed-rate mortgage at 7% will pay approximately $558,000 in total interest over the life of the loan - 1.4 times the original principal (Federal Reserve Bank of St. Louis, 2024).',
     beginnerExplain: ['Think of P&I like a restaurant tab that charges a daily fee for staying open. The tab itself is the principal - what you originally owe. The daily fee is interest - the cost of leaving the balance unpaid. Each payment covers that period\'s fee first, then whatever is left chips away at the tab. In Month 1 the tab is at its maximum, so the fee is at its maximum and very little of your payment actually reduces the debt. As months pass and the tab shrinks, the fee shrinks too, and more of each payment goes toward clearing the balance. The payment amount never changes - only the fee-to-balance split shifts, slowly at first, then faster as the balance falls.'],
     whenToUse: 'Analyse the P&I split when evaluating whether to choose a shorter loan term, make extra principal payments, or refinance. The amortisation schedule reveals how much equity is actually building in the early years - often far less than the total payment suggests. Use a 15-year vs 30-year comparison to quantify the interest saving against the higher monthly payment. Extra payments made in Years 1-5 reduce total interest significantly more than the same payment made in Year 20, because they lower the balance on which interest will compound for the remaining term.',
     examples: {
@@ -6424,6 +7455,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The "primary duty" standard governs which tasks count toward exemption. Under 29 CFR 541.700, primary duty means the principal, main, major, or most important duty the employee performs - not necessarily the one that consumes the most hours. A store manager who spends 70% of their shift stocking shelves alongside staff can still have a primary duty of management if that management function is what drives the department\'s operation. This is the "concurrent duties" doctrine, and it is why a time-and-motion study alone does not determine exempt status.',
       'The Highly Compensated Employee (HCE) shortcut applies to employees earning at least $107,432 per year in total annual compensation (with at least $684/week paid on salary or fee basis). HCE employees only need to "customarily and regularly" perform at least one executive, administrative, or professional duty - a significantly lighter standard than the full duties test. The HCE threshold is indexed and reviewed periodically by the Department of Labor.',
     ],
+    keyTakeaways: [
+      'The FLSA exemption requires both a salary test ($684/week minimum) AND a duties test - failing either means overtime applies regardless of job title or salary amount.',
+      'Five white-collar exemption categories exist: Executive, Administrative, Learned/Creative Professional, Outside Sales (no salary threshold), and Computer Employee.',
+      'The administrative exemption requires genuine "discretion and independent judgment on matters of significance" - following detailed procedures is skilled execution, not discretion.',
+      'Employees earning at least $107,432 annually qualify for the Highly Compensated Employee shortcut, requiring only one qualifying duty rather than the full duties test.',
+      'Misclassification exposes employers to up to 2 years of back overtime (3 years if willful) plus liquidated damages - often equal to the unpaid overtime amount.',
+    ],
+    fastFact: 'The US Department of Labor recovered $274 million in back wages for 163,000 workers through wage and hour investigations in fiscal year 2023, with exempt status misclassification among the leading violations (US DOL Wage and Hour Division, 2023).',
     beginnerExplain: ['Think of the duties test as a two-lock system. Your employer claims you do not need overtime pay because you are a salaried employee. To legally make that claim, they must open two locks: first, your salary must be at least $684 per week on a guaranteed basis (the salary lock). Second, your actual day-to-day work - not your job title, but what you genuinely do - must match one of five government-defined categories (the duties lock). An employee titled "Manager" who never manages anyone fails the duties lock. An employee titled "Associate" who genuinely runs a team, approves hires, and sets department priorities may pass it. If either lock fails, overtime applies regardless of what the business card says.'],
     whenToUse: 'Use the duties test framework whenever a salaried employee regularly works more than 40 hours per week without receiving overtime pay. If you are an employee, check your own classification: does your current salary clear $684/week on a guaranteed basis, and do your actual responsibilities genuinely match one of the five exemption categories? Employers use the test when structuring new roles, reclassifying existing ones, or responding to a DOL audit. HR professionals and employment attorneys use it when reviewing misclassification risk across a workforce - particularly in industries such as retail, banking, insurance, and professional services where the administrative exemption is frequently over-applied.',
     examples: {
@@ -6502,6 +7541,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Multiples fall into two families based on their numerator. Enterprise Value multiples (EV/EBITDA, EV/Revenue, EV/EBIT, EV/FCF) use total business value including debt and cash. Equity multiples (P/E, Price/Book, Price/FCF-to-equity) use only market capitalisation. The cardinal rule: always match numerator to denominator. EV against EBITDA (which belongs to all capital providers), market cap against net income (which belongs only to shareholders). Mixing the two - for example, dividing EV by Net Income - produces a meaningless ratio and is one of the most common errors in valuation practice.',
       'Because multiples compress a complex business into a single number, they are most useful for relative valuation: screening whether one company appears cheap or expensive compared with peers. A 10x EV/EBITDA tells you nothing in isolation; it only becomes meaningful when you know the industry median is 8x (implying a premium) or 14x (implying a discount). Multiples are also highly sensitive to the interest rate environment - low rates inflate multiples, high rates compress them - so always anchor comparisons to a consistent time period.',
     ],
+    keyTakeaways: [
+      'A valuation multiple expresses business price as a ratio to a financial metric - EBITDA, revenue, or earnings - enabling quick relative comparison across companies of different sizes.',
+      'Enterprise Value multiples (EV/EBITDA, EV/Revenue) must use metrics belonging to all capital providers; equity multiples (P/E, P/Book) must use metrics belonging only to shareholders - mixing the two produces a meaningless number.',
+      'Multiples are inversely linked to interest rates: the same business trades at higher multiples when rates are low and at lower multiples when rates rise, making cross-cycle historical comparisons unreliable.',
+      'Cross-sector multiple comparisons are meaningless - a software company at 20x EBITDA and a retailer at 6x are not one overvalued and one cheap; they are structurally different businesses with different growth and margin profiles.',
+      'Private company valuations typically apply a 15-30% discount to public peer multiples to account for illiquidity and investor concentration risk.',
+    ],
+    fastFact: 'The median S&P 500 forward P/E multiple compressed from approximately 22x in early 2021 to 16x in mid-2022 as the Federal Reserve raised rates from near zero to above 4%, illustrating the direct inverse relationship between rates and multiples (S&P Global, 2023).',
     beginnerExplain: ['Imagine your local bakery earns $50,000 profit a year. If a buyer offers $500,000 to purchase it, they\'re paying 10 times the annual profit - a "10x multiple." If a similar bakery sold last year for $700,000, that one went at 14x. Investors use multiples exactly like this: they level the playing field so you can compare whether one business is priced higher or lower than another relative to what it earns, regardless of the absolute size.'],
     whenToUse: 'Use multiples for quick comparable screening - to flag whether a company looks expensive or cheap versus peers - before doing deeper discounted cash flow analysis. Always compare companies in the same industry and at a similar stage of growth. Use EV multiples (EV/EBITDA, EV/Revenue) when the companies you are comparing have different capital structures; use equity multiples (P/E, P/Book) when you are specifically analysing returns to shareholders.',
     examples: {
@@ -6563,6 +7610,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The system\'s defining feature is its decimal structure: every unit steps up or down by a factor of 10 using standardized prefixes. A kilometer is 1,000 meters; a centimeter is one-hundredth of a meter; a millimeter is one-thousandth. This makes arithmetic straightforward compared to converting feet to miles or ounces to pounds, where each conversion requires a different ratio.',
       'Adopted formally by France in 1795 and spread globally through trade and treaty, the metric system is now the legal system of measurement in 195 of 196 countries. The United States is the most notable exception; it uses US customary units for everyday commerce but relies on metric for science, medicine, the military, and pharmaceutical manufacturing.',
     ],
+    keyTakeaways: [
+      'The SI has 7 base units - meter, kilogram, second, ampere, kelvin, mole, and candela - from which all other units are derived.',
+      'Every metric conversion involves multiplying or dividing by a power of 10 using standardized prefixes: kilo = 1,000, centi = 0.01, milli = 0.001.',
+      'The same prefix applies identically across all base units - a kilogram, kilometer, kilojoule, and kilovolt all mean exactly 1,000 of their respective base unit.',
+      '195 of 196 countries have officially adopted the metric system; the US uses customary units for commerce but relies on metric for science, medicine, and manufacturing.',
+      'A metric ton (tonne) is 1,000 kg; a US short ton is 907 kg - the two differ by nearly 10% and should not be confused in international trade or shipping.',
+    ],
+    fastFact: 'NASA\'s Mars Climate Orbiter was lost in 1999 because one team used metric units (newton-seconds) while another used US customary units (pound-force-seconds) - a $327 million spacecraft destroyed by a unit conversion error (NASA, 1999).',
     beginnerExplain: [
       'Think of metric as "counting in tens at every level." If you know that 1 meter = 100 centimeters and 1 kilogram = 1,000 grams, you can rescale any measurement by moving a decimal point - no memorizing that 5,280 feet make a mile or 16 ounces make a pound.',
       'The same prefix works identically for every base unit: kilo always means 1,000 (kilometer, kilogram, kilojoule), centi always means 1/100 (centimeter, centiliter), milli always means 1/1,000 (millimeter, milligram, millisecond). Learn the prefixes once and they apply everywhere.',
@@ -6641,6 +7696,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'When a consumer or business exchanges money, the provider sources currency at or near the mid-market rate and sells it at a marked-up rate to cover costs and earn a profit. The bid price is what the market maker pays to buy a currency from you; the ask price is what they charge to sell it to you. The mid-market sits exactly between these two - which is why it is the fairest and most neutral benchmark for comparing any exchange offer.',
       'The mid-market rate fluctuates continuously during trading hours - Monday through Friday, 24 hours a day - as supply and demand for each currency shifts in response to economic data, central bank decisions, and market sentiment. The ECB publishes daily euro reference rates at around 16:00 CET based on a concertation of rates from major market participants. Bloomberg and Reuters publish continuously updated mid-market rates throughout the trading day.',
     ],
+    keyTakeaways: [
+      'The mid-market rate is the midpoint between the bid and ask price for a currency pair in the wholesale interbank market, with no retail markup included.',
+      'No retail customer can transact at mid-market - the best fintech services add markups of 0.35-0.6% on major pairs; high-street banks typically add 3-4%.',
+      'The ECB publishes daily euro reference rates at approximately 16:00 CET; Bloomberg and Reuters publish continuously updated mid-market rates during trading hours.',
+      'Airport exchange desks and hotel bureaux de change apply markups of 8-15% above mid-market - among the most expensive ways to convert currency.',
+      'A 1% markup on a $50,000 wire transfer costs $500 - comparing providers against mid-market is highest-value on large transactions.',
+    ],
+    fastFact: 'Consumers and businesses globally lose an estimated $200 billion per year to hidden FX fees and exchange rate markups above mid-market, according to the World Bank Payment Systems Team (2023).',
     beginnerExplain: [
       'Think of buying and selling used cars. A dealer buys your car at one price (bid) and sells it to the next buyer at a higher price (ask). The mid-market rate is the midpoint between these two prices - what the car is "really worth" before the dealer takes their cut.',
       'In currency markets, the dealer is the bank or exchange bureau. When you swap dollars for euros, the bank is acting as that dealer: buying your dollars cheaply and selling euros to you at a markup.',
@@ -6732,6 +7795,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'In percentage and ratio calculations, the numerator is the change or the quantity being expressed as a proportion. In the percentage increase formula $$\\frac{\\text{New} - \\text{Old}}{\\text{Old}} \\times 100$$, the numerator is (New - Old) - the absolute change. Increasing the numerator raises the result proportionally; changing the denominator has the inverse effect.',
       'The numerator can be any real number, including zero and negatives. A numerator of zero gives a result of zero (as long as the denominator is non-zero). A negative numerator with a positive denominator produces a negative result - in percentage change, this signals a fall rather than a rise.',
     ],
+    keyTakeaways: [
+      'The numerator is the top number in a fraction - it counts how many equal parts of the whole are being considered.',
+      'In percentage change formulas, the numerator is always the absolute change (New - Old), not the new value itself; placing the new value in the numerator is the most common percentage calculation error.',
+      'A numerator of zero always produces a result of zero, provided the denominator is non-zero - in percentage change this means no change occurred.',
+      'A negative numerator with a positive denominator produces a negative result - indicating a decrease in percentage change calculations.',
+    ],
     beginnerExplain: ['If a pizza is cut into 8 slices and you eat 3, you had 3/8 of the pizza. The "3" at the top is the numerator - it counts how many slices you actually took. Think of the numerator as the answer to "how many?" and the denominator as the answer to "out of how many total?" The numerator is always what you are measuring; the denominator is always the scale you are measuring it against.'],
     whenToUse: 'Identify the numerator by asking: "what quantity am I measuring or comparing?" That value goes on top. In a percentage formula, the numerator is always the change or the part - the thing being expressed as a proportion of the base (denominator). In a rate such as miles per hour, the distance (miles) is the numerator.',
     examples: {
@@ -6787,6 +7856,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'In percentage and ratio calculations, the denominator is the reference base - the value you are expressing the other number as a proportion of. In the percentage decrease formula $$\\frac{\\text{Old} - \\text{New}}{\\text{Old}} \\times 100$$, the denominator is always the original value. Choosing the wrong denominator is the most common error in percentage calculations, and it always produces a plausible-looking but incorrect result.',
       'One universal rule: the denominator can never be zero. Division by zero is undefined - there is no number that, when multiplied by zero, produces a non-zero numerator. This is why percentage change is mathematically undefined when the starting value is zero.',
     ],
+    keyTakeaways: [
+      'The denominator is the bottom number in a fraction - it defines how many equal parts the whole is divided into and is always the reference base.',
+      'Using the new value as the denominator instead of the original value is the most common percentage calculation error, producing a result that overstates decreases and understates increases.',
+      'The denominator can never be zero - division by zero is undefined because no number multiplied by zero can equal a non-zero numerator.',
+      'In percentage formulas, the denominator is always the original (before) value; in a rate like miles per hour, the denominator is the time unit (hours).',
+    ],
     beginnerExplain: ['Think of a pizza cut into 8 slices. The denominator is 8 - it tells you how many total slices the pizza was divided into. If you eat 3 slices, you had 3/8 of the pizza. The "8" at the bottom defines how big each slice is. A smaller denominator means bigger pieces: 1/2 (denominator = 2) gives you half the pizza, while 1/8 (denominator = 8) gives you one small slice. In any fraction or percentage, the denominator is always the total you are dividing by.'],
     whenToUse: 'Identify the denominator whenever you are setting up a fraction, percentage, ratio, or rate. Ask: "what is the total or reference base?" That is your denominator. In percentage calculations, the original (before) value is always the denominator. In a rate such as miles per hour, the time (hours) is the denominator.',
     examples: {
@@ -6841,6 +7916,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'A weighted average assigns each value a weight that reflects how much data it represents before the average is computed. The formula multiplies each value by its weight, sums the products, and divides by the total weight. The result is identical to what you would get by combining all individual data points and computing a single overall rate.',
       'The concept appears whenever groups of different sizes are combined. A simple arithmetic mean treats every value equally, so smaller groups get the same influence as larger ones - producing a misleading result. A weighted average corrects for this by scaling each value to the size of the group it came from.',
       'Weights can be any unit that represents the denominator of each value: sample size, total marks, hours, impression counts, or investment amounts. The only requirement is that all weights use the same unit.',
+    ],
+    keyTakeaways: [
+      'A weighted average assigns each value a weight proportional to how much data it represents before calculating the mean - producing the same result as computing the average from all individual data points directly.',
+      'Simple average gives equal influence to every value regardless of group size; when group sizes differ, this always produces a biased result that over-weights smaller groups.',
+      'Weights must all use the same unit - mixing people with hours, or marks with credit hours, produces a meaningless result.',
+      'When all groups have equal size, simple average and weighted average give identical results - equal weights cancel out in the formula.',
+      'In WACC, the cost of each capital source is weighted by its share of total capital structure; the resulting blended rate is a weighted average of debt and equity costs.',
     ],
     beginnerExplain: [
       'Think of two test scores: you scored 90% on a 10-question quiz and 70% on a 100-question exam. Simple average: (90 + 70) / 2 = 80%. But the exam had ten times as many questions, so your overall performance is much closer to 70%.',
@@ -6909,6 +7991,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The formula is WACC = (E/V) x Re + (D/V) x Rd x (1 - T), where E is the market value of equity, D is the market value of debt, V = E + D, Re is the required return on equity, Rd is the cost of debt, and T is the corporate tax rate. The (1 - T) adjustment reflects that interest payments are tax-deductible, reducing the effective cost of debt to the company.',
       'Cost of equity is not directly observable - it must be estimated using a model such as CAPM (Re = Rf + Beta x Equity Risk Premium). Cost of debt is the weighted average interest rate on outstanding debt, adjusted downward for the tax shield. Because equity investors bear more risk than lenders, the cost of equity is always higher than the cost of debt.',
     ],
+    keyTakeaways: [
+      'WACC = (E/V) x Re + (D/V) x Rd x (1-T), where the (1-T) term reflects the tax deductibility of interest, reducing the effective cost of debt below its stated rate.',
+      'The cost of equity must be estimated - typically via CAPM - and is always higher than the cost of debt because equity holders bear more risk with a junior claim in liquidation.',
+      'A 200-300 basis point error in WACC, from a flawed equity risk premium or beta assumption, can shift a DCF valuation by 20-40% on a 10-year model.',
+      'Weights must use current market values, not book values - using book values understates the equity weight when equity trades above book, producing a misleadingly low WACC.',
+      'ROCE exceeding WACC means the business creates economic value; ROCE below WACC means it destroys value even with positive accounting profits.',
+    ],
+    fastFact: 'The average WACC for S&P 500 companies rose from approximately 7.5% in early 2021 to above 10% by late 2022 as the Federal Reserve raised the fed funds rate from near zero to 4.25-4.5% (Aswath Damodaran, NYU Stern, 2023).',
     beginnerExplain: [
       'Imagine you borrow $6,000 from a bank at 6% interest and take $4,000 from an investor who wants 10% returns, to fund a $10,000 food stall. The bank\'s effective cost is 4.5% after tax savings (6% x 75% if you\'re in a 25% tax bracket). Your blended funding cost is: (60% x 4.5%) + (40% x 10%) = 2.7% + 4.0% = 6.7%. That 6.7% is your WACC - the minimum your food stall must earn on its $10,000 to keep both the bank and the investor satisfied. Earn more than 6.7% and you create value; earn less and you are destroying it.',
     ],
@@ -6970,6 +8060,13 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The most efficient method for finding the GCD is the Euclidean algorithm: divide the larger number by the smaller, take the remainder, and repeat until the remainder is zero. The last non-zero remainder is the GCD. Example: GCD(18, 24) - divide 24 by 18, remainder 6. Divide 18 by 6, remainder 0. GCD = 6.',
       'In fraction arithmetic, the GCD is used to simplify (reduce) a fraction to its lowest terms. Dividing both numerator and denominator by their GCD produces an equivalent fraction where the two parts share no common factor other than 1.',
     ],
+    keyTakeaways: [
+      'The GCD is the largest integer that divides both numbers exactly with no remainder - also called the GCF or HCF.',
+      'The Euclidean algorithm finds the GCD efficiently: divide the larger number by the smaller, take the remainder, repeat until the remainder is zero; the last non-zero remainder is the GCD.',
+      'Dividing numerator and denominator by their GCD reduces a fraction to lowest terms - the fully simplified form where no further reduction is possible.',
+      'GCD(a, b) x LCM(a, b) = a x b - knowing the GCD gives you the LCM and vice versa without listing all multiples.',
+      'When GCD(a, b) = 1, the numbers are coprime and the fraction a/b is already fully reduced.',
+    ],
     beginnerExplain: [
       'Imagine you have 12 apples and 8 oranges and want to arrange them into identical groups with no fruit left over. The largest number of equal groups possible is 4 - giving 3 apples and 2 oranges per group. That "4" is GCD(12, 8).',
       'For fractions, the GCD tells you how much you can shrink the fraction without changing its value. 12/18 divided top and bottom by GCD(12, 18) = 6 gives 2/3 - the same fraction, at its smallest.',
@@ -7027,6 +8124,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The LCD is the essential step in adding or subtracting fractions with different denominators. Converting both fractions to the LCD makes their denominators identical, meaning each fraction counts the same-sized parts - so numerators can be added or subtracted directly.',
       'Computing the LCD: LCD(b, d) = (b × d) ÷ GCD(b, d). For denominators 4 and 6: GCD(4, 6) = 2, so LCD = (4 × 6) ÷ 2 = 12. When denominators are coprime (GCD = 1), the LCD equals their product.',
     ],
+    keyTakeaways: [
+      'The LCD equals the LCM of the two denominators and is the smallest shared denominator that allows fraction addition or subtraction without oversizing.',
+      'LCD(b, d) = (b x d) / GCD(b, d) - when GCD > 1, the LCD is smaller than the product of the denominators.',
+      'When denominators are coprime (GCD = 1), the LCD equals their product - there is no smaller shared denominator.',
+      'When one denominator is a multiple of the other (e.g., 5 and 10), the LCD is simply the larger denominator and only one fraction needs converting.',
+    ],
     beginnerExplain: [
       'You want to add 1/4 and 1/3 of a pizza. But fourths and thirds are different slice sizes, so you cannot count them together yet. The LCD asks: what is the smallest number of equal slices you could cut both pizzas into so the sizes match? The answer is 12 - twelfths work for both evenly. That is the LCD.',
       'Once both fractions are in twelfths: 1/4 = 3/12 and 1/3 = 4/12. Now the slice size is identical and 3/12 + 4/12 = 7/12.',
@@ -7077,6 +8180,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The LCM (Lowest Common Multiple) of two positive integers is the smallest positive integer that is a multiple of both. LCM(4, 6) = 12 because 12 is the smallest number appearing in both the multiples of 4 (4, 8, 12, 16...) and the multiples of 6 (6, 12, 18...).',
       'The fastest way to compute LCM uses the GCD identity: LCM(a, b) = (a × b) ÷ GCD(a, b). For LCM(4, 6): GCD(4, 6) = 2, so LCM = (4 × 6) ÷ 2 = 12. When a and b are coprime (GCD = 1), LCM equals their product.',
       'In fraction arithmetic, the LCM of two denominators is the LCD - the smallest number that allows both fractions to be expressed with a shared denominator so their numerators can be added or subtracted.',
+    ],
+    keyTakeaways: [
+      'The LCM is the smallest positive integer that is a multiple of both numbers - found efficiently via LCM(a, b) = (a x b) / GCD(a, b).',
+      'When a and b are coprime (GCD = 1), LCM equals their product; when GCD > 1, LCM is smaller than the product.',
+      'The identity LCM(a, b) x GCD(a, b) = a x b links both tools - knowing any three of the four values gives you the fourth.',
+      'In fraction arithmetic, the LCM of two denominators is the LCD (Lowest Common Denominator) - the smallest number for which both fractions can be expressed in the same-sized pieces.',
     ],
     beginnerExplain: [
       'Bus A comes every 4 minutes. Bus B comes every 6 minutes. Both leave together at time zero. When is the next time they leave at the same moment? Multiples of 4: 4, 8, 12... Multiples of 6: 6, 12... First overlap: 12 minutes. That is LCM(4, 6) = 12.',
@@ -7136,6 +8245,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The Gregorian rule for determining leap years has three conditions applied in order: a year divisible by 4 is a leap year; however, century years (1700, 1800, 1900) are not leap years even though divisible by 4; except that century years divisible by 400 are leap years (2000 was a leap year, 1900 was not). This three-part rule reduces the remaining calendar error to about 26 seconds per year - accurate enough that no further correction will be needed for several thousand years.',
       'The name "leap year" refers to the way fixed calendar dates behave. In an ordinary year, any date falls one weekday later than the same date the previous year. In a leap year, dates after February 29 "leap" an extra day - falling two weekdays later than the previous year instead of one. This is why a birthday falling on Tuesday in 2023 would fall on Thursday in 2024 (a leap year) rather than Wednesday.',
     ],
+    keyTakeaways: [
+      'The Gregorian three-part rule: divisible by 4 is a leap year; except century years (e.g., 1900); except century years divisible by 400 (e.g., 2000).',
+      'The Earth\'s astronomical year is approximately 365.2422 days - without leap year corrections, the calendar would drift by roughly 24 days per century.',
+      'The correct programming check is (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0 - the simple year % 4 === 0 check misclassifies 1900 and 2100 as leap years.',
+      'A 400-year Gregorian cycle contains exactly 97 leap years and 146,097 days; the remaining error is about 26 seconds per year.',
+      'Any date range spanning February 29 is exactly 1 day longer in a leap year; ranges entirely before March 1 or after February are unaffected.',
+    ],
+    fastFact: 'People born on February 29 - about 1 in 1,461 births - celebrate their actual calendar birthday only once every 4 years, with an estimated 5 million "leaplings" alive worldwide (The Honor Society of Leap Year Day Babies, 2024).',
     beginnerExplain: [
       'Think of it like this: Earth takes about 365 and a quarter days to orbit the Sun, but the calendar only has whole days. So we count 365 days per year and bank the leftover quarter-day. After four years, we\'ve saved up four quarters - one full day. We spend that saved day on February 29.',
       'Without this correction, the calendar would drift. Midsummer holidays would slowly slide into autumn over centuries, and the seasons would no longer line up with the months people expect. The three-part Gregorian rule (divisible by 4, except centuries, except centuries divisible by 400) fine-tunes the correction so the drift is down to 26 seconds per year instead of 11 minutes.',
@@ -7203,6 +8320,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Most geriatric and clinical nutrition guidelines - including those from ESPEN (European Society for Clinical Nutrition and Metabolism) - recommend an optimal BMI range of 23-27.5 for adults 65 and over. Below 23, and especially below 22, is associated with frailty risk, malnutrition, immune suppression, falls, and higher all-cause mortality. The lower bound is higher than in younger adults because low body weight in older age almost always signals muscle loss, poor nutrition, or chronic disease - not metabolic health.',
       'The upper bound of 27.5 reflects a finding sometimes called the "obesity paradox": large meta-analyses consistently show that older adults with BMI 25-30 have equal or lower all-cause mortality compared to those in the standard normal range. The most widely accepted explanation is that a moderate weight reserve provides energy and protein buffers during acute illness, hospitalization, or periods of reduced appetite - events that are far more common in older adults than in younger populations.',
     ],
+    keyTakeaways: [
+      'Most geriatric guidelines recommend a BMI of 23-27.5 as the optimal range for adults 65 and over - higher than the standard adult normal range of 18.5-24.9.',
+      'ESPEN defines a BMI below 22 as a malnutrition risk factor specifically for adults over 70; the standard underweight cutoff of 18.5 dramatically understates this risk in older patients.',
+      'The "obesity paradox" in older adults shows BMI 25-30 carries equal or lower all-cause mortality compared to the standard normal range, likely due to energy and protein reserves during illness.',
+      'Sarcopenia can produce a normal-appearing BMI while body composition deteriorates - muscle is replaced by fat without changing total weight.',
+      'Waist circumference above 88 cm (women) or 102 cm (men) is a complementary risk marker that BMI alone cannot detect.',
+    ],
+    fastFact: 'A meta-analysis of 1.3 million older adults found BMI 27.5 was associated with the lowest all-cause mortality risk in adults aged 65 and over, compared to BMI 24-25 in younger adults (Winter et al., British Journal of Nutrition, 2014).',
     beginnerExplain: [
       'Imagine two people with exactly the same BMI of 19 - one is 28 years old, the other is 76. For the 28-year-old, BMI 19 is lean but healthy. For the 76-year-old, it is a warning sign: too little body reserve to recover well from surgery, a serious infection, or a few weeks of reduced appetite.',
       'Standard BMI thresholds were designed with younger adults in mind. Geriatric BMI guidelines shift the safe minimum upward to 23 because the danger zone at age 70+ is being too lean, not too heavy. A 71-year-old at BMI 26 is not overweight by geriatric standards - they are sitting in the optimal range with a reasonable reserve for the unexpected.',
@@ -7272,6 +8397,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Fetal age - also called embryonic age, fertilization age, or conceptional age - is the age of an embryo or fetus counted from the date of fertilization. It is approximately two weeks less than gestational age, because gestational counting starts at the last menstrual period, roughly two weeks before ovulation and conception occur.',
       'At term (week 40 gestational age), a baby is approximately 38 weeks fetal age. Fetal age is the measure used in embryology and developmental biology - when a textbook says "the heart begins beating at week 4," it typically means week 4 of fetal age (week 6 of gestational age). Understanding which system a source uses prevents misinterpreting developmental milestones by two full weeks.',
     ],
+    keyTakeaways: [
+      'Fetal age counts from fertilization and is approximately 2 weeks less than gestational age, which starts at the last menstrual period.',
+      'At term (40 weeks gestational age), a baby is approximately 38 weeks of fetal age - the same pregnancy described with two different starting clocks.',
+      'Embryology textbooks and IVF laboratories use fetal age; obstetricians and midwives universally use gestational age.',
+      'Misinterpreting which system a source uses creates a 2-week discrepancy in developmental milestones - the heartbeat appears "at 4 weeks" in embryology texts, but at 6 weeks by gestational age.',
+    ],
     beginnerExplain: [
       'Imagine you are baking bread. The recipe says "rise for 2 hours," but the clock on the wall started running 2 hours before you even mixed the ingredients. Fetal age is like the actual baking time - it starts when the dough was made (fertilization). Gestational age is like the wall clock - it started running earlier, before anything was in the bowl. The bread takes the same time to bake either way; the two clocks just disagree on what time it is.',
     ],
@@ -7322,6 +8453,12 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     definition: [
       'Gestational age is the age of a pregnancy measured in weeks and days from the first day of the last menstrual period (LMP), not from the date of conception. A full-term pregnancy is 40 weeks of gestational age. This counting method starts about two weeks before fertilization actually occurs, because ovulation and conception happen roughly two weeks after the LMP begins.',
       'All obstetric milestones are expressed in gestational weeks: viability is established around week 24, full term begins at week 37, and post-term is week 42 or later. A baby delivered at 40 weeks gestational age has been developing as an embryo or fetus for approximately 38 weeks - the two figures differ because gestational age includes the pre-conception phase of the menstrual cycle.',
+    ],
+    keyTakeaways: [
+      'Gestational age is measured from the first day of the last menstrual period (LMP) and includes approximately 2 weeks before fertilization actually occurs.',
+      'A full-term pregnancy is 40 weeks of gestational age; viability is established around week 24, and full term begins at week 37.',
+      'LMP-based dating assumes ovulation at day 14 of a 28-day cycle - irregular cycles require first-trimester ultrasound correction when the two differ by more than 7 days.',
+      'Gestational age is the universal clinical standard for all obstetric milestones, screening windows, and growth measurements worldwide.',
     ],
     beginnerExplain: [
       'Imagine a race where the clock starts two minutes before the runners leave the starting line. The runners are not actually moving for those first two minutes, but the official race time includes them anyway. Gestational age works the same way - the pregnancy "clock" starts at your last period, not when conception happened. So when your doctor says you are 10 weeks pregnant, the baby has only existed for about 8 weeks.',
@@ -7374,6 +8511,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The Institute of Medicine (IOM) published evidence-based GWG guidelines in 2009, updated from the 1990 version to reflect modern obesity prevalence. These guidelines set total gain targets and per-week rates by pre-pregnancy BMI category, and are endorsed by ACOG, the CDC, and most obstetric bodies worldwide.',
       'GWG outside the recommended range - either too much or too little - is associated with distinct adverse outcomes. Excessive GWG (which affects approximately 47% of US pregnant women per CDC data) is the more common problem and is linked to macrosomia, C-section delivery, and long-term postpartum weight retention. Insufficient GWG is linked to preterm birth and small-for-gestational-age infants.',
     ],
+    keyTakeaways: [
+      'IOM 2009 guidelines set total GWG targets by pre-pregnancy BMI: 12.5-18 kg (underweight), 11.5-16 kg (normal), 7-11.5 kg (overweight), 5-9 kg (obese).',
+      'Approximately 47% of US pregnant women exceed the IOM-recommended GWG range, according to CDC surveillance data.',
+      'GWG consists mostly of fetus (~3.3 kg), amniotic fluid (~0.8 kg), placenta (~0.7 kg), blood volume expansion (~1.5 kg), and only 3-4 kg of maternal fat stores.',
+      'The per-week rate applies from the second trimester; first-trimester gain of just 0.5-2 kg total is normal and does not need to be compensated in later trimesters.',
+      'Excessive GWG is linked to macrosomia (birth weight above 4 kg), C-section delivery, and long-term postpartum weight retention.',
+    ],
+    fastFact: 'CDC data show approximately 47% of US pregnant women gain more weight than the IOM recommends, with rates highest among women who began pregnancy with overweight or obesity (Centers for Disease Control and Prevention, 2022).',
     beginnerExplain: [
       'Think of GWG targets like a recipe that accounts for your starting pantry. The baby needs roughly the same "ingredients" (nutrients, energy, space to grow) regardless of the mother\'s starting weight. If your pantry is already well-stocked - meaning you have more stored energy from a higher pre-pregnancy BMI - the recipe calls for fewer new ingredients from the store.',
       'A woman with obesity (BMI 32) has a GWG target of 5-9 kg, not because she should restrict food, but because her body can supply more from existing reserves. A woman who is underweight (BMI 17) has a target of 12.5-18 kg because she needs to build those reserves from scratch. The baby\'s needs are nearly identical in both cases - only the starting balance differs.',
@@ -7445,6 +8590,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Inflation is the rate at which the general level of prices for goods and services rises over time, reducing the purchasing power of money. It is measured using a price index - most commonly the Consumer Price Index (CPI) - which tracks the cost of a fixed basket of typical household purchases month by month.',
       'Central banks in most developed economies target roughly 2% annual inflation. Mild inflation is considered healthy because it encourages spending (items cost more later, so buy now) and allows businesses to adjust wages and prices gradually. Deflation - falling prices - is generally considered more dangerous because it triggers delayed purchases and debt deflation spirals.',
     ],
+    keyTakeaways: [
+      'Inflation is measured by tracking price changes in a fixed basket of typical household goods and services (CPI); a 3% annual rate halves purchasing power in roughly 24 years.',
+      'Most developed-market central banks target approximately 2% annual inflation as the optimal balance between growth incentives and purchasing power stability.',
+      'Deflation is generally considered more dangerous than mild inflation because it incentivizes delayed purchases and can spiral into economic contraction.',
+      'Core inflation excludes food and energy to filter out volatile supply-shock effects; central banks focus on core inflation for policy decisions.',
+      'A $100 bill from 1980 had the equivalent purchasing power of approximately $389 in 2025, reflecting the cumulative rise in the US CPI-U over that period.',
+    ],
+    fastFact: 'US CPI-U inflation peaked at 9.1% in June 2022 - the highest reading since November 1981 - before declining to approximately 2.4% by the end of 2024 (US Bureau of Labor Statistics, 2024).',
     beginnerExplain: ['Imagine a coffee costs $2 today. If inflation runs at 3% per year, that same coffee costs $2.06 next year, $2.25 in five years, and $4.85 in thirty years. Your dollar has not disappeared - but it buys less each year.', 'A 3% annual inflation rate halves the purchasing power of your money in about 24 years. This is why savings accounts that pay below the inflation rate are quietly losing real value.'],
     whenToUse: 'Use the inflation rate when comparing prices, wages, or values from different time periods. A salary of $50,000 in 1990 was worth far more in real terms than $50,000 in 2025 - adjusting for CPI gives the true comparison. Inflation data is also central to interest rate policy, bond pricing, pension planning, and any real vs. nominal return analysis.',
     examples: {
@@ -7496,6 +8649,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'The Consumer Price Index (CPI) is a statistical measure that tracks the average change over time in the prices paid by urban consumers for a representative basket of goods and services. The basket typically includes food, housing, clothing, transportation, healthcare, education, and recreation. National statistics agencies update prices monthly by surveying thousands of retail outlets and service providers.',
       'CPI is expressed as an index number relative to a base period set at 100. The US BLS uses a 1982-84 average as the base for CPI-U; the UK ONS uses 2015=100 for CPIH; Eurostat uses 2015=100 for HICP. The choice of base year affects the magnitude of the numbers but not the inflation rate calculated between any two years.',
     ],
+    keyTakeaways: [
+      'CPI tracks the average price change in a fixed representative basket of goods and services; it is expressed as an index relative to a base period set at 100.',
+      'The US BLS uses 1982-84 as the CPI-U base period; the UK ONS uses 2015=100 for CPIH; Eurostat uses 2015=100 for HICP.',
+      'Owners Equivalent Rent (OER) - a survey-based estimate of what homeowners would charge to rent their own homes - makes up roughly 26% of US CPI-U.',
+      'The Federal Reserve targets PCE inflation (not CPI) at 2%; PCE typically runs 0.3-0.5 percentage points below CPI because it accounts for consumer substitution.',
+      'CPI overestimates true inflation slightly because a fixed basket cannot capture substitution - when prices rise, consumers switch to cheaper alternatives.',
+    ],
+    fastFact: 'The US CPI-U index reached 320.6 in August 2024 versus a base of 100 in 1982-84, meaning the same basket of consumer goods and services costs more than three times as much as it did 40 years ago (US Bureau of Labor Statistics, 2024).',
     beginnerExplain: ['Think of CPI as the price tag on a very specific shopping cart. Statisticians fill this cart with the same items every month - a loaf of bread, a gallon of petrol, one month of rent, a doctor visit, a pair of jeans. They track exactly how much that fixed cart costs.', 'When the cart costs 3% more than last year, CPI rose 3% and inflation was 3%. The cart does not change - only its price.'],
     whenToUse: 'Use CPI when converting a historical amount to present-day money (or vice versa). The formula is: Adjusted Value = Original x (CPI later / CPI earlier). CPI is also used to index tax brackets, Social Security benefits, rental contracts, wage agreements, and inflation-protected securities (TIPS). When comparing salaries or prices from different decades, always convert to real (CPI-adjusted) terms first.',
     examples: {
@@ -7545,6 +8706,14 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
       'Purchasing power is the quantity of goods and services that a unit of currency can buy at a given time. As prices rise through inflation, each unit of currency purchases less - its purchasing power falls. As prices fall through deflation, purchasing power rises. Central banks target stable, mild inflation specifically to maintain predictable purchasing power over time.',
       'Purchasing power parity (PPP) extends this concept internationally: it compares the purchasing power of different currencies by measuring what the same basket of goods costs in each country. PPP exchange rates are used by the World Bank and IMF to compare living standards across countries more accurately than market exchange rates.',
     ],
+    keyTakeaways: [
+      'Purchasing power is the quantity of goods and services a unit of currency can buy; inflation reduces it and deflation increases it over time.',
+      '$100 in 1913 had the equivalent purchasing power of approximately $3,238 in 2025, reflecting more than a century of US price inflation.',
+      'The rule of 70 estimates how long purchasing power halves at a given inflation rate: divide 70 by the rate (70 / 3% = ~23 years at 3% inflation).',
+      'Purchasing power parity (PPP) adjusts international comparisons by measuring what the same basket of goods costs across countries rather than using market exchange rates.',
+      'A real return = nominal return minus inflation rate; a 5% investment return with 3% inflation yields only 2% real purchasing power gain.',
+    ],
+    fastFact: 'The US dollar lost approximately 97% of its purchasing power between 1913 and 2024, with $1 in 1913 equivalent to roughly $32 in purchasing power today (US Bureau of Labor Statistics CPI data, 2024).',
     beginnerExplain: ['Imagine $100 in 1990 and $100 today. Both are $100. But in 1990, $100 filled a grocery cart that would cost over $240 today. The $100 bill looks the same, but it has lost more than half its purchasing power over 35 years.', 'The inflation calculator on this site measures exactly this: it tells you that your 1990 $100 has only 42% of its original purchasing power left - or equivalently, that it takes $240 today to buy what $100 bought then.'],
     whenToUse: 'Use purchasing power analysis when comparing values across time (salary history, historical prices, pension adequacy) or across countries (international cost comparisons, PPP-adjusted GDP per capita). Purchasing power is the key concept behind real vs. nominal returns: a 5% investment return with 3% inflation yields only 2% real purchasing power gain. Any long-term financial plan must account for purchasing power erosion.',
     examples: {
