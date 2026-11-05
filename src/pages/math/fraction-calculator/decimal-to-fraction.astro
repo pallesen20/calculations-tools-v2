@@ -18,10 +18,11 @@ const f = {
 const tocItems = [
   { id: 'how-to-use',           label: 'How to use' },
   { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'decimal-types',         label: 'Conversion by decimal type' },
   { id: 'terminating',          label: 'Terminating decimals' },
-  { id: 'repeating',          label: 'Repeating decimals' },
-  { id: 'mixed-repeating',    label: 'Mixed repeating decimals' },
-  { id: 'negative',           label: 'Negative decimals' },
+  { id: 'repeating',            label: 'Repeating decimals' },
+  { id: 'mixed-repeating',      label: 'Mixed repeating decimals' },
+  { id: 'negative',             label: 'Negative decimals' },
   { id: 'common-decimals',    label: 'Common decimal–fraction table' },
   { id: 'examples',           label: 'Worked examples' },
   { id: 'common-mistakes',    label: 'Common mistakes' },
@@ -250,16 +251,20 @@ const schema = [
       </div>
       <h2 id="how-to-use">How to use our decimal to fraction converter</h2>
       <p>Enter any decimal number - positive, negative, terminating, or repeating. The calculator returns the exact fraction in lowest terms, the mixed number (if applicable), and a step-by-step explanation of the conversion method used.</p>
-      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <h3 id="explained-to-beginner">Decimals into fractions explained to a beginner</h3>
       <p>Think of a decimal as a stack of coins. 0.75 means 75 cents - literally 75 out of 100. Write that as 75/100. Can you repack those coins into larger groups without getting change? Both 75 and 100 divide evenly by 25, so yes: 3 groups of 25 cents out of 4 groups of 25 cents = 3/4. The GCD is simply the size of the largest group that fits evenly into both the numerator and denominator.</p>
       <p>Repeating decimals need a different trick. Let x = 0.333... Multiply both sides by 10: now 10x = 3.333... Both still carry the same endless "3" tail. Subtract: 10x - x = 3.333... - 0.333... = 3 exactly. So 9x = 3 and x = 1/3. The infinite tails cancel because they are identical - and that algebraic move works for any repeating decimal.</p>
-      <h2 id="terminating">Terminating decimals</h2>
+      <h2 id="decimal-types">Conversion method depends on the type of decimal</h2>
+      <p>Not all decimals convert the same way. Terminating decimals use a direct power-of-10 method with no algebra.</p>
+      <p>Repeating decimals require a subtraction step to cancel the infinite tail. Mixed repeating decimals combine both, and negative decimals simply carry the sign through the conversion unchanged.</p>
+      <p>Each method is covered below with the formula and a worked example.</p>
+      <h3 id="terminating">Terminating decimals</h3>
       <p>A terminating decimal has a finite number of digits after the decimal point. The conversion is direct:</p>
       <Formula expr={f.general} />
       <p>Count the decimal places (n). Write the decimal digits as the numerator. Use 10<sup>n</sup> as the denominator. Simplify using the GCD:</p>
       <Formula expr={f.terminating} />
       <p>0.75 has two decimal places, so the denominator is 100. 75/100, simplified with GCD(75,100) = 25, gives 3/4.</p>
-      <h2 id="repeating">Repeating decimals</h2>
+      <h3 id="repeating">Repeating decimals</h3>
       <p>A repeating (recurring) decimal has a block of digits that repeats infinitely. The algebraic method:</p>
       <Formula expr={f.repGeneral} />
       <p>Let x = the decimal. Multiply by 10<sup>n</sup> (where n = length of the repeating block) to shift one full cycle. Subtract the original x to cancel the repeating part. Solve for x:</p>
@@ -281,11 +286,11 @@ const schema = [
         </table>
       </div>
       <p>The 0.9̄ = 1 row in that table is the one I always linger on. The algebraic proof is airtight - 9/9 = 1 - but the intuitive argument lands better: there is no real number you can place between 0.999... and 1. In mathematics, two distinct numbers always have a value between them. If there's no gap, there's no distinction.</p>
-      <h2 id="mixed-repeating">Mixed repeating decimals</h2>
+      <h3 id="mixed-repeating">Mixed repeating decimals</h3>
       <p>When non-repeating digits precede the repeating block, use a two-step subtraction:</p>
       <Formula expr={f.repMixed} />
       <p>For 0.416̄6̄… (repeating 6): multiply by 1000 to get 416.666… and by 10 to get 4.166… Subtract: 1000x − 10x = 412, so 990x = 412 and x = 412/990 = 206/495. Alternatively: numerator = all digits − non-repeating part; denominator = 9s for the repeating digits followed by 0s for the non-repeating digits.</p>
-      <h2 id="negative">Negative decimals</h2>
+      <h3 id="negative">Negative decimals</h3>
       <p>Convert the absolute value to a fraction, then apply the negative sign:</p>
       <Formula expr={f.neg} />
       <p>−0.25 → 25/100 → GCD = 25 → 1/4 → −1/4.</p>
