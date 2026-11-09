@@ -1,0 +1,116 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Unit Price Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Unit Price Calculator</h2>
+        <p>Compare any two products</p>
+      </div>
+
+      <div class="up-top-row">
+        <div class="bmi-unit-toggle">
+          <button class="bmi-unit-btn active" id="up-metric">Metric</button>
+          <button class="bmi-unit-btn" id="up-imperial">Imperial</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.25rem;flex:1;min-width:100px;max-width:160px;">
+          <label style="font-size:0.75rem;color:rgba(255,255,255,0.6);">Currency</label>
+          <select id="up-currency" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:white;font-size:0.8rem;padding:0.4rem 0.5rem;"></select>
+        </div>
+      </div>
+
+      <div class="up-items-grid">
+        <div class="up-item-card" id="up-card-1">
+          <div class="up-item-label">Item 1</div>
+          <label style="font-size:0.75rem;color:rgba(255,255,255,0.6);display:block;margin-bottom:0.25rem;">Price</label>
+          <input type="text" inputmode="decimal" id="up-price-1" placeholder="e.g. 3.49" />
+          <label style="font-size:0.75rem;color:rgba(255,255,255,0.6);display:block;margin:0.5rem 0 0.25rem;">Quantity</label>
+          <div class="up-qty-row">
+            <input type="text" inputmode="decimal" id="up-qty-1" placeholder="e.g. 500" class="up-qty-input" />
+            <select id="up-unit-1" class="up-unit-sel">
+              <optgroup label="Weight">
+                <option value="g">g</option>
+                <option value="100g">100 g</option>
+                <option value="kg">kg</option>
+                <option value="oz">oz</option>
+                <option value="lb">lb</option>
+              </optgroup>
+              <optgroup label="Volume">
+                <option value="ml">ml</option>
+                <option value="100ml">100 ml</option>
+                <option value="L">L</option>
+                <option value="fl oz">fl oz</option>
+                <option value="pint">pint</option>
+                <option value="gallon">gallon</option>
+              </optgroup>
+              <optgroup label="Count">
+                <option value="count">count</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="up-item-result" id="up-result-1"></div>
+        </div>
+
+        <div class="up-item-card" id="up-card-2">
+          <div class="up-item-label">Item 2</div>
+          <label style="font-size:0.75rem;color:rgba(255,255,255,0.6);display:block;margin-bottom:0.25rem;">Price</label>
+          <input type="text" inputmode="decimal" id="up-price-2" placeholder="e.g. 5.99" />
+          <label style="font-size:0.75rem;color:rgba(255,255,255,0.6);display:block;margin:0.5rem 0 0.25rem;">Quantity</label>
+          <div class="up-qty-row">
+            <input type="text" inputmode="decimal" id="up-qty-2" placeholder="e.g. 1000" class="up-qty-input" />
+            <select id="up-unit-2" class="up-unit-sel">
+              <optgroup label="Weight">
+                <option value="g">g</option>
+                <option value="100g">100 g</option>
+                <option value="kg">kg</option>
+                <option value="oz">oz</option>
+                <option value="lb">lb</option>
+              </optgroup>
+              <optgroup label="Volume">
+                <option value="ml">ml</option>
+                <option value="100ml">100 ml</option>
+                <option value="L">L</option>
+                <option value="fl oz">fl oz</option>
+                <option value="pint">pint</option>
+                <option value="gallon">gallon</option>
+              </optgroup>
+              <optgroup label="Count">
+                <option value="count">count</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="up-item-result" id="up-result-2"></div>
+        </div>
+      </div>
+
+      <div id="up-compare" class="up-compare-box" style="display:none;"></div>
+    </div>
+  </section>
+
+  <script src="/js/unit-price-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .calculator-container { padding: 1.25rem; }
+  .up-top-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .up-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.75rem; }
+  .up-item-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 0.75rem; transition: border-color 0.2s, background 0.2s; min-width: 0; }
+  .up-item-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); margin-bottom: 0.5rem; }
+  .up-winner-card { border-color: rgba(99,102,241,0.6); background: rgba(99,102,241,0.08); }
+  .up-loser-card { border-color: rgba(255,255,255,0.05); opacity: 0.75; }
+  .up-item-result { margin-top: 0.5rem; min-height: 1.25rem; }
+  .up-price-line { font-size: 0.8rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .up-price-primary { color: white; font-size: 0.95rem; font-weight: 700; }
+  .up-compare-box { background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.12)); border: 1px solid rgba(99,102,241,0.3); border-radius: 10px; padding: 0.75rem 1rem; text-align: center; }
+  .up-winner { color: white; font-size: 0.875rem; font-weight: 600; }
+  .up-qty-row { display: flex; gap: 0.4rem; align-items: stretch; }
+  .up-qty-input { flex: 1; min-width: 0; width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 0.875rem; padding: 0.45rem 0.6rem; box-sizing: border-box; }
+  .up-unit-sel { flex: 0 0 68px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 0.8rem; padding: 0.4rem 0.3rem; box-sizing: border-box; }
+  input[type="text"] { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 0.875rem; padding: 0.45rem 0.6rem; box-sizing: border-box; }
+  select { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 0.8rem; padding: 0.4rem 0.5rem; }
+  select optgroup { background: #1e1e2e; color: rgba(255,255,255,0.6); font-size: 0.7rem; }
+  select option { background: #1e1e2e; color: white; }
+  @media (max-width: 600px) { .up-items-grid { grid-template-columns: 1fr; } }
+</style>

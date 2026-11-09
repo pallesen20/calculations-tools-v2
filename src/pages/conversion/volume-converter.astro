@@ -1,0 +1,379 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import type { Source } from '../../components/Sources.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import SubPageCards from '../../components/SubPageCards.astro';
+
+const sources: Source[] = [
+  {
+    author: 'International Bureau of Weights and Measures (BIPM)',
+    title: 'The International System of Units (SI Brochure), 9th edition',
+    journal: 'bipm.org',
+    year: 2019,
+    url: 'https://www.bipm.org/en/publications/si-brochure/',
+  },
+  {
+    author: 'National Institute of Standards and Technology (NIST)',
+    title: 'Weights and Measures - US Customary Units',
+    journal: 'nist.gov',
+    year: 2024,
+    url: 'https://www.nist.gov/pml/weights-and-measures',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'metric',          label: 'Metric volume units' },
+  { id: 'us-customary',    label: 'US customary units' },
+  { id: 'cooking',         label: 'Cooking measurement units' },
+  { id: 'sub-pages',       label: 'Conversion formulas' },
+  { id: 'common',          label: 'Common conversions' },
+  { id: 'reference',       label: 'Quick reference table' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'How many milliliters are in 1 US fluid ounce?',
+    options: ['25.35 ml', '29.57 ml', '33.81 ml', '36.49 ml'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '1 US fluid ounce = 29.5735 ml exactly, as defined in the International System of Units. The UK imperial fluid ounce is slightly different at 28.4131 ml - this converter uses the US definition.',
+  },
+  {
+    q: 'A recipe calls for 2 cups of water. How many milliliters is that?',
+    options: ['236.6 ml', '354.9 ml', '473.2 ml', '591.5 ml'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '1 US cup = 236.588 ml. Two cups = 2 × 236.588 = 473.2 ml. This is a common cooking conversion for recipes that specify US cups but require metric measurements.',
+  },
+  {
+    q: 'How many fluid ounces are in 1 US gallon?',
+    options: ['64', '96', '112', '128'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: '1 US gallon = 4 quarts = 8 pints = 16 cups = 128 fluid ounces = 3,785.41 ml. This hierarchy is worth memorising for cooking and volume comparisons.',
+  },
+  {
+    q: '1 tablespoon equals how many teaspoons?',
+    options: ['2', '3', '4', '5'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '1 US tablespoon = 3 teaspoons exactly. This is one of the most important cooking measurement relationships: 3 tsp = 1 tbsp = 14.79 ml.',
+  },
+  {
+    q: '500 ml is closest to how many US fluid ounces?',
+    options: ['12.7 fl oz', '16.9 fl oz', '20.3 fl oz', '23.7 fl oz'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '500 ml × 0.033814 = 16.907 fl oz. A 500 ml bottle (common for water and beverages) is essentially 16.9 fl oz or just over a US pint (16 fl oz).',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Volume Converter",
+    "url": "https://calculations.tools/conversion/volume-converter",
+    "description": "Convert between metric and US customary volume units instantly. Supports milliliters, liters, fluid ounces, cups, tablespoons, teaspoons, pints, and gallons.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert volume units",
+    "description": "Step-by-step guide to converting between metric and US customary volume units using the volume converter.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter a value", "text": "Type the number you want to convert in the value field." },
+      { "@type": "HowToStep", "position": 2, "name": "Select the source unit", "text": "Choose the unit you are converting from in the From dropdown." },
+      { "@type": "HowToStep", "position": 3, "name": "Select the target unit", "text": "Choose the unit you want to convert to in the To dropdown." },
+      { "@type": "HowToStep", "position": 4, "name": "Read the result", "text": "The converted value appears instantly. Use the swap button to reverse direction." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many ml is 1 fluid ounce?", "acceptedAnswer": { "@type": "Answer", "text": "1 US fluid ounce equals 29.5735 ml. This is the exact definition used in the United States. The UK imperial fluid ounce is slightly larger at 28.4131 ml. For US recipes and product labels, always use 29.5735 ml." } },
+      { "@type": "Question", "name": "How many ml is 1 cup?", "acceptedAnswer": { "@type": "Answer", "text": "1 US cup equals 236.588 ml. This is the standard US legal cup used in recipes and nutrition labeling. The metric cup used in some countries (Australia, Canada) is 250 ml." } },
+      { "@type": "Question", "name": "How many ml is 1 liter?", "acceptedAnswer": { "@type": "Answer", "text": "1 liter equals 1,000 milliliters exactly. This is an SI definition. 1 liter also equals 33.814 US fluid ounces, 4.227 US cups, or 0.264 US gallons." } },
+      { "@type": "Question", "name": "How many fluid ounces is 1 liter?", "acceptedAnswer": { "@type": "Answer", "text": "1 liter equals 33.814 US fluid ounces. A common reference: a standard 1 liter water bottle contains about 33.8 fl oz, which is about 2 US pints (32 fl oz) plus a small extra amount." } },
+      { "@type": "Question", "name": "How many cups are in a gallon?", "acceptedAnswer": { "@type": "Answer", "text": "There are 16 US cups in 1 US gallon. The full hierarchy: 1 gallon = 4 quarts = 8 pints = 16 cups = 128 fluid ounces = 3,785.41 ml." } },
+      { "@type": "Question", "name": "What is the difference between a US fluid ounce and a UK fluid ounce?", "acceptedAnswer": { "@type": "Answer", "text": "A US fluid ounce is 29.5735 ml. A UK (imperial) fluid ounce is 28.4131 ml. They differ by about 4%. This converter uses the US fluid ounce. UK recipes typically use ml or the metric system rather than fl oz." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Volume Converter"
+  metaTitle="Volume Converter | Convert ml, L, fl oz, Cups, Gallons"
+  description="Convert between milliliters, liters, fluid ounces, cups, tablespoons, teaspoons, pints, and gallons instantly. Free volume converter with quick-select conversions."
+  canonical="https://calculations.tools/conversion/volume-converter"
+  tocItems={tocItems}
+  embedSlug="volume-converter"
+  schema={schema}
+  sources={sources}
+  ogFormula="1 L = 1,000 ml = 33.814 fl oz = 4.227 cups = 0.264 gallons"
+  ogExample="500 ml = 0.5 L = 16.91 fl oz = 2.11 cups"
+>
+  <div slot="calculator">
+    <section class="calculator-interface" id="vc-calculator">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instant Volume Conversion Calculator</h2>
+          <p>Enter a value and select volume units - result updates instantly</p>
+        </div>
+        <h3 class="font-semibold text-white text-center mb-6">Quick Conversions</h3>
+        <div id="vc-quick" class="lc-quick"></div>
+        <div class="lc-inputs">
+          <div class="input-group">
+            <label for="vc-value">Value</label>
+            <input id="vc-value" type="text" inputmode="decimal" value="1" placeholder="Enter value" />
+          </div>
+          <div class="input-group">
+            <label for="vc-from">From</label>
+            <select id="vc-from"></select>
+          </div>
+          <div class="unit-swap-wrap">
+            <button class="unit-swap" id="vc-swap" title="Swap units" aria-label="Swap units">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+              </svg>
+            </button>
+          </div>
+          <div class="input-group">
+            <label for="vc-to">To</label>
+            <select id="vc-to"></select>
+          </div>
+        </div>
+        <div class="lc-result-box">
+          <div class="result-label">Result</div>
+          <div class="lc-result" id="vc-result">-</div>
+          <div class="lc-result-desc" id="vc-result-desc"></div>
+        </div>
+        <div>
+          <h3 id="vc-common-title" class="lc-common-title"></h3>
+          <div id="vc-common" class="lc-common-grid"></div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/volume-converter.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This converter handles all common metric and US customary volume units: milliliters, liters, US fluid ounces, US cups, tablespoons, teaspoons, US pints, and US gallons. Enter a value, pick your units, and the result appears immediately. All conversions use the exact US customary definitions from NIST.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>1 US fl oz = 29.5735 ml exactly (US definition; UK fl oz is 28.4131 ml).</li>
+          <li>1 US cup = 236.588 ml = 8 fl oz. 1 US gallon = 3,785.41 ml = 128 fl oz = 16 cups.</li>
+          <li>1 tbsp = 3 tsp = 14.787 ml. 1 tsp = 4.929 ml.</li>
+          <li>Quick mental check: 1 liter is about 33.8 fl oz or just over 2 US pints (32 fl oz).</li>
+        </ul>
+      </div>
+      <SubPageCards parentPath="/conversion/volume-converter" heading="Specific volume converters" />
+      <h2 id="how-to-use">How to use our volume converter</h2>
+      <p>Type a value in the input field, select the unit you are converting from, then select the unit you want. The result updates as you type. The swap button reverses the direction without retyping. Quick conversion buttons at the top jump straight to the most common pairs: <a href="/conversion/volume-converter/ml-to-fl-oz">ml to fl oz</a>, <a href="/conversion/volume-converter/fl-oz-to-ml">fl oz to ml</a>, <a href="/conversion/volume-converter/cup-to-ml">cups to ml</a>, and <a href="/conversion/volume-converter/l-to-gal">liters to gallons</a>.</p>
+      <p>All calculations run locally in your browser. No data is sent anywhere. Results use exact conversion factors from NIST and BIPM definitions.</p>
+      <h2 id="metric">Metric volume units</h2>
+      <p>The <a href="/glossary/metric-system">metric system</a> measures volume in liters, with the milliliter (one-thousandth of a liter) as the practical everyday unit. The liter is not an SI base unit - the SI base unit of volume is the cubic meter (1 m³ = 1,000 L) - but the liter is accepted by BIPM for use with SI. It is used in almost every country for beverages, medicine, cooking, and fuel.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Unit</th><th>Symbol</th><th>Milliliters (exact)</th><th>Common use</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Liter</td><td>L</td><td>1,000 ml</td><td>Beverages, fuel, cooking</td></tr>
+            <tr><td>Milliliter</td><td>ml</td><td>1 ml</td><td>Medicine, nutrition, small measures</td></tr>
+            <tr><td>Centiliter</td><td>cl</td><td>10 ml</td><td>Wine and spirits (Europe)</td></tr>
+            <tr><td>Deciliter</td><td>dl</td><td>100 ml</td><td>Recipes in Scandinavia</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The milliliter is functionally equal to one cubic centimeter (1 ml = 1 cm³). This makes it easy to work with geometry: a 10 cm × 10 cm × 10 cm cube holds exactly 1 liter.</p>
+      <h2 id="us-customary">US customary volume units</h2>
+      <p>The US customary system uses fluid ounces as the base unit for liquid volume, with pints, quarts, and gallons as larger containers. All these units are defined by NIST relative to the liter.</p>
+      <p>According to NIST, the US customary system is used in everyday commerce across all 50 US states, though science and medicine use metric units.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Unit</th><th>Symbol</th><th>Milliliters (exact)</th><th>Fluid ounces</th><th>Common use</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Gallon</td><td>gal</td><td>3,785.41 ml</td><td>128 fl oz</td><td>Fuel, milk jugs, large containers</td></tr>
+            <tr><td>Quart</td><td>qt</td><td>946.353 ml</td><td>32 fl oz</td><td>Large beverage containers</td></tr>
+            <tr><td>Pint</td><td>pt</td><td>473.176 ml</td><td>16 fl oz</td><td>Beer, berries, deli containers</td></tr>
+            <tr><td>Cup</td><td>cup</td><td>236.588 ml</td><td>8 fl oz</td><td>Recipes, measuring cups</td></tr>
+            <tr><td>Fluid ounce</td><td>fl oz</td><td>29.5735 ml</td><td>1 fl oz</td><td>Beverages, nutrition labels, recipes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A note on UK vs US fluid ounces: a UK <a href="/glossary/imperial-system">(imperial)</a> fluid ounce is 28.4131 ml, about 4% smaller than the US fl oz (29.5735 ml). UK pints are also different - a UK pint is 568 ml (20 fl oz), while a US pint is 473 ml (16 fl oz). This converter uses US definitions throughout.</p>
+      <h2 id="cooking">Cooking measurement units</h2>
+      <p>US recipes use tablespoons and teaspoons as the smallest cooking measures. These units follow a strict hierarchy: 3 teaspoons = 1 tablespoon, 4 tablespoons = 1/4 cup, and 16 tablespoons = 1 cup. Knowing these relationships lets you scale recipes without a measuring cup.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Unit</th><th>Milliliters</th><th>Teaspoons</th><th>Tablespoons</th><th>Cups</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 teaspoon (tsp)</td><td>4.929 ml</td><td>1</td><td>1/3</td><td>1/48</td></tr>
+            <tr><td>1 tablespoon (tbsp)</td><td>14.787 ml</td><td>3</td><td>1</td><td>1/16</td></tr>
+            <tr><td>1/4 cup</td><td>59.147 ml</td><td>12</td><td>4</td><td>1/4</td></tr>
+            <tr><td>1/3 cup</td><td>78.863 ml</td><td>16</td><td>5.33</td><td>1/3</td></tr>
+            <tr><td>1/2 cup</td><td>118.294 ml</td><td>24</td><td>8</td><td>1/2</td></tr>
+            <tr><td>1 cup</td><td>236.588 ml</td><td>48</td><td>16</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When I personally convert between metric and US cooking measures, I find the tablespoon-to-ml relationship the most practical anchor: 1 tbsp = roughly 15 ml. This mental shortcut is 1.4% high (the actual value is 14.787 ml), which is negligible for home cooking but significant for pharmaceutical compounding. But definitely saves you some time when you are cooking at home.</p>
+      <h2 id="sub-pages">Dedicated volume conversion pages and formulas</h2>
+      <p>Each page below focuses on a single conversion pair with a detailed reference table, formula, and worked examples:</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Conversion</th><th>Formula</th></tr></thead>
+          <tbody>
+            <tr><td><a href="/conversion/volume-converter/ml-to-l">Milliliters to Liters</a></td><td>L = ml ÷ 1,000</td></tr>
+            <tr><td><a href="/conversion/volume-converter/l-to-ml">Liters to Milliliters</a></td><td>ml = L × 1,000</td></tr>
+            <tr><td><a href="/conversion/volume-converter/ml-to-fl-oz">Milliliters to Fluid Ounces</a></td><td>fl oz = ml × 0.033814</td></tr>
+            <tr><td><a href="/conversion/volume-converter/fl-oz-to-ml">Fluid Ounces to Milliliters</a></td><td>ml = fl oz × 29.5735</td></tr>
+            <tr><td><a href="/conversion/volume-converter/oz-to-ml">Oz to ml</a></td><td>ml = fl oz × 29.5735</td></tr>
+            <tr><td><a href="/conversion/volume-converter/ml-to-oz">ml to oz</a></td><td>fl oz = ml × 0.033814</td></tr>
+            <tr><td><a href="/conversion/volume-converter/l-to-fl-oz">Liters to Fluid Ounces</a></td><td>fl oz = L × 33.814</td></tr>
+            <tr><td><a href="/conversion/volume-converter/fl-oz-to-l">Fluid Ounces to Liters</a></td><td>L = fl oz × 0.029574</td></tr>
+            <tr><td><a href="/conversion/volume-converter/l-to-gal">Liters to Gallons</a></td><td>gal = L × 0.264172</td></tr>
+            <tr><td><a href="/conversion/volume-converter/gal-to-l">Gallons to Liters</a></td><td>L = gal × 3.78541</td></tr>
+            <tr><td><a href="/conversion/volume-converter/cup-to-ml">Cups to Milliliters</a></td><td>ml = cups × 236.588</td></tr>
+            <tr><td><a href="/conversion/volume-converter/ml-to-cup">Milliliters to Cups</a></td><td>cups = ml × 0.004227</td></tr>
+            <tr><td><a href="/conversion/volume-converter/tbsp-to-ml">Tablespoons to Milliliters</a></td><td>ml = tbsp × 14.7868</td></tr>
+            <tr><td><a href="/conversion/volume-converter/ml-to-tbsp">Milliliters to Tablespoons</a></td><td>tbsp = ml × 0.067628</td></tr>
+            <tr><td><a href="/conversion/volume-converter/tsp-to-ml">Teaspoons to Milliliters</a></td><td>ml = tsp × 4.92892</td></tr>
+            <tr><td><a href="/conversion/volume-converter/ml-to-tsp">Milliliters to Teaspoons</a></td><td>tsp = ml × 0.202884</td></tr>
+            <tr><td><a href="/conversion/volume-converter/fl-oz-to-pint">Fluid Ounces to Pints</a></td><td>pints = fl oz ÷ 16</td></tr>
+            <tr><td><a href="/conversion/volume-converter/pint-to-fl-oz">Pints to Fluid Ounces</a></td><td>fl oz = pints × 16</td></tr>
+            <tr><td><a href="/conversion/volume-converter/pint-to-gal">Pints to Gallons</a></td><td>gal = pints ÷ 8</td></tr>
+            <tr><td><a href="/conversion/volume-converter/gal-to-pint">Gallons to Pints</a></td><td>pints = gal × 8</td></tr>
+            <tr><td><a href="/conversion/volume-converter/cup-to-fl-oz">Cups to Fluid Ounces</a></td><td>fl oz = cups × 8</td></tr>
+            <tr><td><a href="/conversion/volume-converter/fl-oz-to-cup">Fluid Ounces to Cups</a></td><td>cups = fl oz ÷ 8</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="common">Common volume conversions</h2>
+      <h3>Milliliters and fluid ounces</h3>
+      <p>1 fl oz = 29.5735 ml. 1 ml = 0.033814 fl oz.</p>
+      <ul>
+        <li>100 ml to fl oz: 100 × 0.033814 = 3.38 fl oz</li>
+        <li>355 ml to fl oz: 355 × 0.033814 = 12 fl oz (standard US can)</li>
+        <li>500 ml to fl oz: 500 × 0.033814 = 16.91 fl oz</li>
+        <li>750 ml to fl oz: 750 × 0.033814 = 25.36 fl oz (wine bottle)</li>
+      </ul>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/volume-converter/ml-to-fl-oz">ml to fl oz</a> and <a href="/conversion/volume-converter/fl-oz-to-ml">fl oz to ml</a>.</p>
+      <h3>Liters and gallons</h3>
+      <p>1 US gallon = 3.78541 L. 1 L = 0.264172 US gallons.</p>
+      <ul>
+        <li>1 L to gallons: 0.264 gal</li>
+        <li>2 L to gallons: 0.528 gal</li>
+        <li>1 gal to liters: 3.785 L</li>
+        <li>5 gal to liters: 18.93 L (common for water cooler jugs)</li>
+      </ul>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/volume-converter/l-to-gal">liters to gallons</a> and <a href="/conversion/volume-converter/gal-to-l">gallons to liters</a>.</p>
+      <h3>Cups and milliliters</h3>
+      <p>1 US cup = 236.588 ml. 250 ml is not a cup - it is 1.057 cups (a metric cup used in some countries is 250 ml, but this converter uses the US cup).</p>
+      <ul>
+        <li>1/2 cup to ml: 118.3 ml</li>
+        <li>1 cup to ml: 236.6 ml</li>
+        <li>2 cups to ml: 473.2 ml</li>
+        <li>4 cups to ml: 946.4 ml (nearly 1 liter)</li>
+      </ul>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/volume-converter/cup-to-ml">cups to ml</a> and <a href="/conversion/volume-converter/ml-to-cup">ml to cups</a>.</p>
+      <h2 id="reference">Quick reference table for volume conversions</h2>
+      <p>The table below covers the most common volume conversions. Each row gives the exact multiplication factor and a worked numeric example.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>From</th><th>To</th><th>Multiply by</th><th>Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ml</td><td>L</td><td>0.001</td><td>500 ml × 0.001 = 0.5 L</td></tr>
+            <tr><td>L</td><td>ml</td><td>1,000</td><td>1.5 L × 1,000 = 1,500 ml</td></tr>
+            <tr><td>ml</td><td>fl oz</td><td>0.033814</td><td>355 ml × 0.033814 = 12 fl oz</td></tr>
+            <tr><td>fl oz</td><td>ml</td><td>29.5735</td><td>8 fl oz × 29.5735 = 236.6 ml</td></tr>
+            <tr><td>L</td><td>fl oz</td><td>33.814</td><td>1 L × 33.814 = 33.8 fl oz</td></tr>
+            <tr><td>L</td><td>gal</td><td>0.264172</td><td>3.785 L × 0.264 = 1 gal</td></tr>
+            <tr><td>gal</td><td>L</td><td>3.78541</td><td>1 gal × 3.785 = 3.785 L</td></tr>
+            <tr><td>cup</td><td>ml</td><td>236.588</td><td>2 cups × 236.6 = 473.2 ml</td></tr>
+            <tr><td>tbsp</td><td>ml</td><td>14.7868</td><td>4 tbsp × 14.79 = 59.1 ml</td></tr>
+            <tr><td>tsp</td><td>ml</td><td>4.92892</td><td>1 tsp × 4.93 = 4.93 ml</td></tr>
+            <tr><td>pint</td><td>fl oz</td><td>16</td><td>2 pints × 16 = 32 fl oz</td></tr>
+            <tr><td>gal</td><td>pints</td><td>8</td><td>1 gal × 8 = 8 pints</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The US vs UK fl oz difference catches people most often when following UK recipes. I've seen this cause real problems when someone scales a UK cocktail recipe for a US audience - the fl oz amounts look the same on paper but represent different volumes. Always confirm whether a recipe uses US or UK measurements before converting.</p>
+      <h2 id="common-mistakes">Common mistakes in volume conversion</h2>
+      <h3>Confusing US and UK fluid ounces</h3>
+      <p>A US fl oz is 29.5735 ml. A UK (imperial) fl oz is 28.4131 ml. They look identical on a label but differ by about 4%. If you're following a UK recipe that lists "fl oz" or if a UK-manufactured product shows volume in fl oz, the values are slightly different from the US equivalent. This converter uses US fl oz throughout.</p>
+      <h3>Assuming 250 ml equals 1 cup</h3>
+      <p>250 ml = 1.057 US cups, not 1 cup. The US cup is 236.588 ml. Some countries (Australia, Canada, metric recipes) use a "metric cup" of 250 ml. When you see "1 cup" in an American recipe, that's 236.6 ml. Using 250 ml adds about 5.6% extra per cup, which is noticeable in baking.</p>
+      <h3>Mixing up tablespoons and teaspoons in conversions</h3>
+      <p>1 tablespoon = 3 teaspoons = 14.787 ml. 1 teaspoon = 4.929 ml. When converting a recipe, doubling a tablespoon-based measurement and entering it as teaspoons gives a result that's 3× too high. Always confirm the unit before converting.</p>
+      <h2 id="faq">FAQs about converting volume units</h2>
+      <h3>How many ml is 1 fluid ounce?</h3>
+      <p>1 US fluid ounce equals 29.5735 ml. This is the exact NIST definition. For quick mental math, 1 fl oz is roughly 30 ml (1.5% high) or exactly 29.57 ml (0.001% low). The UK imperial fluid ounce is different at 28.4131 ml.</p>
+      <h3>How many ml is 1 cup?</h3>
+      <p>1 US cup equals 236.588 ml, or approximately 236.6 ml. This is based on the US legal definition used for nutrition labeling (21 CFR 101.9). The Australian and Canadian metric cup is 250 ml, so check the recipe's country of origin when precision matters.</p>
+      <h3>How many ml is 1 liter?</h3>
+      <p>1 liter equals exactly 1,000 milliliters. This is an SI definition - "milli" means one-thousandth. 1 liter also equals 33.814 US fluid ounces, 4.227 US cups, 67.628 tablespoons, 0.264 US gallons, and 2.113 US pints.</p>
+      <h3>How many fluid ounces is 1 liter?</h3>
+      <p>1 liter equals 33.814 US fluid ounces. A quick way to remember: 1 liter is a little more than 2 US pints (which are 32 fl oz). The difference is 1.814 fl oz - about 2 tablespoons.</p>
+      <h3>How many cups are in a gallon?</h3>
+      <p>There are 16 US cups in 1 US gallon. The full US customary liquid hierarchy is: 1 gallon = 4 quarts = 8 pints = 16 cups = 32 gills = 128 fluid ounces = 3,785.41 ml.</p>
+      <h3>What is the difference between a US fluid ounce and a UK fluid ounce?</h3>
+      <p>A US fluid ounce is 29.5735 ml. A UK (imperial) fluid ounce is 28.4131 ml. The difference is about 4%. This matters when comparing UK and US product labels or following recipes from different countries. The UK has largely moved to metric for most purposes, so "fl oz" on a UK label is relatively rare today.</p>
+      <QuizBlock
+        topic="volume conversion"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/conversion/volume-converter"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter</a>
+            <p>Convert between metric and imperial weight units: kilograms, grams, pounds, ounces, stone, and tons.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📏</span>
+          <div>
+            <a href="/conversion/length-converter">Length Converter</a>
+            <p>Convert between meters, kilometers, feet, inches, miles, and more.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter">Temperature Converter</a>
+            <p>Convert between Celsius, Fahrenheit, and Kelvin.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/math/unit-price-calculator">Unit Price Calculator</a>
+            <p>Compare product prices by volume - price per 100 ml, per liter, or per fl oz.</p>
+          </div>
+        </li>
+      </ul>
+      <RelatedGlossaryTerms toolPath="/conversion/volume-converter" />
+    </div>
+  </div>
+</CalculatorLayout>

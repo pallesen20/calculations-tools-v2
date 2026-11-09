@@ -6,6 +6,7 @@ import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro
 import type { Source } from '../../../components/Sources.astro';
 import HealthDisclaimer from '../../../components/HealthDisclaimer.astro';
 import QuizBlock from '../../../components/QuizBlock.astro';
+import SubPageCards from '../../../components/SubPageCards.astro';
 
 const f = {
   metric:    "$$\\text{BMI} = \\frac{\\text{weight (kg)}}{\\text{height (m)}^2}$$",
@@ -268,6 +269,7 @@ const schema = [
         <div class="answer-box-label">BMI categories at a glance</div>
         <p>BMI below <strong>18.5</strong> is Underweight. <strong>18.5–24.9</strong> is Normal weight. <strong>25.0–29.9</strong> is Overweight. <strong>30.0–34.9</strong> is Obese Class I. <strong>35.0–39.9</strong> is Obese Class II. <strong>40.0+</strong> is Obese Class III. These ranges are defined by the WHO for adults aged 18 and over. Enter your age and gender above to also get an estimated body fat % and personalised context.</p>
       </div>
+      <SubPageCards parentPath="/health/bmi-calculator" heading="Specific BMI calculators" />
       <h2 id="how-to-use">How to use this BMI calculator</h2>
       <p>Select <strong>Metric</strong> or <strong>Imperial</strong>, then choose your <strong>gender</strong> and enter your <strong>age</strong>. Finally, enter your weight and height - results appear instantly. The calculator shows your BMI, category, visual scale, healthy weight range, estimated <a href="/glossary/body-fat-percentage">body fat percentage</a>, and a personalised context note based on your age and gender.</p>
       <p>Age and gender are optional for the basic BMI result but required for the body fat estimate and context notes. If you enter an age under 20, the calculator will direct you to the appropriate growth-chart-based tool for <a href="/health/bmi-calculator/kids">children</a> or <a href="/health/bmi-calculator/teens">teenagers</a>.</p>

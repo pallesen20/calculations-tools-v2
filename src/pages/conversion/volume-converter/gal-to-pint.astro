@@ -1,0 +1,176 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{pints} = \\text{gal} \\times 8$$",
+  rev: "$$\\text{gal} = \\text{pints} \\div 8$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert gallons to pints' },
+  { id: 'reference-table', label: 'Gallons to pints reference table' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Gallons to Pints Converter",
+    "url": "https://calculations.tools/conversion/volume-converter/gal-to-pint",
+    "description": "Convert US gallons to pints. 1 gallon = 8 pints, 2 gallons = 16 pints, 0.5 gallon = 4 pints. All US measurements.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert gallons to pints",
+    "description": "Multiply gallons by 8 to get US pints.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter gallon value", "text": "Type your gallon value in the gallons field. The pint result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted pint value appears. For 1 gallon, the result is 8 pints." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the pints field to convert back to gallons." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many pints is 1 gallon?", "acceptedAnswer": { "@type": "Answer", "text": "1 US gallon equals exactly 8 US pints. This is defined: 1 gallon = 4 quarts = 8 pints = 128 fl oz." } },
+      { "@type": "Question", "name": "How many pints is 2 gallons?", "acceptedAnswer": { "@type": "Answer", "text": "2 gallons equals 16 pints. Multiply 2 by 8: 2 × 8 = 16 pints." } },
+      { "@type": "Question", "name": "How many pints is 5 gallons?", "acceptedAnswer": { "@type": "Answer", "text": "5 gallons equals 40 pints. Multiply 5 by 8: 5 × 8 = 40 pints. A 5-gallon water cooler jug holds 40 pints." } },
+      { "@type": "Question", "name": "How many gallons is 16 pints?", "acceptedAnswer": { "@type": "Answer", "text": "16 pints equals 2 gallons. Divide 16 by 8: 16 ÷ 8 = 2 gallons." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Gallons to Pints Converter"
+  metaTitle="Gallons to Pints Converter | Instantly Convert gal to pints"
+  description="Convert US gallons to pints. 1 gallon = 8 pints, 2 gallons = 16 pints, 5 gallons = 40 pints. Enter gallons or pints - converts both directions."
+  canonical="https://calculations.tools/conversion/volume-converter/gal-to-pint"
+  tocItems={tocItems}
+  embedSlug="gal-to-pint"
+  schema={schema}
+  ogFormula="pints = gal × 8"
+  ogExample="1 gallon = 8 pints"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instantly Convert US gallons to pints</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Gallons (gal)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Pints (pt)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 8" />
+          </div>
+        </div>
+        <div class="pair-formula-note">1 gallon = 8 pints &nbsp;·&nbsp; US measurements</div>
+      </div>
+    </section>
+    <script src="/js/gal-to-pint.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert gallons to pints, multiply by <strong>8</strong>. So 1 gallon = 8 pints, 2 gallons = 16 pints, and 5 gallons = 40 pints. This is exact: 1 US gallon = 8 US pints by definition.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact formula: pints = gal × 8. 1 US gallon = 8 pints exactly.</li>
+          <li>US volume hierarchy: 1 gal = 4 qt = 8 pt = 16 cups = 128 fl oz.</li>
+          <li>5 gallons = 40 pints (water cooler). 1 half-gallon = 4 pints.</li>
+          <li>Reverse: gal = pints ÷ 8.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our US gallons to pints converter</h2>
+      <p>Type any gallon value in the gallons field and the pint result appears instantly. Both directions work without pressing a button.</p>
+      <h2 id="formula">How do you convert gallons to pints?</h2>
+      <p>Multiply the number of US gallons by 8. The US customary system defines 1 gallon = 4 quarts = 8 pints = 16 cups = 128 fl oz. These are all exact whole-number relationships.</p>
+      <Formula expr={f.fwd} />
+      <p>Worked examples: 0.5 gal = 4 pt. 1 gal = 8 pt. 2 gal = 16 pt. 3 gal = 24 pt. 5 gal = 40 pt. 10 gal = 80 pt.</p>
+      <h2 id="reference-table">Gallons to pints reference table</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Gallons</th><th>Pints</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.25 gal</td><td>2 pt</td><td>Quart</td></tr>
+            <tr><td>0.5 gal</td><td>4 pt</td><td>Half gallon</td></tr>
+            <tr><td>1 gal</td><td>8 pt</td><td>Gallon container</td></tr>
+            <tr><td>2 gal</td><td>16 pt</td><td>Large container</td></tr>
+            <tr><td>5 gal</td><td>40 pt</td><td>Water cooler jug</td></tr>
+            <tr><td>10 gal</td><td>80 pt</td><td>Large tank</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="also-see"><strong>US vs UK gallons and pints:</strong> A UK gallon = 8 UK pints = 4.546 L; a US gallon = 8 US pints = 3.785 L. The 8:1 ratio holds in both systems, but the absolute volumes differ by about 20%. This converter uses US gallons and US pints throughout.</p>
+      <h2 id="faq">FAQs about converting US gallons to pints</h2>
+      <h3>How many pints is 1 gallon?</h3>
+      <p>1 US gallon equals exactly 8 US pints. This is defined: 1 gallon = 4 quarts = 8 pints = 16 cups = 128 fl oz.</p>
+      <h3>How many pints is 2 gallons?</h3>
+      <p>2 gallons equals 16 pints. 2 × 8 = 16 pints. 16 pints = 32 cups = 256 fl oz.</p>
+      <h3>How many pints is 5 gallons?</h3>
+      <p>5 gallons equals 40 pints. 5 × 8 = 40 pints. A standard 5-gallon water cooler jug holds exactly 40 US pints.</p>
+      <h3>How many gallons is 16 pints?</h3>
+      <p>16 pints equals 2 gallons. 16 ÷ 8 = 2 gallons.</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/pint-to-gal">Pints to Gallons</a>
+            <p>Reverse conversion - enter pints and get gallons instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/gal-to-l">Gallons to Liters</a>
+            <p>Convert gallons to liters - 1 gallon = 3.785 L.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/pint-to-fl-oz">Pints to Fluid Ounces</a>
+            <p>Convert pints to fl oz - 1 pint = 16 fl oz.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter">Volume Converter (all units)</a>
+            <p>Convert between all volume units - ml, L, fl oz, cups, gallons, and more.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

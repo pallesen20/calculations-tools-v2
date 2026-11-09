@@ -1,0 +1,185 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{cups} = \\text{ml} \\div 236.588$$",
+  rev: "$$\\text{ml} = \\text{cups} \\times 236.588$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert ml to cups' },
+  { id: 'reverse',         label: 'How to convert cups to ml' },
+  { id: 'reference-table', label: 'ml to cups reference table' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Milliliters to Cups Converter",
+    "url": "https://calculations.tools/conversion/volume-converter/ml-to-cup",
+    "description": "Convert milliliters to US cups for cooking and baking. 100 ml = 0.423 cups, 250 ml = 1.057 cups, 500 ml = 2.113 cups.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert milliliters to cups",
+    "description": "Divide ml by 236.588 to get US cups.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter ml value", "text": "Type your ml value in the ml field. The cup result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted cup value appears immediately. For 250 ml, the result is 1.057 cups." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the cups field to convert back to ml." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many cups is 100 ml?", "acceptedAnswer": { "@type": "Answer", "text": "100 ml equals 0.423 cups. Divide 100 by 236.588: 100 ÷ 236.588 = 0.423 cups. That's just under half a cup." } },
+      { "@type": "Question", "name": "How many cups is 250 ml?", "acceptedAnswer": { "@type": "Answer", "text": "250 ml equals 1.057 cups - just over 1 cup. Many metric recipes treat 250 ml as 1 cup, which is close enough for most purposes." } },
+      { "@type": "Question", "name": "How many cups is 500 ml?", "acceptedAnswer": { "@type": "Answer", "text": "500 ml equals 2.113 cups. Divide 500 by 236.588: 500 ÷ 236.588 = 2.113 cups. That's a bit over 2 cups." } },
+      { "@type": "Question", "name": "How many cups is 1 liter?", "acceptedAnswer": { "@type": "Answer", "text": "1 liter (1,000 ml) equals 4.227 cups. Divide 1,000 by 236.588: 1,000 ÷ 236.588 = 4.227 cups." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Milliliters to Cups Converter"
+  metaTitle="Milliliters to Cups Converter | Instantly convert ml to cups"
+  description="Convert milliliters to US cups for cooking and baking. 100 ml = 0.42 cups, 250 ml = 1.06 cups, 500 ml = 2.11 cups. Enter ml or cups - converts both ways."
+  canonical="https://calculations.tools/conversion/volume-converter/ml-to-cup"
+  tocItems={tocItems}
+  embedSlug="ml-to-cup"
+  schema={schema}
+  ogFormula="cups = ml ÷ 236.588"
+  ogExample="250 ml = 1.057 cups"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instantly Convert mL to cups</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Milliliters (ml)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 250" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Cups</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 1.057" />
+          </div>
+        </div>
+        <div class="pair-formula-note">1 cup = 236.588 ml &nbsp;·&nbsp; US customary cups</div>
+      </div>
+    </section>
+    <script src="/js/ml-to-cup.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert milliliters to US cups, divide by <strong>236.588</strong>. So 100 ml = 0.42 cups, 250 ml = 1.06 cups, and 500 ml = 2.11 cups. 1 US cup = 236.588 ml (not 240 or 250 ml, though recipes often round up).</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Formula: cups = ml ÷ 236.588. 1 US cup = 236.588 ml exactly.</li>
+          <li>60 ml = 1/4 cup. 120 ml = 1/2 cup. 180 ml = 3/4 cup. 240 ml ≈ 1 cup (slight rounding).</li>
+          <li>250 ml = 1.057 cups - metric recipes often round this to "1 cup".</li>
+          <li>Reverse: ml = cups × 236.588.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our ml to cups converter</h2>
+      <p>Type any ml value in the ml field and the cup result appears instantly. You can also type in the cups field to convert back to ml - both directions work without pressing a button.</p>
+      <h2 id="formula">How do you convert ml to cups?</h2>
+      <p>Divide the number of milliliters by 236.588. The US customary cup is defined as 8 fl oz = 236.588 ml. For rough mental arithmetic, divide by 240 ml - this gives a result about 1.4% too low but is close enough for most cooking.</p>
+      <Formula expr={f.fwd} />
+      <p>Worked examples: 60 ml = 0.254 cups (≈ 1/4 cup). 120 ml = 0.507 cups (≈ 1/2 cup). 180 ml = 0.761 cups (≈ 3/4 cup). 240 ml = 1.014 cups (≈ 1 cup). 250 ml = 1.057 cups. 500 ml = 2.113 cups. 1,000 ml = 4.227 cups.</p>
+      <h2 id="reverse">How do you convert cups to ml?</h2>
+      <p class="also-see">Multiply cups by 236.588. See the dedicated <a href="/conversion/volume-converter/cup-to-ml">cups to ml converter</a> for a cups-first reference table with fractions.</p>
+      <Formula expr={f.rev} />
+      <h2 id="reference-table">Milliliters to cups reference table</h2>
+      <p>Common ml values expressed as cups, with fraction equivalents for cooking:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Milliliters (ml)</th><th>Cups</th><th>Cup fraction (approx)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>30 ml</td><td>0.127 cups</td><td>1/8 cup</td></tr>
+            <tr><td>60 ml</td><td>0.254 cups</td><td>1/4 cup</td></tr>
+            <tr><td>80 ml</td><td>0.338 cups</td><td>1/3 cup</td></tr>
+            <tr><td>120 ml</td><td>0.507 cups</td><td>1/2 cup</td></tr>
+            <tr><td>160 ml</td><td>0.677 cups</td><td>2/3 cup</td></tr>
+            <tr><td>180 ml</td><td>0.761 cups</td><td>3/4 cup</td></tr>
+            <tr><td>240 ml</td><td>1.014 cups</td><td>1 cup (rounded)</td></tr>
+            <tr><td>250 ml</td><td>1.057 cups</td><td>1 cup (metric recipes)</td></tr>
+            <tr><td>480 ml</td><td>2.028 cups</td><td>2 cups (rounded)</td></tr>
+            <tr><td>500 ml</td><td>2.113 cups</td><td>2 cups + a splash</td></tr>
+            <tr><td>1,000 ml</td><td>4.227 cups</td><td>4 cups + a splash</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="faq">FAQs about ml to cups conversion</h2>
+      <h3>How many cups is 100 ml?</h3>
+      <p>100 ml equals 0.423 cups - just under half a cup. In US recipe fractions, 100 ml is close to 1/3 cup (which is 79 ml) but not exactly. For precision, measure 100 ml directly.</p>
+      <h3>How many cups is 250 ml?</h3>
+      <p>250 ml equals 1.057 US cups - just over 1 cup. Most metric recipes define 1 cup as 250 ml, which is a 5.7% difference from the strict US definition. In practice this doesn't affect most recipes.</p>
+      <h3>How many cups is 500 ml?</h3>
+      <p>500 ml equals 2.113 US cups - just over 2 cups. For recipes, treat 500 ml as 2 cups with a small extra splash.</p>
+      <h3>How many cups is 1 liter?</h3>
+      <p>1 liter (1,000 ml) equals 4.227 US cups. A liter is about 4 and a quarter cups. This is a useful anchor point for scaling metric recipes.</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/cup-to-ml">Cups to Milliliters</a>
+            <p>Reverse conversion - enter cups and get ml instantly. Includes fraction table.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/ml-to-fl-oz">Milliliters to Fluid Ounces</a>
+            <p>Convert ml to fl oz - 100 ml = 3.38 fl oz.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/ml-to-tbsp">Milliliters to Tablespoons</a>
+            <p>Convert ml to tablespoons - 15 ml = 1 tablespoon.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter">Volume Converter (all units)</a>
+            <p>Convert between all volume units - ml, L, fl oz, cups, gallons, and more.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

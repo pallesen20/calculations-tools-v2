@@ -5,6 +5,7 @@ import RelatedTools from '../../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 import QuizBlock from '../../../components/QuizBlock.astro';
 import type { Source } from '../../../components/Sources.astro';
+import SubPageCards from '../../../components/SubPageCards.astro';
 
 const f = {
   basic:      "$$\\text{Result} = N \\times \\frac{P}{100}$$",
@@ -238,6 +239,7 @@ const schema = [
         <p class="answer-box-label">Quick answer</p>
         <p>To find <strong>X% of a number</strong>, multiply the number by X then divide by 100. To calculate a <strong>percentage increase or decrease</strong>, divide the difference by the original value and multiply by 100.</p>
       </div>
+      <SubPageCards parentPath="/math/percentage-calculator" heading="Specific percentage calculators" />
       <h2 id="how-to-use">How to use our percentage calculator</h2>
       <p>Select one of the four modes at the top of the tool, enter your values, and the result updates immediately. No submit button needed. All calculations run locally in your browser, nothing is sent to a server, and results are rounded to four decimal places.</p>
       <ul>
@@ -310,7 +312,7 @@ const schema = [
       <p><a href="/math/percentage-calculator/change">Percentage change</a> has a direction. You know which value is the starting point, and the original is always the base. Use it for before-and-after comparisons: an old price vs. a new price, or last year's <a href="/glossary/revenue">revenue</a> vs. this year's.</p>
       <p><a href="/math/percentage-calculator/difference">Percentage difference</a> is used when neither value is clearly the original. The base is the average of the two values:</p>
       <Formula expr={f.pctDiff} />
-      <p>Use percentage difference when comparing two independent measurements with no defined reference point, for example the prices of two competing products where neither is the baseline.</p>
+      <p>Use percentage difference when comparing two independent measurements with no defined reference point, for example the <a href="/math/unit-price-calculator">prices of two competing products</a> where neither is the baseline.</p>
       <p>If Product A costs $120 and Product B costs $150:</p>
       <Formula expr={f.pctDiffEx} />
       <p>Neither price is treated as the original - the average ($135) is the base.</p>

@@ -1,0 +1,180 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{fl oz} = \\text{pints} \\times 16$$",
+  rev: "$$\\text{pints} = \\text{fl oz} \\div 16$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert pints to fl oz' },
+  { id: 'reference-table', label: 'Pints to fl oz reference table' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pints to Fluid Ounces Converter",
+    "url": "https://calculations.tools/conversion/volume-converter/pint-to-fl-oz",
+    "description": "Convert US pints to fluid ounces. 1 pint = 16 fl oz, 2 pints = 32 fl oz, 0.5 pints = 8 fl oz. All US measurements.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert pints to fluid ounces",
+    "description": "Multiply pints by 16 to get US fluid ounces.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter pint value", "text": "Type your pint value in the pints field. The fl oz result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted fl oz value appears. For 1 pint, the result is 16 fl oz." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the fl oz field to convert back to pints." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many fl oz is 1 pint?", "acceptedAnswer": { "@type": "Answer", "text": "1 US pint equals exactly 16 US fluid ounces. This is a defined relationship: 1 pint = 2 cups = 16 fl oz." } },
+      { "@type": "Question", "name": "How many fl oz is 2 pints?", "acceptedAnswer": { "@type": "Answer", "text": "2 pints equals 32 fluid ounces. Multiply 2 by 16: 2 × 16 = 32 fl oz. This equals 1 US quart." } },
+      { "@type": "Question", "name": "How many fl oz is a half pint?", "acceptedAnswer": { "@type": "Answer", "text": "Half a pint (0.5 pints) equals 8 fl oz. Multiply 0.5 by 16: 0.5 × 16 = 8 fl oz. This equals 1 US cup." } },
+      { "@type": "Question", "name": "How many ml is 1 pint?", "acceptedAnswer": { "@type": "Answer", "text": "1 US pint equals 473.2 ml. 16 fl oz × 29.5735 ml/fl oz = 473.2 ml. Use the fl oz to ml converter for this." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Pints to Fluid Ounces Converter"
+  metaTitle="Pints to Fluid Ounces Converter | Convert pint to fl oz"
+  description="Convert US pints to fluid ounces. 1 pint = 16 fl oz, 2 pints = 32 fl oz, 0.5 pints = 8 fl oz = 1 cup. Enter pints or fl oz - converts both directions."
+  canonical="https://calculations.tools/conversion/volume-converter/pint-to-fl-oz"
+  tocItems={tocItems}
+  embedSlug="pint-to-fl-oz"
+  schema={schema}
+  ogFormula="fl oz = pints × 16"
+  ogExample="1 pint = 16 fl oz"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instantly Convert pint to fl oz</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Pints (pt)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Fluid Ounces (fl oz)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 16" />
+          </div>
+        </div>
+        <div class="pair-formula-note">1 pint = 16 fl oz &nbsp;·&nbsp; US measurements</div>
+      </div>
+    </section>
+    <script src="/js/pint-to-fl-oz.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert US pints to fluid ounces, multiply by <strong>16</strong>. So 1 pint = 16 fl oz, 2 pints = 32 fl oz, and 0.5 pints = 8 fl oz (1 cup). This is exact: 1 US pint = 16 US fl oz by definition.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact formula: fl oz = pints × 16. 1 US pint = 16 fl oz = 2 cups.</li>
+          <li>0.5 pt = 8 fl oz = 1 cup. 2 pt = 32 fl oz = 1 quart. 8 pt = 128 fl oz = 1 gallon.</li>
+          <li>US pint (16 fl oz, 473 ml) differs from UK pint (20 fl oz, 568 ml).</li>
+          <li>Reverse: pints = fl oz ÷ 16.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our US pint to US fl oz converter</h2>
+      <p>Type any pint value in the pints field and the fl oz result appears instantly. Both directions work without pressing a button.</p>
+      <h2 id="formula">How do you convert pints to fluid ounces?</h2>
+      <p>Multiply the number of pints by 16. This is an exact conversion - 1 US pint is defined as exactly 16 US fluid ounces. No rounding involved.</p>
+      <Formula expr={f.fwd} />
+      <p>Worked examples: 0.25 pt = 4 fl oz. 0.5 pt = 8 fl oz. 1 pt = 16 fl oz. 1.5 pt = 24 fl oz. 2 pt = 32 fl oz. 4 pt = 64 fl oz. 8 pt = 128 fl oz (1 gallon).</p>
+      <h2 id="reference-table">Pints to fluid ounces reference table</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Pints</th><th>Fluid Ounces</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0.25 pt</td><td>4 fl oz</td><td>Half cup</td></tr>
+            <tr><td>0.5 pt</td><td>8 fl oz</td><td>1 cup</td></tr>
+            <tr><td>0.75 pt</td><td>12 fl oz</td><td>Standard US can</td></tr>
+            <tr><td>1 pt</td><td>16 fl oz</td><td>1 pint</td></tr>
+            <tr><td>1.5 pt</td><td>24 fl oz</td><td>Large water bottle</td></tr>
+            <tr><td>2 pt</td><td>32 fl oz</td><td>1 quart</td></tr>
+            <tr><td>4 pt</td><td>64 fl oz</td><td>Half gallon</td></tr>
+            <tr><td>8 pt</td><td>128 fl oz</td><td>1 gallon</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="also-see"><strong>US vs UK pint:</strong> A UK (<a href="/glossary/imperial-system">imperial</a>) pint = 20 UK fl oz = 568.3 ml. A US pint = 16 US fl oz = 473.2 ml. They differ by about 20%. If you are following a UK recipe that specifies pints, the volume is significantly larger than a US pint. This converter uses US pints throughout.</p>
+      <h2 id="faq">FAQs about converting pints to fluid ounces</h2>
+      <h3>How many fl oz is 1 pint?</h3>
+      <p>1 US pint equals exactly 16 US fluid ounces. This is defined: 1 pint = 2 cups = 4 gills = 16 fl oz = 32 tablespoons.</p>
+      <h3>How many fl oz is 2 pints?</h3>
+      <p>2 pints equals 32 fl oz. 2 × 16 = 32 fl oz. 2 pints also equals 1 US quart.</p>
+      <h3>How many fl oz is a half pint?</h3>
+      <p>Half a pint equals 8 fl oz. 0.5 × 16 = 8 fl oz. 8 fl oz = 1 cup. A half-pint milk carton (school lunch size) is 8 fl oz.</p>
+      <h3>How many ml is 1 pint?</h3>
+      <p>1 US pint equals 473.2 ml. 16 fl oz × 29.5735 ml = 473.2 ml. Use the <a href="/conversion/volume-converter/fl-oz-to-ml">fl oz to ml converter</a> for exact ml values.</p>
+      <h3>Is a US pint the same as a UK pint?</h3>
+      <p>No. A US pint = 16 US fl oz = 473.2 ml. A UK (imperial) pint = 20 UK fl oz = 568.3 ml. The UK pint is about 20% larger. This comes up most often with beer: a UK pub pint of beer is 568 ml, while a US pint glass is typically 473 ml (16 fl oz).</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/fl-oz-to-pint">Fluid Ounces to Pints</a>
+            <p>Reverse conversion - enter fl oz and get pints instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/pint-to-gal">Pints to Gallons</a>
+            <p>Convert pints to gallons - 8 pints = 1 gallon.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/fl-oz-to-ml">Fluid Ounces to Milliliters</a>
+            <p>Convert fl oz to ml - 16 fl oz = 473.2 ml.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter">Volume Converter (all units)</a>
+            <p>Convert between all volume units - ml, L, fl oz, cups, gallons, and more.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

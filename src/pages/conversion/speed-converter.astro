@@ -4,6 +4,7 @@ import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import Formula from '../../components/Formula.astro';
 import type { Source } from '../../components/Sources.astro';
 import QuizBlock from '../../components/QuizBlock.astro';
+import SubPageCards from '../../components/SubPageCards.astro';
 
 const sources: Source[] = [
   {
@@ -212,6 +213,7 @@ const schema = [
           <li>The speed of light (299,792,458 m/s) is the universal speed limit, established by <a href="https://www.energy.gov/science/doe-explainsrelativity" target="_blank" rel="noopener noreferrer">Einstein's 1905 special relativity</a>.</li>
         </ul>
       </div>
+      <SubPageCards parentPath="/conversion/speed-converter" heading="Specific speed converters" />
       <h2 id="how-to-use">How to Use This Speed Converter</h2>
       <p>Type a value in the input field, choose your "From" unit, then select your "To" unit. The result updates instantly as you type. Use the quick-conversion buttons to jump straight to the most searched pairs - km/h to mph, knots to mph, m/s to km/h, and more. The swap button reverses the direction without re-entering the value.</p>
       <p>The common conversions panel below the result shows your value in 8 other units simultaneously, so you can compare several scales at once without changing the dropdowns.</p>
@@ -338,7 +340,7 @@ const schema = [
       <p><a href="/conversion/speed-converter/knots-to-kmh">1 knot = 1.852 km/h</a>, not 1 km/h. The two units are off by nearly double. A weather report citing "35-knot winds" means 64.8 km/h (40.3 mph), not 35 km/h. Mixing these is a common error when reading aviation weather or marine forecasts.</p>
       <h3>Confusing statute miles and nautical miles</h3>
       <p>A statute mile (used on roads) is 1,609.344 meters (approx. 1.6 kilometers). A nautical mile is 1,852 meters - about 15% longer. This matters in navigation: 100 nautical miles is not the same distance as 100 statute miles.</p>
-      <p>See the <a href="/conversion/length-converter">length converter</a> for conversions between the two.</p>
+      <p class="also-see"><strong>See the</strong> <a href="/conversion/length-converter">length converter</a> for conversions between the two.</p>
       <h2 id="pair-converters">Specific Speed Conversion Tools</h2>
       <p>Need a dedicated page for a single conversion pair? These pages include the formula, worked examples, a full reference table, and reverse conversion:</p>
       <ul>

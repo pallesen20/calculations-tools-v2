@@ -224,7 +224,7 @@ const schema = [
       <p>Percentage change formula for reference:</p>
       <Formula expr={f.changeFormula} />
       <p>When I need to choose between these two measures, the test I always apply is: "does the order of these two numbers matter?" If swapping them would make the question nonsensical - if you would never say "the change from Store B's price to Store A's price" - then percentage difference is the right tool. If the order matters, percentage change is what you need.</p>
-      <p>See our dedicated <a href="/math/percentage-calculator/change">percentage change tool</a>.</p>
+      <p class="also-see"><strong>See our</strong> dedicated <a href="/math/percentage-calculator/change">percentage change tool</a>.</p>
       <h2 id="common-mistakes">Common mistakes for percent difference</h2>
       <h3>Using one value as the denominator instead of the average</h3>
       <p>A common error is dividing by one of the two values rather than their average. If you divide by V1, you get a percentage change <em>from</em> V1 <em>to</em> V2 - a directional measure. Dividing by the average produces the symmetric, direction-neutral percentage difference.</p>
@@ -243,7 +243,7 @@ const schema = [
       <h3>Can percentage difference exceed 100%?</h3>
       <p>Yes. When one value is more than three times the other, the result exceeds 100%. For example, the percentage difference between 10 and 40 is (30 ÷ 25) × 100 = 120%. There is no upper limit.</p>
       <h3>When should I use percentage difference instead of percentage change?</h3>
-      <p>Use percentage difference when comparing two independent measurements where neither is the logical starting point - comparing prices of two products, scores from two groups, or readings from two instruments. Use percentage change when one value clearly precedes the other in time or sequence.</p>
+      <p>Use percentage difference when comparing two independent measurements where neither is the logical starting point - comparing <a href="/math/unit-price-calculator">prices of two products</a>, scores from two groups, or readings from two instruments. Use percentage change when one value clearly precedes the other in time or sequence.</p>
       <h3>Is percentage difference the same as relative difference?</h3>
       <p>Not quite. Relative difference is calculated relative to one specific reference value, so it changes if you swap the inputs. Percentage difference uses the average as the reference, making it symmetric and independent of input order.</p>
       <QuizBlock

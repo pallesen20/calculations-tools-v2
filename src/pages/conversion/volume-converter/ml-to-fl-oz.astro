@@ -1,0 +1,195 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{fl oz} = \\text{ml} \\times 0.033814$$",
+  rev: "$$\\text{ml} = \\text{fl oz} \\times 29.5735$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert ml to fl oz' },
+  { id: 'reverse',         label: 'How to convert fl oz to ml' },
+  { id: 'reference-table', label: 'ml to fl oz reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Milliliters to Fluid Ounces Converter",
+    "url": "https://calculations.tools/conversion/volume-converter/ml-to-fl-oz",
+    "description": "Convert milliliters to fluid ounces instantly. Formula: fl oz = ml × 0.033814. All values are US fluid ounces (1 fl oz = 29.5735 ml).",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert milliliters to fluid ounces",
+    "description": "Multiply ml by 0.033814 to get US fluid ounces.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter ml value", "text": "Type your milliliter value in the ml field. The fl oz result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted fl oz value appears immediately. For 100 ml, the result is 3.38 fl oz." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the fl oz field to convert back to ml." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many fl oz is 100 ml?", "acceptedAnswer": { "@type": "Answer", "text": "100 ml equals 3.38 US fluid ounces. Multiply 100 by 0.033814: 100 × 0.033814 = 3.3814 fl oz." } },
+      { "@type": "Question", "name": "How many ml is 1 fl oz?", "acceptedAnswer": { "@type": "Answer", "text": "1 US fluid ounce equals 29.5735 ml. This converter uses US fluid ounces. The UK fluid ounce is slightly larger at 28.4131 ml." } },
+      { "@type": "Question", "name": "How many fl oz is 250 ml?", "acceptedAnswer": { "@type": "Answer", "text": "250 ml equals 8.45 US fluid ounces. Multiply 250 by 0.033814: 250 × 0.033814 = 8.454 fl oz." } },
+      { "@type": "Question", "name": "How many fl oz is 500 ml?", "acceptedAnswer": { "@type": "Answer", "text": "500 ml equals 16.91 US fluid ounces. Multiply 500 by 0.033814: 500 × 0.033814 = 16.907 fl oz." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Milliliters to Fluid Ounces Converter"
+  metaTitle="Milliliters to Fluid Ounces | Instantly Convert ml to fl oz"
+  description="Convert milliliters to US fluid ounces instantly. Formula: fl oz = ml × 0.033814. 100 ml = 3.38 fl oz, 250 ml = 8.45 fl oz, 500 ml = 16.91 fl oz."
+  canonical="https://calculations.tools/conversion/volume-converter/ml-to-fl-oz"
+  tocItems={tocItems}
+  embedSlug="ml-to-fl-oz"
+  schema={schema}
+  ogFormula="fl oz = ml × 0.033814"
+  ogExample="100 ml = 3.38 fl oz"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instantly Convert ml to fl oz</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Milliliters (ml)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 100" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Fluid Ounces (fl oz)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 3.38" />
+          </div>
+        </div>
+        <div class="pair-formula-note">1 fl oz = 29.5735 ml &nbsp;·&nbsp; 1 ml = 0.033814 fl oz &nbsp;·&nbsp; US fl oz</div>
+      </div>
+    </section>
+    <script src="/js/ml-to-fl-oz.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert milliliters to fluid ounces, multiply by <strong>0.033814</strong>. So 100 ml = 3.38 fl oz, 250 ml = 8.45 fl oz, and 500 ml = 16.91 fl oz. All values on this page use US fluid ounces (1 fl oz = 29.5735 ml).</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Formula: fl oz = ml × 0.033814. Reverse: ml = fl oz × 29.5735.</li>
+          <li>Quick mental check: 30 ml is about 1 fl oz. 240 ml is about 8 fl oz (1 cup).</li>
+          <li>US vs UK: US fl oz = 29.5735 ml. UK fl oz = 28.4131 ml. This converter uses US.</li>
+          <li>Common: 355 ml (US can) = 12 fl oz. 473 ml = 16 fl oz (pint).</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our ml to fl oz converter</h2>
+      <p>Type any ml value in the ml field and the fl oz result appears instantly. You can also type in the fl oz field to convert back to ml - both directions work without pressing a button.</p>
+      <h2 id="formula">How do you convert milliliters to fluid ounces?</h2>
+      <p>Multiply the number of milliliters by 0.033814. This factor comes from the exact US fl oz definition: 1 fl oz = 29.5735 ml, so 1 ml = 1/29.5735 = 0.033814 fl oz.</p>
+      <Formula expr={f.fwd} />
+      <p>Worked examples: 30 ml = 1.01 fl oz. 100 ml = 3.38 fl oz. 240 ml = 8.11 fl oz. 350 ml = 11.83 fl oz. 500 ml = 16.91 fl oz. 750 ml = 25.36 fl oz. 1,000 ml = 33.81 fl oz.</p>
+      <h2 id="reverse">How do you convert fluid ounces to ml?</h2>
+      <p class="also-see">Multiply fluid ounces by 29.5735. See the dedicated <a href="/conversion/volume-converter/fl-oz-to-ml">fl oz to ml converter</a> for a fl oz-first reference table.</p>
+      <Formula expr={f.rev} />
+      <p>Worked examples: 1 fl oz = 29.57 ml. 8 fl oz = 236.6 ml (1 cup). 12 fl oz = 354.9 ml. 16 fl oz = 473.2 ml. 32 fl oz = 946.4 ml. 64 fl oz = 1,892.7 ml.</p>
+      <h2 id="reference-table">Milliliters to fluid ounces reference table</h2>
+      <p>Common volumes converted from ml to US fluid ounces, with everyday context for each value:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Milliliters (ml)</th><th>Fluid Ounces (fl oz)</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>30 ml</td><td>1.01 fl oz</td><td>Shot glass (US)</td></tr>
+            <tr><td>60 ml</td><td>2.03 fl oz</td><td>Double shot / 2 fl oz measure</td></tr>
+            <tr><td>100 ml</td><td>3.38 fl oz</td><td>Travel bottle max (TSA)</td></tr>
+            <tr><td>150 ml</td><td>5.07 fl oz</td><td>Small juice glass</td></tr>
+            <tr><td>240 ml</td><td>8.11 fl oz</td><td>1 cup (approx)</td></tr>
+            <tr><td>250 ml</td><td>8.45 fl oz</td><td>Standard glass of water</td></tr>
+            <tr><td>355 ml</td><td>12.00 fl oz</td><td>US standard can</td></tr>
+            <tr><td>473 ml</td><td>16.00 fl oz</td><td>US pint</td></tr>
+            <tr><td>500 ml</td><td>16.91 fl oz</td><td>Water bottle</td></tr>
+            <tr><td>750 ml</td><td>25.36 fl oz</td><td>Wine bottle</td></tr>
+            <tr><td>1,000 ml</td><td>33.81 fl oz</td><td>1 liter bottle</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="when-to-use">When do you need to convert ml to fl oz?</h2>
+      <p>This conversion comes up most when switching between metric product labels (ml) and US recipe measurements (fl oz). Common scenarios:</p>
+      <ul>
+        <li><strong>Beverages</strong> - European or imported drinks labeled in ml, US recipes call for fl oz.</li>
+        <li><strong>Cooking</strong> - metric recipes specify ml while US measuring cups are marked in fl oz and cups.</li>
+        <li><strong>Cosmetics</strong> - product sizes on labels often show both ml and fl oz, useful when only one is printed.</li>
+        <li><strong>Travel</strong> - TSA liquid limits are 3.4 fl oz = 100 ml per container.</li>
+      </ul>
+      <h2 id="faq">FAQs about milliliters and US fluid ounces</h2>
+      <h3>How many fl oz is 100 ml?</h3>
+      <p>100 ml equals 3.38 US fluid ounces. 100 × 0.033814 = 3.3814 fl oz. This is the standard maximum for liquids in carry-on luggage (TSA 3.4 fl oz rule).</p>
+      <h3>How many ml is 1 fl oz?</h3>
+      <p>1 US fluid ounce equals 29.5735 ml. The UK fluid ounce is slightly larger at 28.4131 ml. This converter uses US fl oz throughout.</p>
+      <h3>How many fl oz is 250 ml?</h3>
+      <p>250 ml equals 8.45 US fluid ounces. 250 × 0.033814 = 8.454 fl oz. A standard drinking glass holds about 250 ml or 8-9 fl oz.</p>
+      <h3>How many fl oz is 500 ml?</h3>
+      <p>500 ml equals 16.91 US fluid ounces. 500 × 0.033814 = 16.907 fl oz. A 500 ml water bottle holds just under 17 fl oz.</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/fl-oz-to-ml">Fluid Ounces to Milliliters</a>
+            <p>Reverse conversion - enter fl oz and get ml instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/ml-to-l">Milliliters to Liters</a>
+            <p>Convert ml to L - useful when you have large ml values.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/ml-to-cup">Milliliters to Cups</a>
+            <p>Convert ml to US cups for baking and cooking recipes.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter">Volume Converter (all units)</a>
+            <p>Convert between all volume units - ml, L, fl oz, cups, gallons, and more.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

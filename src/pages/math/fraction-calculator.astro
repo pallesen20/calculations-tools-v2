@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import QuizBlock from '../../components/QuizBlock.astro';
+import SubPageCards from '../../components/SubPageCards.astro';
 
 const f = {
   add:        "$$\\frac{a}{b} + \\frac{c}{d} = \\frac{a \\times d + c \\times b}{b \\times d}$$",
@@ -214,6 +215,7 @@ const schema = [
         <p class="answer-box-label">Quick rules</p>
         <p><strong>Add/subtract:</strong> find a common denominator, convert, then add/subtract numerators. <strong>Multiply:</strong> numerator × numerator over denominator × denominator. <strong>Divide:</strong> multiply by the reciprocal. <strong>Simplify:</strong> divide both parts by their GCD (Greatest Common Divisor).</p>
       </div>
+      <SubPageCards parentPath="/math/fraction-calculator" heading="Specific fraction calculators" />
       <h2 id="how-to-use">How to use our fraction calculator</h2>
       <p>Select an operation using the buttons at the top, then enter the numerator and denominator for each fraction. Results appear instantly: the simplified fraction, mixed number (when applicable), decimal equivalent, and percentage. The step-by-step panel shows how the result was reached. For <strong>Simplify</strong>, only one fraction is needed.</p>
       <h2 id="numerator-denominator">Numerator and denominator</h2>
@@ -321,7 +323,7 @@ const schema = [
       <p>To divide, flip the <em>second</em> fraction (not the first) and multiply. ¾ ÷ ⅖ becomes ¾ × 5/2 = 15/8. A common error is to flip the first fraction instead.</p>
       <h3>Not applying sign rules to negative fractions</h3>
       <p>A negative fraction can be written three ways: −a/b = a/(−b) = −(a/b). When multiplying or dividing negative fractions, count the total number of negative signs - an odd count gives a negative result, even gives a positive.</p>
-      <p>Reviewing a project cost split between three contractors: one had billed for 1/3 of the work, another for 1/4. A colleague calculated their combined share as 2/7 - by adding the numerators (1+1=2) and the denominators (3+4=7).</p>
+      <p>Reviewing a project <a href="/math/bill-split-calculator">cost split between three contractors</a>: one had billed for 1/3 of the work, another for 1/4. A colleague calculated their combined share as 2/7 - by adding the numerators (1+1=2) and the denominators (3+4=7).</p>
       <p>The actual combined share is 7/12, found using 12 as the common denominator: 4/12 + 3/12 = 7/12. The difference between 2/7 (about 28.6%) and 7/12 (about 58.3%) is not small.</p>
       <p>The add-denominators error appears in non-mathematical contexts more often than you would expect from people who otherwise handle numbers confidently.</p>
       <p>Scaling a recipe from 3/4 cup down to 1/8 cup portions: the question is how many 1/8-cup measures fit in 3/4 cup, which is 3/4 ÷ 1/8 = 3/4 × 8/1 = 24/4 = 6. In three separate instances, the person doing the calculation flipped the first fraction instead of the second, getting 4/3 × 1/8 = 4/24 = 1/6. That gives 0.17 instead of 6 - a factor-of-36 error from flipping the wrong fraction. The rule is always to flip the divisor (the second fraction), never the dividend.</p>

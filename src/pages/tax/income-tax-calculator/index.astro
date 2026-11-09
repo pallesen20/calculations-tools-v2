@@ -4,6 +4,7 @@ import FinanceDisclaimer from '../../../components/FinanceDisclaimer.astro';
 import type { Source } from '../../../components/Sources.astro';
 import RelatedGlossaryTerms from '../../../components/RelatedGlossaryTerms.astro';
 import QuizBlock from '../../../components/QuizBlock.astro';
+import SubPageCards from '../../../components/SubPageCards.astro';
 
 const tocItems = [
   { id: 'how-to-use', label: 'How to use this calculator' },
@@ -218,6 +219,7 @@ const schema = [
           <li>Pre-tax contributions to a 401(k), HSA, or FSA reduce your taxable income dollar-for-dollar, lowering both your income tax and your effective rate without reducing your total compensation.</li>
         </ul>
       </div>
+      <SubPageCards parentPath="/tax/income-tax-calculator" heading="Income tax by country" />
       <h2 id="how-to-use">How to use our income tax calculator</h2>
       <p>This global tool works for any country or currency. Enter your annual gross income, select your currency, and enter your effective income tax rate. The calculator instantly shows your tax liability and after-tax income on annual, monthly, and weekly bases.</p>
       <p>If you don't know your effective rate, use a rough estimate based on your country's tax schedule. For US residents, enter a combined federal and state effective rate - typically 15-30% for most earners.</p>

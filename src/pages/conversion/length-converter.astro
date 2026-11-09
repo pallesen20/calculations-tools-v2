@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
 import QuizBlock from '../../components/QuizBlock.astro';
+import SubPageCards from '../../components/SubPageCards.astro';
 
 const sources: Source[] = [
   {
@@ -177,6 +178,7 @@ const schema = [
         <div class="answer-box-label">Quick answer</div>
         <p>This converter handles all common metric and imperial length units: meters, kilometers, centimeters, millimeters, feet, inches, yards, miles, nautical miles, furlongs, and fathoms. Enter a value, choose your units, and the result appears instantly. All conversions use exact or internationally defined factors and calculate entirely in your browser.</p>
       </div>
+      <SubPageCards parentPath="/conversion/length-converter" heading="Specific length converters" />
       <h2 id="how-to-use">How to use our length converter</h2>
       <p>Type a value in the input field, choose your "From" unit, then choose your "To" unit. The result updates as you type. To reverse a conversion, click the swap button between the two unit selectors. The quick conversion buttons at the top let you jump straight to the most common pairs.</p>
       <p>All calculations run locally in your browser using exact conversion factors. Results are shown to 8 significant figures, which is more than sufficient for any practical use.</p>
@@ -237,7 +239,7 @@ const schema = [
         <li>6 inches to cm: 6 × 2.54 = 15.24 cm</li>
         <li>A standard A4 sheet is 29.7 cm × 21.0 cm, which is 11.69 in × 8.27 in (this one has been helpful to me personally a couple of times.)</li>
       </ul>
-      <p>See our dedicated <a href="/conversion/length-converter/cm-to-in">centimeters to inches converter</a> and <a href="/conversion/length-converter/in-to-cm">inches to centimeters converter</a> pages.</p>
+      <p class="also-see"><strong>See our</strong> dedicated <a href="/conversion/length-converter/cm-to-in">centimeters to inches converter</a> and <a href="/conversion/length-converter/in-to-cm">inches to centimeters converter</a> pages.</p>
       <h3>Meters and feet</h3>
       <p>1 foot = 0.3048 m exactly, so 1 meter = 1 ÷ 0.3048 = 3.28084 ft.</p>
       <ul>
@@ -245,7 +247,7 @@ const schema = [
         <li>6 ft to meters: 6 × 0.3048 = 1.8288 m</li>
         <li>The cruising altitude of a commercial aircraft is around 35,000 ft = 10,668 m</li>
       </ul>
-      <p>See our dedicated <a href="/conversion/length-converter/m-to-ft">meters to feet converter</a> and <a href="/conversion/length-converter/ft-to-m">feet to meters converter</a> pages.</p>
+      <p class="also-see"><strong>See our</strong> dedicated <a href="/conversion/length-converter/m-to-ft">meters to feet converter</a> and <a href="/conversion/length-converter/ft-to-m">feet to meters converter</a> pages.</p>
       <h3>Kilometers and miles</h3>
       <p>1 mile = 1,609.344 m exactly, so 1 km = 1 ÷ 1.609344 = 0.62137 miles.</p>
       <ul>
@@ -253,7 +255,7 @@ const schema = [
         <li>26.2 miles (marathon) to km: 26.2 × 1.609344 = 42.165 km</li>
         <li>A 5K race is exactly 5 km = 3.107 miles</li>
       </ul>
-      <p>See our dedicated <a href="/conversion/length-converter/km-to-mi">kilometers to miles converter</a> and <a href="/conversion/length-converter/mi-to-km">miles to kilometers converter</a> pages.</p>
+      <p class="also-see"><strong>See our</strong> dedicated <a href="/conversion/length-converter/km-to-mi">kilometers to miles converter</a> and <a href="/conversion/length-converter/mi-to-km">miles to kilometers converter</a> pages.</p>
       <h3>Nautical miles</h3>
       <p>1 nautical mile = 1,852 m = 1.852 km = 1.15078 statute miles.</p>
       <ul>

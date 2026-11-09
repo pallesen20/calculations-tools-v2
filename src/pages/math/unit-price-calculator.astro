@@ -1,0 +1,522 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const sources: Source[] = [
+  {
+    author: 'U.S. Bureau of Labor Statistics',
+    title: 'Consumer Expenditure Surveys, 2023',
+    journal: 'U.S. Bureau of Labor Statistics',
+    year: 2023,
+    url: 'https://www.bls.gov/opub/reports/consumer-expenditures/2023/',
+  },
+  {
+    author: 'European Parliament and Council',
+    title: 'Directive 98/6/EC on consumer protection in the indication of the prices of products offered to consumers',
+    journal: 'EUR-Lex',
+    year: 1998,
+    url: 'https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A31998L0006',
+  },
+  {
+    author: 'National Institute of Standards and Technology',
+    title: 'Office of Weights and Measures',
+    journal: 'NIST',
+    year: 2024,
+    url: 'https://www.nist.gov/pml/owm',
+  },
+];
+
+const f = {
+  def:     "$$\\text{Unit price} = \\frac{\\text{Total price}}{\\text{Quantity}}$$",
+  weight:  "$$\\text{Price per 100 g} = \\frac{\\text{Total price}}{\\text{Weight in grams}} \\times 100$$",
+  volume:  "$$\\text{Price per 100 ml} = \\frac{\\text{Total price}}{\\text{Volume in ml}} \\times 100$$",
+  example: "$$\\frac{€3.49}{500\\,\\text{g}} = €0.00698/\\text{g} = €0.698/100\\,\\text{g} = €6.98/\\text{kg}$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',            label: 'How to use this calculator' },
+  { id: 'unit-price',            label: 'What is unit price?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',               label: 'Unit price formula' },
+  { id: 'best-value',            label: 'How to find best value' },
+  { id: 'weight-volume',         label: 'Weight and volume units' },
+  { id: 'common-mistakes',       label: 'Common mistakes' },
+  { id: 'faq',                   label: 'FAQs' },
+  { id: 'quiz',                  label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',         label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'A 400 g jar of peanut butter costs €3.20. What is the unit price per 100 g?',
+    options: [
+      '€0.80 per 100 g',
+      '€8.00 per 100 g',
+      '€0.08 per 100 g',
+      '€1.28 per 100 g',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: '€3.20 divided by 400 g = €0.008 per gram. Multiply by 100 to get €0.80 per 100 g. That is the standard unit price used on supermarket shelf labels.',
+  },
+  {
+    q: 'Product A is €4.99 for 750 g. Product B is €3.49 for 500 g. Which is cheaper per 100 g?',
+    options: [
+      'Product B (€0.698 per 100 g)',
+      'Product A (€0.665 per 100 g)',
+      'Both are the same',
+      'Product B (€0.70 per 100 g)',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Product A: €4.99 / 750 × 100 = €0.665 per 100 g. Product B: €3.49 / 500 × 100 = €0.698 per 100 g. Product A is cheaper despite the higher sticker price.',
+  },
+  {
+    q: 'Why can you not directly compare a price per kg with a price per lb?',
+    options: [
+      'They use different currencies',
+      'They use different base units - 1 kg equals 2.205 lb, so you must convert first',
+      'Prices per lb are always higher',
+      'The comparison is only valid for liquids',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '1 kg = 2.205 lb. A price of €5/kg equals about €2.27/lb. If one label shows the price per kg and another shows per lb, convert both to the same unit before comparing or you will get a misleading result.',
+  },
+  {
+    q: 'What is the correct formula for unit price?',
+    options: [
+      'Quantity divided by total price',
+      'Total price multiplied by quantity',
+      'Total price divided by quantity',
+      'Quantity minus total price',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Unit price = Total price / Quantity. You divide the price by the amount you get - not the other way around. Dividing quantity by price gives units per dollar, which is the inverse.',
+  },
+  {
+    q: 'A 2 L bottle of juice costs €3.60. A 330 ml can costs €1.10. Which is cheaper per 100 ml?',
+    options: [
+      'The 330 ml can (€0.33 per 100 ml)',
+      'The 2 L bottle (€0.18 per 100 ml)',
+      'They are the same price per 100 ml',
+      'The 2 L bottle (€0.36 per 100 ml)',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '2 L bottle: €3.60 / 2000 ml × 100 = €0.18 per 100 ml. Can: €1.10 / 330 ml × 100 = €0.333 per 100 ml. The bottle is nearly half the per-unit price.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Unit Price Calculator",
+    "url": "https://calculations.tools/math/unit-price-calculator",
+    "description": "Compare any two products by price per 100g, kg, lb, or oz. Supports weight, volume, and count units with 15+ currencies and metric/imperial toggle.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the unit price calculator",
+    "description": "Compare two products to find which offers the lower price per unit of weight or volume.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Select currency and unit system", "text": "Choose your currency from the dropdown and select Metric or Imperial depending on the units on your product labels." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter Item 1 price and quantity", "text": "Type the total price, then the package quantity, and select the unit (g, kg, oz, lb, ml, L, fl oz, or count)." },
+      { "@type": "HowToStep", "position": 3, "name": "Enter Item 2 price and quantity", "text": "Repeat for the second product. The units can be different - the calculator converts everything to a common base." },
+      { "@type": "HowToStep", "position": 4, "name": "Read the comparison", "text": "The calculator shows the unit price for each item and highlights which product costs less per unit, with the percentage difference." },
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is unit price?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Unit price is the cost per standard unit of a product - typically per 100 g, per kg, per lb, or per litre. It is calculated by dividing the total price by the package quantity. Unit price lets you compare products in different sizes on the same basis." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate price per kg?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Divide the total price by the weight in kilograms. Example: a 750 g product at €4.99 weighs 0.75 kg, so the price per kg is €4.99 / 0.75 = €6.65 per kg. If the weight is in grams, divide by 1000 first." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is a bigger pack always cheaper per unit?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Usually, but not always. Premium or store-brand small packs sometimes have a lower unit price than the large size of a different brand. Promotional pricing on smaller sizes can also temporarily make them cheaper. Always calculate both before assuming." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I compare a price per kg with a price per lb?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Not directly. 1 kg equals 2.205 lb, so the numbers are on different scales. Convert both to the same unit first. This calculator handles the conversion automatically - enter one item in kg and the other in lb and it shows both results in the same unit." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between unit price and unit rate?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Unit price specifically refers to cost per unit of product. Unit rate is the broader mathematical concept of any quantity expressed per one unit - speed (km/h), pay ($ per hour), or calorie density (kcal per 100 g) are all unit rates. Unit price is a specific application of unit rate." }
+      },
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Unit Price Calculator"
+  metaTitle="Unit Price Calculator - Price Per kg, lb & oz"
+  description="Compare any two products by price per 100g, kg, lb, or oz. Supports weight, volume, and count units with 15+ currencies and metric/imperial toggle."
+  canonical="https://calculations.tools/math/unit-price-calculator"
+  tocItems={tocItems}
+  embedSlug="unit-price-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="Unit price = Total price / Quantity"
+  ogExample="€3.49 for 500g = €0.698 per 100g = €6.98 per kg"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Calculate Price Per Unit</h2>
+          <p>Compare any two products</p>
+        </div>
+        <div class="up-top-row">
+          <div class="bmi-unit-toggle" style="margin-bottom: 0;">
+            <button class="bmi-unit-btn active" id="up-metric">Metric</button>
+            <button class="bmi-unit-btn" id="up-imperial">Imperial</button>
+          </div>
+          <div class="bmi-field up-currency-field">
+            <label class="bmi-label" for="up-currency">Currency</label>
+            <div class="bmi-input-wrap">
+              <select id="up-currency" class="bmi-input"></select>
+            </div>
+          </div>
+        </div>
+        <div class="up-items-grid">
+          <div class="up-item-card" id="up-card-1">
+            <div class="up-item-label">Item 1</div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="up-price-1">Price</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="up-price-1" class="bmi-input" placeholder="e.g. 3.49" />
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="up-qty-1">Quantity</label>
+              <div class="up-qty-row">
+                <div class="bmi-input-wrap" style="flex:1;min-width:0;">
+                  <input type="text" inputmode="decimal" id="up-qty-1" class="bmi-input" placeholder="e.g. 500" />
+                </div>
+                <div class="bmi-input-wrap up-unit-wrap">
+                  <select id="up-unit-1" class="bmi-input">
+                    <optgroup label="Weight">
+                      <option value="g">g</option>
+                      <option value="100g">100 g</option>
+                      <option value="kg">kg</option>
+                      <option value="oz">oz</option>
+                      <option value="lb">lb</option>
+                    </optgroup>
+                    <optgroup label="Volume">
+                      <option value="ml">ml</option>
+                      <option value="100ml">100 ml</option>
+                      <option value="L">L</option>
+                      <option value="fl oz">fl oz</option>
+                      <option value="pint">pint</option>
+                      <option value="gallon">gallon</option>
+                    </optgroup>
+                    <optgroup label="Count">
+                      <option value="count">count</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="up-item-result" id="up-result-1"></div>
+          </div>
+          <div class="up-item-card" id="up-card-2">
+            <div class="up-item-label">Item 2</div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="up-price-2">Price</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="up-price-2" class="bmi-input" placeholder="e.g. 5.99" />
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="up-qty-2">Quantity</label>
+              <div class="up-qty-row">
+                <div class="bmi-input-wrap" style="flex:1;min-width:0;">
+                  <input type="text" inputmode="decimal" id="up-qty-2" class="bmi-input" placeholder="e.g. 1000" />
+                </div>
+                <div class="bmi-input-wrap up-unit-wrap">
+                  <select id="up-unit-2" class="bmi-input">
+                    <optgroup label="Weight">
+                      <option value="g">g</option>
+                      <option value="100g">100 g</option>
+                      <option value="kg">kg</option>
+                      <option value="oz">oz</option>
+                      <option value="lb">lb</option>
+                    </optgroup>
+                    <optgroup label="Volume">
+                      <option value="ml">ml</option>
+                      <option value="100ml">100 ml</option>
+                      <option value="L">L</option>
+                      <option value="fl oz">fl oz</option>
+                      <option value="pint">pint</option>
+                      <option value="gallon">gallon</option>
+                    </optgroup>
+                    <optgroup label="Count">
+                      <option value="count">count</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="up-item-result" id="up-result-2"></div>
+          </div>
+        </div>
+        <div id="up-compare" class="up-compare-box" style="display:none;"></div>
+      </div>
+    </section>
+    <script src="/js/unit-price-calculator.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>A <a href="/glossary/unit-price">unit price</a> calculator divides the total price by the package quantity to give you cost per 100 g, per kg, per lb, or per litre. Enter the price and size for two products and it shows which costs less per unit - regardless of whether the labels use different units or sizes.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Unit price = Total price / Quantity. The lowest number is always the better deal.</li>
+          <li>1 kg = 1,000 g = 2.205 lb = 35.27 oz. The calculator handles all unit conversions automatically.</li>
+          <li>Bigger packs are usually cheaper per gram, but not always - premium brands and sale pricing can flip this. Always run the numbers.</li>
+          <li>Unit pricing is mandated by law in all 27 EU member states under Directive 98/6/EC (2000) and in 10+ US states.</li>
+          <li>Weight (g/kg/oz/lb) and volume (ml/L/fl oz) cannot be compared directly - only compare like for like.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use this unit price calculator</h2>
+      <p>Select your currency and choose <a href="/glossary/metric-system">Metric</a> or <a href="/glossary/imperial-system">Imperial</a>. Then enter the price and package size for each of two items - the units can differ, so one item can be in grams and the other in oz. The calculator shows the unit price in both metric and imperial and highlights the cheaper option with the percentage saving.</p>
+      <h2 id="unit-price">What is unit price?</h2>
+      <p>Unit price is the cost per standard unit of a product - per 100 g, per kg, per lb, or per litre. Under <strong>EU Directive 98/6/EC</strong> (European Commission, 2000), every retailer in the EU must display the unit price on shelf labels alongside the selling price. This makes cross-brand comparisons fair.</p>
+      <p>Without unit prices, a 500 g pack at €4.49 and a 750 g pack at €5.99 look similar in cost. With unit prices, you see €0.898 per 100 g vs €0.799 per 100 g instantly. The 750 g pack is 11% cheaper per gram despite the higher total price.</p>
+      <h3 id="explained-to-beginner">Unit price explained to a beginner</h3>
+      <p>Picture two boxes of pasta at the grocery store. One is 400 g for €2.40. The other is 500 g for €2.75. The bigger box looks more expensive - but is it? Divide each price by its weight: €2.40 / 400 = €0.006 per gram. €2.75 / 500 = €0.0055 per gram. Multiply by 100 to get the more readable number: €0.60 per 100 g vs. €0.55 per 100 g.</p>
+      <p>The 500 g box is actually <a href="/math/percentage-calculator">8% cheaper</a>. That single number - cost per 100 g - is the unit price. It strips away the packaging size and puts every product on the same scale. The same logic works for liquids (price per 100 ml), cleaning products (price per wash), or even toilet paper (price per sheet).</p>
+      <h2 id="formula">Unit price formula</h2>
+      <p>The formula has one step. Divide the total price by the quantity. All other <a href="/conversion">unit conversions</a> (100 g, per kg, per lb) are just multiplications of this single result.</p>
+      <Formula expr={f.def} />
+      <p>For weight products, the standard reference unit is 100 g in metric countries and per lb in the US:</p>
+      <Formula expr={f.weight} />
+      <p>For liquids, the reference is 100 ml:</p>
+      <Formula expr={f.volume} />
+      <p>Worked example - a 500 g bag of coffee for €3.49:</p>
+      <Formula expr={f.example} />
+      <h3 id="price-per-100g">Price per 100 g calculation</h3>
+      <p>EU Directive 98/6/EC requires all packaged food sold in the EU to display the price per 100 grams alongside the selling price. It is the standard comparison unit for dry goods, cheese, deli products, and snacks. Divide the price by the weight in grams, then multiply by 100.</p>
+      <p><strong>Example:</strong> a 400 g block of cheddar at €3.80 → €3.80 / 400 × 100 = €0.95 per 100 g.</p>
+      <h3 id="price-per-kg">Price per kg calculation</h3>
+      <p>Used for bulk dry goods - flour, rice, sugar, coffee, and counter-service meat. If you already have the per-100 g price, multiply by 10 to get the price per kilo. One kg = 1,000 g.</p>
+      <p><strong>Example:</strong> a 1.5 kg bag of rice at €2.25 → €2.25 / 1.5 = €1.50 per kg.</p>
+      <h3 id="price-per-lb">Price per lb calculation</h3>
+      <p>Price per pound is the standard weight unit on US grocery labels for meat, deli products, cheese, and produce by weight. Labels typically show a "$X.XX/lb" shelf tag. One lb = 16 oz = 453.6 g.</p>
+      <p><strong>Example:</strong> a 12 oz pack of turkey at $4.49 → 12 oz = 0.75 lb → $4.49 / 0.75 = $5.99 per lb.</p>
+      <p class="also-see"><strong>See our</strong> <a href="/conversion/weight-converter/lb-to-oz">pounds to ounces converter</a> and <a href="/conversion/weight-converter/oz-to-g">ounces to grams converter</a>.</p>
+      <h3 id="price-per-oz">Price per oz calculation</h3>
+      <p>Useful for small packaged goods in the US where weights appear in ounces: spices, nuts, deli meats, and cosmetics. One oz = 28.35 g. For tiny portions like spices, per-oz is often more readable than per-lb.</p>
+      <p><strong>Example:</strong> a 1.5 oz jar of saffron at $6.99 → $6.99 / 1.5 = $4.66 per oz.</p>
+      <p class="also-see"><strong>See our</strong> <a href="/conversion/weight-converter/oz-to-g">oz to g converter</a>.</p>
+      <h3 id="price-per-100ml">Price per 100 ml calculation</h3>
+      <p>The EU retail standard for liquid products - required on labels for beverages, shampoo, cooking oil, and cleaning products. Divide the price by volume in milliliter, then multiply by 100. Comparable to price per 100 g for dry goods.</p>
+      <p><strong>Example:</strong> a 250 ml bottle of perfume at €42.00 → €42.00 / 250 × 100 = €16.80 per 100 ml.</p>
+      <h3 id="price-per-liter">Price per liter calculation</h3>
+      <p>Standard for cooking oil, large beverage bottles, and cleaning products in metric countries. If you have the per-100 ml price, multiply by 10 to get per liter. One liter = 1,000 ml = 33.81 fl oz.</p>
+      <p><strong>Example:</strong> a 1.5 L bottle of olive oil at €3.60 → €3.60 / 1.5 = €2.40 per liter.</p>
+      <p class="also-see"><strong>See our</strong> <a href="/conversion/volume-converter/l-to-fl-oz">liters to fluid ounces converter</a>.</p>
+      <h3 id="price-per-fl-oz">Price per fl oz calculation</h3>
+      <p>The standard volume unit on US liquid product labels: juices, sports drinks, shampoo, and condiments. One US fl oz = 29.57 ml, so a 20 fl oz bottle holds about 591 ml. Use this unit when comparing products labeled in fl oz.</p>
+      <p><strong>Example:</strong> a 20 fl oz sports drink at $2.49 → $2.49 / 20 = $0.12 per fl oz.</p>
+      <p class="also-see"><strong>See our</strong> <a href="/conversion/volume-converter/fl-oz-to-ml">fluid ounces to milliliters converter</a>.</p>
+      <h3 id="price-per-gallon">Price per gallon calculation</h3>
+      <p>Common for fuel at US gas stations, large jugs of water, cleaning supplies, and paint. One US gallon = 128 fl oz = 3.785 liters. For large containers, per-gallon is often the most practical comparison unit.</p>
+      <p><strong>Example:</strong> a 2.5 gallon container of laundry detergent at $22.99 → $22.99 / 2.5 = $9.20 per gallon.</p>
+      <p class="also-see"><strong>See our</strong> <a href="/conversion/volume-converter/gal-to-l">US gallons to liters converter</a>.</p>
+      <h3 id="price-per-unit">Price per unit (count) calculation</h3>
+      <p>Used for multi-packs where the individual item count matters more than weight or volume: eggs, vitamin tablets, paper towels, water bottles, or batteries. Divide the total price by the number of items in the pack.</p>
+      <p><strong>Example:</strong> a pack of 48 vitamin tablets at $12.99 → $12.99 / 48 = $0.27 per tablet.</p>
+      <h2 id="best-value">How to compare unit prices for best value</h2>
+      <p>Calculate the same unit (e.g. price per 100 g) for every option, then pick the lowest number. According to a <a href="https://www.bls.gov/opub/reports/consumer-expenditures/2023/" target="_blank" rel="noferrer noopener">2023 US Consumer Expenditure Survey (BLS)</a>, US households spent an average of $412 per month on groceries.</p>
+      <p>Consistently buying the lower unit price product across just 10 routine items saves an estimated $400-600 per year.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Product</th><th>Total price</th><th>Size</th><th>Per 100 g</th><th>Best value?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Coffee A</td><td>€4.99</td><td>250 g</td><td>€1.996</td><td></td></tr>
+            <tr><td>Coffee B</td><td>€7.49</td><td>500 g</td><td>€1.498</td><td></td></tr>
+            <tr><td>Coffee C</td><td>€12.99</td><td>1 kg</td><td>€1.299</td><td>Best value</td></tr>
+            <tr><td>Coffee D (store brand)</td><td>€5.99</td><td>500 g</td><td>€1.198</td><td>Best value overall</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When I work through grocery comparisons like this table, one pattern shows up consistently: the store brand at a midrange pack size often beats the premium brand's largest size on unit price.</p>
+      <p>The brand premium is real and sometimes visible in ingredient quality, but on a pure price-per-gram basis, it rarely survives the calculation.</p>
+      <h2 id="weight-volume">Weight and volume unit reference</h2>
+      <p>The most common comparison error is mixing <a href="/conversion">weight and volume units</a>. A fluid ounce of water weighs about 29.6 g, but a fluid ounce of olive oil weighs 27.6 g - they're not interchangeable. Stick to weight-to-weight or volume-to-volume comparisons.</p>
+      <p>The table below shows the conversion factors used by this calculator.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Unit</th><th>Grams</th><th>Ounces</th><th>Pounds</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 g</td><td>1</td><td>0.0353</td><td>0.00220</td></tr>
+            <tr><td>100 g</td><td>100</td><td>3.527</td><td>0.2205</td></tr>
+            <tr><td>1 kg</td><td>1,000</td><td>35.27</td><td>2.205</td></tr>
+            <tr><td>1 oz</td><td>28.35</td><td>1</td><td>0.0625</td></tr>
+            <tr><td>1 lb</td><td>453.6</td><td>16</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Unit</th><th>Milliliters</th><th>Liters</th><th>Fluid oz (US)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 ml</td><td>1</td><td>0.001</td><td>0.0338</td></tr>
+            <tr><td>100 ml</td><td>100</td><td>0.1</td><td>3.381</td></tr>
+            <tr><td>1 L</td><td>1,000</td><td>1</td><td>33.81</td></tr>
+            <tr><td>1 fl oz (US)</td><td>29.57</td><td>0.02957</td><td>1</td></tr>
+            <tr><td>1 pint (US)</td><td>473.2</td><td>0.4732</td><td>16</td></tr>
+            <tr><td>1 gallon (US)</td><td>3,785</td><td>3.785</td><td>128</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="common-mistakes">Common mistakes when comparing unit prices</h2>
+      <h3>Dividing price by quantity in the wrong order</h3>
+      <p>Unit price is always price / quantity, not quantity / price. Dividing the wrong way gives you units per dollar - which sounds plausible but is the inverse. A spoken sanity check catches this: "50 cents per 100 g" makes sense; "2 hundred-grams per dollar" is odd phrasing and signals a division error.</p>
+      <h3>Comparing weight units with volume units</h3>
+      <p>A 500 ml bottle and a 500 g jar are not the same size for most products. Oil, honey, and sauces are denser than water, so the same volume weighs more. Only compare products that use the same unit type - both by weight or both by volume.</p>
+      <h3>Ignoring "per pack" labeling</h3>
+      <p>Some shelf labels show "price per 100 g" but the product itself is sold in pre-portioned sachets. A box of 20 sachets × 5 g each is 100 g total - but you're buying 20 servings, and the per-sachet cost may matter more than the per-gram price. Use the count unit for products where individual servings are what you're buying.</p>
+      <p>The wrong-direction error (dividing quantity by price) is the one I see most often when helping people set up grocery comparison spreadsheets.</p>
+      <p>The result always looks plausible - small decimal number, makes sense as a "rate" - but the moment you try to use it to project a total cost, the math breaks down. If your result gives you something in "grams per dollar," you've divided the wrong way.</p>
+      <h2 id="faq">Frequently asked questions about unit price</h2>
+      <h3>What is unit price?</h3>
+      <p>Unit price is the cost per standard unit of a product - per 100 g, per kg, per lb, or per litre. Divide total price by package quantity to get it. It is the standard metric for comparing differently sized products on the same basis, and it is legally required on retail labels in the EU and many US states.</p>
+      <h3>How do you calculate price per kg?</h3>
+      <p>Divide the total price by the weight in kilograms. If the weight is in grams, divide by 1,000 first. Example: €4.99 for 750 g = €4.99 / 0.75 kg = €6.65 per kg. This calculator handles the conversion automatically - enter the weight in any unit and it outputs per-kg alongside per-lb.</p>
+      <h3>Is a bigger pack always cheaper per unit?</h3>
+      <p>Usually, but not always. Sales pricing on smaller sizes, premium brand pricing on large formats, and store-brand vs. name-brand comparisons all create exceptions. The only reliable method is to calculate the unit price for every option before buying - never assume size alone determines value.</p>
+      <h3>Can I compare a price per kg with a price per lb?</h3>
+      <p>Not directly - 1 kg = 2.205 lb, so the scales are different. Enter one item in kg and the other in lb in this calculator and it converts both to grams internally, then shows results in matching units. You can also compare the per-kg column for both items.</p>
+      <h3>What is the difference between unit price and unit rate?</h3>
+      <p>Unit price is a specific application - cost per unit of product. <a href="/math/ratio-calculator/unit-rate">Unit rate</a> is the broader mathematical concept: any quantity expressed per one unit, including speed (km per hour), pay ($ per hour), or fuel efficiency (km per litre). Every unit price is a unit rate, but not all unit rates are prices.</p>
+      <QuizBlock
+        topic="unit pricing"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/unit-price-calculator"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/math/ratio-calculator/unit-rate',         blurb: 'Calculate any rate per one unit - price, speed, pay, or fuel.' },
+        { path: '/math/percentage-calculator/difference',   blurb: 'Calculate the percentage difference between two prices - uses the average as the base.' },
+        { path: '/conversion/weight-converter',             blurb: 'Convert between kg, g, lb, oz, and stone for any weight comparison.' },
+        { path: '/math/percentage-calculator/change',       blurb: 'Calculate the percentage saving between two prices.' },
+        { path: '/math/ratio-calculator',             blurb: 'Simplify and compare any two quantities as a ratio.' },
+        { path: '/finance/inflation-calculator',      blurb: 'Adjust historical prices for inflation to compare true costs across years.' },
+      ]} />
+      <RelatedGlossaryTerms toolPath="/math/unit-price-calculator" />
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .up-top-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .up-currency-field {
+    flex: 1;
+    min-width: 120px;
+    max-width: 180px;
+    margin: 0;
+  }
+  .up-items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .up-item-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: border-color 0.2s, background 0.2s;
+    min-width: 0;
+  }
+  .up-item-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 0.6rem;
+  }
+  .up-winner-card {
+    border-color: rgba(99,102,241,0.6);
+    background: rgba(99,102,241,0.08);
+  }
+  .up-loser-card {
+    border-color: rgba(255,255,255,0.05);
+    opacity: 0.75;
+  }
+  .up-item-result {
+    margin-top: 0.75rem;
+    min-height: 1.5rem;
+  }
+  .up-price-line {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.65;
+  }
+  .up-price-primary {
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .up-compare-box {
+    background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.12));
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 10px;
+    padding: 0.9rem 1.25rem;
+    text-align: center;
+  }
+  .up-winner {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  .up-qty-row {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .up-unit-wrap {
+    flex: 0 0 72px;
+  }
+  @media (max-width: 600px) {
+    .up-items-grid { grid-template-columns: 1fr; }
+    .up-currency-field { max-width: none; }
+  }
+</style>

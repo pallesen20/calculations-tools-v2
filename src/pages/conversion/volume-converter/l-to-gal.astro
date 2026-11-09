@@ -1,0 +1,194 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{gal} = \\text{L} \\times 0.264172$$",
+  rev: "$$\\text{L} = \\text{gal} \\times 3.78541$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert liters to gallons' },
+  { id: 'reverse',         label: 'How to convert gallons to liters' },
+  { id: 'reference-table', label: 'Liters to gallons reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Liters to Gallons Converter",
+    "url": "https://calculations.tools/conversion/volume-converter/l-to-gal",
+    "description": "Convert liters to US gallons instantly. Formula: gal = L × 0.264172. 1 L = 0.264 gal, 10 L = 2.64 gal, 1 gallon = 3.785 L.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert liters to gallons",
+    "description": "Multiply liters by 0.264172 to get US gallons.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter liter value", "text": "Type your liter value in the L field. The gallon result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted gallon value appears immediately. For 10 L, the result is 2.64 gallons." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the gallon field to convert back to liters." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many gallons is 1 liter?", "acceptedAnswer": { "@type": "Answer", "text": "1 liter equals 0.264172 US gallons. Multiply 1 by 0.264172: 1 × 0.264172 = 0.264 gallons." } },
+      { "@type": "Question", "name": "How many liters is 1 gallon?", "acceptedAnswer": { "@type": "Answer", "text": "1 US gallon equals 3.78541 liters. This is the standard US liquid gallon definition." } },
+      { "@type": "Question", "name": "How many gallons is 5 liters?", "acceptedAnswer": { "@type": "Answer", "text": "5 liters equals 1.321 US gallons. Multiply 5 by 0.264172: 5 × 0.264172 = 1.321 gallons." } },
+      { "@type": "Question", "name": "How many gallons is 20 liters?", "acceptedAnswer": { "@type": "Answer", "text": "20 liters equals 5.283 US gallons. Multiply 20 by 0.264172: 20 × 0.264172 = 5.283 gallons." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Liters to Gallons Converter"
+  metaTitle="Liters to Gallons Converter | Instantly convert L to gal"
+  description="Convert liters to US gallons instantly. 1 L = 0.264 gal, 10 L = 2.64 gal, 1 gallon = 3.785 liters. Essential for fuel, water, and large volume comparisons."
+  canonical="https://calculations.tools/conversion/volume-converter/l-to-gal"
+  tocItems={tocItems}
+  embedSlug="l-to-gal"
+  schema={schema}
+  ogFormula="gal = L × 0.264172"
+  ogExample="10 L = 2.64 gallons"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instantly Convert L to gal</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Liters (L)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 10" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Gallons (gal)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 2.64" />
+          </div>
+        </div>
+        <div class="pair-formula-note">1 gallon = 3.78541 L &nbsp;·&nbsp; 1 L = 0.264172 gallons &nbsp;·&nbsp; US liquid gallons</div>
+      </div>
+    </section>
+    <script src="/js/l-to-gal.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert liters to US gallons, multiply by <strong>0.264172</strong>. So 1 L = 0.264 gal, 10 L = 2.64 gal, and 20 L = 5.28 gal. For the reverse, 1 US gallon = 3.78541 liters - a bit less than 4 liters.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Formula: gal = L × 0.264172. Reverse: L = gal × 3.78541.</li>
+          <li>Quick mental check: 1 gallon is about 3.8 liters. 10 liters is about 2.6 gallons.</li>
+          <li>US gallon (3.785 L) differs from UK imperial gallon (4.546 L). This converter uses US gallons.</li>
+          <li>Common: 40 L tank = 10.57 gallons. 60 L tank = 15.85 gallons. 20 L jug = 5.28 gallons.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our L to gal converter</h2>
+      <p>Type any liter value in the L field and the gallon result appears instantly. You can also type in the gallon field to convert back to liters - both directions work without pressing a button.</p>
+      <h2 id="formula">How do you convert liters to gallons?</h2>
+      <p>Multiply the number of liters by 0.264172. This factor is derived from the exact US gallon definition: 1 US liquid gallon = 3.785411784 L exactly. So 1 L = 1/3.785411784 = 0.264172 gallons.</p>
+      <Formula expr={f.fwd} />
+      <p>Worked examples: 1 L = 0.264 gal. 5 L = 1.321 gal. 10 L = 2.642 gal. 20 L = 5.283 gal. 40 L = 10.567 gal. 50 L = 13.209 gal. 100 L = 26.417 gal.</p>
+      <h2 id="reverse">How do you convert gallons to liters?</h2>
+      <p class="also-see">Multiply gallons by 3.78541. See the dedicated <a href="/conversion/volume-converter/gal-to-l">gallons to liters converter</a> for a gallons-first reference table.</p>
+      <Formula expr={f.rev} />
+      <p>Worked examples: 1 gal = 3.785 L. 2 gal = 7.571 L. 5 gal = 18.927 L. 10 gal = 37.854 L.</p>
+      <h2 id="reference-table">Liters to gallons reference table</h2>
+      <p>Common liter values converted to US gallons, covering fuel tanks, water containers, and industrial volumes:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Liters (L)</th><th>Gallons (gal)</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 L</td><td>0.264 gal</td><td>Small bottle / 1 liter</td></tr>
+            <tr><td>4 L</td><td>1.057 gal</td><td>Approx 1 gallon (jugs)</td></tr>
+            <tr><td>5 L</td><td>1.321 gal</td><td>5-liter gas can</td></tr>
+            <tr><td>10 L</td><td>2.642 gal</td><td>Medium water container</td></tr>
+            <tr><td>20 L</td><td>5.283 gal</td><td>Water cooler jug</td></tr>
+            <tr><td>40 L</td><td>10.567 gal</td><td>Small fuel tank</td></tr>
+            <tr><td>50 L</td><td>13.209 gal</td><td>Medium car fuel tank</td></tr>
+            <tr><td>60 L</td><td>15.850 gal</td><td>Standard car fuel tank</td></tr>
+            <tr><td>75 L</td><td>19.813 gal</td><td>Large SUV fuel tank</td></tr>
+            <tr><td>100 L</td><td>26.417 gal</td><td>Large container / barrel</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="when-to-use">When do you need to convert liters to gallons?</h2>
+      <p>This conversion is essential when switching between metric and US systems for large volumes. The most common scenarios:</p>
+      <ul>
+        <li><strong>Fuel economy</strong> - comparing fuel consumption when one country quotes L/100km and another quotes mpg (miles per gallon).</li>
+        <li><strong>Water storage</strong> - comparing tank or container capacities between metric and US labeling.</li>
+        <li><strong>Cooking and brewing</strong> - scaling large-batch recipes between metric L and US gallon recipes.</li>
+        <li><strong>Purchasing</strong> - understanding how much liquid a metric product contains when you're used to gallon pricing.</li>
+      </ul>
+      <h2 id="faq">FAQs about converting liters to US gallons</h2>
+      <h3>How many gallons is 1 liter?</h3>
+      <p>1 liter equals 0.264 US gallons. Quick way to remember: it takes about 3.8 liters to make 1 gallon - so 1 liter is roughly a quarter of a gallon.</p>
+      <h3>How many liters is 1 gallon?</h3>
+      <p>1 US gallon equals 3.78541 liters. The UK imperial gallon is larger at 4.546 liters. This converter uses US gallons throughout.</p>
+      <h3>How many gallons is 5 liters?</h3>
+      <p>5 liters equals 1.321 US gallons. 5 × 0.264172 = 1.321 gallons. A standard 5-liter gas can holds about 1.3 gallons.</p>
+      <h3>How many gallons is 20 liters?</h3>
+      <p>20 liters equals 5.283 US gallons. 20 × 0.264172 = 5.28 gallons. A 20-liter water cooler jug holds about 5.3 gallons.</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/gal-to-l">Gallons to Liters Converter</a>
+            <p>Reverse conversion - enter gallons and get liters instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/l-to-fl-oz">Liters to Fluid Ounces</a>
+            <p>Convert liters to fl oz - for smaller US volume comparisons.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/pint-to-gal">Pints to Gallons</a>
+            <p>Convert between pints and gallons - 8 pints = 1 gallon.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter">Volume Converter (all units)</a>
+            <p>Convert between all volume units - ml, L, fl oz, cups, gallons, and more.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

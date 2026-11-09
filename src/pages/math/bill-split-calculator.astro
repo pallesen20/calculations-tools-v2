@@ -1,0 +1,521 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const sources: Source[] = [
+  {
+    author: 'Bankrate',
+    title: 'Tipping Culture Survey',
+    journal: 'Bankrate',
+    year: 2024,
+    url: 'https://www.bankrate.com/archive/tipping-culture-survey/',
+  },
+  {
+    author: 'U.S. Department of Labor',
+    title: 'Minimum Wages for Tipped Employees',
+    journal: 'Wage and Hour Division',
+    year: 2024,
+    url: 'https://www.dol.gov/agencies/whd/state/minimum-wage/tipped',
+  },
+  {
+    author: 'Internal Revenue Service',
+    title: 'Tip Recordkeeping and Reporting',
+    journal: 'IRS',
+    year: 2024,
+    url: 'https://www.irs.gov/businesses/small-businesses-self-employed/tip-recordkeeping-and-reporting',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this calculator' },
+  { id: 'split-equally',   label: 'How to split a bill equally' },
+  { id: 'tip-guide',       label: 'Tip guide: how much to tip' },
+  { id: 'custom-split',    label: 'How to split a bill unequally' },
+  { id: 'dutch',           label: 'What is going Dutch?' },
+  { id: 'common-mistakes', label: 'Common mistakes' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: '4 people share a $96 restaurant bill with an 18% tip. How much does each person pay?',
+    options: [
+      '$28.32 each',
+      '$24.00 each',
+      '$26.88 each',
+      '$22.56 each',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Tip = $96 × 18% = $17.28. Grand total = $96 + $17.28 = $113.28. Per person = $113.28 / 4 = $28.32. Always add tip to the subtotal before dividing.',
+  },
+  {
+    q: 'Alice had $40 of food, Bob had $20, on a $60 subtotal with a 20% tip. What is Alice\'s share including her proportional tip?',
+    options: [
+      '$48.00',
+      '$52.00',
+      '$44.00',
+      '$50.00',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Total tip = $60 × 20% = $12. Alice\'s share of the bill = 40/60 = 67%. Her tip = 67% × $12 = $8. Total = $40 + $8 = $48. Each person pays tip in proportion to what they ordered.',
+  },
+  {
+    q: 'What percentage tip is considered standard at a sit-down restaurant in the US?',
+    options: [
+      '10-12%',
+      '18-20%',
+      '5-8%',
+      '25-30%',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '18-20% is the widely accepted standard tip at a US sit-down restaurant for good service. 15% is considered acceptable for average service; 20%+ for excellent service.',
+  },
+  {
+    q: 'What does "going Dutch" mean when splitting a bill?',
+    options: [
+      'The host pays the entire bill',
+      'Each person pays exactly for what they ordered',
+      'Each person pays an equal share of the total',
+      'The oldest person pays for the group',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '"Going Dutch" means each person pays an equal share of the total bill, regardless of what they ordered. It is the simplest and most common bill-splitting method for groups.',
+  },
+  {
+    q: 'A dinner bill is $150. You want to leave a 20% tip. The restaurant already added 8% tax. What is the correct tip amount?',
+    options: [
+      '$30.00 (20% of $150)',
+      '$25.60 (20% of $128, the pre-tax amount)',
+      '$32.40 (20% of $162, post-tax)',
+      'Cannot be determined without more info',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'If the $150 bill already includes tax, tip 20% of $150 = $30. If $150 is the pre-tax subtotal and 8% tax brings it to $162, 20% of $162 = $32.40. Etiquette guides suggest tipping on the pre-tax amount, but tipping on the post-tax total is also common.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Split Bill Calculator",
+    "url": "https://calculations.tools/math/bill-split-calculator",
+    "description": "Split any restaurant bill or group expense equally or by custom amounts. Includes tip and tax calculation with proportional allocation per person.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to split a bill using the split bill calculator",
+    "description": "Split a restaurant or group bill equally or by individual amounts, including tip and tax.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter the bill total", "text": "Type the subtotal before tip and tax. If your bill already includes tax, enter the full amount and leave the tax field at 0." },
+      { "@type": "HowToStep", "position": 2, "name": "Add tip and tax percentages", "text": "Use the preset tip buttons (0%, 10%, 15%, 18%, 20%, 25%) or type a custom percentage. Add a tax percentage if tax is not already included in the bill." },
+      { "@type": "HowToStep", "position": 3, "name": "Choose equal or custom split", "text": "For an equal split, enter the number of people and read the per-person amount. For a custom split, switch to Custom mode, add each person's name, and enter what they ordered." },
+      { "@type": "HowToStep", "position": 4, "name": "Read each person's share", "text": "In equal mode, see the amount per person including tip and tax. In custom mode, each person's share shows their food amount plus their proportional share of tip and tax." },
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do you calculate splitting a bill?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Add any tip and tax to the subtotal first to get the grand total. Then divide by the number of people for an equal split. Example: a $80 bill with 20% tip is $96 total; divided by 4 people is $24 each." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you split a bill unequally?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Each person enters the amount they ordered. Tip and tax are then split proportionally - if someone ordered 60% of the food, they pay 60% of the tip and tax. This calculator handles the math automatically in Custom split mode." }
+      },
+      {
+        "@type": "Question",
+        "name": "Should you tip before or after splitting the bill?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Add the tip to the full bill first, then split. The tip is a percentage of the subtotal - if you split the food amount first and each person adds their own tip, the tip can end up incorrectly applied or unevenly distributed." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the standard tip at a restaurant in the US?",
+        "acceptedAnswer": { "@type": "Answer", "text": "18-20% is the widely accepted standard for a sit-down restaurant in the US. 15% is considered acceptable for average service. For exceptional service, 20-25% is common. Delivery tips typically range from 15-20% of the order total." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the formula for splitting a bill?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Each person pays = (Subtotal + Tip + Tax) / Number of people. For unequal splits: each person pays their food amount + (their food amount / total subtotal) × (tip + tax). The tip and tax are proportional to what each person ordered." }
+      },
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Split Bill Calculator"
+  metaTitle="Split Bill Calculator | Equal & Custom Bill Splitter"
+  description="Split any restaurant bill or group expense equally or by custom amounts. Add tip and tax, name each person, and get everyone's exact share instantly."
+  canonical="https://calculations.tools/math/bill-split-calculator"
+  tocItems={tocItems}
+  embedSlug="bill-split-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="Each person pays = (Bill + Tip + Tax) / Number of people"
+  ogExample="$120 bill + 20% tip ($24) / 4 people = $36 each"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Split a Bill Instantly</h2>
+          <p>Split any bill equally or by person</p>
+        </div>
+        <div class="bs-top-row">
+          <div class="bmi-field bs-currency-field">
+            <label class="bmi-label" for="bs-currency">Currency</label>
+            <div class="bmi-input-wrap">
+              <select id="bs-currency" class="bmi-input"></select>
+            </div>
+          </div>
+          <div class="bmi-unit-toggle" style="margin-bottom: 0;">
+            <button class="bmi-unit-btn active" id="bs-mode-equal">Equal split</button>
+            <button class="bmi-unit-btn" id="bs-mode-custom">Custom split</button>
+          </div>
+        </div>
+        <div class="bs-inputs-grid">
+          <div class="bmi-field">
+            <label class="bmi-label" for="bs-total">Bill total</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="bs-total" class="bmi-input" placeholder="e.g. 120.00" />
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="bs-tip">Tip %</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="bs-tip" class="bmi-input" placeholder="e.g. 18" />
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="bs-tax">Tax %</label>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="bs-tax" class="bmi-input" placeholder="optional" />
+            </div>
+          </div>
+        </div>
+        <div class="bs-tip-presets">
+          <button class="bs-tip-preset" data-tip="0">No tip</button>
+          <button class="bs-tip-preset" data-tip="10">10%</button>
+          <button class="bs-tip-preset" data-tip="15">15%</button>
+          <button class="bs-tip-preset" data-tip="18">18%</button>
+          <button class="bs-tip-preset" data-tip="20">20%</button>
+          <button class="bs-tip-preset" data-tip="25">25%</button>
+        </div>
+        <div id="bs-equal-section">
+          <div class="bmi-field">
+            <label class="bmi-label" for="bs-count">Number of people</label>
+            <div class="bs-count-row">
+              <button class="bs-count-btn" id="bs-count-minus">-</button>
+              <div class="bmi-input-wrap bs-count-wrap">
+                <input type="text" inputmode="decimal" id="bs-count" class="bmi-input" value="2" />
+              </div>
+              <button class="bs-count-btn" id="bs-count-plus">+</button>
+            </div>
+          </div>
+        </div>
+        <div id="bs-custom-section" style="display:none;">
+          <div class="bs-custom-header">
+            <span class="bmi-label">Person</span>
+            <span class="bmi-label">Their amount</span>
+          </div>
+          <div id="bs-people-list"></div>
+          <button class="bs-add-btn" id="bs-add-person">+ Add person</button>
+        </div>
+        <div id="bs-result"></div>
+      </div>
+    </section>
+    <script src="/js/bill-split-calculator.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>A bill split calculator divides a restaurant or group bill among multiple people. Enter the total, add a tip percentage, and choose equal or custom split. For equal splits, divide the grand total by the number of people. For custom splits, each person pays for what they ordered plus their proportional share of tip and tax.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Equal split formula: each person pays = (subtotal + tip + tax) / number of people.</li>
+          <li>Standard US restaurant tip is 18-20% of the pre-tax subtotal.</li>
+          <li>For custom splits, divide tip and tax proportionally - not equally - based on what each person ordered.</li>
+          <li>Americans spend over $1 trillion dining out each year (National Restaurant Association, 2023), making bill splitting one of the most common everyday math tasks.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our bill splitter</h2>
+      <p>Enter the bill total, select a tip percentage using the preset buttons, and add a tax percentage if tax is not already included. For equal splits, set the number of people and read the per-person amount. For custom splits, switch to Custom mode, add each person's name, and type what they ordered - the calculator splits tip and tax proportionally.</p>
+      <p>The tax field is optional. If your bill already includes tax (common outside the US), leave it at 0 and enter the full post-tax total as the bill amount. The tip presets cover the most common US rates - type any percentage directly into the tip field for other rates.</p>
+      <h2 id="split-equally">How to split a restaurant bill equally</h2>
+      <p>Equal splitting is the most common approach for groups dining together. Add tip and tax to the subtotal first to get the grand total, then divide by the number of people.</p>
+      <p>For a $120 dinner with 4 people and a 20% tip: tip = $24, grand total = $144, each person pays $36 - a <a href="/math/ratio-calculator/unit-rate">unit rate</a> of total divided by people. Many groups skip adding tip before dividing and end up under-paying the server.</p>
+      <p>Equal splits work best when everyone ordered roughly the same amount. If one person had a $12 salad and another had a $45 steak, equal splitting creates obvious unfairness. That's when the custom split mode becomes the right tool.</p>
+      <h2 id="tip-guide">How much should you tip?</h2>
+      <p>The standard tip at a US sit-down restaurant is 18-20% of the pre-tax subtotal (<a href="https://www.bankrate.com/archive/tipping-culture-survey/" target="_blank" rel="noopener noreferrer">Bankrate, 2024</a>). Tip percentages vary by service type and country. In many European countries, tipping is optional or rounded up to the nearest whole amount.</p>
+      <p>In the US and Canada, tipping is expected at table-service restaurants because the federal tipped minimum wage is $2.13/hour (<a href="https://www.dol.gov/agencies/whd/state/minimum-wage/tipped" target="_blank" rel="noopener noreferrer">DOL, 2024</a>) - tips make up the difference to minimum wage.</p>
+      <p><strong>Disclaimer:</strong> Tipping obviously varies by country. In some countries, it is normal not to tip at all. Throughout Scandinavia for example, it is very normal to see customers not leaving any tip. This is because the minimum wage is higher here than the global average.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Service type</th>
+              <th>Suggested tip</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Sit-down restaurant (excellent)</td><td>20-25%</td><td>Standard for attentive service</td></tr>
+            <tr><td>Sit-down restaurant (average)</td><td>15-18%</td><td>Minimum considered acceptable in US</td></tr>
+            <tr><td>Food delivery</td><td>15-20%</td><td>Minimum $3-5 for small orders</td></tr>
+            <tr><td>Bar service</td><td>15-20%</td><td>Or $1-2 per drink</td></tr>
+            <tr><td>Buffet</td><td>10%</td><td>Lower as full service is not provided</td></tr>
+            <tr><td>Takeout (counter service)</td><td>0-10%</td><td>Optional; not expected</td></tr>
+            <tr><td>Coffee shop</td><td>10-15%</td><td>Optional for simple orders</td></tr>
+            <tr><td>Fast food</td><td>0%</td><td>Not expected</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When I work through bill splits with groups, I often see people tip on the post-tax total rather than the pre-tax subtotal. Both approaches are acceptable - tipping on the full post-tax amount is more generous by roughly the tax rate (8-10% in most US states). The etiquette guides say pre-tax, but most servers don't distinguish.</p>
+      <h2 id="custom-split">How do you split a bill unequally?</h2>
+      <p>For an unequal split, each person pays for what they ordered plus a proportional share of the tip and tax. If Alice ordered $40 of food and Bob ordered $20 on a $60 subtotal, Alice is responsible for 67% of the bill. With a 20% tip ($12), Alice pays $40 + 67% × $12 = $48. Bob pays $20 + 33% × $12 = $24.</p>
+      <p>The key rule: tip and tax should follow the food amounts, not be divided equally. Splitting tip equally when orders vary significantly means the person who ordered more effectively gets a discounted tip rate while the lighter eater subsidizes them. This calculator uses proportional allocation in custom mode automatically.</p>
+      <p>In my experience, the custom split works best when each person enters their own amount rather than one person trying to remember what everyone had. Pass the phone around the table - it takes 20 seconds and avoids arguments.</p>
+      <h2 id="dutch">What is "going Dutch" and when should you use it?</h2>
+      <p>Going Dutch means each person pays an equal share of the total, regardless of what they individually ordered.</p>
+      <p>The term originated in the 17th century from Dutch cultural practices around individual financial responsibility. It is the simplest approach for groups of close friends where minor differences in what people ordered are not worth calculating out.</p>
+      <p>Going Dutch works well for recurring group dinners where the balance evens out over time. It becomes unfair when there are large price differences - for example, when some people drink alcohol and others don't, or when one person orders a significantly more expensive entree. For those situations, use the custom split mode.</p>
+      <h2 id="common-mistakes">Common bill-splitting mistakes</h2>
+      <p>The most common error is forgetting to add tip before dividing. If four people split a $100 bill as $25 each and then leave a 20% tip separately, they're calculating correctly. But if they split $25 each and assume that includes the tip, the server receives nothing. Always calculate the final amount including tip, then divide.</p>
+      <p>A second common mistake: using an equal split when drinks are involved. One person who ordered three glasses of wine and a person who drank water will have very different bills. For mixed groups, the custom split removes the awkwardness of someone suggesting they should pay less - the numbers speak for themselves.</p>
+      <p>Third: forgetting that some restaurants add a service charge automatically for large parties (usually 6+ people). The IRS distinguishes mandatory service charges from voluntary tips - they are taxed differently (<a href="https://www.irs.gov/businesses/small-businesses-self-employed/tip-recordkeeping-and-reporting" target="_blank" rel="noopener noreferrer">IRS</a>). Check the bill before adding a tip - you may already be paying 18% built in. Adding 20% on top of a mandatory 18% service charge means tipping nearly 40%.</p>
+      <h2 id="faq">FAQs about splitting a bill</h2>
+      <h3>How do you calculate splitting a bill?</h3>
+      <p>Add any tip and tax to the subtotal first to get the grand total. Then divide by the number of people for an equal split. Example: an $80 bill with 20% tip is $96 total; divided by 4 people equals $24 each. Use the <a href="/math/percentage-calculator">percentage calculator</a> if you need to work out the tip amount separately.</p>
+      <h3>Should you tip before or after splitting the bill?</h3>
+      <p>Always add tip to the full bill before splitting, not after. If each person calculates their own tip on their share, rounding differences and varying percentages can leave the server with an inconsistent amount. Agree on the tip percentage as a group, calculate it on the full subtotal, then split the total amount equally or by proportion.</p>
+      <h3>How do you split a bill when someone doesn't drink alcohol?</h3>
+      <p>Use the custom split mode. Each person enters the total cost of what they ordered, including their drinks. The non-drinker enters only their food amount. Tip and tax are then split proportionally. This is fairer than equal splitting when one person's alcohol significantly inflates the total.</p>
+      <h3>What is the formula for splitting a bill with tax and tip?</h3>
+      <p>Grand total = subtotal + (subtotal × tip%) + (subtotal × tax%). Per person (equal) = grand total / N. Per person (custom) = their food amount + (their food / subtotal) × (tip amount + tax amount). The custom formula ensures the person who ordered more also pays more of the shared charges.</p>
+      <h3>Does a large party tip get split equally?</h3>
+      <p>In equal split mode, yes - tip is divided equally among all people. In custom split mode, each person's tip contribution is proportional to what they ordered. For large parties where the restaurant adds a mandatory service charge, verify the bill first to avoid double-tipping on top of the automatic gratuity.</p>
+      <QuizBlock
+        topic="bill splitting"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/math/bill-split-calculator"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools
+        tools={[
+          { path: '/math/percentage-calculator', icon: '%', title: 'Percentage Calculator', blurb: 'Calculate tip amounts, tax percentages, or any percentage of a total amount.' },
+          { path: '/math/unit-price-calculator', icon: '🏷️', title: 'Unit Price Calculator', blurb: 'Compare two products by price per kg, lb, or litre to find the better deal before you order.' },
+          { path: '/finance/roi-calculator', icon: '📈', title: 'ROI Calculator', blurb: 'Measure the return on any group investment or shared purchase.' },
+          { path: '/math/ratio-calculator', icon: '⚖️', title: 'Ratio Calculator', blurb: 'Work out proportional shares for any ratio-based split.' },
+          { path: '/math/percentage-calculator/difference', icon: '±', title: 'Percentage Difference', blurb: 'Find the percentage difference between two amounts - useful for comparing what different people paid.' },
+        ]}
+      />
+      <RelatedGlossaryTerms toolPath="/math/bill-split-calculator" />
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .bs-top-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .bs-currency-field {
+    flex: 1;
+    min-width: 120px;
+    max-width: 180px;
+    margin: 0;
+  }
+  .bs-inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .bs-tip-presets {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .bs-tip-preset {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.8rem;
+    padding: 0.3rem 0.75rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .bs-tip-preset:hover { background: rgba(255,255,255,0.14); color: white; }
+  .bs-tip-preset.active { background: rgba(99,102,241,0.3); border-color: rgba(99,102,241,0.6); color: white; }
+  .bs-count-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .bs-count-wrap { flex: 1; }
+  .bs-count-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    color: white;
+    font-size: 1.1rem;
+    width: 42px;
+    cursor: pointer;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .bs-count-btn:hover { background: rgba(255,255,255,0.16); }
+  .bs-result-card {
+    background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.15));
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .bs-per-person-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.4rem;
+  }
+  .bs-per-person-amount {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .bs-per-person-meta { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+  .bs-breakdown {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-top: 0.75rem;
+  }
+  .bs-breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.75);
+  }
+  .bs-breakdown-total {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 0.3rem;
+    padding-top: 0.6rem;
+    color: white;
+    font-weight: 600;
+  }
+  .bs-breakdown-muted { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+  .bs-custom-header {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    padding: 0 0.1rem;
+  }
+  .bs-custom-header .bmi-label { flex: 1; min-width: 0; font-size: 0.72rem; }
+  .bs-custom-header .bmi-label:last-child { flex: 0 0 110px; }
+  .bs-person-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+    margin-bottom: 0.6rem;
+  }
+  .bs-name-wrap { flex: 1; min-width: 0; }
+  .bs-amt-wrap { flex: 0 0 110px; }
+  .bs-remove-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.45);
+    font-size: 1rem;
+    width: 36px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .bs-remove-btn:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); color: rgba(239,68,68,0.9); }
+  .bs-add-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 0.75rem;
+    transition: background 0.15s;
+  }
+  .bs-add-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+  .bs-custom-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.6rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .bs-person-result {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 0.75rem;
+    min-width: 0;
+  }
+  .bs-person-result-name {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bs-person-result-amount { font-size: 1.1rem; font-weight: 700; color: white; }
+  .bs-person-result-meta { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
+  .bs-status {
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+  }
+  .bs-status-ok { background: rgba(34,197,94,0.1); color: rgba(134,239,172,0.9); }
+  .bs-status-warn { background: rgba(251,191,36,0.1); color: rgba(252,211,77,0.9); }
+  @media (max-width: 540px) {
+    .bs-inputs-grid { grid-template-columns: 1fr 1fr; }
+    .bs-custom-cards { grid-template-columns: 1fr 1fr; }
+    .bs-currency-field { max-width: none; }
+  }
+  @media (max-width: 380px) {
+    .bs-inputs-grid { grid-template-columns: 1fr; }
+  }
+</style>

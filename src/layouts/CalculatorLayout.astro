@@ -150,6 +150,7 @@ const iframeSnippet = embedUrl
               </ul>
             </nav>
           )}
+          {sources && sources.length > 0 && <Sources sources={sources} />}
           <HelpfulVote canonical={canonical ?? '/'} variant="sidebar" />
           {embedUrl && (
             <div class="embed-section">
@@ -165,7 +166,6 @@ const iframeSnippet = embedUrl
               </div>
             </div>
           )}
-          {sources && sources.length > 0 && <Sources sources={sources} />}
         </aside>
         <div class="page-content">
           <slot name="content" />

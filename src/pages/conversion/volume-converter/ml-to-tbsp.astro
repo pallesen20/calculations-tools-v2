@@ -1,0 +1,179 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{tbsp} = \\text{ml} \\div 14.7868$$",
+  rev: "$$\\text{ml} = \\text{tbsp} \\times 14.7868$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert ml to tablespoons' },
+  { id: 'reference-table', label: 'ml to tablespoons reference table' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Milliliters to Tablespoons Converter",
+    "url": "https://calculations.tools/conversion/volume-converter/ml-to-tbsp",
+    "description": "Convert milliliters to tablespoons for cooking. 15 ml = 1 tablespoon, 30 ml = 2 tablespoons, 60 ml = 4 tablespoons (1/4 cup).",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert milliliters to tablespoons",
+    "description": "Divide ml by 14.7868 to get tablespoons.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter ml value", "text": "Type your ml value in the ml field. The tablespoon result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted tablespoon value appears. For 15 ml, the result is 1.01 tablespoons." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the tablespoons field to convert back to ml." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many tablespoons is 15 ml?", "acceptedAnswer": { "@type": "Answer", "text": "15 ml equals 1.014 tablespoons - essentially 1 tablespoon. The exact US tablespoon is 14.787 ml, so this is a minor rounding accepted in recipes." } },
+      { "@type": "Question", "name": "How many tablespoons is 30 ml?", "acceptedAnswer": { "@type": "Answer", "text": "30 ml equals 2.03 tablespoons - just over 2 tablespoons. 30 ml is also approximately 1 fluid ounce." } },
+      { "@type": "Question", "name": "How many tablespoons is 60 ml?", "acceptedAnswer": { "@type": "Answer", "text": "60 ml equals 4.058 tablespoons - about 4 tablespoons or 1/4 cup. Divide 60 by 14.7868 = 4.058 tbsp." } },
+      { "@type": "Question", "name": "How many tablespoons is 100 ml?", "acceptedAnswer": { "@type": "Answer", "text": "100 ml equals 6.76 tablespoons. Divide 100 by 14.7868 = 6.76 tbsp. That's 6 tablespoons plus a bit less than 1 teaspoon." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Milliliters to Tablespoons Converter"
+  metaTitle="Milliliters to Tablespoons | Instantly Convert ml to tbsp"
+  description="Convert ml to tablespoons for cooking. 15 ml = 1 tablespoon, 30 ml = 2 tablespoons, 60 ml = 4 tablespoons. Enter ml or tbsp - converts both directions."
+  canonical="https://calculations.tools/conversion/volume-converter/ml-to-tbsp"
+  tocItems={tocItems}
+  embedSlug="ml-to-tbsp"
+  schema={schema}
+  ogFormula="tbsp = ml ÷ 14.7868"
+  ogExample="15 ml = 1 tablespoon"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instantly Convert ml to tbsp</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Milliliters (ml)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 15" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Tablespoons (tbsp)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+        </div>
+        <div class="pair-formula-note">1 tbsp = 14.7868 ml &nbsp;·&nbsp; US tablespoon</div>
+      </div>
+    </section>
+    <script src="/js/ml-to-tbsp.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert milliliters to tablespoons, divide by <strong>14.7868</strong>. So 15 ml = 1 tablespoon, 30 ml = 2 tablespoons, and 60 ml = 4 tablespoons (1/4 cup). For quick math: divide by 15 to get approximate tablespoons.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Formula: tbsp = ml ÷ 14.7868. Quick estimate: divide by 15 for approximate tablespoons.</li>
+          <li>15 ml = 1 tbsp. 30 ml = 2 tbsp. 45 ml = 3 tbsp. 60 ml = 4 tbsp (1/4 cup).</li>
+          <li>1 tablespoon = 3 teaspoons. 16 tablespoons = 1 cup = 236.6 ml.</li>
+          <li>Reverse: ml = tbsp × 14.7868.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our ml to tbsp converter</h2>
+      <p>Type any ml value in the ml field and the tablespoon result appears instantly. Use it in reverse to find ml for a given number of tablespoons. Both directions work without pressing a button.</p>
+      <h2 id="formula">How do you convert ml to tablespoons?</h2>
+      <p>Divide the number of milliliters by 14.7868. For everyday cooking, dividing by 15 gives a close enough result - the error is less than 1.5%. For medicine or precision baking, use the exact factor.</p>
+      <Formula expr={f.fwd} />
+      <p>Worked examples: 15 ml = 1.01 tbsp. 30 ml = 2.03 tbsp. 45 ml = 3.04 tbsp. 60 ml = 4.06 tbsp. 120 ml = 8.11 tbsp (1/2 cup). 240 ml = 16.23 tbsp (1 cup).</p>
+      <h2 id="reference-table">Milliliters to tablespoons reference table</h2>
+      <p>Common ml amounts expressed in tablespoons, with cup fraction equivalents:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Milliliters (ml)</th><th>Tablespoons</th><th>Cup equivalent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>15 ml</td><td>1 tbsp</td><td>1/16 cup</td></tr>
+            <tr><td>30 ml</td><td>2 tbsp</td><td>1/8 cup</td></tr>
+            <tr><td>45 ml</td><td>3 tbsp</td><td>3/16 cup</td></tr>
+            <tr><td>60 ml</td><td>4 tbsp</td><td>1/4 cup</td></tr>
+            <tr><td>75 ml</td><td>5.07 tbsp</td><td>-</td></tr>
+            <tr><td>90 ml</td><td>6.08 tbsp</td><td>3/8 cup</td></tr>
+            <tr><td>120 ml</td><td>8.11 tbsp</td><td>1/2 cup</td></tr>
+            <tr><td>180 ml</td><td>12.17 tbsp</td><td>3/4 cup</td></tr>
+            <tr><td>240 ml</td><td>16.23 tbsp</td><td>1 cup</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="faq">FAQs about ml to tbsp conversion</h2>
+      <h3>How many tablespoons is 15 ml?</h3>
+      <p>15 ml equals just over 1 tablespoon (1.014 tbsp exactly). In practice, 15 ml and 1 tablespoon are used interchangeably in recipes - the difference is under 1.5%.</p>
+      <h3>How many tablespoons is 30 ml?</h3>
+      <p>30 ml equals 2.03 tablespoons - essentially 2 tablespoons. 30 ml is also nearly 1 fluid ounce (1 fl oz = 29.57 ml), which equals 2 tablespoons exactly.</p>
+      <h3>How many tablespoons is 60 ml?</h3>
+      <p>60 ml equals about 4 tablespoons. 4 tablespoons = 1/4 cup = 2 fl oz = 59.15 ml. The small difference (0.85 ml) is negligible for cooking.</p>
+      <h3>How many tablespoons is 100 ml?</h3>
+      <p>100 ml equals 6.76 tablespoons. That's 6 tablespoons plus about 3/4 teaspoon. For recipes: measure 6 tablespoons and add 1 teaspoon (5 ml), which gives 6 tbsp + 1 tsp = 94 ml - close enough for cooking.</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/tbsp-to-ml">Tablespoons to Milliliters</a>
+            <p>Reverse conversion - enter tablespoons and get ml instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/ml-to-tsp">Milliliters to Teaspoons</a>
+            <p>Convert ml to teaspoons - 5 ml = 1 teaspoon.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/ml-to-cup">Milliliters to Cups</a>
+            <p>Convert ml to US cups - 240 ml = 1 cup.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter">Volume Converter (all units)</a>
+            <p>Convert between all volume units - ml, L, fl oz, cups, gallons, and more.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

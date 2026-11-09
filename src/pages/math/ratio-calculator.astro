@@ -4,6 +4,7 @@ import Formula from '../../components/Formula.astro';
 import RelatedTools from '../../components/RelatedTools.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import QuizBlock from '../../components/QuizBlock.astro';
+import SubPageCards from '../../components/SubPageCards.astro';
 
 const f = {
   def:      "$$a : b = \\frac{a}{b}$$",
@@ -175,6 +176,7 @@ const schema = [
         <p>To simplify a <a href="/glossary/ratio">ratio</a> a:b, <strong>divide both terms by their GCD</strong>. 12:8 → GCD = 4 → <strong>3:2</strong>. Equivalent ratios are found by multiplying both terms by the same number.</p>
         <p>GCD = Greatest Common Divisor - the largest number that divides evenly into both terms. For 12 and 8, GCD = 4 because 4 is the highest factor shared by both.</p>
       </div>
+      <SubPageCards parentPath="/math/ratio-calculator" heading="Specific ratio calculators" />
       <h2 id="how-to-use">How to use this ratio calculator</h2>
       <p>Enter the two terms of your ratio. Optionally enter a scale multiplier to generate a scaled equivalent. The calculator returns the simplified ratio, <a href="/math/fraction-calculator">fraction form</a>, decimal value, and step-by-step GCD workings.</p>
       <h2 id="what-is">What is a ratio?</h2>

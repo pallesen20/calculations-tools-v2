@@ -1,0 +1,51 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Volume Converter">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Volume Converter</h2>
+        <p>Enter a value and select units</p>
+      </div>
+
+      <div id="vc-quick" class="lc-quick"></div>
+
+      <div class="lc-inputs">
+        <div class="input-group">
+          <label for="vc-value">Value</label>
+          <input id="vc-value" type="text" inputmode="decimal" value="1" placeholder="Enter value" />
+        </div>
+        <div class="input-group">
+          <label for="vc-from">From</label>
+          <select id="vc-from"></select>
+        </div>
+        <div class="unit-swap-wrap">
+          <button class="unit-swap" id="vc-swap" title="Swap units" aria-label="Swap units">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#ffffff" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+          </button>
+        </div>
+        <div class="input-group">
+          <label for="vc-to">To</label>
+          <select id="vc-to"></select>
+        </div>
+      </div>
+
+      <div class="lc-result-box">
+        <div class="result-label">Result</div>
+        <div class="lc-result" id="vc-result">-</div>
+        <div class="lc-result-desc" id="vc-result-desc"></div>
+      </div>
+
+      <div>
+        <h3 id="vc-common-title" class="lc-common-title"></h3>
+        <div id="vc-common" class="lc-common-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/volume-converter.js" is:inline></script>
+</EmbedLayout>

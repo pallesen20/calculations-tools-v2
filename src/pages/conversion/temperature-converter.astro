@@ -4,6 +4,7 @@ import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import Formula from '../../components/Formula.astro';
 import type { Source } from '../../components/Sources.astro';
 import QuizBlock from '../../components/QuizBlock.astro';
+import SubPageCards from '../../components/SubPageCards.astro';
 
 const sources: Source[] = [
   {
@@ -186,6 +187,7 @@ const schema = [
         <div class="answer-box-label">Quick answer</div>
         <p>To convert <a href="/conversion/temperature-converter/c-to-f">Celsius to Fahrenheit</a>: multiply by 9/5 then add 32. To convert <a href="/conversion/temperature-converter/f-to-c">Fahrenheit to Celsius</a>: subtract 32 then multiply by 5/9. Example: 100°C = 212°F; 72°F = 22.2°C. To convert to Kelvin, add 273.15 to the Celsius value.</p>
       </div>
+      <SubPageCards parentPath="/conversion/temperature-converter" heading="Specific temperature converters" />
       <h2 id="how-to-use">How to use our temperature converter</h2>
       <p>Type a temperature in the input field, choose the scale you are converting from, then choose the target scale. The result updates instantly. Quick conversion buttons at the top jump to the most common pairs. All five scales are supported: Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur. All calculations run locally in your browser.</p>
       <h2 id="scales">The five temperature scales</h2>
@@ -212,17 +214,17 @@ const schema = [
       <Formula expr={f.cToF} />
       <p>Examples: 0°C = 32°F, 20°C = 68°F, 37°C = 98.6°F, 100°C = 212°F.</p>
       <p>Quick mental estimate: double the Celsius value and add 30. This gives 0°C ≈ 30°F (actual: 32°F) and 20°C ≈ 70°F (actual: 68°F). The estimate is off by a couple of degrees but useful for quick comparisons.</p>
-      <p>Also see: <a href="/conversion/temperature-converter/c-to-f">Celsius to Fahrenheit converter</a>.</p>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/temperature-converter/c-to-f">Celsius to Fahrenheit converter</a>.</p>
       <h3>Fahrenheit to Celsius</h3>
       <p>Subtract 32 first (remove the zero-point offset), then multiply by 5/9 (scale back to Celsius degree size).</p>
       <Formula expr={f.fToC} />
       <p>Examples: 32°F = 0°C, 72°F = 22.2°C, 98.6°F = 37°C, 212°F = 100°C.</p>
-      <p>Also see: <a href="/conversion/temperature-converter/f-to-c">Fahrenheit to Celsius converter</a>.</p>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/temperature-converter/f-to-c">Fahrenheit to Celsius converter</a>.</p>
       <h3>Celsius to Kelvin</h3>
       <p>Celsius and Kelvin use the same degree size, so you only need to shift the zero point.</p>
       <Formula expr={f.cToK} />
       <p>Examples: 0°C = 273.15 K, 25°C = 298.15 K, 100°C = 373.15 K.</p>
-      <p>Also see: <a href="/conversion/temperature-converter/c-to-k">Celsius to Kelvin converter</a>.</p>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/temperature-converter/c-to-k">Celsius to Kelvin converter</a>.</p>
       <h2 id="reference">Key reference points for temperature scales</h2>
       <p>These are the most useful fixed points across all five scales.</p>
       <div class="responsive-table">

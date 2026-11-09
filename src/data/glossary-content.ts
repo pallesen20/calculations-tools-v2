@@ -1069,6 +1069,76 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'gratuity': {
+    definition: [
+      'A gratuity - commonly called a tip - is a voluntary payment added to a bill as a reward for good service. It is expressed as a percentage of the pre-tax subtotal. In the US, tipping is a cultural standard at sit-down restaurants, with 18-20% now considered the baseline for satisfactory service.',
+      'Gratuities serve as a primary income source for service workers in countries where base wages are set below the standard minimum wage (notably the US). In many other countries - most of Europe, Japan, South Korea - tipping is optional or not expected at all, and service staff are paid a standard wage.',
+    ],
+    keyTakeaways: [
+      'Standard US restaurant tip: 18-20% of the pre-tax subtotal for satisfactory service.',
+      'Tip formula: Tip = Subtotal x (Tip% / 100). Always apply to the pre-tax amount.',
+      'Tip before splitting the bill - add the full tip to the total, then divide among the group.',
+      'Automatic gratuity (service charge) is often added for groups of 6 or more. Check the bill before tipping extra.',
+      'Delivery tips: 15-20% is standard, with a minimum of $3-5 for small orders.',
+    ],
+    fastFact: 'In the US, restaurant servers earn a federal tipped minimum wage of $2.13 per hour (US Department of Labor, 2024); tips typically make up 60-70% of their total income.',
+    beginnerExplain: [
+      'Think of it this way: your restaurant bill is $50. You want to leave an 18% tip. Multiply $50 by 0.18 = $9. Your total payment is $59. That $9 goes directly to the server as a thank-you for their service.',
+      'If you are splitting the $50 bill with a friend and want to tip 18%, add the tip first: $50 + $9 = $59, then divide by two: $29.50 each. This is different from each of you tipping separately on your half, which could lead to uneven or forgotten tips.',
+    ],
+    whenToUse: 'Calculate gratuity any time you receive table service at a restaurant, use a food delivery service, or receive personal services such as haircuts or taxi rides. Use the tip formula before splitting the bill so the tip is handled consistently.',
+    examples: {
+      headers: ['Bill total', 'Tip %', 'Tip amount', 'Grand total'],
+      rows: [
+        ['$40.00', '15%', '$6.00', '$46.00'],
+        ['$40.00', '18%', '$7.20', '$47.20'],
+        ['$40.00', '20%', '$8.00', '$48.00'],
+        ['$40.00', '25%', '$10.00', '$50.00'],
+        ['$120.00', '20%', '$24.00', '$144.00'],
+      ],
+    },
+    pitfalls: 'The most common mistake is forgetting to add tip before splitting a group bill - each person ends up paying less than their share and the server receives less. A second mistake is double-tipping when a restaurant has already added a mandatory service charge (common for groups of 6+). Always read the bill before adding a tip manually.',
+    faqs: [
+      { q: 'Should you tip on the pre-tax or post-tax total?', a: 'Etiquette guides - including the Emily Post Institute - say to tip on the pre-tax subtotal. In practice, most people tip on the post-tax total since it is the number shown at the bottom of the bill. Tipping on the full post-tax amount results in a slightly higher tip (by roughly the tax rate), which most servers appreciate.' },
+      { q: 'Is gratuity the same as a service charge?', a: 'No. A gratuity is a voluntary tip you add. A service charge is a mandatory fee the restaurant adds automatically, usually 18-20% for large groups. If your bill already includes a service charge, you generally do not need to add a separate tip. Check the bill before tipping.' },
+      { q: 'What is the minimum acceptable tip?', a: '15% is widely considered the minimum acceptable tip for satisfactory table service in the US. For poor service, the standard advice is to leave a note explaining the issue rather than leaving nothing - a zero tip is often interpreted as forgetting rather than a deliberate signal.' },
+      { q: 'Do you tip on alcohol?', a: 'Yes, in the US you tip on the full bill including alcohol. Alcohol inflates the bill significantly, which is why some groups use a custom split - the person who ordered the expensive wine pays a larger share of the tip.' },
+    ],
+    quiz: {
+      topic: 'gratuity',
+      questions: [
+        {
+          q: 'You have a $60 restaurant bill. You want to leave an 18% tip. What is the tip amount?',
+          options: ['$10.80', '$9.00', '$12.00', '$6.80'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Tip = $60 x 18% = $60 x 0.18 = $10.80. Grand total = $60 + $10.80 = $70.80.',
+        },
+        {
+          q: 'What is the widely accepted standard tip range at a US sit-down restaurant for good service?',
+          options: ['5-10%', '18-20%', '10-12%', '25-30%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: '18-20% is the current standard for good service at a US sit-down restaurant. 15% is considered acceptable for average service.',
+        },
+        {
+          q: 'Your group\'s restaurant bill already includes an automatic 18% service charge. What should you do?',
+          options: [
+            'Add another 20% tip on top',
+            'Check the bill and do not add a separate tip',
+            'Still leave a 10% tip as a bonus',
+            'Ask the manager to remove the service charge',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Automatic service charges (common for large parties) already serve as the gratuity. Adding more would mean tipping nearly 40% total. Always read the bill before tipping manually.',
+        },
+        {
+          q: 'Four friends split a $80 bill equally. Each pays $20. They forgot to add a 20% tip. How much is each person short?',
+          options: ['$4.00', '$5.00', '$2.00', '$3.20'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: '20% tip on $80 = $16. Divided by 4 people = $4 per person. Each person should have paid $24, not $20. Always add tip before dividing.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
   'gross-profit': {
     definition: [
       'Gross Profit is the first profitability figure on an income statement. It is calculated as Revenue minus Cost of Goods Sold (COGS) - what remains after paying the direct costs of producing goods or delivering services, before any overhead, R&D, SG&A, interest, or tax.',
@@ -2745,6 +2815,70 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'unit-price': {
+    definition: [
+      'Unit price is the cost per standard unit of a product - typically expressed as price per 100 grams, per kilogram, per pound, or per litre. It is calculated by dividing the total price of a product by its quantity: Unit Price = Total Price / Quantity. This single number strips away differences in package size and puts every product on the same scale.',
+      'Unit price is mandated on retail labels in all 27 EU member states under Directive 98/6/EC (2000) and in over 10 US states. Despite this, label accuracy varies and some products deliberately use unusual reference units (e.g. price per 10 g rather than per 100 g) to obscure comparisons. Calculating unit price independently takes seconds and prevents paying a size premium.',
+    ],
+    keyTakeaways: [
+      'Unit price = Total price / Quantity. The product with the lowest unit price always costs less per gram, litre, or unit.',
+      '1 kg = 1,000 g = 2.205 lb = 35.27 oz. All units convert to a common base so any two products can be compared.',
+      'Bigger packs are usually cheaper per unit, but premium pricing and promotional offers can reverse this - always calculate.',
+      'Weight (g, kg, oz, lb) and volume (ml, L, fl oz) cannot be directly compared; only compare like for like.',
+      'EU Directive 98/6/EC (2000) requires unit price on all retail pre-packaged goods in EU member states.',
+    ],
+    fastFact: 'US households spend an average of $412 per month on groceries (Bureau of Labor Statistics Consumer Expenditure Survey, 2023); consistently choosing the lower unit price product across routine items saves an estimated $400-600 per year.',
+    beginnerExplain: [
+      'Think of two boxes of pasta at the grocery store. One is 400 g for $2.40 and the other is 500 g for $2.75. The bigger box looks more expensive at a glance. But divide each price by its weight: $2.40 / 400 = $0.006 per gram; $2.75 / 500 = $0.0055 per gram. Multiply by 100 to get the more readable number: $0.60 per 100 g vs. $0.55 per 100 g.',
+      'The 500 g box is actually 8% cheaper per gram, even though it costs more overall. That single number - cost per 100 g - is the unit price. It works the same for liquids (price per 100 ml), cleaning products (price per wash), or toilet paper (price per sheet). One division, then compare.',
+    ],
+    whenToUse: 'Use unit price whenever comparing two or more products that come in different package sizes or when a shelf label displays an unusual reference unit. It is especially useful for grocery shopping, bulk buying decisions, and evaluating whether a larger size or a different brand is genuinely cheaper.',
+    examples: {
+      headers: ['Product', 'Total price', 'Size', 'Per 100 g', 'Better value?'],
+      rows: [
+        ['Coffee A', '$4.99', '250 g', '$1.996', ''],
+        ['Coffee B', '$7.49', '500 g', '$1.498', ''],
+        ['Coffee C', '$12.99', '1 kg', '$1.299', 'Yes'],
+        ['Store brand', '$5.99', '500 g', '$1.198', 'Best overall'],
+      ],
+    },
+    pitfalls: 'The most common error is comparing a price per kg with a price per lb without converting first - 1 kg = 2.205 lb, so the numbers are on different scales. The second trap is comparing weight-based unit prices with volume-based ones (e.g. price per 100 g vs. price per 100 ml) for products like olive oil or honey, where density varies significantly.',
+    faqs: [
+      { q: 'What is unit price?', a: 'Unit price is the cost per standard unit of a product - per 100 g, per kg, per lb, or per litre. Divide total price by package quantity to get it. It is used to compare differently sized products on the same basis and is legally required on retail labels in the EU and many US states.' },
+      { q: 'How do you calculate price per kg?', a: 'Divide the total price by the weight in kilograms. If the weight is in grams, divide by 1,000 first to convert. Example: $4.99 for 750 g = $4.99 / 0.75 kg = $6.65 per kg. This is the standard metric unit price used across Europe.' },
+      { q: 'Is a bigger pack always cheaper per unit?', a: 'Usually, but not always. Premium brand large sizes can cost more per gram than a store brand small size. Promotional pricing on smaller packs can temporarily make them cheaper. The only reliable method is to calculate unit price for every option before buying.' },
+      { q: 'What is the difference between unit price and unit rate?', a: 'Unit price is specifically the cost per unit of product. Unit rate is the broader mathematical concept of any quantity expressed per one unit - speed (km/h), pay ($ per hour), or calorie density (kcal per 100 g). Every unit price is a unit rate, but not all unit rates are prices.' },
+    ],
+    quiz: {
+      topic: 'unit pricing',
+      questions: [
+        {
+          q: 'A 400 g jar of peanut butter costs $3.20. What is the unit price per 100 g?',
+          options: ['$0.80 per 100 g', '$8.00 per 100 g', '$0.08 per 100 g', '$1.28 per 100 g'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: '$3.20 / 400 g = $0.008 per gram. Multiply by 100 to get $0.80 per 100 g. This is the standard unit price shown on EU shelf labels.',
+        },
+        {
+          q: 'Product A is $4.99 for 750 g. Product B is $3.49 for 500 g. Which is cheaper per 100 g?',
+          options: ['Product B ($0.698 per 100 g)', 'Product A ($0.665 per 100 g)', 'Both are the same', 'Product B ($0.70 per 100 g)'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Product A: $4.99 / 750 × 100 = $0.665. Product B: $3.49 / 500 × 100 = $0.698. Product A is cheaper per 100 g despite the higher sticker price.',
+        },
+        {
+          q: 'Why can you not directly compare a price per kg with a price per lb?',
+          options: ['They use different currencies', '1 kg = 2.205 lb, so the scales differ - convert first', 'Prices per lb are always higher', 'The comparison only works for liquids'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: '1 kg = 2.205 lb. A price of $5/kg equals about $2.27/lb. If one label shows $/kg and another shows $/lb, convert both to the same unit before comparing.',
+        },
+        {
+          q: 'What is the correct unit price formula?',
+          options: ['Quantity divided by total price', 'Total price multiplied by quantity', 'Total price divided by quantity', 'Quantity minus total price'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Unit price = Total price / Quantity. Dividing quantity by price gives units per dollar - the inverse - which sounds plausible but cannot be used to compare products.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
   'unit-rate': {
     definition: [
       'A unit rate is a ratio in which the denominator is exactly 1, expressing how much of one quantity corresponds to a single unit of another. The formula is: $$\\text{Unit Rate} = \\frac{\\text{Quantity A}}{1 \\text{ unit of Quantity B}}$$ Common examples include speed (kilometers per 1 hour), price (euros per 1 kilogram), fuel efficiency (litres per 1 kilometer), and productivity (units per 1 worker per hour). The "per one" structure makes unit rates the most intuitive form for direct comparison.',

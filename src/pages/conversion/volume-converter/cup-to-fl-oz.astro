@@ -1,0 +1,180 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{fl oz} = \\text{cups} \\times 8$$",
+  rev: "$$\\text{cups} = \\text{fl oz} \\div 8$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert cups to fl oz' },
+  { id: 'reference-table', label: 'Cups to fl oz reference table' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Cups to Fluid Ounces Converter",
+    "url": "https://calculations.tools/conversion/volume-converter/cup-to-fl-oz",
+    "description": "Convert US cups to fluid ounces for cooking and recipes. 1 cup = 8 fl oz, 1/2 cup = 4 fl oz, 2 cups = 16 fl oz.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert cups to fluid ounces",
+    "description": "Multiply cups by 8 to get US fluid ounces.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter cup value", "text": "Type your cup value in the cups field. The fl oz result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted fl oz value appears. For 1 cup, the result is 8 fl oz." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the fl oz field to convert back to cups." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many fl oz is 1 cup?", "acceptedAnswer": { "@type": "Answer", "text": "1 US cup equals exactly 8 US fluid ounces. The cup is defined as 8 fl oz, so this is a whole-number conversion." } },
+      { "@type": "Question", "name": "How many fl oz is 2 cups?", "acceptedAnswer": { "@type": "Answer", "text": "2 cups equals 16 fl oz. Multiply 2 by 8: 2 × 8 = 16 fl oz. This equals 1 pint." } },
+      { "@type": "Question", "name": "How many cups is 12 fl oz?", "acceptedAnswer": { "@type": "Answer", "text": "12 fl oz equals 1.5 cups. Divide 12 by 8: 12 ÷ 8 = 1.5 cups. A standard 12 fl oz US can is 1.5 cups." } },
+      { "@type": "Question", "name": "How many fl oz is a half cup?", "acceptedAnswer": { "@type": "Answer", "text": "Half a cup equals 4 fl oz. 0.5 × 8 = 4 fl oz." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Cups to Fluid Ounces Converter"
+  metaTitle="Cups to Fluid Ounces Converter | Convert cups to fl oz"
+  description="Convert US cups to fl oz for cooking. 1 cup = 8 fl oz, 1/2 cup = 4 fl oz, 2 cups = 16 fl oz = 1 pint. Enter cups or fl oz - converts both directions."
+  canonical="https://calculations.tools/conversion/volume-converter/cup-to-fl-oz"
+  tocItems={tocItems}
+  embedSlug="cup-to-fl-oz"
+  schema={schema}
+  ogFormula="fl oz = cups × 8"
+  ogExample="1 cup = 8 fl oz"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instantly Convert cups to fl oz</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Cups</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 1" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Fluid Ounces (fl oz)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 8" />
+          </div>
+        </div>
+        <div class="pair-formula-note">1 cup = 8 fl oz &nbsp;·&nbsp; US measurements</div>
+      </div>
+    </section>
+    <script src="/js/cup-to-fl-oz.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert cups to fluid ounces, multiply by <strong>8</strong>. So 1 cup = 8 fl oz, 1/2 cup = 4 fl oz, and 2 cups = 16 fl oz (1 pint). This is exact: 1 US cup = 8 US fluid ounces by definition.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact formula: fl oz = cups × 8. 1 cup = 8 fl oz exactly.</li>
+          <li>1/4 cup = 2 fl oz. 1/2 cup = 4 fl oz. 3/4 cup = 6 fl oz. 1 cup = 8 fl oz.</li>
+          <li>2 cups = 16 fl oz = 1 pint. 4 cups = 32 fl oz = 1 quart.</li>
+          <li>Reverse: cups = fl oz ÷ 8.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our cups to fl oz converter</h2>
+      <p>Type any cup value in the cups field and the fl oz result appears instantly. Use decimals for fractions: 0.5 for half a cup. Both directions work without pressing a button.</p>
+      <h2 id="formula">How do you convert cups to fluid ounces?</h2>
+      <p>Multiply the number of US cups by 8. The US customary cup is defined as exactly 8 fluid ounces. This makes the conversion simple and exact - no approximation involved.</p>
+      <Formula expr={f.fwd} />
+      <p>Worked examples: 1/4 cup = 2 fl oz. 1/3 cup = 2.67 fl oz. 1/2 cup = 4 fl oz. 2/3 cup = 5.33 fl oz. 3/4 cup = 6 fl oz. 1 cup = 8 fl oz. 1.5 cups = 12 fl oz. 2 cups = 16 fl oz. 4 cups = 32 fl oz.</p>
+      <h2 id="reference-table">Cups to fluid ounces reference table</h2>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Cups</th><th>Fluid Ounces</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1/8 cup</td><td>1 fl oz</td><td>2 tablespoons</td></tr>
+            <tr><td>1/4 cup</td><td>2 fl oz</td><td>4 tablespoons</td></tr>
+            <tr><td>1/3 cup</td><td>2.67 fl oz</td><td>5 tbsp + 1 tsp</td></tr>
+            <tr><td>1/2 cup</td><td>4 fl oz</td><td>8 tablespoons</td></tr>
+            <tr><td>2/3 cup</td><td>5.33 fl oz</td><td>-</td></tr>
+            <tr><td>3/4 cup</td><td>6 fl oz</td><td>12 tablespoons</td></tr>
+            <tr><td>1 cup</td><td>8 fl oz</td><td>Standard cup / 1/2 pint</td></tr>
+            <tr><td>1.5 cups</td><td>12 fl oz</td><td>Standard US can</td></tr>
+            <tr><td>2 cups</td><td>16 fl oz</td><td>1 pint</td></tr>
+            <tr><td>4 cups</td><td>32 fl oz</td><td>1 quart</td></tr>
+            <tr><td>8 cups</td><td>64 fl oz</td><td>Half gallon</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="faq">FAQs about converting cups to fl oz</h2>
+      <h3>How many fl oz is 1 cup?</h3>
+      <p>1 US cup equals exactly 8 US fluid ounces. This is not an approximation - the cup is defined as 8 fl oz in the US customary system.</p>
+      <h3>How many fl oz is 2 cups?</h3>
+      <p>2 cups equals 16 fl oz. 2 × 8 = 16 fl oz. This is also 1 US pint.</p>
+      <h3>How many cups is 12 fl oz?</h3>
+      <p>12 fl oz equals 1.5 cups. 12 ÷ 8 = 1.5 cups. A standard 12 fl oz US soda or beer can is 1.5 cups of liquid.</p>
+      <h3>How many fl oz is a half cup?</h3>
+      <p>Half a cup equals 4 fl oz. 0.5 × 8 = 4 fl oz. This is also 8 tablespoons or 24 teaspoons.</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/fl-oz-to-cup">Fluid Ounces to Cups</a>
+            <p>Reverse conversion - enter fl oz and get cups instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/cup-to-ml">Cups to Milliliters</a>
+            <p>Convert cups to ml - 1 cup = 236.6 ml.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/fl-oz-to-ml">Fluid Ounces to Milliliters</a>
+            <p>Convert fl oz to ml - 8 fl oz = 236.6 ml.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter">Volume Converter (all units)</a>
+            <p>Convert between all volume units - ml, L, fl oz, cups, gallons, and more.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

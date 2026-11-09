@@ -3,6 +3,7 @@ import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
 import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
 import type { Source } from '../../components/Sources.astro';
 import QuizBlock from '../../components/QuizBlock.astro';
+import SubPageCards from '../../components/SubPageCards.astro';
 
 const sources: Source[] = [
   {
@@ -176,6 +177,7 @@ const schema = [
         <div class="answer-box-label">Quick answer</div>
         <p>This converter handles all common metric and imperial weight units: milligrams, grams, kilograms, metric tons, ounces, pounds, stone, US short tons, and UK long tons. Enter a value, pick your units, and the result appears immediately. All conversions use internationally defined factors and run entirely in your browser.</p>
       </div>
+      <SubPageCards parentPath="/conversion/weight-converter" heading="Specific weight converters" />
       <h2 id="how-to-use">How to use our weight converter</h2>
       <p>Type a value in the input field, select the unit you are converting from, then select the unit you want. The result updates as you type. The swap button reverses the direction without retyping. Quick conversion buttons at the top jump straight to the most common pairs: <a href="/conversion/weight-converter/kg-to-lb">kg to lbs</a>, <a href="/conversion/weight-converter/lb-to-kg">lbs to kg</a>, <a href="/conversion/weight-converter/g-to-oz">g to oz</a>, and <a href="/conversion/weight-converter/oz-to-g">oz to g</a>.</p>
       <p>All calculations run locally in your browser. No data is sent anywhere. Results use exact conversion factors rather than approximations.</p>
@@ -260,7 +262,7 @@ const schema = [
         <li>150 lbs to kg: 150 × 0.453592 = 68.039 kg</li>
         <li>A typical adult body weight of 75 kg = 165.35 lbs = 11 st 11.3 lb</li>
       </ul>
-      <p>Also see: <a href="/conversion/weight-converter/kg-to-lb">kilograms to pounds</a> and <a href="/conversion/weight-converter/lb-to-kg">pounds to kilograms</a>.</p>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/weight-converter/kg-to-lb">kilograms to pounds</a> and <a href="/conversion/weight-converter/lb-to-kg">pounds to kilograms</a>.</p>
       <h3>Grams and ounces</h3>
       <p>1 oz = 28.3495 g exactly (avoirdupois). 1 g = 0.035274 oz.</p>
       <ul>
@@ -268,7 +270,7 @@ const schema = [
         <li>500 g to lbs: 500 × 0.453592 = 1.1023 lbs (just over 1 lb)</li>
         <li>1 lb to g: 453.592 g (useful for recipes converting US to metric)</li>
       </ul>
-      <p>Also see: <a href="/conversion/weight-converter/g-to-oz">grams to ounces</a> and <a href="/conversion/weight-converter/oz-to-g">ounces to grams</a>.</p>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/weight-converter/g-to-oz">grams to ounces</a> and <a href="/conversion/weight-converter/oz-to-g">ounces to grams</a>.</p>
       <h3>Stone and pounds</h3>
       <p>1 stone = 14 lbs exactly. 1 stone = 6.35029 kg.</p>
       <ul>
@@ -276,7 +278,7 @@ const schema = [
         <li>11 stone 5 lbs: (11 × 14) + 5 = 159 lbs = 72.121 kg</li>
         <li>To convert kg to stone: divide kg by 6.35029, then separate the decimal into whole stones and pounds × 14</li>
       </ul>
-      <p>Also see: <a href="/conversion/weight-converter/st-to-lb">stone to pounds</a> and <a href="/conversion/weight-converter/lb-to-st">pounds to stone</a>.</p>
+      <p class="also-see"><strong>Also see:</strong> <a href="/conversion/weight-converter/st-to-lb">stone to pounds</a> and <a href="/conversion/weight-converter/lb-to-st">pounds to stone</a>.</p>
       <h3>Metric tons and other units</h3>
       <ul>
         <li>1 metric ton to lbs: 1,000 × 2.20462 = 2,204.62 lbs</li>

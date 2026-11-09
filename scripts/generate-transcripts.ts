@@ -52,6 +52,8 @@ const TOOLS: ToolMeta[] = [
   { slug: 'weighted-average-percentage-calculator',  name: 'Weighted Average Percentage Calculator',   path: '/math/percentage-calculator/weighted-average', category: 'Math', priority: 5 },
   { slug: 'fraction-calculator',                     name: 'Fraction Calculator',                      path: '/math/fraction-calculator',                    category: 'Math', priority: 5 },
   { slug: 'ratio-calculator',      name: 'Ratio Calculator',      path: '/math/ratio-calculator',      category: 'Math', priority: 5 },
+  { slug: 'bill-split-calculator', name: 'Bill Split Calculator', path: '/math/bill-split-calculator', category: 'Math', priority: 5 },
+  { slug: 'unit-price-calculator', name: 'Unit Price Calculator', path: '/math/unit-price-calculator', category: 'Math', priority: 5 },
   { slug: 'diff-checker', name: 'Diff Checker', path: '/compare/text', category: 'Tools', priority: 6 },
 ];
 

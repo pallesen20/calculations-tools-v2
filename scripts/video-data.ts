@@ -565,6 +565,33 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     proTipFix: 'always use EBIT - earnings before interest and tax - because it removes the effect of how the business is financed and what country it pays tax in, giving a fair cross-company comparison',
   },
 
+  'bill-split-calculator': {
+    hookProblem: 'split a restaurant bill fairly between multiple people without anyone getting it wrong',
+    character: 'Tom, a 28-year-old marketing coordinator',
+    exampleSetup: 'He is out for dinner with three colleagues. The total bill is $96, and the group agrees on an 18% tip.',
+    formulaPlain: 'add the tip to the subtotal to get the grand total, then divide by the number of people',
+    exampleWalkthrough: 'Tip = $96 times 18% = $17.28. Grand total = $96 plus $17.28 = $113.28. Divided by 4 people = $28.32 each.',
+    exampleResult: '$28.32 each - that includes their share of the food and their share of the tip',
+    exampleImplication: "if Tom and his colleagues had split the $96 equally and then each left their own tip separately, rounding differences would have left the server short. Calculating the total first and dividing once gives a clean, accurate result.",
+    notableFeature: 'a full breakdown showing subtotal, tip amount, grand total, and tip per person all on one screen - plus a Custom split mode where each person enters their own food amount and tip is split proportionally',
+    proTipMistake: 'splitting the food total first and forgetting to add tip before dividing - the server ends up undertipped',
+    proTipFix: 'always add the tip to the full subtotal first to get the grand total, then divide by the number of people - the calculator does this automatically when you enter a tip percentage',
+  },
+
+  'unit-price-calculator': {
+    hookProblem: 'know which product is actually cheaper when two items have different package sizes',
+    character: 'Maya, a 29-year-old household manager',
+    exampleSetup: 'She is choosing between two jars of coffee at the grocery store: a 250 g jar for $4.99 and a 500 g jar for $7.49 - that is 8.8 oz for $4.99 and 17.6 oz for $7.49 in imperial',
+    formulaPlain: 'divide the total price by the quantity to get the price per gram, then multiply by 100 to get the price per 100 grams',
+    exampleWalkthrough: '$4.99 divided by 250 grams equals $0.01996 per gram, times 100 = $1.996 per 100 g. $7.49 divided by 500 grams equals $0.01498 per gram, times 100 = $1.498 per 100 g',
+    exampleResult: 'The 500 g jar is cheaper - $1.498 vs $1.996 per 100 g, a saving of 25% per gram',
+    exampleImplication: 'the smaller jar looks like the affordable choice at $4.99, but you pay 25% more per gram - over a year of weekly coffee purchases, that difference adds up',
+    notableFeature: 'a side-by-side comparison showing the unit price in four formats at once - per 100 g, per kg, per lb, and per oz - so you can match whatever unit is on the shelf label',
+    proTipMistake: 'comparing a price per kg from one label with a price per lb from another label without converting first',
+    proTipFix: 'enter both items in the calculator regardless of their label units - it converts everything to a common base automatically and shows you the same unit for both',
+    unitNote: 'If your store labels use imperial units, switch to Imperial mode using the button at the top - enter quantities in oz or lb and the calculator shows results per lb and per oz as the primary units.',
+  },
+
   'bmi-calculator-menopause': {
     hookProblem: 'know whether your weight, waist, and menopause history add up to real cardiometabolic risk',
     character: 'Linda, a 57-year-old office manager 5 years past menopause',

@@ -1,0 +1,195 @@
+---
+import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
+import Formula from '../../../components/Formula.astro';
+
+const f = {
+  fwd: "$$\\text{L} = \\text{ml} \\div 1{,}000$$",
+  rev: "$$\\text{ml} = \\text{L} \\times 1{,}000$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',      label: 'How to use this converter' },
+  { id: 'formula',         label: 'How to convert ml to liters' },
+  { id: 'reverse',         label: 'How to convert liters to ml' },
+  { id: 'reference-table', label: 'ml to liters reference table' },
+  { id: 'when-to-use',     label: 'When you need this conversion' },
+  { id: 'faq',             label: 'FAQs' },
+  { id: 'related-tools',   label: 'Related tools' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Milliliters to Liters Converter",
+    "url": "https://calculations.tools/conversion/volume-converter/ml-to-l",
+    "description": "Convert milliliters to liters instantly. Formula: L = ml ÷ 1,000. Includes reverse liters to ml conversion and a reference table for common volumes.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to convert milliliters to liters",
+    "description": "Convert milliliters to liters by dividing by 1,000.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter ml value", "text": "Type your milliliter value in the ml field. The liter result updates instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Read the result", "text": "The converted liter value appears immediately. For 500 ml, the result is 0.5 L." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert in reverse", "text": "Type in the liters field to convert back to ml. The converter works in both directions." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "How many liters is 500 ml?", "acceptedAnswer": { "@type": "Answer", "text": "500 ml equals 0.5 liters. Divide 500 by 1,000: 500 ÷ 1,000 = 0.5 L." } },
+      { "@type": "Question", "name": "How do you convert ml to liters?", "acceptedAnswer": { "@type": "Answer", "text": "Divide the number of milliliters by 1,000. Example: 250 ml ÷ 1,000 = 0.25 L." } },
+      { "@type": "Question", "name": "How many ml is 1 liter?", "acceptedAnswer": { "@type": "Answer", "text": "1 liter equals exactly 1,000 milliliters. This is the SI definition: the prefix milli means one-thousandth." } },
+      { "@type": "Question", "name": "How many ml is 1.5 liters?", "acceptedAnswer": { "@type": "Answer", "text": "1.5 liters equals 1,500 ml. Multiply 1.5 by 1,000: 1.5 × 1,000 = 1,500 ml." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Milliliters to Liters Converter"
+  metaTitle="Milliliters to Liters Converter | Instantly convert mL to L"
+  description="Convert milliliters to liters instantly. Formula: L = ml ÷ 1,000. Common bottle and container sizes included - 250 ml, 500 ml, 750 ml, 1,000 ml in liters."
+  canonical="https://calculations.tools/conversion/volume-converter/ml-to-l"
+  tocItems={tocItems}
+  embedSlug="ml-to-l"
+  schema={schema}
+  ogFormula="L = ml ÷ 1,000"
+  ogExample="500 ml = 0.5 L"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container">
+        <div class="calculator-header">
+          <h2>Instantly Convert mL to L</h2>
+          <p>Type in either field - converts instantly in both directions</p>
+        </div>
+        <div class="pair-inputs">
+          <div class="pair-field">
+            <label for="lp-a">Milliliters (ml)</label>
+            <input id="lp-a" type="text" inputmode="decimal" placeholder="e.g. 500" />
+          </div>
+          <div class="pair-eq">=</div>
+          <div class="pair-field">
+            <label for="lp-b">Liters (L)</label>
+            <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 0.5" />
+          </div>
+        </div>
+        <div class="pair-formula-note">1 L = 1,000 ml &nbsp;·&nbsp; 1 ml = 0.001 L</div>
+      </div>
+    </section>
+    <script src="/js/ml-to-l.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>To convert milliliters to liters, divide by <strong>1,000</strong>. So 500 ml = 0.5 L, 250 ml = 0.25 L, and 1,500 ml = 1.5 L. The relationship is exact: the prefix "milli" means one-thousandth, so 1 ml = 0.001 L by definition.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Exact formula: L = ml ÷ 1,000. No rounding needed.</li>
+          <li>Common reference: 500 ml = 0.5 L (half a liter, standard water bottle).</li>
+          <li>750 ml = 0.75 L (standard wine bottle). 330 ml = 0.33 L (standard can).</li>
+          <li>To reverse: multiply liters by 1,000 to get ml.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use our mL to L converter</h2>
+      <p>Type any ml value in the ml field and the liters result appears instantly. You can also type in the liters field to convert back to ml - it works in both directions without pressing a button.</p>
+      <h2 id="formula">How do you convert milliliters to liters?</h2>
+      <p>Divide the number of milliliters by 1,000. This is exact - no approximation involved. The liter and milliliter are both SI units, and the prefix "milli" means exactly 10⁻³.</p>
+      <Formula expr={f.fwd} />
+      <p>Worked examples: 100 ml = 0.1 L. 250 ml = 0.25 L. 500 ml = 0.5 L. 750 ml = 0.75 L. 1,000 ml = 1 L. 1,500 ml = 1.5 L. 2,000 ml = 2 L.</p>
+      <h2 id="reverse">How do you convert liters to milliliters?</h2>
+      <p class="also-see">Multiply liters by 1,000. See the dedicated <a href="/conversion/volume-converter/l-to-ml">liters to milliliters converter</a> for a liters-first reference table.</p>
+      <Formula expr={f.rev} />
+      <p>Worked examples: 0.25 L = 250 ml. 0.5 L = 500 ml. 1 L = 1,000 ml. 2 L = 2,000 ml.</p>
+      <h2 id="reference-table">Milliliters to liters reference table</h2>
+      <p>Common bottle, container, and recipe volumes converted from ml to liters:</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Milliliters (ml)</th><th>Liters (L)</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>50 ml</td><td>0.05 L</td><td>Shot glass (US)</td></tr>
+            <tr><td>100 ml</td><td>0.1 L</td><td>Small bottle / travel size</td></tr>
+            <tr><td>200 ml</td><td>0.2 L</td><td>Small glass</td></tr>
+            <tr><td>250 ml</td><td>0.25 L</td><td>Cup of coffee</td></tr>
+            <tr><td>330 ml</td><td>0.33 L</td><td>Standard can (soda, beer)</td></tr>
+            <tr><td>355 ml</td><td>0.355 L</td><td>US standard can</td></tr>
+            <tr><td>500 ml</td><td>0.5 L</td><td>Standard water bottle</td></tr>
+            <tr><td>750 ml</td><td>0.75 L</td><td>Wine bottle</td></tr>
+            <tr><td>1,000 ml</td><td>1 L</td><td>Standard liter bottle</td></tr>
+            <tr><td>1,500 ml</td><td>1.5 L</td><td>Large water bottle</td></tr>
+            <tr><td>2,000 ml</td><td>2 L</td><td>Large soda bottle</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="when-to-use">When do you need to convert ml to liters?</h2>
+      <p>This conversion comes up most often in cooking, nutrition labeling, medicine, and when comparing product sizes. Common scenarios:</p>
+      <ul>
+        <li><strong>Recipes</strong> - metric recipes sometimes list liquids in ml while containers are labeled in liters.</li>
+        <li><strong>Nutrition labels</strong> - serving sizes on packaging are often in ml, while daily intake recommendations are in liters.</li>
+        <li><strong>Medicine</strong> - oral liquids are measured in ml; infusion rates in clinical contexts use L/hour.</li>
+        <li><strong>Science</strong> - lab measurements are often in ml, while larger processes work in liters.</li>
+      </ul>
+      <h2 id="faq">FAQs about mL to L conversion</h2>
+      <h3>How many liters is 500 ml?</h3>
+      <p>500 ml equals 0.5 liters. Divide by 1,000: 500 ÷ 1,000 = 0.5 L. A standard 500 ml water bottle holds exactly half a liter.</p>
+      <h3>How do you convert ml to liters?</h3>
+      <p>Divide the milliliter value by 1,000. Quick mental trick: move the decimal point three places to the left. 750 ml becomes 0.750 L. 1,250 ml becomes 1.250 L.</p>
+      <h3>How many ml is 1 liter?</h3>
+      <p>1 liter equals exactly 1,000 ml. This is the SI definition - "milli" means one-thousandth. 1 liter of water weighs almost exactly 1 kilogram (at 4°C).</p>
+      <h3>How many ml is 1.5 liters?</h3>
+      <p>1.5 liters equals 1,500 ml. Multiply 1.5 × 1,000 = 1,500 ml. Standard large beverage bottles are often 1.5 L (1,500 ml).</p>
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/l-to-ml">Liters to Milliliters Converter</a>
+            <p>Reverse conversion - enter liters and get ml instantly.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/ml-to-fl-oz">Milliliters to Fluid Ounces Converter</a>
+            <p>Convert ml to US fl oz - useful for US recipes and product labels.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter/l-to-gal">Liters to Gallons Converter</a>
+            <p>Convert liters to US gallons for fuel and large volume comparisons.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💧</span>
+          <div>
+            <a href="/conversion/volume-converter">Volume Converter (all units)</a>
+            <p>Convert between all volume units simultaneously - ml, L, fl oz, cups, gallons.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
+  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
+  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
+  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
+  .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
+  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
+</style>

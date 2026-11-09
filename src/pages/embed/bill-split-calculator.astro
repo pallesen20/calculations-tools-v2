@@ -1,0 +1,117 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Bill Split Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Bill Split Calculator</h2>
+        <p>Split any bill equally or by person</p>
+      </div>
+
+      <div class="bs-top-row">
+        <div style="flex:1;min-width:100px;max-width:160px;">
+          <label style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.07em;color:rgba(255,255,255,0.5);display:block;margin-bottom:0.3rem;">Currency</label>
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;overflow:hidden;">
+            <select id="bs-currency" style="background:transparent;border:none;color:white;font-size:0.85rem;padding:0.6rem 0.75rem;width:100%;"></select>
+          </div>
+        </div>
+        <div class="bmi-unit-toggle">
+          <button class="bmi-unit-btn active" id="bs-mode-equal">Equal</button>
+          <button class="bmi-unit-btn" id="bs-mode-custom">Custom</button>
+        </div>
+      </div>
+
+      <div class="bs-inputs-grid">
+        <div>
+          <label class="bs-label">Bill total</label>
+          <div class="bs-input-wrap"><input type="text" inputmode="decimal" id="bs-total" class="bs-input" placeholder="e.g. 120.00" /></div>
+        </div>
+        <div>
+          <label class="bs-label">Tip %</label>
+          <div class="bs-input-wrap"><input type="text" inputmode="decimal" id="bs-tip" class="bs-input" placeholder="e.g. 18" /></div>
+        </div>
+        <div>
+          <label class="bs-label">Tax %</label>
+          <div class="bs-input-wrap"><input type="text" inputmode="decimal" id="bs-tax" class="bs-input" placeholder="optional" /></div>
+        </div>
+      </div>
+
+      <div class="bs-tip-presets">
+        <button class="bs-tip-preset" data-tip="0">No tip</button>
+        <button class="bs-tip-preset" data-tip="10">10%</button>
+        <button class="bs-tip-preset" data-tip="15">15%</button>
+        <button class="bs-tip-preset" data-tip="18">18%</button>
+        <button class="bs-tip-preset" data-tip="20">20%</button>
+        <button class="bs-tip-preset" data-tip="25">25%</button>
+      </div>
+
+      <div id="bs-equal-section">
+        <label class="bs-label">Number of people</label>
+        <div class="bs-count-row">
+          <button class="bs-count-btn" id="bs-count-minus">-</button>
+          <div class="bs-input-wrap bs-count-wrap"><input type="text" inputmode="decimal" id="bs-count" class="bs-input" value="2" /></div>
+          <button class="bs-count-btn" id="bs-count-plus">+</button>
+        </div>
+      </div>
+
+      <div id="bs-custom-section" style="display:none;">
+        <div class="bs-custom-header">
+          <span class="bs-label" style="flex:1;">Person</span>
+          <span class="bs-label" style="flex:0 0 110px;">Their amount</span>
+        </div>
+        <div id="bs-people-list"></div>
+        <button class="bs-add-btn" id="bs-add-person">+ Add person</button>
+      </div>
+
+      <div id="bs-result"></div>
+    </div>
+  </section>
+
+  <script src="/js/bill-split-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .calculator-container { padding: 1.25rem; }
+  .bs-top-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .bs-inputs-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem; }
+  .bs-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.5); display: block; margin-bottom: 0.3rem; }
+  .bs-input-wrap { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; overflow: hidden; }
+  .bs-input { background: transparent; border: none; color: white; font-size: 0.875rem; padding: 0.6rem 0.75rem; width: 100%; box-sizing: border-box; }
+  .bs-tip-presets { display: flex; gap: 0.35rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .bs-tip-preset { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; color: rgba(255,255,255,0.65); font-size: 0.75rem; padding: 0.25rem 0.6rem; cursor: pointer; white-space: nowrap; }
+  .bs-tip-preset.active { background: rgba(99,102,241,0.3); border-color: rgba(99,102,241,0.6); color: white; }
+  .bs-count-row { display: flex; gap: 0.4rem; align-items: stretch; margin-bottom: 0.75rem; }
+  .bs-count-wrap { flex: 1; }
+  .bs-count-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1.1rem; width: 40px; cursor: pointer; }
+  .bs-custom-header { display: flex; gap: 0.5rem; margin-bottom: 0.3rem; }
+  .bs-person-row { display: flex; gap: 0.4rem; align-items: stretch; margin-bottom: 0.5rem; }
+  .bs-name-wrap { flex: 1; min-width: 0; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; overflow: hidden; }
+  .bs-amt-wrap { flex: 0 0 100px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; overflow: hidden; }
+  .bs-remove-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: rgba(255,255,255,0.45); font-size: 1rem; width: 34px; cursor: pointer; flex-shrink: 0; }
+  .bs-add-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; color: rgba(255,255,255,0.65); font-size: 0.8rem; padding: 0.45rem 1rem; cursor: pointer; width: 100%; margin-bottom: 0.6rem; }
+  .bs-result-card { background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.15)); border: 1px solid rgba(99,102,241,0.3); border-radius: 12px; padding: 1.1rem; text-align: center; margin-top: 0.75rem; margin-bottom: 0.75rem; }
+  .bs-per-person-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); margin-bottom: 0.3rem; }
+  .bs-per-person-amount { font-size: 2.2rem; font-weight: 800; color: white; letter-spacing: -0.02em; margin-bottom: 0.2rem; }
+  .bs-per-person-meta { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+  .bs-breakdown { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 0.65rem 0.9rem; margin-top: 0.6rem; }
+  .bs-breakdown-row { display: flex; justify-content: space-between; padding: 0.28rem 0; font-size: 0.84rem; color: rgba(255,255,255,0.72); }
+  .bs-breakdown-total { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.25rem; padding-top: 0.5rem; color: white; font-weight: 600; }
+  .bs-breakdown-muted { color: rgba(255,255,255,0.4); font-size: 0.77rem; }
+  .bs-custom-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 0.5rem; margin-top: 0.75rem; margin-bottom: 0.6rem; }
+  .bs-person-result { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 0.65rem; min-width: 0; }
+  .bs-person-result-name { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-bottom: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bs-person-result-amount { font-size: 1rem; font-weight: 700; color: white; }
+  .bs-person-result-meta { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-top: 0.15rem; }
+  .bs-status { text-align: center; font-size: 0.78rem; padding: 0.45rem; border-radius: 8px; margin-bottom: 0.5rem; }
+  .bs-status-ok { background: rgba(34,197,94,0.1); color: rgba(134,239,172,0.9); }
+  .bs-status-warn { background: rgba(251,191,36,0.1); color: rgba(252,211,77,0.9); }
+  .bmi-unit-toggle { display: flex; background: rgba(255,255,255,0.08); border-radius: 8px; padding: 3px; gap: 2px; }
+  .bmi-unit-btn { background: transparent; border: none; color: rgba(255,255,255,0.6); font-size: 0.8rem; padding: 0.3rem 0.7rem; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+  .bmi-unit-btn.active { background: rgba(255,255,255,0.15); color: white; }
+  @media (max-width: 480px) {
+    .bs-inputs-grid { grid-template-columns: 1fr 1fr; }
+    .bs-custom-cards { grid-template-columns: 1fr 1fr; }
+  }
+</style>

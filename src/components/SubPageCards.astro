@@ -1,0 +1,50 @@
+---
+import { getChildPages } from '../utils/getPages';
+
+interface Props {
+  parentPath: string;
+  heading?: string;
+}
+
+const { parentPath, heading = 'Specific calculators' } = Astro.props;
+const children = getChildPages(parentPath);
+if (children.length === 0) return;
+const hasMore = children.length > 5;
+---
+<section class="subpage-cards">
+  <h2 class="subpage-cards-heading">{heading}</h2>
+  <div class="hi-grid subpage-cards-grid">
+    {children.map(c => (
+      <a href={c.path} class="hi-card">
+        <div class="hi-icon">{c.icon}</div>
+        <div class="hi-body">
+          <div class="hi-title">{c.title}</div>
+          {c.short && <div class="hi-short">{c.short}</div>}
+        </div>
+        <div class="hi-arrow">→</div>
+      </a>
+    ))}
+  </div>
+  {hasMore && <button class="subpage-cards-more" aria-expanded="false">See {children.length - 5} more</button>}
+</section>
+<script>
+  document.querySelectorAll('.subpage-cards-more').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const grid = btn.previousElementSibling as HTMLElement;
+      grid.classList.add('expanded');
+      btn.setAttribute('aria-expanded', 'true');
+      (btn as HTMLElement).style.display = 'none';
+    });
+  });
+</script>
+<style>
+.subpage-cards { margin-bottom: .75rem; }
+.subpage-cards a { text-decoration: none; }
+.subpage-cards-heading { font-size: 1rem; font-weight: 600; color: white; margin: 0 0 0.75rem; border: 0; }
+.subpage-cards-more { display: none; }
+@media (max-width: 480px) {
+  .subpage-cards-grid:not(.expanded) .hi-card:nth-child(n+6) { display: none; }
+  .subpage-cards-more { display: block; width: 100%; margin-top: 0.5rem; padding: 0.55rem 1rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; color: rgba(255,255,255,0.75); font-size: 0.82rem; font-weight: 500; cursor: pointer; text-align: center; }
+  .subpage-cards-more:hover { background: rgba(255,255,255,0.13); }
+}
+</style>
