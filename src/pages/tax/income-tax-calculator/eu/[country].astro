@@ -663,7 +663,7 @@ const nlExample = `€${ex.toLocaleString()} gross - €${nlExNetTax.toLocaleStr
             </ul>
           </div>
 
-          <h2 id="how-to-use">How to calculate German income tax</h2>
+          <h2 id="how-to-use">How to calculate german income tax</h2>
           <p>The German payroll deduction works in three distinct layers. Use the calculator above for an instant result. Here is how it works step by step:</p>
           <ol>
             <li><strong>Determine annual gross salary</strong> - your total salary before any deductions. Convert monthly to annual by multiplying by 12.</li>
@@ -675,7 +675,7 @@ const nlExample = `€${ex.toLocaleString()} gross - €${nlExNetTax.toLocaleStr
             <li><strong>Net salary = Gross - Lohnsteuer - Soli - Church tax - All social contributions</strong></li>
           </ol>
 
-          <h2 id="zones">Germany income tax zones 2026 (§32a EStG)</h2>
+          <h2 id="zones">Germany income tax zones 2026 (§32a estg)</h2>
           <p>Unlike most countries, Germany does not use fixed tax brackets. The §32a EStG formula creates five zones where the marginal rate rises smoothly within each zone - there are no sudden jumps in tax liability.</p>
           <div class="responsive-table">
             <table>
@@ -764,7 +764,7 @@ const nlExample = `€${ex.toLocaleString()} gross - €${nlExNetTax.toLocaleStr
           <p>Saxony (Sachsen) exception: employees pay 2.3% (with children) or 2.9% (childless) for long-term care; the employer pays 1.3% instead of 1.8%. Select Sachsen in the calculator to apply this rate.</p>
           <p>Source: <a href="https://www.bundesregierung.de/breg-de/aktuelles/beitragsgemessungsgrenzen-2386514" target="_blank" rel="noopener noreferrer">Sozialversicherungsrechengrossen 2026 - Bundesregierung</a>.</p>
 
-          <h2 id="tax-classes">Tax classes (Steuerklassen) in Germany</h2>
+          <h2 id="tax-classes">Tax classes (Steuerklassen) in germany</h2>
           <p>Your tax class determines the payroll withholding rate applied each month. The annual tax liability is the same regardless of class - but the class changes how much is withheld during the year.</p>
           <div class="responsive-table">
             <table>
@@ -838,7 +838,7 @@ const nlExample = `€${ex.toLocaleString()} gross - €${nlExNetTax.toLocaleStr
           </div>
           <p>Church tax is deductible as a special expense (Sonderausgabe) on your annual tax return, providing a partial offset. To leave the church and stop paying, you must formally de-register (Kirchenaustritt) at your local registry office.</p>
 
-          <h2 id="compare">How Germany compares to other EU countries</h2>
+          <h2 id="compare">How germany compares to other EU countries</h2>
           <p>Germany's effective total tax burden (income tax + social contributions) is among the highest in the EU for average earners. At the OECD average wage, Germany's tax wedge is approximately 47-48% - meaning nearly half of gross employment cost is tax and contributions.</p>
           <div class="responsive-table">
             <table>
@@ -937,7 +937,7 @@ const nlExample = `€${ex.toLocaleString()} gross - €${nlExNetTax.toLocaleStr
             </ul>
           </div>
 
-          <h2 id="how-it-works">How Dutch income tax works</h2>
+          <h2 id="how-it-works">How dutch income tax works</h2>
           <p>The Netherlands taxes income in "boxes." Box 1 covers income from work and home ownership - this is what applies to employment income. Unlike Germany, the Netherlands embeds social insurance premiums directly into Box 1 rates, so the first bracket combines income tax and three social insurance contributions into one percentage. According to the Belastingdienst (2026), the social insurance portion is 27.65% of income in the first bracket.</p>
           <p>What makes the Dutch system distinct is its use of tax credits (heffingskortingen) that reduce the tax owed - not the taxable income. Every worker gets a general credit (algemene heffingskorting) and employed workers get an additional employment credit (arbeidskorting). These credits are income-dependent and phase out at higher incomes, effectively creating a more progressive system than the headline brackets suggest.</p>
 
@@ -1004,7 +1004,7 @@ const nlExample = `€${ex.toLocaleString()} gross - €${nlExNetTax.toLocaleStr
           </div>
           <p>The arbeidskorting builds up on a four-step scale before reaching its maximum. For incomes between €0 and €{nlA.s1Top.toLocaleString()}, the credit is {(nlA.s1Rate * 100).toFixed(3)}% of employment income. It rises steeply between €{nlA.s1Top.toLocaleString()} and €{nlA.s3Top.toLocaleString()}, reaching its peak at €{nlA.s4Base.toLocaleString()}, then phases down. This means low earners benefit proportionally more from this credit than middle earners.</p>
 
-          <h2 id="step-by-step">Step-by-step: how to calculate Dutch net salary</h2>
+          <h2 id="step-by-step">Step-by-step: how to calculate dutch net salary</h2>
           <p>The Dutch net salary calculation has four steps. For a €{ex.toLocaleString()} gross salary in 2026:</p>
           <ol>
             <li><strong>Calculate Box 1 tax:</strong> {fmtEur(nlB.b1Top)} x {(nlB.b1Rate * 100).toFixed(2)}% = {fmtEur(Math.round(nlB.b1Top * nlB.b1Rate))} (bracket 1) + {fmtEur(ex - nlB.b1Top)} x {(nlB.b2Rate * 100).toFixed(2)}% = {fmtEur(Math.round((ex - nlB.b1Top) * nlB.b2Rate))} (bracket 2). Total: {fmtEur(nlExTax)}.</li>
@@ -1013,11 +1013,11 @@ const nlExample = `€${ex.toLocaleString()} gross - €${nlExNetTax.toLocaleStr
             <li><strong>Net income tax = {fmtEur(nlExTax)} - {fmtEur(nlExAhk)} - {fmtEur(nlExAk)} = {fmtEur(nlExNetTax)}.</strong> Annual net salary: {fmtEur(nlExNet)} ({fmtEur(nlExNetMonthly)}/month).</li>
           </ol>
 
-          <h2 id="healthcare">Healthcare insurance (ZVW) in the Netherlands</h2>
+          <h2 id="healthcare">Healthcare insurance (ZVW) in the netherlands</h2>
           <p>The Netherlands has a mandatory basic health insurance (basisverzekering) under the Health Insurance Act (ZVW). Every resident must take out their own policy with a private insurer. The nominal premium averages around €170-185 per month in 2026 - this is NOT deducted from your salary and is paid by employees directly to their health insurer.</p>
           <p>Employers pay a separate income-related ZVW contribution (inkomensafhankelijke bijdrage ZVW) calculated as a percentage of your gross salary. This is a wage cost for the employer and is not deducted from your take-home pay, so it does not appear in this calculator's results. The employee-side of Dutch healthcare is handled entirely outside of the Box 1 income tax system.</p>
 
-          <h2 id="compare">How Netherlands compares to other EU countries</h2>
+          <h2 id="compare">How netherlands compares to other EU countries</h2>
           <p>The Netherlands has a competitive effective tax rate for middle incomes thanks to its generous heffingskortingen credits. At €{ex.toLocaleString()} gross, the effective Dutch income tax rate of {nlExEff}% compares favourably with Germany's ~{exEff}% total deduction rate (which includes substantial social contributions). The Netherlands' tax system is relatively transparent - three brackets plus two credits cover most employees.</p>
           <div class="responsive-table">
             <table>

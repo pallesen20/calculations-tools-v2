@@ -69,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Inches to Millimeters Converter"
   metaTitle="Inches to Millimeters Converter | Calculate in to mm"
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="mm = in × 25.4"
   ogExample="1 in = 25.4 mm"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Inch to Millimeter (in to mm) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Inches (in)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 25.4" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 in = 25.4 mm &nbsp;·&nbsp; 1 mm = 0.03937 in</div>
-
       </div>
     </section>
-
     <script src="/js/in-to-mm.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert inches to millimeters, multiply by <strong>25.4</strong>. So 1 in = 25.4 mm exactly, and 12 in = 304.8 mm. The factor is exact - one inch is defined as exactly 25.4 mm since the International Yard and Pound Agreement of 1959.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>Essential for engineering, 3D printing, and hardware spec conversion.</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use our inches to mm converter</h2>
       <p>Type any inch value in the in field and the mm result appears instantly. You can also type in the mm field to convert back to inches - it works in both directions without pressing a button.</p>
-
-      <h2 id="formula">How Do You Convert Inches to Millimeters?</h2>
+      <h2 id="formula">How do you convert inches to millimeters?</h2>
       <p>Multiply inches by 25.4. One inch is defined as exactly 25.4 mm - this is the foundational international definition from which all other inch-based metric conversions are derived.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 0.5 in = 12.7 mm. 1 in = 25.4 mm. 6 in = 152.4 mm. 12 in = 304.8 mm.</p>
-
       <p>Mental shortcut: multiply by 25 for a quick estimate. The error is 1.57%, which is usually acceptable for rough checks but not for precision work.</p>
-
-      <h2 id="reverse">How Do You Convert Millimeters to Inches?</h2>
+      <h2 id="reverse">How do you convert millimeters to inches?</h2>
       <p>Divide millimeters by 25.4. For a dedicated reverse converter with reference table, see the <a href="/conversion/length-converter/mm-to-in">millimeters to inches converter</a>.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 50 mm ÷ 25.4 = 1.9685 in. 100 mm ÷ 25.4 = 3.937 in. 254 mm ÷ 25.4 = 10 in.</p>
-
-      <h2 id="reference-table">Inches to Millimeters Reference Table</h2>
+      <h2 id="reference-table">Inches to millimeters reference table</h2>
       <p>Common values converted using the exact factor 25.4 mm/in:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -172,8 +152,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When Do You Need to Convert Inches to Millimeters?</h2>
+      <h2 id="when-to-use">When do you need to convert inches to millimeters?</h2>
       <p>Inches-to-mm is a daily conversion in technical fields where US and international standards intersect:</p>
       <ul>
         <li><strong>Engineering drawings</strong> - converting US imperial specifications to metric for international manufacturing or ISO standards.</li>
@@ -182,21 +161,15 @@ const schema = [
         <li><strong>Woodworking</strong> - US lumber and tools use inch fractions; European machinery uses mm settings.</li>
         <li><strong>Electronics</strong> - PCB trace widths, connector pitches, and enclosure dimensions often mix both systems.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <h2 id="faq">FAQs about millimeters to inches conversion</h2>
       <h3>How many mm is 1 inch?</h3>
       <p>Exactly 25.4 mm. This is the international definition: the inch was standardized as 25.4 mm in 1959 by agreement between the US, UK, Canada, Australia, New Zealand, and South Africa. Every inch-to-mm value is a multiple of 25.4.</p>
-
       <h3>How do you convert inches to mm?</h3>
       <p>Multiply by 25.4. The calculation is straightforward because the factor is exact: 2 in = 50.8 mm, 3 in = 76.2 mm, 4 in = 101.6 mm. No rounding is required for any integer-inch input.</p>
-
       <h3>How many mm is 12 inches?</h3>
       <p>Exactly 304.8 mm. Since 12 inches = 1 foot, this means 1 ft = 304.8 mm = 30.48 cm = 0.3048 m - all the foot-based definitions chain from the same 25.4 mm anchor. For the cm conversion, see the <a href="/conversion/length-converter/in-to-cm">inches to centimeters converter</a>.</p>
-
       <h3>What is 2 inches in mm?</h3>
       <p>2 inches equals exactly 50.8 mm. Multiply 2 × 25.4 = 50.8. This is a common size for pipe fittings, drill bits, and camera filter threads.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -228,12 +201,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

@@ -69,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Kilometers to Miles Converter"
   metaTitle="Kilometers to Miles Converter | Instantly Calculate km to mi"
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="mi = km ÷ 1.609344"
   ogExample="10 km = 6.2137 mi"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Kilometer to Mile (km to mi) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Kilometers (km)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 0.621371" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 km = 0.621371 mi &nbsp;·&nbsp; 1 mi = 1.609344 km</div>
-
       </div>
     </section>
-
     <script src="/js/km-to-mi.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert kilometers to miles, divide by <strong>1.609344</strong> (or multiply by 0.621371). So 10 km = 6.214 mi. The factor is exact - one mile is defined as exactly 1,609.344 meters since the International Yard and Pound Agreement of 1959.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>Only the US, UK, and Liberia use miles for road distances - most running events use km (NIST, 2023).</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use our km to miles converter</h2>
       <p>Type any value in the km field and the miles result appears instantly. You can also type in the miles field to convert back to km - it works in both directions without pressing a button.</p>
-
-      <h2 id="formula">How Do You Convert Kilometers to Miles?</h2>
+      <h2 id="formula">How do you convert kilometers to miles?</h2>
       <p>Divide kilometers by 1.609344, or multiply by 0.621371. Both are exact (within floating-point precision). The underlying definition is that one international mile equals exactly 1,609.344 meters, set in 1959.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 5 km = 3.107 mi. 10 km = 6.214 mi. 42.195 km = 26.219 mi (marathon).</p>
-
       <p>Mental shortcut: multiply km by 5 and divide by 8. For 10 km: 10 × 5 = 50, ÷ 8 = 6.25 mi. Actual: 6.214 mi. The error is under 0.03% - better than multiplying by 0.6 (which is 3.4% low).</p>
-
-      <h2 id="reverse">How Do You Convert Miles to Kilometers?</h2>
+      <h2 id="reverse">How do you convert miles to kilometers?</h2>
       <p>Multiply miles by 1.609344. For a full multi-unit converter, the <a href="/conversion/length-converter">length converter</a> handles all units at once.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 1 mi = 1.609 km. 5 mi = 8.047 km. 26.219 mi = 42.195 km.</p>
-
-      <h2 id="reference-table">Kilometers to Miles Reference Table</h2>
+      <h2 id="reference-table">Kilometers to miles reference table</h2>
       <p>Common running distances and road distances converted using the exact factor 1 ÷ 1.609344.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -169,8 +149,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When Do You Need to Convert km to Miles?</h2>
+      <h2 id="when-to-use">When do you need to convert km to miles?</h2>
       <p>Road distances are measured in km in most of the world but in miles in the US and UK. According to NIST (2023), the US is the only large economy where road signs use miles exclusively. This creates conversion needs for travellers, runners comparing race distances, and anyone reading international maps.</p>
       <ul>
         <li><strong>Running</strong> - 5K and 10K races use km; US road races often use miles. Converting pace and distance between systems is routine.</li>
@@ -178,21 +157,16 @@ const schema = [
         <li><strong>Maps and navigation</strong> - US GPS devices often default to miles; European devices to km.</li>
         <li><strong>Fuel economy</strong> - mpg vs L/100km conversions involve this km-to-mile factor.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <h2 id="faq">FAQs about converting km to miles</h2>
       <h3>How many miles is 1 km?</h3>
       <p>0.621371 miles. The exact value is 1 ÷ 1.609344 = 0.6213711922... A quick way to remember: 1 km is about 5/8 of a mile (5 ÷ 8 = 0.625, which is 0.6% high).</p>
-
       <h3>How do you convert km to miles?</h3>
-      <p>Divide by 1.609344 or multiply by 0.621371. The best mental shortcut: multiply by 5 and divide by 8 (error under 0.03%). For 10 km: 50 ÷ 8 = 6.25 mi (actual: 6.214 mi). Alternatively, the <a href="/conversion/speed-converter/mph-to-kmh">mph to km/h converter</a> uses the same factor for speed.</p>
-
+      <p>Divide by 1.609344 or multiply by 0.621371. The best mental shortcut: multiply by 5 and divide by 8 (error under 0.03%). For 10 km: 50 ÷ 8 = 6.25 mi (actual: 6.214 mi).</p>
+      <p class="also-see">Alternatively, the <a href="/conversion/speed-converter/mph-to-kmh">mph to km/h converter</a> uses the same factor for speed.</p>
       <h3>How many km is 5 miles?</h3>
       <p>8.04672 km exactly. Multiply 5 by 1.609344: 5 × 1.609344 = 8.04672 km. A 5-mile run is a common distance in the UK - about 400 m more than 8 km.</p>
-
       <h3>Is 1 km longer than 1 mile?</h3>
       <p>No - 1 mile is longer. One mile = 1.609344 km, so a mile is 60.9% longer than a kilometer. Put another way, you need to run 1.609 km to cover 1 mile. A 10K race (10 km) is about 6.21 miles.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -224,12 +198,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

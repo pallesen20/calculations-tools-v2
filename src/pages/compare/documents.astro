@@ -135,7 +135,7 @@ const schema = [
       <p>In practice: a 40-page service agreement where a vendor changed one number in clause 12.3 from "$50,000" to "$100,000." Without a diff tool you'd read 40 pages to find it. With this tool, the diff shows the exact paragraph in under five seconds.</p>
       <h2 id="how-it-works">How document text extraction works</h2>
       <p>This tool uses <a href="https://github.com/mwilliamson/mammoth.js" rel="nofollow" target="_blank">mammoth.js</a> to read .docx files. Mammoth converts the XML structure of a Word document into plain text, preserving the text content of each paragraph. The extracted text from both documents is then compared line by line using an LCS diff algorithm - the same algorithm used by Git's <code>diff</code> command.</p>
-      <h2 id="vs-word-compare">This tool vs Word's built-in Compare Documents</h2>
+      <h2 id="vs-word-compare">This tool vs word's built-in compare documents</h2>
       <p>Word has its own Compare Documents feature (Review tab → Compare). Both tools find differences between two versions of a file, but they serve different situations. Here's when to use each:</p>
       <div class="responsive-table">
         <table>
@@ -179,7 +179,7 @@ const schema = [
       <p>I've seen this catch problems that Word's comment trail would have missed. A vendor returned a signed services agreement where, alongside the agreed payment terms, two liability clauses had been quietly reworded. The text diff flagged both paragraphs in seconds - something a visual scan of a 28-page document would likely have missed on deadline.</p>
       <h3>HR and employee handbook versioning</h3>
       <p>Annual handbook updates often touch dozens of sections across a long document. Compare the outgoing and incoming versions to produce a summary of what changed for all-staff communication - without manually annotating differences across 80 pages.</p>
-      <h2 id="common-mistakes">Common mistakes when comparing Word documents</h2>
+      <h2 id="common-mistakes">Common mistakes when comparing word documents</h2>
       <h3>Uploading a .doc file</h3>
       <p>The tool accepts only .docx (Office Open XML). Older .doc files produce empty output or fail silently. Open the file in Microsoft Word or LibreOffice Writer and use File → Save As to convert it to .docx before uploading.</p>
       <h3>Document has pending track changes</h3>

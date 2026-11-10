@@ -262,7 +262,7 @@ const schema = [
       <h2 id="how-to-use">How to use this EV calculator</h2>
       <p>Enter <strong>Market Capitalisation</strong> (share price × shares outstanding - find on any financial data site), <strong>Total Debt</strong> (short-term + long-term debt from the balance sheet), and <strong>Cash &amp; Equivalents</strong> (cash + short-term investments). Optionally enter <strong><a href="/finance/ebitda-calculator">EBITDA</a></strong> and <strong>Revenue</strong> to calculate the <a href="/glossary/ev-ebitda">EV/EBITDA</a> and EV/Revenue valuation multiples.</p>
       <p>Use figures from the same date. For a valuation context, use the latest reported balance sheet data paired with last twelve months (LTM) EBITDA and <a href="/glossary/revenue">revenue</a>.</p>
-      <h2 id="formula">Enterprise Value formula</h2>
+      <h2 id="formula">Enterprise value formula</h2>
       <p>Enterprise Value represents the theoretical total acquisition cost of a business - what an acquirer would pay to own 100% of the company, assuming they take on all debt but receive all cash:</p>
       <Formula expr={f.ev} />
       <p>The logic: an acquirer must pay market cap to equity holders, assume responsibility for all debt, but gains immediate access to the cash balance. Net debt (Total Debt − Cash) therefore adjusts the equity price to the true cost of taking over the business.</p>
@@ -275,7 +275,7 @@ const schema = [
       <p>Imagine you want to buy a house. The asking price is $500,000 - that's like market cap. But the house has a $200,000 mortgage attached to it (debt you must take on) and $50,000 cash sitting in a safe inside (which you immediately get).</p>
       <p>To own the house outright, you need $500,000 + $200,000 - $50,000 = $650,000. That's Enterprise Value - the true all-in cost of taking over the property.</p>
       <p>Enterprise Value does the same thing for a company: it adjusts the share price for the debt burden and cash balance, so two companies can be compared on equal terms regardless of how they're financed.</p>
-      <h2 id="ev-vs-mktcap">Enterprise Value vs. market capitalisation</h2>
+      <h2 id="ev-vs-mktcap">Enterprise value vs. market capitalisation</h2>
       <p>Market cap is the value of a company's equity - shares outstanding × share price. Enterprise Value is the total value of the business including all sources of capital:</p>
       <div class="responsive-table">
         <table>
@@ -300,7 +300,7 @@ const schema = [
       <p>The cardinal rule: always match numerator to denominator. EV against EBITDA - correct. Market cap against EBITDA - meaningless.</p>
       <p>A multiple only tells you something when you compare it against a benchmark - the same industry, a similar stage of growth, and the same rate environment. A company at 15x EV/EBITDA might be cheap if its sector median is 20x, or expensive if the median is 8x.</p>
 
-      <h2 id="multiples">EV/EBITDA and EV/Revenue multiples</h2>
+      <h2 id="multiples">EV/EBITDA and ev/revenue multiples</h2>
       <p>EV multiples answer the question: "how many times earnings (or revenue) is the market valuing this business?" A lower multiple indicates a cheaper valuation relative to earnings; a higher multiple implies growth expectations are priced in.</p>
       <div class="responsive-table">
         <table>

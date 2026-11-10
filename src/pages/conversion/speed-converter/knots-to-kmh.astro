@@ -134,25 +134,25 @@ const schema = [
         </ul>
       </div>
 
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use this converter</h2>
       <p>Enter a knots value and the km/h equivalent appears instantly. You can also type in the km/h field to convert back to knots. The converter is fully bidirectional. There's no submit button - results update as you type.</p>
       <p>The default shows 20 knots = 37.04 km/h. Change either value to recalculate. For the reverse (km/h to knots), just type your km/h value in the right field.</p>
 
-      <h2 id="formula">How Do You Convert Knots to km/h?</h2>
+      <h2 id="formula">How do you convert knots to km/h?</h2>
       <p>Multiply knots by 1.852. This factor is exact, not approximate: one nautical mile equals exactly 1,852 meters by international definition (BIPM, 1929), so the conversion is 1,852 meters ÷ 1,000 meters per kilometer = 1.852 km per nautical mile, giving 1.852 km/h per knot.</p>
 
       <Formula expr={f.knotsToKmh} />
 
       <p>Worked examples: 10 knots = 18.52 km/h. 30 knots = 55.56 km/h. 490 knots = 907.5 km/h (typical commercial airliner cruise).</p>
 
-      <h2 id="reverse">How Do You Convert km/h to Knots?</h2>
+      <h2 id="reverse">How do you convert km/h to knots?</h2>
       <p>Divide km/h by 1.852. The reciprocal factor is 0.539957 - multiply km/h by this to get knots. European weather forecasts often give wind speeds in km/h, while aviation and marine instruments read in knots. This conversion is needed whenever you cross between the two systems.</p>
 
       <Formula expr={f.kmhToKnots} />
 
       <p>Worked examples: 100 km/h = 54.00 knots. 200 km/h = 107.99 knots. 900 km/h = 486.00 knots.</p>
 
-      <h2 id="beaufort">Beaufort Wind Scale in Knots and km/h</h2>
+      <h2 id="beaufort">Beaufort wind scale in knots and km/h</h2>
       <p>The Beaufort scale is the universal standard for describing wind force at sea and in weather reports, defined by the World Meteorological Organization (WMO). Each force number maps to a knots range, with a km/h equivalent. European weather services routinely publish Beaufort force alongside km/h readings.</p>
 
       <div class="responsive-table">
@@ -180,7 +180,7 @@ const schema = [
 
       <p>For reference beyond the Beaufort scale: 150 kn = 277.8 km/h (airliner approach speed), 490 kn = 907.5 km/h (commercial airliner cruise), 1,320 kn = 2,445 km/h (Concorde cruise, approximately <a href="/glossary/mach-number">Mach 2</a>).</p>
 
-      <h2 id="when-to-use">When Do You Need to Convert Knots to km/h?</h2>
+      <h2 id="when-to-use">When do you need to convert knots to km/h?</h2>
       <p>Knots are the standard unit in all commercial and military aviation globally, and in maritime navigation worldwide. The International Civil Aviation Organisation (ICAO) mandates knots for airspeed on all cockpit instruments. At the same time, most European countries and meteorological agencies publish wind speeds in km/h for general public communication. The conversion is needed whenever these two worlds meet.</p>
 
       <p>Common situations where this conversion helps:</p>
@@ -192,7 +192,7 @@ const schema = [
         <li><strong>Aviation training</strong> - Student pilots from metric-system countries often need to relate knots to the km/h wind speeds they grew up with.</li>
       </ul>
 
-      <h2 id="faq">Frequently Asked Questions</h2>
+      <h2 id="faq">Frequently asked questions</h2>
 
       <h3>How many km/h is 1 knot?</h3>
       <p>1 knot = 1.852 km/h exactly. A nautical mile is defined as exactly 1,852 meters by the International Bureau of Weights and Measures, so dividing by 1,000 meters per kilometer gives 1.852 - no rounding involved.</p>

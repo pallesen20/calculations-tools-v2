@@ -69,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Inches to Feet Converter"
   metaTitle="Inches to Feet Converter | Instantly Calculate in to ft"
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="ft = in ÷ 12"
   ogExample="12 in = 1 ft"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Inch to Foot (in to ft) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Inches (in)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 1" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 ft = 12 in &nbsp;·&nbsp; 1 in = 0.08333 ft</div>
-
       </div>
     </section>
-
     <script src="/js/in-to-ft.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
-        <p>To convert inches to feet, divide by <strong>12</strong>. So 12 in = 1 ft, 60 in = 5 ft, and 72 in = 6 ft. There are exactly 12 inches in one foot - this is the imperial definition.</p>
+        <p>To convert inches to feet, divide by <strong>12</strong>. So 12 in = 1 ft, 60 in = 5 ft, and 72 in = 6 ft. There are exactly 12 inches in one foot - this is <a href="/glossary/imperial-system">the imperial definition</a>.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>Example: 69 in = 5 ft 9 in (5×12=60, 69−60=9).</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use our inches to feet converter</h2>
       <p>Type any inch value in the in field and the feet result appears instantly as a decimal (e.g. 69 in → 5.75 ft). You can also type in the ft field to convert back to inches - it works in both directions. Note: the result is in decimal feet. To get feet and inches (e.g. "5 ft 9 in"), see the worked example in the formula section below.</p>
-
-      <h2 id="formula">How Do You Convert Inches to Feet?</h2>
+      <h2 id="formula">How do you convert inches to feet?</h2>
       <p>Divide inches by 12. There are exactly 12 inches in one foot. For non-integer results (e.g. 69 in = 5.75 ft), convert to feet and inches by taking the integer part as feet and multiplying the decimal part by 12 to get remaining inches.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 12 in = 1 ft. 24 in = 2 ft. 60 in = 5 ft. 69 in = 5.75 ft (= 5 ft 9 in). 72 in = 6 ft.</p>
-
       <p>Feet and inches breakdown: 69 ÷ 12 = 5 remainder 9 → 5 ft 9 in.</p>
-
-      <h2 id="reverse">How Do You Convert Feet to Inches?</h2>
+      <h2 id="reverse">How do you convert feet to inches?</h2>
       <p>Multiply feet by 12. For a dedicated converter, see the <a href="/conversion/length-converter/ft-to-in">feet to inches converter</a>.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 5 ft = 60 in. 5.5 ft = 66 in. 6 ft = 72 in.</p>
-
-      <h2 id="reference-table">Inches to Feet Reference Table</h2>
+      <h2 id="reference-table">Inches to feet reference table</h2>
       <p>Common values in both decimal feet and feet-and-inches format:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -172,8 +152,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When Do You Need to Convert Inches to Feet?</h2>
+      <h2 id="when-to-use">When do you need to convert inches to feet?</h2>
       <p>This conversion is needed whenever measurements are recorded in total inches but need to be expressed in feet:</p>
       <ul>
         <li><strong>Height data</strong> - some medical and fitness systems record total height in inches; humans naturally understand feet and inches better.</li>
@@ -181,21 +160,15 @@ const schema = [
         <li><strong>Fabric and sewing</strong> - patterns specify measurements in inches, but fabric is sold by the yard (36 in).</li>
         <li><strong>Screen sizes</strong> - monitor diagonal sizes are in inches; room layouts are in feet.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <h2 id="faq">FAQs about inches to ft conversion</h2>
       <h3>How many feet is 60 inches?</h3>
       <p>60 inches equals exactly 5 feet. Divide 60 by 12. This is the approximate height threshold often cited in clothing and medical contexts (5 ft = 152.4 cm).</p>
-
       <h3>How do you convert inches to feet?</h3>
       <p>Divide by 12. For mixed feet and inches output: integer part of (in ÷ 12) = feet, remainder = extra inches. Example: 69 in → 69 ÷ 12 = 5 remainder 9 → 5 ft 9 in.</p>
-
       <h3>How many feet is 72 inches?</h3>
       <p>72 inches equals exactly 6 feet. This is "6 foot" - a common adult male height benchmark in the US. To convert to centimeters: 72 × 2.54 = 182.88 cm. Use the <a href="/conversion/length-converter/in-to-mm">inches to mm converter</a> for the metric millimeter equivalent.</p>
-
       <h3>How do you express inches as feet and inches?</h3>
       <p>Divide the total inches by 12. The whole number is the feet; multiply the decimal remainder by 12 to get the remaining inches. Or use integer division: feet = floor(in/12), remaining inches = in mod 12. Example: 75 in → floor(75/12)=6 ft, 75 mod 12 = 3 in → 6 ft 3 in.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -234,12 +207,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

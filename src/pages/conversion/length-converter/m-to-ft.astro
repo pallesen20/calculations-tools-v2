@@ -69,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Meters to Feet Converter"
   metaTitle="Meters to Feet Converter | Calculate meters to imperial ft"
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="ft = m ÷ 0.3048"
   ogExample="1 m = 3.28084 ft"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Meters to Feet (m to ft) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Meters (m)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 3.28084" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 m = 3.28084 ft &nbsp;·&nbsp; 1 ft = 0.3048 m</div>
-
       </div>
     </section>
-
     <script src="/js/m-to-ft.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert meters to feet, divide by <strong>0.3048</strong> (or multiply by 3.28084). So 1 m = 3.28084 ft. The factor is exact - one foot is defined as exactly 0.3048 meters since the International Yard and Pound Agreement of 1959.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>The US and UK are the main countries still using feet for everyday heights and distances (NIST, 2023).</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use our m to ft converter</h2>
       <p>Type any value in the meters field and the feet result appears instantly. You can also type in the feet field to convert back to meters - it works in both directions without pressing a button.</p>
-
-      <h2 id="formula">How Do You Convert Meters to Feet?</h2>
+      <h2 id="formula">How do you convert meters to feet?</h2>
       <p>Divide meters by 0.3048. This is an exact factor: one foot is defined as exactly 0.3048 meters under the International Yard and Pound Agreement of 1959, signed by the US, UK, Canada, Australia, New Zealand, and South Africa. There is no rounding.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 1.8 m = 5.905 ft. 10 m = 32.808 ft. 100 m = 328.084 ft.</p>
-
       <p>Mental shortcut: multiply by 3.28 for a quick estimate. The error is only 0.025%, which is negligible for everyday use.</p>
-
-      <h2 id="reverse">How Do You Convert Feet to Meters?</h2>
+      <h2 id="reverse">How do you convert feet to meters?</h2>
       <p>Multiply feet by 0.3048. This is the same exact definition used in reverse. For a full multi-unit converter, the <a href="/conversion/length-converter">length converter</a> handles all metric and imperial units simultaneously.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 5 ft = 1.524 m. 6 ft = 1.8288 m. 100 ft = 30.48 m.</p>
-
-      <h2 id="reference-table">Meters to Feet Reference Table</h2>
+      <h2 id="reference-table">Meters to feet reference table</h2>
       <p>Common values converted using the exact factor 1 ÷ 0.3048 = 3.280839895...</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -171,8 +151,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When Do You Need to Convert Meters to Feet?</h2>
+      <h2 id="when-to-use">When do you need to convert meters to feet?</h2>
       <p>The meter/foot divide follows a geographic split. According to NIST (2023), only the US, Liberia, and Myanmar use feet as a primary unit for everyday measurement. This creates conversion needs for travellers, architects working across borders, and anyone reading international height or distance data.</p>
       <ul>
         <li><strong>Height</strong> - medical records in the US use feet and inches; international records use meters and centimeters.</li>
@@ -180,21 +159,15 @@ const schema = [
         <li><strong>Construction</strong> - US blueprints use feet; European blueprints use meters.</li>
         <li><strong>Sports</strong> - track and field events are measured in meters; American football uses yards and feet.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <h2 id="faq">FAQs about converting meters to feet</h2>
       <h3>How many feet is 1 meter?</h3>
       <p>1 meter is 3.28084 feet. The exact conversion is 1 ÷ 0.3048 = 3.280839895... ft. In practical terms, 1 meter is about 3 feet and 3⅜ inches - slightly more than a yard (which is exactly 3 feet).</p>
-
       <h3>How do you convert meters to feet?</h3>
       <p>Divide by 0.3048 or multiply by 3.28084. Both are equivalent - 3.28084 is simply 1 ÷ 0.3048 rounded to 5 decimal places. The exact factor is a repeating decimal: 3.2808398950131...</p>
-
       <h3>How many meters is 6 feet?</h3>
       <p>6 feet is exactly 1.8288 meters. Multiply 6 by 0.3048: 6 × 0.3048 = 1.8288 m. This is a commonly cited height - in clinical settings it's often rounded to 1.83 m.</p>
-
       <h3>Is a meter longer than a foot?</h3>
       <p>Yes - a meter is 3.28084 feet, so it's more than three times the length of a foot. A meter is also about 9.4% longer than a yard (0.9144 m). If you need to compare meters and yards, use the <a href="/conversion/length-converter/m-to-yd">meters to yards converter</a>.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -240,12 +213,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

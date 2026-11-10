@@ -160,7 +160,7 @@ const schema = [
           <li>For pure CSV files without formulas or multiple sheets, the lighter <a href="/compare/csv">CSV comparison tool</a> loads faster.</li>
         </ul>
       </div>
-      <h2 id="how-to-use">How to use our Excel diff checker tool</h2>
+      <h2 id="how-to-use">How to use our excel diff checker tool</h2>
       <p>Drop your original (older) spreadsheet into the left panel and the revised (newer) version into the right panel. Then click "Find Differences." The diff output appears below with every change color-coded by type.</p>
       <p>If either file contains multiple sheets, tabs appear below the file preview so you can select which sheet to compare. Each side selects its sheet independently - useful when sheets have been renamed or reordered between file versions.</p>
       <p>The Swap button exchanges the contents of both panels without re-uploading. The Sample button loads a short example spreadsheet. The Copy Diff button copies the full result to your clipboard as tab-separated text.</p>
@@ -195,7 +195,7 @@ const schema = [
         </tbody>
       </table>
       </div>
-      <h2 id="use-cases">Use cases for an Excel diff checker</h2>
+      <h2 id="use-cases">Use cases for an excel diff checker</h2>
       <h3>Financial reporting and reconciliation</h3>
       <p>Compare monthly or quarterly financial reports between the draft and the signed-off version. The diff immediately shows every cell that changed - useful for catching last-minute edits, formula overrides, or figures manually adjusted after the original was shared.</p>
       <p>For comparing text-based reports or code files, the <a href="/compare/text">text diff checker</a> handles plain-text line-by-line comparison.</p>
@@ -211,7 +211,7 @@ const schema = [
       <p>This tool uses <strong>positional row matching</strong>: row N in the original is always compared to row N in the changed file. If a row was inserted in the middle, every row after it will appear as "changed" due to the position shift. For best results, sort both files by a unique identifier column before uploading, or ensure new rows were only appended at the bottom.</p>
       <p>When I use this Excel diff checker for reconciliation work, the single most common source of confusing output is an unsorted file. A supplier adding one new SKU at row 50 makes every subsequent row appear changed, which floods the diff with hundreds of false positives.</p>
       <p><strong>The fix takes 10 seconds:</strong> sort both files by SKU or order number before uploading, and the real changes surface cleanly. It's worth building that sort step into your standard workflow before you ever touch the upload buttons.</p>
-      <h2 id="common-mistakes">Common mistakes when comparing Excel files</h2>
+      <h2 id="common-mistakes">Common mistakes when comparing excel files</h2>
       <h3>Uploading files in the wrong order</h3>
       <p>The left panel is "Original" and the right panel is "Changed." If the output looks backwards, use the Swap button to exchange both files without re-uploading.</p>
       <h3>Formula values vs. formula text</h3>
@@ -224,7 +224,7 @@ const schema = [
       <h3>Numbers stored as text in one file</h3>
       <p>A cell containing the number 1234 and a cell containing the text string "1234" compare as different, even though they look the same. This frequently happens when importing from a legacy system or copying data from a web page - numbers arrive as text and Excel doesn't automatically convert them.</p>
       <p>Look for the small green triangle in the top-left corner of cells, which indicates a number stored as text. Use <em>Data &gt; Text to Columns</em> or the "Convert to Number" option to fix the entire column before uploading.</p>
-      <h2 id="faq">FAQs about Excel diff checker</h2>
+      <h2 id="faq">FAQs about excel diff checker</h2>
       <h3>How do I compare two Excel files?</h3>
       <p>Upload your original .xlsx file on the left and the changed version on the right, then click Find Differences. Changed cells are highlighted in yellow with the previous value shown in parentheses.</p>
       <h3>Is my data safe?</h3>

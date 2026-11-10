@@ -150,7 +150,7 @@ const schema = [
           <li>To compare two sheets within the same workbook, export as .xlsx, upload the same file on both sides, and select different sheet tabs on each panel.</li>
         </ul>
       </div>
-      <h2 id="how-to-export">How to export from Google Sheets</h2>
+      <h2 id="how-to-export">How to export from google sheets</h2>
       <p>Google Sheets does not provide direct browser-side access to sheet data, so this tool works with exported files. Exporting takes under 30 seconds:</p>
       <ol>
         <li>Open your Google Sheet.</li>
@@ -164,14 +164,14 @@ const schema = [
       <p><strong>One thing worth knowing:</strong> CSV export only captures the sheet that is currently active when you click File → Download. If your workbook has 5 sheets and you want to compare a specific one, make sure that sheet is selected before downloading.</p>
       <p>I've seen people download the wrong sheet, get a diff full of apparent changes, and spend 10 minutes troubleshooting before noticing the tab name in the preview header.</p>
       <p>Exporting as .xlsx avoids this - all sheets are included and you pick the right one after uploading.</p>
-      <h2 id="how-to-use">How to use our Google Sheets diff checker tool</h2>
+      <h2 id="how-to-use">How to use our google sheets diff checker tool</h2>
       <p>This tool uses the same comparison engine as the <a href="/compare/excel">Excel & CSV comparison tool</a> - SheetJS runs entirely in your browser to parse the exported files, so nothing is uploaded to any server. Drop each exported file into its panel and click Find Differences.</p>
       <p>Yellow cells changed, green rows were added, red rows were removed. The summary bar shows the total counts. Use Copy Diff to copy the full result as tab-separated text.</p>
       <h3 id="explained-to-beginner">Explained to a beginner</h3>
       <p>Google Sheets is a live document - multiple people can edit it at the same time, and the content changes whenever anyone makes an edit. The problem is there's no built-in way to get a clean "before and after" view showing exactly which cells changed between two points in time. This tool fills that gap.</p>
       <p>Think of it like taking a photograph of the sheet at two different moments. You export a CSV on Monday morning (photo 1), the team edits the sheet all week, then you export another CSV on Friday afternoon (photo 2). Upload both photos here and the tool highlights every cell that looks different between them - including the old value so you can see exactly what it was before.</p>
       <p><strong>Concrete example:</strong> a 200-row budget spreadsheet shared with 6 teammates. After a quarterly review meeting, someone updates 15 line items, adds 3 new budget rows, and removes 2 discontinued ones. Download CSVs before and after. Upload both here: you see exactly which 15 cells changed (with old values), 3 green added rows, 2 red removed rows. The whole process takes about 90 seconds.</p>
-      <h2 id="vs-version-history">This tool vs. Google Sheets version history</h2>
+      <h2 id="vs-version-history">This tool vs. google sheets version history</h2>
       <p>Google Sheets has a built-in version history (File → Version history → See version history). It's useful for quick checks, but it answers a different question than this tool does.</p>
       <div class="responsive-table">
       <table>
@@ -199,7 +199,7 @@ const schema = [
       <p>When two teams maintain separate copies of a shared dataset in Google Sheets, exporting both and comparing them reveals every discrepancy - missing rows, conflicting values, or formatting-driven differences that text comparison would miss.</p>
       <h3>Vendor or client data review</h3>
       <p>When a vendor or client sends you a copy of a shared master sheet, export your version and theirs as CSV and compare them. Any row they added, value they changed, or entry they removed shows up immediately - without you having to read through both spreadsheets line by line to find the divergence.</p>
-      <h2 id="common-mistakes">Common mistakes when comparing Google Sheets exports</h2>
+      <h2 id="common-mistakes">Common mistakes when comparing google sheets exports</h2>
       <h3>CSV export captures the wrong sheet</h3>
       <p>When you choose File → Download → CSV, Google Sheets only exports the tab that is currently selected. If you intended to export the "Q3 Data" tab but "Summary" was active, you get the wrong file - and the diff will be full of apparent changes that don't reflect your intended comparison.</p>
       <p>Always glance at which tab is highlighted in the sheet bar before clicking Download. Exporting as .xlsx avoids this entirely, since all tabs are included and you select the right one after uploading.</p>

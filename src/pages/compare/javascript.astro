@@ -147,13 +147,13 @@ const schema = [
           <li>For Python use <a href="/compare/python">Compare Python</a>; for CSS use <a href="/compare/css">Compare CSS</a>; for any language use <a href="/compare/code">Compare Code</a>.</li>
         </ul>
       </div>
-      <h2 id="how-to-use">How to use this JavaScript diff checker</h2>
+      <h2 id="how-to-use">How to use this javascript diff checker</h2>
       <p>Paste or upload your original JavaScript or TypeScript on the left and the changed version on the right. Click "Find Differences." The diff shows every added and removed line with line numbers. Toggle Unified or Side-by-Side view. The language is pre-selected as JavaScript, so uploads filter to .js, .ts, .jsx, .tsx, .mjs, and .cjs files.</p>
       <h3 id="explained-to-beginner">JS and TS diff check explained to a beginner</h3>
       <p>JavaScript and TypeScript are close relatives - TypeScript adds type annotations like <code>: string</code> or <code>: number[]</code> on top of JavaScript. When you compare a JS file to its TypeScript equivalent, those annotation lines show as added, but the underlying logic is usually unchanged.</p>
       <p>The most confusing thing about diffing JS is that code formatters (Prettier, ESLint) can change dozens of lines at once without changing any logic. Switching from single quotes to double quotes, adding trailing commas, or inserting semicolons all affect many lines simultaneously. A diff showing 200 changed lines in a 300-line file is often just a formatter running - not a real code change.</p>
       <p>Think of it like comparing two copies of a memo where one person used Oxford commas and the other didn't. The sentences are identical, but almost every line looks different. The fix: run the same formatter on both files before diffing. The real changes then collapse to a handful of lines - those are the ones worth reviewing.</p>
-      <h2 id="js-diff">What to watch for when you compare JavaScript files</h2>
+      <h2 id="js-diff">What to watch for when you compare javascript files</h2>
       <h3>Formatter noise: Prettier and ESLint reformats</h3>
       <p>Prettier or ESLint reformatting changes many lines at once - semicolons, quote style (single vs double), trailing commas, and bracket spacing. A formatter-only diff shows many changed lines with identical logic. To isolate real changes, run the same formatter on both files before diffing.</p>
       <p>When I get a diff back from a collaborator showing 200 changed lines in a 300-line file, the first thing I do is check whether it's a formatting diff. If most changes are quote style, semicolons, and trailing commas, I run Prettier on both files and diff again. Usually the real changes collapse to 10-15 lines - that's where I focus the review.</p>
@@ -161,7 +161,7 @@ const schema = [
       <p>Converting <code>function foo() {}</code> to <code>const foo = () => {}</code> changes multiple lines. The diff shows the function declaration as removed and the arrow function as added. This is a real structural change, not formatting noise - it affects <code>this</code> binding and the function's <code>prototype</code> property.</p>
       <h3>TypeScript type annotations added to JavaScript</h3>
       <p>Adding TypeScript types to a JavaScript file shows each annotated line as changed. A migration from plain JS to TypeScript produces a large diff even if the runtime logic is unchanged - every function signature and variable declaration gains new annotation lines.</p>
-      <h2 id="use-cases">When to use a JavaScript or TypeScript diff checker</h2>
+      <h2 id="use-cases">When to use a javascript or typescript diff checker</h2>
       <h3>Reviewing AI-generated JavaScript rewrites</h3>
       <p>When an AI assistant rewrites a component or refactors a function, paste the original and the new version side by side to verify only the requested changes were made. Switch to Side-by-Side view to track the logic block by block without jumping between files.</p>
       <h3>Bundle output comparison</h3>
@@ -171,7 +171,7 @@ const schema = [
       <h3>Framework migration</h3>
       <p>During a migration (class components to hooks, CommonJS to ESM), compare before and after versions of each module to confirm the migration is complete and correct.</p>
       <p>Side-by-side view is most useful for framework migrations. Comparing class component syntax to hook-based syntax is hard to follow in unified view because the structure changes so much. Side by side, you can track the logic block by block - the constructor becomes state initialization, componentDidMount becomes useEffect - and verify each equivalent in parallel.</p>
-      <h2 id="common-mistakes">Common mistakes when comparing JavaScript files</h2>
+      <h2 id="common-mistakes">Common mistakes when comparing javascript files</h2>
       <h3>Comparing before and after a formatter run</h3>
       <p>If one file was saved with Prettier auto-format and the other was not, the diff shows every formatting difference - quote style, semicolons, trailing commas, indentation. Run the same formatter on both files before diffing to see only logical changes.</p>
       <h3>Comparing minified vs unminified code</h3>

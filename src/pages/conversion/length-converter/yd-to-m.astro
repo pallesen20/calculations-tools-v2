@@ -69,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Yards to Meters Converter"
   metaTitle="Yards to Meters Converter | Instantly Calculate yd to m"
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="m = yd × 0.9144"
   ogExample="100 yd = 91.44 m"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Yard to Meter (yd to m) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Yards (yd)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 0.9144" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 yd = 0.9144 m &nbsp;·&nbsp; 1 m = 1.09361 yd</div>
-
       </div>
     </section>
-
     <script src="/js/yd-to-m.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert yards to meters, multiply by <strong>0.9144</strong>. So 100 yd = 91.44 m. The factor is exact - one yard is defined as exactly 0.9144 meters since the International Yard and Pound Agreement of 1959.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,27 +118,18 @@ const schema = [
           <li>American football fields are 100 yards (91.44 m); standard athletics tracks are 400 m (437.4 yd).</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use our yards to meters converter</h2>
       <p>Type any value in the yards field and the meters result appears instantly. You can also type in the meters field to convert back to yards - it works in both directions without pressing a button.</p>
-
-      <h2 id="formula">How Do You Convert Yards to Meters?</h2>
+      <h2 id="formula">How do you convert yards to meters?</h2>
       <p>Multiply yards by 0.9144. This is exact: one yard is defined as 3 feet, and one foot is defined as exactly 0.3048 m. So 1 yd = 3 × 0.3048 = 0.9144 m precisely.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 10 yd = 9.144 m. 100 yd = 91.44 m. 1760 yd = 1609.344 m (= 1 mile).</p>
-
-      <h2 id="reverse">How Do You Convert Meters to Yards?</h2>
+      <h2 id="reverse">How do you convert meters to yards?</h2>
       <p>Divide meters by 0.9144, or multiply by 1.09361. For a full multi-unit converter, the <a href="/conversion/length-converter">length converter</a> handles all units at once.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 1 m = 1.094 yd. 100 m = 109.36 yd. 400 m = 437.4 yd.</p>
-
-      <h2 id="reference-table">Yards to Meters Reference Table</h2>
+      <h2 id="reference-table">Yards to meters reference table</h2>
       <p>Common sports field dimensions and fabric measurements converted using the exact factor 0.9144.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -167,8 +148,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When Do You Need to Convert Yards to Meters?</h2>
+      <h2 id="when-to-use">When do you need to convert yards to meters?</h2>
       <p>Yards are primarily used in the US for American football, fabric, and some construction contexts. Most international sports and trade use meters. According to NIST (2023), the yard is one of the few imperial units still in common everyday use in the US.</p>
       <ul>
         <li><strong>American football</strong> - field is 100 yards; international reports often give dimensions in meters.</li>
@@ -176,21 +156,15 @@ const schema = [
         <li><strong>Fabric and textiles</strong> - US fabric is sold by the yard; European fabric is sold by the meter.</li>
         <li><strong>Golf</strong> - distances are in yards in the US and UK, meters in most other countries.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <h2 id="faq">FAQs about converting yards to meters</h2>
       <h3>How many meters is 1 yard?</h3>
       <p>Exactly 0.9144 meters. A yard is 3 feet, and each foot is 0.3048 m, so 3 × 0.3048 = 0.9144 m. A meter is about 9.4% longer than a yard. Put another way, 1 m = 1.09361 yd.</p>
-
       <h3>How do you convert yards to meters?</h3>
       <p>Multiply by 0.9144. Quick mental estimate: multiply by 0.9 (error 0.48%). For 100 yards: 100 × 0.9 = 90 m; actual is 91.44 m. The 1.44 m difference matters in competitive swimming or track events but is negligible for fabric or garden measurements.</p>
-
       <h3>How many yards is 100 meters?</h3>
       <p>109.36 yards. Divide 100 by 0.9144 = 109.361 yd. The 100 m sprint is 9.36 yards longer than the old 100 yard dash. That's why world records for the two distances aren't directly comparable - 100 m is about 8.5% farther.</p>
-
       <h3>Is a yard bigger than a meter?</h3>
       <p>No - a meter is longer. 1 m = 1.09361 yd, so a meter is about 9.4% longer than a yard. If you need to compare yards and feet or yards and miles, the <a href="/conversion/length-converter">length converter</a> handles all imperial units together.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -222,12 +196,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

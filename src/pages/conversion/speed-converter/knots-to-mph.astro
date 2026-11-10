@@ -146,29 +146,29 @@ const schema = [
         </ul>
       </div>
 
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use this converter</h2>
       <p>Enter a knots value and the mph equivalent appears instantly. You can also type in the mph field to convert back to knots - the converter is fully bidirectional. There's no submit button; results update as you type.</p>
 
-      <h2 id="what-is-a-knot">What Is a Knot - and What Does kts Mean?</h2>
+      <h2 id="what-is-a-knot">What is a knot - and what does kts mean?</h2>
       <p>A knot is a unit of speed equal to one nautical mile per hour. The abbreviation differs by context: <strong>KT</strong> is used in METAR aviation weather reports (e.g. "WIND 270/15KT"), <strong>kts</strong> is the informal plural you see in marine weather apps and vessel trackers, and <strong>kn</strong> is the SI-approved symbol. All three mean identical values - one nautical mile (1,852 m) per hour.</p>
       <p>The name comes from 16th-century seamanship. Sailors measured speed with a chip log: a wooden panel thrown overboard on a rope knotted at fixed intervals every 47 feet 3 inches. They counted how many knots passed through their hands in 28 seconds - that count directly equalled the ship's speed in nautical miles per hour because the interval and time were calibrated to match the ratio of 1 nm to 1 hour.</p>
       <p>In everyday terms: 1 knot (1.15 mph) is about the pace of a relaxed walk. A 15-knot wind is a fresh breeze capable of extending a flag. A 490-knot airliner covers roughly 9 statute miles - or 8 nautical miles - every minute. The unit feels unfamiliar on land but is the global standard for anything that navigates by chart.</p>
 
-      <h2 id="formula">How Do You Convert Knots to mph?</h2>
+      <h2 id="formula">How do you convert knots to mph?</h2>
       <p>Multiply knots by 1852 ÷ 1609.344, which equals approximately 1.15078. The factor comes directly from the two unit definitions: a nautical mile is exactly 1,852 meters; a statute mile is exactly 1,609.344 meters. Dividing the first by the second gives the exact conversion ratio. ICAO (the International Civil Aviation Organisation) has used knots as the standard airspeed unit since the 1940s.</p>
 
       <Formula expr={f.knotsToMph} />
 
       <p>Worked examples: 10 knots = 11.51 mph. 25 knots = 28.77 mph. 490 knots = 563.9 mph (typical airliner cruise speed).</p>
 
-      <h2 id="reverse">How Do You Convert mph to Knots?</h2>
+      <h2 id="reverse">How do you convert mph to knots?</h2>
       <p>Divide mph by 1.15078. The reciprocal factor is 0.868976 - multiply mph by this to get knots. Pilots and mariners convert mph to knots when reading speed data from non-aviation instruments or when communicating with ground traffic that uses mph.</p>
 
       <Formula expr={f.mphToKnots} />
 
       <p>Worked examples: 60 mph = 52.14 knots. 100 mph = 86.90 knots. 565 mph = 490.9 knots.</p>
 
-      <h2 id="reference-table">Knots to mph Reference Table</h2>
+      <h2 id="reference-table">Knots to mph reference table</h2>
       <p>Common knot values converted to mph and km/h, with real-world contexts for each speed range. Values use the exact factor 1 knot = 1.15078 mph.</p>
 
       <div class="responsive-table">
@@ -191,7 +191,7 @@ const schema = [
         </table>
       </div>
 
-      <h2 id="when-to-use">When Do You Need to Convert Knots to mph?</h2>
+      <h2 id="when-to-use">When do you need to convert knots to mph?</h2>
       <p>Knots are the standard unit in all commercial and military aviation, and in maritime navigation globally - regardless of whether the country uses mph or km/h on its roads. The International Civil Aviation Organisation (ICAO) mandates knots for airspeed worldwide, meaning every airliner cockpit instrument reads in knots. Weather agencies in many countries (including the US National Hurricane Center) report wind speeds in knots.</p>
 
       <p>Common conversion needs:</p>
@@ -202,7 +202,7 @@ const schema = [
         <li><strong>Flight simulation</strong> - simulator users frequently need to cross-reference knot speeds with real-world mph references.</li>
       </ul>
 
-      <h2 id="knots-vs-mph">Knots vs mph: Key Differences</h2>
+      <h2 id="knots-vs-mph">Knots vs mph: key differences</h2>
       <p>Knots and mph both measure speed - neither is "faster" than the other. The difference is the reference unit: a knot uses the nautical mile (1,852 m) while mph uses the statute mile (1,609.344 m). Because the nautical mile is longer, 1 knot is always greater than 1 mph: specifically 1.15078 mph.</p>
       <div class="responsive-table">
         <table>
@@ -220,7 +220,7 @@ const schema = [
       </div>
       <p>The nautical mile's link to latitude is the core reason aviation and maritime industries adopted knots: on a chart, a distance of 60 nm equals exactly 1 degree of latitude, making mental dead-reckoning arithmetic straightforward. mph offers no equivalent geometric shortcut, which is why it never gained traction in navigation despite being common on land.</p>
 
-      <h2 id="faq">Frequently Asked Questions</h2>
+      <h2 id="faq">Frequently asked questions</h2>
 
       <h3>How many mph is 1 knot?</h3>
       <p>1 knot = 1.15078 mph. The factor is the ratio of the nautical mile (1,852 m) to the statute mile (1,609.344 m). Both are exact by definition, so the conversion is exact: 1852 ÷ 1609.344 = 1.150779…</p>

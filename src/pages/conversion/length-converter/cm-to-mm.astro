@@ -69,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Centimeters to Millimeters Converter"
   metaTitle="Centimeters to Millimeters Converter | Calculate cm to mm"
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="mm = cm × 10"
   ogExample="1 cm = 10 mm"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Centimeter to Millimeter (cm to mm) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Centimeters (cm)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 10" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 cm = 10 mm &nbsp;·&nbsp; 1 mm = 0.1 cm</div>
-
       </div>
     </section>
-
     <script src="/js/cm-to-mm.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert centimeters to millimeters, multiply by <strong>10</strong>. So 1 cm = 10 mm, 5 cm = 50 mm, and 30 cm = 300 mm. The factor is exact - 1 cm = 10 mm by the SI metric prefix definition.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>Common use cases: sewing, woodworking, photography, precision manufacturing.</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use our quick cm to mm converter</h2>
       <p>Type any centimeter value in the cm field and the millimeters result appears instantly. You can also type in the mm field to convert back to centimeters - it works in both directions without pressing a button.</p>
-
-      <h2 id="formula">How Do You Convert Centimeters to Millimeters?</h2>
+      <h2 id="formula">How do you convert centimeters to millimeters?</h2>
       <p>Multiply centimeters by 10. The relationship is exact: the SI prefix "centi-" means 1/100 and "milli-" means 1/1000. Since 1/100 ÷ 1/1000 = 10, there are exactly 10 mm in every centimeter.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 1 cm = 10 mm. 2.5 cm = 25 mm. 30 cm = 300 mm. 100 cm = 1000 mm = 1 m.</p>
-
       <p>Mental shortcut: simply move the decimal point one place to the right. 12.5 cm → 125 mm. This is the simplest conversion in the metric system.</p>
-
-      <h2 id="reverse">How Do You Convert Millimeters to Centimeters?</h2>
+      <h2 id="reverse">How do you convert millimeters to centimeters?</h2>
       <p>Divide millimeters by 10. For a dedicated reverse converter, see the <a href="/conversion/length-converter/mm-to-cm">millimeters to centimeters converter</a>.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 10 mm = 1 cm. 25 mm = 2.5 cm. 300 mm = 30 cm.</p>
-
-      <h2 id="reference-table">Centimeters to Millimeters Reference Table</h2>
+      <h2 id="reference-table">Centimeters to millimeters reference table</h2>
       <p>Common values converted at the exact factor of 10:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -171,8 +151,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When Do You Need to Convert Centimeters to Millimeters?</h2>
+      <h2 id="when-to-use">When do you need to convert centimeters to millimeters?</h2>
       <p>Both units are used in everyday metric measurement, and conversions happen when precision requirements change:</p>
       <ul>
         <li><strong>Sewing and tailoring</strong> - seam allowances and buttonhole sizes are in mm; fabric widths and garment measurements in cm.</li>
@@ -181,21 +160,15 @@ const schema = [
         <li><strong>Medical imaging</strong> - anatomy dimensions in cm; lesion sizes, catheter diameters in mm.</li>
         <li><strong>Engineering</strong> - product dimensions in cm for readability; tight tolerances specified in mm.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <h2 id="faq">FAQs about cm to mm conversion</h2>
       <h3>How many mm is 1 cm?</h3>
       <p>Exactly 10 mm. The "centi-" prefix means 1/100 of a meter; "milli-" means 1/1000. So 1 cm = 10 × 1 mm. This holds true for any cm value - just multiply by 10.</p>
-
       <h3>How do you convert cm to mm?</h3>
       <p>Multiply by 10, or move the decimal point one position to the right. 3.7 cm → 37 mm. 0.8 cm → 8 mm. 100 cm → 1000 mm. The conversion is exact with no rounding for any input.</p>
-
       <h3>How many mm is 2.5 cm?</h3>
       <p>2.5 cm equals exactly 25 mm. This is very close to 1 inch (which is 25.4 mm = 2.54 cm). To convert to inches directly, use the <a href="/conversion/length-converter/cm-to-in">centimeters to inches converter</a>.</p>
-
       <h3>How many mm is 30 cm?</h3>
       <p>30 cm equals exactly 300 mm - the length of a standard 30 cm ruler. To convert 30 cm to inches: 30 ÷ 2.54 = 11.811 in. For that conversion use the <a href="/conversion/length-converter/cm-to-in">cm to inches converter</a>.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -234,12 +207,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

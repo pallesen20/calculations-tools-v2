@@ -264,11 +264,11 @@ const schema = [
           <li>California is the only US state with a statutory daily double-time requirement (2x after 12 hours in one day).</li>
         </ul>
       </div>
-      <h2 id="how-to-use">How to Use This Overtime Calculator</h2>
+      <h2 id="how-to-use">How to use this overtime calculator</h2>
       <p>Enter your regular hourly rate, the number of regular hours you worked, and your overtime hours. If you're paid a salary and need your effective hourly rate first, use the <a href="/finance/salary-to-hourly-calculator">salary to hourly calculator</a>.</p>
       <p>Then select your overtime multiplier - 1.5x is the US federal standard, but your employer or country may use a different rate.</p>
       <p>The calculator instantly shows your regular pay, overtime pay, the overtime premium (the extra amount you earned above your regular rate), your total pay, and your effective hourly rate across all hours.</p>
-      <h2 id="how-to-calculate">Exact Formula: How to Calculate Overtime Pay</h2>
+      <h2 id="how-to-calculate">Exact formula: how to calculate overtime pay</h2>
       <p>Multiply your regular hourly rate by the overtime multiplier, then multiply by the number of overtime hours. At the US standard of 1.5x, a worker earning $20/hr earns $30/hr for each overtime hour. The FLSA requires non-exempt employees to receive at least 1.5x regular pay for hours over 40 in a workweek (<a href="https://www.adp.com/resources/articles-and-insights/articles/h/how-to-calculate-overtime-pay.aspx" target="_blank">ADP, 2025</a>).</p>
       <Formula expr={f.otPay} />
       <p>To find only the extra premium above your base rate:</p>
@@ -279,7 +279,7 @@ const schema = [
       <Formula expr={f.effective} />
       <h3>Worked example to calculate overtime pay</h3>
       <p>$25/hr, 40 regular hours, 8 overtime hours at 1.5x. Regular pay = $1,000. Overtime pay = $25 x 1.5 x 8 = $300. Total = <strong>$1,300</strong>. Effective rate = $1,300 / 48 = <strong>$27.08/hr</strong>.</p>
-      <h2 id="overtime-rates">What Are Overtime Pay Rates Around the World?</h2>
+      <h2 id="overtime-rates">What are overtime pay rates around the world?</h2>
       <p>Overtime rules differ dramatically by country. The US federal standard of 1.5x (<a href="/glossary/time-and-a-half">time and a half</a>) after 40 hours is actually one of the lower thresholds globally - France triggers overtime after just 35 hours, while the UK has no mandatory overtime premium at all. The table below covers the key rules for major economies.</p>
       <div class="responsive-table">
         <table>
@@ -319,7 +319,7 @@ const schema = [
       <p>Germany has no statutory premium - rates are set by collective agreements, typically 1.25x to 1.5x depending on the sector.</p>
       <p>The UK has no mandatory overtime premium at all: employers only need to ensure total pay stays above the National Living Wage. In practice most UK employers do pay 1.25x to 1.5x, but it comes from the employment contract, not from law.</p>
       <p>If you work in Europe, your actual overtime rate depends on your country, your sector agreement, and your specific contract.</p>
-      <h2 id="multipliers">What Are the Common Overtime Multipliers?</h2>
+      <h2 id="multipliers">What are the common overtime multipliers?</h2>
       <p>The most common <a href="/glossary/overtime-pay">overtime pay</a> multipliers globally range from 1.25x to 3x, with the specific rate depending on your country, industry, employment contract, and the type of hours worked. Many employers pay higher rates than the legal minimum - always check your contract or collective agreement first.</p>
       <div class="responsive-table">
         <table>
@@ -344,16 +344,16 @@ const schema = [
       </div>
       <p>I have noticed the UK rules surprises workers accustomed to US or Australian rules the most. The assumption is that some multiple of regular pay is always guaranteed by law - but UK statute only requires that total compensation, including any overtime, keeps the worker above the National Living Wage (minimum wage).</p>
       <p>An employer can pay 1.0x for overtime hours as long as the resulting hourly average stays above the floor. Most UK employers do pay a premium in practice, but the source of that premium is the contract or the sector agreement, not the law. It is an important distinction if you are negotiating a new role or moving between countries.</p>
-      <h2 id="ot-tax">Is Overtime Pay Taxed Differently?</h2>
+      <h2 id="ot-tax">Is overtime pay taxed differently?</h2>
       <p>Overtime is taxed as ordinary income at the same federal tax brackets as regular wages - there is no special "overtime tax rate" in the US.</p>
       <p>However, a significant change took effect in 2025: the One Big Beautiful Bill Act introduced a federal deduction of up to $12,500 per individual ($25,000 for joint filers) for qualifying overtime compensation for tax years 2025-2028, phasing out above $150,000 income (<a href="https://www.irs.gov/newsroom/questions-and-answers-about-the-new-deduction-for-qualified-overtime-compensation" target="_blank">IRS, 2025</a>). This means many overtime workers will keep more of their premium pay starting with their 2025 <a href="/tax/income-tax-calculator">tax return</a> filed in 2026.</p>
       <p>Your paycheck may look more heavily withheld during high-overtime weeks because payroll systems annualise your weekly earnings to estimate withholding. This isn't a higher tax rate - it's a timing difference that typically self-corrects at year-end if your <a href="/finance/annual-income-calculator">annual income</a> stays in a lower bracket.</p>
-      <h2 id="salaried">Do Salaried Workers Get Overtime?</h2>
+      <h2 id="salaried">Do salaried workers get overtime?</h2>
       <p>Under the FLSA, salaried employees earning below $684 per week ($35,568 per year) are entitled to overtime pay regardless of their job title or duties. Salaried workers above that threshold may be exempt if they perform executive, administrative, or professional duties - but "salary" alone doesn't exempt a worker; the duties test must also be met. This threshold affects millions of US workers (<a href="https://www.dol.gov/agencies/whd/overtime" target="_blank">Department of Labor, 2025</a>).</p>
       <p>To calculate overtime for a salaried non-exempt employee, divide the weekly salary by the number of hours that salary is meant to cover to get the regular rate. Then apply the 1.5x multiplier to hours beyond 40. This is the "regular rate" method required by the FLSA.</p>
       <p>One pattern I see repeatedly: salaried employees assume their exempt status is permanent and tied to their job title. In reality, <a href="/glossary/flsa-duties-test">the FLSA duties test</a> governs exemption, and the salary threshold ($684/week as of 2025) means someone who has not had a raise in several years may have slipped below it - and may be entitled to overtime pay they have not been receiving.</p>
       <p>If you are salaried, regularly work more than 40 hours, and receive no overtime pay, it is worth verifying whether your current salary still clears the threshold and whether your role genuinely satisfies the duties test.</p>
-      <h2 id="ot-examples">Overtime Pay Examples</h2>
+      <h2 id="ot-examples">Overtime pay examples</h2>
       <p>The table below shows total pay and overtime premium for common hourly rates at the US standard 1.5x multiplier, based on a 40-hour regular week with 10 hours of overtime - a typical scenario for retail, manufacturing, and healthcare workers.</p>
       <div class="responsive-table">
         <table>
@@ -376,7 +376,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <h2 id="faq">Frequently Asked Questions About Overtime Pay</h2>
+      <h2 id="faq">Frequently asked questions about overtime pay</h2>
       <h3>How is overtime pay calculated?</h3>
       <p>Multiply your regular hourly rate by your overtime multiplier, then by the number of overtime hours worked. At 1.5x, a $20/hr worker earns $30/hr for each overtime hour. For 10 overtime hours, that is $300 in overtime pay on top of $800 in regular pay, giving a total of $1,100 for the week.</p>
       <h3>What is the standard overtime rate in the US?</h3>

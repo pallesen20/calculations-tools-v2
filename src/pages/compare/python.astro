@@ -147,14 +147,14 @@ const schema = [
           <li>For any other language, use the <a href="/compare/code">Compare Code</a> tool with its language selector.</li>
         </ul>
       </div>
-      <h2 id="how-to-use">How to use our Python diff checker tool</h2>
+      <h2 id="how-to-use">How to use our python diff checker tool</h2>
       <p>Paste or upload your original Python file on the left and the changed version on the right. Click "Find Differences." The diff shows every line that was added, removed, or unchanged, with line numbers. Toggle between Unified view and Side-by-Side view using the buttons above the output.</p>
       <p>The Sample button loads two versions of a short Python function so you can see how the output looks before pasting your own code. The language is pre-selected as Python, so the file upload dialog filters to .py, .pyw, .pyx, and .ipynb files.</p>
       <h3 id="explained-to-beginner">Python diff checker explained to a beginner</h3>
       <p>Python is unusual because whitespace matters to how the code runs. A line indented with 4 spaces and the same line with 2 spaces are different programs - one might run correctly, the other throws an <code>IndentationError</code> before it even starts.</p>
       <p>Think of a recipe written in numbered groups. If someone changes which group a step belongs to - by indenting it further in or pulling it back out - the dish comes out differently, even though the step's words are identical. That's exactly what happens when Python code is moved inside or outside a loop or <code>if</code> block.</p>
       <p>When you compare two Python files, you're not just checking what words changed - you're checking how far left or right each line sits. A diff that shows a line "removed" and "added" with identical text but different indentation is not noise; it's a meaningful structural change that may alter what the code does.</p>
-      <h2 id="python-diff">What to look for when you compare Python files</h2>
+      <h2 id="python-diff">What to look for when you compare python files</h2>
       <p>Python's syntax has a few properties that affect how diffs read:</p>
       <h3>Indentation changes in Python code</h3>
       <p>Python uses indentation as syntax. A line moved inside or outside a block appears as a change even if the code content is identical. Watch for lines that are removed and re-added with different leading whitespace - this usually means a refactor moved a block rather than changing its logic.</p>
@@ -164,7 +164,7 @@ const schema = [
       <p>Docstrings (triple-quoted strings) and comments are treated as plain text lines. A newly added docstring will appear as several consecutive green lines, typically at the top of a function or class.</p>
       <h3>f-string and format string updates</h3>
       <p>A change from <code>% formatting</code> to <code>f-strings</code> will show as a removed line and an added line per string. The line counts will match if the logic was not otherwise changed.</p>
-      <h2 id="use-cases">When to use a Python diff checker</h2>
+      <h2 id="use-cases">When to use a python diff checker</h2>
       <h3>Reviewing refactored Python functions</h3>
       <p>Paste the before and after versions of a refactored Python function to confirm no logic was accidentally dropped or altered. Side-by-side view makes it easy to read both versions in parallel.</p>
       <h3>Comparing scripts between environments</h3>
@@ -174,7 +174,7 @@ const schema = [
       <h3>Comparing Jupyter notebook versions</h3>
       <p>Export both notebook versions to .py (File → Download → Python) before diffing. The raw .ipynb JSON diff includes execution counts, cell outputs, and metadata that change on every run - making the diff unreadable even when the code itself didn't change.</p>
       <p>When comparing two notebook versions, I always export to .py first. The raw JSON comparison works in a pinch, but the output noise from execution counts and cell metadata means you end up hunting for actual code changes inside hundreds of lines of diff clutter. The .py export strips all of that and gives a clean signal.</p>
-      <h2 id="common-mistakes">Common mistakes when comparing Python files</h2>
+      <h2 id="common-mistakes">Common mistakes when comparing python files</h2>
       <h3>Uploading .pyc compiled bytecode files</h3>
       <p>Python compiles .py files to .pyc bytecode stored in <code>__pycache__/</code>. These are binary files, not text. Uploading them produces garbled output. Always upload the .py source file, not its compiled counterpart.</p>
       <h3>Comparing notebooks without exporting to .py first</h3>
@@ -183,7 +183,7 @@ const schema = [
       <p>Two functions with the same behavior but different variable names, different comment style, or different formatting will show as completely different in the diff. This tool compares what is literally in the file - not what the code does.</p>
       <h3>Including virtual environment files</h3>
       <p>If you paste code copied from a virtual environment's <code>site-packages/</code> folder instead of your own source files, you'll compare third-party library code rather than your project. Make sure both files come from your project directory.</p>
-      <h2 id="faq">FAQs about comparing Python code files</h2>
+      <h2 id="faq">FAQs about comparing python code files</h2>
       <h3>Can I compare .ipynb Jupyter notebook files?</h3>
       <p>Yes. Jupyter notebooks are JSON files. The diff will compare the raw JSON content, which includes cell source, outputs, and metadata. For a cleaner diff of just the code, export the notebook as a .py script first (File → Download as → Python).</p>
       <h3>Does this check Python syntax or run the code?</h3>

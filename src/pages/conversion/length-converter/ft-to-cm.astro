@@ -69,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Feet to Centimeters Converter"
   metaTitle="Feet to Centimeters Converter | Instantly Calculate ft to cm"
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="cm = ft × 30.48"
   ogExample="6 ft = 182.88 cm"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Foot to Centimeter (ft to cm) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Feet (ft)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 182.88" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 ft = 30.48 cm &nbsp;·&nbsp; 1 cm = 0.032808 ft</div>
-
       </div>
     </section>
-
     <script src="/js/ft-to-cm.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert feet to centimeters, multiply by <strong>30.48</strong>. So 5 ft = 152.4 cm and 6 ft = 182.88 cm. The factor is exact - one foot is defined as exactly 30.48 cm since the International Yard and Pound Agreement of 1959.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>Quick mental estimate: multiply feet by 30 (gives result ~1.6% low).</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to Use This Converter</h2>
+      <h2 id="how-to-use">How to use our feet to cm converter</h2>
       <p>Type any feet value in the ft field and the centimeters result appears instantly. You can also type in the cm field to convert back to feet - it works in both directions. Note: this converter accepts decimal feet (e.g. 5.833 for 5'10"). For a feet-and-inches input format, use the <a href="/conversion/height-converter">height converter</a>.</p>
-
-      <h2 id="formula">How Do You Convert Feet to Centimeters?</h2>
+      <h2 id="formula">How do you convert feet to centimeters?</h2>
       <p>Multiply feet by 30.48. One foot is defined as exactly 0.3048 meters = 30.48 centimeters. This is an exact definition with no rounding.</p>
-
       <Formula expr={f.fwd} />
-
       <p>For feet and inches, first convert to decimal feet: add inches ÷ 12 to the feet value. Example: 5'10" = 5 + 10/12 = 5.8333 ft × 30.48 = 177.8 cm.</p>
-
       <p>Worked examples: 5 ft = 152.4 cm. 5.5 ft = 167.64 cm. 6 ft = 182.88 cm. 6.5 ft = 198.12 cm.</p>
-
-      <h2 id="reverse">How Do You Convert Centimeters to Feet?</h2>
+      <h2 id="reverse">How do you convert centimeters to feet?</h2>
       <p>Divide centimeters by 30.48. For a dedicated page with a height reference table, see the <a href="/conversion/length-converter/cm-to-ft">centimeters to feet converter</a>.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 160 cm ÷ 30.48 = 5.249 ft. 175 cm ÷ 30.48 = 5.741 ft. 183 cm ÷ 30.48 = 6.004 ft.</p>
-
-      <h2 id="reference-table">Feet to Centimeters Reference Table</h2>
+      <h2 id="reference-table">Feet to centimeters reference table</h2>
       <p>Common height values converted using the exact factor 30.48 cm/ft:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -172,8 +152,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When Do You Need to Convert Feet to Centimeters?</h2>
+      <h2 id="when-to-use">When do you need to convert feet to centimeters?</h2>
       <p>The feet-to-cm conversion is driven almost entirely by human height. The US uses feet and inches for height; most other countries use centimeters. Common use cases:</p>
       <ul>
         <li><strong>Medical and fitness</strong> - entering height in metric systems, BMI calculators, and international health records.</li>
@@ -181,21 +160,15 @@ const schema = [
         <li><strong>Sports</strong> - basketball, athletics, and combat sports often list athlete heights in both units depending on the publication's audience.</li>
         <li><strong>Architecture and construction</strong> - converting US blueprint dimensions to metric for international projects.</li>
       </ul>
-
-      <h2 id="faq">Frequently Asked Questions</h2>
-
+      <h2 id="faq">FAQs about feet to cm conversion</h2>
       <h3>How many cm is 5 feet 10 inches?</h3>
       <p>5 feet 10 inches equals 177.8 cm. Convert to decimal feet: 5 + 10/12 = 5.8333 ft. Multiply by 30.48: 5.8333 × 30.48 = 177.8 cm. This is a common height for adult males in Western countries.</p>
-
       <h3>How do you convert feet to centimeters?</h3>
       <p>Multiply feet by 30.48. If you have feet and inches, convert to decimal feet first by adding inches/12 to the foot count. The factor 30.48 is exact - it comes from the international definition of the foot as 0.3048 m.</p>
-
       <h3>How many cm is 5 feet?</h3>
       <p>Exactly 152.4 cm. This is the threshold often used in clothing and medical contexts to identify shorter-than-average adult stature. Multiply 5 × 30.48 = 152.4 cm.</p>
-
       <h3>How many cm is 6 feet?</h3>
       <p>Exactly 182.88 cm, commonly rounded to 183 cm in metric medical records. Use the <a href="/conversion/length-converter/cm-to-ft">centimeters to feet converter</a> to go the other direction - enter 183 and you get 6.004 ft.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -234,12 +207,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

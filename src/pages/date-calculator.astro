@@ -361,7 +361,7 @@ const schema = [
       <p>Month-end arithmetic is where I see the most silent bugs in billing and contract software. The question "what is January 31 plus one month?" has at least three defensible answers: February 28 (clamp to the last valid day of the month), March 3 (let the overflow roll forward), or March 1 (snap to the first day of the next month).</p>
       <h3>Quick tip when programming with date functions</h3>
       <p>Different programming languages and spreadsheet functions give different answers. If you're building a recurring billing system or contract renewal tracker, always test against January 31, February 28, and February 29 start dates - those three edge cases expose the behavior your users will eventually encounter.</p>
-      <h2 id="excel-formulas">Excel and Google Sheets formulas</h2>
+      <h2 id="excel-formulas">Excel and google sheets formulas</h2>
       <p>For automating date calculations in <a href="/compare/google-sheets">spreadsheets</a>, these are the most useful built-in functions:</p>
       <div class="responsive-table">
       <table>

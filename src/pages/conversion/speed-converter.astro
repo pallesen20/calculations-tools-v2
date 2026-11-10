@@ -214,10 +214,10 @@ const schema = [
         </ul>
       </div>
       <SubPageCards parentPath="/conversion/speed-converter" heading="Specific speed converters" />
-      <h2 id="how-to-use">How to Use This Speed Converter</h2>
+      <h2 id="how-to-use">How to use this speed converter</h2>
       <p>Type a value in the input field, choose your "From" unit, then select your "To" unit. The result updates instantly as you type. Use the quick-conversion buttons to jump straight to the most searched pairs - km/h to mph, knots to mph, m/s to km/h, and more. The swap button reverses the direction without re-entering the value.</p>
       <p>The common conversions panel below the result shows your value in 8 other units simultaneously, so you can compare several scales at once without changing the dropdowns.</p>
-      <h2 id="mph-to-kmh">How Do You Convert mph to km/h?</h2>
+      <h2 id="mph-to-kmh">How do you convert mph to km/h?</h2>
       <p>Multiply miles per hour by 1.609344. This factor is exact because one international mile = 1,609.344 meters, a definition locked in by the International Yard and Pound Agreement of 1959. The US, UK, and most speed-limited countries use this conversion daily for reading foreign road signs.</p>
       <Formula expr={f.mphToKmh} />
       <Formula expr={f.kmhToMph} />
@@ -238,7 +238,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <h2 id="what-is-a-knot">What Is a Knot and Why Do Pilots Use It?</h2>
+      <h2 id="what-is-a-knot">What is a knot and why do pilots use it?</h2>
       <p>A knot is one <a href="/glossary/nautical-mile">nautical mile</a> per hour, equal to exactly 1.852 km/h or 1.15078 mph. <a href="https://iho.int/" target="_blank" rel="noopener noreferrer">The International Hydrographic Organization</a> defines the nautical mile as exactly 1,852 meters - corresponding to one arcminute of latitude on Earth's surface. This geometric link to latitude makes knots ideal for navigation: one degree of latitude is exactly 60 nautical miles.</p>
       <h3>Why is it called a knot?</h3>
       <p>The origin of the word "knot" goes back to 17th-century sailors who measured speed using a chip log - a piece of wood on a knotted rope cast overboard. They counted how many knots passed through their hands in 30 seconds to estimate speed. The unit has stuck in aviation and shipping ever since because navigation charts are still built around nautical miles.</p>
@@ -258,7 +258,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <h2 id="speed-units">Which Speed Units Are Used Around the World?</h2>
+      <h2 id="speed-units">Which speed units are used around the world?</h2>
       <p>Only three countries still use miles per hour for road speed limits: the United States, the United Kingdom, and Liberia. Every other country uses kilometers per hour (km/h) on road signs.</p>
       <p>Aviation worldwide uses knots, regardless of the country's road speed system, a legacy of the US dominating early commercial aviation.</p>
       <p>The table below lists some of the speed units supported by this converter, their SI equivalents in m/s, and the contexts where each is the standard choice.</p>
@@ -278,7 +278,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <h2 id="real-world-speeds">What Are Common Real-World Speeds in km/h and mph?</h2>
+      <h2 id="real-world-speeds">What are common real-world speeds in km/h and mph?</h2>
       <p>Context is the best way to build intuition for speed units. A human walking pace is about 5 km/h (3.1 mph), while a professional sprinter peaks near 45 km/h (28 mph).</p>
       <p>Commercial aircraft cruise at roughly 900 km/h (560 mph) at altitude, or about 490 knots. <a href="/glossary/mach-number">Mach 1</a> at sea level is approximately 1,225 km/h (761 mph), though the exact value varies with air temperature.</p>
       <h3>Real-world speed examples in km/h, mph and m/s</h3>
@@ -301,7 +301,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-      <h2 id="ms-to-kmh">How Do You Convert m/s to km/h?</h2>
+      <h2 id="ms-to-kmh">How do you convert m/s to km/h?</h2>
       <p>To <a href="/conversion/speed-converter/ms-to-kmh">convert m/s to km/h</a>, simply multiply meters per second by 3.6 to get km/h. The factor of 3.6 comes directly from unit definitions: there are 3,600 seconds in an hour and 1,000 meters in a kilometer, so 1 m/s × 3,600 s/h ÷ 1,000 m/km = 3.6 km/h.</p>
       <p>Physics and meteorology use m/s by default; road speeds always appear in km/h or mph.</p>
       <p>Below is the meters per second to kilometers per hour formula (and vice versa):</p>
@@ -331,7 +331,7 @@ const schema = [
       <p>In physics and engineering calculations, speed must be in m/s before it enters any standard SI equation. Kinetic energy is ½mv², drag force is ½rho Av²Cd - both use m/s directly.</p>
       <p>I've encountered reports where the analyst fed v = 130 (meaning km/h) into a kinetic energy formula, producing an answer off by a factor of 13 (3.6 squared). The 3.6 conversion from km/h to m/s is easy to verify mentally, but it gets skipped in quick estimates more often than it should.</p>
       <p>Any time speed appears in an equation alongside kilograms and meters, check that the unit is m/s before calculating.</p>
-      <h2 id="common-mistakes">What Are Common Speed Conversion Mistakes?</h2>
+      <h2 id="common-mistakes">What are common speed conversion mistakes?</h2>
       <h3>Reading European speed limits as mph</h3>
       <p>A 130 km/h motorway sign in Germany is 80.8 mph, not 130 mph. Visitors from the US or UK occasionally mistake km/h limit signs for mph limits, which would mean driving well above the legal speed. Always check which unit a sign uses before setting cruise control. Unless the speedometer is already in km/h, then you're fine.</p>
       <h3>Using 1.6 instead of 1.609344</h3>
@@ -341,7 +341,7 @@ const schema = [
       <h3>Confusing statute miles and nautical miles</h3>
       <p>A statute mile (used on roads) is 1,609.344 meters (approx. 1.6 kilometers). A nautical mile is 1,852 meters - about 15% longer. This matters in navigation: 100 nautical miles is not the same distance as 100 statute miles.</p>
       <p class="also-see"><strong>See the</strong> <a href="/conversion/length-converter">length converter</a> for conversions between the two.</p>
-      <h2 id="pair-converters">Specific Speed Conversion Tools</h2>
+      <h2 id="pair-converters">Specific speed conversion tools</h2>
       <p>Need a dedicated page for a single conversion pair? These pages include the formula, worked examples, a full reference table, and reverse conversion:</p>
       <ul>
         <li><a href="/conversion/speed-converter/mph-to-kmh"><strong>mph to km/h converter</strong></a> - formula, reference table, and reverse km/h to mph</li>
@@ -351,7 +351,7 @@ const schema = [
         <li><a href="/conversion/speed-converter/ms-to-mph"><strong>m/s to mph converter</strong></a> - science to imperial road speeds</li>
         <li><a href="/conversion/speed-converter/fps-to-mph"><strong>ft/s to mph converter</strong></a> - US engineering and ballistics</li>
       </ul>
-      <h2 id="faq">Frequently Asked Questions About Converting Speeds</h2>
+      <h2 id="faq">Frequently asked questions about converting speeds</h2>
       <h3>How many km/h is 60 mph?</h3>
       <p>60 mph = 96.56 km/h. Multiply any mph value by 1.609344 to get km/h. The factor is exact: 1 international mile = 1,609.344 meters by definition since 1959. For quick mental math, double the mph and subtract 20%: 60 × 2 = 120, minus 12 = 108 - wait, that gives 108. Correct shortcut: multiply by 1.6: 60 × 1.6 = 96.</p>
       <h3>What is 100 km/h in mph?</h3>
