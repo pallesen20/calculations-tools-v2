@@ -58,10 +58,9 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Ounces to Grams Converter"
-  metaTitle="Ounces to Grams Converter | oz to g"
+  metaTitle="Ounces to Grams Converter | Instantly Convert oz to g"
   description="Convert ounces to grams instantly. Formula: g = oz × 28.3495. Cooking reference table included - 1 oz, 4 oz, 8 oz, 16 oz in grams and more."
   canonical="https://calculations.tools/conversion/weight-converter/oz-to-g"
   tocItems={tocItems}
@@ -70,16 +69,13 @@ const schema = [
   ogFormula="g = oz × 28.3495"
   ogExample="8 oz = 226.8 g"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Ounce to Gram (oz to g) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Ounces (oz)</label>
@@ -91,23 +87,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 226.8" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 oz = 28.3495 g &nbsp;·&nbsp; 1 g = 0.035274 oz</div>
-
       </div>
     </section>
-
     <script src="/js/oz-to-g.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert ounces to grams, multiply by <strong>28.3495</strong>. So 1 oz = 28.35 g, 8 oz = 226.8 g, and 16 oz (1 lb) = 453.6 g. This uses <a href="/glossary/avoirdupois-system">the avoirdupois ounce</a> - the standard for food and everyday goods.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -117,27 +107,18 @@ const schema = [
           <li>Do not confuse with fluid ounces (volume) or troy ounces (precious metals, 31.1035 g).</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use our oz to g converter</h2>
       <p>Type any ounces value in the oz field and the grams result appears instantly. You can also type in the g field to convert back to oz. This converter uses avoirdupois ounces - not troy ounces or fluid ounces.</p>
-
       <h2 id="formula">How do you convert ounces to grams?</h2>
       <p>Multiply ounces by 28.3495. The exact value is 28.349523125 g/oz, derived from the international pound: 1 lb = 453.59237 g exactly, and 1 lb = 16 oz, so 1 oz = 453.59237 ÷ 16 = 28.3495... g.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 1 oz = 28.35 g. 2 oz = 56.70 g. 4 oz = 113.4 g. 8 oz = 226.8 g. 12 oz = 340.2 g. 16 oz = 453.6 g.</p>
-
       <h2 id="reverse">How do you convert grams to ounces?</h2>
       <p class="also-see">Divide grams by 28.3495. See the dedicated <a href="/conversion/weight-converter/g-to-oz">grams to ounces converter</a> for a grams-first reference table.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 100 g = 3.527 oz. 250 g = 8.818 oz. 500 g = 17.637 oz.</p>
-
       <h2 id="reference-table">Ounces to grams reference table</h2>
       <p>Common cooking and food weight values converted using the exact factor 28.3495 g/oz:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -158,7 +139,6 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="when-to-use">When do you need to convert ounces to grams?</h2>
       <p>US recipes and food labels list weight in ounces; the rest of the world uses grams. This conversion is most common in food and cooking contexts:</p>
       <ul>
@@ -167,21 +147,15 @@ const schema = [
         <li><strong>Postal and packaging</strong> - lightweight parcels shipped to metric countries need grams for customs.</li>
         <li><strong>Nutrition and diet tracking</strong> - many US diet apps default to oz; international nutritional databases use grams.</li>
       </ul>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about ounces to grams conversion</h2>
       <h3>How many grams is 1 ounce?</h3>
       <p>1 avoirdupois ounce = 28.3495 g (exact: 28.349523125 g). Quick approximation: about 28 grams. Do not confuse with troy ounces (31.1035 g) used for gold and silver.</p>
-
       <h3>How many grams is 8 ounces?</h3>
       <p>8 oz = 226.8 g. This is half a pound. Many US recipes for meat portions use 8 oz as a standard serving size.</p>
-
       <h3>How many grams is 16 ounces?</h3>
       <p>16 oz = 453.6 g = exactly 1 pound (within floating-point rounding). This is because 1 lb = 453.59237 g exactly and 1 lb = 16 oz exactly.</p>
-
       <h3>Is a fluid ounce the same as a weight ounce?</h3>
       <p>No. A fluid ounce (fl oz) measures volume (~29.57 mL for US fl oz); a weight ounce (oz) measures mass (28.35 g). For water they are close but not equal. This converter handles weight ounces only.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -213,12 +187,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

@@ -69,10 +69,9 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Pounds to Kilograms Converter"
-  metaTitle="Pounds to Kilograms Converter | lbs to kg"
+  metaTitle="Pounds to Kilograms Converter | Instantly Convert lbs to kg"
   description="Convert pounds to kilograms instantly. Formula: kg = lb × 0.453592. Body weight reference table included - 100 lb, 150 lb, 200 lb in kg and more."
   canonical="https://calculations.tools/conversion/weight-converter/lb-to-kg"
   tocItems={tocItems}
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="kg = lb × 0.453592"
   ogExample="150 lb = 68.04 kg"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Pound to Kilogram (lb to kg) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Pounds (lb)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 68.04" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 lb = 0.453592 kg &nbsp;·&nbsp; 1 kg = 2.20462 lb</div>
-
       </div>
     </section>
-
     <script src="/js/lb-to-kg.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert pounds to kilograms, multiply by <strong>0.453592</strong> (or divide by 2.20462). So 150 lb = 68.04 kg and 200 lb = 90.72 kg. The factor is exact: 1 lb = 0.45359237 kg, defined internationally in 1959.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>The US uses lbs for body weight; most other countries use kg.</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use our lbs to kgs converter</h2>
       <p>Type any pounds value in the lb field and the kg result appears instantly. You can also type in the kg field to convert back to lbs - it works in both directions without pressing a button.</p>
-
       <h2 id="formula">How do you convert pounds to kilograms?</h2>
       <p>Multiply pounds by 0.453592. The exact value is 0.45359237 kg/lb - the international pound definition adopted in 1959 by the US, UK, and other countries.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 100 lb = 45.36 kg. 120 lb = 54.43 kg. 150 lb = 68.04 kg. 180 lb = 81.65 kg. 200 lb = 90.72 kg.</p>
-
       <p>Mental shortcut: divide by 2.2 for a quick estimate. For 165 lb: 165 ÷ 2.2 = 75 kg (actual: 74.84 kg). The error is under 0.2%.</p>
-
       <h2 id="reverse">How do you convert kilograms to pounds?</h2>
       <p class="also-see">Multiply kilograms by 2.20462. See the dedicated <a href="/conversion/weight-converter/kg-to-lb">kilograms to pounds converter</a> for a kg-first reference table.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 60 kg = 132.28 lb. 70 kg = 154.32 lb. 80 kg = 176.37 lb.</p>
-
       <h2 id="reference-table">Pounds to kilograms reference table</h2>
       <p>Common body weight values converted using the exact factor 0.45359237 kg/lb:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -172,7 +152,6 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="when-to-use">When do you need to convert lbs to kg?</h2>
       <p>This conversion is most commonly needed when a US-based weight measurement must be interpreted in metric countries, or when filling out international forms. Common use cases:</p>
       <ul>
@@ -181,21 +160,15 @@ const schema = [
         <li><strong>Shipping</strong> - converting parcel weights from US lbs to kg for international carriers and customs declarations.</li>
         <li><strong>Sport</strong> - weight class divisions in international competitions (Olympics, FIFA, etc.) are specified in kg.</li>
       </ul>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about pounds to kilos conversion</h2>
       <h3>How many kg is 150 pounds?</h3>
       <p>150 pounds equals 68.04 kg. Multiply 150 by 0.453592: 150 × 0.453592 = 68.039 kg. This is a commonly referenced body weight - roughly average female weight in the US.</p>
-
       <h3>How do you convert lbs to kg?</h3>
       <p>Multiply pounds by 0.453592. Quick mental check: divide by 2.2 (result is 0.2% high). For 200 lb: 200 ÷ 2.2 = 90.9 kg (actual: 90.72 kg).</p>
-
       <h3>How many kg is 200 pounds?</h3>
       <p>200 pounds equals 90.72 kg. This is just under the 100 kg threshold commonly referenced in weightlifting and medical contexts.</p>
-
       <h3>Is 1 pound more or less than 1 kg?</h3>
       <p>1 pound is less than 1 kg. One pound = 0.4536 kg, so it takes about 2.205 pounds to equal 1 kilogram. A kilogram is roughly 2.2 times heavier than a pound.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -227,12 +200,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

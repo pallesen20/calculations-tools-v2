@@ -41,22 +41,21 @@ const schema = [
       },
       {
         "@type": "Question",
-        "name": "How do you convert grams to mg?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Multiply grams by 1000. Example: 2.5 g × 1000 = 2500 mg. This is exact - move the decimal point three places to the right." }
+        "name": "Why are some nutrients listed in grams and others in milligrams on food labels?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Macronutrients (protein, fat, carbohydrate) are present in large enough amounts to express in grams. Micronutrients like sodium, calcium, iron and vitamins are present in much smaller amounts, so milligrams or micrograms are used. The FDA requires both units to appear on Nutrition Facts panels depending on the nutrient." }
       },
       {
         "@type": "Question",
-        "name": "How many mg is 0.5 grams?",
-        "acceptedAnswer": { "@type": "Answer", "text": "0.5 grams equals 500 milligrams. Multiply 0.5 by 1000: 0.5 × 1000 = 500 mg." }
+        "name": "How many mg is 2.3 grams of sodium?",
+        "acceptedAnswer": { "@type": "Answer", "text": "2.3 grams of sodium equals 2300 milligrams. The FDA's recommended daily sodium limit is 2300 mg - often expressed as 2.3 g on nutrition science resources. Multiply 2.3 by 1000 to get 2300 mg." }
       }
     ]
   }
 ];
 ---
-
 <CalculatorLayout
   title="Grams to Milligrams Converter"
-  metaTitle="Grams to Milligrams Converter | g to mg"
+  metaTitle="Grams to Milligrams Converter | Instantly Convert g to mg"
   description="Convert grams to milligrams instantly. Formula: mg = g × 1000. Reference table included - 0.1 g, 0.5 g, 1 g, 2 g in milligrams and more."
   canonical="https://calculations.tools/conversion/weight-converter/g-to-mg"
   tocItems={tocItems}
@@ -65,16 +64,13 @@ const schema = [
   ogFormula="mg = g × 1000"
   ogExample="1 g = 1000 mg"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Instant Gram to Milligram (g to mg) Calculator</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Grams (g)</label>
@@ -86,93 +82,77 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 1000" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 g = 1000 mg &nbsp;·&nbsp; 1 mg = 0.001 g</div>
-
       </div>
     </section>
-
     <script src="/js/g-to-mg.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert grams to milligrams, multiply by <strong>1000</strong>. So 1 g = 1000 mg and 0.5 g = 500 mg. This is exact - the SI prefix "milli" means 1/1000 by definition.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
           <li>Exact: 1 g = 1000 mg - defined by the SI prefix "milli" = 1/1000.</li>
           <li>0.5 g = 500 mg. 1 g = 1000 mg. 2.5 g = 2500 mg.</li>
           <li>Move the decimal three places right to convert g to mg.</li>
-          <li>To convert mg back to g, divide by 1000.</li>
+          <li>Food labels use grams for macros (protein, fat, carbs) and milligrams for micronutrients (sodium, calcium, iron) - the FDA requires both on Nutrition Facts panels.</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use this g to mg converter</h2>
       <p>Type any grams value in the g field and the milligrams result appears instantly. You can also type in the mg field to convert back to grams. The conversion is exact - multiply by 1000.</p>
-
       <h2 id="formula">How do you convert grams to milligrams?</h2>
       <p>Multiply grams by 1000. The SI prefix "milli" means 1/1000, so 1 gram = 1000 milligrams by definition. Move the decimal point three places to the right.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 0.1 g = 100 mg. 0.25 g = 250 mg. 0.5 g = 500 mg. 1 g = 1000 mg. 1.5 g = 1500 mg. 2 g = 2000 mg. 5 g = 5000 mg.</p>
-
       <p>Shortcut: move the decimal three places right. For 3.75 g: 3750 mg. Exact, no rounding.</p>
-
       <h2 id="reverse">How do you convert milligrams to grams?</h2>
       <p class="also-see">Divide milligrams by 1000. See the dedicated <a href="/conversion/weight-converter/mg-to-g">milligrams to grams converter</a> for an mg-first reference table.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 500 mg = 0.5 g. 1000 mg = 1 g. 2500 mg = 2.5 g.</p>
-
       <h2 id="reference-table">Grams to milligrams reference table</h2>
-
+      <p>Nutrient and supplement amounts expressed in grams and their milligram equivalents:</p>
       <div class="responsive-table">
         <table>
           <thead>
-            <tr><th>Grams (g)</th><th>Milligrams (mg)</th><th>Common context</th></tr>
+            <tr><th>Grams (g)</th><th>Milligrams (mg)</th><th>Nutrition / supplement context</th></tr>
           </thead>
           <tbody>
-            <tr><td>0.05 g</td><td>50 mg</td><td>Low-dose aspirin</td></tr>
-            <tr><td>0.1 g</td><td>100 mg</td><td>-</td></tr>
-            <tr><td>0.2 g</td><td>200 mg</td><td>Ibuprofen tablet</td></tr>
-            <tr><td>0.25 g</td><td>250 mg</td><td>Amoxicillin 250 mg</td></tr>
-            <tr><td>0.5 g</td><td>500 mg</td><td>Paracetamol tablet</td></tr>
-            <tr><td>1 g</td><td>1,000 mg</td><td>Paracetamol max single dose</td></tr>
-            <tr><td>1.5 g</td><td>1,500 mg</td><td>-</td></tr>
-            <tr><td>2 g</td><td>2,000 mg</td><td>-</td></tr>
-            <tr><td>4 g</td><td>4,000 mg</td><td>Paracetamol max daily dose</td></tr>
-            <tr><td>5 g</td><td>5,000 mg</td><td>-</td></tr>
+            <tr><td>0.065 g</td><td>65 mg</td><td>Vitamin C adult RDA (NIH)</td></tr>
+            <tr><td>0.3 g</td><td>300 mg</td><td>Calcium in a glass of milk (approx.)</td></tr>
+            <tr><td>0.4 g</td><td>400 mg</td><td>Magnesium adult RDA (NIH)</td></tr>
+            <tr><td>1 g</td><td>1,000 mg</td><td>Calcium adult RDA (NIH); fish oil capsule</td></tr>
+            <tr><td>1.5 g</td><td>1,500 mg</td><td>Calcium upper recommended limit (older adults)</td></tr>
+            <tr><td>2.3 g</td><td>2,300 mg</td><td>Sodium daily limit (FDA)</td></tr>
+            <tr><td>3 g</td><td>3,000 mg</td><td>Creatine maintenance dose</td></tr>
+            <tr><td>5 g</td><td>5,000 mg</td><td>Creatine loading phase dose</td></tr>
+            <tr><td>6 g</td><td>6,000 mg</td><td>Beta-alanine daily dose (sports nutrition)</td></tr>
           </tbody>
         </table>
       </div>
-
+      <blockquote class="blockquote-observation">
+        <p>When I look at supplement labels I always check whether the dose is per capsule or per serving - a tub listing "5 g creatine per serving" is 5000 mg, but a capsule product at "750 mg per capsule" needs 4-7 capsules to reach the same daily dose. The g-to-mg conversion is what catches that discrepancy quickly.</p>
+      </blockquote>
       <h2 id="when-to-use">When do you need to convert grams to mg?</h2>
+      <p>The g-to-mg direction comes up most when you have a bulk or weighed amount in grams and need to express it at milligram precision - typically for nutrition, supplements, or lab work.</p>
       <ul>
-        <li><strong>Medication</strong> - pharmaceutical formulas specify drug concentrations in mg; compounding recipes work in grams.</li>
-        <li><strong>Nutrition labels</strong> - daily values for vitamins and minerals are in mg; total intake is tracked in grams.</li>
-        <li><strong>Chemistry</strong> - analytical balances read in grams; reaction calculations may require mg precision.</li>
-        <li><strong>Supplements</strong> - supplement containers list amounts in mg; purchasing in grams requires conversion.</li>
+        <li><strong>Reading food labels</strong> - macronutrients (protein, fat, carbs) are listed in grams; micronutrients (sodium, calcium, iron, vitamins) are in mg. Converting between them lets you compare nutrients at a consistent scale or track against RDA targets.</li>
+        <li><strong>Supplement dosing</strong> - bulk powders (creatine, beta-alanine, magnesium) are sold by the gram but dosed in milligrams. A 500 g tub at 3 g per serving = 3000 mg per serving, not 3 mg.</li>
+        <li><strong>Nutrition formulation</strong> - dietitians and food scientists building recipes or fortified foods start with gram weights from scales and convert to mg to match nutrient databases and label regulations.</li>
+        <li><strong>Lab and analytical chemistry</strong> - analytical balances measure in grams; assay protocols specify reagent amounts in milligrams. The conversion ensures the right amount goes into the reaction.</li>
       </ul>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about g to mg conversion</h2>
       <h3>How many mg is 1 gram?</h3>
-      <p>Exactly 1000 milligrams. 1 g × 1000 = 1000 mg. This is the SI definition - "milli" means 1/1000.</p>
-
-      <h3>How do you convert grams to mg?</h3>
-      <p>Multiply by 1000, or move the decimal three places right. For 0.75 g: move decimal → 750 mg. Exact, no rounding.</p>
-
+      <p>Exactly 1000 milligrams. 1 g × 1000 = 1000 mg. This is the SI definition - "milli" means 1/1000. It also equals the calcium RDA for most adults (1000 mg/day, per NIH guidelines).</p>
+      <h3>Why are some nutrients in grams and others in milligrams on food labels?</h3>
+      <p>Macronutrients are present in large amounts - tens of grams per serving - so grams is the natural unit. Micronutrients like sodium, calcium, and iron are present in hundredths or thousandths of a gram, so milligrams make the numbers readable. The FDA's Nutrition Facts format requires both, depending on the nutrient type.</p>
+      <h3>How many mg is 2.3 grams of sodium?</h3>
+      <p>2.3 g = 2300 mg. The FDA recommends staying under 2300 mg of sodium per day, which is why nutrition science publications often express the same limit as 2.3 g. Multiply 2.3 by 1000 to convert.</p>
       <h3>How many mg is 0.5 grams?</h3>
-      <p>0.5 g = 500 mg. This is equivalent to a standard paracetamol or acetaminophen tablet.</p>
-
+      <p>0.5 g = 500 mg. In supplement terms this is a common capsule size for magnesium, vitamin C, and similar micronutrients sold in gram-weight containers.</p>
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -204,12 +184,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
