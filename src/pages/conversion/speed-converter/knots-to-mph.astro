@@ -1,6 +1,39 @@
 ---
 import CalculatorLayout from '../../../layouts/CalculatorLayout.astro';
 import Formula from '../../../components/Formula.astro';
+import type { Source } from '../../../components/Sources.astro';
+import QuizBlock from '../../../components/QuizBlock.astro';
+
+const sources: Source[] = [
+  {
+    author: 'NOAA Ocean Service',
+    title: 'What is a nautical mile?',
+    journal: 'National Oceanic and Atmospheric Administration',
+    year: 2024,
+    url: 'https://oceanservice.noaa.gov/facts/nautical-mile-knot.html',
+  },
+  {
+    author: 'National Hurricane Center',
+    title: 'Saffir-Simpson Hurricane Wind Scale',
+    journal: 'NOAA National Hurricane Center',
+    year: 2024,
+    url: 'https://www.nhc.noaa.gov/aboutsshws.php',
+  },
+  {
+    author: 'National Weather Service',
+    title: 'Beaufort Wind Scale',
+    journal: 'NOAA National Weather Service',
+    year: 2024,
+    url: 'https://www.weather.gov/mfl/beaufort',
+  },
+  {
+    author: 'NIST Office of Weights and Measures',
+    title: 'Metric (SI) / Imperial unit definitions',
+    journal: 'National Institute of Standards and Technology',
+    year: 2023,
+    url: 'https://www.nist.gov/pml/owm',
+  },
+];
 
 const f = {
   knotsToMph: "$$\\text{mph} = \\text{knots} \\times \\frac{1852}{1609.344} \\approx \\text{knots} \\times 1.15078$$",
@@ -13,11 +46,46 @@ const tocItems = [
   { id: 'formula',         label: 'How to convert knots to mph' },
   { id: 'reverse',         label: 'How to convert mph to knots' },
   { id: 'reference-table', label: 'Knots to mph reference table' },
+  { id: 'beaufort-scale',  label: 'Beaufort wind scale in knots and mph' },
   { id: 'when-to-use',     label: 'When you need this conversion' },
   { id: 'knots-vs-mph',    label: 'Knots vs mph: key differences' },
   { id: 'faq',             label: 'FAQs' },
+  { id: 'quiz',            label: 'Quiz: test your knowledge' },
   { id: 'related-tools',   label: 'Related tools' },
 ];
+
+const quizQuestions = [
+  {
+    q: 'How many mph is 1 knot?',
+    options: ['1.60934 mph', '1.15078 mph', '0.86898 mph', '1.852 mph'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '1 knot = 1.15078 mph. The factor comes from dividing the nautical mile (1,852 m) by the statute mile (1,609.344 m). 1.852 is the km/h equivalent, not mph.',
+  },
+  {
+    q: 'How fast is 20 knots in mph?',
+    options: ['17.3 mph', '20.0 mph', '23.02 mph', '34.52 mph'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '20 knots x 1.15078 = 23.02 mph. 17.3 mph is 15 knots; 34.52 mph is 30 knots.',
+  },
+  {
+    q: 'Why do aviation and maritime industries use knots instead of mph?',
+    options: ['Knots are a larger unit so numbers are smaller and easier to read', '1 nautical mile equals 1 arcminute of latitude, making chart navigation simpler', 'ICAO chose knots because they are more precise than mph', 'Knots convert more easily to metric units'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The nautical mile has a direct geometric link to the Earth: 1 nm = 1 arcminute of latitude. This means 60 nm covers exactly 1 degree of latitude, making dead-reckoning calculations on charts straightforward without unit conversion.',
+  },
+  {
+    q: 'On the Beaufort scale, what force is a wind of 34-40 knots (39-46 mph)?',
+    options: ['Force 10 (storm)', 'Force 6 (strong breeze)', 'Force 12 (hurricane force)', 'Force 8 (gale)'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The Beaufort scale places 34-40 knots at Force 8 (gale). Force 12 (hurricane force) starts at 64 knots. Force 10 (storm) is 48-55 knots.',
+  },
+  {
+    q: 'What abbreviation is used for knots in METAR aviation weather reports?',
+    options: ['kts', 'kn', 'KT', 'kt/h'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: '"KT" is the METAR standard (e.g. "WIND 270/15KT"). "kts" is the informal marine plural, and "kn" is the SI-approved symbol. All three mean the same unit.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 
 const schema = [
   {
@@ -60,7 +128,7 @@ const schema = [
       {
         "@type": "Question",
         "name": "Why do planes and ships use knots instead of mph?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Aviation and maritime navigation use charts based on nautical miles, where 1 nautical mile equals one arcminute of latitude. This geometric link makes position plotting simpler - a 60 nautical mile journey covers exactly 1 degree of latitude. ICAO standardised knots for aviation in the 1940s, and the convention has stuck globally." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Aviation and maritime navigation use charts based on nautical miles, where 1 nautical mile equals one arcminute of latitude. This geometric link makes position plotting simpler - a 60 nautical mile journey covers exactly 1 degree of latitude. ICAO standardized knots for aviation in the 1940s, and the convention has stuck globally." }
       },
       {
         "@type": "Question",
@@ -86,28 +154,25 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Knots to mph Converter"
-  metaTitle="Knots to mph Converter - Aviation & Maritime"
+  metaTitle="Knots to mph Converter | Miles per Hour to Knots Calculator"
   description="Convert knots to miles per hour and back. 1 knot = 1.15078 mph exactly. Reference table for ships, aircraft, and wind speeds. Reverse mph to knots included."
   canonical="https://calculations.tools/conversion/speed-converter/knots-to-mph"
   tocItems={tocItems}
   embedSlug="knots-to-mph"
   schema={schema}
+  sources={sources}
   ogFormula="mph = knots × 1.15078"
   ogExample="20 knots = 20 × 1.15078 = 23.02 mph"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
           <h2>Convert Knots to Miles Per Hour Instantly</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="km-a">Knots (kn)</label>
@@ -119,58 +184,44 @@ const schema = [
             <input id="km-b" type="text" inputmode="decimal" placeholder="e.g. 23.02" />
           </div>
         </div>
-
         <div class="pair-formula-note">1 knot = 1.15078 mph &nbsp;·&nbsp; 1 mph = 0.868976 knots</div>
-
       </div>
     </section>
-
     <script src="/js/knots-to-mph.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>1 <a href="/glossary/knot">knot</a> = 1.15078 mph. Multiply knots by 1.15078 to get mph. The factor comes from dividing the nautical mile (1,852 m) by the statute mile (1,609.344 m). For the reverse, divide mph by 1.15078.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
           <li>1 knot = 1.15078 mph = 1.852 km/h exactly (nautical mile = 1,852 m by definition).</li>
-          <li>All commercial aviation uses knots worldwide - standardised by ICAO in the 1940s.</li>
+          <li>All commercial aviation uses knots worldwide - standardized by ICAO in the 1940s.</li>
           <li>Beaufort Force 12 (hurricane) starts at 64 knots = 73.6 mph = 118.5 km/h.</li>
           <li>Quick estimate: knots × 1.15 ≈ mph (0.07% low - accurate enough for most uses).</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use this knots to mph converter</h2>
       <p>Enter a knots value and the mph equivalent appears instantly. You can also type in the mph field to convert back to knots - the converter is fully bidirectional. There's no submit button; results update as you type.</p>
-
       <h2 id="what-is-a-knot">What is a knot - and what does kts mean?</h2>
       <p>A knot is a unit of speed equal to one nautical mile per hour. The abbreviation differs by context: <strong>KT</strong> is used in METAR aviation weather reports (e.g. "WIND 270/15KT"), <strong>kts</strong> is the informal plural you see in marine weather apps and vessel trackers, and <strong>kn</strong> is the SI-approved symbol. All three mean identical values - one nautical mile (1,852 m) per hour.</p>
-      <p>The name comes from 16th-century seamanship. Sailors measured speed with a chip log: a wooden panel thrown overboard on a rope knotted at fixed intervals every 47 feet 3 inches. They counted how many knots passed through their hands in 28 seconds - that count directly equalled the ship's speed in nautical miles per hour because the interval and time were calibrated to match the ratio of 1 nm to 1 hour.</p>
+      <p>The name comes from 16th-century seamanship. Sailors measured speed with a chip log: a wooden panel thrown overboard on a rope knotted at fixed intervals every 47 feet 3 inches.</p>
+      <p>They counted how many knots passed through their hands in 28 seconds - that count directly equalled the ship's speed in nautical miles per hour because the interval and time were calibrated to match the ratio of 1 nm to 1 hour.</p>
       <p>In everyday terms: 1 knot (1.15 mph) is about the pace of a relaxed walk. A 15-knot wind is a fresh breeze capable of extending a flag. A 490-knot airliner covers roughly 9 statute miles - or 8 nautical miles - every minute. The unit feels unfamiliar on land but is the global standard for anything that navigates by chart.</p>
-
       <h2 id="formula">How do you convert knots to mph?</h2>
-      <p>Multiply knots by 1852 ÷ 1609.344, which equals approximately 1.15078. The factor comes directly from the two unit definitions: a nautical mile is exactly 1,852 meters; a statute mile is exactly 1,609.344 meters. Dividing the first by the second gives the exact conversion ratio. ICAO (the International Civil Aviation Organisation) has used knots as the standard airspeed unit since the 1940s.</p>
-
+      <p>Multiply knots by 1852 ÷ 1609.344, which equals approximately 1.15078. The factor comes directly from the two unit definitions: a nautical mile is exactly 1,852 meters; a statute mile is exactly 1,609.344 meters.</p>
+      <p>Dividing the first by the second gives the exact conversion ratio. ICAO (the International Civil Aviation Organisation) has used knots as the standard airspeed unit since the 1940s.</p>
       <Formula expr={f.knotsToMph} />
-
       <p>Worked examples: 10 knots = 11.51 mph. 25 knots = 28.77 mph. 490 knots = 563.9 mph (typical airliner cruise speed).</p>
-
       <h2 id="reverse">How do you convert mph to knots?</h2>
       <p>Divide mph by 1.15078. The reciprocal factor is 0.868976 - multiply mph by this to get knots. Pilots and mariners convert mph to knots when reading speed data from non-aviation instruments or when communicating with ground traffic that uses mph.</p>
-
       <Formula expr={f.mphToKnots} />
-
       <p>Worked examples: 60 mph = 52.14 knots. 100 mph = 86.90 knots. 565 mph = 490.9 knots.</p>
-
       <h2 id="reference-table">Knots to mph reference table</h2>
       <p>Common knot values converted to mph and km/h, with real-world contexts for each speed range. Values use the exact factor 1 knot = 1.15078 mph.</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -182,18 +233,44 @@ const schema = [
             <tr><td>15 kn</td><td>17.3 mph</td><td>27.8 km/h</td><td>Cargo ship (typical)</td></tr>
             <tr><td>20 kn</td><td>23.0 mph</td><td>37.0 km/h</td><td>Fast cargo / cruise ship</td></tr>
             <tr><td>30 kn</td><td>34.5 mph</td><td>55.6 km/h</td><td>High-speed ferry</td></tr>
-            <tr><td>34 kn</td><td>39.1 mph</td><td>63.0 km/h</td><td>Beaufort Force 12 (hurricane) threshold</td></tr>
-            <tr><td>64 kn</td><td>73.6 mph</td><td>118.5 km/h</td><td>Hurricane (Beaufort / Saffir-Simpson)</td></tr>
+            <tr><td>34 kn</td><td>39.1 mph</td><td>63.0 km/h</td><td>Beaufort Force 8 (gale)</td></tr>
+            <tr><td>64 kn</td><td>73.6 mph</td><td>118.5 km/h</td><td>Beaufort Force 12 / hurricane threshold (Saffir-Simpson)</td></tr>
             <tr><td>150 kn</td><td>172.6 mph</td><td>277.8 km/h</td><td>Airliner approach speed</td></tr>
             <tr><td>490 kn</td><td>563.9 mph</td><td>907.5 km/h</td><td>Commercial airliner cruise</td></tr>
             <tr><td>1320 kn</td><td>1519 mph</td><td>2,445 km/h</td><td>Concorde cruise (Mach 2)</td></tr>
           </tbody>
         </table>
       </div>
-
+      <h2 id="beaufort-scale">Beaufort wind scale in knots and mph</h2>
+      <p>The Beaufort scale is the international standard for describing wind force. Each force number maps to a knot range, a descriptive name, and observable effects. All 13 levels are shown below with their mph equivalents (source: NOAA National Weather Service).</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Force</th><th>Knots</th><th>mph</th><th>Description</th><th>Sea/land effect</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0</td><td>0 kn</td><td>0 mph</td><td>Calm</td><td>Sea like a mirror; smoke rises vertically</td></tr>
+            <tr><td>1</td><td>1-3 kn</td><td>1-3 mph</td><td>Light air</td><td>Ripples; smoke drifts</td></tr>
+            <tr><td>2</td><td>4-6 kn</td><td>5-7 mph</td><td>Light breeze</td><td>Small wavelets; leaves rustle</td></tr>
+            <tr><td>3</td><td>7-10 kn</td><td>8-12 mph</td><td>Gentle breeze</td><td>Large wavelets; leaves in motion</td></tr>
+            <tr><td>4</td><td>11-16 kn</td><td>13-18 mph</td><td>Moderate breeze</td><td>Small waves; raises dust and loose paper</td></tr>
+            <tr><td>5</td><td>17-21 kn</td><td>19-24 mph</td><td>Fresh breeze</td><td>Moderate waves; small trees sway</td></tr>
+            <tr><td>6</td><td>22-27 kn</td><td>25-31 mph</td><td>Strong breeze</td><td>Large waves; large branches move</td></tr>
+            <tr><td>7</td><td>28-33 kn</td><td>32-38 mph</td><td>Near gale</td><td>Sea heaps up; whole trees in motion</td></tr>
+            <tr><td>8</td><td>34-40 kn</td><td>39-46 mph</td><td>Gale</td><td>Moderately high waves; twigs break</td></tr>
+            <tr><td>9</td><td>41-47 kn</td><td>47-54 mph</td><td>Strong gale</td><td>High waves; slight structural damage</td></tr>
+            <tr><td>10</td><td>48-55 kn</td><td>55-63 mph</td><td>Storm</td><td>Very high waves; trees uprooted</td></tr>
+            <tr><td>11</td><td>56-63 kn</td><td>64-72 mph</td><td>Violent storm</td><td>Exceptionally high waves; widespread damage</td></tr>
+            <tr><td>12</td><td>64+ kn</td><td>74+ mph</td><td>Hurricane force</td><td>Air filled with foam and spray; visibility near zero</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <blockquote class="blockquote-observation">
+        <p>When I look at a marine weather forecast showing "F8 gusts to 40 kts" I mentally translate it as "gale, up to 46 mph" - the Beaufort number tells me what to expect at sea, and the mph conversion anchors it to something I can picture on land. Force 8 is the threshold where most recreational sailors should be heading for port.</p>
+      </blockquote>
       <h2 id="when-to-use">When do you need to convert knots to mph?</h2>
-      <p>Knots are the standard unit in all commercial and military aviation, and in maritime navigation globally - regardless of whether the country uses mph or km/h on its roads. The International Civil Aviation Organisation (ICAO) mandates knots for airspeed worldwide, meaning every airliner cockpit instrument reads in knots. Weather agencies in many countries (including the US National Hurricane Center) report wind speeds in knots.</p>
-
+      <p>Knots are the standard unit in all commercial and military aviation, and in maritime navigation globally - regardless of whether the country uses mph or km/h on its roads.</p>
+      <p>The International Civil Aviation Organisation (ICAO) mandates knots for airspeed worldwide, meaning every airliner cockpit instrument reads in knots. Weather agencies in many countries (including the US National Hurricane Center) report wind speeds in knots.</p>
       <p>Common conversion needs:</p>
       <ul>
         <li><strong>Reading aviation weather</strong> - TAF and METAR reports always give wind in knots. Converting to mph helps non-pilots understand forecasts.</li>
@@ -201,7 +278,6 @@ const schema = [
         <li><strong>Wind speed reports</strong> - US National Hurricane Center advisories and many marine forecasts use knots; local TV weather uses mph.</li>
         <li><strong>Flight simulation</strong> - simulator users frequently need to cross-reference knot speeds with real-world mph references.</li>
       </ul>
-
       <h2 id="knots-vs-mph">Knots vs mph: key differences</h2>
       <p>Knots and mph both measure speed - neither is "faster" than the other. The difference is the reference unit: a knot uses the nautical mile (1,852 m) while mph uses the statute mile (1,609.344 m). Because the nautical mile is longer, 1 knot is always greater than 1 mph: specifically 1.15078 mph.</p>
       <div class="responsive-table">
@@ -219,32 +295,28 @@ const schema = [
         </table>
       </div>
       <p>The nautical mile's link to latitude is the core reason aviation and maritime industries adopted knots: on a chart, a distance of 60 nm equals exactly 1 degree of latitude, making mental dead-reckoning arithmetic straightforward. mph offers no equivalent geometric shortcut, which is why it never gained traction in navigation despite being common on land.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about converting knots to miles per hour</h2>
       <h3>How many mph is 1 knot?</h3>
       <p>1 knot = 1.15078 mph. The factor is the ratio of the nautical mile (1,852 m) to the statute mile (1,609.344 m). Both are exact by definition, so the conversion is exact: 1852 ÷ 1609.344 = 1.150779…</p>
-
       <h3>How fast is 20 knots in mph?</h3>
       <p>20 knots = 23.02 mph (37.04 km/h). This is a typical cruising speed for fast container ships and larger naval vessels. Recreational powerboats often cruise at 20-30 knots (23-34.5 mph) depending on hull type and engine size.</p>
-
       <h3>Why do planes use knots instead of mph?</h3>
-      <p>Navigation charts divide the Earth using latitude and longitude, where 1 nautical mile = 1 arcminute of latitude. Using knots makes distance-time calculations direct on aeronautical charts. ICAO standardised knots globally in the 1940s, so all international aviation - regardless of country - uses the same unit.</p>
-
+      <p>Navigation charts divide the Earth using latitude and longitude, where 1 nautical mile = 1 arcminute of latitude. Using knots makes distance-time calculations direct on aeronautical charts. ICAO standardized knots globally in the 1940s, so all international aviation - regardless of country - uses the same unit.</p>
       <h3>How fast is 30 knots in mph?</h3>
       <p>30 knots = 34.52 mph (55.56 km/h). This is approximately the speed of a fast ferry or military patrol vessel. The US Navy's Arleigh Burke-class destroyers are rated at over 30 knots. Most commercial container ships cruise at 18-25 knots to balance speed and fuel efficiency.</p>
-
       <h3>What is wind speed of 50 knots in mph?</h3>
       <p>50 knots = 57.54 mph (92.6 km/h). This is a strong storm wind (Beaufort Force 10). The Beaufort scale threshold for a hurricane starts at 64 knots = 73.7 mph. The US National Hurricane Center classifies Category 1 hurricanes from 64 knots (74 mph) upward.</p>
-
       <h3>What does kts mean?</h3>
       <p>Kts is an informal plural abbreviation for knots - the unit equal to one nautical mile per hour. You see "kts" most often in marine weather apps, sailing forecasts, and vessel-tracking displays. The abbreviation varies by standard: METAR aviation weather reports use "KT" (e.g. "15KT"), and the SI system uses "kn". All three - kts, kt, kn - mean the same thing.</p>
-
       <h3>How fast is a knot in everyday terms?</h3>
       <p>One knot (1.15 mph) is just above a casual walking pace. Ten knots (11.5 mph) is a fast cycling speed. Thirty knots (34.5 mph) is roughly highway merging speed. A commercial airliner at 490 knots (563 mph) covers the length of a football field every tenth of a second. The unit spans an enormous range: from drifting sea ice at under 1 knot to supersonic aircraft above 1,000 knots.</p>
-
       <h3>What is the difference between speed in knots vs mph?</h3>
       <p>Knots and mph measure the same thing (speed) using different reference miles. A knot uses the nautical mile (1,852 m), which is tied to Earth's geometry - 1 nautical mile equals 1 arcminute of latitude. A statute mile (1,609.344 m) has no equivalent geometric meaning. This is why knots dominate aviation and maritime navigation: chart-based distance calculations stay exact without unit conversion. On land, mph is more intuitive because road signs, speed limits, and speedometers use it.</p>
+      <QuizBlock
+        topic="knots"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/conversion/speed-converter/knots-to-mph"
+      />
 
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
@@ -258,7 +330,7 @@ const schema = [
         <li>
           <span class="tool-icon">⚡</span>
           <div>
-            <a href="/conversion/speed-converter/mph-to-kmh">mph to km/h Converter</a>
+            <a href="/conversion/speed-converter/mph-to-kph">mph to kph Converter</a>
             <p>Convert between miles per hour and kilometers per hour - for road speed comparisons.</p>
           </div>
         </li>
@@ -284,12 +356,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
