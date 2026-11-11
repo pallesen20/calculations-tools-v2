@@ -69,7 +69,6 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Celsius to Fahrenheit Converter"
   metaTitle="Celsius to Fahrenheit Temperature Converter | °C to °F"
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="°F = °C × 9/5 + 32"
   ogExample="100°C = 212°F"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
-          <h2>Instant Celsius to Fahrenheit (°C to °F) Converter</h2>
+          <h2>Instantly Convert Celsius to Fahrenheit (°C to °F)</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Celsius (°C)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 212" />
           </div>
         </div>
-
         <div class="pair-formula-note">°F = °C × 9/5 + 32 &nbsp;·&nbsp; °C = (°F − 32) × 5/9</div>
-
       </div>
     </section>
-
     <script src="/js/c-to-f.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert Celsius to Fahrenheit, multiply by <strong>9/5</strong> then add <strong>32</strong>. Formula: °F = °C × 9/5 + 32. Key values: 0°C = 32°F, 20°C = 68°F, 37°C = 98.6°F, 100°C = 212°F. Quick mental estimate: double the Celsius value and add 30.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>-40°C = -40°F - the only point where both scales are equal.</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use this ºC to ºF calculator</h2>
       <p>Type any Celsius value in the °C field and the Fahrenheit result appears instantly. You can also type in the °F field to convert back to Celsius - it works in both directions without pressing a button.</p>
-
-      <h2 id="formula">How do you convert celsius to fahrenheit?</h2>
+      <h2 id="formula">How do you convert Celsius to Fahrenheit?</h2>
       <p>Multiply by 9/5 (which scales the degree size from Celsius to Fahrenheit), then add 32 (which shifts the zero point). The two scales differ in both degree size and where zero sits, so you need both operations.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 0°C = 32°F. 20°C = 68°F. 37°C = 98.6°F. 100°C = 212°F. 180°C = 356°F.</p>
-
       <p>Mental shortcut: double the Celsius value and add 30. For 20°C: 20 × 2 = 40, + 30 = 70°F (actual: 68°F, error 2°F). For 100°C: 100 × 2 = 200, + 30 = 230°F (actual: 212°F, error 18°F - the shortcut loses accuracy at extremes, use the full formula for cooking and science).</p>
-
-      <h2 id="reverse">How do you convert fahrenheit to celsius?</h2>
+      <h2 id="reverse">How do you convert Fahrenheit to Celsius?</h2>
       <p class="also-see">Subtract 32 first (remove the zero-point offset), then multiply by 5/9 (scale back to Celsius degree size). See the dedicated <a href="/conversion/temperature-converter/f-to-c">Fahrenheit to Celsius converter</a> for a Fahrenheit-first reference table.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 32°F = 0°C. 72°F = 22.2°C. 98.6°F = 37°C. 212°F = 100°C.</p>
-
-      <h2 id="reference-table">Celsius to fahrenheit reference table</h2>
+      <h2 id="reference-table">Celsius to Fahrenheit reference table</h2>
       <p>Common temperatures converted using the exact formula °F = °C × 9/5 + 32:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -174,8 +154,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When do you need to convert celsius to fahrenheit?</h2>
+      <h2 id="when-to-use">When do you need to convert Celsius to Fahrenheit?</h2>
       <p>The Celsius–Fahrenheit conversion is the most common temperature conversion. The US uses Fahrenheit for everyday temperatures (weather, cooking, body temperature) while most of the world uses Celsius. Common situations:</p>
       <ul>
         <li><strong>Cooking</strong> - US recipes specify oven temperatures in °F; European or metric recipes use °C. A 350°F oven = 176.7°C; a 180°C oven = 356°F.</li>
@@ -183,21 +162,15 @@ const schema = [
         <li><strong>Medicine</strong> - US clinical references often give body temperature in °F (98.6°F = 37°C; fever at 100.4°F = 38°C).</li>
         <li><strong>Science</strong> - lab work uses Celsius globally; some older US scientific publications used Fahrenheit.</li>
       </ul>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about converting Celsius to Fahrenheit</h2>
       <h3>How do you convert Celsius to Fahrenheit?</h3>
       <p>Multiply by 9/5 then add 32. Formula: °F = °C × 9/5 + 32. Example: 37°C × 9/5 = 66.6, + 32 = 98.6°F. Quick mental estimate: double the Celsius and add 30 (works within ~5°F for everyday temps).</p>
-
       <h3>What is 37 degrees Celsius in Fahrenheit?</h3>
       <p>37°C = 98.6°F. Calculation: 37 × 1.8 + 32 = 66.6 + 32 = 98.6°F. This is normal adult body temperature. A temperature of 38°C (100.4°F) is generally the threshold for a fever in adults.</p>
-
       <h3>What is 20°C in Fahrenheit?</h3>
       <p>20°C = 68°F. Calculation: 20 × 9/5 + 32 = 36 + 32 = 68°F. This is a comfortable room temperature and a common indoor thermostat setting in Celsius countries.</p>
-
       <h3>What is the same temperature in Celsius and Fahrenheit?</h3>
       <p>-40 degrees. At -40, both scales give the same number: -40°C = -40°F. Above -40, Fahrenheit is always numerically higher than Celsius. Below -40, Fahrenheit is lower.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -229,12 +202,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }

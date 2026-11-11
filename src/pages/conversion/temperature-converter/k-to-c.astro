@@ -69,10 +69,9 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="Kelvin to Celsius Converter"
-  metaTitle="Kelvin to Celsius Temperature Converter | K to °C"
+  metaTitle="Kelvin to Celsius Temperature Converter | Convert K to °C"
   description="Convert Kelvin to Celsius instantly. Formula: °C = K − 273.15. Includes reverse Celsius to Kelvin conversion and a science reference table with key fixed points."
   canonical="https://calculations.tools/conversion/temperature-converter/k-to-c"
   tocItems={tocItems}
@@ -81,16 +80,13 @@ const schema = [
   ogFormula="°C = K − 273.15"
   ogExample="300 K = 26.85°C"
 >
-
   <div slot="calculator">
     <section class="calculator-interface">
       <div class="calculator-container">
-
         <div class="calculator-header">
-          <h2>Instant Kelvin to Celsius (K to °C) Converter</h2>
+          <h2>Instantly Convert Kelvin to Celsius (K to °C)</h2>
           <p>Type in either field - converts instantly in both directions</p>
         </div>
-
         <div class="pair-inputs">
           <div class="pair-field">
             <label for="lp-a">Kelvin (K)</label>
@@ -102,23 +98,17 @@ const schema = [
             <input id="lp-b" type="text" inputmode="decimal" placeholder="e.g. 26.85" />
           </div>
         </div>
-
         <div class="pair-formula-note">°C = K − 273.15 &nbsp;·&nbsp; K = °C + 273.15</div>
-
       </div>
     </section>
-
     <script src="/js/k-to-c.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>To convert Kelvin to Celsius, subtract <strong>273.15</strong>. Formula: °C = K − 273.15. Examples: 0 K = −273.15°C, 273.15 K = 0°C, 300 K = 26.85°C, 373.15 K = 100°C. No multiplication needed - the two scales have identical degree sizes.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -128,29 +118,19 @@ const schema = [
           <li>A change of 1 K equals a change of 1°C - degree sizes are identical.</li>
         </ul>
       </div>
-
-      <h2 id="how-to-use">How to use this converter</h2>
+      <h2 id="how-to-use">How to use our K to °C temperature converter</h2>
       <p>Type any Kelvin value in the K field and the Celsius result appears instantly. You can also type in the °C field to convert back to Kelvin - it works in both directions without pressing a button.</p>
-
-      <h2 id="formula">How do you convert kelvin to celsius?</h2>
+      <h2 id="formula">How do you convert Kelvin to Celsius?</h2>
       <p>Subtract 273.15. Kelvin and Celsius use the same degree size, so no multiplication is needed. The only difference is the zero point: Kelvin starts at absolute zero (the lowest possible temperature), while Celsius starts at the freezing point of water.</p>
-
       <Formula expr={f.fwd} />
-
       <p>Worked examples: 0 K = −273.15°C. 77.15 K = −196°C (liquid nitrogen). 273.15 K = 0°C. 298.15 K = 25°C. 300 K = 26.85°C. 310.15 K = 37°C. 373.15 K = 100°C.</p>
-
       <p>Note: Kelvin values are always positive (or zero) because 0 K is the absolute minimum. A negative Kelvin temperature has no physical meaning.</p>
-
-      <h2 id="reverse">How do you convert celsius to kelvin?</h2>
+      <h2 id="reverse">How do you convert Celsius to Kelvin?</h2>
       <p class="also-see">Add 273.15. See the dedicated <a href="/conversion/temperature-converter/c-to-k">Celsius to Kelvin converter</a> for a Celsius-first reference table.</p>
-
       <Formula expr={f.rev} />
-
       <p>Worked examples: 0°C = 273.15 K. 25°C = 298.15 K. 37°C = 310.15 K. 100°C = 373.15 K.</p>
-
-      <h2 id="reference-table">Kelvin to celsius reference table</h2>
+      <h2 id="reference-table">Kelvin to Celsius reference table</h2>
       <p>Key scientific and physical fixed points converted using °C = K − 273.15:</p>
-
       <div class="responsive-table">
         <table>
           <thead>
@@ -171,8 +151,7 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <h2 id="when-to-use">When do you need to convert kelvin to celsius?</h2>
+      <h2 id="when-to-use">When do you need to convert Kelvin to Celsius?</h2>
       <p>Scientific results and data tables often give temperatures in Kelvin. Converting back to Celsius makes the values intuitively understandable. Common situations:</p>
       <ul>
         <li><strong>Reading scientific papers</strong> - experimental temperatures in physics and chemistry are often given in Kelvin; converting to Celsius gives an everyday sense of the scale.</li>
@@ -180,21 +159,15 @@ const schema = [
         <li><strong>Astronomy</strong> - stellar surface temperatures (e.g. the Sun ≈ 5778 K = 5504.85°C) are stated in Kelvin.</li>
         <li><strong>Cryogenics</strong> - working with liquid nitrogen (77.15 K = −196°C) or liquid helium (4.2 K = −268.95°C) requires familiarity with both scales.</li>
       </ul>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <h2 id="faq">FAQs about Kelvin to Celsius conversions</h2>
       <h3>How do you convert Kelvin to Celsius?</h3>
       <p>Subtract 273.15. Formula: °C = K − 273.15. Example: 373.15 K − 273.15 = 100°C (water boiling point). No multiplication is needed because Kelvin and Celsius have identical degree sizes.</p>
-
       <h3>What is 0 Kelvin in Celsius?</h3>
       <p>0 K = −273.15°C. This is absolute zero - the lowest possible temperature, where all classical thermal motion stops. It has been approached to within billionths of a degree but never fully reached.</p>
-
       <h3>What is 300 K in Celsius?</h3>
       <p>300 K = 26.85°C. Calculation: 300 − 273.15 = 26.85°C. This is approximately room temperature and is a common reference value in thermodynamics equations because it is conveniently close to 25°C (298.15 K).</p>
-
       <h3>Can Kelvin be negative?</h3>
       <p>No. Kelvin starts at absolute zero (0 K), the lowest possible temperature. There is no temperature below absolute zero in classical thermodynamics. If you get a negative Kelvin result, the input Kelvin value was below 273.15 K, meaning the Celsius equivalent is negative - which is valid - but the Kelvin value itself must always be ≥ 0.</p>
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -226,12 +199,9 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
-
 </CalculatorLayout>
-
 <style is:global>
   .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
   .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
