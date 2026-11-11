@@ -34,7 +34,7 @@ function fmt(num) {
 
 function populate(selectEl, defaultVal) {
   selectEl.innerHTML = Object.entries(UNITS)
-    .map(([k, u]) => `<option value="${k}"${k === defaultVal ? ' selected' : ''}>${u.label} (${u.abbr})</option>`)
+    .map(([k, u]) => `<option value="${k}"${k === defaultVal ? ' selected' : ''}>${u.label}</option>`)
     .join('');
 }
 

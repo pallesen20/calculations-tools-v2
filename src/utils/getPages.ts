@@ -961,7 +961,7 @@ const entries: Entry[] = [
     units: 'km/h, mph, m/s, kn, ft/s, ft/min, m/min, km/s, mi/s, c',
   },
   {
-    path: '/conversion/speed-converter/mph-to-kph',
+    path: '/conversion/speed-converter/mph-to-kmh',
     title: 'mph to kph Converter',
     description: 'Convert miles per hour to kph instantly. Formula: kph = mph × 1.609344. Includes reverse kph to mph conversion and a reference table for common road speeds.',
     changefreq: 'monthly',

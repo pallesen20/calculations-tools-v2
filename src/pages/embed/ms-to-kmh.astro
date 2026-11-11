@@ -8,22 +8,50 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
 
       <div class="calculator-header">
         <h2>m/s to km/h Converter</h2>
-        <p>Type in either field - converts instantly in both directions</p>
+        <p>Type in any field — all units update instantly</p>
       </div>
 
-      <div class="pair-inputs">
-        <div class="pair-field">
-          <label for="sk-a">Meters per second (m/s)</label>
-          <input id="sk-a" type="text" inputmode="decimal" placeholder="e.g. 10" />
-        </div>
-        <div class="pair-eq">=</div>
-        <div class="pair-field">
-          <label for="sk-b">Kilometers per hour (km/h)</label>
-          <input id="sk-b" type="text" inputmode="decimal" placeholder="e.g. 36" />
+      <div class="bmi-field">
+        <label class="bmi-label" for="sk-ms">Meters per second</label>
+        <div class="bmi-input-wrap">
+          <input id="sk-ms" class="bmi-input" type="text" inputmode="decimal" placeholder="e.g. 10" />
+          <span class="bmi-unit-tag">m/s</span>
         </div>
       </div>
 
-      <div class="pair-formula-note">1 m/s = 3.6 km/h &nbsp;·&nbsp; 1 km/h = 0.27778 m/s</div>
+      <div class="bmi-field">
+        <label class="bmi-label" for="sk-kmh">Kilometers per hour</label>
+        <div class="bmi-input-wrap">
+          <input id="sk-kmh" class="bmi-input" type="text" inputmode="decimal" placeholder="e.g. 36" />
+          <span class="bmi-unit-tag">km/h</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="sk-mph">Miles per hour</label>
+        <div class="bmi-input-wrap">
+          <input id="sk-mph" class="bmi-input" type="text" inputmode="decimal" placeholder="e.g. 22.37" />
+          <span class="bmi-unit-tag">mph</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="sk-fts">Feet per second</label>
+        <div class="bmi-input-wrap">
+          <input id="sk-fts" class="bmi-input" type="text" inputmode="decimal" placeholder="e.g. 32.81" />
+          <span class="bmi-unit-tag">ft/s</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="sk-kn">Knots</label>
+        <div class="bmi-input-wrap">
+          <input id="sk-kn" class="bmi-input" type="text" inputmode="decimal" placeholder="e.g. 19.44" />
+          <span class="bmi-unit-tag">kn</span>
+        </div>
+      </div>
+
+      <div class="pair-formula-note">1 m/s = 3.6 km/h = 2.237 mph = 3.281 ft/s = 1.944 kn</div>
 
     </div>
   </section>
@@ -32,10 +60,5 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
 </EmbedLayout>
 
 <style>
-  .pair-inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.75rem; align-items: end; margin-bottom: 1rem; }
-  .pair-field label { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-bottom: 0.35rem; }
-  .pair-field input { width: 100%; padding: 0.6rem 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 1rem; box-sizing: border-box; }
-  .pair-eq { font-size: 1.5rem; color: rgba(255,255,255,0.5); padding-bottom: 0.35rem; }
   .pair-formula-note { text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.5rem; }
-  @media (max-width: 480px) { .pair-inputs { grid-template-columns: 1fr; } .pair-eq { text-align: center; padding-bottom: 0; } }
 </style>
