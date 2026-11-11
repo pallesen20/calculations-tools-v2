@@ -175,6 +175,15 @@ const iframeSnippet = embedUrl
   </main>
 </BaseLayout>
 <script>
+  document.querySelectorAll('.toc-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = (link as HTMLAnchorElement).getAttribute('href')?.slice(1);
+      const target = id ? document.getElementById(id) : null;
+      if (target) window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 20, behavior: 'smooth' });
+    });
+  });
+
   const embedToggle = document.getElementById('embedToggle');
   const embedPanel = document.getElementById('embedPanel');
   const copyEmbedBtn = document.getElementById('copyEmbedBtn');
