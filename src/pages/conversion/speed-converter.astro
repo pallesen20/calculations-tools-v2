@@ -80,7 +80,7 @@ const quizQuestions = [
     q: 'An analyst feeds v = 130 (intending 130 km/h) into a kinetic energy formula that expects m/s. By what factor is their answer wrong?',
     options: ['3.6', '1.6', '13', '6'] as [string, string, string, string],
     correct: 2 as const,
-    explanation: 'Kinetic energy uses v², so the error is 3.6² = 12.96 - roughly a factor of 13. This is because 130 km/h = 36.1 m/s, and (130)² vs (36.1)² differ by 3.6 squared. The page notes this exact mistake in the first-person observations section.',
+    explanation: 'Kinetic energy uses v², so the error is 3.6² = 12.96 - roughly a factor of 13. This is because 130 km/h = 36.1 m/s, and (130)² vs (36.1)² differ by 3.6 squared. The page notes this exact mistake in the content.',
   },
 ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
 

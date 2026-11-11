@@ -168,8 +168,8 @@ const entries: Entry[] = [
     path: '/embed-tools',
     title: 'Embed Free Calculators on Your Website - calculations.tools',
     description: 'Embed free calculators and converters on any website. No sign-up, no fees, one line of HTML. BMI, compound interest, percentage, currency converters and more.',
-    changefreq: 'monthly' as const,
-    priority: 0.7,
+    changefreq: 'yearly' as const,
+    priority: 0.3,
     lastmod: '2026-11-11',
     icon: '🔗',
     short: 'Free calculator widgets for your website',
@@ -1373,7 +1373,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/ml-to-l',
-    title: 'Milliliters to Liters Converter — calculations.tools',
+    title: 'Milliliters to Liters Converter - calculations.tools',
     description: 'Convert milliliters to liters instantly. Formula: L = ml ÷ 1,000. Includes reference table, reverse conversion, and practical examples.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1384,7 +1384,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/l-to-ml',
-    title: 'Liters to Milliliters Converter — calculations.tools',
+    title: 'Liters to Milliliters Converter - calculations.tools',
     description: 'Convert liters to milliliters instantly. Formula: ml = L × 1,000. Includes reference table, reverse conversion, and practical examples.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1395,7 +1395,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/ml-to-fl-oz',
-    title: 'Milliliters to Fluid Ounces — calculations.tools',
+    title: 'Milliliters to Fluid Ounces - calculations.tools',
     description: 'Convert milliliters to fluid ounces instantly. Formula: fl oz = ml × 0.033814. US fl oz. Includes reference table and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1406,7 +1406,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/fl-oz-to-ml',
-    title: 'Fluid Ounces to Milliliters — calculations.tools',
+    title: 'Fluid Ounces to Milliliters - calculations.tools',
     description: 'Convert fluid ounces to milliliters instantly. 1 US fl oz = 29.5735 ml. Includes US vs UK comparison, reference table, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1417,7 +1417,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/oz-to-ml',
-    title: 'Ounces to Milliliters Converter — calculations.tools',
+    title: 'Ounces to Milliliters Converter - calculations.tools',
     description: 'Convert fluid ounces to milliliters instantly. 1 oz = 29.5735 ml (US fl oz). Includes reference table and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1428,7 +1428,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/ml-to-oz',
-    title: 'Milliliters to Ounces Converter — calculations.tools',
+    title: 'Milliliters to Ounces Converter - calculations.tools',
     description: 'Convert milliliters to fluid ounces instantly. Formula: oz = ml × 0.033814. Includes reference table and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1439,7 +1439,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/l-to-gal',
-    title: 'Liters to Gallons Converter — calculations.tools',
+    title: 'Liters to Gallons Converter - calculations.tools',
     description: 'Convert liters to US gallons instantly. Formula: gal = L × 0.264172. Includes reference table, US vs UK comparison, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1450,7 +1450,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/gal-to-l',
-    title: 'Gallons to Liters Converter — calculations.tools',
+    title: 'Gallons to Liters Converter - calculations.tools',
     description: 'Convert US gallons to liters instantly. Formula: L = gal × 3.78541. Includes reference table, US vs UK comparison, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1461,7 +1461,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/l-to-fl-oz',
-    title: 'Liters to Fluid Ounces Converter — calculations.tools',
+    title: 'Liters to Fluid Ounces Converter - calculations.tools',
     description: 'Convert liters to US fluid ounces instantly. Formula: fl oz = L × 33.814. Includes reference table and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1472,7 +1472,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/fl-oz-to-l',
-    title: 'Fluid Ounces to Liters Converter — calculations.tools',
+    title: 'Fluid Ounces to Liters Converter - calculations.tools',
     description: 'Convert fluid ounces to liters instantly. Formula: L = fl oz × 0.0295735. Includes reference table and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1483,7 +1483,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/cup-to-ml',
-    title: 'Cups to Milliliters Converter — calculations.tools',
+    title: 'Cups to Milliliters Converter - calculations.tools',
     description: 'Convert cups to milliliters instantly. 1 US cup = 236.588 ml. Includes cup fractions table (1/4, 1/3, 1/2 cup) and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1494,7 +1494,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/ml-to-cup',
-    title: 'Milliliters to Cups Converter — calculations.tools',
+    title: 'Milliliters to Cups Converter - calculations.tools',
     description: 'Convert milliliters to US cups instantly. Formula: cups = ml ÷ 236.588. Includes reference table and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1505,7 +1505,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/tbsp-to-ml',
-    title: 'Tablespoons to Milliliters — calculations.tools',
+    title: 'Tablespoons to Milliliters - calculations.tools',
     description: 'Convert tablespoons to milliliters instantly. 1 US tbsp = 14.7868 ml. Includes reference table, cooking guide, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1516,7 +1516,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/ml-to-tbsp',
-    title: 'Milliliters to Tablespoons — calculations.tools',
+    title: 'Milliliters to Tablespoons - calculations.tools',
     description: 'Convert milliliters to tablespoons instantly. Formula: tbsp = ml ÷ 14.7868. Includes reference table and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1527,7 +1527,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/tsp-to-ml',
-    title: 'Teaspoons to Milliliters Converter — calculations.tools',
+    title: 'Teaspoons to Milliliters Converter - calculations.tools',
     description: 'Convert teaspoons to milliliters instantly. 1 US tsp = 4.92892 ml. Includes reference table, medical 5 ml note, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1538,7 +1538,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/ml-to-tsp',
-    title: 'Milliliters to Teaspoons Converter — calculations.tools',
+    title: 'Milliliters to Teaspoons Converter - calculations.tools',
     description: 'Convert milliliters to teaspoons instantly. Formula: tsp = ml ÷ 4.92892. Includes reference table and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1549,7 +1549,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/fl-oz-to-pint',
-    title: 'Fluid Ounces to Pints Converter — calculations.tools',
+    title: 'Fluid Ounces to Pints Converter - calculations.tools',
     description: 'Convert fluid ounces to pints instantly. 16 fl oz = 1 US pint (exact). Includes US vs UK pint comparison, reference table, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1560,7 +1560,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/pint-to-fl-oz',
-    title: 'Pints to Fluid Ounces Converter — calculations.tools',
+    title: 'Pints to Fluid Ounces Converter - calculations.tools',
     description: 'Convert pints to fluid ounces instantly. 1 US pint = 16 fl oz (exact). Includes US vs UK pint comparison, reference table, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1571,7 +1571,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/pint-to-gal',
-    title: 'Pints to Gallons Converter — calculations.tools',
+    title: 'Pints to Gallons Converter - calculations.tools',
     description: 'Convert pints to US gallons instantly. 8 US pints = 1 gallon (exact). Includes reference table, US vs UK note, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1582,7 +1582,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/gal-to-pint',
-    title: 'Gallons to Pints Converter — calculations.tools',
+    title: 'Gallons to Pints Converter - calculations.tools',
     description: 'Convert US gallons to pints instantly. 1 gallon = 8 pints (exact). Includes reference table, US vs UK note, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1593,7 +1593,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/cup-to-fl-oz',
-    title: 'Cups to Fluid Ounces Converter — calculations.tools',
+    title: 'Cups to Fluid Ounces Converter - calculations.tools',
     description: 'Convert cups to fluid ounces instantly. 1 US cup = 8 fl oz (exact). Includes reference table, cup fractions, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -1604,7 +1604,7 @@ const entries: Entry[] = [
   },
   {
     path: '/conversion/volume-converter/fl-oz-to-cup',
-    title: 'Fluid Ounces to Cups Converter — calculations.tools',
+    title: 'Fluid Ounces to Cups Converter - calculations.tools',
     description: 'Convert fluid ounces to cups instantly. 8 fl oz = 1 US cup (exact). Includes reference table, cup fractions, and reverse conversion.',
     changefreq: 'monthly' as const,
     priority: 0.9,
@@ -2481,7 +2481,7 @@ export function getChildPages(parentPath: string): HealthToolMeta[] {
     .filter(e => e.path.startsWith(parentPath + '/') && e.path.split('/').length === depth + 1)
     .map(e => ({
       path:        e.path,
-      title:       e.title.split(' — ')[0].split(' - ')[0],
+      title:       e.title.split(' - ')[0].split(' - ')[0],
       short:       e.short ?? '',
       description: e.description,
       icon:        e.icon ?? '',

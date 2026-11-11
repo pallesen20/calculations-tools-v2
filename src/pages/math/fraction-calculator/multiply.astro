@@ -35,9 +35,9 @@ const quizQuestions = [
   {
     q: 'Do you need a common denominator to multiply fractions?',
     options: [
-      'No — multiply straight across: numerators together, denominators together',
-      'Yes — find the LCD first, then multiply the converted fractions',
-      'Yes — find the LCD, multiply only the numerators, keep the LCD as denominator',
+      'No - multiply straight across: numerators together, denominators together',
+      'Yes - find the LCD first, then multiply the converted fractions',
+      'Yes - find the LCD, multiply only the numerators, keep the LCD as denominator',
       'Only when the denominators are different',
     ] as [string, string, string, string],
     correct: 0 as const,
@@ -59,11 +59,11 @@ const quizQuestions = [
     options: [
       'Because multiplication always produces a result less than 1',
       'Because the result is automatically simplified',
-      'Because you are subdividing one piece, not combining same-size pieces — denominators multiply naturally',
+      'Because you are subdividing one piece, not combining same-size pieces - denominators multiply naturally',
       'Because the LCD equals the product of the denominators anyway',
     ] as [string, string, string, string],
     correct: 2 as const,
-    explanation: 'Multiplication means "of" — you are taking a fraction OF a fraction, subdividing one piece. You are not combining same-size slices, so there is no need to convert to a uniform denominator first.',
+    explanation: 'Multiplication means "of" - you are taking a fraction OF a fraction, subdividing one piece. You are not combining same-size slices, so there is no need to convert to a uniform denominator first.',
   },
   {
     q: 'What is 5 × 2/3?',
@@ -79,10 +79,10 @@ const quizQuestions = [
   {
     q: 'A student multiplies 1½ × 2⅔ as (1×2) + (½×⅔) = 2⅓. What is the correct answer?',
     options: [
-      '2⅓ — the student is correct',
-      '4 — convert to improper fractions first: 3/2 × 8/3 = 24/6 = 4',
-      '3½ — add the whole parts and multiply the fractions separately',
-      '2⅔ — the fractional parts should be added, not multiplied',
+      '2⅓ - the student is correct',
+      '4 - convert to improper fractions first: 3/2 × 8/3 = 24/6 = 4',
+      '3½ - add the whole parts and multiply the fractions separately',
+      '2⅔ - the fractional parts should be added, not multiplied',
     ] as [string, string, string, string],
     correct: 1 as const,
     explanation: 'Mixed number parts are not independent factors. Convert to improper fractions: 1½ = 3/2 and 2⅔ = 8/3. Then 3/2 × 8/3 = 24/6 = 4. The student\'s method distributes incorrectly.',

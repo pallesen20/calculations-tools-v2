@@ -5,7 +5,7 @@
 
 const ADMOB_ENABLED = false;
 
-// Ad unit IDs — replace TEST values with real IDs from your AdMob account.
+// Ad unit IDs - replace TEST values with real IDs from your AdMob account.
 // Create the AdMob account at: https://admob.google.com
 const AD_UNITS = {
   ios: {
@@ -18,7 +18,7 @@ const AD_UNITS = {
   },
 };
 
-// App-level publisher IDs — add your real AdMob app IDs here when going live.
+// App-level publisher IDs - add your real AdMob app IDs here when going live.
 // These go in Info.plist (iOS) and AndroidManifest.xml (Android) as well.
 export const ADMOB_APP_IDS = {
   ios: 'ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX',
