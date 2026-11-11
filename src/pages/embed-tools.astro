@@ -1,0 +1,594 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteToolCount } from '../utils/getPages';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Embed Free Calculators on Your Website - calculations.tools",
+  "url": "https://calculations.tools/embed-tools",
+  "description": "Embed 147+ free calculators and converters on any website. No sign-up, no fees, one line of HTML. BMI calculator, compound interest, percentage, currency converter, and more.",
+};
+
+const steps = [
+  {
+    num: '01',
+    title: 'Find the tool you want',
+    body: 'Browse calculations.tools and pick any calculator or converter. Every tool page has a built-in embed option — 147+ to choose from across health, finance, math, and unit conversion.',
+  },
+  {
+    num: '02',
+    title: 'Click "Embed this tool"',
+    body: 'On any tool page, click the "Embed this tool" button in the left sidebar. A panel opens instantly with a ready-to-use HTML snippet.',
+  },
+  {
+    num: '03',
+    title: 'Paste the code into your page',
+    body: 'Copy the snippet and paste it anywhere in your HTML — a blog post, landing page, or sidebar. The calculator appears exactly as it does on this site. No JavaScript setup, no npm packages, no configuration.',
+  },
+];
+
+const tools = [
+  {
+    emoji: '⚤',
+    name: 'BMI Calculator',
+    slug: 'bmi-calculator',
+    path: '/health/bmi-calculator',
+    desc: 'Body mass index from height and weight. Metric and imperial. Includes WHO classification and healthy range.',
+  },
+  {
+    emoji: '%',
+    name: 'Percentage Calculator',
+    slug: 'percentage-calculator',
+    path: '/math/percentage-calculator',
+    desc: 'Three percentage formulas in one: X% of Y, what % is X of Y, and % change between two values.',
+  },
+  {
+    emoji: '📈',
+    name: 'Compound Interest Calculator',
+    slug: 'compound-interest-calculator',
+    path: '/finance/compound-interest-calculator',
+    desc: 'Final balance, total interest earned, and a year-by-year breakdown. Supports any compounding period.',
+  },
+  {
+    emoji: '🏋️',
+    name: 'Body Fat Calculator',
+    slug: 'body-fat-calculator',
+    path: '/health/body-fat-calculator',
+    desc: 'U.S. Navy method and BMI method. Returns body fat percentage, lean mass, and fitness category.',
+  },
+  {
+    emoji: '💱',
+    name: 'Currency Converter',
+    slug: 'currency-converter',
+    path: '/conversion/currency-converter',
+    desc: 'Live mid-market rates sourced from the European Central Bank. 160+ currencies.',
+  },
+  {
+    emoji: '⚡',
+    name: 'mph to km/h Converter',
+    slug: 'mph-to-kmh',
+    path: '/conversion/speed-converter/mph-to-kmh',
+    desc: 'Instant bidirectional conversion between miles per hour and km/h. No button needed.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Do I need to create an account?',
+    a: 'No. There is no account, no registration, and no API key. Copy the code, paste it, done.',
+  },
+  {
+    q: 'Is it really free?',
+    a: 'Yes, completely free. There are no paid tiers, no watermarks to unlock, and no usage limits. Every tool is free on our site and free to embed elsewhere.',
+  },
+  {
+    q: 'Can I use it on a commercial website?',
+    a: 'Yes. You can embed on any website, including commercial sites, blogs, and web apps. The only requirement is that the small "Powered by calculations.tools" attribution link at the bottom of the embed remains visible.',
+  },
+  {
+    q: 'How do I change the size of the embed?',
+    a: 'Adjust the width and height attributes in the iframe tag. The default height is 480px. For tools with longer output (like a year-by-year compound interest table), try 600px. The embed is scrollable if the content exceeds the iframe height.',
+  },
+  {
+    q: 'Will the embed break when you update a tool?',
+    a: 'No. The embed URL is stable. When we improve or fix a tool, every existing embed automatically receives the update — you do not need to change your code.',
+  },
+  {
+    q: 'Can I embed multiple tools on the same page?',
+    a: 'Yes. Each tool runs in its own iframe with isolated JavaScript, so there is no conflict between multiple embeds on the same page.',
+  },
+  {
+    q: 'Can I style the embed to match my site?',
+    a: 'The iframe boundary limits CSS access, so the calculator\'s internal styles cannot be changed from outside. You can control the iframe\'s width, height, border-radius, and margin. The embed has a transparent background that blends naturally with most page designs.',
+  },
+];
+---
+
+<BaseLayout
+  title="Embed Free Calculators on Your Website"
+  metaTitle="Embed Free Calculator Widgets on Your Website - calculations.tools"
+  description="Embed 147+ free calculators and converters on any website. No sign-up, no fees, one line of HTML. BMI, compound interest, percentage, currency, unit converters and more."
+  canonical="https://calculations.tools/embed-tools"
+  schema={schema}
+>
+  <div class="ew-page">
+    <div class="ew-container">
+
+      <header class="ew-hero">
+        <p class="ew-eyebrow">Free embeddable widgets</p>
+        <h1 class="ew-headline">Embed free calculators<br>on your website</h1>
+        <p class="ew-subline">No sign-up. No fees. No API keys. Just copy one line of HTML and paste it anywhere — your visitors get a fully working calculator, maintained by us, forever.</p>
+        <div class="ew-hero-badges">
+          <span class="ew-badge">{siteToolCount}+ tools</span>
+          <span class="ew-badge">Zero cost</span>
+          <span class="ew-badge">No account needed</span>
+          <span class="ew-badge">Mobile responsive</span>
+        </div>
+        <div class="ew-hero-ctas">
+          <a href="/" class="ew-btn ew-btn-primary">Browse all tools</a>
+          <a href="#how-to" class="ew-btn ew-btn-ghost">How it works ↓</a>
+        </div>
+      </header>
+
+      <section class="ew-benefits">
+        <div class="ew-benefit-card">
+          <div class="ew-benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>One line of HTML</h3>
+          <p>Paste a single iframe tag. No JavaScript libraries to load, no npm install, no build step. It works in WordPress, Webflow, Squarespace, Framer, raw HTML — anywhere.</p>
+        </div>
+        <div class="ew-benefit-card">
+          <div class="ew-benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Always up to date</h3>
+          <p>We maintain every tool. Bug fixes, accuracy improvements, and new features go live automatically in all existing embeds. Your code never needs to change.</p>
+        </div>
+        <div class="ew-benefit-card">
+          <div class="ew-benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>Completely free</h3>
+          <p>No pricing tiers, no "pro" plan, no watermarks. The embed is free because the site is free. That is not changing.</p>
+        </div>
+        <div class="ew-benefit-card">
+          <div class="ew-benefit-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3>Mobile responsive</h3>
+          <p>Every embed adapts to any screen size. Your readers on phones and tablets get the same working calculator as desktop visitors.</p>
+        </div>
+      </section>
+
+      <section class="ew-section" id="how-to">
+        <div class="ew-section-label">How to embed</div>
+        <div class="ew-section-body">
+          <h2>Three steps, under a minute</h2>
+          <p>No developer needed. If you can paste HTML into a page, you can embed a calculator.</p>
+          <div class="ew-steps">
+            {steps.map(s => (
+              <div class="ew-step">
+                <div class="ew-step-num">{s.num}</div>
+                <div class="ew-step-content">
+                  <h3>{s.title}</h3>
+                  <p>{s.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="ew-section" id="live-demo">
+        <div class="ew-section-label">Live demo</div>
+        <div class="ew-section-body">
+          <h2>See it in action</h2>
+          <p>This is an actual live embed of the BMI Calculator, running directly on this page. The code below it is exactly what you would paste.</p>
+          <div class="ew-demo-frame">
+            <iframe
+              src="https://calculations.tools/embed/bmi-calculator"
+              width="100%"
+              height="480"
+              frameborder="0"
+              style="border-radius:12px; display:block;"
+              title="BMI Calculator embed demo"
+              loading="lazy"
+            ></iframe>
+          </div>
+          <div class="ew-code-block" id="demo-code-block">
+            <div class="ew-code-label">Embed code</div>
+            <pre class="ew-code"><code id="demo-code">&lt;iframe src="https://calculations.tools/embed/bmi-calculator" width="100%" height="480" frameborder="0" style="border-radius:12px"&gt;&lt;/iframe&gt;</code></pre>
+            <button class="ew-copy-btn" data-target="demo-code">Copy code</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="ew-section" id="popular-tools">
+        <div class="ew-section-label">Popular widgets</div>
+        <div class="ew-section-body">
+          <h2>{siteToolCount}+ tools ready to embed</h2>
+          <p>Every tool on calculations.tools has an embed. Here are the most popular ones. Click "Copy code" on any card to get your iframe snippet.</p>
+          <div class="ew-tool-grid">
+            {tools.map(t => {
+              const code = `<iframe src="https://calculations.tools/embed/${t.slug}" width="100%" height="480" frameborder="0" style="border-radius:12px"></iframe>`;
+              return (
+                <div class="ew-tool-card">
+                  <div class="ew-tool-top">
+                    <span class="ew-tool-emoji">{t.emoji}</span>
+                    <div>
+                      <div class="ew-tool-name">{t.name}</div>
+                      <p class="ew-tool-desc">{t.desc}</p>
+                    </div>
+                  </div>
+                  <pre class="ew-tool-code"><code>{code}</code></pre>
+                  <div class="ew-tool-actions">
+                    <button class="ew-copy-btn ew-copy-btn--small" data-code={code}>Copy code</button>
+                    <a href={t.path} class="ew-tool-link" target="_blank" rel="noopener">See tool →</a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <p class="ew-all-tools-note">Looking for a specific tool? <a href="/" class="ew-link">Browse the full library →</a></p>
+        </div>
+      </section>
+
+      <section class="ew-section" id="faq">
+        <div class="ew-section-label">Questions</div>
+        <div class="ew-section-body">
+          <h2>Frequently asked questions</h2>
+          <div class="ew-faqs">
+            {faqs.map(f => (
+              <div class="ew-faq">
+                <h3>{f.q}</h3>
+                <p>{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="ew-cta">
+        <div class="ew-cta-inner">
+          <h2>Ready to add a free calculator to your site?</h2>
+          <p>Browse {siteToolCount}+ tools — health, finance, math, unit conversion, and more. Each one is free to embed, requires no sign-up, and works out of the box.</p>
+          <a href="/" class="ew-btn ew-btn-primary ew-btn-lg">Browse all tools →</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.ew-copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const targetId = btn.getAttribute('data-target');
+      const codeAttr = btn.getAttribute('data-code');
+      let text = '';
+      if (targetId) {
+        text = document.getElementById(targetId)?.textContent || '';
+      } else if (codeAttr) {
+        text = codeAttr;
+      }
+      text = text.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+      try {
+        await navigator.clipboard.writeText(text);
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      } catch {}
+    });
+  });
+});
+</script>
+
+<style is:global>
+  .ew-page {
+    min-height: 100vh;
+    padding: 3rem 1rem 5rem;
+  }
+  .ew-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .ew-hero {
+    text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 3rem;
+  }
+  .ew-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1rem;
+  }
+  .ew-headline {
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  .ew-subline {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    max-width: 580px;
+    margin: 0 auto 1.5rem;
+  }
+  .ew-hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .ew-badge {
+    background: rgba(167,139,250,0.15);
+    border: 1px solid rgba(167,139,250,0.3);
+    color: #c4b5fd;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+  }
+  .ew-hero-ctas {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .ew-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.15s;
+    cursor: pointer;
+    border: none;
+  }
+  .ew-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .ew-btn-primary { background: linear-gradient(135deg, #2563eb, #7c3aed); color: white; }
+  .ew-btn-ghost { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); }
+  .ew-btn-lg { padding: 0.8rem 2rem; font-size: 1rem; }
+
+  .ew-benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  @media (max-width: 540px) { .ew-benefits { grid-template-columns: 1fr; } }
+  .ew-benefit-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+  }
+  .ew-benefit-icon {
+    color: #a78bfa;
+    margin-bottom: 0.75rem;
+  }
+  .ew-benefit-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  .ew-benefit-card p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .ew-section {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    align-items: start;
+  }
+  @media (max-width: 640px) { .ew-section { grid-template-columns: 1fr; gap: 0.5rem; } }
+  .ew-section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    padding-top: 0.35rem;
+  }
+  .ew-section-body h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.75rem;
+  }
+  .ew-section-body > p {
+    font-size: 0.93rem;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .ew-steps { display: flex; flex-direction: column; gap: 1.5rem; }
+  .ew-step { display: flex; gap: 1.25rem; align-items: flex-start; }
+  .ew-step-num {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #a78bfa;
+    background: rgba(167,139,250,0.12);
+    border: 1px solid rgba(167,139,250,0.25);
+    border-radius: 6px;
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .ew-step-content h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.35rem;
+  }
+  .ew-step-content p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.58);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .ew-demo-frame {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .ew-code-block {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+  }
+  .ew-code-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 0.6rem;
+  }
+  .ew-code {
+    margin: 0 0 0.75rem;
+    padding: 0;
+    background: transparent;
+    overflow-x: auto;
+  }
+  .ew-code code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.8rem;
+    color: #93c5fd;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .ew-copy-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .ew-copy-btn:hover { background: rgba(255,255,255,0.18); }
+  .ew-copy-btn--small { font-size: 0.78rem; padding: 0.35rem 0.75rem; }
+
+  .ew-tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  @media (max-width: 600px) { .ew-tool-grid { grid-template-columns: 1fr; } }
+  .ew-tool-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+  .ew-tool-top { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .ew-tool-emoji { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .ew-tool-name { font-size: 0.9rem; font-weight: 700; color: white; margin-bottom: 0.2rem; }
+  .ew-tool-desc { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.55; margin: 0; }
+  .ew-tool-code {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 7px;
+    padding: 0.6rem 0.75rem;
+    margin: 0;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .ew-tool-code code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.72rem;
+    color: #93c5fd;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  .ew-tool-actions { display: flex; gap: 0.6rem; align-items: center; }
+  .ew-tool-link {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .ew-tool-link:hover { color: rgba(255,255,255,0.8); }
+  .ew-all-tools-note {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.45);
+    margin: 0;
+  }
+  .ew-link { color: #a78bfa; text-decoration: none; }
+  .ew-link:hover { color: white; }
+
+  .ew-faqs { display: flex; flex-direction: column; gap: 1.5rem; }
+  .ew-faq h3 {
+    font-size: 0.93rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.4rem;
+  }
+  .ew-faq p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.58);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .ew-cta {
+    background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(124,58,237,0.2));
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+  .ew-cta h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.75rem;
+  }
+  .ew-cta p {
+    font-size: 0.93rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+  }
+</style>

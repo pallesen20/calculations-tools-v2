@@ -165,6 +165,16 @@ const entries: Entry[] = [
     icon: 'ℹ️',
   },
   {
+    path: '/embed-tools',
+    title: 'Embed Free Calculators on Your Website - calculations.tools',
+    description: 'Embed free calculators and converters on any website. No sign-up, no fees, one line of HTML. BMI, compound interest, percentage, currency converters and more.',
+    changefreq: 'monthly' as const,
+    priority: 0.7,
+    lastmod: '2026-11-11',
+    icon: '🔗',
+    short: 'Free calculator widgets for your website',
+  },
+  {
     path: '/editorial-standards',
     title: 'Editorial Standards - calculations.tools',
     description: 'How calculations.tools sources, verifies, and maintains its tools and content - including formula verification, source requirements, health content standards, and correction policy.',
