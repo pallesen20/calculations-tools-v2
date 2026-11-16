@@ -391,7 +391,7 @@ const schema = [
       <p>For precise month-based calculations, use the years-months-days breakdown from this calculator or the DATEDIF function in <a href="/compare/excel">Excel</a> rather than dividing the day count.</p>
       <h3>Ignoring time zones and Daylight Saving Time</h3>
       <p>Date calculations based on calendar days do not need to account for time zones or DST (Daylight Saving Time). However, if you are calculating a duration in hours or minutes and crossing a DST boundary, a day may be 23 or 25 hours rather than 24.</p>
-      <p>The hours and minutes values in this calculator are derived from the day count multiplied by 24 and 1440, which assumes every day is exactly 24 hours. For high-precision time-of-day calculations, use a dedicated timestamp calculator.</p>
+      <p>The hours and minutes values in this calculator are derived from the day count <a href="/conversion/hours-to-days-calculator">multiplied by 24 and 1,440</a>, which assumes every day is exactly 24 hours. For high-precision time-of-day calculations, use a <a href="/conversion/seconds-to-hours-calculator">seconds to hours converter</a> to work from raw seconds.</p>
       <h3>Confusion between the two workday counting conventions</h3>
       <p>Excel's NETWORKDAYS counts both the start and end date as workdays if they are weekdays (inclusive). This calculator counts Mon-Fri days in [start, end) - exclusive of the start, inclusive of the end.</p>
       <p>This matches the total days convention but differs from NETWORKDAYS by 1 when both dates are weekdays. Be consistent in whichever convention you use within a single calculation.</p>

@@ -605,6 +605,32 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     proTipFix: 'always set the annual maintenance field to at least 15% of your initial build cost as a conservative floor - even for simple tools. Using zero for maintenance is the single most common error in build vs. buy analyses',
   },
 
+  'hours-to-days-calculator': {
+    hookProblem: 'quickly convert between hours, days, minutes, and seconds without doing mental math',
+    character: 'Sofia, a 34-year-old project manager',
+    exampleSetup: 'Her team has a 72-hour SLA window to respond to customer issues. She needs to know how many days that is, and how it maps to minutes for her ticketing system.',
+    formulaPlain: 'divide hours by 24 to get days; multiply days by 24 to get hours; multiply hours by 60 to get minutes; multiply hours by 3,600 to get seconds',
+    exampleWalkthrough: '72 hours divided by 24 equals 3 days exactly. The all-units panel shows this is also 4,320 minutes and 259,200 seconds. Using the quick-select button switches to days-to-hours instantly.',
+    exampleResult: '72 hours = 3 days = 4,320 minutes = 259,200 seconds',
+    exampleImplication: 'a 72-hour SLA starting Monday 9am closes Thursday 9am - not Thursday end-of-day, which matters if the team was mentally treating "72 hours" as "3 working days"',
+    notableFeature: 'the all-units panel that shows the input value converted to every time unit simultaneously - seconds, minutes, hours, days, and weeks all at once',
+    proTipMistake: 'treating "72 business hours" the same as "72 calendar hours" in SLA calculations',
+    proTipFix: 'check whether the agreement specifies calendar hours or business hours. At 8 hours per business day, 72 business hours equals 9 working days, not 3 calendar days.',
+  },
+
+  'seconds-to-hours-calculator': {
+    hookProblem: 'convert raw seconds from logs, timers, or sports data into hours and minutes',
+    character: 'Lena, a 29-year-old data analyst',
+    exampleSetup: 'Her team exports server uptime logs where elapsed time is stored as raw seconds. She needs to convert 28,800 seconds to hours for a weekly SLA report and check how many hours a 604,800-second window covers.',
+    formulaPlain: 'divide seconds by 3,600 to get hours; divide seconds by 60 to get minutes; divide seconds by 86,400 to get days; multiply hours by 3,600 to get seconds',
+    exampleWalkthrough: '28,800 divided by 3,600 equals 8 hours exactly - one standard workday. The all-units panel immediately confirms this is 480 minutes and 0.333 days. 604,800 divided by 3,600 equals 168 hours, which is exactly one week.',
+    exampleResult: '28,800 seconds = 8 hours = 480 minutes = 0.333 days',
+    exampleImplication: 'server logs that show 28,800 seconds of uptime represent a full 8-hour shift - confirming the system ran without interruption through the overnight maintenance window',
+    notableFeature: 'the all-units panel showing the input value converted to seconds, minutes, hours, days, and weeks simultaneously - useful when you need multiple equivalents without running separate conversions',
+    proTipMistake: 'dividing by 60 instead of 3,600 when converting seconds directly to hours',
+    proTipFix: 'always divide by 3,600 to go from seconds to hours in a single step. Dividing by 60 gives minutes, not hours - the two-step path of dividing by 60 twice is equivalent but slower.',
+  },
+
   'bmi-calculator-menopause': {
     hookProblem: 'know whether your weight, waist, and menopause history add up to real cardiometabolic risk',
     character: 'Linda, a 57-year-old office manager 5 years past menopause',

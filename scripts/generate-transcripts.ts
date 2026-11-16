@@ -46,6 +46,8 @@ const TOOLS: ToolMeta[] = [
   { slug: 'height-converter',      name: 'Height Converter',      path: '/conversion/height-converter',      category: 'Conversion', priority: 4 },
   { slug: 'image-to-text',         name: 'Image to Text',         path: '/conversion/image-to-text',         category: 'Conversion', priority: 4 },
   { slug: 'length-converter',      name: 'Length Converter',      path: '/conversion/length-converter',      category: 'Conversion', priority: 4 },
+  { slug: 'hours-to-days-calculator', name: 'Hours to Days Calculator', path: '/conversion/hours-to-days-calculator', category: 'Conversion', priority: 4 },
+  { slug: 'seconds-to-hours-calculator', name: 'Seconds to Hours Calculator', path: '/conversion/seconds-to-hours-calculator', category: 'Conversion', priority: 4 },
   { slug: 'speed-converter',       name: 'Speed Converter',       path: '/conversion/speed-converter',       category: 'Conversion', priority: 4 },
   { slug: 'temperature-converter', name: 'Temperature Converter', path: '/conversion/temperature-converter', category: 'Conversion', priority: 4 },
   { slug: 'weight-converter',      name: 'Weight Converter',      path: '/conversion/weight-converter',      category: 'Conversion', priority: 4 },
