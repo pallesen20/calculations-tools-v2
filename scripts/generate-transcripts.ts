@@ -20,6 +20,7 @@ const TOOLS: ToolMeta[] = [
   { slug: 'loan-payment-calculator',      name: 'Loan Payment Calculator',       path: '/finance/loan-payment-calculator',          category: 'Finance',     priority: 2 },
   { slug: 'compound-interest-calculator', name: 'Compound Interest Calculator',  path: '/finance/compound-interest-calculator',     category: 'Finance',     priority: 2 },
   { slug: 'roi-calculator',               name: 'ROI Calculator',                path: '/finance/roi-calculator',                   category: 'Finance',     priority: 2 },
+  { slug: 'build-vs-buy-calculator',      name: 'Build vs. Buy Calculator',      path: '/finance/build-vs-buy-calculator',          category: 'Finance',     priority: 2 },
   { slug: 'salary-to-hourly-calculator',  name: 'Salary to Hourly Calculator',   path: '/finance/salary-to-hourly-calculator',      category: 'Finance',     priority: 2 },
   { slug: 'pay-raise-calculator',         name: 'Pay Raise Calculator',          path: '/finance/pay-raise-calculator',             category: 'Finance',     priority: 2 },
   { slug: 'annual-income-calculator',           name: 'Annual Income Calculator',           path: '/finance/annual-income-calculator',           category: 'Finance', priority: 3 },

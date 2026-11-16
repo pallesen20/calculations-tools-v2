@@ -592,6 +592,19 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     unitNote: 'If your store labels use imperial units, switch to Imperial mode using the button at the top - enter quantities in oz or lb and the calculator shows results per lb and per oz as the primary units.',
   },
 
+  'build-vs-buy-calculator': {
+    hookProblem: 'figure out whether to build a software tool yourself or just pay for a SaaS subscription',
+    character: 'Marcus, a 41-year-old head of engineering',
+    exampleSetup: 'His team needs a CRM. Build cost: $150,000 upfront, $30,000 per year maintenance, plus $500 per month hosting. Buy cost: $2,000 per month SaaS with 5% annual price increases',
+    formulaPlain: 'cumulative build cost equals initial development plus all maintenance and hosting over the years; cumulative buy cost equals all subscription payments plus the setup fee',
+    exampleWalkthrough: 'Year 1 build: $150,000 plus $30,000 maintenance plus $6,000 hosting equals $186,000. Year 1 buy: $24,000 plus $5,000 setup equals $29,000. By year 5, build cumulative is $336,000 and buy is $138,000',
+    exampleResult: 'Buy wins over 5 years by $198,000. Break-even is not reached in this scenario',
+    exampleImplication: 'unless the team needs deep customization or has hundreds of users, paying for the SaaS is cheaper over any realistic 5-year horizon in this example',
+    notableFeature: 'a year-by-year cost comparison table showing exactly when - if ever - build becomes cheaper than buy, with the break-even month highlighted',
+    proTipMistake: 'forgetting to include ongoing maintenance, which typically costs 15 to 25% of initial development per year',
+    proTipFix: 'always set the annual maintenance field to at least 15% of your initial build cost as a conservative floor - even for simple tools. Using zero for maintenance is the single most common error in build vs. buy analyses',
+  },
+
   'bmi-calculator-menopause': {
     hookProblem: 'know whether your weight, waist, and menopause history add up to real cardiometabolic risk',
     character: 'Linda, a 57-year-old office manager 5 years past menopause',

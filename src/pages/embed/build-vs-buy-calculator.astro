@@ -1,0 +1,198 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Build vs. Buy Calculator - calculations.tools">
+  <div class="bvb-wrap">
+    <div class="bvb-row">
+      <div class="bvb-col">
+        <div class="bvb-section-label">Build (in-house)</div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bvb-build-cost">Initial development cost</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bvb-build-cost" class="bmi-input" placeholder="e.g. 150000" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bvb-build-maintenance">Annual maintenance cost (year 1)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bvb-build-maintenance" class="bmi-input" placeholder="e.g. 30000" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bvb-build-hosting">Monthly hosting / infrastructure</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bvb-build-hosting" class="bmi-input" placeholder="e.g. 500" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bvb-build-growth">Maintenance growth % per year (optional)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bvb-build-growth" class="bmi-input" placeholder="e.g. 10" />
+          </div>
+        </div>
+      </div>
+      <div class="bvb-col">
+        <div class="bvb-section-label">Buy (SaaS / off-the-shelf)</div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bvb-buy-setup">Setup / implementation fee (optional)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bvb-buy-setup" class="bmi-input" placeholder="e.g. 5000" />
+          </div>
+        </div>
+        <div class="bvb-period-label">Subscription amount per</div>
+        <div class="bvb-periods">
+          <button class="bvb-period-btn" data-period="monthly">Month</button>
+          <button class="bvb-period-btn active" data-period="annual">Year</button>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bvb-buy-annual">Subscription cost</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bvb-buy-annual" class="bmi-input" placeholder="e.g. 24000" />
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="bvb-buy-growth">Annual price increase % (optional)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bvb-buy-growth" class="bmi-input" placeholder="e.g. 5" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bvb-global-row">
+      <div class="bmi-field">
+        <label class="bmi-label" for="bvb-years">Analysis period</label>
+        <div class="bmi-input-wrap">
+          <select id="bvb-years" class="bmi-input">
+            <option value="1">1 year</option>
+            <option value="2">2 years</option>
+            <option value="3">3 years</option>
+            <option value="4">4 years</option>
+            <option value="5" selected>5 years</option>
+            <option value="6">6 years</option>
+            <option value="7">7 years</option>
+            <option value="8">8 years</option>
+            <option value="9">9 years</option>
+            <option value="10">10 years</option>
+          </select>
+        </div>
+      </div>
+      <div class="bmi-field">
+        <label class="bmi-label" for="bvb-currency">Currency</label>
+        <div class="bmi-input-wrap">
+          <select id="bvb-currency" class="bmi-input">
+            <option value="$">$ USD</option>
+            <option value="€">€ EUR</option>
+            <option value="£">£ GBP</option>
+            <option value="C$">C$ CAD</option>
+            <option value="A$">A$ AUD</option>
+            <option value="kr">kr DKK / NOK / SEK</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div id="bvb-result" class="lbm-result hidden">
+      <div class="lbm-cards">
+        <div class="lbm-card">
+          <div class="lbm-card-val" id="bvb-build-total">-</div>
+          <div class="lbm-card-lbl">Total build cost</div>
+        </div>
+        <div class="lbm-card">
+          <div class="lbm-card-val" id="bvb-buy-total">-</div>
+          <div class="lbm-card-lbl">Total buy cost</div>
+        </div>
+        <div id="bvb-diff-card" class="lbm-card">
+          <div class="lbm-card-val" id="bvb-diff">-</div>
+          <div class="lbm-card-lbl" id="bvb-diff-lbl">Savings</div>
+        </div>
+      </div>
+      <div id="bvb-recommendation" class="bvb-rec"></div>
+      <div class="pi-steps" style="margin-top:0.75rem;">
+        <div class="pi-steps-title">Calculation breakdown</div>
+        <div class="pi-steps-subtitle">Build</div>
+        <div class="pi-step">
+          <span class="pi-step-label">Initial development</span>
+          <span class="pi-step-val" id="bvb-step-build-initial">-</span>
+        </div>
+        <div class="pi-step">
+          <span class="pi-step-label">Hosting (total)</span>
+          <span class="pi-step-val" id="bvb-step-build-hosting">-</span>
+        </div>
+        <div class="pi-step">
+          <span class="pi-step-label">Maintenance (total)</span>
+          <span class="pi-step-val" id="bvb-step-build-maint">-</span>
+        </div>
+        <div class="pi-step pi-step-total">
+          <span class="pi-step-label">Total build cost</span>
+          <span class="pi-step-val" id="bvb-step-build-total">-</span>
+        </div>
+        <div class="pi-steps-subtitle" style="margin-top:0.5rem;">Buy</div>
+        <div class="pi-step">
+          <span class="pi-step-label">Setup / implementation</span>
+          <span class="pi-step-val" id="bvb-step-buy-setup">-</span>
+        </div>
+        <div class="pi-step">
+          <span class="pi-step-label">Subscriptions (total)</span>
+          <span class="pi-step-val" id="bvb-step-buy-annual">-</span>
+        </div>
+        <div class="pi-step pi-step-total">
+          <span class="pi-step-label">Total buy cost</span>
+          <span class="pi-step-val" id="bvb-step-buy-total">-</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="bvb-table-section" class="hidden" style="margin-top:1.5rem;">
+      <div class="pi-steps-title" style="margin-bottom:0.5rem;">Year-by-year cost comparison</div>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Cumulative build</th>
+              <th>Cumulative buy</th>
+              <th>Difference</th>
+            </tr>
+          </thead>
+          <tbody id="bvb-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="embed-attr">
+      <a href="https://calculations.tools/finance/build-vs-buy-calculator" target="_blank" rel="noopener">Build vs. Buy Calculator</a> by calculations.tools
+    </div>
+  </div>
+
+  <script src="/js/build-vs-buy-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .bvb-wrap { padding: 1rem; }
+  .bvb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 540px) { .bvb-row { grid-template-columns: 1fr; } }
+  .bvb-col { display: flex; flex-direction: column; }
+  .bvb-section-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.4); margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .bvb-global-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+  @media (max-width: 540px) { .bvb-global-row { grid-template-columns: 1fr; } }
+  .bvb-periods { display: flex; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .bvb-period-btn { padding: 0.3rem 0.8rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7); cursor: pointer; font-size: 0.78rem; transition: background 0.15s, border-color 0.15s; }
+  .bvb-period-btn.active { background: rgba(139,92,246,0.3); border-color: rgba(139,92,246,0.6); color: #fff; }
+  .bvb-period-label { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .bvb-rec { margin-top: 0.75rem; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; text-align: center; }
+  .bvb-rec-buy { background: rgba(96,165,250,0.15); border: 1px solid rgba(96,165,250,0.3); color: #93c5fd; }
+  .bvb-rec-build { background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.3); color: #86efac; }
+  .bvb-win .lbm-card-val { color: #4ade80; }
+  .bvb-lose .lbm-card-val { color: #f87171; }
+  .bvb-pos { color: #4ade80; }
+  .bvb-neg { color: #f87171; }
+  .bvb-breakeven-row { background: rgba(139,92,246,0.12); font-weight: 600; }
+  .bvb-breakeven-row td:first-child { color: #a78bfa; }
+  .pi-steps-subtitle { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: rgba(255,255,255,0.35); margin-bottom: 0.3rem; }
+  .pi-step-total { border-top: 1px solid rgba(255,255,255,0.1); margin-top: 0.25rem; padding-top: 0.25rem; font-weight: 600; }
+  .embed-attr { margin-top: 1.25rem; font-size: 0.75rem; color: rgba(255,255,255,0.3); text-align: center; }
+  .embed-attr a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  .embed-attr a:hover { color: rgba(255,255,255,0.7); }
+</style>

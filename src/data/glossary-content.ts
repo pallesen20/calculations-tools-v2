@@ -8894,4 +8894,176 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'total-cost-of-ownership': {
+    definition: [
+      'Total cost of ownership (TCO) is the complete lifetime cost of acquiring, deploying, operating, and eventually retiring a product or system. It goes beyond the purchase price to include implementation, training, maintenance, integration, upgrades, and disposal.',
+      'TCO is the standard framework for comparing build vs. buy decisions in software, equipment procurement, and infrastructure investments. A tool that costs $10,000 upfront but requires $50,000 in annual maintenance has a higher TCO than one that costs $20,000 upfront with $10,000 annual maintenance over a 5-year horizon.',
+      'Most procurement mistakes happen because only the acquisition cost is compared. TCO analysis is specifically designed to surface hidden ongoing costs that make the total picture different from the sticker price.',
+    ],
+    keyTakeaways: [
+      'TCO includes acquisition, implementation, maintenance, training, integration, upgrades, and disposal - not just the purchase price.',
+      'Software maintenance alone typically accounts for 50-80% of total software TCO over a product\'s lifetime (Gartner, 2023).',
+      'TCO is the correct comparison unit for build vs. buy decisions - comparing only initial build cost against first-year subscription cost is a common and costly mistake.',
+      'A lower TCO does not automatically mean the right choice - strategic value, vendor lock-in risk, and speed-to-value all factor into the full decision.',
+      'TCO calculations should use the same time horizon for all options being compared - typically 3-10 years for software.',
+    ],
+    fastFact: 'Software maintenance costs (bug fixes, security patches, dependency updates) typically equal 15-25% of initial development cost per year - meaning a $200,000 build costs $30,000-$50,000 per year just to keep running.',
+    beginnerExplain: [
+      'Think of buying vs. leasing a car. The sticker price of a new car is $30,000. But you also pay insurance, maintenance, fuel, and eventual repair costs over 10 years. TCO is the total of all of those - not just the $30,000.',
+      'Now imagine the leased car costs $500/month with all maintenance included. After 5 years that\'s $30,000 - exactly the same as buying. But at year 7, the lease has cost $42,000 while ownership costs might be only $35,000 with no major repairs. TCO shows you which side of the crossover point you\'re on.',
+    ],
+    whenToUse: 'Use TCO when comparing any two options with different cost structures - especially when one has high upfront cost and low ongoing cost (buy once) versus low upfront cost and ongoing fees (subscription). Common applications: software build vs. buy, equipment lease vs. purchase, cloud vs. on-premise infrastructure, and outsourcing vs. in-house staffing decisions.',
+    examples: {
+      headers: ['Cost category', 'Build in-house', 'SaaS subscription'],
+      rows: [
+        ['Acquisition / setup', '$150,000', '$5,000 implementation'],
+        ['Year 1 ongoing cost', '$30,000 maintenance + $6,000 hosting', '$24,000 subscription'],
+        ['5-year total (flat costs)', '$330,000', '$125,000'],
+        ['5-year total (with 10% maintenance growth, 5% SaaS increase)', '$365,000', '$133,000'],
+        ['Winner at 5 years', 'Buy wins by $232,000', '-'],
+        ['Break-even year', 'Never in this scenario', '-'],
+      ],
+    },
+    pitfalls: 'The most common TCO mistake is using different time horizons for the options being compared. Comparing a 1-year subscription cost against a full build cost makes build look expensive; comparing a 10-year subscription against a 3-year build depreciation makes buy look expensive. Always use the same analysis window and include all cost categories for both options.',
+    faqs: [
+      { q: 'What is included in TCO for software?', a: 'Software TCO includes: initial development or license cost, implementation and onboarding, annual maintenance (bug fixes, security patches, upgrades), infrastructure and hosting, training, integration with other systems, and eventual migration or replacement cost. Missing any of these categories, especially ongoing maintenance, leads to significantly underestimated TCO.' },
+      { q: 'How do I calculate TCO for a build vs. buy decision?', a: 'List all costs for each option over your chosen analysis period (typically 5 years). For build: initial development + (annual maintenance x years) + (hosting x years). For buy: setup fee + (subscription x years). Factor in annual growth rates for maintenance and subscription price increases. The option with lower total is cheaper on a TCO basis - but check the year-by-year table to find the break-even month.' },
+      { q: 'Is TCO the same as lifecycle cost?', a: 'They are very similar and often used interchangeably. TCO focuses on the costs incurred by the owner or operator. Lifecycle cost analysis (LCA) is more common in engineering and manufacturing contexts and may also include environmental costs, end-of-life disposal, and broader social costs. For software and business decisions, TCO is the standard term.' },
+    ],
+    quiz: {
+      topic: 'total cost of ownership',
+      questions: [
+        {
+          q: 'What does TCO stand for in software and procurement analysis?',
+          options: [
+            'Total Capital Outlay',
+            'Total Cost of Ownership',
+            'Time Cost of Operations',
+            'Technology Cost Overview',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'TCO stands for Total Cost of Ownership. It captures the complete lifetime cost of a product or system - acquisition, implementation, maintenance, training, and eventual replacement - not just the purchase price.',
+        },
+        {
+          q: 'According to this glossary entry, what percentage of software TCO does maintenance typically represent?',
+          options: [
+            '10-20%',
+            '20-35%',
+            '50-80%',
+            'Under 10%',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Maintenance typically represents 50-80% of total software TCO over a product\'s lifetime (Gartner, 2023). This is why TCO analyses that only count initial acquisition cost lead to significantly wrong conclusions.',
+        },
+        {
+          q: 'In the worked example in this glossary entry, which option has the lower TCO at year 5?',
+          options: [
+            'Build in-house at $330,000',
+            'SaaS subscription at $125,000',
+            'They have equal TCO at year 5',
+            'Build in-house because the initial cost is a one-time fee',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The SaaS subscription at $125,000 wins at year 5. Build costs $330,000 over 5 years ($150K initial + $30K/yr maintenance + $6K/yr hosting). The subscription costs $125,000 ($5K setup + $24K/yr). Build only wins if the analysis horizon extends beyond the break-even point.',
+        },
+        {
+          q: 'What is the most common mistake in TCO analysis?',
+          options: [
+            'Using too long a time horizon',
+            'Using different time horizons for the options being compared',
+            'Including training costs in the analysis',
+            'Counting infrastructure costs twice',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The most common mistake is comparing options over different time horizons - for example, comparing a 1-year subscription cost against the full build cost. Always use the same analysis window for both options. This skews the comparison in whichever direction the analyst (consciously or not) prefers.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'opportunity-cost': {
+    definition: [
+      'Opportunity cost is the value of the best alternative forgone when you make a choice. Every decision to do X implicitly means not doing Y - and the opportunity cost is the value of Y, the best thing you gave up.',
+      'In finance, opportunity cost is used to evaluate investment decisions, capital allocation, and resource prioritization. If you invest $100,000 in a business project that returns 5% annually, your opportunity cost is what you could have earned with that $100,000 elsewhere - say, 8% in an index fund. The true "cost" of the project is not just what you spent, but the 3% annual gap versus the alternative.',
+      'In build vs. buy decisions, the opportunity cost of building in-house is the value of what the development team could have shipped on revenue-generating product features instead. This is frequently the largest single cost in a build analysis and the most commonly omitted one.',
+    ],
+    keyTakeaways: [
+      'Opportunity cost is the value of the best alternative you give up - not just the out-of-pocket cost of your choice.',
+      'In software build vs. buy, the opportunity cost of building is what your engineers could have shipped on the core product instead - often $60,000-$200,000+ per engineer per year.',
+      'Opportunity cost is not recorded in accounting statements, which is why it is so often missed in business decision-making.',
+      'When two options have similar direct costs, the one with lower opportunity cost is typically the better choice.',
+      'The opportunity cost of doing nothing is also real: not adopting a tool that would save 20 hours per week has an opportunity cost equal to those 20 hours times the hourly cost of the people involved.',
+    ],
+    fastFact: 'The term "opportunity cost" was formalized by Austrian economist Friedrich von Wieser in 1914, though the concept appears in economic reasoning as far back as the 1870s. It is now a foundational concept in both microeconomics and corporate finance.',
+    beginnerExplain: [
+      'You have $1,000 and two choices: put it in a savings account at 3%, or buy concert tickets you plan to resell for a $200 profit. The opportunity cost of buying the tickets is the $30 you would have earned in the savings account.',
+      'The concert tickets earned $200, so the net gain versus the alternative is $170. If the tickets had earned only $25, the opportunity cost of $30 would mean the savings account was actually the better choice - even though the tickets made money.',
+    ],
+    whenToUse: 'Apply opportunity cost thinking when: allocating limited engineering or capital resources between competing projects; deciding whether to build vs. buy software; evaluating whether to hire for a function vs. outsourcing it; comparing investment options with different risk profiles; and prioritizing product roadmap features. Any time you have constrained resources and multiple options, opportunity cost is the right lens.',
+    examples: {
+      headers: ['Scenario', 'Chosen option', 'Alternative', 'Opportunity cost'],
+      rows: [
+        ['Dev team builds internal CRM (6 months)', '1 internal CRM', '2 product features that could ship in same time', '2 revenue-generating features'],
+        ['$200K capital invested in equipment at 4% return', '$8,000/year return', 'Index fund at 8% return', '$8,000/year gap ($16K - $8K)'],
+        ['10 hrs/week spent on manual reporting', 'Free (no tool spend)', 'Automation tool at $200/month', '10 hrs x $80/hr x 52 wks = $41,600/year'],
+        ['CEO spends 20% of time on admin', 'No EA hired', 'Hire EA at $60K/year', 'CEO time worth $300K/year x 20% = $60K opportunity cost'],
+      ],
+    },
+    pitfalls: 'The biggest pitfall with opportunity cost is treating "free" as actually free. Spending developer time on internal tools, spending executive time on tasks an assistant could do, or choosing not to invest idle capital - all have real opportunity costs that don\'t appear on any expense line. Building "for free" with existing staff is often the most expensive option when opportunity cost is included.',
+    faqs: [
+      { q: 'Is opportunity cost the same as sunk cost?', a: 'No - they are different concepts. Opportunity cost is the value of the best alternative you give up by making a choice; it is a forward-looking concept. Sunk cost is money already spent that cannot be recovered; it is backward-looking. Good decision-making means ignoring sunk costs (they\'re gone either way) and explicitly weighing opportunity costs (they affect the future outcome).' },
+      { q: 'How do you calculate opportunity cost?', a: 'Identify your best available alternative, then estimate its value over the same time period as your chosen option. If you invest in Project A for 1 year and expect a 5% return, and your best alternative (Project B) would return 9%, your opportunity cost is 4% - the gap between what you chose and what you gave up.' },
+      { q: 'Why is opportunity cost not shown in financial statements?', a: 'Financial statements record actual transactions - money spent and money received. Opportunity cost is a hypothetical: what you could have earned from an alternative you did not pursue. Because it involves a counterfactual, it cannot be audited or verified, so it is excluded from GAAP/IFRS accounting. This is why management accounting and decision analysis frameworks explicitly add it back when evaluating options.' },
+    ],
+    quiz: {
+      topic: 'opportunity cost',
+      questions: [
+        {
+          q: 'What is opportunity cost?',
+          options: [
+            'The total money spent on a project',
+            'The value of the best alternative forgone when making a choice',
+            'The cost of reversing a decision after it is made',
+            'The difference between budgeted and actual costs',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Opportunity cost is the value of the best alternative you give up by making a choice. If you choose option A, your opportunity cost is the value of option B - the best thing you did not choose.',
+        },
+        {
+          q: 'According to this glossary entry, what is the opportunity cost of an engineering team spending 6 months building an internal CRM?',
+          options: [
+            'The salary costs of the engineers during those 6 months',
+            'The licensing cost of a SaaS CRM alternative',
+            'The revenue-generating product features that could have shipped in the same time',
+            'The interest cost on capital tied up in the project',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The opportunity cost is what the team could have built instead: revenue-generating product features. The salary cost is a direct cost, not an opportunity cost. Opportunity cost is specifically the value of the best alternative foregone.',
+        },
+        {
+          q: 'You invest $100,000 at 5% annual return. Your best alternative was an index fund at 8%. What is your opportunity cost per year?',
+          options: [
+            '$5,000 (your actual return)',
+            '$8,000 (what you could have earned)',
+            '$3,000 (the gap between the two returns)',
+            '$13,000 (the sum of both returns)',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Opportunity cost is the gap: 8% - 5% = 3% on $100,000 = $3,000 per year. You chose the option that earns $5,000, giving up $8,000. The $3,000 difference is what you sacrificed by not choosing the alternative.',
+        },
+        {
+          q: 'According to this glossary entry, what is the biggest pitfall with opportunity cost thinking?',
+          options: [
+            'Overestimating the return on the chosen option',
+            'Treating "free" options (using existing staff) as having no cost',
+            'Using too long a time horizon for the comparison',
+            'Confusing opportunity cost with sunk cost',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that treating "free" as actually free is the biggest mistake. Spending developer time on internal tools has an opportunity cost equal to what those developers could have built for revenue instead - even though no money changes hands.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
 };

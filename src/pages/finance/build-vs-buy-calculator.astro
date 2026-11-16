@@ -1,0 +1,516 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import RelatedTools from '../../components/RelatedTools.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+import FinanceDisclaimer from '../../components/FinanceDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  build: "$$\\text{Build cost}(y) = C_0 + H \\cdot y + M \\cdot \\frac{(1+g)^y - 1}{g}$$",
+  buy:   "$$\\text{Buy cost}(y) = S + A \\cdot \\frac{(1+r)^y - 1}{r}$$",
+  diff:  "$$\\text{Savings} = \\text{Buy cost}(Y) - \\text{Build cost}(Y)$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'Ulziit, B.; Warraich, Z.A.; Gencel, C.; Petersen, K.',
+    title: 'Software maintenance (Wikipedia, citing: A conceptual framework of challenges and solutions for managing global software maintenance)',
+    journal: 'Journal of Software: Evolution and Process / Wikipedia',
+    year: 2015,
+    url: 'https://en.wikipedia.org/wiki/Software_maintenance',
+  },
+  {
+    author: 'Sheridan, Emma (CFO Dive, citing Vertice SaaS Inflation Index)',
+    title: 'Stubbornly high SaaS prices outpace CPI inflation',
+    journal: 'CFO Dive',
+    year: 2023,
+    url: 'https://www.cfodive.com/news/stubbornly-high-saas-prices-outpace-cpi-inflation/699683/',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',            label: 'How to use this calculator' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'build-costs',           label: 'What to include in build costs' },
+  { id: 'buy-costs',             label: 'What to include in buy costs' },
+  { id: 'break-even',            label: 'How break-even is calculated' },
+  { id: 'when-to-build',         label: 'When building makes sense' },
+  { id: 'when-to-buy',           label: 'When buying makes sense' },
+  { id: 'mistakes',              label: 'Common mistakes' },
+  { id: 'faq',                   label: 'FAQs' },
+  { id: 'quiz',                  label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',         label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'In the build vs. buy formula, what does the variable g represent?',
+    options: [
+      'Annual subscription price increase rate',
+      'Annual maintenance cost growth rate',
+      'General inflation rate',
+      'Gross margin percentage',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'In the build cost formula, g is the annual maintenance growth rate. If maintenance costs increase 10% per year, set g = 0.10. The buy formula uses r for the subscription price increase rate.',
+  },
+  {
+    q: 'Research cited by Wikipedia puts software maintenance at what percentage of a system\'s total lifecycle cost?',
+    options: [
+      '10-20%',
+      '25-40%',
+      '80-90%',
+      'Under 10%',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'According to research cited on Wikipedia (Ulziit et al., Journal of Software: Evolution and Process, 2015), software maintenance comprises 80-90% of the lifecycle cost. This is why build analyses that focus only on initial development cost regularly underestimate the true total cost.',
+  },
+  {
+    q: 'A team builds software for $200,000. Annual maintenance is $40,000, hosting is $500/month. A SaaS alternative costs $5,000/month. After 3 years, which is cheaper?',
+    options: [
+      'Build: approximately $346,000 vs. buy: $180,000 - buy wins',
+      'Build: approximately $346,000 vs. buy: $180,000 - build wins',
+      'Build: approximately $258,000 vs. buy: $180,000 - buy wins',
+      'They cost exactly the same at year 3',
+    ] as [string, string, string, string],
+    correct: 0 as const,
+    explanation: 'Build cumulative (3 yr): $200K + ($40K x 3) + ($6K x 3) = $338K. Buy cumulative: $60K/yr x 3 = $180K. Buy wins by $158K at year 3. The high initial build cost is not yet offset by lower subscription costs.',
+  },
+  {
+    q: 'What does the break-even point represent in a build vs. buy analysis?',
+    options: [
+      'The year when build costs stop growing',
+      'The year when cumulative build costs first equal or fall below cumulative buy costs',
+      'The payback period on the initial investment',
+      'The year when the SaaS subscription is fully paid off',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Break-even is the first point (interpolated to months) where the cumulative total cost of building equals the cumulative total cost of buying. After this point, build becomes the cheaper option on a cumulative basis.',
+  },
+  {
+    q: 'According to this page, what is the most common mistake in build vs. buy analyses?',
+    options: [
+      'Using too long an analysis period',
+      'Underestimating the initial build cost',
+      'Forgetting ongoing maintenance, which often costs 15-25% of initial build cost per year',
+      'Overestimating subscription price inflation',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The most common mistake is omitting ongoing maintenance. Industry benchmarks put annual maintenance at 15-25% of initial development cost. Missing this single line item routinely makes build appear 2-3x cheaper than reality over a 5-year horizon.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Build vs. Buy Calculator",
+    "url": "https://calculations.tools/finance/build-vs-buy-calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "description": "Compare the total cost of building software in-house versus buying a SaaS solution. Shows break-even month, year-by-year TCO, and a build or buy recommendation.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the Build vs. Buy Calculator",
+    "description": "Compare in-house development costs against SaaS subscription costs to find the break-even point.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter build costs", "text": "Enter the initial development cost, annual maintenance cost, and monthly hosting or infrastructure cost." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter buy costs", "text": "Enter the one-time setup or implementation fee and the monthly or annual subscription cost." },
+      { "@type": "HowToStep", "position": 3, "name": "Set growth rates", "text": "Optionally set the annual maintenance growth rate for build costs and the annual price increase rate for the subscription." },
+      { "@type": "HowToStep", "position": 4, "name": "Choose analysis period", "text": "Select the number of years to compare (1-10 years). Longer horizons favor build; shorter horizons favor buy." },
+      { "@type": "HowToStep", "position": 5, "name": "Read the recommendation", "text": "The calculator shows cumulative costs for both options, the break-even month (if any), and a clear build or buy recommendation." },
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "When should you build instead of buy?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Build when your requirements are genuinely unique and no off-the-shelf product covers more than 70-80% of them, when you need deep integration with proprietary systems, or when the subscription cost over 5+ years clearly exceeds build plus maintenance. Build also makes sense when the product is core to your competitive advantage and you cannot afford vendor lock-in." }
+      },
+      {
+        "@type": "Question",
+        "name": "What hidden costs do most build vs. buy analyses miss?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The two most commonly missed costs are ongoing software maintenance (typically 15-25% of initial development cost per year) and the opportunity cost of developer time. When your engineering team builds internal tools, they are not building revenue-generating product. This opportunity cost is rarely included in build analyses but is often the largest single factor when total cost is calculated honestly." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the break-even point in a build vs. buy decision?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The break-even point is the month at which cumulative build costs (initial investment plus all maintenance and hosting) first equal cumulative buy costs (setup fee plus all subscription payments). After that point, building is cheaper on a cumulative basis. The calculator interpolates between years to give you the break-even in months, not just whole years." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is building software always cheaper in the long run?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Not always. Build costs continue to grow as software requires maintenance, security patches, and infrastructure. If subscription prices stay flat or the SaaS vendor improves the product at their cost, the subscription can remain cheaper indefinitely. Build only wins the long-run cost race when maintenance stays modest relative to subscription savings - typically under 20% of initial cost per year." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between build vs. buy and make vs. buy?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Make vs. buy is the broader strategic framework used in manufacturing and supply chain management - should a company produce a component internally or purchase it from a supplier? Build vs. buy is the software-specific application of the same principle: should a team develop a tool or system in-house, or license an existing product? The underlying economics are identical; the terminology differs by industry." }
+      }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Build vs. Buy Calculator"
+  metaTitle="Build vs. Buy Calculator | Software & Business ᐅ"
+  description="Compare the total cost of building software in-house vs. buying a SaaS solution. Shows break-even month, year-by-year TCO table, and a clear build or buy recommendation."
+  canonical="https://calculations.tools/finance/build-vs-buy-calculator"
+  tocItems={tocItems}
+  schema={schema}
+  sources={sources}
+  embedSlug="build-vs-buy-calculator"
+  ogFormula="Total cost = initial + Σ(annual cost × growth factor)"
+  ogExample="$150K build + $30K/yr vs $24K/yr SaaS - buy wins until year 6"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Build vs. Buy Cost Comparison</h2>
+          <p>Enter costs for both options to see the break-even point and total cost comparison</p>
+        </div>
+        <div class="bvb-row">
+          <div class="bvb-col">
+            <div class="bvb-section-label">Build (in-house)</div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="bvb-build-cost">Initial development cost</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="bvb-build-cost" class="bmi-input" placeholder="e.g. 150000" />
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="bvb-build-maintenance">Annual maintenance cost (year 1)</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="bvb-build-maintenance" class="bmi-input" placeholder="e.g. 30000" />
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="bvb-build-hosting">Monthly hosting / infrastructure</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="bvb-build-hosting" class="bmi-input" placeholder="e.g. 500" />
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="bvb-build-growth">Maintenance growth rate % per year (optional)</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="bvb-build-growth" class="bmi-input" placeholder="e.g. 10" />
+              </div>
+            </div>
+          </div>
+          <div class="bvb-col">
+            <div class="bvb-section-label">Buy (SaaS / off-the-shelf)</div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="bvb-buy-setup">Setup / implementation fee (optional)</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="bvb-buy-setup" class="bmi-input" placeholder="e.g. 5000" />
+              </div>
+            </div>
+            <div class="bvb-period-label">Subscription amount per</div>
+            <div class="bvb-periods">
+              <button class="bvb-period-btn" data-period="monthly">Month</button>
+              <button class="bvb-period-btn active" data-period="annual">Year</button>
+            </div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="bvb-buy-annual">Subscription cost</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="bvb-buy-annual" class="bmi-input" placeholder="e.g. 24000" />
+              </div>
+            </div>
+            <div class="bmi-field">
+              <label class="bmi-label" for="bvb-buy-growth">Annual price increase % (optional)</label>
+              <div class="bmi-input-wrap">
+                <input type="text" inputmode="decimal" id="bvb-buy-growth" class="bmi-input" placeholder="e.g. 5" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bvb-global-row">
+          <div class="bmi-field">
+            <label class="bmi-label" for="bvb-years">Analysis period</label>
+            <div class="bmi-input-wrap">
+              <select id="bvb-years" class="bmi-input">
+                <option value="1">1 year</option>
+                <option value="2">2 years</option>
+                <option value="3">3 years</option>
+                <option value="4">4 years</option>
+                <option value="5" selected>5 years</option>
+                <option value="6">6 years</option>
+                <option value="7">7 years</option>
+                <option value="8">8 years</option>
+                <option value="9">9 years</option>
+                <option value="10">10 years</option>
+              </select>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="bvb-currency">Currency</label>
+            <div class="bmi-input-wrap">
+              <select id="bvb-currency" class="bmi-input">
+                <option value="$">$ USD</option>
+                <option value="€">€ EUR</option>
+                <option value="£">£ GBP</option>
+                <option value="C$">C$ CAD</option>
+                <option value="A$">A$ AUD</option>
+                <option value="kr">kr DKK / NOK / SEK</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div id="bvb-result" class="lbm-result hidden">
+          <div class="lbm-cards">
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="bvb-build-total">-</div>
+              <div class="lbm-card-lbl">Total build cost</div>
+            </div>
+            <div class="lbm-card">
+              <div class="lbm-card-val" id="bvb-buy-total">-</div>
+              <div class="lbm-card-lbl">Total buy cost</div>
+            </div>
+            <div id="bvb-diff-card" class="lbm-card">
+              <div class="lbm-card-val" id="bvb-diff">-</div>
+              <div class="lbm-card-lbl" id="bvb-diff-lbl">Savings</div>
+            </div>
+          </div>
+          <div id="bvb-recommendation" class="bvb-rec"></div>
+          <div class="pi-steps" style="margin-top:0.75rem;">
+            <div class="pi-steps-title">Calculation breakdown</div>
+            <div class="pi-steps-subtitle">Build</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Initial development</span>
+              <span class="pi-step-val" id="bvb-step-build-initial">-</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Hosting (total)</span>
+              <span class="pi-step-val" id="bvb-step-build-hosting">-</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Maintenance (total)</span>
+              <span class="pi-step-val" id="bvb-step-build-maint">-</span>
+            </div>
+            <div class="pi-step pi-step-total">
+              <span class="pi-step-label">Total build cost</span>
+              <span class="pi-step-val" id="bvb-step-build-total">-</span>
+            </div>
+            <div class="pi-steps-subtitle" style="margin-top:0.5rem;">Buy</div>
+            <div class="pi-step">
+              <span class="pi-step-label">Setup / implementation</span>
+              <span class="pi-step-val" id="bvb-step-buy-setup">-</span>
+            </div>
+            <div class="pi-step">
+              <span class="pi-step-label">Subscriptions (total)</span>
+              <span class="pi-step-val" id="bvb-step-buy-annual">-</span>
+            </div>
+            <div class="pi-step pi-step-total">
+              <span class="pi-step-label">Total buy cost</span>
+              <span class="pi-step-val" id="bvb-step-buy-total">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div id="bvb-table-section" class="hidden" style="margin-top:1.5rem;padding:0 1rem 1rem;">
+      <div class="pi-steps-title" style="margin-bottom:0.5rem;">Year-by-year cost comparison</div>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Cumulative build</th>
+              <th>Cumulative buy</th>
+              <th>Difference</th>
+            </tr>
+          </thead>
+          <tbody id="bvb-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <style is:global>
+      .bvb-row { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+      @media (max-width:640px) { .bvb-row { grid-template-columns:1fr; } }
+      .bvb-col { display:flex; flex-direction:column; gap:0; }
+      .bvb-section-label { font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:rgba(255,255,255,0.4); margin-bottom:0.6rem; padding-bottom:0.4rem; border-bottom:1px solid rgba(255,255,255,0.08); }
+      .bvb-global-row { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:0.5rem; }
+      @media (max-width:640px) { .bvb-global-row { grid-template-columns:1fr; } }
+      .bvb-periods { display:flex; gap:0.4rem; margin-bottom:0.75rem; }
+      .bvb-period-btn { padding:0.3rem 0.8rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; transition:background 0.15s,border-color 0.15s; }
+      .bvb-period-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:#fff; }
+      .bvb-period-label { font-size:0.78rem; color:rgba(255,255,255,0.45); margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.05em; }
+      .bvb-rec { margin-top:0.75rem; padding:0.75rem 1rem; border-radius:8px; font-weight:600; font-size:0.95rem; text-align:center; }
+      .bvb-rec-buy { background:rgba(96,165,250,0.15); border:1px solid rgba(96,165,250,0.3); color:#93c5fd; }
+      .bvb-rec-build { background:rgba(74,222,128,0.15); border:1px solid rgba(74,222,128,0.3); color:#86efac; }
+      .bvb-win .lbm-card-val { color:#4ade80; }
+      .bvb-lose .lbm-card-val { color:#f87171; }
+      .bvb-pos { color:#4ade80; }
+      .bvb-neg { color:#f87171; }
+      .bvb-breakeven-row { background:rgba(139,92,246,0.12); font-weight:600; }
+      .bvb-breakeven-row td:first-child { color:#a78bfa; }
+      .pi-steps-subtitle { font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:rgba(255,255,255,0.35); margin-bottom:0.3rem; }
+      .pi-step-total { border-top:1px solid rgba(255,255,255,0.1); margin-top:0.25rem; padding-top:0.25rem; font-weight:600; }
+    </style>
+    <script src="/js/build-vs-buy-calculator.js" is:inline></script>
+    <FinanceDisclaimer />
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <p class="answer-box-label">Quick answer</p>
+        <p>Use this calculator to compare the <strong>total cost of building software in-house</strong> versus buying a SaaS solution. Enter your build costs (initial + maintenance + hosting) and subscription costs to see a year-by-year comparison, the break-even month, and a clear recommendation. Building is almost never cheaper in year one - but it often wins after year 5-7.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Software maintenance comprises 80-90% of a system's total lifecycle cost, according to research cited by <a href="https://en.wikipedia.org/wiki/Software_maintenance" target="_blank" rel="noopener noreferrer">Wikipedia (Ulziit et al., 2015)</a> - which is why build analyses that only count initial development cost are almost always wrong.</li>
+          <li>Build almost never wins in year one or two. Break-even typically requires 4-8 years when maintenance and hosting are modeled correctly.</li>
+          <li>73% of SaaS vendors raised prices in 2023, with average software price inflation of 8.7% - more than double the <a href="/finance/inflation-calculator">US CPI rate</a> that year (<a href="https://www.cfodive.com/news/stubbornly-high-saas-prices-outpace-cpi-inflation/699683/" target="_blank" rel="noopener noreferrer">CFO Dive, citing Vertice, 2023</a>). This compounding matters over a 5-10 year horizon.</li>
+          <li>The break-even calculation in this tool uses a geometric series formula to compound both maintenance growth and subscription price increases.</li>
+          <li>Build makes sense when: requirements are unique, the tool is core to your competitive advantage, or the subscription cost clearly exceeds build plus maintenance at the 5-year mark.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">What does the build vs. buy decision really cost?</h2>
+      <p>The build vs. buy question is one of the most consequential decisions a software team makes - yet most analyses get it wrong. Teams routinely compare the initial development cost to the first year's subscription and declare build the winner.</p>
+      <p>That comparison ignores the 80-90% of a software system's lifetime cost that comes from ongoing maintenance, security updates, infrastructure, and upgrades - not the initial build (Ulziit et al., 2015, via <a href="https://en.wikipedia.org/wiki/Software_maintenance" target="_blank" rel="noopener noreferrer">Wikipedia</a>). And on the buy side, 73% of <a href="/glossary/total-cost-of-ownership">SaaS vendors</a> raised prices in 2023 alone.</p>
+      <h3>How to use this build or buy calculator</h3>
+      <p>To use this calculator: enter your initial development cost, annual maintenance estimate, and monthly hosting in the Build section. Enter the setup fee and subscription cost in the Buy section. Set growth rates if you expect maintenance or subscription costs to rise annually. Choose the analysis period (3-10 years) and read the recommendation.</p>
+      <p>The calculator shows cumulative costs year by year, interpolates the break-even month, and labels the cheaper option over your chosen horizon. The year-by-year table highlights the break-even year with a checkmark.</p>
+      <h3 id="explained-to-beginner">Build vs. buy explained to a beginner</h3>
+      <p>Imagine you need a coffee machine at the office. You could buy an espresso machine for $2,000 (build), or pay $80/month for a coffee service that delivers pods and maintains the machine (buy). In month one, build looks insane.</p>
+      <p>By month 25, the espresso machine has cost the same total as the service - that's the <a href="/glossary/break-even-point">break-even point</a>. After that, every month is cheaper on the espresso machine.</p>
+      <p>Now add: the espresso machine needs a service call every year ($300), and the pod service raises prices 5% annually. That's exactly what this calculator models for software.</p>
+      <p>The initial build cost is the espresso machine. Maintenance is the annual service call. The SaaS subscription is the pod service with annual price increases. Break-even is when the two lines cross.</p>
+      <h2 id="build-costs">What to include in build costs</h2>
+      <p>Most build analyses undercount costs by 40-60% because they only capture obvious line items. A complete build cost model includes every cost that wouldn't exist if you bought instead.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Cost category</th><th>What to include</th><th>Typical magnitude</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Initial development</td><td>Engineer salaries or contractor fees, design, project management, QA, documentation</td><td>$50K-$500K+ depending on scope</td></tr>
+            <tr><td>Annual maintenance</td><td>Bug fixes, dependency updates, security patches, minor features</td><td>15-25% of initial build cost per year</td></tr>
+            <tr><td>Infrastructure / hosting</td><td>Cloud compute, storage, CDN, database, monitoring tools</td><td>$200-$5,000/month depending on scale</td></tr>
+            <tr><td>Integrations</td><td>Connecting to other internal systems, API development, data pipelines</td><td>Often 20-30% of initial build cost</td></tr>
+            <tr><td>Security and compliance</td><td>Penetration testing, audits, GDPR/SOC2 compliance work</td><td>$5K-$50K/year for regulated industries</td></tr>
+            <tr><td>Opportunity cost</td><td>What else the development team could have shipped instead</td><td>Hardest to quantify, often the largest factor</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The <a href="/glossary/opportunity-cost">opportunity cost</a> of developer time is the most frequently omitted and most significant cost. When your senior engineers spend six months building an internal CRM, they're not building the revenue-generating features on the product roadmap.</p>
+      <p>Use our <a href="/finance/salary-to-hourly-calculator">salary to hourly calculator</a> to convert annual salaries into an accurate project cost estimate. For product companies, this tradeoff can easily be worth more than the entire build cost.</p>
+      <blockquote class="blockquote-observation">
+      <p>In practice, I'd recommend setting the annual maintenance field to at least 15% of your initial build cost as a conservative floor - even for simple tools.</p>
+      </blockquote>
+      <p>Complex software with many integrations typically lands at 20-25%. Using zero for maintenance is the single most common error in build vs. buy analyses.</p>
+      <h2 id="buy-costs">What to include in buy costs</h2>
+      <p>Buy analyses have their own blind spots. The headline subscription price is rarely the total cost of a SaaS solution - implementation, training, seat limits, and switching costs all add up.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Cost category</th><th>What to include</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Subscription fee</td><td>Base license cost, annualized</td><td>Use the annual contract price, not the month-to-month rate</td></tr>
+            <tr><td>Setup / implementation</td><td>Onboarding, configuration, data migration, training</td><td>Often 1-3x the annual subscription for enterprise tools</td></tr>
+            <tr><td>Per-seat costs</td><td>Additional user licenses above the base tier</td><td>Add headcount growth to the subscription projection</td></tr>
+            <tr><td>Add-ons and overages</td><td>Storage limits, API call limits, premium features</td><td>Often 20-50% above the base price in year 2+</td></tr>
+            <tr><td>Integration costs</td><td>Connecting the SaaS to internal systems, often via middleware</td><td>$5K-$30K one-time, plus ongoing API maintenance</td></tr>
+            <tr><td>Switching cost</td><td>Cost to exit if you later decide to build or switch vendors</td><td>Data export, retraining, rebuild of integrations</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Switching cost is the most underweighted factor in buy decisions. Once a SaaS tool is embedded in workflows and data is locked in the vendor's format, the realistic cost to leave is often 2-3x the original implementation fee. This is why vendor lock-in deserves explicit consideration alongside price when evaluating buy options.</p>
+      <h2 id="break-even">How break-even is calculated</h2>
+      <p>The <a href="/glossary/break-even-point">break-even point</a> is the month at which cumulative build costs first equal or fall below cumulative buy costs. The calculator uses geometric series formulas to model both maintenance growth and subscription price increases accurately.</p>
+      <p>Build cumulative cost at year <em>y</em>:</p>
+      <Formula expr={f.build} />
+      <p>Where <em>C&#8320;</em> is the initial development cost, <em>H</em> is annual hosting cost, <em>M</em> is year-1 maintenance, and <em>g</em> is the annual maintenance growth rate.</p>
+      <p>Buy cumulative cost at year <em>y</em>:</p>
+      <Formula expr={f.buy} />
+      <p>Where <em>S</em> is the setup fee, <em>A</em> is the year-1 annual subscription cost, and <em>r</em> is the annual subscription price increase rate.</p>
+      <p>The difference (positive = build saves money):</p>
+      <Formula expr={f.diff} />
+      <p>The calculator iterates year 1 through the maximum of your analysis period or 20 years to find the first year where build cumulative cost falls at or below buy cumulative cost. It then interpolates between that year and the previous year to give you the break-even in months, not just whole years.</p>
+      <p>When growth rates are zero, both formulas simplify to flat annual cost multiplied by years. The geometric series form handles the compounding case where g &gt; 0 or r &gt; 0.</p>
+      <h2 id="when-to-build">When building makes sense</h2>
+      <p>Build wins when the subscription cost is high relative to build complexity, when your requirements are genuinely unique, or when the product is so central to your business that you can't afford vendor dependency. Here are the clearest signals that building is the right call.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Signal</th><th>Why build wins</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>No SaaS covers &gt;80% of your requirements</td><td>Customization cost on a 60% fit often exceeds build cost within 2 years</td></tr>
+            <tr><td>Subscription price exceeds build + maintenance at year 5</td><td>The cumulative math favors build; break-even is reachable</td></tr>
+            <tr><td>Tool is a core competitive advantage</td><td>Letting a vendor own your core capability creates strategic risk</td></tr>
+            <tr><td>Deep integration with proprietary data or systems</td><td>API-based integrations with SaaS tools add cost and latency</td></tr>
+            <tr><td>High user volume with per-seat pricing</td><td>Per-seat SaaS costs scale linearly; build costs do not</td></tr>
+            <tr><td>Regulated industry with strict data residency requirements</td><td>Not all SaaS vendors meet HIPAA, SOC2, or GDPR requirements</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The team size and subscription model are the two biggest factors. If a SaaS tool charges per seat and you have 500 users at $20/seat/month ($120K/year), you can often build a focused internal tool for $150K and be in cost parity by year 2 - even with maintenance included. That math obviously flips if you only have 20 users.</p>
+      <h2 id="when-to-buy">When buying makes sense</h2>
+      <p>Buy wins when speed-to-value matters, when your engineering team is best deployed on core product, or when the problem being solved is genuinely commodity functionality.</p>
+      <p>The majority of build vs. buy analyses should end in a buy decision - most internal software needs are not unique enough to justify the sustained maintenance commitment.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Signal</th><th>Why buy wins</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tool needed in weeks, not months</td><td>SaaS deploys immediately; build takes 3-18 months before first useful version</td></tr>
+            <tr><td>Low user count with flat per-seat pricing</td><td>Subscription cost stays predictable; build maintenance does not</td></tr>
+            <tr><td>Category is evolving rapidly (AI, analytics)</td><td>SaaS vendor absorbs R&amp;D cost; you get new features automatically</td></tr>
+            <tr><td>Engineering team is at capacity on core product</td><td>Opportunity cost of diverting engineers exceeds subscription cost</td></tr>
+            <tr><td>Well-defined problem with mature SaaS solutions</td><td>CRM, HR, accounting, email - these are solved problems</td></tr>
+            <tr><td>Analysis period is under 3 years</td><td>Build almost never recoups initial investment in under 3 years</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When I've reviewed software spend at my previous employer where engineering was the bottleneck, buying almost always won on the full model - even where build looked cheaper on a subscription vs. development cost comparison.</p>
+      <p>The factor that consistently tipped the analysis was the cost of one senior engineer's time for 3-6 months, which is frequently $60-$120K in salary alone, before the ongoing maintenance obligation.</p>
+      <h2 id="mistakes">Common mistakes in build vs. buy analyses</h2>
+      <ul>
+        <li><strong>Forgetting ongoing maintenance:</strong> The single most common error. Industry benchmarks put annual maintenance at 15-25% of initial development cost. Missing this single line item routinely makes build appear 2-3x cheaper than reality over a 5-year horizon.</li>
+        <li><strong>Using a 1-year analysis window:</strong> Build almost never wins at year one. Using a 1-year comparison biases every analysis toward buy, regardless of long-term economics. Use a 5-7 year window to capture the period where build costs flatten and subscription costs compound.</li>
+        <li><strong>Ignoring subscription price escalation:</strong> 73% of SaaS vendors raised prices in 2023, with average software price inflation of 8.7% - more than double general CPI (Vertice, 2023). A $24K/year subscription at 8% annual growth costs $43K in year 10 - a 79% increase. Not modeling this understates the buy cost significantly.</li>
+        <li><strong>Counting only developer time for initial build:</strong> Project management, QA, design, documentation, and stakeholder reviews typically add 30-50% to raw development time. A project estimated at 3 engineer-months often takes 5 calendar months when total effort is counted.</li>
+        <li><strong>Excluding integration and onboarding costs for buy:</strong> Implementation fees for enterprise SaaS tools often equal or exceed the first year's subscription. A $24K/year tool with a $20K implementation fee has a true first-year cost of $44K - often missed when comparing to build.</li>
+        <li><strong>Not modeling the switching cost:</strong> Build analyses typically don't account for the cost to exit a SaaS vendor in year 3 or 5 if the tool doesn't meet needs. Data migration, retraining, and integration rebuild can cost more than a year's subscription.</li>
+      </ul>
+      <h2 id="faq">Frequently asked questions about build vs. buy</h2>
+      <h3>When should you build instead of buy?</h3>
+      <p>Build when your requirements are genuinely unique and no off-the-shelf product covers more than 70-80% of them, when you need deep integration with proprietary systems, or when the subscription cost over 5+ years clearly exceeds build plus maintenance. Build also makes sense when the product is core to your competitive advantage and you can't afford vendor lock-in.</p>
+      <h3>What hidden costs do most build vs. buy analyses miss?</h3>
+      <p>The two most commonly missed costs are ongoing software maintenance (typically 15-25% of initial development cost per year) and the <a href="/glossary/opportunity-cost">opportunity cost</a> of developer time. When your engineering team builds internal tools, they're not building revenue-generating product. This opportunity cost is rarely included in build analyses but is often the largest single factor when total cost is calculated honestly.</p>
+      <h3>What is the break-even point in a build vs. buy decision?</h3>
+      <p>The break-even point is the month at which cumulative build costs (initial investment plus all maintenance and hosting) first equal cumulative buy costs (setup fee plus all subscription payments). After that point, building is cheaper on a cumulative basis. This calculator interpolates between years to give you the break-even in months, not just whole years.</p>
+      <h3>Is building software always cheaper in the long run?</h3>
+      <p>Not always. Build costs continue to grow as software requires maintenance, security patches, and infrastructure. If subscription prices stay flat or the vendor improves the product at their cost, the subscription can remain cheaper indefinitely. Build only wins the long-run cost race when maintenance stays modest relative to subscription savings - typically under 20% of initial cost per year.</p>
+      <h3>What is the difference between build vs. buy and make vs. buy?</h3>
+      <p>Make vs. buy is the broader strategic framework used in manufacturing and supply chain management - should a company produce a component internally or purchase it from a supplier? Build vs. buy is the software-specific application of the same principle. The underlying economics are identical; the terminology differs by industry.</p>
+      <QuizBlock
+        topic="build vs. buy"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/finance/build-vs-buy-calculator"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <RelatedTools tools={[
+        { path: '/finance/payback-period-calculator', blurb: 'Calculate when any investment pays itself back - the same break-even logic applied to cost-reduction decisions.' },
+        { path: '/finance/roi-calculator',            blurb: 'Calculate total return on investment once you have decided to build in-house.' },
+        { path: '/finance/break-even-calculator',    blurb: 'Apply break-even analysis to units and revenue - the same math as build vs. buy for product decisions.' },
+        { path: '/finance/compound-interest-calculator', blurb: 'Model the compounding growth of subscription costs or savings over time.' },
+      ]} />
+      <RelatedGlossaryTerms toolPath="/finance/build-vs-buy-calculator" />
+    </div>
+  </div>
+</CalculatorLayout>
