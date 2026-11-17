@@ -6,6 +6,7 @@ import QuizBlock from '../../components/QuizBlock.astro';
 import { GLOSSARY_TERMS } from '../../data/glossary';
 import { GLOSSARY_CONTENT } from '../../data/glossary-content';
 import HelpfulVote from '../../components/HelpfulVote.astro';
+import { AUTHORS } from '../../data/authors';
 
 export function getStaticPaths() {
   return GLOSSARY_TERMS.map(t => ({ params: { slug: t.slug } }));
@@ -22,6 +23,8 @@ const next = idx < GLOSSARY_TERMS.length - 1 ? GLOSSARY_TERMS[idx + 1] : null;
 const relatedTermObjects = (term.relatedTerms ?? [])
   .map(s => GLOSSARY_TERMS.find(t => t.slug === s))
   .filter(Boolean) as typeof GLOSSARY_TERMS;
+
+const author = term.siteCategory === 'Baking' ? AUTHORS.nikki : AUTHORS.jesper;
 
 const ogFormulaText = term.formula
   ? term.formula
@@ -47,6 +50,22 @@ const schema = [
       "@type": "DefinedTermSet",
       "name": "Finance & Math Glossary",
       "url": "https://calculations.tools/glossary",
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `https://calculations.tools/glossary/${slug}`,
+    "url": `https://calculations.tools/glossary/${slug}`,
+    "name": `${term.term} - Definition, Formula & Examples`,
+    "description": term.shortDef,
+    "author": {
+      "@type": "Person",
+      "name": author.name,
+      "url": `https://calculations.tools${author.pageUrl}`,
+      "image": `https://calculations.tools${author.image}`,
+      "jobTitle": author.jobTitle,
+      "sameAs": author.sameAs,
     },
   },
   ...(content?.faqs?.length ? [{
@@ -195,6 +214,16 @@ const schema = [
       </>
     )}
 
+    <div class="gl-author-box">
+      <img src={author.image} alt={author.name} class="gl-author-img" width="52" height="52" />
+      <div class="gl-author-info">
+        <div class="gl-author-label">Written by</div>
+        <a href={author.pageUrl} class="gl-author-name">{author.name}</a>
+        <div class="gl-author-title">{author.jobTitle}</div>
+        <p class="gl-author-bio">{author.tooltipBio}</p>
+      </div>
+    </div>
+
     <nav class="gl-prev-next">
       {prev
         ? <a href={`/glossary/${prev.slug}`} class="glossary-nav-prev">← {prev.term}</a>
@@ -279,6 +308,53 @@ const schema = [
   }
   .gl-what-is {
     margin-top: 2rem;
+  }
+  .gl-author-box {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-top: 2.5rem;
+    padding: 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+  .gl-author-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    flex-shrink: 0;
+  }
+  .gl-author-info { min-width: 0; }
+  .gl-author-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.2rem;
+  }
+  .gl-author-name {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 0.15rem;
+  }
+  .gl-author-name:hover { text-decoration: underline; }
+  .gl-author-title {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 0.5rem;
+  }
+  .gl-author-bio {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.55;
+    margin: 0;
   }
   .gl-prev-next {
     display: flex;
