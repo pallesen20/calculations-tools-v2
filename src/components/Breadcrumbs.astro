@@ -119,7 +119,7 @@ const schema = {
     "@type": "ListItem",
     "position": i + 1,
     "name": c.name,
-    "item": { "@type": "Thing", "@id": `https://calculations.tools${c.url ?? pathname}` }
+    "item": `https://calculations.tools${c.url ?? pathname}`
   }))
 };
 ---
