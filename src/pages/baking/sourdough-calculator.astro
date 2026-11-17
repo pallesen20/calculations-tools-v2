@@ -1,0 +1,718 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const f = {
+  ddt:   "$$T_{water} = (T_{target} \\times 3) - T_{flour} - T_{room} - T_{friction}$$",
+  pct:   "$$\\text{Baker's \\%} = \\frac{\\text{Ingredient weight}}{\\text{Flour weight}} \\times 100$$",
+};
+
+const sources: Source[] = [
+  {
+    author: 'King Arthur Baking',
+    title: 'Dough Temperature',
+    journal: 'King Arthur Baking Professional Reference',
+    year: 2024,
+    url: 'https://www.kingarthurbaking.com/pro/reference/dough-temperature',
+  },
+  {
+    author: 'Leo, Maurizio',
+    title: 'The ultimate guide to bread dough bulk fermentation',
+    journal: 'The Perfect Loaf',
+    year: 2023,
+    url: 'https://www.theperfectloaf.com/the-ultimate-guide-to-bread-dough-bulk-fermentation/',
+  },
+];
+
+const tocItems = [
+  { id: 'how-to-use',         label: 'How to use this calculator' },
+  { id: 'bakers-percentage',  label: "What is baker's percentage?" },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'hydration',          label: 'Sourdough hydration guide' },
+  { id: 'starter-percentage', label: 'Starter percentage and timing' },
+  { id: 'ddt',                label: 'Desired dough temperature (DDT)' },
+  { id: 'ddt-formula',       label: 'The water temperature formula' },
+  { id: 'mistakes',           label: 'Common mistakes' },
+  { id: 'faq',                label: 'FAQs' },
+  { id: 'quiz',               label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',      label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: "In baker's percentages, which ingredient is always set to 100%?",
+    options: ['Water', 'Total dough weight', 'Flour', 'Starter'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: "Baker's percentage uses flour as the base (100%). Every other ingredient is expressed as a percentage of the flour weight, making it easy to scale any recipe.",
+  },
+  {
+    q: 'Using 500 g of flour at 72% hydration, how much water do you need?',
+    options: ['500 g', '360 g', '720 g', '72 g'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: '500 g x 0.72 = 360 g. Hydration percentage multiplied directly by flour weight gives the water amount.',
+  },
+  {
+    q: "Your target DDT is 24 °C, flour temperature is 20 °C, room temperature is 22 °C, and you're hand mixing (4 °C friction). What water temperature do you need?",
+    options: ['30 °C', '26 °C', '34 °C', '22 °C'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Water temp = (24 x 3) - 20 - 22 - 4 = 72 - 46 = 26 °C. The friction factor accounts for the heat generated during mixing.',
+  },
+  {
+    q: 'What salt percentage is considered standard for sourdough bread?',
+    options: ['0.5-1%', '1.8-2.2%', '3-4%', '5%'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: "1.8-2.2% baker's percentage is the professional standard. Below 1.5% the dough is under-seasoned; above 2.5% the salt starts to inhibit fermentation.",
+  },
+  {
+    q: 'A higher starter percentage leads to which result?',
+    options: ['Slower fermentation', 'Faster fermentation', 'More salt needed', 'Lower hydration'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'More starter means more active yeast and bacteria in the dough, speeding up fermentation. At 20% starter, bulk fermentation takes roughly half the time it does at 10%.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Sourdough Calculator",
+    "url": "https://calculations.tools/baking/sourdough-calculator",
+    "description": "Calculate sourdough recipe quantities using baker's percentages. Includes metric/imperial toggle and desired dough temperature (DDT) water temperature calculator.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the sourdough calculator",
+    "description": "Scale a sourdough recipe using baker's percentages and find the correct water temperature for your target dough temperature.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Choose your unit system", "text": "Select Metric (grams, Celsius) or Imperial (ounces, Fahrenheit) at the top. All inputs and outputs update instantly." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter your flour weight", "text": "Type your flour weight in the Flour field, or switch to 'By total dough weight' if you want to target a specific loaf size." },
+      { "@type": "HowToStep", "position": 3, "name": "Set your percentages", "text": "Adjust the sliders or type directly into the Hydration, Starter, and Salt fields. The recipe card below updates automatically." },
+      { "@type": "HowToStep", "position": 4, "name": "Read your recipe", "text": "The recipe card shows the weight of each ingredient alongside its baker's percentage. The starter breakdown shows how much flour and water are inside your starter." },
+      { "@type": "HowToStep", "position": 5, "name": "Calculate water temperature", "text": "In the Water Temperature section, enter your target dough temperature, flour temperature, and room temperature. Select your mixing method and read the required water temperature." }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is baker's percentage in sourdough?", "acceptedAnswer": { "@type": "Answer", "text": "Baker's percentage expresses every ingredient as a fraction of the flour weight, with flour always set to 100%. Water at 72% means 72 g of water for every 100 g of flour. This system makes scaling any recipe straightforward - just change the flour weight and all other amounts scale proportionally." } },
+      { "@type": "Question", "name": "How much starter should I use for sourdough?", "acceptedAnswer": { "@type": "Answer", "text": "Most bakers use 10-20% starter by baker's percentage. At 15% with a room temperature around 21-22 C (70-72 F), bulk fermentation typically takes 8-10 hours. Using more starter (20-25%) speeds fermentation to 5-7 hours but reduces flavor complexity." } },
+      { "@type": "Question", "name": "What is desired dough temperature (DDT) in sourdough?", "acceptedAnswer": { "@type": "Answer", "text": "Desired dough temperature (DDT) is the target temperature of the dough after mixing. Most sourdough recipes are calibrated for 24-26 C (75-78 F). Hitting this temperature produces predictable fermentation times. The water temperature calculator finds exactly what temperature water you need to reach your target." } },
+      { "@type": "Question", "name": "How do I calculate water temperature for sourdough?", "acceptedAnswer": { "@type": "Answer", "text": "For hand mixing: Water temp = (Target DDT x 3) - Flour temp - Room temp - 4 C friction. For a stand mixer, use 13 C friction. Example: target 24 C, flour 20 C, room 22 C, hand mix: water = (72) - 20 - 22 - 4 = 26 C." } },
+      { "@type": "Question", "name": "What percentage hydration is best for sourdough?", "acceptedAnswer": { "@type": "Answer", "text": "72-75% hydration is a good starting point for most home bakers. It produces an open crumb while remaining manageable to shape. Hydration below 68% yields a denser, easier-to-handle loaf. Above 78% requires confident shaping skills and usually a bench scraper." } }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Sourdough Calculator"
+  metaTitle="Sourdough Calculator | Starter, Baker's % & Water Temperature"
+  description="Free sourdough calculator for baker's percentages and desired dough temperature. Metric and imperial. Scale by flour or target total dough weight."
+  canonical="https://calculations.tools/baking/sourdough-calculator"
+  tocItems={tocItems}
+  embedSlug="sourdough-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="Baker's % = Ingredient / Flour x 100; Water temp = (DDT x 3) - Flour temp - Room temp - Friction"
+  ogExample="500g flour, 72% hydration: 360g water, 75g starter (15%), 9g salt (1.8%). DDT 24C, flour 20C, room 22C, hand mix: water = 26C"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container sd-container">
+        <div class="sd-toolbar">
+          <div class="sd-toggle-group">
+            <button class="sd-unit-btn active" data-unit="metric">Metric (g, °C)</button>
+            <button class="sd-unit-btn" data-unit="imperial">Imperial (oz, °F)</button>
+          </div>
+        </div>
+        <div class="sd-section">
+          <div class="sd-section-title">Dough recipe</div>
+          <div class="sd-toggle-group sd-mode-toggle">
+            <button class="sd-mode-btn active" data-mode="flour">By flour weight</button>
+            <button class="sd-mode-btn" data-mode="total">By total dough weight</button>
+          </div>
+          <div id="sd-flour-row" class="bmi-field">
+            <label class="bmi-label" for="sd-flour">Flour</label>
+            <div class="bmi-input-wrap">
+              <input id="sd-flour" class="bmi-input" type="text" inputmode="decimal" value="500" />
+              <span class="bmi-unit-tag sd-wunit">g</span>
+            </div>
+          </div>
+          <div id="sd-total-row" class="bmi-field hidden">
+            <label class="bmi-label" for="sd-total">Total dough weight</label>
+            <div class="bmi-input-wrap">
+              <input id="sd-total" class="bmi-input" type="text" inputmode="decimal" value="944" />
+              <span class="bmi-unit-tag sd-wunit">g</span>
+            </div>
+          </div>
+          <div class="sd-slider-field" style="margin-top: 0.6rem;">
+            <div class="sd-slider-row">
+              <label class="sd-slider-label" for="sd-hydration">Hydration</label>
+              <input id="sd-hydration-slider" class="sd-slider" type="range" min="50" max="100" value="72" step="1" />
+              <input id="sd-hydration" class="sd-pct-input" type="text" inputmode="decimal" value="72" />
+              <span class="sd-pct-sym">%</span>
+            </div>
+          </div>
+          <div class="sd-slider-field">
+            <div class="sd-slider-row">
+              <label class="sd-slider-label" for="sd-starter-pct">Starter</label>
+              <input id="sd-starter-slider" class="sd-slider" type="range" min="5" max="30" value="15" step="1" />
+              <input id="sd-starter-pct" class="sd-pct-input" type="text" inputmode="decimal" value="15" />
+              <span class="sd-pct-sym">%</span>
+            </div>
+          </div>
+          <div class="sd-slider-field">
+            <div class="sd-slider-row">
+              <label class="sd-slider-label" for="sd-salt-pct">Salt</label>
+              <input id="sd-salt-slider" class="sd-slider" type="range" min="0.5" max="3" value="1.8" step="0.1" />
+              <input id="sd-salt-pct" class="sd-pct-input" type="text" inputmode="decimal" value="1.8" />
+              <span class="sd-pct-sym">%</span>
+            </div>
+          </div>
+          <div class="sd-recipe">
+            <div class="sd-recipe-header">
+              <span>Ingredient</span>
+              <span>Baker's %</span>
+              <span>Amount</span>
+            </div>
+            <div class="sd-recipe-row">
+              <span>Flour</span>
+              <span class="sd-recipe-pct">100%</span>
+              <span id="sd-out-flour" class="sd-recipe-val">500&nbsp;g</span>
+            </div>
+            <div class="sd-recipe-row">
+              <span>Water</span>
+              <span class="sd-recipe-pct" id="sd-hydration-display">72%</span>
+              <span id="sd-out-water" class="sd-recipe-val">-</span>
+            </div>
+            <div class="sd-recipe-row">
+              <span>Starter</span>
+              <span class="sd-recipe-pct" id="sd-starter-display">15%</span>
+              <span id="sd-out-starter" class="sd-recipe-val">-</span>
+            </div>
+            <div class="sd-recipe-row sd-starter-note-row">
+              <span class="sd-starter-note" id="sd-starter-breakdown">- flour + - water</span>
+            </div>
+            <div class="sd-recipe-row">
+              <span>Salt</span>
+              <span class="sd-recipe-pct" id="sd-salt-display">1.8%</span>
+              <span id="sd-out-salt" class="sd-recipe-val">-</span>
+            </div>
+            <div class="sd-recipe-row sd-recipe-total">
+              <span>Total</span>
+              <span class="sd-recipe-pct"></span>
+              <span id="sd-out-total" class="sd-recipe-val">-</span>
+            </div>
+          </div>
+        </div>
+        <div class="sd-section">
+          <div class="sd-section-title">Water temperature (DDT)</div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="sd-ddt">Target dough temp</label>
+            <div class="bmi-input-wrap">
+              <input id="sd-ddt" class="bmi-input" type="text" inputmode="decimal" value="24" />
+              <span class="bmi-unit-tag sd-tunit">°C</span>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="sd-flour-temp">Flour temperature</label>
+            <div class="bmi-input-wrap">
+              <input id="sd-flour-temp" class="bmi-input" type="text" inputmode="decimal" value="20" />
+              <span class="bmi-unit-tag sd-tunit">°C</span>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label" for="sd-room-temp">Room temperature</label>
+            <div class="bmi-input-wrap">
+              <input id="sd-room-temp" class="bmi-input" type="text" inputmode="decimal" value="21" />
+              <span class="bmi-unit-tag sd-tunit">°C</span>
+            </div>
+          </div>
+          <div class="bmi-field">
+            <label class="bmi-label">Mixing method</label>
+            <div class="sd-toggle-group">
+              <button class="sd-mix-btn active" data-mix="hand">Hand (4&thinsp;°C)</button>
+              <button class="sd-mix-btn" data-mix="stand">Stand mixer (13&thinsp;°C)</button>
+            </div>
+          </div>
+          <div class="sd-ddt-result">
+            <div class="sd-ddt-result-label">Water temperature needed</div>
+            <div class="sd-ddt-value-row">
+              <span id="sd-water-temp-result" class="sd-ddt-value">-</span>
+              <span id="sd-water-temp-unit" class="sd-ddt-unit">°C</span>
+            </div>
+          </div>
+        </div>
+        <div class="sd-section">
+          <div class="sd-section-title">Fermentation timeline</div>
+          <div class="sd-tl-context" id="sd-tl-context">Estimated for 15% starter at 24 °C</div>
+          <div class="sd-timeline">
+            <div class="sd-tl-row">
+              <div class="sd-tl-spine">
+                <div class="sd-tl-dot sd-tl-dot--blue">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </div>
+                <div class="sd-tl-line"></div>
+              </div>
+              <div class="sd-tl-info">
+                <div class="sd-tl-name">Mix &amp; autolyse</div>
+                <div class="sd-tl-sub">Combine flour and water, rest 30–60 min to hydrate the gluten. Fold in starter and salt once the dough has relaxed.</div>
+              </div>
+              <div class="sd-tl-badge">30 min</div>
+            </div>
+            <div class="sd-tl-row">
+              <div class="sd-tl-spine">
+                <div class="sd-tl-dot sd-tl-dot--green">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+                </div>
+                <div class="sd-tl-line"></div>
+              </div>
+              <div class="sd-tl-info">
+                <div class="sd-tl-name">Stretch &amp; folds</div>
+                <div class="sd-tl-sub">3–4 sets of stretch and folds or coil folds at 30-min intervals over the first 2 hrs of bulk.</div>
+              </div>
+              <div class="sd-tl-badge">First 2 hrs</div>
+            </div>
+            <div class="sd-tl-row">
+              <div class="sd-tl-spine">
+                <div class="sd-tl-dot sd-tl-dot--orange">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="sd-tl-line"></div>
+              </div>
+              <div class="sd-tl-info">
+                <div class="sd-tl-name">Bulk Fermentation</div>
+                <div class="sd-tl-sub">Watch for a 50–75% volume rise and a domed, jiggly surface - visual cues beat the clock here.</div>
+              </div>
+              <div class="sd-tl-badge sd-tl-badge--live" id="sd-bulk-time">6-7 hrs</div>
+            </div>
+            <div class="sd-tl-row">
+              <div class="sd-tl-spine">
+                <div class="sd-tl-dot sd-tl-dot--purple">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+                </div>
+                <div class="sd-tl-line"></div>
+              </div>
+              <div class="sd-tl-info">
+                <div class="sd-tl-name">Pre-shape &amp; shape</div>
+                <div class="sd-tl-sub">Pre-shape, bench rest 20–30 min until the dough relaxes, then do your final shape into a banneton or tin.</div>
+              </div>
+              <div class="sd-tl-badge">20-30 min</div>
+            </div>
+            <div class="sd-tl-row">
+              <div class="sd-tl-spine">
+                <div class="sd-tl-dot sd-tl-dot--cyan">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </div>
+                <div class="sd-tl-line"></div>
+              </div>
+              <div class="sd-tl-info">
+                <div class="sd-tl-name">Final proof</div>
+                <div class="sd-tl-sub">Cold-retard in the fridge 8–16 hrs for deeper flavour, or proof at room temp for 1–2 hrs if baking same day.</div>
+              </div>
+              <div class="sd-tl-badge sd-tl-badge--wide">1-16 hrs</div>
+            </div>
+            <div class="sd-tl-row sd-tl-row--last">
+              <div class="sd-tl-spine">
+                <div class="sd-tl-dot sd-tl-dot--red">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 2.5s-.5 3 1 5.5C6 9.5 4 11.5 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8c0-3-1.5-5.5-4-7.5-1 3-2.5 4.5-4.5 5-1.5-2.5-1.5-5.5-3-9z"/></svg>
+                </div>
+              </div>
+              <div class="sd-tl-info">
+                <div class="sd-tl-name">Bake</div>
+                <div class="sd-tl-sub" id="sd-bake-desc">Score the dough, then bake in a preheated Dutch oven - 20–25 min covered at 250 °C (480 °F), then 20–25 min lid off at 230 °C (445 °F) for crust colour.</div>
+              </div>
+              <div class="sd-tl-badge">45-50 min</div>
+            </div>
+          </div>
+          <p class="sd-tl-disclaimer">Bulk times are estimates based on starter percentage and dough temperature. Active starter, flour type, and altitude affect actual timing.</p>
+          <div class="sd-bake-guide">
+            <div class="sd-bake-guide-title">Quick bake guide</div>
+            <ol class="sd-bake-steps">
+              <li>Preheat oven + Dutch oven to 250 °C (480 °F) for at least 45–60 min before baking.</li>
+              <li>Score the cold dough - one confident slash at a 45° angle, about 1 cm (0.4 in) deep.</li>
+              <li>Bake covered 20–25 min. Steam trapped under the lid drives oven spring.</li>
+              <li>Remove lid, drop to 230 °C (445 °F), bake another 20–25 min until deep golden brown.</li>
+              <li>Cool on a wire rack for at least 1 hr before slicing - the crumb finishes setting as it cools.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="/js/sourdough-calculator.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This sourdough calculator scales any recipe using baker's percentages. Enter your flour weight (or target dough weight), set hydration, starter, and salt percentages, and read the ingredient amounts instantly. The water temperature section finds exactly what temperature water you need to hit your target dough temperature.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Baker's percentage sets flour to 100% and expresses all other ingredients as a fraction of flour weight - so recipes scale perfectly just by changing the flour amount.</li>
+          <li>Standard salt for sourdough is 1.8-2.2% baker's percentage. Below 1.5% the dough lacks structure; above 2.5% the salt starts to inhibit fermentation.</li>
+          <li>Desired dough temperature (DDT) for most sourdough recipes is 24-26 °C (75-78 °F). Water temp = (DDT x 3) - flour temp - room temp - friction factor.</li>
+          <li>Hydration below 70% gives a tighter crumb and easier shaping. Above 75% produces a more open crumb but requires confident handling technique.</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use this sourdough calculator</h2>
+      <p>Start by selecting Metric or Imperial at the top - this switches all weights (grams vs ounces) and temperatures (°C vs °F) simultaneously. The calculator uses the same unit system for both the dough recipe and the water temperature sections.</p>
+      <p>For the dough recipe, type your flour weight or switch to "By total dough weight" if you're targeting a specific loaf size. Adjust the three sliders - hydration controls water, starter sets levain amount, and salt stays in the 1.8-2.2% range for most loaves. The recipe card updates as you type.</p>
+      <p>The starter row shows a breakdown of how much flour and water are inside your starter, assuming 100% hydration (equal parts flour and water by weight). This matters if you want to track total flour and total water across the whole recipe.</p>
+      <p>For water temperature, enter your target dough temperature, flour temperature, and room temperature. Select Hand or Stand mixer - stand mixers generate significantly more heat friction, so they need cooler water.</p>
+      <p>The fermentation timeline below the DDT section estimates your bulk fermentation window based on your starter percentage and dough temperature. The orange time badge updates live as you adjust either value - the sub-label shows exactly which inputs the estimate is using.</p>
+      <h2 id="bakers-percentage">What is baker's percentage?</h2>
+      <p><a href="/glossary/percentage">Baker's percentage</a> is the standard notation professional bakers use to express recipe <a href="/glossary/ratio">ratios</a>. Flour is always defined as 100%, and every other ingredient is expressed as a percentage of that flour weight.</p>
+      <p>The King Arthur Baking Company describes it as "the universal language of bread baking" because it allows any recipe to be scaled without recalculating each ingredient individually.</p>
+      <p>In a recipe with 500 g flour at 72% hydration, water is 500 x 0.72 = 360 g. If you scale up to 1,000 g flour, water automatically becomes 720 g. The percentage stays the same; only the reference weight changes.</p>
+      <p>Baker's percentage also makes it easy to compare recipes. Two sourdoughs with 68% and 78% hydration will bake quite differently - one will be easy to shape and produce a denser crumb, the other will be sticky and produce large, irregular holes.</p>
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Think of your flour as a "$100 budget." Every other ingredient is a percentage of that budget. If water is 72%, you spend $72 on water. If starter is 15%, you spend $15 on starter. If you decide to double your batch (flour = $200), all the other amounts double automatically - $144 on water, $30 on starter - because the percentages stay fixed.</p>
+      <p>That's exactly how baker's percentages work. The flour weight is your anchor. Change it and everything scales. The percentages are just the recipe's DNA.</p>
+      <h2 id="hydration">Sourdough hydration guide</h2>
+      <p>Hydration is the single biggest variable in sourdough baking. It affects crumb structure, crust thickness, shaping difficulty, and fermentation speed.</p>
+      <p>Most recipes fall between 68% and 82% hydration, with 72-75% being the most common range for a standard country loaf.</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Hydration</th><th>Bread style</th><th>Crumb</th><th>Shaping difficulty</th></tr></thead>
+          <tbody>
+            <tr><td>60-65%</td><td>Traditional European rye blends</td><td>Dense, tight</td><td>Easy</td></tr>
+            <tr><td>68-72%</td><td>Standard country loaf</td><td>Moderate, even</td><td>Manageable</td></tr>
+            <tr><td>73-78%</td><td>Open-crumb sourdough</td><td>Irregular, open</td><td>Requires practice</td></tr>
+            <tr><td>79-85%</td><td>Ciabatta, focaccia-style</td><td>Very open, large holes</td><td>Needs bench scraper</td></tr>
+            <tr><td>86%+</td><td>Tartine-style levain</td><td>Extremely open</td><td>Advanced technique</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <blockquote class="blockquote-observation">
+      <p>When I first tried 80% hydration, the dough felt more like a batter than a bread dough. The key was using the full fermentation time and aggressive stretch-and-fold sets during bulk - the gluten development at that stage is what gives the dough enough structure to hold its shape in the oven, not the stiffness of the mix.</p>
+    </blockquote>
+      <h2 id="starter-percentage">Starter percentage and fermentation timing</h2>
+      <p>The sourdough starter percentage controls how fast your dough ferments. More starter means more active yeast and bacteria working on the same amount of sugar, which shortens bulk fermentation. Less starter slows fermentation, giving more time for flavor-developing organic acids to build up.</p>
+      <div class="responsive-table">
+        <table>
+          <thead><tr><th>Starter %</th><th>Bulk fermentation at 24 °C (75 °F)</th><th>Flavor profile</th></tr></thead>
+          <tbody>
+            <tr><td>5-10%</td><td>12-16 hours</td><td>Complex, more sour</td></tr>
+            <tr><td>12-18%</td><td>8-10 hours</td><td>Balanced</td></tr>
+            <tr><td>20-25%</td><td>5-7 hours</td><td>Milder, less acidic</td></tr>
+            <tr><td>25-30%</td><td>3-5 hours</td><td>Mild, good for fast schedule</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>These times are approximate - they shift significantly with temperature. A dough fermenting at 20 °C (68 °F) will take roughly 1.5-2x longer than the same dough at 24 °C.</p>
+      <p>The fermentation timeline in the calculator combines both variables and gives you a live estimate as you adjust your starter percentage or DDT.</p>
+      <h2 id="ddt">Desired dough temperature (DDT)</h2>
+      <p>Desired dough temperature (DDT) is the target temperature of the finished dough after mixing. Most sourdough recipes are written assuming a dough temperature of 24-26 °C (75-78 °F).</p>
+      <p>When your dough lands outside this range, your bulk fermentation window shifts - warmer doughs ferment faster, cooler ones slower. The fermentation timeline reads directly from your DDT input and updates its bulk estimate when you change it.</p>
+      <h3 id="ddt-formula">The water temperature formula</h3>
+      <p>To find your water temperature, multiply your target DDT by 3 (one factor for each ingredient: flour, room, water), then subtract flour temperature, room temperature, and the friction factor for your mixing method.</p>
+      <Formula expr={f.ddt} />
+      <p>The friction factor accounts for heat generated during mixing: hand mixing adds about 4 °C (7 °F), a stand mixer adds about 13 °C (23 °F), per King Arthur Baking's professional formulas. This is why stand mixers almost always need cooler water than hand mixing for the same target DDT.</p>
+      <h3>DDT formula example</h3>
+      <p>Target DDT 24 °C, flour temperature 20 °C, room 22 °C, hand mixing. Water temp = (24 x 3) - 20 - 22 - 4 = 26 °C. With a stand mixer: (24 x 3) - 20 - 22 - 13 = 17 °C.</p>
+      <p>If the calculator shows a water temperature below 5 °C (41 °F) or above 42 °C (108 °F), the conditions are outside practical range. Very cold flour or a hot kitchen may require adjusting fermentation time expectations rather than using extreme water temperatures.</p>
+      <h2 id="mistakes">Common mistakes when making sourdough</h2>
+      <h3>Scaling without using baker's percentages</h3>
+      <p>Doubling a recipe by eye often leads to uneven scaling - especially for salt and starter. Using baker's percentages removes the guesswork entirely. Change only the flour weight and let the calculator multiply everything else.</p>
+      <h3>Ignoring starter hydration in total flour calculations</h3>
+      <p>Your starter contains its own flour and water. If your starter is 100% hydration, 150 g of starter contains 75 g of flour and 75 g of water. This affects your total flour weight (and therefore your true hydration) if you're trying to be precise. The calculator shows the starter breakdown to help you track this.</p>
+      <h3>Not accounting for room temperature in DDT</h3>
+      <p>Room temperature is the most variable factor in home baking. A kitchen at 18 °C in winter and 26 °C in summer needs very different water temperatures to hit the same DDT. Many bakers check DDT rarely and then wonder why their fermentation times are inconsistent between seasons.</p>
+      <h3>Setting salt too low to avoid taste, then over-fermenting</h3>
+      <p>Salt does more than flavor the bread - it tightens gluten structure and slows fermentation slightly. Dropping below 1.5% speeds up fermentation unpredictably and produces a flatter, weaker structure. Stay in the 1.8-2.2% range unless you have a specific reason to deviate.</p>
+      <h2 id="faq">FAQs about making sourdough</h2>
+      <h3>What is baker's percentage in sourdough?</h3>
+      <p>Baker's percentage expresses every ingredient as a fraction of the flour weight, with flour always at 100%. Water at 72% means 72 g per 100 g flour. It makes scaling any recipe direct - change the flour weight and all other amounts scale proportionally.</p>
+      <h3>How much starter should I use for sourdough?</h3>
+      <p>Most bakers use 10-20% starter. At 15% and a room temperature around 22 °C (72 °F), bulk fermentation takes 8-10 hours. At 20% it shortens to 5-7 hours. Reducing to 10% slows it to 12-16 hours and builds more acidity and flavor complexity over the longer ferment.</p>
+      <h3>What is desired dough temperature (DDT)?</h3>
+      <p>DDT is the target temperature of your dough immediately after mixing. Most sourdough recipes are calibrated for 24-26 °C (75-78 °F). Hitting this range makes bulk fermentation times predictable. The water temperature calculator on this page finds exactly what water temperature you need to reach your target.</p>
+      <h3>How do I calculate water temperature for sourdough?</h3>
+      <p>For hand mixing: water temp = (target DDT x 3) - flour temp - room temp - 4 °C. For a stand mixer, replace 4 °C with 13 °C. Example: target 24 °C, flour 20 °C, room 22 °C, hand mix - water = 72 - 20 - 22 - 4 = 26 °C.</p>
+      <h3>What percentage hydration is best for sourdough?</h3>
+      <p>72-75% is a reliable starting point for most home bakers. It produces a moderately open crumb and handles reasonably well through shaping. Below 68% the crumb will be denser and the dough easier to work. Above 78% requires confident shaping and good gluten development to hold structure in the oven.</p>
+      <QuizBlock
+        topic="sourdough baking"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/baking/sourdough-calculator"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/conversion/weight-converter">Weight Converter</a>
+            <p>Convert between grams, ounces, pounds, and kilograms - useful when working from recipes in different unit systems.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌡️</span>
+          <div>
+            <a href="/conversion/temperature-converter">Temperature Converter</a>
+            <p>Convert between Celsius and Fahrenheit for oven temperatures, DDT targets, and refrigerator proofing ranges.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">%</span>
+          <div>
+            <a href="/math/percentage-calculator">Percentage Calculator</a>
+            <p>Calculate percentages in both directions - useful when working backwards from a recipe to find the baker's percentage of an unlabeled ingredient.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⏱️</span>
+          <div>
+            <a href="/conversion/hours-to-days-calculator">Hours to Days Calculator</a>
+            <p>Convert bulk fermentation and cold proof times between hours and days when planning a baking schedule.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .sd-container { max-width: 100% !important; }
+  .sd-toolbar { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+  .sd-toggle-group { display: flex; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); width: fit-content; }
+  .sd-unit-btn, .sd-mode-btn, .sd-mix-btn {
+    padding: 0.4rem 0.9rem;
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.65);
+    font-size: 0.8rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .sd-unit-btn.active, .sd-mode-btn.active, .sd-mix-btn.active {
+    background: rgba(255,255,255,0.18);
+    color: white;
+    font-weight: 600;
+  }
+  .sd-unit-btn:hover, .sd-mode-btn:hover, .sd-mix-btn:hover { background: rgba(255,255,255,0.12); }
+  .sd-section {
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .sd-section-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 0.75rem;
+  }
+  .sd-mode-toggle { margin-bottom: 0.9rem; width: fit-content; }
+  .sd-slider-field { margin-bottom: 0.6rem; }
+  .sd-slider-row {
+    display: grid;
+    grid-template-columns: 5rem 1fr 3.2rem auto;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .sd-slider-label { font-size: 0.85rem; color: rgba(255,255,255,0.75); white-space: nowrap; }
+  .sd-slider { width: 100%; accent-color: #60a5fa; cursor: pointer; }
+  .sd-pct-input {
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    text-align: right;
+  }
+  .sd-pct-sym { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
+  .sd-recipe {
+    margin-top: 0.9rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 0.75rem;
+  }
+  .sd-recipe-header {
+    display: grid;
+    grid-template-columns: 1fr 4.5rem 5.5rem;
+    gap: 0.5rem;
+    padding: 0.2rem 0 0.4rem;
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .sd-recipe-header span:nth-child(2),
+  .sd-recipe-header span:nth-child(3) { text-align: right; }
+  .sd-recipe-row {
+    display: grid;
+    grid-template-columns: 1fr 4.5rem 5.5rem;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.8);
+    align-items: baseline;
+    min-width: 0;
+  }
+  .sd-recipe-pct { text-align: right; color: rgba(255,255,255,0.45); font-size: 0.8rem; }
+  .sd-recipe-val { text-align: right; font-weight: 600; color: #93c5fd; font-variant-numeric: tabular-nums; }
+  .sd-starter-note-row {
+    display: block !important;
+    padding: 0.2rem 0 0.4rem !important;
+    border-bottom: none !important;
+  }
+  .sd-starter-note {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.35);
+    padding-left: 0;
+    font-style: italic;
+  }
+  .sd-recipe-total {
+    border-bottom: none !important;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: 0.25rem;
+    font-weight: 600;
+    color: white;
+  }
+  .sd-recipe-total .sd-recipe-val { color: white; }
+  .sd-ddt-result {
+    background: linear-gradient(135deg, #1e40af 0%, #5b21b6 100%);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 0.9rem;
+  }
+  .sd-ddt-result-label { font-size: 0.75rem; color: rgba(255,255,255,0.65); margin-bottom: 0.4rem; }
+  .sd-ddt-value-row { display: flex; align-items: baseline; justify-content: center; gap: 0.25rem; }
+  .sd-ddt-value { font-size: 2rem; font-weight: 700; color: #93c5fd; }
+  .sd-ddt-unit { font-size: 1rem; color: rgba(255,255,255,0.65); }
+  @media (max-width: 540px) {
+    .sd-toolbar { justify-content: flex-start; }
+    .sd-recipe-header { grid-template-columns: 1fr 4rem 4.5rem; }
+    .sd-recipe-row { grid-template-columns: 1fr 4rem 4.5rem; }
+  }
+  .sd-tl-context {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  .sd-timeline { display: flex; flex-direction: column; }
+  .sd-tl-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+    min-width: 0;
+  }
+  .sd-tl-spine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .sd-tl-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .sd-tl-dot--blue   { background: rgba(96,165,250,0.18); color: #60a5fa; }
+  .sd-tl-dot--green  { background: rgba(74,222,128,0.18); color: #4ade80; }
+  .sd-tl-dot--orange { background: rgba(251,146,60,0.22); color: #fb923c; }
+  .sd-tl-dot--purple { background: rgba(167,139,250,0.18); color: #a78bfa; }
+  .sd-tl-dot--cyan   { background: rgba(34,211,238,0.18); color: #22d3ee; }
+  .sd-tl-dot--red    { background: rgba(248,113,113,0.18); color: #f87171; }
+  .sd-tl-line {
+    width: 2px;
+    flex: 1;
+    min-height: 12px;
+    background: rgba(255,255,255,0.08);
+    margin: 4px 0;
+  }
+  .sd-tl-row--last .sd-tl-spine { justify-content: flex-start; }
+  .sd-tl-info { min-width: 0; padding: 0.5rem 0 0.65rem; }
+  .sd-tl-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .sd-tl-sub {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+  .sd-tl-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: rgba(255,255,255,0.55);
+    background: rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 0.2rem 0.6rem;
+    margin-top: 0.55rem;
+    align-self: start;
+  }
+  .sd-tl-badge--live {
+    color: #fb923c;
+    background: rgba(251,146,60,0.12);
+    border: 1px solid rgba(251,146,60,0.25);
+    font-size: 0.8rem;
+  }
+  .sd-tl-badge--wide { white-space: normal; text-align: right; max-width: 90px; }
+  .sd-bake-guide {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .sd-bake-guide-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.6rem;
+  }
+  .sd-bake-steps {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .sd-bake-steps li {
+    font-size: 0.8rem;
+    color: white;
+    line-height: 1.5;
+    padding-left: 0.25rem;
+  }
+  .sd-tl-disclaimer {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    font-style: italic;
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    line-height: 1.5;
+  }
+  @media (max-width: 400px) {
+    .sd-tl-badge--wide { max-width: 70px; font-size: 0.65rem; }
+  }
+</style>

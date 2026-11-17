@@ -1,0 +1,123 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import { getBakingTools } from '../../utils/getPages';
+
+const tools = getBakingTools();
+
+const groupMap = tools.reduce((acc, t) => {
+  (acc[t.group] ??= []).push(t);
+  return acc;
+}, {} as Record<string, typeof tools>);
+
+const groups = Object.entries(groupMap);
+const totalTools = tools.length;
+
+const tocItems = [
+  { id: 'tools', label: 'All baking tools' },
+  { id: 'bakers-math', label: "What is baker's math?" },
+  { id: 'faq', label: 'FAQs' },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Baking Calculators",
+    "url": "https://calculations.tools/baking",
+    "description": "Free baking calculators for sourdough recipes, baker's percentages, and desired dough temperature. Metric and imperial support.",
+    "hasPart": tools.map(t => ({
+      "@type": "WebApplication",
+      "name": t.title,
+      "url": `https://calculations.tools${t.path}`,
+    })),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Are these baking calculators free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, completely free. No registration, no usage limits. All tools run entirely in your browser - no data is sent to any server." } },
+      { "@type": "Question", "name": "Do the calculators support metric and imperial?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The sourdough calculator has a single toggle that switches all weights between grams and ounces, and all temperatures between Celsius and Fahrenheit simultaneously." } },
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Baking Calculators"
+  metaTitle="Baking Calculators | Baker's Math & Sourdough"
+  description="Free baking calculators: sourdough with baker's percentages, desired dough temperature, and metric/imperial support. More tools coming."
+  canonical="https://calculations.tools/baking"
+  tocItems={tocItems}
+  schema={schema}
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container hi-container">
+        <div class="calculator-header">
+          <h2>Baking Calculator Hub</h2>
+          <p>Baker's math, sourdough, and recipe scaling - free and instant</p>
+        </div>
+        <div class="hi-stats">
+          <div class="hi-stat">
+            <div class="hi-stat-val">{totalTools}</div>
+            <div class="hi-stat-lbl">Tool{totalTools !== 1 ? 's' : ''}</div>
+          </div>
+          <div class="hi-stat hi-stat-wide">
+            <div class="hi-stat-val hi-stat-free">Free</div>
+            <div class="hi-stat-lbl">No login · runs in browser</div>
+          </div>
+        </div>
+        {groups.map(([groupName, groupTools]) => (
+          <div class="hi-group">
+            <div class="hi-group-header">
+              <span class="hi-group-label">{groupName}</span>
+            </div>
+            <div class="hi-grid">
+              {groupTools.map(tool => (
+                <a href={tool.path} class="hi-card">
+                  <div class="hi-icon">{tool.icon}</div>
+                  <div class="hi-body">
+                    <div class="hi-title">{tool.title}</div>
+                    {tool.short && <div class="hi-short">{tool.short}</div>}
+                  </div>
+                  <div class="hi-arrow">→</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">What's in the baking section</div>
+        <p>This section contains free baking calculators focused on baker's math and recipe precision. The sourdough calculator covers baker's percentages, metric and imperial units, and desired dough temperature (DDT) for water temperature calculation.</p>
+        <p>More baking tools are planned - hydration adjusters, preferment calculators, and oven timing guides.</p>
+      </div>
+
+      <h2 id="tools">All baking tools</h2>
+      <p>Every tool runs in your browser with no login required. Results update as you type.</p>
+
+      <h2 id="bakers-math">What is baker's math?</h2>
+      <p>Baker's math (or baker's percentages) is the standard notation professional bakers use to write recipes. Every ingredient is expressed as a percentage of the flour weight, with flour always set to 100%. A recipe with 70% hydration contains 70 g of water for every 100 g of flour.</p>
+      <p>The main advantage is effortless scaling. Double the flour weight and every other ingredient doubles automatically - no recalculation needed. It also makes recipes directly comparable: two loaves with 68% and 78% hydration will bake quite differently, and the percentage immediately communicates that difference to any baker.</p>
+      <p>The <a href="/baking/sourdough-calculator">Sourdough Calculator</a> handles all baker's percentage math automatically. Enter a flour weight, set your hydration, starter, and salt percentages, and it outputs the weight of each ingredient plus a starter breakdown showing how much flour and water are inside the levain.</p>
+
+      <h2 id="faq">FAQs</h2>
+      <h3>Are these baking calculators free?</h3>
+      <p>Yes, completely free. No registration, no usage limits, no premium tier. All tools run entirely in your browser - no data is transmitted to any server.</p>
+      <h3>Do the calculators support metric and imperial?</h3>
+      <p>Yes. The sourdough calculator has a single toggle at the top that switches all weights between grams and ounces, and all temperatures between Celsius and Fahrenheit simultaneously.</p>
+      <h3>What tools are planned for the baking section?</h3>
+      <p>Planned additions include a preferment calculator (poolish, biga, levain ratios), a baking time and temperature converter, and a hydration adjustment tool for different flour types. The sourdough calculator is the first and most complete tool in the section.</p>
+
+    </div>
+  </div>
+
+</CalculatorLayout>
+<style>
+  .hi-container { max-width: 100% !important; }
+</style>

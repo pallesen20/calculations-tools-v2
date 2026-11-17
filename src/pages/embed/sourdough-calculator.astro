@@ -1,0 +1,269 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+<EmbedLayout title="Sourdough Calculator - calculations.tools">
+
+  <div class="sd-wrap">
+
+    <div class="sd-toolbar">
+      <div class="sd-toggle-group">
+        <button class="sd-unit-btn active" data-unit="metric">Metric (g, °C)</button>
+        <button class="sd-unit-btn" data-unit="imperial">Imperial (oz, °F)</button>
+      </div>
+    </div>
+
+    <div class="sd-section">
+      <div class="sd-section-title">Dough recipe</div>
+
+      <div class="sd-toggle-group sd-mode-toggle">
+        <button class="sd-mode-btn active" data-mode="flour">By flour weight</button>
+        <button class="sd-mode-btn" data-mode="total">By total dough weight</button>
+      </div>
+
+      <div id="sd-flour-row" class="sd-field">
+        <label class="sd-label" for="sd-flour">Flour</label>
+        <div class="sd-input-wrap">
+          <input id="sd-flour" class="sd-input" type="text" inputmode="decimal" value="500" />
+          <span class="sd-unit sd-wunit">g</span>
+        </div>
+      </div>
+
+      <div id="sd-total-row" class="sd-field hidden">
+        <label class="sd-label" for="sd-total">Total dough weight</label>
+        <div class="sd-input-wrap">
+          <input id="sd-total" class="sd-input" type="text" inputmode="decimal" value="944" />
+          <span class="sd-unit sd-wunit">g</span>
+        </div>
+      </div>
+
+      <div class="sd-slider-field" style="margin-top: 0.5rem;">
+        <div class="sd-slider-row">
+          <label class="sd-slider-label" for="sd-hydration">Hydration</label>
+          <input id="sd-hydration-slider" class="sd-slider" type="range" min="50" max="100" value="72" step="1" />
+          <input id="sd-hydration" class="sd-pct-input" type="text" inputmode="decimal" value="72" />
+          <span class="sd-pct-sym">%</span>
+        </div>
+      </div>
+
+      <div class="sd-slider-field">
+        <div class="sd-slider-row">
+          <label class="sd-slider-label" for="sd-starter-pct">Starter</label>
+          <input id="sd-starter-slider" class="sd-slider" type="range" min="5" max="30" value="15" step="1" />
+          <input id="sd-starter-pct" class="sd-pct-input" type="text" inputmode="decimal" value="15" />
+          <span class="sd-pct-sym">%</span>
+        </div>
+      </div>
+
+      <div class="sd-slider-field">
+        <div class="sd-slider-row">
+          <label class="sd-slider-label" for="sd-salt-pct">Salt</label>
+          <input id="sd-salt-slider" class="sd-slider" type="range" min="0.5" max="3" value="1.8" step="0.1" />
+          <input id="sd-salt-pct" class="sd-pct-input" type="text" inputmode="decimal" value="1.8" />
+          <span class="sd-pct-sym">%</span>
+        </div>
+      </div>
+
+      <div class="sd-recipe">
+        <div class="sd-recipe-header">
+          <span>Ingredient</span>
+          <span>Baker's %</span>
+          <span>Amount</span>
+        </div>
+        <div class="sd-recipe-row">
+          <span>Flour</span>
+          <span class="sd-recipe-pct">100%</span>
+          <span id="sd-out-flour" class="sd-recipe-val">500&nbsp;g</span>
+        </div>
+        <div class="sd-recipe-row">
+          <span>Water</span>
+          <span class="sd-recipe-pct" id="sd-hydration-display">72%</span>
+          <span id="sd-out-water" class="sd-recipe-val">-</span>
+        </div>
+        <div class="sd-recipe-row">
+          <span>Starter</span>
+          <span class="sd-recipe-pct" id="sd-starter-display">15%</span>
+          <span id="sd-out-starter" class="sd-recipe-val">-</span>
+        </div>
+        <div class="sd-starter-note-row">
+          <span class="sd-starter-note" id="sd-starter-breakdown">- flour + - water</span>
+        </div>
+        <div class="sd-recipe-row">
+          <span>Salt</span>
+          <span class="sd-recipe-pct" id="sd-salt-display">1.8%</span>
+          <span id="sd-out-salt" class="sd-recipe-val">-</span>
+        </div>
+        <div class="sd-recipe-row sd-recipe-total">
+          <span>Total</span>
+          <span class="sd-recipe-pct"></span>
+          <span id="sd-out-total" class="sd-recipe-val">-</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd-section">
+      <div class="sd-section-title">Water temperature (DDT)</div>
+
+      <div class="sd-field">
+        <label class="sd-label" for="sd-ddt">Target dough temp</label>
+        <div class="sd-input-wrap">
+          <input id="sd-ddt" class="sd-input" type="text" inputmode="decimal" value="24" />
+          <span class="sd-unit sd-tunit">°C</span>
+        </div>
+      </div>
+
+      <div class="sd-field">
+        <label class="sd-label" for="sd-flour-temp">Flour temperature</label>
+        <div class="sd-input-wrap">
+          <input id="sd-flour-temp" class="sd-input" type="text" inputmode="decimal" value="20" />
+          <span class="sd-unit sd-tunit">°C</span>
+        </div>
+      </div>
+
+      <div class="sd-field">
+        <label class="sd-label" for="sd-room-temp">Room temperature</label>
+        <div class="sd-input-wrap">
+          <input id="sd-room-temp" class="sd-input" type="text" inputmode="decimal" value="21" />
+          <span class="sd-unit sd-tunit">°C</span>
+        </div>
+      </div>
+
+      <div class="sd-field">
+        <label class="sd-label">Mixing method</label>
+        <div class="sd-toggle-group">
+          <button class="sd-mix-btn active" data-mix="hand">Hand (4&thinsp;°C)</button>
+          <button class="sd-mix-btn" data-mix="stand">Stand mixer (13&thinsp;°C)</button>
+        </div>
+      </div>
+
+      <div class="sd-ddt-result">
+        <div class="sd-ddt-result-label">Water temperature needed</div>
+        <div class="sd-ddt-value-row">
+          <span id="sd-water-temp-result" class="sd-ddt-value">-</span>
+          <span id="sd-water-temp-unit" class="sd-ddt-unit">°C</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sd-attribution">
+      <a href="https://calculations.tools/baking/sourdough-calculator" target="_blank" rel="noopener">
+        calculations.tools/sourdough-calculator
+      </a>
+    </div>
+  </div>
+
+  <script src="/js/sourdough-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style>
+  .sd-wrap { padding: 0.75rem; font-family: system-ui, sans-serif; }
+  .sd-toolbar { display: flex; justify-content: flex-end; margin-bottom: 0.75rem; }
+  .sd-toggle-group { display: flex; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); }
+  .sd-unit-btn, .sd-mode-btn, .sd-mix-btn {
+    padding: 0.4rem 0.9rem;
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.65);
+    font-size: 0.78rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+  }
+  .sd-unit-btn.active, .sd-mode-btn.active, .sd-mix-btn.active {
+    background: rgba(255,255,255,0.18);
+    color: white;
+    font-weight: 600;
+  }
+  .sd-section {
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    padding: 0.9rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .sd-section-title {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.65rem;
+  }
+  .sd-mode-toggle { margin-bottom: 0.75rem; width: fit-content; }
+  .sd-field { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; gap: 0.5rem; }
+  .sd-label { font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+  .sd-input-wrap { display: flex; align-items: center; gap: 0; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; overflow: hidden; }
+  .sd-input {
+    width: 5.5rem;
+    padding: 0.4rem 0.5rem;
+    background: rgba(255,255,255,0.08);
+    border: none;
+    color: white;
+    font-size: 0.9rem;
+    text-align: right;
+  }
+  .sd-unit {
+    padding: 0 0.5rem;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.55);
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  .sd-slider-field { margin-bottom: 0.5rem; }
+  .sd-slider-row { display: grid; grid-template-columns: 4.5rem 1fr 2.8rem auto; gap: 0.4rem; align-items: center; }
+  .sd-slider-label { font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+  .sd-slider { width: 100%; accent-color: #60a5fa; cursor: pointer; }
+  .sd-pct-input {
+    width: 100%;
+    padding: 0.35rem 0.4rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: white;
+    font-size: 0.82rem;
+    text-align: right;
+  }
+  .sd-pct-sym { color: rgba(255,255,255,0.5); font-size: 0.82rem; }
+  .sd-recipe { margin-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.6rem; }
+  .sd-recipe-header {
+    display: grid;
+    grid-template-columns: 1fr 4rem 5rem;
+    gap: 0.4rem;
+    padding: 0.2rem 0 0.3rem;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .sd-recipe-header span:nth-child(2),
+  .sd-recipe-header span:nth-child(3) { text-align: right; }
+  .sd-recipe-row {
+    display: grid;
+    grid-template-columns: 1fr 4rem 5rem;
+    gap: 0.4rem;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.84rem;
+    color: rgba(255,255,255,0.8);
+  }
+  .sd-recipe-pct { text-align: right; color: rgba(255,255,255,0.4); font-size: 0.75rem; }
+  .sd-recipe-val { text-align: right; font-weight: 600; color: #93c5fd; }
+  .sd-starter-note-row { padding: 0.15rem 0 0.3rem; border-bottom: none; }
+  .sd-starter-note { font-size: 0.68rem; color: rgba(255,255,255,0.3); font-style: italic; }
+  .sd-recipe-total { border-bottom: none !important; border-top: 1px solid rgba(255,255,255,0.15); margin-top: 0.2rem; font-weight: 600; color: white; }
+  .sd-recipe-total .sd-recipe-val { color: white; }
+  .sd-ddt-result { background: linear-gradient(135deg,#1e40af,#5b21b6); border-radius: 10px; padding: 0.9rem; text-align: center; margin-top: 0.75rem; }
+  .sd-ddt-result-label { font-size: 0.72rem; color: rgba(255,255,255,0.65); margin-bottom: 0.3rem; }
+  .sd-ddt-value-row { display: flex; align-items: baseline; justify-content: center; gap: 0.2rem; }
+  .sd-ddt-value { font-size: 1.75rem; font-weight: 700; color: #93c5fd; }
+  .sd-ddt-unit { font-size: 0.95rem; color: rgba(255,255,255,0.65); }
+  .sd-attribution { text-align: center; margin-top: 0.5rem; }
+  .sd-attribution a { font-size: 0.7rem; color: rgba(255,255,255,0.3); text-decoration: none; }
+  .hidden { display: none !important; }
+
+  /* Override bmi-* classes not available in embed context */
+  .bmi-field { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; gap: 0.5rem; }
+  .bmi-label { font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+  .bmi-input-wrap { display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; overflow: hidden; }
+  .bmi-input { width: 5.5rem; padding: 0.4rem 0.5rem; background: rgba(255,255,255,0.08); border: none; color: white; font-size: 0.9rem; text-align: right; }
+  .bmi-unit-tag { padding: 0 0.5rem; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.55); font-size: 0.8rem; white-space: nowrap; }
+</style>

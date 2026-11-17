@@ -156,6 +156,15 @@ const entries: Entry[] = [
     icon: '👤',
   },
   {
+    path: '/about-us/nikki-condit',
+    title: 'Nikki Condit, M.S. ABA, BCBA - Baking & Behavior Expert',
+    description: 'Nikki Condit is a Board Certified Behavior Analyst (BCBA) and Co-CEO of LAB Learning and Behavior Institute GmbH. She reviews baking and behavior-related tools on calculations.tools.',
+    changefreq: 'monthly' as const,
+    priority: 0.8,
+    lastmod: '2026-11-17',
+    icon: '👤',
+  },
+  {
     path: '/about-us',
     title: 'About Us - calculations.tools',
     description: 'Learn about calculations.tools - free, accurate calculation tools for everyone, built by Jesper Pallesen.',
@@ -2209,7 +2218,37 @@ US_SALES_TAX.forEach(state => {
   });
 });
 
+entries.push(
+  {
+    path: '/baking',
+    title: "Baking Calculators - Baker's Math & Sourdough",
+    description: "Free baking calculators: sourdough with baker's percentages, desired dough temperature, and metric/imperial support.",
+    changefreq: 'monthly' as const,
+    priority: 0.8,
+    lastmod: '2026-11-17',
+    icon: '🍞',
+    short: "Baker's math, hydration, DDT",
+  },
+  {
+    path: '/baking/sourdough-calculator',
+    title: "Sourdough Calculator - Baker's Percentages & DDT",
+    description: "Free sourdough calculator for baker's percentages and desired dough temperature. Metric and imperial. Scale by flour or target total dough weight.",
+    changefreq: 'monthly' as const,
+    priority: 0.9,
+    lastmod: '2026-11-17',
+    icon: '🍞',
+    short: "Baker's %, DDT, metric/imperial, recipe scale",
+  },
+);
+
 export const siteToolCount = entries.length;
+export const distinctToolCount = entries.filter(e =>
+  !e.path.startsWith('/conversion/currency-converter/') &&
+  !e.path.startsWith('/tax/sales-tax-calculator/us/') &&
+  !e.path.startsWith('/tax/income-tax-calculator/us/') &&
+  !e.path.startsWith('/tax/income-tax-calculator/eu/') &&
+  !e.path.startsWith('/glossary/')
+).length;
 
 export function getPages(): PageMeta[] {
   return entries
@@ -2586,4 +2625,24 @@ export function getSearchIndex(): SearchEntry[] {
   }));
 
   return [...toolEntries, ...glossaryEntries];
+}
+
+const BAKING_GROUPS: Record<string, string> = {
+  'sourdough-calculator': 'Sourdough',
+};
+
+export function getBakingTools(): HealthToolMeta[] {
+  return entries
+    .filter(e => e.path.startsWith('/baking/') && e.path !== '/baking')
+    .map(e => {
+      const seg = e.path.replace('/baking/', '').split('/')[0];
+      return {
+        path:        e.path,
+        title:       e.title.split(' - ')[0],
+        short:       e.short ?? '',
+        description: e.description,
+        icon:        e.icon ?? '',
+        group:       BAKING_GROUPS[seg] ?? 'Baking',
+      };
+    });
 }

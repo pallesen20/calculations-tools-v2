@@ -1,0 +1,433 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": "https://calculations.tools/about-us/nikki-condit",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Nikki Condit",
+    "alternateName": "Nicole Condit",
+    "url": "https://calculations.tools/about-us/nikki-condit",
+    "image": "https://calculations.tools/nikki.webp",
+    "jobTitle": "Board Certified Behavior Analyst (BCBA), Co-CEO",
+    "honorificSuffix": "M.S. ABA, BCBA",
+    "hasCredential": [
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "degree",
+        "name": "Master of Science in Applied Behavior Analysis",
+        "educationalLevel": "Master's Degree",
+        "recognizedBy": { "@type": "Organization", "name": "The Chicago School of Professional Psychology" },
+        "dateCreated": "2017"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "certification",
+        "name": "Board Certified Behavior Analyst (BCBA)",
+        "identifier": "1-18-29226",
+        "recognizedBy": { "@type": "Organization", "name": "Behavior Analyst Certification Board (BACB)" },
+        "dateCreated": "2018-02"
+      },
+      {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "degree",
+        "name": "Bachelor of Science in Cross-Categorical Special Education",
+        "educationalLevel": "Bachelor's Degree",
+        "recognizedBy": { "@type": "Organization", "name": "University of Wisconsin-Madison" }
+      }
+    ],
+    "alumniOf": [
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "University of Wisconsin-Madison",
+        "url": "https://www.wisc.edu/"
+      },
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "The Chicago School of Professional Psychology",
+        "url": "https://www.thechicagoschool.edu/"
+      }
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "LAB Learning and Behavior Institute GmbH",
+      "url": "https://www.lab-institute.com/",
+      "description": "School-based behavior specialists, ABA therapy, and behavioral interventions. Female-founded and led organization serving children with autism and developmental delays.",
+      "areaServed": "Germany"
+    },
+    "affiliation": {
+      "@type": "Organization",
+      "name": "ABA-Deutschland",
+      "description": "Board of Directors member since 2020"
+    },
+    "description": "Board Certified Behavior Analyst (BCBA, #1-18-29226) and Co-CEO of LAB Learning and Behavior Institute GmbH. 10+ years in Applied Behavior Analysis with expertise in autism, ADHD, and behavioral interventions. Based in Dusseldorf, Germany.",
+    "knowsAbout": [
+      "Applied Behavior Analysis",
+      "Autism Spectrum Disorder",
+      "ADHD",
+      "Oppositional Defiant Disorder",
+      "Behavioral Interventions",
+      "Child Development",
+      "Special Education",
+      "Psychology",
+      "School-Based Behavior Support"
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/in/nikki-condit/",
+      "https://www.lab-institute.com/"
+    ],
+    "mainEntityOfPage": {
+      "@type": "ProfilePage",
+      "url": "https://calculations.tools/about-us/nikki-condit",
+      "name": "Nikki Condit, M.S. ABA, BCBA - Applied Behavior Analysis Expert",
+      "inLanguage": "en-US",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://calculations.tools/#website",
+        "url": "https://calculations.tools",
+        "name": "calculations.tools",
+        "description": "Free, accurate calculators and converters - no sign-up, no paid content, instant results.",
+        "inLanguage": "en-US"
+      }
+    }
+  }
+};
+
+const tools = [
+  { href: '/baking/sourdough-calculator', icon: '🍞', title: 'Sourdough Calculator', desc: "Baker's percentages, hydration, and desired dough temperature in one tool." },
+];
+---
+
+<BaseLayout
+  title="Nikki Condit, M.S. ABA, BCBA - Baking & Behavior Expert"
+  metaTitle="Nikki Condit, M.S. ABA, BCBA - calculations.tools"
+  description="Nikki Condit is a Board Certified Behavior Analyst (BCBA) and Co-CEO of LAB Learning and Behavior Institute GmbH. She reviews baking and behavior-related tools on calculations.tools."
+  canonical="https://calculations.tools/about-us/nikki-condit"
+  schema={personSchema}
+>
+  <div class="ap-page">
+    <div class="ap-container">
+      <header class="ap-hero">
+        <img
+          src="/nikki.webp"
+          alt="Nikki Condit"
+          class="ap-photo"
+          width="120"
+          height="120"
+          fetchpriority="high"
+          loading="eager"
+        />
+        <h1 class="ap-name">Nikki Condit</h1>
+        <p class="ap-creds">M.S. ABA, BCBA &middot; BCBA #1-18-29226</p>
+        <p class="ap-role">Co-CEO &middot; <a href="https://www.lab-institute.com/" target="_blank" rel="noopener" class="ap-site-link">LAB Learning and Behavior Institute GmbH</a></p>
+        <div class="ap-actions">
+          <a
+            href="https://www.linkedin.com/in/nikki-condit/"
+            target="_blank"
+            rel="noopener"
+            class="ap-btn ap-btn-linkedin"
+            aria-label="Nikki Condit on LinkedIn"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
+          <a href="https://www.lab-institute.com/" target="_blank" rel="noopener" class="ap-btn ap-btn-ghost">LAB Institute ↗</a>
+          <a href="/about-us" class="ap-btn ap-btn-ghost">About the site →</a>
+        </div>
+      </header>
+
+      <section class="ap-bio">
+        <h2>About Nikki</h2>
+        <p>Nikki Condit is a Board Certified Behavior Analyst (BCBA) with over 10 years of experience in Applied Behavior Analysis and more than 15 years working with children and adults aged 2-21 with developmental delays and disorders, including Autism Spectrum Disorder, ADHD, and Oppositional Defiant Disorder.</p>
+        <p>She began her career as a Behavior Therapist with the Wisconsin Early Autism Project (WEAP) - the leading ABA and autism therapy provider in Wisconsin. While at the University of Wisconsin-Madison, she worked as an intern researcher at the Waisman Center, in the Center for Secondary Education for Students with ASD (CSESA).</p>
+        <p>After completing her Bachelor of Science in Cross-Categorical Special Education (with Teaching License, MC-EA, EA-A) at UW-Madison, she went on to earn her Master of Science in Applied Behavior Analysis from The Chicago School of Professional Psychology in 2017. She has been a Board Certified Behavior Analyst since February 2018 (Certification #1-18-29226).</p>
+        <p>In 2017, Nikki moved to Germany and joined ABA Autismus Therapie Dusseldorf (ABA ATD), where she helped establish ABA as an effective therapy in Dusseldorf and the surrounding NRW region. She has served on the Board of Directors for ABA-Deutschland since 2020.</p>
+        <p>Today, Nikki is Co-CEO of LAB Learning and Behavior Institute GmbH - a female-founded and female-led organization providing school-based behavior support, ABA therapy, and behavioral interventions to children and families in Germany. She reviews all baking and behavior-related tools on calculations.tools.</p>
+      </section>
+
+      <section class="ap-credentials">
+        <h2>Credentials</h2>
+        <div class="ap-cred-grid">
+          <div class="ap-cred-card">
+            <span class="ap-cred-icon">🎓</span>
+            <div>
+              <div class="ap-cred-title">M.S. in Applied Behavior Analysis</div>
+              <div class="ap-cred-org">The Chicago School of Professional Psychology &middot; 2017</div>
+            </div>
+          </div>
+          <div class="ap-cred-card">
+            <span class="ap-cred-icon">🏅</span>
+            <div>
+              <div class="ap-cred-title">Board Certified Behavior Analyst (BCBA)</div>
+              <div class="ap-cred-org">BACB Certification #1-18-29226 &middot; Since February 2018</div>
+            </div>
+          </div>
+          <div class="ap-cred-card">
+            <span class="ap-cred-icon">🎓</span>
+            <div>
+              <div class="ap-cred-title">B.S. in Cross-Categorical Special Education</div>
+              <div class="ap-cred-org">University of Wisconsin-Madison &middot; Teaching License (MC-EA, EA-A)</div>
+            </div>
+          </div>
+          <div class="ap-cred-card">
+            <span class="ap-cred-icon">🏛️</span>
+            <div>
+              <div class="ap-cred-title">Board of Directors, ABA-Deutschland</div>
+              <div class="ap-cred-org">Member since 2020</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ap-projects">
+        <h2>Organization</h2>
+        <div class="ap-projects-grid">
+          <a href="https://www.lab-institute.com/" target="_blank" class="ap-project-card">
+            <span class="ap-project-name">LAB Learning and Behavior Institute GmbH</span>
+            <span class="ap-project-url">lab-institute.com</span>
+            <p class="ap-project-desc">School-based behavior specialists, ABA therapy, and behavioral interventions. Female-founded and female-led. Serving children with autism and developmental delays in Germany.</p>
+            <span class="ap-project-arrow">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="ap-tools">
+        <h2>Nikki's tools on calculations.tools</h2>
+        <p class="ap-tools-intro">Tools authored and reviewed by Nikki - all free, no account required.</p>
+        <div class="ap-tools-grid">
+          {tools.map(t => (
+            <a href={t.href} class="ap-tool-card">
+              <span class="ap-tool-icon">{t.icon}</span>
+              <div>
+                <span class="ap-tool-name">{t.title}</span>
+                <p class="ap-tool-desc">{t.desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+        <div class="ap-tools-more">
+          <a href="/" class="ap-btn ap-btn-ghost">Browse all tools →</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .ap-page {
+    min-height: 100vh;
+    padding: 3rem 1rem 5rem;
+  }
+  .ap-container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .ap-hero {
+    text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 3rem;
+  }
+  .ap-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 3px solid rgba(255,255,255,0.15);
+    display: block;
+    margin: 0 auto 1.25rem;
+    -webkit-user-drag: none;
+  }
+  .ap-name {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.25rem;
+  }
+  .ap-creds {
+    font-size: 0.82rem;
+    color: #a78bfa;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.3rem;
+  }
+  .ap-role {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.5rem;
+  }
+  .ap-site-link {
+    color: #a78bfa;
+    text-decoration: none;
+  }
+  .ap-site-link:hover { color: white; text-decoration: none; }
+  .ap-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .ap-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .ap-btn:hover { opacity: 0.85; transform: translateY(-1px); text-decoration: none; }
+  .ap-btn-linkedin { background: #0a66c2; color: white !important; }
+  .ap-btn-ghost {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.75) !important;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .ap-bio {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ap-bio h2, .ap-credentials h2, .ap-projects h2, .ap-tools h2 {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.1rem;
+  }
+  .ap-bio p {
+    font-size: 0.93rem;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .ap-credentials {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ap-cred-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .ap-cred-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 1rem 1.1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+  }
+  .ap-cred-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .ap-cred-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.2rem;
+  }
+  .ap-cred-org {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+  }
+  .ap-projects {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ap-projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .ap-project-card {
+    position: relative;
+    display: block;
+    padding: 1.25rem;
+    background: var(--glass-bg-md);
+    border: 1px solid var(--glass-border-strong);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .ap-project-card:hover {
+    border-color: rgba(167,139,250,0.4);
+    background: rgba(255,255,255,0.07);
+    text-decoration: none;
+  }
+  .ap-project-name {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.2rem;
+  }
+  .ap-project-url {
+    display: block;
+    font-size: 0.75rem;
+    color: #a78bfa;
+    margin-bottom: 0.65rem;
+  }
+  .ap-project-desc {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .ap-project-arrow {
+    position: absolute;
+    top: 1rem;
+    right: 1.1rem;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.25);
+  }
+  .ap-tools { margin-bottom: 1rem; }
+  .ap-tools-intro {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 1.25rem;
+  }
+  .ap-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  @media (max-width: 540px) {
+    .ap-tools-grid { grid-template-columns: 1fr; }
+  }
+  .ap-tool-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .ap-tool-card:hover {
+    border-color: rgba(167,139,250,0.35);
+    background: rgba(255,255,255,0.07);
+    text-decoration: none;
+  }
+  .ap-tool-icon { font-size: 1.25rem; line-height: 1; flex-shrink: 0; margin-top: 0.1rem; }
+  .ap-tool-name {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.25rem;
+  }
+  .ap-tool-desc { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.5; margin: 0; }
+  .ap-tools-more { text-align: center; margin-top: 1rem; }
+</style>

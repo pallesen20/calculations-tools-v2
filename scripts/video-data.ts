@@ -631,6 +631,20 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     proTipFix: 'always divide by 3,600 to go from seconds to hours in a single step. Dividing by 60 gives minutes, not hours - the two-step path of dividing by 60 twice is equivalent but slower.',
   },
 
+  'sourdough-calculator': {
+    hookProblem: 'scale a sourdough recipe precisely and know exactly what water temperature to use',
+    character: 'Maya, a 34-year-old home baker',
+    exampleSetup: "She bakes two loaves every weekend using 500 g bread flour. She wants a 72% hydration loaf with 15% starter and 1.8% salt - and her kitchen is 21 C with flour at 20 C, targeting a 24 C dough temperature.",
+    formulaPlain: "baker's percentage: each ingredient divided by flour weight times 100. Water temperature: target DDT times 3, minus flour temperature, minus room temperature, minus friction factor (4 C for hand mixing)",
+    exampleWalkthrough: '500 g flour times 0.72 equals 360 g water. 500 times 0.15 equals 75 g starter - which contains 37.5 g flour and 37.5 g water. 500 times 0.018 equals 9 g salt. Total dough: 944 g. Water temp: 24 times 3 minus 20 minus 21 minus 4 equals 27 C.',
+    exampleResult: "Recipe: 500 g flour, 360 g water (72%), 75 g starter (15%), 9 g salt (1.8%). Water temperature needed: 27 C.",
+    exampleImplication: "using 27 C water instead of tap water at 18 C brings the finished dough to 24 C, which is the target fermentation temperature - making bulk fermentation times predictable at around 8-10 hours at room temperature",
+    notableFeature: 'the starter breakdown showing how much flour and water are inside the starter - useful for bakers who want to track total flour and total hydration across the whole recipe including the levain',
+    proTipMistake: "forgetting the friction factor in the DDT calculation and using room-temperature water",
+    proTipFix: 'always subtract the friction factor - 4 C for hand mixing, 13 C for a stand mixer. Without it, your dough will be 4-13 degrees warmer than intended and bulk fermentation will run faster than expected.',
+    unitNote: 'metric by default; switch to Imperial for ounces and Fahrenheit - example in Imperial: 17.6 oz flour, 12.7 oz water, 2.6 oz starter, 0.3 oz salt; DDT target 75 F, water temp needed 81 F',
+  },
+
   'bmi-calculator-menopause': {
     hookProblem: 'know whether your weight, waist, and menopause history add up to real cardiometabolic risk',
     character: 'Linda, a 57-year-old office manager 5 years past menopause',

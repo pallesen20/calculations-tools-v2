@@ -74,9 +74,26 @@ const sourceStandards = [
         <div class="es-section-label">Authorship</div>
         <div class="es-section-body">
           <h2>Who creates this content</h2>
-          <p>All tools and content on calculations.tools are built, written, and maintained by <a href="/about-us/jesper-pallesen" class="es-link">Jesper Pallesen</a>, the site's founder and sole author. Jesper is a developer with  a degree in Business and Economics. He has a genuine passion for data analytics with a focus on technical accuracy, data-driven analysis, and clear explanation of quantitative concepts.</p>
-          <p>Because there is one author, there is one consistent quality standard across the entire site. Every tool is built using the same process, verified against the same types of sources, and held to the same threshold before publication. There is no inconsistency between contributors, and no tool is published by someone unfamiliar with the subject matter.</p>
-          <a href="/about-us/jesper-pallesen" class="es-btn es-btn-ghost">Read about Jesper →</a>
+          <p>Tools and content on calculations.tools are created and maintained by subject matter experts. Each category is owned by a named author with verified credentials in that domain - so every result is produced by someone with genuine expertise in the subject, not a generalist writing about it at arm's length.</p>
+          <div class="es-author-cards">
+            <div class="es-author-card">
+              <img src="/jesper.webp" alt="Jesper Pallesen" class="es-author-img" width="52" height="52" />
+              <div class="es-author-info">
+                <div class="es-author-name"><a href="/about-us/jesper-pallesen" class="es-link">Jesper Pallesen</a></div>
+                <div class="es-author-role">Founder &amp; Developer - Finance, Math, Health, Conversion, Tax</div>
+                <p class="es-author-bio">Developer with a degree in Business and Economics. Specializes in technical accuracy, data analytics, and quantitative explanation. Builds and maintains all core calculators across finance, math, health, and conversion categories.</p>
+              </div>
+            </div>
+            <div class="es-author-card">
+              <img src="/nikki.webp" alt="Nikki Condit" class="es-author-img" width="52" height="52" />
+              <div class="es-author-info">
+                <div class="es-author-name"><a href="/about-us/nikki-condit" class="es-link">Nikki Condit, M.S. ABA, BCBA</a></div>
+                <div class="es-author-role">Subject Matter Expert - Baking &amp; Behavioral Science</div>
+                <p class="es-author-bio">Board Certified Behavior Analyst (BCBA #1-18-29226) with 10+ years in Applied Behavior Analysis. Co-CEO of LAB Learning and Behavior Institute GmbH. Authors all baking calculators and behavioral science tools on this site.</p>
+              </div>
+            </div>
+          </div>
+          <p>All tools follow the same four-step verification process regardless of author. The subject matter expert who authors a tool is the same person responsible for the accuracy of its formula, reference data, and content - there is no separation between who writes and who verifies.</p>
         </div>
       </section>
 
@@ -548,6 +565,51 @@ const sourceStandards = [
   }
   .es-commitments strong {
     color: rgba(255,255,255,0.9);
+  }
+
+  .es-author-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.25rem 0;
+  }
+  .es-author-card {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 1.1rem;
+    align-items: start;
+    padding: 1.1rem 1.25rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+  .es-author-img {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top;
+    border: 2px solid rgba(255,255,255,0.12);
+    display: block;
+    flex-shrink: 0;
+  }
+  .es-author-name {
+    font-size: 0.93rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.15rem;
+  }
+  .es-author-role {
+    font-size: 0.75rem;
+    color: rgba(167,139,250,0.8);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .es-author-bio {
+    font-size: 0.84rem !important;
+    color: rgba(255,255,255,0.55) !important;
+    line-height: 1.65 !important;
+    margin: 0 !important;
   }
 
   .es-cta {
