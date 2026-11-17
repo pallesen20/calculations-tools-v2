@@ -50,9 +50,10 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   <script src="/js/hours-to-days-calculator.js" is:inline></script>
 </EmbedLayout>
 
-<style>
+<style is:global>
   .htd-quick { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
-  .htd-quick-btn { padding: 0.35rem 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; color: rgba(255,255,255,0.85); font-size: 0.75rem; cursor: pointer; }
+  .htd-quick-btn { padding: 0.35rem 0.7rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; color: rgba(255,255,255,0.85); font-size: 0.75rem; cursor: pointer; transition: background 0.15s; }
+  .htd-quick-btn:hover { background: rgba(255,255,255,0.14); }
   .htd-inputs { display: grid; grid-template-columns: 1fr 1fr auto 1fr; gap: 0.75rem; margin-bottom: 1rem; align-items: end; }
   .htd-inputs input, .htd-inputs select { width: 100%; padding: 0.5rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: white; font-size: 0.875rem; box-sizing: border-box; }
   .htd-inputs select { appearance: none; padding-right: 2rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.6)' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.6rem center; }
