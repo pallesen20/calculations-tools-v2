@@ -2091,7 +2091,7 @@ GLOSSARY_TERMS.forEach(t => {
 
 entries.push({
   path: '/glossary',
-  title: 'Finance & Math Glossary - Key Terms Explained',
+  title: 'Finance, Math & Health Glossary - Key Terms Explained',
   description: 'Plain-English definitions for finance, math, and health terms used across our calculators. Each term includes a formula, examples, and links to related tools.',
   changefreq: 'weekly' as const,
   priority: 1.0,

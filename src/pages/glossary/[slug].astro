@@ -24,7 +24,7 @@ const relatedTermObjects = (term.relatedTerms ?? [])
   .map(s => GLOSSARY_TERMS.find(t => t.slug === s))
   .filter(Boolean) as typeof GLOSSARY_TERMS;
 
-const author = term.siteCategory === 'Baking' ? AUTHORS.nikki : AUTHORS.jesper;
+const author = (term.siteCategory === 'Baking' || term.category === 'Psychology') ? AUTHORS.nikki : AUTHORS.jesper;
 
 const ogFormulaText = term.formula
   ? term.formula
@@ -48,7 +48,7 @@ const schema = [
     "url": `https://calculations.tools/glossary/${slug}`,
     "inDefinedTermSet": {
       "@type": "DefinedTermSet",
-      "name": "Finance & Math Glossary",
+      "name": "Finance, Math & Health Glossary",
       "url": "https://calculations.tools/glossary",
     },
   },
