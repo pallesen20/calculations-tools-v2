@@ -50,7 +50,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   <script src="/js/temperature-converter.js" is:inline></script>
 </EmbedLayout>
 
-<style>
+<style is:global>
   .tc-common-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
   .tc-common-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.6rem; text-align: center; font-size: 0.8rem; color: white; }
   .tc-common-from { font-weight: 500; }

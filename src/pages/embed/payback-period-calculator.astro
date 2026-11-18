@@ -123,7 +123,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   <script src="/js/payback-period-calculator.js" is:inline></script>
 </EmbedLayout>
 
-<style>
+<style is:global>
   .pp-periods { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem; }
   .pp-period-btn { padding:0.3rem 0.7rem; border-radius:6px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); cursor:pointer; font-size:0.78rem; }
   .pp-period-btn.active { background:rgba(139,92,246,0.3); border-color:rgba(139,92,246,0.6); color:#fff; }

@@ -169,7 +169,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   <script src="/js/build-vs-buy-calculator.js" is:inline></script>
 </EmbedLayout>
 
-<style>
+<style is:global>
   .bvb-wrap { padding: 1rem; }
   .bvb-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
   @media (max-width: 540px) { .bvb-row { grid-template-columns: 1fr; } }

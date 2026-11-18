@@ -54,7 +54,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   <script src="/js/word-counter.js" is:inline></script>
 </EmbedLayout>
 
-<style>
+<style is:global>
   .wc-textarea { min-height: 150px; }
   .wc-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 1rem; }
   .wc-stat-card { border-radius: 10px; padding: 1rem; color: white; }

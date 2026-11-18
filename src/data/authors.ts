@@ -46,7 +46,7 @@ export const AUTHORS: Record<string, AuthorData> = {
     slug: 'nikki-condit',
     name: 'Nikki Condit',
     image: '/nikki.webp',
-    jobTitle: 'M.S. ABA, BCBA',
+    jobTitle: 'M.S. ABA, BCBA #1-18-29226',
     linkedin: 'https://www.linkedin.com/in/nikki-condit/',
     pageUrl: '/about-us/nikki-condit',
     tooltipBio: 'Board Certified Behavior Analyst (BCBA) with 10+ years in Applied Behavior Analysis. Co-CEO of LAB Learning and Behavior Institute GmbH, Dusseldorf.',

@@ -63,7 +63,7 @@ import EmbedLayout from '../../layouts/EmbedLayout.astro';
   <script src="/js/currency-converter.js" is:inline></script>
 </EmbedLayout>
 
-<style>
+<style is:global>
   .cc-live { display:flex; align-items:center; gap:0.4rem; justify-content:center; margin-bottom:1rem; }
   .cc-dot { width:7px; height:7px; background:#22c55e; border-radius:50%; animation:pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.2)} }

@@ -52,6 +52,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['adiposity-rebound', 'bmi-percentile', 'bmi'],
   },
   {
+    slug: 'applied-behavior-analysis',
+    term: 'Applied Behavior Analysis (ABA)',
+    letter: 'A',
+    category: 'Psychology',
+    siteCategory: 'Health',
+    shortDef: 'Applied Behavior Analysis (ABA) is a scientific discipline that studies and applies the principles of learning and behavior to improve socially significant behaviors. It is the most evidence-based intervention for autism spectrum disorder and is used in schools, clinics, and home settings for children and adults with developmental disabilities.',
+    relatedTools: ['/health/aba-behavior-rate-calculator'],
+    relatedTerms: ['bcba'],
+  },
+  {
     slug: 'avoirdupois-system',
     term: 'Avoirdupois System',
     letter: 'A',
@@ -757,6 +767,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   },
 
   // ─── Health ──────────────────────────────────────────────────────────────────
+  {
+    slug: 'bcba',
+    term: 'BCBA (Board Certified Behavior Analyst)',
+    letter: 'B',
+    category: 'Psychology',
+    siteCategory: 'Health',
+    shortDef: 'A BCBA (Board Certified Behavior Analyst) is a credentialed professional who designs, implements, and supervises Applied Behavior Analysis (ABA) programs. The credential is awarded by the Behavior Analyst Certification Board (BACB) and requires a master\'s degree, supervised fieldwork hours, and passing a standardized exam.',
+    relatedTools: ['/health/aba-behavior-rate-calculator'],
+    relatedTerms: ['applied-behavior-analysis'],
+  },
   {
     slug: 'bmi',
     term: 'BMI (Body Mass Index)',

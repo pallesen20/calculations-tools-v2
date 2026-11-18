@@ -805,6 +805,16 @@ const entries: Entry[] = [
     featured: true,
   },
   {
+    path: '/health/aba-behavior-rate-calculator',
+    title: 'ABA Behavior Rate Calculator - Frequency, Duration & Latency',
+    description: 'Calculate ABA frequency rate (RPM/RPH), duration percentage, and mean latency for behavior data collection. Free tool for BCBAs, RBTs, and behavior technicians.',
+    changefreq: 'monthly',
+    priority: 0.9,
+    lastmod: '2026-11-18',
+    icon: '📊',
+    short: 'Frequency rate, duration % & latency recording',
+  },
+  {
     path: '/health/pregnancy-calculator',
     title: 'Pregnancy Calculator - Due Date & Gestational Age',
     description: 'Calculate your pregnancy due date and gestational age from last period, conception date, due date, ultrasound, or IVF transfer. See fetal size and key milestones.',
@@ -2379,11 +2389,12 @@ export function getTaxTools(): HealthToolMeta[] {
 }
 
 const HEALTH_GROUPS: Record<string, string> = {
-  'bmi-calculator':            'BMI Calculators',
-  'lean-body-mass-calculator': 'Body Composition',
-  'ffmi-calculator':           'Body Composition',
-  'body-fat-calculator':       'Body Composition',
-  'ideal-weight-calculator':   'Body Composition',
+  'bmi-calculator':                  'BMI Calculators',
+  'lean-body-mass-calculator':       'Body Composition',
+  'ffmi-calculator':                 'Body Composition',
+  'body-fat-calculator':             'Body Composition',
+  'ideal-weight-calculator':         'Body Composition',
+  'aba-behavior-rate-calculator':    'Psychology',
 };
 
 export function getHealthTools(): HealthToolMeta[] {

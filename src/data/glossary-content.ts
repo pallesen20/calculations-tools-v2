@@ -9066,4 +9066,197 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'applied-behavior-analysis': {
+    definition: [
+      'Applied Behavior Analysis (ABA) is a scientific discipline that applies the principles of learning and behavior - systematically established through decades of experimental research - to understand and change behaviors that matter to individuals and society. It draws on the foundational work of B.F. Skinner and the science of behaviorism, extended to real-world settings by Baer, Wolf, and Risley in their landmark 1968 paper defining the field.',
+      'ABA practitioners measure behavior in observable, quantifiable terms: frequency, rate, duration, latency, and intensity. This measurement discipline is what distinguishes ABA from other behavioral approaches - every intervention decision is driven by data collected before, during, and after treatment. If the data do not show improvement, the program is revised.',
+      'The most prominent application is autism spectrum disorder (ASD). Decades of controlled research support early intensive ABA intervention as the most effective evidence-based treatment for improving communication, social, and adaptive behavior outcomes in children with ASD. ABA is also applied in schools, organizational settings, sports psychology, and substance abuse treatment.',
+    ],
+    keyTakeaways: [
+      'ABA is defined by seven dimensions (applied, behavioral, analytic, technological, conceptually systematic, effective, and generality) established by Baer, Wolf & Risley in 1968 - still the field\'s foundation.',
+      'All ABA programs are data-driven: behavior is measured before, during, and after intervention, and the program is revised if data do not show improvement.',
+      'Early intensive behavioral intervention (EIBI) - typically 25-40 hours per week for children under 5 - has the strongest research base for improving outcomes in autism spectrum disorder.',
+      'The credential for ABA practitioners is the BCBA (Board Certified Behavior Analyst), awarded by the BACB after a master\'s degree, supervised fieldwork, and a standardized exam.',
+      'ABA uses both reinforcement-based (increasing desired behavior) and extinction-based (reducing problem behavior) techniques - ethical practice always prioritizes the least restrictive effective procedure.',
+    ],
+    fastFact: 'The US Surgeon General and the American Psychological Association both recognize ABA-based early intervention as an evidence-based treatment for autism. As of 2024, ABA therapy is mandated insurance coverage in all 50 US states, making BCBA credentialing one of the fastest-growing allied health professions.',
+    beginnerExplain: [
+      'Think of ABA as "if-then" science for behavior. It maps out: what happens before a behavior (the trigger), what the behavior looks like (observable and measurable), and what happens after (the consequence that makes it more or less likely to happen again). By changing those "before" and "after" conditions, behavior therapists can reliably increase behaviors people want more of and reduce behaviors that cause harm or limit learning.',
+      'A simple example: a child cries when asked to put away a toy. The "before" is the instruction, the behavior is crying, and the "after" is that the instruction is removed (the child gets to keep playing). ABA would identify that the crying is being reinforced by escaping the task, then design a plan to teach a more appropriate way to request a break.',
+    ],
+    whenToUse: 'ABA is the right framework when you need to change behavior in a measurable, evidence-based way. Practically: designing intervention programs for children with autism or developmental disabilities, writing behavior support plans in school settings, supervising behavior technicians (RBTs), or analyzing why a problem behavior is occurring using a functional behavior assessment (FBA). The ABA behavior rate calculator is the starting point - measuring how often or how long a behavior occurs is the first step before any intervention decision.',
+    examples: {
+      headers: ['ABA technique', 'What it does', 'Common use case'],
+      rows: [
+        ['Discrete Trial Training (DTT)', 'Structured, repeated practice of a specific skill with clear prompts and reinforcement', 'Teaching language, imitation, and academic skills in early intervention'],
+        ['Natural Environment Training (NET)', 'Teaching skills in everyday contexts, following the learner\'s motivation', 'Generalizing skills from clinic to home and school settings'],
+        ['Functional Behavior Assessment (FBA)', 'Identifying the reason a problem behavior occurs (attention, escape, sensory, access)', 'Prerequisite to any behavior intervention plan in schools or clinics'],
+        ['Behavior Intervention Plan (BIP)', 'A written plan specifying how to respond to and reduce a problem behavior', 'Required in US schools for students whose behavior impedes learning'],
+        ['Token Economy', 'Earning tokens for target behaviors, exchangeable for preferred items or activities', 'Classroom-wide behavior management and individual motivation systems'],
+      ],
+    },
+    pitfalls: 'The most common misconception is that ABA means drill-and-repeat table work - this describes one specific technique (DTT), not the field. Modern ABA is naturalistic, play-based, and child-led for most of the session. A second pitfall is confusing the goal of ABA with compliance training; ethical ABA is designed to increase the learner\'s independence and quality of life. Finally, ABA without proper data collection is not ABA - if a program is not being measured and adjusted based on the data, it does not meet the field\'s core analytic dimension.',
+    faqs: [
+      { q: 'Is ABA only for autism?', a: 'No. ABA is a science of behavior with applications in autism, ADHD, traumatic brain injury, organizational behavior management, sports psychology, and substance abuse treatment. Autism is by far the most common clinical application because decades of research have established early intensive ABA as the most effective evidence-based intervention for improving outcomes in children with ASD.' },
+      { q: 'What is the difference between ABA and behavioral therapy?', a: '"Behavioral therapy" is a broad term covering many approaches. ABA is a specific, data-driven behavioral science with defined dimensions. Unlike general behavioral therapy, every ABA program requires ongoing measurement of target behaviors, and the intervention must be revised if data do not show progress.' },
+      { q: 'How many hours of ABA does a child with autism need?', a: 'Research on early intensive behavioral intervention (EIBI) typically uses 25-40 hours per week for children under 5 with ASD. However, intensity depends on the child\'s goals, age, and current skill level. A BCBA should determine the appropriate intensity based on individual assessment, not a fixed number.' },
+    ],
+    quiz: {
+      topic: 'Applied Behavior Analysis',
+      questions: [
+        {
+          q: 'What three elements does ABA analyze to understand and change behavior?',
+          options: [
+            'Genetics, environment, and medication',
+            'Thoughts, feelings, and social context',
+            'What happens before a behavior, the behavior itself, and what happens after',
+            'The age of onset, frequency, and severity of the behavior',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'ABA maps the antecedent (what happens before), the behavior (observable and measurable), and the consequence (what follows). Changing antecedents and consequences is how ABA practitioners reliably increase desired behaviors and reduce problem behaviors.',
+        },
+        {
+          q: 'According to this entry, what makes ABA different from other behavioral approaches?',
+          options: [
+            'ABA uses medication alongside behavioral techniques',
+            'Every ABA decision is driven by data collected before, during, and after treatment',
+            'ABA focuses exclusively on autism, while other approaches cover multiple conditions',
+            'ABA practitioners must hold a doctorate-level credential',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The definition section states that every intervention decision is driven by data collected before, during, and after treatment. If the data do not show improvement, the program is revised. This measurement discipline distinguishes ABA from other behavioral approaches.',
+        },
+        {
+          q: 'Early intensive behavioral intervention (EIBI) is typically delivered at what intensity?',
+          options: [
+            '5-10 hours per week in a clinic setting',
+            '15-20 hours per week at school only',
+            '25-40 hours per week for children under 5',
+            '10 hours per week with parental coaching sessions',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Research on EIBI typically uses 25-40 hours per week for children under 5 with ASD. This intensity has the strongest evidence base for improving communication, social, and adaptive behavior outcomes.',
+        },
+        {
+          q: 'What is the most common misconception about ABA identified in the pitfalls section?',
+          options: [
+            'That ABA requires a BCBA credential to implement',
+            'That ABA can only be delivered in clinic settings',
+            'That ABA means drill-and-repeat table work, when modern ABA is mostly naturalistic and play-based',
+            'That ABA is not covered by insurance in most US states',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The pitfalls section clarifies that drill-and-repeat table work describes DTT - one specific technique, not the field. Modern ABA is naturalistic and play-based for most sessions. The goal is increased independence and quality of life, not behavioral compliance.',
+        },
+        {
+          q: 'What is a Functional Behavior Assessment (FBA) used for?',
+          options: [
+            'Measuring how quickly a learner responds to instructions',
+            'Calculating the duration percentage of a behavior in a session',
+            'Certifying that a behavior program meets BACB ethical guidelines',
+            'Identifying why a problem behavior occurs before designing an intervention',
+          ] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'An FBA identifies the reason a problem behavior occurs - whether maintained by attention, escape, sensory stimulation, or access to items. It is a prerequisite to any behavior intervention plan in schools or clinics.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'bcba': {
+    definition: [
+      'A Board Certified Behavior Analyst (BCBA) is a master\'s-level professional credential awarded by the Behavior Analyst Certification Board (BACB). BCBAs are trained to design, implement, and supervise Applied Behavior Analysis programs for individuals across the lifespan - most commonly children and adults with autism spectrum disorder, ADHD, and other developmental disabilities.',
+      'The credential requires a master\'s degree in behavior analysis, education, or psychology; completion of a BACB-approved course sequence covering ABA principles, measurement, and ethics; a minimum of 2,000 supervised fieldwork hours; and passing the BCBA examination. As of 2022, the exam is based on the 5th Edition Task List, a 95-item competency framework covering seven content areas.',
+      'BCBAs are legally authorized in most US states to independently provide and bill for ABA services. In clinical settings, BCBAs supervise Registered Behavior Technicians (RBTs) who deliver direct therapy hours. BCBAs are responsible for assessment, program design, data review, and clinical decisions.',
+    ],
+    keyTakeaways: [
+      'BCBA is a master\'s-level credential requiring a degree, 2,000+ supervised fieldwork hours, and passing the BACB examination - not just a certification course.',
+      'BCBAs independently design and supervise ABA programs; they supervise RBTs (Registered Behavior Technicians) who deliver direct therapy hours.',
+      'The 5th Edition Task List (2022) is the current competency framework for BCBA exams - it covers measurement, behavior change procedures, ethical and professional conduct, and personnel supervision.',
+      'As of 2024, ABA therapy is mandated insurance coverage in all 50 US states, making BCBA one of the fastest-growing allied health credentials in the US.',
+      'BCBA credential numbers are publicly verifiable via the BACB certificant registry - credentials follow the format 1-YY-NNNNN (year of certification plus sequential number).',
+    ],
+    fastFact: 'As of 2024, there are over 60,000 active BCBAs worldwide, with the US accounting for approximately 90% of them. The number of certified BCBAs has grown more than tenfold since 2010, driven by insurance mandate laws and increased autism diagnoses. (Behavior Analyst Certification Board, Annual Data Report, 2023)',
+    beginnerExplain: [
+      'Think of a BCBA like a physical therapist for behavior. The physical therapist designs the exercise program, decides which muscles to target, and adjusts the plan based on progress - but a PT aide might carry out the actual daily exercises. A BCBA plays the same design-and-supervise role for behavior programs: they assess the learner, write the protocol, review the data, and make clinical decisions. The behavior technician (RBT) is the aide who works directly with the learner every session.',
+      'The difference matters because BCBAs must pass a rigorous national exam and meet ongoing continuing education requirements. When you see "ABA therapy" listed as a service, a BCBA should be the credentialed professional responsible for the program design.',
+    ],
+    whenToUse: 'Look for a BCBA when you need someone to design or oversee an ABA intervention program. BCBAs write behavior intervention plans (BIPs) for schools, assess learners using standardized tools, supervise behavior technicians, and make clinical decisions based on session data. For parents seeking ABA services, verifying that a BCBA holds an active, unsuspended credential on the BACB registry is the minimum quality check before starting a program.',
+    examples: {
+      headers: ['Credential level', 'Requirements', 'Role'],
+      rows: [
+        ['RBT (Registered Behavior Technician)', '40-hour training, competency assessment, ongoing supervision', 'Delivers direct therapy sessions under BCBA supervision'],
+        ['BCaBA (Board Certified Assistant Behavior Analyst)', 'Bachelor\'s degree, supervised hours, exam', 'Implements programs under BCBA supervision; cannot work independently'],
+        ['BCBA (Board Certified Behavior Analyst)', 'Master\'s degree, 2,000+ supervised hours, exam', 'Independently designs, supervises, and bills for ABA programs'],
+        ['BCBA-D (Doctoral level)', 'Doctorate + BCBA requirements', 'Same scope as BCBA; doctoral designation only, not a separate license'],
+      ],
+    },
+    pitfalls: 'The most common mistake is assuming that anyone providing "ABA therapy" is a BCBA. Many providers hire unlicensed staff or use the term loosely. Always verify the credential on the BACB\'s public certificant registry at bacb.com. A second pitfall: BCBA certification alone does not guarantee experience with a specific population - a BCBA credentialed primarily in organizational behavior management has very different clinical competencies than one with 10 years of early intervention experience. Ask about population-specific experience, not just the credential.',
+    faqs: [
+      { q: 'How do I verify a BCBA credential?', a: 'Go to bacb.com and use the certificant registry search. Enter the BCBA\'s name or certificate number. The registry shows whether the credential is active, suspended, or revoked. BCBA certificate numbers follow the format 1-YY-NNNNN. This verification takes less than a minute and is the minimum check before starting any ABA program.' },
+      { q: 'What is the difference between a BCBA and an RBT?', a: 'A BCBA is a master\'s-level credentialed professional who designs and supervises ABA programs. An RBT (Registered Behavior Technician) completes a 40-hour training and delivers direct therapy sessions under BCBA supervision. The BCBA makes all clinical decisions; the RBT implements the protocol. In clinical practice, a learner typically sees an RBT daily and a BCBA for weekly or biweekly program review.' },
+      { q: 'Is ABA insurance coverage mandatory in the US?', a: 'Yes. As of 2024, all 50 US states have passed insurance mandate laws requiring coverage for ABA therapy for autism spectrum disorder. The specific coverage terms vary by state and plan type. For specific coverage questions, contact the insurer directly with the ABA CPT codes (97151-97158).' },
+    ],
+    quiz: {
+      topic: 'BCBA credential',
+      questions: [
+        {
+          q: 'What three requirements must a person meet to earn the BCBA credential?',
+          options: [
+            'A bachelor\'s degree, 500 supervised hours, and a skills observation',
+            'A master\'s degree, 2,000+ supervised fieldwork hours, and passing the BCBA examination',
+            'A doctorate, 1,000 hours of direct therapy, and a written ethics course',
+            'A psychology license, 3 years of clinical experience, and a peer review',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The BCBA credential requires a master\'s degree in behavior analysis, education, or psychology; a minimum of 2,000 supervised fieldwork hours; and passing the BACB examination. It is a master\'s-level, not doctoral, credential.',
+        },
+        {
+          q: 'What is the relationship between a BCBA and an RBT in a clinical ABA program?',
+          options: [
+            'They are equivalent credentials - either can design or deliver ABA programs',
+            'The RBT supervises the BCBA during fieldwork hours',
+            'The BCBA designs the program and makes clinical decisions; the RBT delivers direct therapy sessions under supervision',
+            'RBTs only work in school settings; BCBAs only work in clinical settings',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The BCBA designs the intervention, supervises the program, and makes all clinical decisions. The RBT implements the protocol during direct therapy sessions. A learner typically sees an RBT daily and a BCBA for weekly or biweekly program reviews.',
+        },
+        {
+          q: 'How can a parent verify that a BCBA\'s credential is active?',
+          options: [
+            'Request a photocopy of their exam score report',
+            'Ask their state licensing board for a credential check',
+            'Search the BACB\'s public certificant registry at bacb.com using the BCBA\'s name or certificate number',
+            'Check whether their employer is accredited by CARF International',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The BACB maintains a public certificant registry at bacb.com where anyone can search a BCBA\'s name or certificate number to confirm the credential is active, suspended, or revoked. This is the authoritative source.',
+        },
+        {
+          q: 'According to the pitfalls section, what is the most common mistake when seeking ABA services?',
+          options: [
+            'Choosing a BCBA who works in a clinic rather than a home setting',
+            'Assuming anyone providing "ABA therapy" is a BCBA - many providers use the term loosely',
+            'Selecting a BCBA with a BCBA-D designation instead of a standard BCBA',
+            'Starting services before the child turns 3 years old',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The pitfalls section warns that many providers use the term "ABA therapy" loosely without employing credentialed BCBAs. Always verify the credential on the BACB registry.',
+        },
+        {
+          q: 'As of 2024, how many US states mandate insurance coverage for ABA therapy for autism?',
+          options: [
+            '12 states with the highest autism prevalence',
+            '38 states that have passed autism insurance reform laws',
+            'All 50 states',
+            'Only states with a Medicaid waiver program for autism',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'As of 2024, all 50 US states have passed insurance mandate laws requiring coverage for ABA therapy for autism spectrum disorder. This is a key driver of BCBA demand and one of the fastest-growing allied health credential expansions in recent US history.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
 };

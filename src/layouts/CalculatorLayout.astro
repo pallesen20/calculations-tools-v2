@@ -30,9 +30,10 @@ interface Props {
   youtubeUploadDate?: string;
   credential?: string;
   authorKey?: string;
+  reviewerKey?: string;
 }
 
-const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample, noindex, youtubeId, youtubeSummary, youtubeUploadDate, credential: credentialOverride, authorKey } = Astro.props;
+const { title, metaTitle, description, canonical, schema, tocItems = [], embedSlug, sources, ogFormula, ogExample, noindex, youtubeId, youtubeSummary, youtubeUploadDate, credential: credentialOverride, authorKey, reviewerKey } = Astro.props;
 
 const _pathname = new URL(Astro.request.url).pathname.replace(/\/$/, '') || '/index';
 const _filePath = `src/pages${_pathname}.astro`;
@@ -44,20 +45,45 @@ const _category = _pathname.startsWith('/math') ? 'Math'
   : 'Tools';
 
 const _author = authorKey && AUTHORS[authorKey] ? AUTHORS[authorKey] : getAuthorForPath(_pathname);
+const _reviewer = reviewerKey && AUTHORS[reviewerKey] ? AUTHORS[reviewerKey] : null;
+const _displayPerson = _reviewer ?? _author;
+const _displayLabel = _reviewer ? 'Content by' : 'Created by';
 
 const _credential = credentialOverride
-  ?? (_category === 'Health'
+  ?? (_reviewer
+  ? `Built by ${_author.name} · Reviewed by ${_reviewer.name}, ${_reviewer.jobTitle}`
+  : _category === 'Health'
   ? 'Formulas sourced from WHO & peer-reviewed research'
   : _category === 'Finance'
   ? 'Formulas follow CFA Institute & GAAP standards'
   : _category === 'Conversion' || _category === 'Math'
   ? 'Verified against NIST & ISO reference values'
   : _category === 'Baking'
-  ? 'Reviewed by a certified baking professional'
+  ? 'Formulas follow professional baking standards'
   : 'Verified against primary reference sources');
 const ogImage = (ogFormula && ogExample)
   ? `https://calculations-image-generator.vercel.app/api/og-web?category=${encodeURIComponent(_category)}&calculator=${encodeURIComponent(title)}&formula=${encodeURIComponent(ogFormula)}&example=${encodeURIComponent(ogExample)}`
   : undefined;
+
+let lastUpdated = '';
+let lastUpdatedISO = '';
+try {
+  const result = execSync(
+    `git log -1 --format="%ci" -- "${_filePath}"`,
+    { encoding: 'utf-8' }
+  ).trim();
+  if (result) {
+    const d = new Date(result);
+    lastUpdated = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    lastUpdatedISO = d.toISOString().split('T')[0];
+  } else {
+    lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    lastUpdatedISO = new Date().toISOString().split('T')[0];
+  }
+} catch {
+  lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  lastUpdatedISO = new Date().toISOString().split('T')[0];
+}
 
 const AUTHOR = {
   "@type": "Person",
@@ -81,27 +107,52 @@ const AUTHOR = {
   "knowsAbout": _author.knowsAbout,
 };
 
-const augmentedSchema = schema
+const REVIEWER_SCHEMA = _reviewer ? {
+  "@type": "Person",
+  "name": _reviewer.name,
+  "url": `https://calculations.tools${_reviewer.pageUrl}`,
+  "sameAs": _reviewer.sameAs,
+  "jobTitle": _reviewer.jobTitle,
+  "worksFor": {
+    "@type": "Organization",
+    "name": _reviewer.organization.name,
+    "url": _reviewer.organization.url,
+    ...(_reviewer.organization.logo ? { "logo": _reviewer.organization.logo } : {}),
+  },
+  "description": _reviewer.schemaDescription,
+  "knowsAbout": _reviewer.knowsAbout,
+} : null;
+
+const _baseSchemas = schema
   ? (Array.isArray(schema) ? schema : [schema]).map((s: any) => {
       if (s['@type'] !== 'WebApplication') return s;
       const withImage = (ogImage && !s.image) ? { ...s, image: ogImage } : s;
-      const withAuthor = !withImage.author ? { ...withImage, author: AUTHOR } : withImage;
+      let withAuthor;
+      if (_reviewer && REVIEWER_SCHEMA) {
+        withAuthor = { ...withImage, creator: AUTHOR, author: REVIEWER_SCHEMA };
+      } else {
+        withAuthor = !withImage.author ? { ...withImage, author: AUTHOR } : withImage;
+      }
       return !withAuthor.publishingPrinciples ? { ...withAuthor, publishingPrinciples: "https://calculations.tools/editorial-standards" } : withAuthor;
     })
-  : schema;
+  : null;
 
-let lastUpdated = '';
-try {
-  const result = execSync(
-    `git log -1 --format="%ci" -- "${_filePath}"`,
-    { encoding: 'utf-8' }
-  ).trim();
-  lastUpdated = result
-    ? new Date(result).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-    : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-} catch {
-  lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-}
+const augmentedSchema = (_reviewer && REVIEWER_SCHEMA && canonical && _baseSchemas)
+  ? [..._baseSchemas, {
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      "url": canonical,
+      "name": title,
+      "description": description,
+      "lastReviewed": lastUpdatedISO,
+      "reviewedBy": REVIEWER_SCHEMA,
+      "author": REVIEWER_SCHEMA,
+      "audience": {
+        "@type": "MedicalAudience",
+        "audienceType": "Healthcare professionals and therapists"
+      }
+    }]
+  : (_baseSchemas ?? schema);
 
 const embedUrl = embedSlug ? `https://calculations.tools/embed/${embedSlug}` : null;
 const iframeSnippet = embedUrl
@@ -124,10 +175,10 @@ const iframeSnippet = embedUrl
         <aside class="page-sidebar">
           <div class="info-box">
             <aside>
-              <img src={_author.image} height="50" width="50" alt={_author.name} />
+              <img src={_displayPerson.image} height="50" width="50" alt={_displayPerson.name} />
               <div class="author-box">
-                <span class="eyebrow">Created by</span>
-                <a class="author" href={_author.pageUrl} id="author-link">{_author.name}</a>
+                <span class="eyebrow">{_displayLabel}</span>
+                <a class="author" href={_displayPerson.pageUrl} id="author-link">{_displayPerson.name}</a>
               </div>
               <div class="last-updated">
                 <span class="eyebrow">Last updated</span>
@@ -137,15 +188,15 @@ const iframeSnippet = embedUrl
             <span class="author-credential">{_credential} - <a href="/editorial-standards" class="credential-link">Editorial standards</a></span>
             <div class="author-tooltip" id="author-tooltip" role="tooltip" aria-hidden="true">
               <div class="at-header">
-                <img src={_author.image} width="52" height="52" alt={_author.name} class="at-photo" />
+                <img src={_displayPerson.image} width="52" height="52" alt={_displayPerson.name} class="at-photo" />
                 <div class="at-name-block">
-                  <div class="at-name">{_author.name}</div>
-                  <a class="at-link" href={_author.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                  <div class="at-name">{_displayPerson.name}</div>
+                  <a class="at-link" href={_displayPerson.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 </div>
               </div>
-              <p class="at-bio">{_author.tooltipBio}</p>
+              <p class="at-bio">{_displayPerson.tooltipBio}</p>
               <div class="at-footer">
-                <a href={_author.pageUrl} class="at-link">See author page</a>
+                <a href={_displayPerson.pageUrl} class="at-link">See author page</a>
                 <a href="/editorial-standards" class="at-link">See editorial standards</a>
               </div>
             </div>
@@ -268,7 +319,7 @@ const iframeSnippet = embedUrl
   .info-box aside {
     display: grid;
     grid-template-columns: 50px 1fr 1fr;
-    align-items: center;
+    align-items: start;
     gap: 0.75rem;
     /* background: rgba(255,255,255,0.05);
     border-radius: 12px;
