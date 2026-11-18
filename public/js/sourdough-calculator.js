@@ -182,6 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function calcFermentation() {
+    const bulkTimeEl = document.getElementById('sd-bulk-time');
+    if (!bulkTimeEl) return;
     const starterPct = parseFloat(document.getElementById('sd-starter-pct').value) || 15;
 
     const ddtRaw  = parseFloat(document.getElementById('sd-ddt').value);
