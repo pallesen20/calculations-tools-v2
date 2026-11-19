@@ -8,6 +8,7 @@ export interface GlossaryTerm {
   formula?: string;
   relatedTools?: string[];
   relatedTerms?: string[];
+  reviewer?: 'nikki';
 }
 
 export const GLOSSARY_TERMS: GlossaryTerm[] = [
@@ -20,6 +21,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'Adjusted EBITDA is EBITDA restated to exclude non-recurring, non-cash, or one-off items. It represents the normalised operating profitability of a business, stripped of distortions.',
     relatedTools: ['/finance/ebitda-calculator'],
     relatedTerms: ['ebitda', 'ebitda-margin', 'operating-profit'],
+  },
+  {
+    slug: 'adhd',
+    term: 'ADHD (Attention Deficit Hyperactivity Disorder)',
+    letter: 'A',
+    category: 'Psychology',
+    siteCategory: 'Health',
+    reviewer: 'nikki',
+    shortDef: 'ADHD is a neurodevelopmental condition characterized by persistent patterns of inattention, hyperactivity, and impulsivity that interfere with daily functioning. It affects approximately 5-7% of children and 2-5% of adults worldwide. The core deficit is in regulating attention voluntarily, not in the raw capacity to focus.',
+    relatedTools: ['/health/adhd-break-calculator'],
+    relatedTerms: ['pomodoro-technique', 'applied-behavior-analysis'],
   },
   {
     slug: 'arithmetic',
@@ -679,6 +691,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['proportion', 'ratio'],
   },
   {
+    slug: 'pomodoro-technique',
+    term: 'Pomodoro Technique',
+    letter: 'P',
+    category: 'Productivity',
+    siteCategory: 'Health',
+    reviewer: 'nikki',
+    shortDef: 'The Pomodoro Technique is a time management method that breaks work into 25-minute focus intervals (Pomodoros) separated by 5-minute breaks, with a longer 15-30 minute break after every four Pomodoros. Created by Francesco Cirillo in the late 1980s, it reduces procrastination by making sustained work feel finite and achievable.',
+    relatedTools: ['/health/adhd-break-calculator'],
+    relatedTerms: [],
+  },
+  {
     slug: 'proportion',
     term: 'Proportion',
     letter: 'P',
@@ -768,6 +791,27 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
 
   // ─── Health ──────────────────────────────────────────────────────────────────
   {
+    slug: 'developmental-milestone',
+    term: 'Developmental Milestone',
+    letter: 'D',
+    category: 'Child Development',
+    siteCategory: 'Health',
+    reviewer: 'nikki',
+    shortDef: 'A developmental milestone is a skill or behavior that most children achieve by a certain age. Milestones are organized into five domains - gross motor, fine motor, language, social/emotional, and cognitive - and are used to screen for delays, guide early intervention eligibility, and set IEP goals.',
+    relatedTools: ['/health/child-developmental-age-calculator', '/health/corrected-age-calculator', '/health/iep-goal-calculator'],
+    relatedTerms: ['iep', 'corrected-age', 'applied-behavior-analysis'],
+  },
+  {
+    slug: 'discrete-trial-training',
+    term: 'Discrete Trial Training (DTT)',
+    letter: 'D',
+    category: 'Psychology',
+    siteCategory: 'Health',
+    shortDef: 'Discrete Trial Training (DTT) is a structured ABA teaching method in which a skill is broken into small, teachable steps. Each trial consists of a clear antecedent (SD), a response, and a consequence. Data is recorded on every trial as correct, prompted, incorrect, or no response.',
+    relatedTools: ['/health/dtt-data-calculator', '/health/aba-behavior-rate-calculator'],
+    relatedTerms: ['applied-behavior-analysis', 'bcba'],
+  },
+  {
     slug: 'bcba',
     term: 'BCBA (Board Certified Behavior Analyst)',
     letter: 'B',
@@ -776,6 +820,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'A BCBA (Board Certified Behavior Analyst) is a credentialed professional who designs, implements, and supervises Applied Behavior Analysis (ABA) programs. The credential is awarded by the Behavior Analyst Certification Board (BACB) and requires a master\'s degree, supervised fieldwork hours, and passing a standardized exam.',
     relatedTools: ['/health/aba-behavior-rate-calculator'],
     relatedTerms: ['applied-behavior-analysis'],
+  },
+  {
+    slug: 'corrected-age',
+    term: 'Corrected Age',
+    letter: 'C',
+    category: 'Psychology',
+    siteCategory: 'Health',
+    shortDef: 'Corrected age (also called adjusted age) is the age of a premature baby calculated from their expected due date rather than their actual birth date. It equals chronological age minus the weeks born early. Used for developmental milestone tracking until approximately 24 months corrected age.',
+    formula: '$$\\text{Corrected age} = \\text{Chronological age} - (40 - \\text{GA at birth})$$',
+    relatedTools: ['/health/corrected-age-calculator', '/health/pregnancy-calculator'],
+    relatedTerms: ['gestational-age'],
   },
   {
     slug: 'bmi',
@@ -951,7 +1006,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Maternal Health',
     siteCategory: 'Health',
     shortDef: 'Gestational age is the age of a pregnancy measured in weeks and days from the first day of the last menstrual period (LMP). A full-term pregnancy is 40 weeks of gestational age. It differs from fetal age (counted from conception) by approximately two weeks.',
-    relatedTools: ['/health/pregnancy-calculator', '/health/bmi-calculator/pregnancy'],
+    relatedTools: ['/health/pregnancy-calculator', '/health/bmi-calculator/pregnancy', '/health/child-developmental-age-calculator'],
     relatedTerms: ['fetal-age', 'gestational-weight-gain', 'naegeles-rule'],
   },
   {
@@ -963,6 +1018,16 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'Gestational weight gain (GWG) is the total weight gained from conception to delivery. The IOM 2009 guidelines set category-specific targets based on pre-pregnancy BMI: underweight (12.5-18 kg), normal weight (11.5-16 kg), overweight (7-11.5 kg), and obese (5-9 kg) for singleton pregnancies.',
     relatedTools: ['/health/bmi-calculator/pregnancy'],
     relatedTerms: ['ideal-body-weight', 'visceral-fat', 'hormone-replacement-therapy'],
+  },
+  {
+    slug: 'hyperfocus',
+    term: 'Hyperfocus',
+    letter: 'H',
+    category: 'Psychology',
+    siteCategory: 'Health',
+    shortDef: 'Hyperfocus is a state of intense, prolonged concentration on a single task, most commonly associated with ADHD. It appears to contradict ADHD\'s hallmark inattentiveness but reflects the same inconsistent attention system: ADHD attention is not simply short, it is variable - capable of complete absorption on high-interest tasks and near-inability to sustain focus on low-interest ones.',
+    relatedTools: ['/health/adhd-break-calculator'],
+    relatedTerms: ['applied-behavior-analysis'],
   },
   {
     slug: 'naegeles-rule',
@@ -1276,6 +1341,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     relatedTerms: ['metric-system', 'avoirdupois-system'],
   },
   {
+    slug: 'iep',
+    term: 'IEP (Individualized Education Program)',
+    letter: 'I',
+    category: 'Special Education',
+    siteCategory: 'Health',
+    reviewer: 'nikki',
+    shortDef: 'An Individualized Education Program (IEP) is a legally binding document required by IDEA for every student with a qualifying disability in a US public school. It defines the student\'s present levels of performance, annual measurable goals, special education services, and mastery criteria for evaluating goal achievement.',
+    relatedTools: ['/health/iep-goal-calculator', '/health/dtt-data-calculator'],
+    relatedTerms: ['applied-behavior-analysis', 'mastery-criterion'],
+  },
+  {
     slug: 'npv',
     term: 'Net Present Value (NPV)',
     letter: 'N',
@@ -1328,6 +1404,17 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     shortDef: 'The metric system is the international decimal system of measurement, formally known as the International System of Units (SI). Every unit is linked by powers of 10 using standard prefixes (kilo-, centi-, milli-). Used officially in 195 of 196 countries, it is the global standard for science, medicine, and international trade.',
     relatedTools: ['/conversion/length-converter', '/conversion/weight-converter', '/conversion/height-converter', '/conversion/temperature-converter', '/conversion/speed-converter'],
     relatedTerms: ['imperial-system', 'avoirdupois-system'],
+  },
+  {
+    slug: 'mastery-criterion',
+    term: 'Mastery Criterion',
+    letter: 'M',
+    category: 'Special Education',
+    siteCategory: 'Health',
+    reviewer: 'nikki',
+    shortDef: 'A mastery criterion is the specific performance standard written into an IEP goal that defines when a student has achieved the goal. It typically combines an accuracy percentage (e.g., 80%) with a consistency requirement (e.g., 3 consecutive sessions), ensuring the skill is stable and not a one-session fluke.',
+    relatedTools: ['/health/iep-goal-calculator', '/health/dtt-data-calculator'],
+    relatedTerms: ['iep', 'applied-behavior-analysis'],
   },
   {
     slug: 'weighted-average',

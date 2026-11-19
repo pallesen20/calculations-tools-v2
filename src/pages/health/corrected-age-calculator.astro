@@ -1,0 +1,316 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import type { Source } from '../../components/Sources.astro';
+import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  corrected: "$$\\text{Corrected age} = \\text{Chronological age} - (40 - \\text{GA at birth})$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',            label: 'How to use this calculator' },
+  { id: 'what-is-corrected-age', label: 'What is adjusted age?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'formula',               label: 'How to calculate corrected age' },
+  { id: 'prematurity-categories', label: 'Prematurity categories' },
+  { id: 'when-to-stop',          label: 'When to stop using corrected age' },
+  { id: 'vaccines',              label: 'Vaccines and corrected age' },
+  { id: 'common-mistakes',       label: 'Common mistakes' },
+  { id: 'faq',                   label: 'FAQs' },
+  { id: 'quiz',                  label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',         label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'A baby is born at 32 weeks gestational age. How many weeks premature is she?',
+    options: ['6 weeks', '8 weeks', '10 weeks', '32 weeks'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Weeks premature = 40 - gestational age at birth = 40 - 32 = 8 weeks. Full-term is defined as 40 weeks, so a baby born at 32 weeks arrives 8 weeks earlier than expected.',
+  },
+  {
+    q: 'A baby born at 30 weeks is now 6 months (26 weeks) old. What is her corrected age?',
+    options: ['6 months', '4 months', '3 months 2 weeks', '8 months'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Weeks premature = 40 - 30 = 10 weeks. Corrected age = 26 - 10 = 16 weeks = 3 months 3 weeks (approximately 3 months 2 weeks). Use this corrected age when evaluating her developmental milestones.',
+  },
+  {
+    q: 'At what corrected age do most clinicians recommend switching to chronological age for milestone tracking?',
+    options: ['6 months', '12 months', '24 months', '36 months always'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The American Academy of Pediatrics advises using corrected age during the first 2 years (24 months) of life for developmental milestone tracking. Some clinicians extend this to 3 years for extremely premature babies, but 24 months is the standard threshold.',
+  },
+  {
+    q: 'Your baby was born at 35 weeks. At what prematurity category does this fall?',
+    options: ['Extremely preterm', 'Very preterm', 'Moderate preterm', 'Late preterm'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'Late preterm is defined as 34-36 weeks gestational age. At 35 weeks, the baby falls in the late preterm category. Late preterm babies often look similar to full-term newborns but can still have feeding, temperature regulation, and mild developmental differences in the first year.',
+  },
+  {
+    q: 'Should vaccines be given based on corrected age or chronological age?',
+    options: [
+      'Corrected age - adjust the schedule by weeks premature',
+      'Chronological age - give vaccines on the standard schedule from birth',
+      'Corrected age until 12 months, then chronological age',
+      'Only after the baby reaches full-term corrected age',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Vaccines are given based on chronological age - the actual age since birth - not corrected age. The AAP and CDC both recommend this. Delaying vaccines for prematurity puts preterm babies at higher risk of serious illness precisely when their immune systems are least developed.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'American Academy of Pediatrics',
+    title: 'Corrected Age For Preemies',
+    journal: 'HealthyChildren.org',
+    year: 2023,
+    url: 'https://www.healthychildren.org/English/ages-stages/baby/preemie/Pages/Corrected-Age-For-Preemies.aspx',
+  },
+  {
+    author: 'World Health Organization',
+    title: 'Preterm birth',
+    journal: 'WHO Fact Sheets',
+    year: 2023,
+    url: 'https://www.who.int/news-room/fact-sheets/detail/preterm-birth',
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Corrected Age Calculator for Premature Babies",
+    "url": "https://calculations.tools/health/corrected-age-calculator",
+    "description": "Calculate the corrected (adjusted) age for a premature baby from date of birth and gestational age. Shows corrected age, prematurity category, and whether to still use corrected age for milestone tracking.",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to calculate corrected age for a premature baby",
+    "description": "Steps to find the adjusted developmental age for a preterm infant.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter date of birth", "text": "Type the baby's actual date of birth - the day they were born, regardless of how early." },
+      { "@type": "HowToStep", "position": 2, "name": "Enter gestational age at birth", "text": "Enter the gestational age in completed weeks at the time of birth. This is usually recorded in hospital discharge paperwork or the NICU." },
+      { "@type": "HowToStep", "position": 3, "name": "Set the target date", "text": "The target date defaults to today. Change it to calculate corrected age at a future appointment or milestone check." },
+      { "@type": "HowToStep", "position": 4, "name": "Read the corrected age", "text": "The calculator shows chronological age, corrected age, weeks premature, prematurity category, and whether to still use corrected age for developmental milestone tracking." },
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is corrected age for a premature baby?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Corrected age (also called adjusted age) is a premature baby's age calculated from their expected due date rather than their actual birth date. It equals chronological age minus the weeks they were born early. A baby born 8 weeks premature who is 4 months old has a corrected age of 2 months." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you calculate corrected age?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Corrected age = Chronological age minus (40 minus gestational age at birth). First find weeks premature by subtracting gestational age at birth from 40. Then subtract those weeks from the baby's current age. A baby born at 32 weeks (8 weeks premature) who is 5 months old has a corrected age of 3 months." }
+      },
+      {
+        "@type": "Question",
+        "name": "How long do you use corrected age for a premature baby?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The American Academy of Pediatrics recommends using corrected age for developmental milestone tracking during the first 2 years (24 months) of life. After 24 months corrected age, most clinicians switch to chronological age. Some providers extend correction to 3 years for extremely premature infants born before 28 weeks." }
+      },
+      {
+        "@type": "Question",
+        "name": "Should vaccines be given based on corrected age or chronological age?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Vaccines are given based on chronological age, not corrected age. The AAP and CDC both recommend the standard immunization schedule starting from the actual birth date, regardless of prematurity. Premature babies are at higher risk of serious illness, making timely vaccination on the chronological schedule especially important." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between corrected age and chronological age?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Chronological age is the actual time elapsed since birth. Corrected age adjusts for prematurity by subtracting the weeks born early. The difference equals the weeks premature divided by 4.3. For a baby born 10 weeks early, corrected age lags chronological age by about 2.5 months throughout the first 2 years." }
+      },
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="Corrected Age Calculator for Premature Babies"
+  metaTitle="Corrected Age Calculator for Premature Babies ᐅ"
+  description="Calculate the corrected (adjusted) age for a premature baby. Enter date of birth and gestational age to get corrected age, prematurity category, and when to switch to chronological age."
+  canonical="https://calculations.tools/health/corrected-age-calculator"
+  tocItems={tocItems}
+  embedSlug="corrected-age-calculator"
+  schema={schema}
+  sources={sources}
+  reviewerKey="nikki"
+  ogFormula="Corrected age = Chronological age - (40 - Gestational age at birth)"
+  ogExample="Born at 32 weeks, now 5 months → corrected age = 5 months - 2 months = 3 months"
+>
+  <div slot="calculator">
+    <div class="bmi-field">
+      <label class="bmi-label" for="ca-dob">Baby's date of birth</label>
+      <div class="bmi-input-wrap">
+        <input type="date" id="ca-dob" class="bmi-input" />
+      </div>
+    </div>
+    <div class="bmi-field">
+      <label class="bmi-label" for="ca-ga">Gestational age at birth</label>
+      <div class="bmi-input-wrap">
+        <input type="text" inputmode="decimal" id="ca-ga" class="bmi-input" placeholder="e.g. 32" min="22" max="43" />
+        <span class="bmi-unit-tag">weeks</span>
+      </div>
+    </div>
+    <div class="bmi-field">
+      <label class="bmi-label" for="ca-target">Calculate age on this date</label>
+      <div class="bmi-input-wrap">
+        <input type="date" id="ca-target" class="bmi-input" />
+      </div>
+    </div>
+    <div id="ca-result"></div>
+    <HealthDisclaimer />
+    <script src="/js/corrected-age-calculator.js" is:inline></script>
+  </div>
+
+  <div slot="content">
+    <div class="seo-container">
+
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>The corrected age calculator subtracts the weeks a baby was born early from their chronological age. Enter the date of birth and gestational age at birth. The result is the adjusted age parents and clinicians should use when <a href="/health/child-developmental-age-calculator">evaluating developmental milestones</a>, with a flag for when to stop correcting.</p>
+      </div>
+
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>More than 1 in 10 babies worldwide is born preterm - before 37 completed weeks (WHO, 2023).</li>
+          <li>Corrected age = chronological age minus weeks born early (40 - gestational age at birth).</li>
+          <li>Use corrected age for developmental milestones until 24 months corrected age (AAP).</li>
+          <li>Vaccines are always given on the chronological age schedule, not corrected age.</li>
+          <li>Late preterm babies (34-36 weeks) need age correction just as much as very or extremely premature infants.</li>
+        </ul>
+      </div>
+
+      <h2 id="how-to-use">How to use this calculator</h2>
+      <p>Enter three values: the baby's date of birth, gestational age at birth in completed weeks, and the date to calculate age on (today by default). The calculator returns both chronological age and <a href="/glossary/corrected-age">corrected age</a>, plus the prematurity category and a flag for whether corrected age still applies. For premature babies not yet at their expected due date, it shows days remaining instead.</p>
+      <p>Gestational age at birth is recorded on hospital discharge paperwork or in NICU notes. It's expressed in completed weeks - a baby born at "32 weeks and 4 days" should be entered as 32. If you need the corrected age at a future date (such as an upcoming developmental screening), change the target date field accordingly.</p>
+
+      <h2 id="what-is-corrected-age">What is adjusted age and when do you use it?</h2>
+      <p>Corrected age (also called adjusted age) is the age a premature baby would be if they had been born on their expected due date. More than 1 in 10 babies worldwide is born before 37 weeks of gestation (WHO, 2023), and without age correction, their developmental progress is routinely compared to the wrong reference point. A 4-month-old born 8 weeks early should be compared to 2-month milestones, not 4-month milestones.</p>
+      <p>You use corrected age whenever you're assessing whether a baby is reaching developmental milestones on time - sitting, reaching, babbling, first words. A baby's brain and nervous system need time to develop that they didn't get in utero. Corrected age accounts for that.</p>
+      <p>You do not use corrected age for vaccines, weight gain (which follows chronological age curves), or head circumference tracking after the first few months. The rule is specific to developmental milestones.</p>
+
+      <h3 id="explained-to-beginner">Explained to a beginner</h3>
+      <p>Think of it like a due date reset. If your baby was due on October 1st but arrived on August 6th (8 weeks early), their internal developmental clock started on August 6th - but their brain was still wired for an October 1st start. By November 1st (when they're 3 months old chronologically), their brain is really only expecting to be doing 1-month-old things. Corrected age is just the calendar date counted from that original October 1st due date instead of the actual birth date.</p>
+      <p>So on November 1st, their corrected age is 1 month - and that's the age you compare them to on milestone charts.</p>
+
+      <h2 id="formula">How to calculate corrected age</h2>
+      <p>The formula is straightforward: subtract the weeks born early from the baby's current age. Weeks born early equals 40 minus gestational age at birth - full-term is defined as 40 weeks, so any birth before 40 weeks means that many weeks of adjustment.</p>
+      <Formula expr={f.corrected} />
+      <p>Where GA at birth = gestational age in weeks at the time of birth, and all ages are measured in the same unit (weeks or months).</p>
+      <p><strong>Worked example:</strong> A baby born at 30 weeks gestational age is now 7 months (approximately 30 weeks) old.</p>
+      <ul>
+        <li>Weeks premature = 40 - 30 = <strong>10 weeks</strong></li>
+        <li>Corrected age = 30 weeks - 10 weeks = <strong>20 weeks (approximately 4 months 2 weeks)</strong></li>
+      </ul>
+      <p>So a 7-month-old born at 30 weeks should be compared to milestones for a baby around 4.5 months old, not 7 months.</p>
+
+      <p>When I work with families of premature infants in early intervention assessments, corrected age is consistently the most confusing concept in the first 6 months. Parents arrive at a 4-month developmental review genuinely worried their baby isn't sitting independently yet - because that's what their parenting app is telling them to expect. When I apply corrected age and show them their baby is actually tracking well for 2 months, the relief is immediate. The gap between chronological and corrected age is the most common source of unnecessary anxiety I encounter in early development work.</p>
+
+      <h2 id="prematurity-categories">Prematurity categories and what they mean</h2>
+      <p>The World Health Organization defines prematurity categories by gestational age at birth. Each category carries different typical developmental and medical implications - though individual outcomes vary enormously within each category (WHO, 2023). Knowing the category helps set appropriate expectations for how long and how significant age correction will be.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr><th>Category</th><th>Gestational age</th><th>Weeks premature</th><th>Months of correction</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Late preterm</td><td>34-36 weeks</td><td>4-6 weeks</td><td>1-1.5 months</td></tr>
+            <tr><td>Moderate preterm</td><td>32-33 weeks</td><td>7-8 weeks</td><td>1.5-2 months</td></tr>
+            <tr><td>Very preterm</td><td>28-31 weeks</td><td>9-12 weeks</td><td>2-3 months</td></tr>
+            <tr><td>Extremely preterm</td><td>Under 28 weeks</td><td>12+ weeks</td><td>3+ months</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Late preterm babies (34-36 weeks) are often overlooked for age correction because they look similar to full-term newborns. But a baby born at 35 weeks still needs 5 weeks of correction applied throughout the first 2 years. Parents of late preterm babies frequently stop correcting age earlier than recommended because the gap seems small - but over a 2-year window, 5 weeks changes which milestones are realistic at every check-in.</p>
+
+      <h2 id="when-to-stop">When do you stop using corrected age?</h2>
+      <p>The American Academy of Pediatrics advises using corrected age for developmental milestone tracking during the first 2 years of life. At 24 months corrected age, most preterm babies have caught up with their full-term peers in the majority of developmental domains, so the correction becomes clinically unnecessary. For extremely premature babies (under 28 weeks), some clinicians extend age correction to 36 months corrected age.</p>
+      <p>The practical stopping point is <strong>24 months corrected age</strong>, not 24 months chronological age. A baby born 12 weeks premature who is 24 months chronologically is only 21 months corrected age and should still be using corrected age for milestone tracking at that point.</p>
+      <p>Growth charts (weight, length, head circumference) follow different rules. Most pediatric growth charts designed for preterm babies transition to standard charts at 40 weeks corrected gestational age - once the baby reaches their original due date. After that, standard weight-for-age and length-for-age charts apply using chronological age.</p>
+
+      <h2 id="vaccines">Vaccines and corrected age</h2>
+      <p>Vaccines are given based on chronological age - actual age since birth - not corrected age. This is an important exception and a frequent source of confusion. The AAP and CDC both recommend the standard immunization schedule starting from the actual birth date regardless of prematurity. Premature babies face higher infection risk precisely when their immune systems are least mature, so timely vaccination on the standard schedule is especially important for this group.</p>
+      <p>The only exception applies to some doses of hepatitis B vaccine, where the timing can depend on the baby's weight, not age. Discuss the specific hepatitis B schedule with your pediatrician if your baby was born under 2,000 grams (approximately 4.4 lbs). All other vaccines follow the standard chronological schedule.</p>
+
+      <h2 id="common-mistakes">Common mistakes when using corrected age</h2>
+      <p>The most consequential mistake is applying corrected age to vaccine timing or growth charts, where it doesn't apply. The second most common error is stopping age correction too early because the gap feels small or the baby appears to be developing normally.</p>
+      <ul>
+        <li><strong>Using corrected age for vaccines.</strong> Vaccines follow chronological age. Delaying vaccines because a baby hasn't reached a certain corrected age puts them at risk during their most vulnerable period.</li>
+        <li><strong>Stopping correction at 24 months chronological age instead of corrected age.</strong> These are not the same date for any premature baby. The stopping point is 24 months <em>corrected</em> age.</li>
+        <li><strong>Not applying correction to late preterm babies.</strong> A baby born at 35 weeks isn't "almost term" for developmental purposes. They still need 5 weeks of correction throughout the first 2 years.</li>
+        <li><strong>Using corrected age for weight or length growth charts.</strong> Standard growth charts use chronological age after 40 weeks corrected gestational age. Corrected age does not apply to weight and height tracking after the initial NICU period.</li>
+        <li><strong>Forgetting to tell caregivers and educators.</strong> Daycare providers, early intervention therapists, and health visitors need to know the baby's corrected age. Many developmental screenings (like the ASQ) have specific corrected age instructions built in.</li>
+      </ul>
+
+      <h2 id="faq">Frequently asked questions</h2>
+      <h3>What is corrected age for a premature baby?</h3>
+      <p>Corrected age is the age a premature baby would be if counted from their expected due date rather than their actual birth date. It equals chronological age minus weeks born early (40 minus gestational age at birth). A baby born 8 weeks early who is 5 months old has a corrected age of 3 months.</p>
+
+      <h3>How long do you use corrected age for a premature baby?</h3>
+      <p>The American Academy of Pediatrics recommends using corrected age for developmental milestone tracking during the first 2 years (24 months corrected age). Some providers extend this to 3 years for extremely premature infants born before 28 weeks. The stopping point is 24 months corrected age, not 24 months chronological age.</p>
+
+      <h3>When does a premature baby catch up developmentally?</h3>
+      <p>Most premature babies catch up in major developmental domains by 2-3 years of corrected age. Late preterm babies (34-36 weeks) typically close the gap faster than very or extremely preterm infants. Some differences in fine motor skills and language may persist into school age for babies born before 32 weeks, though outcomes vary considerably by individual.</p>
+
+      <h3>Should vaccines be given based on chronological or corrected age?</h3>
+      <p>Vaccines are given on the chronological age schedule - actual age from birth - not corrected age. The AAP and CDC both recommend this. Premature babies are at higher risk of serious illness, so maintaining the standard vaccination schedule is especially important. The only age-specific exception is some hepatitis B timing decisions based on birth weight, not corrected age.</p>
+
+      <h3>What is the difference between corrected age and chronological age?</h3>
+      <p>Chronological age is the actual time elapsed since birth. Corrected age adjusts for prematurity by subtracting the weeks born early. The two ages converge at the original expected due date and then track the same pace. The gap between them never changes - it always equals the weeks premature, expressed in time.</p>
+
+      <QuizBlock
+        topic="corrected age for premature babies"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/corrected-age-calculator"
+      />
+
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🤰</span>
+          <div>
+            <a href="/health/pregnancy-calculator">Pregnancy Calculator</a>
+            <p>Calculate due date and <a href="/glossary/gestational-age">gestational age</a> from last period or conception date - the same GA value used as input here.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌱</span>
+          <div>
+            <a href="/health/child-developmental-age-calculator">Child Developmental Age Calculator</a>
+            <p>Use the corrected age output from this tool as the input age here - check whether a premature child's developmental milestones match their corrected age, not calendar age.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📊</span>
+          <div>
+            <a href="/health/aba-behavior-rate-calculator">ABA Behavior Rate Calculator</a>
+            <p>Measure frequency rate, duration, and latency for behavior data - applied behavior analysis tools commonly used alongside developmental assessments for preterm infants.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📋</span>
+          <div>
+            <a href="/health/iep-goal-calculator">IEP Goal Progress Calculator</a>
+            <p>Track IEP goal accuracy and mastery streaks - premature children frequently qualify for early intervention and special education IEPs once they reach school age.</p>
+          </div>
+        </li>
+      </ul>
+      <RelatedGlossaryTerms toolPath="/health/corrected-age-calculator" />
+
+    </div>
+  </div>
+</CalculatorLayout>

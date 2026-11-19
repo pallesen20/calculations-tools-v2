@@ -1,0 +1,373 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import Formula from '../../components/Formula.astro';
+import type { Source } from '../../components/Sources.astro';
+import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import RelatedGlossaryTerms from '../../components/RelatedGlossaryTerms.astro';
+
+const f = {
+  focus: "$$\\text{Focus block} = \\text{Typical span} \\times \\text{Task multiplier} \\times \\text{Medication factor}$$",
+  break: "$$\\text{Short break} = \\max\\left(5,\\ \\left\\lfloor\\frac{\\text{Focus block}}{4}\\right\\rfloor_{5}\\right)$$",
+};
+
+const tocItems = [
+  { id: 'how-to-use',         label: 'How to use this calculator' },
+  { id: 'adhd-attention-span', label: 'How long can someone with ADHD focus?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'task-multipliers',   label: 'Task type and medication adjustments' },
+  { id: 'adhd-pomodoro',      label: 'Adapting the Pomodoro technique for ADHD' },
+  { id: 'breaks',             label: 'How long should ADHD breaks be?' },
+  { id: 'hyperfocus',         label: 'Understanding hyperfocus' },
+  { id: 'mistakes',           label: 'Common mistakes with work intervals' },
+  { id: 'faq',                label: 'FAQs' },
+  { id: 'quiz',               label: 'Quiz: test your knowledge' },
+  { id: 'related-tools',      label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'Using this calculator, what is the recommended focus block for someone whose typical ADHD attention span is 20 minutes doing deep work (no medication)?',
+    options: ['15 minutes', '20 minutes', '25 minutes', '30 minutes'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Deep work uses a 1.25 multiplier: 20 × 1.25 = 25 minutes, rounded to the nearest 5. This matches the standard Pomodoro by coincidence - most people with ADHD doing deep work find their true capacity is higher than their routine-task span.',
+  },
+  {
+    q: 'The standard Pomodoro technique uses 25 minutes of work. Why do many ADHD coaches recommend shorter blocks instead?',
+    options: [
+      '25 minutes is too short for ADHD hyperfocus',
+      'Shorter blocks provide more frequent dopamine rewards and reduce task-start friction',
+      'The Pomodoro technique was designed for neurotypical people only',
+      'Longer breaks are needed after 25 minutes of work',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'ADHD brains respond strongly to immediate rewards. Shorter work blocks (10-15 min) mean wins come faster, which reduces the activation energy needed to start a task and keeps motivation higher through the session.',
+  },
+  {
+    q: 'What does the medication multiplier (1.3×) represent in this calculator?',
+    options: [
+      'Taking medication increases focus time by 130 minutes',
+      'Stimulant medication typically extends sustainable focus duration by roughly 30%',
+      'Medication only helps with routine tasks, not deep work',
+      'The factor is the same as the deep work multiplier',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Stimulant ADHD medications (methylphenidate, amphetamines) increase dopamine availability, which typically extends the duration of sustained attention. A 30% increase is a conservative estimate consistent with clinical observations, though individual response varies considerably.',
+  },
+  {
+    q: 'After completing 4 focus blocks, the calculator recommends a long break. What is the purpose of this long break compared to the short breaks between blocks?',
+    options: [
+      'It is long enough to allow the brain to consolidate memories from the session',
+      'It resets dopamine levels and prevents mental fatigue buildup across the full session',
+      'It is required because ADHD medication wears off after 4 blocks',
+      'The long break replaces the final short break of the cycle',
+    ] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Short breaks (5-10 min) allow momentary mental recovery between blocks. The longer break after 4 blocks (20-25 min) gives the dopamine system a fuller reset, which helps maintain sustainable focus quality across a full work session rather than just the first hour.',
+  },
+  {
+    q: 'Someone with ADHD is building software and enters 15 minutes as their typical focus time. The calculator recommends 25 minutes for deep work. Should they start at 25 or 15?',
+    options: [
+      '25 minutes - always use the calculator output',
+      '15 minutes - the calculator output is wrong for this person',
+      '15 minutes first; track results and adjust upward if 25 minutes works better',
+      '20 minutes - split the difference',
+    ] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The calculator gives a starting point. When the recommended focus block is higher than your self-reported typical span, start at your known span and experiment with extending it by 5 minutes at a time. The number that works in practice matters more than the formula output.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const sources: Source[] = [
+  {
+    author: 'CHADD (Children and Adults with ADHD)',
+    title: 'Are Attention Spans Really Shrinking? What the Science Says',
+    journal: 'CHADD.org',
+    year: 2026,
+    url: 'https://chadd.org/adhd-in-the-news/are-attention-spans-really-shrinking-what-the-science-says/',
+  },
+  {
+    author: 'Inflow ADHD',
+    title: 'ADHD productivity hack: How to use the Pomodoro method to get things done',
+    journal: 'getinflow.io',
+    year: 2023,
+    url: 'https://getinflow.io/post/pomodoro-technique-adhd-productivity',
+  },
+  {
+    author: 'PsychCentral',
+    title: 'How to Adapt the Pomodoro Technique for ADHD',
+    journal: 'PsychCentral',
+    year: 2021,
+    url: 'https://psychcentral.com/adhd/how-to-adapt-the-pomodoro-technique-adhd',
+  },
+];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ADHD Break Calculator",
+    "url": "https://calculations.tools/health/adhd-break-calculator",
+    "description": "Calculates personalised ADHD focus blocks and break intervals based on your typical attention span, task type, and medication status.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the ADHD Break Calculator",
+    "description": "Get a personalised work-break schedule by entering your typical focus time and task type.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Enter your typical focus time", "text": "Type how many minutes you can usually focus before losing concentration on a moderate task. If you're unsure, start with 15 minutes." },
+      { "@type": "HowToStep", "position": 2, "name": "Select your task type", "text": "Choose Routine (repetitive or low-interest tasks), Moderate (normal work tasks), or Deep Work (coding, writing, or analysis requiring sustained concentration)." },
+      { "@type": "HowToStep", "position": 3, "name": "Indicate medication status", "text": "Check the medication box if you have taken stimulant ADHD medication today. This adjusts the focus block upward by approximately 30%." },
+      { "@type": "HowToStep", "position": 4, "name": "Enter optional session length", "text": "Optionally enter the total hours in your work session to see how many focus blocks fit and how much total focused time that gives you." },
+      { "@type": "HowToStep", "position": 5, "name": "Read your recommended schedule", "text": "The calculator shows your personalised focus block, short break (after each block), and long break (every 4 blocks), plus a comparison against the standard 25-minute Pomodoro." },
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How long can someone with ADHD focus?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Adults with ADHD typically sustain focus for 15 to 30 minutes on routine tasks before attention drifts, compared to 45 to 60 minutes for neurotypical adults. The key difference is not raw duration but consistency: ADHD attention is more variable and harder to sustain across a full work session." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the Pomodoro technique good for ADHD?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It can work, but the standard 25-minute block often needs adjusting. Many adults with ADHD find that 10 to 20 minute blocks work better for routine tasks, while deep work sessions can sometimes run 40 to 50 minutes. The key benefit is the structured endpoint: knowing a break is coming makes it easier to start." }
+      },
+      {
+        "@type": "Question",
+        "name": "How long should ADHD breaks be?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Short breaks between focus blocks should be 5 to 15 minutes - roughly one quarter of the focus block length. After every four blocks, take a longer 20 to 25 minute break. The break should involve genuine rest or movement, not scrolling on a phone, which can make it harder to re-engage with work." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best work-to-break ratio for ADHD?",
+        "acceptedAnswer": { "@type": "Answer", "text": "There is no single best ratio. Research and practitioner experience suggest a 4:1 work-to-break ratio as a starting point (20 min focus, 5 min break). Adults who struggle with the standard 25/5 Pomodoro often do better with 15/5 or 50/10. Test different ratios across a week and track which produces the most consistent output." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can people with ADHD hyperfocus for hours?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Hyperfocus is a well-documented ADHD trait where a person becomes so absorbed in a task that they lose track of time entirely. This seems to contradict short attention spans, but both are real: ADHD attention is inconsistent, not simply short. Hyperfocus usually occurs on high-interest tasks and cannot be deliberately switched on." }
+      }
+    ]
+  }
+];
+---
+<CalculatorLayout
+  title="ADHD Break Calculator"
+  metaTitle="ADHD Break Calculator | Attention Span & Break Interval"
+  description="Calculate personalised ADHD focus blocks and break intervals. Enter your typical attention span, task type, and medication status to get an ADHD-adjusted work schedule."
+  canonical="https://calculations.tools/health/adhd-break-calculator"
+  tocItems={tocItems}
+  embedSlug="adhd-break-calculator"
+  schema={schema}
+  reviewerKey="nikki"
+  sources={sources}
+  ogFormula="Focus block = typical span × task multiplier × medication factor"
+  ogExample="20 min span × 1.25 (deep work) = 25 min focus, 5 min break"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container" style="display:flex;flex-direction:column;gap:0.9rem;">
+        <div class="calculator-header">
+          <h2>ADHD Attention Span & Break Interval Calculator</h2>
+          <p>Personalised focus blocks and break intervals</p>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="adb-focus-time">Your typical focus time (minutes)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="adb-focus-time" class="bmi-input" placeholder="e.g. 20" value="20" />
+            <span class="bmi-unit-tag">min</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">Task type</label>
+          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-top:0.25rem;">
+            <button class="adb-task-btn bmi-unit-btn" data-task="routine">Routine</button>
+            <button class="adb-task-btn bmi-unit-btn active" data-task="moderate">Moderate</button>
+            <button class="adb-task-btn bmi-unit-btn" data-task="deep">Deep work</button>
+          </div>
+        </div>
+        <div class="bmi-field" style="flex-direction:row;align-items:center;gap:0.6rem;cursor:pointer;">
+          <input type="checkbox" id="adb-medication" style="width:1rem;height:1rem;accent-color:#818cf8;flex-shrink:0;cursor:pointer;" />
+          <label class="bmi-label" for="adb-medication" style="margin:0;cursor:pointer;">Taking ADHD medication today</label>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="adb-session-hours">Total session length (optional)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="adb-session-hours" class="bmi-input" placeholder="e.g. 3" />
+            <span class="bmi-unit-tag">hours</span>
+          </div>
+        </div>
+        <div id="adb-result"></div>
+        <HealthDisclaimer />
+      </div>
+    </section>
+    <script src="/js/adhd-break-calculator.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>This calculator takes your honest attention span, your task type, and whether you're medicated, then outputs a focus block length, short break, and long break scaled to how your <a href="/glossary/adhd">ADHD</a> brain actually works - not the standard 25-minute <a href="/glossary/pomodoro-technique">Pomodoro</a> that wasn't designed for it.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>Adults with ADHD typically sustain focus for 15-30 minutes on routine tasks, compared to 45-60 minutes for neurotypical adults (CHADD, 2026).</li>
+          <li>Short breaks of 5-10 minutes are most effective when they involve physical movement, not phone scrolling.</li>
+          <li>Taking ADHD medication typically extends sustainable focus duration by 20-35%, so the calculator adjusts upward by a 1.3x factor.</li>
+          <li>After every 4 focus blocks, a longer break of 20-25 minutes allows a fuller cognitive reset before the next set.</li>
+          <li>Deep work tasks (coding, writing, analysis) support longer blocks; routine tasks need shorter ones.</li>
+        </ul>
+      </div>
+      <h2 id="adhd-attention-span">How long can someone with ADHD actually focus?</h2>
+      <p>Adults with ADHD typically sustain attention for 15 to 30 minutes on routine tasks before concentration drifts, roughly half the 45 to 60 minutes that neurotypical adults manage (CHADD, 2026).</p>
+      <p>The critical difference isn't raw duration - it's consistency. ADHD attention jumps unpredictably, making sustained effort on low-interest tasks significantly harder than the numbers suggest.</p>
+      <p>Children with ADHD follow a different pattern. A common clinical rule of thumb is 2 to 3 minutes of sustained focus per year of age. A 10-year-old might manage 20 to 30 minutes under ideal conditions.</p>
+      <p>This is why the same 25-minute Pomodoro that struggles for adults is too long for most children with ADHD on a bad focus day.</p>
+      <p>The shape of ADHD attention matters too. Many adults report being able to <a href="/glossary/hyperfocus">hyperfocus</a> for hours on genuinely interesting work while losing focus within minutes on routine tasks. This isn't inconsistency to fix - it's the architecture of the ADHD attention system. The calculator accounts for task type with multipliers precisely because of this.</p>
+      <h3 id="explained-to-beginner">ADHD explained to a beginner</h3>
+      <p>Think of your attention like a phone battery with an unpredictable drain rate. On a boring task, it drains fast - maybe 100% gone in 15 minutes. On something you find genuinely interesting, the same battery lasts 90 minutes.</p>
+      <p>And unlike a regular phone, there's no charge percentage bar you can check. The calculator's job is to estimate drain rate by task type, then tell you how long to run before you need to plug back in (take a break).</p>
+      <h2 id="how-to-use">How to use this ADHD attention span calculator</h2>
+      <p>Enter how many minutes you can typically focus before losing concentration on a moderate task. If you're not sure, start with 15 minutes - it's better to underestimate and succeed than to overestimate and fail. Then choose your task type (Routine, Moderate, or Deep Work) and indicate whether you've taken ADHD medication today.</p>
+      <p>The optional session length field tells the calculator how many focus blocks fit into your total work time, which is useful for planning a full workday. Enter 4 for a half-day, 8 for a full day.</p>
+      <p>Once you've run the calculator a few times over a week, you'll see a pattern. If you're consistently finishing focus blocks with energy left over, nudge your typical focus time up by 5 minutes. If you're regularly losing focus before the block ends, nudge it down. The goal is a number that feels slightly challenging but achievable most days.</p>
+      <h2 id="task-multipliers">What do the task type and medication adjustments do?</h2>
+      <p>The calculator multiplies your typical focus span by a task-type factor and an optional medication factor. Routine tasks get a 0.75 multiplier because low-interest tasks drain ADHD attention faster than average. Deep work gets 1.25 because high-engagement work can sustain focus longer. Moderate tasks stay at 1.0 as the baseline.</p>
+      <Formula expr={f.focus} />
+      <p>The medication factor of 1.3 reflects the documented effect of stimulant ADHD medication. Methylphenidate and amphetamine-based medications increase dopamine and norepinephrine availability, extending the period of sustained attention.</p>
+      <p>This is a conservative estimate - individual responses range from 1.1x to 1.5x depending on dose, type, and individual physiology. If your medication has a stronger or weaker effect in practice, treat it as a direction indicator rather than a precise number.</p>
+      <p>The short break formula rounds to the nearest 5 minutes to keep blocks predictable.</p>
+      <Formula expr={f.break} />
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Task type</th>
+              <th>Multiplier</th>
+              <th>20 min span example</th>
+              <th>Typical use cases</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Routine</td><td>0.75×</td><td>15 min</td><td>Data entry, filing, repetitive admin</td></tr>
+            <tr><td>Moderate</td><td>1.0×</td><td>20 min</td><td>Email, standard meetings, most work tasks</td></tr>
+            <tr><td>Deep work</td><td>1.25×</td><td>25 min</td><td>Writing, coding, analysis, creative work</td></tr>
+            <tr><td>Medicated bonus</td><td>+1.3×</td><td>+30%</td><td>Applied after task multiplier</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>In my experience reviewing ADHD productivity systems, the task-type distinction is the most underused variable.</p>
+      <p>Most people set one interval and use it for everything. But the same person who can code for 40 minutes in a single block will lose focus in 10 minutes during a data entry session.</p> 
+      <p>Matching block length to task type is a bigger win than finding the perfect base number.</p>
+      <h2 id="adhd-pomodoro">Is the Pomodoro technique good for ADHD?</h2>
+      <p>It helps, but needs adjustment. The classic 25-minute work block was developed without ADHD in mind and is too long for many adults on routine tasks.</p>
+      <p>Research and practitioner guidance suggest 10 to 20 minute blocks work better for low-interest tasks, while deep work sessions can sometimes run 40 to 50 minutes without a break <a href="https://www.getinflow.io/post/pomodoro-technique-adhd-productivity" target="_blank" rel="noopener noreferrer">(getinflow.io, 2024)</a>. The core benefit of Pomodoro for ADHD isn't the specific numbers - it's the structured endpoint.</p>
+      <p>Knowing a break is coming in 15 minutes dramatically lowers the activation energy required to start a task. ADHD brains often struggle more with starting than sustaining. A timer that says "just 15 minutes" bypasses some of that friction in a way that "work until you're done" never does.</p>
+      <p>Some adults with ADHD report that the 50/10 split (50 minutes work, 10 minutes break) works better than 25/5 for deep work. This is consistent with the deep work multiplier in this calculator.</p>
+      <p>If your typical focus time is 40 minutes, the calculator will recommend a 50-minute block for deep work - which matches the 50/10 approach many find natural for coding or writing.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Schedule variant</th>
+              <th>Focus</th>
+              <th>Short break</th>
+              <th>Best for</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Classic Pomodoro</td><td>25 min</td><td>5 min</td><td>Neurotypical baseline, moderate tasks</td></tr>
+            <tr><td>Short ADHD sprint</td><td>10-15 min</td><td>5 min</td><td>Low-interest tasks, bad focus days</td></tr>
+            <tr><td>Standard ADHD block</td><td>20-25 min</td><td>5 min</td><td>Most moderate tasks, typical days</td></tr>
+            <tr><td>Deep work block</td><td>40-50 min</td><td>10-15 min</td><td>Coding, writing, flow-state work</td></tr>
+            <tr><td>Long break cycle</td><td>4 blocks</td><td>20-25 min</td><td>After every 4 short blocks</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h2 id="breaks">How long should ADHD breaks be?</h2>
+      <p>Short breaks between focus blocks should be 5 to 15 minutes - approximately one quarter of your focus block length. A 20-minute block gets a 5-minute break; a 50-minute block gets a 10 to 15 minute break. After every four blocks, take a longer break of 20 to 25 minutes to allow a fuller reset before starting the next set (PsychCentral, 2023).</p>
+      <p>What you do during the break matters as much as the length. Physical movement - even a short walk, some stretching, or a brief workout - helps more than passive rest. It shifts the brain into a different mode, which makes re-engagement easier.</p>
+      <p>Scrolling on a phone is the most common break mistake: it feels like rest but keeps the stimulation-seeking part of the ADHD brain active, making it harder to return to the task.</p>
+      <p>Some people find that break timers help as much as focus timers. ADHD time blindness means breaks can stretch from 5 minutes to 45 minutes without feeling like it. Setting a separate timer for the break - not just the focus block - is worth building into your system.</p>
+      <h2 id="hyperfocus">Can people with ADHD hyperfocus for hours?</h2>
+      <p>Yes, and this surprises people who assume ADHD always means short attention spans. <a href="/glossary/hyperfocus">Hyperfocus</a> is a well-documented ADHD experience where a person becomes so absorbed in a task that hours pass unnoticed.</p>
+      <p>It most often occurs with high-interest activities - gaming, creative work, coding, or anything with immediate feedback loops. For many adults with ADHD, this is their most productive state.</p>
+      <p><b>Hyperfocus creates a practical risk:</b> the same person who can't focus for 20 minutes on email can lose 4 hours in a programming task without eating or drinking.</p>
+      <p>The long break in this calculator (every 4 blocks) serves as a safeguard. Even during a hyperfocus session, a 25-minute break reminder every 90 to 100 minutes prompts a water and bathroom break without requiring you to stop completely.</p>
+      <p>Hyperfocus cannot be deliberately switched on. It arrives with interest, not effort. The most reliable way to use it is to notice which tasks trigger it for you, then schedule those tasks during your highest-energy hours where you're most likely to drop into that state naturally.</p>
+      <h2 id="mistakes">Common mistakes with ADHD work intervals</h2>
+      <h3>Using one interval length for every task</h3>
+      <p>A 25-minute block for routine admin that only needs 15 minutes of focus leads to wasted time and frustration. Using the same block for deep creative work means cutting the session short just as focus is deepening. Task-matched intervals are worth the small setup cost.</p>
+      <h3>Ignoring medication timing</h3>
+      <p>If you take stimulant medication with a 4-6 hour window, the last 90 minutes look very different from the first 90. Most people get their best deep work blocks in hours 2-4 after medication, then switch to easier tasks as it fades. Building your session structure around your medication curve is one of the most underrated productivity tactics for ADHD.</p>
+      <h3>Treating the calculator output as fixed</h3>
+      <p>The numbers are a starting point. Someone who self-reports a 20-minute span but consistently finishes 25-minute deep work blocks still in focus should update their number to 25. The goal is calibration over time, not compliance with a formula.</p>
+      <h2 id="faq">FAQs about ADHD focus intervals</h2>
+      <h3>How long can someone with ADHD focus?</h3>
+      <p>Adults with ADHD typically manage 15 to 30 minutes of sustained focus on routine tasks. For deeply engaging or high-interest tasks, that can extend considerably - sometimes into hyperfocus territory of 2+ hours. The key factor is interest level and task novelty, not raw capacity.</p>
+      <h3>Is the Pomodoro technique good for ADHD?</h3>
+      <p>It helps, but needs adapting. The standard 25-minute block is often too long for routine tasks and too short for deep work. Most adults with ADHD find shorter blocks (10-20 min) work better for low-interest tasks, while 40-50 minute blocks suit coding or writing. The structured endpoint is the main benefit - not the specific timing.</p>
+      <h3>How long should ADHD breaks be?</h3>
+      <p>Short breaks should be 5 to 15 minutes, roughly one quarter of your focus block. After every four blocks, take a longer break of 20 to 25 minutes. Use movement during breaks rather than passive scrolling, which keeps the dopamine-seeking system active and makes returning to work harder.</p>
+      <h3>What is the best work-to-break ratio for ADHD?</h3>
+      <p>There's no universal ratio. A 4:1 ratio (20 min work, 5 min break) is a solid starting point for most moderate tasks. For routine tasks, 3:1 or even 2:1 (15 min work, 5 min break) often works better. For deep work sessions, some adults prefer 5:1 or 50/10. Test for a week and track output, not just how focused you feel.</p>
+      <h3>Can people with ADHD hyperfocus for hours?</h3>
+      <p>Yes. Hyperfocus is a genuine ADHD trait where someone becomes fully absorbed in a high-interest task, losing track of time entirely. It's the opposite end of the same inconsistent attention system. It can't be deliberately triggered, but it tends to occur reliably on tasks with immediate feedback, creative flow, or strong personal interest.</p>
+      <QuizBlock
+        topic="ADHD focus intervals"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/adhd-break-calculator"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">📊</span>
+          <div>
+            <a href="/health/aba-behavior-rate-calculator">ABA Behavior Rate Calculator</a>
+            <p>Calculate frequency rates, duration percentages, and latency for behavioral data collection - commonly used alongside ADHD behavior tracking.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🧩</span>
+          <div>
+            <a href="/health/dtt-data-calculator">DTT Data Calculator</a>
+            <p>Track percent correct and mastery status across discrete trial teaching sessions, often used in structured ADHD skill-building programs.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📋</span>
+          <div>
+            <a href="/health/iep-goal-calculator">IEP Goal Progress Calculator</a>
+            <p>Track IEP goal accuracy and mastery streaks across sessions - most students with ADHD have an IEP with academic or behavioral goals that need progress monitoring.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌱</span>
+          <div>
+            <a href="/health/child-developmental-age-calculator">Child Developmental Age Calculator</a>
+            <p>Estimate developmental age by domain - ADHD often involves uneven profiles where some areas are age-appropriate and others lag, which affects how focus blocks should be structured.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">📝</span>
+          <div>
+            <a href="/word-counter">Word Counter</a>
+            <p>Track writing output during focused sessions - useful for measuring what you actually produce during each focus block.</p>
+          </div>
+        </li>
+      </ul>
+      <RelatedGlossaryTerms toolPath="/health/adhd-break-calculator" />
+    </div>
+  </div>
+</CalculatorLayout>

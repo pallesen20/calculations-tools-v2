@@ -1,0 +1,99 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="DTT Data Calculator - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>DTT Data Calculator</h2>
+        <p>Percent correct & mastery status</p>
+      </div>
+
+      <div class="bmi-unit-toggle">
+        <button class="dtt-mode-btn bmi-unit-btn active" data-mode="single">Single session</button>
+        <button class="dtt-mode-btn bmi-unit-btn" data-mode="multi">Across sessions</button>
+      </div>
+
+      <div id="dtt-single-section">
+        <div class="bmi-field">
+          <label class="bmi-label" for="dtt-correct">Correct (independent)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="dtt-correct" class="bmi-input" placeholder="e.g. 8" />
+            <span class="bmi-unit-tag">trials</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="dtt-prompted">Prompted</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="dtt-prompted" class="bmi-input" placeholder="e.g. 2" />
+            <span class="bmi-unit-tag">trials</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="dtt-incorrect">Incorrect</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="dtt-incorrect" class="bmi-input" placeholder="e.g. 3" />
+            <span class="bmi-unit-tag">trials</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="dtt-no-response">No response</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="dtt-no-response" class="bmi-input" placeholder="e.g. 2" />
+            <span class="bmi-unit-tag">trials</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="dtt-multi-section" style="display:none;">
+        <div class="dtt-session-header">
+          <span class="dtt-session-label">Session</span>
+          <span class="dtt-col-label">C</span>
+          <span class="dtt-col-label">P</span>
+          <span class="dtt-col-label">I</span>
+          <span class="dtt-col-label">NR</span>
+          <span style="width:32px"></span>
+        </div>
+        <div id="dtt-sessions-container"></div>
+        <button id="dtt-add-session" class="abr-add-btn">+ Add session</button>
+        <div class="bmi-field" style="margin-top:0.5rem;">
+          <label class="bmi-label" for="dtt-consecutive">Consecutive sessions needed</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="dtt-consecutive" class="bmi-input" placeholder="3" value="3" />
+            <span class="bmi-unit-tag">sessions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bmi-field" style="margin-top:0.75rem;">
+        <label class="bmi-label" for="dtt-mastery">Mastery criterion: <span id="dtt-mastery-display">80%</span></label>
+        <input type="range" id="dtt-mastery" min="50" max="100" value="80" step="5" class="dtt-mastery-slider" />
+      </div>
+
+      <div id="dtt-result"></div>
+
+      <div class="abr-attribution">
+        <a href="https://calculations.tools/health/dtt-data-calculator" target="_blank" rel="noopener">calculations.tools</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/dtt-data-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .calculator-container { padding: 1.25rem; }
+  .bmi-unit-toggle { display: flex; background: rgba(255,255,255,0.08); border-radius: 8px; padding: 3px; gap: 2px; margin-bottom: 1.25rem; }
+  .bmi-unit-btn { background: transparent; border: none; color: rgba(255,255,255,0.6); font-size: 0.8rem; padding: 0.3rem 0.7rem; border-radius: 6px; cursor: pointer; white-space: nowrap; flex: 1; }
+  .bmi-unit-btn.active { background: rgba(255,255,255,0.15); color: white; }
+  .bmi-field { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; gap: 0.5rem; }
+  .bmi-label { font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+  .bmi-input-wrap { display: flex; align-items: center; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; overflow: hidden; }
+  .bmi-input { width: 5.5rem; padding: 0.4rem 0.5rem; background: rgba(255,255,255,0.08); border: none; color: white; font-size: 0.9rem; text-align: right; }
+  .bmi-unit-tag { padding: 0 0.5rem; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.55); font-size: 0.8rem; white-space: nowrap; align-self: stretch; display: flex; align-items: center; }
+  .dtt-mastery-slider { width: 100%; margin-top: 0.4rem; accent-color: #818cf8; }
+  .abr-attribution { text-align: center; margin-top: 0.75rem; }
+  .abr-attribution a { font-size: 0.72rem; color: rgba(255,255,255,0.3); text-decoration: none; }
+  .abr-attribution a:hover { color: rgba(255,255,255,0.6); }
+</style>

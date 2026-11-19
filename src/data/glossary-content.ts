@@ -2516,6 +2516,87 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'pomodoro-technique': {
+    definition: [
+      'The Pomodoro Technique is a time management method created by Francesco Cirillo in the late 1980s. The method divides work into 25-minute intervals called Pomodoros, each followed by a 5-minute short break. After completing four Pomodoros, a longer break of 15 to 30 minutes is taken. The name comes from the Italian word for tomato - Cirillo used a tomato-shaped kitchen timer as a student.',
+      'The technique\'s core mechanism is psychological rather than algorithmic. By committing to a fixed, short interval, the method reduces the activation energy required to start a task. Knowing that a break is coming - and that it is mandatory - makes it easier to resist distractions during the interval. The timer also forces regular disengagement, which prevents the mental fatigue that builds up during long unstructured work sessions.',
+    ],
+    keyTakeaways: [
+      'Standard Pomodoro: 25 minutes focused work, 5-minute short break, 15-30 minute long break after every 4 Pomodoros.',
+      'The 25-minute block is a default, not a rule. People with ADHD often do better with 10-15 minute blocks; deep work sessions can extend to 40-50 minutes.',
+      'Stopping when the timer rings is as important as starting. Skipping breaks undercuts the technique\'s core mechanism.',
+      'Francesco Cirillo published the technique formally in 2006. The 25-minute interval was selected by experimenting with different durations as a student.',
+    ],
+    fastFact: 'Francesco Cirillo\'s original Pomodoro timer was a tomato-shaped kitchen timer he found in his family\'s kitchen. The 25-minute default was not derived from research but from personal experimentation - it was the interval at which he personally found consistent focus without significant attention drift.',
+    beginnerExplain: [
+      'Think of it like a game where you only have to focus for one short round before you get a break. Instead of staring at a 3-hour task that feels overwhelming, you only have to work for 25 minutes - then you get 5 minutes completely free. The structure turns an intimidating block into something that actually has an end point, which makes it much easier to start.',
+      'It\'s the same reason TV episodes feel more manageable than a 3-hour film when you\'re tired: a defined runtime feels achievable. When the timer rings, you stop - even mid-sentence. This discipline of stopping is what makes the next Pomodoro easier to begin.',
+    ],
+    whenToUse: 'Use the Pomodoro Technique when you are procrastinating on a task that feels too large or aversive to start, when long unstructured work sessions leave you mentally exhausted, or when you need to protect focus time from interruptions. It is especially effective for knowledge work, writing, studying, and tasks with no built-in feedback loops.',
+    examples: {
+      headers: ['Interval', 'Standard Pomodoro', 'ADHD adaptation', 'Deep work variant'],
+      rows: [
+        ['Focus block', '25 minutes', '10-15 minutes', '45-50 minutes'],
+        ['Short break', '5 minutes', '5 minutes', '10 minutes'],
+        ['Long break', '15-30 min (after 4)', '15-20 min (after 4)', '20-25 min (after 4)'],
+        ['Best for', 'Most tasks', 'Low-interest or ADHD', 'Coding, writing, analysis'],
+      ],
+    },
+    pitfalls: 'The most common mistake is not stopping when the timer rings. Working through breaks undermines the technique\'s reset mechanism and leads to the same mental fatigue the method is designed to prevent. A second mistake is treating 25 minutes as fixed - if you consistently lose focus at 15 minutes or find you are in a strong flow state at 25, adjust the interval. The goal is sustainable output, not adherence to a number.',
+    faqs: [
+      {
+        q: 'Can you adjust the Pomodoro interval from 25 minutes?',
+        a: 'Yes - 25 minutes is a guideline, not a rule. People with ADHD often do better with 10-15 minute blocks. Those doing deep work like coding or writing can often extend to 40-50 minutes. Track which interval length gives you the most consistent output over a full week - that is your personal Pomodoro.',
+      },
+      {
+        q: 'Should you stop working mid-task when the Pomodoro timer rings?',
+        a: 'In Cirillo\'s original method, yes - you stop immediately. The discipline of stopping trains you to respect the boundary, which makes future Pomodoros easier to start. If you are in genuine flow and stopping mid-thought would cause real cost, note where you are and stop at the next natural pause.',
+      },
+      {
+        q: 'Does the Pomodoro Technique work for ADHD?',
+        a: 'It can, but the standard 25-minute block often needs adjusting. Many adults with ADHD find that 10 to 20 minute blocks work better. The technique\'s core benefit - breaking work into finite intervals with a known end point - addresses one of ADHD\'s key barriers: task initiation friction. The ADHD break calculator adjusts the interval based on your actual attention span.',
+      },
+      {
+        q: 'What counts as a valid break in the Pomodoro Technique?',
+        a: 'A valid break involves genuine cognitive disengagement from the task - walking, stretching, making tea, staring out the window. Phone scrolling or checking email does not count as a break because it continues to engage your attention system. Even 5 minutes of real rest is significantly more restorative than 5 minutes of passive screen time.',
+      },
+    ],
+    quiz: {
+      topic: 'the Pomodoro Technique',
+      questions: [
+        {
+          q: 'What is the standard focus interval in the original Pomodoro Technique?',
+          options: ['15 minutes', '20 minutes', '25 minutes', '30 minutes'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Francesco Cirillo\'s original Pomodoro uses 25-minute focus intervals. This was not derived from research but from personal experimentation - it was the interval at which Cirillo found consistent focus without significant attention drift.',
+        },
+        {
+          q: 'How many Pomodoros are completed before a long break is taken?',
+          options: ['2', '3', '4', '5'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The standard Pomodoro cycle is 4 Pomodoros followed by a long break of 15-30 minutes. The long break allows a fuller cognitive reset before the next set of 4.',
+        },
+        {
+          q: 'According to the page, what is the most common mistake people make with the Pomodoro Technique?',
+          options: ['Using too short an interval', 'Not stopping when the timer rings', 'Taking too many long breaks', 'Using it for creative work'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The most common mistake is working through breaks. The break is the technique\'s reset mechanism - skipping it leads to the same mental fatigue the method is designed to prevent.',
+        },
+        {
+          q: 'Why does the Pomodoro Technique make it easier to start a task?',
+          options: ['It automatically blocks distracting websites', 'It rewards you with points for each completed interval', 'Committing to a short interval reduces the psychological barrier to starting', 'It tracks productivity across the whole day'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The technique reduces activation energy by limiting the commitment. Instead of facing a 3-hour task, you only have to work for 25 minutes. The finite endpoint makes it much easier to start - this is the core psychological mechanism.',
+        },
+        {
+          q: 'What does the page recommend as a valid short break activity?',
+          options: ['Checking email', 'Scrolling through social media', 'Walking or stretching', 'Reading a related article'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'A valid break involves genuine cognitive disengagement - walking, stretching, making tea. Phone scrolling and email do not count because they continue engaging your attention system. Real rest is what makes the next Pomodoro sustainable.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
   'proportion': {
     definition: [
       'A proportion is a statement of equality between two ratios: $$\\frac{a}{b} = \\frac{c}{d}$$ It asserts that two quantities scale together at the same rate. If 4 workers can complete a task in 6 hours, a proportion allows you to find how long 10 workers would take under the same conditions. Proportions are the algebraic backbone of scaling, unit conversion, and similarity in geometry.',
@@ -9066,6 +9147,196 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'discrete-trial-training': {
+    definition: [
+      'Discrete Trial Training (DTT) is a structured teaching method within Applied Behavior Analysis. Each "trial" follows a three-part sequence: an antecedent (the discriminative stimulus, or SD) presented by the therapist, the learner\'s response, and a consequence (reinforcement for correct responses or a correction procedure for errors). Trials are presented one at a time, with a clear inter-trial interval between them.',
+      'Data is recorded on every trial using four response categories: correct (independent), prompted, incorrect, and no response. This trial-by-trial recording allows BCBAs to calculate percent correct, monitor prompt fading, and determine when a learner meets the program\'s mastery criterion - typically 80% independent correct across 3 consecutive sessions.',
+      'DTT is used in over 90% of early intensive ABA programs for autism spectrum disorder (National Autism Center, 2015). It is particularly effective for teaching foundational skills - imitation, language, academic concepts, and self-care tasks - where the skill can be broken into discrete, teachable steps that benefit from structured repetition.',
+    ],
+    keyTakeaways: [
+      'DTT follows a three-part sequence: antecedent (SD) → response → consequence. This "three-term contingency" is the structural foundation of all ABA instruction.',
+      '% independent correct = correct trials / total trials × 100. Prompted trials never count toward mastery.',
+      'The standard mastery criterion is 80% independent correct across 3 consecutive sessions; some programs use 90% across 2 for high-stakes skills.',
+      'Prompt dependency - when a learner waits for a prompt instead of responding to the SD alone - is the most common complication and shows up as high prompted % with low independent % across sessions.',
+      'DTT is used in over 90% of early intensive ABA programs for autism, making it the most widely used structured teaching format in the field (National Autism Center, 2015).',
+    ],
+    fastFact: 'DTT was formalized as a clinical procedure by Ivar Lovaas at UCLA in the 1970s. His 1987 study reported that 47% of children with autism who received 40+ hours per week of intensive DTT-based intervention achieved normal intellectual and educational functioning by first grade - a finding that established DTT as the gold standard for early autism intervention.',
+    beginnerExplain: [
+      'Think of DTT like a very structured flashcard drill. The teacher holds up a card (the antecedent), waits for the student to respond, and immediately says "great job" or "try again." Each card is one trial. After 10 cards, the teacher counts how many times the student answered without being shown the right answer first. If the student got 8 of 10 on their own - 80% - and does that three days in a row, they\'ve mastered the concept.',
+      'The key difference from regular teaching is the data. Every single trial is recorded as correct, prompted, wrong, or no answer. This creates a clear picture of learning that lets the teacher know exactly when to move on - and reveals if the student is becoming dependent on hints rather than truly learning the skill.',
+    ],
+    whenToUse: 'DTT is the right teaching format when a skill can be broken into discrete, unambiguous steps and benefits from structured repetition with consistent consequences. It is the primary format for early language, imitation, matching, and academic skills in early intensive ABA programs. It is less appropriate for skills that require fluent, natural-context responding - for those, Natural Environment Training (NET) is more effective. BCBAs typically use DTT for new skill acquisition and NET for generalization.',
+    examples: {
+      headers: ['Skill target', 'Example SD', 'Correct response', 'Typical criterion'],
+      rows: [
+        ['Identifying colors', '"Touch red"', 'Touches the red card', '80% / 3 consecutive sessions'],
+        ['Receptive labels', '"Where is the ball?"', 'Points to ball', '80% / 3 consecutive sessions'],
+        ['Imitation', '"Do this" (clap hands)', 'Claps hands within 5 seconds', '80% / 3 consecutive sessions'],
+        ['Safety skills', '"Stop at the curb"', 'Stops at edge, waits', '100% / 2 consecutive sessions'],
+        ['Greeting', '"Say hi to your teacher"', '"Hi [name]" within 5 seconds', '90% / 2 consecutive sessions'],
+      ],
+    },
+    pitfalls: 'The most common pitfall is recording prompted trials as correct - this inflates percent correct and can lead to advancing a program before the learner has truly acquired the skill. The second major pitfall is delivering prompts too quickly (before the learner has a chance to respond independently), which teaches the learner to wait for help rather than attempt the response. A third issue is inconsistent response intervals - if some staff wait 3 seconds and others wait 10, the NR rate becomes a measure of patience rather than skill. All of these problems are detectable from DTT data: unusually high prompted %, stable but low independent %, or high NR rates with specific staff.',
+    faqs: [
+      { q: 'Is DTT the same as ABA?', a: 'No. DTT is one specific teaching technique within ABA. ABA is the broader science of behavior; it includes many methods such as Natural Environment Training, Functional Behavior Assessment, and behavior intervention plans. DTT is simply the most widely recognized ABA format in early intensive intervention programs for autism.' },
+      { q: 'How long does a DTT session typically last?', a: 'DTT sessions typically run 5-20 minutes per skill target. Early intervention programs may run 20-40 hours of DTT per week in total, broken into short blocks throughout the day. Longer blocks lead to satiation and reduced motivation - most practitioners limit any single DTT block to 10-15 minutes before switching activities or switching to Natural Environment Training.' },
+      { q: 'What is the difference between DTT and Natural Environment Training?', a: 'DTT is structured, therapist-directed, and table-based - trials are presented in a controlled setting with consistent antecedents. Natural Environment Training (NET) teaches the same skills in the learner\'s natural environment, following the learner\'s motivation. BCBAs typically use DTT to acquire new skills and NET to generalize them to everyday contexts.' },
+    ],
+    quiz: {
+      topic: 'Discrete Trial Training',
+      questions: [
+        {
+          q: 'What are the three parts of a DTT trial in order?',
+          options: [
+            'Response, antecedent, consequence',
+            'Antecedent (SD), response, consequence',
+            'Consequence, SD, response',
+            'Prompt, response, reinforcement',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A DTT trial follows the three-term contingency: antecedent (the SD presented by the therapist), the learner\'s response, and the consequence (reinforcement or correction). This sequence is the structural foundation of all ABA instruction.',
+        },
+        {
+          q: 'A session has 7 correct, 3 prompted, 2 incorrect, 3 NR. What is the % independent correct?',
+          options: ['46.7%', '53.3%', '66.7%', '73.3%'] as [string, string, string, string],
+          correct: 0 as const,
+          explanation: 'Total trials = 7 + 3 + 2 + 3 = 15. % independent = 7 / 15 × 100 = 46.7%. Only independent correct trials count - prompted trials are never included in the mastery calculation.',
+        },
+        {
+          q: 'According to this entry, what is the standard mastery criterion in DTT?',
+          options: [
+            '70% correct in a single session',
+            '100% correct across any 2 sessions',
+            '80% independent correct across 3 consecutive sessions',
+            '90% correct including prompted responses across 2 sessions',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The standard mastery criterion is 80% independent correct across 3 consecutive sessions. Some programs use 90% across 2 consecutive sessions for high-stakes skills like communication or safety behaviors.',
+        },
+        {
+          q: 'What is the most common pitfall in DTT data recording identified in this entry?',
+          options: [
+            'Setting the response interval too long',
+            'Using too many trials per session',
+            'Recording prompted trials as correct, which inflates percent correct',
+            'Not tracking no-response trials separately from incorrect trials',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Recording prompted trials as correct inflates the percent correct and can lead to advancing a program before the learner has truly acquired the skill independently. Prompted trials must always be recorded separately and never counted toward the mastery criterion.',
+        },
+        {
+          q: 'What is the key difference between DTT and Natural Environment Training (NET)?',
+          options: [
+            'DTT uses reinforcement; NET does not',
+            'DTT is structured and therapist-directed; NET teaches skills in the learner\'s natural environment following their motivation',
+            'NET is used for new skill acquisition; DTT is used for generalization',
+            'DTT can only be used in clinic settings; NET can be used anywhere',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'DTT is structured, therapist-directed, and table-based with consistent antecedents. NET teaches the same skills in the learner\'s natural environment following the learner\'s motivation. BCBAs typically use DTT to acquire new skills and NET to generalize them.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'adhd': {
+    definition: [
+      'ADHD (Attention Deficit Hyperactivity Disorder) is a neurodevelopmental condition characterized by persistent and impairing patterns of inattention, hyperactivity, and impulsivity. It is one of the most studied psychiatric conditions, affecting approximately 5-7% of children worldwide, with symptoms persisting into adulthood in around 60-70% of cases (American Psychiatric Association, DSM-5-TR, 2022). It is caused by differences in brain development and function, not by poor parenting, laziness, or lack of effort.',
+      'The DSM-5 defines three presentations: predominantly inattentive (difficulty sustaining attention, following through, and organizing), predominantly hyperactive-impulsive (difficulty staying still, interrupting, acting without thinking), and combined (both sets of symptoms). Combined is the most common presentation in clinical settings. The inattentive type is more frequently missed, particularly in girls and adults whose hyperactivity is less visible.',
+      'The core deficit is not an inability to pay attention in general - it is difficulty regulating attention voluntarily. People with ADHD can often focus intensely on high-interest activities for hours, a state called hyperfocus. The challenge is directing and sustaining attention on tasks that are not inherently interesting or immediately rewarding. This is why the same person who cannot focus on paperwork for 10 minutes may code or draw for 4 hours without a break.',
+    ],
+    keyTakeaways: [
+      'ADHD affects 5-7% of children and 2-5% of adults globally; it is one of the most well-validated psychiatric diagnoses with decades of research support (APA, 2022).',
+      'Three DSM-5 presentations: predominantly inattentive, predominantly hyperactive-impulsive, and combined. Combined is the most common.',
+      'The core deficit is in regulating attention - directing it voluntarily to match task demands - not in the raw capacity to focus.',
+      'Stimulant medications (methylphenidate, amphetamines) are the most evidence-based pharmacological treatment, increasing dopamine and norepinephrine availability in the prefrontal cortex.',
+      'Adults with ADHD typically sustain focus for 15-30 minutes on routine tasks, roughly half the 45-60 minutes that neurotypical adults manage on average.',
+    ],
+    fastFact: 'Adults with ADHD typically sustain focus for 15-30 minutes on routine tasks before attention drifts, yet the same person may hyperfocus for hours on a genuinely engaging task. This variability - not simply a "short attention span" - is the defining feature of ADHD attention. The ADHD break calculator uses this distinction to generate adjusted work-rest schedules based on actual attention span rather than neurotypical defaults.',
+    beginnerExplain: [
+      'Think of ADHD as a steering problem, not an engine problem. The engine - the ability to focus - works fine, often extremely well. The steering - the ability to point that focus at whatever you decide to focus on - is what does not work reliably. When a task is genuinely interesting or urgent, the steering works perfectly. When a task is boring or low-stakes, the steering drifts despite the best intentions.',
+      'This is why people with ADHD often seem fine on video games or creative work but struggle with homework or admin tasks. It is not laziness - the same brain that hyperfocuses for 4 hours on the right activity genuinely cannot hold attention on a low-interest task for 10 minutes without external support like timers, body doubling, or structured breaks.',
+    ],
+    whenToUse: 'ADHD is relevant when designing work schedules, planning study sessions, timing medication, sequencing tasks, or structuring any environment for sustainable focus. Tools like the ADHD break calculator use attention span data specific to ADHD to generate adjusted work-rest intervals rather than applying neurotypical defaults like the standard 25-minute Pomodoro.',
+    examples: {
+      headers: ['Feature', 'Inattentive', 'Hyperactive-impulsive', 'Combined'],
+      rows: [
+        ['Primary challenges', 'Sustaining focus, organizing, following through', 'Fidgeting, interrupting, acting without thinking', 'Both sets of symptoms'],
+        ['Often missed in', 'Girls; adults; high-IQ individuals', 'Less commonly missed', 'Diagnosed earlier in childhood'],
+        ['Typical focus span (routine)', '10-20 minutes', '10-20 minutes', '10-20 minutes'],
+        ['Key management tools', 'Structure, timers, written reminders', 'Movement breaks, varied tasks', 'Combination of both'],
+      ],
+    },
+    pitfalls: 'The most common misconception is that ADHD means a uniformly short attention span. Hyperfocus is real and well-documented - someone with ADHD may lose focus in 10 minutes on a boring task and sustain 4 hours on an interesting one. A second pitfall is assuming medication alone is sufficient; evidence consistently shows combined treatment (medication plus behavioral strategies) outperforms medication alone for daily functioning. A third is diagnosing based on concentration difficulty in one context - inattention must be pervasive across settings to meet diagnostic criteria.',
+    faqs: [
+      {
+        q: 'What is the difference between ADHD inattentive and ADHD combined types?',
+        a: 'The inattentive type features difficulty sustaining attention, following through, and organizing but without significant hyperactivity or impulsivity. Combined type meets criteria for both. Combined is the most common clinical presentation; inattentive type is more frequently missed, especially in girls and adults whose symptoms are less disruptive to others.',
+      },
+      {
+        q: 'Can adults have ADHD if they were never diagnosed as children?',
+        a: 'Yes. Many adults receive a first diagnosis in their 30s or 40s, particularly those with high intelligence who compensated through academic performance. The DSM-5 requires symptoms to have been present before age 12, but they may not have caused visible impairment until adult demands - managing finances, careers, relationships - increased significantly.',
+      },
+      {
+        q: 'How does ADHD medication work?',
+        a: 'Stimulant medications increase dopamine and norepinephrine availability in the prefrontal cortex, improving the brain\'s ability to self-regulate attention and inhibit impulsive responses. They are the most evidence-based pharmacological treatment. Non-stimulant options (atomoxetine, guanfacine) are also used, particularly when stimulants cause side effects or are not appropriate.',
+      },
+      {
+        q: 'What is hyperfocus in ADHD?',
+        a: 'Hyperfocus is a state of intense, sustained attention on a highly engaging task where the person loses track of time entirely. It appears paradoxical but is consistent with the core deficit: difficulty regulating attention voluntarily. When external interest substitutes for internal attention regulation, the result is hyperfocus rather than distraction.',
+      },
+    ],
+    quiz: {
+      topic: 'ADHD',
+      questions: [
+        {
+          q: 'According to the DSM-5, what are the three presentations of ADHD?',
+          options: [
+            'Mild, moderate, and severe',
+            'Childhood, adolescent, and adult',
+            'Predominantly inattentive, predominantly hyperactive-impulsive, and combined',
+            'Cognitive, behavioral, and emotional',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The DSM-5 defines three ADHD presentations based on the dominant symptom cluster: predominantly inattentive, predominantly hyperactive-impulsive, and combined (both sets of symptoms present). Combined is the most common presentation in clinical settings.',
+        },
+        {
+          q: 'An adult with ADHD spends 10 minutes on a work email, then 4 hours coding on a personal project without noticing time pass. What ADHD feature does the 4-hour coding session illustrate?',
+          options: [
+            'The person does not really have ADHD',
+            'Hyperfocus - intense sustained attention on a highly engaging task',
+            'Medication wearing off',
+            'The combined presentation only',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Hyperfocus is well-documented in ADHD - when a task is genuinely engaging, external interest substitutes for the internal attention regulation that is otherwise impaired. The same person who cannot focus on low-interest work for 10 minutes may sustain hours of focused work on something they find genuinely motivating.',
+        },
+        {
+          q: 'According to the page, how long do adults with ADHD typically sustain focus on routine tasks?',
+          options: ['5-10 minutes', '15-30 minutes', '30-45 minutes', '45-60 minutes'],
+          correct: 1 as const,
+          explanation: 'Adults with ADHD typically sustain focus for 15-30 minutes on routine tasks - roughly half the 45-60 minutes that neurotypical adults manage on average. This is the basis for the adjusted intervals in the ADHD break calculator.',
+        },
+        {
+          q: 'Which of the following is described as the core deficit of ADHD?',
+          options: [
+            'Having a universally short attention span',
+            'Inability to focus on any task',
+            'Difficulty regulating attention voluntarily to match task demands',
+            'Low intelligence or processing speed',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'ADHD is a difficulty in regulating attention, not an absence of it. The steering - choosing where to direct focus - is impaired. This explains why hyperfocus on interesting tasks coexists with inability to focus on low-interest ones in the same person.',
+        },
+        {
+          q: 'Which ADHD presentation is most frequently missed in girls and adults?',
+          options: ['Combined presentation', 'Hyperactive-impulsive presentation', 'Inattentive presentation', 'Severe presentation'],
+          correct: 2 as const,
+          explanation: 'The inattentive presentation is more commonly missed because its symptoms - poor organization, difficulty following through, losing things - are less disruptive to others than hyperactivity. Girls and high-IQ adults are particularly likely to be undiagnosed because they compensate or mask symptoms more effectively.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
   'applied-behavior-analysis': {
     definition: [
       'Applied Behavior Analysis (ABA) is a scientific discipline that applies the principles of learning and behavior - systematically established through decades of experimental research - to understand and change behaviors that matter to individuals and society. It draws on the foundational work of B.F. Skinner and the science of behaviorism, extended to real-world settings by Baer, Wolf, and Risley in their landmark 1968 paper defining the field.',
@@ -9158,6 +9429,392 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
           ] as [string, string, string, string],
           correct: 3 as const,
           explanation: 'An FBA identifies the reason a problem behavior occurs - whether maintained by attention, escape, sensory stimulation, or access to items. It is a prerequisite to any behavior intervention plan in schools or clinics.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'hyperfocus': {
+    definition: [
+      'Hyperfocus is a state of intense, sustained concentration on a single activity where a person becomes so absorbed that they lose awareness of time, surroundings, and other obligations. It is most commonly associated with ADHD, though it also occurs in autism spectrum disorder and certain mood states. During hyperfocus, an individual may work for hours without eating, drinking, or noticing that multiple hours have passed.',
+      'Hyperfocus seems to contradict ADHD\'s hallmark inattentiveness, but both traits reflect the same underlying pattern: an inconsistent, interest-driven attention system. ADHD attention is not simply short - it is variable. The same person who cannot sustain 20 minutes of focus on a routine task can lock onto a video game, creative project, or coding problem for 4 to 6 hours without voluntary disengagement. This is not willpower or choice; it is the ADHD attention system responding differently to interest and novelty than to obligation.',
+    ],
+    keyTakeaways: [
+      'Hyperfocus most reliably occurs on high-interest, high-novelty, or immediately rewarding tasks.',
+      'It cannot be deliberately switched on - attempts to force hyperfocus on unwanted tasks rarely succeed.',
+      'Hyperfocus during work can be productive, but it creates risks: missing meetings, skipping meals, losing track of time, neglecting other responsibilities.',
+      'Setting external timers (alarms every 60-90 min) is the most reliable safeguard during hyperfocus sessions.',
+      'Hyperfocus is a documented ADHD trait, not a sign that someone\'s ADHD diagnosis is wrong.',
+    ],
+    fastFact: 'Hyperfocus is so reliable for many people with ADHD that some describe it as their most productive state - yet it cannot be deliberately triggered. The tasks that trigger it tend to share high interest, immediate feedback, and low external obligation.',
+    beginnerExplain: [
+      'Imagine your attention is like water flowing through a hose. Usually with ADHD the hose leaks everywhere - attention drips toward any distraction. But sometimes the hose accidentally points directly at something interesting, and instead of leaking, it blasts a full jet. That\'s hyperfocus: all your attention concentrated on one thing so completely that nothing else gets through.',
+      'The key point is that the hose doesn\'t know where to point itself just because you want it to. It goes where the interest is. That\'s why you can\'t hyperfocus on your tax return no matter how important it is, but you accidentally hyperfocus on a video game for 5 hours on a Tuesday night.',
+    ],
+    whenToUse: 'The concept of hyperfocus is relevant when explaining why ADHD is inconsistent rather than simply a short attention span, when planning work schedules around high-interest tasks, or when troubleshooting why someone with ADHD lost hours to a task they did not intend to do.',
+    examples: {
+      headers: ['Scenario', 'Result', 'Risk'],
+      rows: [
+        ['Coding a personal project', 'Productive hyperfocus - 4 hours of output', 'Missed meals, skipped scheduled meetings'],
+        ['Playing a strategy game', 'Non-productive hyperfocus - 3 hours lost', 'Important tasks pushed to late night'],
+        ['Writing creatively', 'Productive hyperfocus - article finished in one session', 'Other deadlines neglected'],
+        ['Watching a documentary series', 'Non-productive hyperfocus - full series watched overnight', 'Sleep deprivation the next day'],
+      ],
+    },
+    pitfalls: 'The biggest pitfall is treating hyperfocus as evidence that ADHD is not real or is being exaggerated. The ability to hyperfocus does not mean that sustained attention on demand is possible. A second pitfall is trying to weaponize hyperfocus deliberately - most people cannot choose what to hyperfocus on, and attempts to do so usually fail. The third is ignoring the costs: even productive hyperfocus can damage health, relationships, and other deadlines if it runs unchecked.',
+    faqs: [
+      { q: 'Is hyperfocus only an ADHD thing?', a: 'No, but it is most commonly associated with ADHD. It also occurs in autism spectrum disorder, and many people without either diagnosis experience flow states that share some characteristics. The ADHD version is distinctive in its involuntary nature and its strong tie to interest level rather than deliberate effort.' },
+      { q: 'Can hyperfocus be used as a productivity strategy?', a: 'Partially. You cannot force hyperfocus, but you can arrange conditions that make it more likely: working on tasks you find genuinely interesting, reducing competing stimulation, working during your peak energy hours, and removing external interruptions. When it arrives, protect the session - close notifications, tell others you are unavailable, and set an alarm so it ends before it costs you something important.' },
+      { q: 'Why can I hyperfocus on games but not on work I care about?', a: 'Games are engineered for the ADHD brain. They provide immediate feedback, variable rewards, clear goals, visual novelty, and progress indicators - all features that trigger the ADHD dopamine system. Work rarely offers the same feedback density. The difference is task design, not willpower or caring.' },
+    ],
+    quiz: {
+      topic: 'hyperfocus',
+      questions: [
+        {
+          q: 'Which of the following best describes hyperfocus in ADHD?',
+          options: [
+            'A short burst of intense focus lasting 5-10 minutes',
+            'A prolonged state of complete absorption in a task, often lasting hours',
+            'The ability to focus on any task when motivated enough',
+            'A medication side effect that temporarily increases attention',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Hyperfocus involves prolonged, intense absorption - often hours - in a single task. It is not brief, not universally available on demand, and is not a medication effect. It is a natural feature of the ADHD attention system responding to high interest.',
+        },
+        {
+          q: 'Why does hyperfocus seem to contradict ADHD\'s well-known attention difficulties?',
+          options: [
+            'It doesn\'t - people with hyperfocus don\'t actually have ADHD',
+            'Both traits reflect the same inconsistent, interest-driven attention system',
+            'Hyperfocus only happens when ADHD medication is working correctly',
+            'People confuse gaming addiction with hyperfocus',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Short attention on routine tasks and hyperfocus on interesting ones are both expressions of the same ADHD pattern: attention driven by interest and novelty rather than intention or obligation. The inconsistency is the defining feature, not just the inattentiveness.',
+        },
+        {
+          q: 'What is the most reliable practical safeguard during a hyperfocus work session?',
+          options: [
+            'Telling yourself to stop after 2 hours',
+            'Setting external alarms every 60-90 minutes',
+            'Avoiding high-interest tasks during work hours',
+            'Taking ADHD medication to control the duration',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'External alarms are the most reliable safeguard because hyperfocus disrupts internal time awareness. You cannot reliably sense when 90 minutes has passed. An alarm creates an external interrupt that bypasses the time blindness the hyperfocus state produces.',
+        },
+        {
+          q: 'According to the glossary entry, why do video games trigger hyperfocus more reliably than important work tasks?',
+          options: [
+            'Games are more visually stimulating',
+            'Games are designed with immediate feedback, variable rewards, and clear goals that engage the ADHD dopamine system',
+            'People with ADHD prefer entertainment to work',
+            'Games trigger hyperfocus because they are repetitive and routine',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Games are engineered with immediate feedback, variable reward schedules, clear progress indicators, and novelty - all features that reliably engage the ADHD attention system. Important work rarely provides the same feedback density, which is why the difference is task design, not motivation.',
+        },
+        {
+          q: 'Which of the following is a risk of productive hyperfocus (e.g., coding a personal project for 4 hours)?',
+          options: [
+            'The output quality is usually worse than normal work',
+            'Important deadlines and obligations may be neglected',
+            'Medication effectiveness is reduced during hyperfocus',
+            'Hyperfocus on productive tasks always leads to burnout',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Even productive hyperfocus creates risk: meals get skipped, meetings get missed, and other deadlines are pushed aside. The examples table in the glossary shows that all hyperfocus scenarios carry a neglect cost, regardless of whether the hyperfocused task itself produced good output.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+  'iep': {
+    definition: [
+      'An Individualized Education Program (IEP) is a legally binding document required by the Individuals with Disabilities Education Act (IDEA) for every US public school student aged 3 to 21 who qualifies for special education services. It is developed by a team that includes the student\'s parents, general and special education teachers, a school administrator, and any relevant specialists. The IEP must be reviewed and updated at least annually.',
+      'Every IEP contains several required components under federal law: a description of the student\'s present levels of academic achievement and functional performance, measurable annual goals, a description of special education services and related supports, an explanation of how progress will be measured and reported to parents, and transition planning for students aged 16 and older. The measurability requirement is what drives IEP goal data collection - goals must include a mastery criterion that allows the team to objectively determine whether the goal was met.',
+    ],
+    keyTakeaways: [
+      'IDEA (2004) requires an IEP for every student with a qualifying disability in a US public school - 13 disability categories are covered.',
+      'IEP goals must be measurable, which means each goal needs a mastery criterion specifying accuracy level and consistency requirement.',
+      'Parents are equal members of the IEP team and must provide informed consent before services begin.',
+      'Progress on IEP goals must be reported to parents at least as often as general education report cards are issued, typically quarterly.',
+      'An IEP is a service commitment, not a performance guarantee - the school commits to providing the services, not to ensuring the student meets every goal.',
+    ],
+    fastFact: 'As of 2023, approximately 7.5 million students (about 15% of all public school students) in the US receive special education services under IDEA.',
+    beginnerExplain: [
+      'Think of an IEP as a personalized game plan for a student who learns differently. Instead of expecting every student to follow exactly the same path at the same pace, the IEP says: here is where this student is right now, here is where we want them to be in 12 months, and here is exactly what the school will do to get them there.',
+      'Each goal in the plan has a finish line written into it. For example: "Sam will correctly identify letter sounds with 80% accuracy across 3 consecutive weekly probes." That\'s the mastery criterion - the specific definition of "done" that everyone on the team agrees on before instruction begins.',
+    ],
+    whenToUse: 'IEP teams use the mastery criteria in goals whenever they collect progress monitoring data, evaluate whether a goal has been met, or decide whether to revise a goal. Parents can request an IEP meeting at any time if they believe their child is not making adequate progress.',
+    examples: {
+      headers: ['IEP component', 'What it contains', 'Who uses it'],
+      rows: [
+        ['Present levels (PLAAFP)', 'Current academic and functional performance baseline', 'Team uses to set realistic goals'],
+        ['Annual goals', 'Measurable targets with mastery criteria', 'Teachers collect progress data against these'],
+        ['Services description', 'Minutes per week of each service', 'Schedules and staffing commitments'],
+        ['Progress reporting', 'How and how often parents are updated', 'Report cards, meetings, data charts'],
+        ['Transition plan (16+)', 'Post-secondary goals and services', 'Prepares student for life after school'],
+      ],
+    },
+    pitfalls: 'The most common IEP pitfall is writing goals without clear mastery criteria, making it impossible to determine objectively whether the goal was met. A second common issue is treating the IEP as a legal formality rather than a working instructional document - goals that are set but never collected data against provide no benefit to the student.',
+    faqs: [
+      { q: 'What is the difference between an IEP and a 504 plan?', a: 'A 504 plan provides accommodations (extra time, preferential seating, modified formats) but does not include specialized instruction or measurable goals. An IEP provides both accommodations and specialized instruction, with annual measurable goals and progress reporting. IEPs are more intensive and cover students with more significant needs. Both are federal protections, but under different laws: IEP under IDEA, 504 under Section 504 of the Rehabilitation Act.' },
+      { q: 'Who qualifies for an IEP?', a: 'Students must meet two criteria: (1) have a disability that falls into one of IDEA\'s 13 categories (learning disability, autism, intellectual disability, emotional disturbance, speech/language impairment, visual/hearing impairment, physical disability, TBI, deaf-blindness, multiple disabilities, developmental delay, other health impairment), and (2) the disability must adversely affect educational performance, requiring specialized instruction.' },
+      { q: 'Can parents reject an IEP?', a: 'Yes. Parents must provide informed consent before services begin and can revoke consent at any time, which stops special education services. Parents can also disagree with specific parts of the IEP without revoking overall consent. IDEA provides procedural safeguards including mediation and due process hearings if parents and the school cannot reach agreement.' },
+    ],
+    quiz: {
+      topic: 'IEP basics',
+      questions: [
+        {
+          q: 'Under IDEA, how often must an IEP be reviewed and updated at minimum?',
+          options: ['Every 6 months', 'Annually', 'Every 3 years', 'Only when the student changes schools'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'IDEA requires IEP teams to review and revise the IEP at least annually. Triennial re-evaluations (every 3 years) are a separate requirement that updates the eligibility determination, not the IEP goals themselves.',
+        },
+        {
+          q: 'What makes an IEP goal "measurable" under IDEA?',
+          options: ['It describes the student\'s disability in detail', 'It includes a mastery criterion with a specific accuracy level and consistency requirement', 'It is written in positive language', 'It is approved by the school principal'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Measurability requires the goal to include a mastery criterion - typically an accuracy percentage and a number of consecutive sessions - so the team can objectively determine whether the student met the goal. Goals without a criterion cannot be evaluated.',
+        },
+        {
+          q: 'An IEP is a guarantee that the student will reach every annual goal. True or false?',
+          options: ['True - the school is legally required to ensure goals are met', 'False - the school commits to providing services, not to guaranteeing goal achievement', 'True, but only for the core academic goals', 'False, unless the parents specifically request a guarantee in writing'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The IEP is a commitment to provide the agreed services and supports with reasonable effort. Courts and IDEA have consistently held that schools are not required to maximize a student\'s potential, only to provide meaningful educational benefit. Not meeting a goal is not automatically a legal violation.',
+        },
+        {
+          q: 'How often must IEP progress be reported to parents?',
+          options: ['Monthly', 'At least as often as general education report cards', 'Only at the annual IEP meeting', 'Only when a goal is met'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'IDEA (34 CFR 300.320(a)(3)) requires progress reports at least as frequently as report cards are issued for non-disabled students in the same school. For most districts, that means quarterly. This is a minimum - teams can report more frequently.',
+        },
+        {
+          q: 'What is the difference between an IEP and a 504 plan?',
+          options: ['They are the same document with different names', 'An IEP includes specialized instruction and goals; a 504 plan provides accommodations only', 'A 504 applies only to academic subjects; an IEP covers behavior goals', 'Only students with physical disabilities can have a 504 plan'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'An IEP provides specialized instruction and measurable annual goals under IDEA. A 504 plan provides accommodations and modifications under Section 504 of the Rehabilitation Act, but no specialized instruction or goals. Students who need accommodations but not specialized instruction typically have 504 plans.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+  'mastery-criterion': {
+    definition: [
+      'A mastery criterion is the specific, measurable performance standard written into an IEP goal that defines when a student has achieved the goal. Under IDEA, all IEP goals must be measurable - which means every goal needs a mastery criterion that answers how well, how often, and over how many trials the student must perform to meet the standard. Without a mastery criterion, teams cannot objectively determine whether a goal has been met.',
+      'Most mastery criteria combine an accuracy percentage (e.g., 80% correct) with a consistency requirement expressed as a number of consecutive sessions (e.g., across 3 consecutive sessions). The accuracy component sets the performance bar; the consecutive component confirms the skill is stable and not a single-session outlier. Some criteria also specify conditions (e.g., independently, without prompts) and a session format (e.g., 10 trials per session).',
+    ],
+    keyTakeaways: [
+      'IDEA requires all IEP goals to be measurable - mastery criteria are what make a goal measurable and evaluable.',
+      'The most common format is "X% accuracy over Y consecutive sessions" - typically 80% over 3 consecutive sessions.',
+      'Only independent (unprompted) responses should count toward the mastery percentage unless the goal explicitly allows prompted responses.',
+      'The consecutive sessions requirement prevents a single lucky performance from triggering a false mastery call.',
+      'Mastery criterion components: accuracy threshold + consistency requirement + response type (independent vs. prompted) + session format.',
+    ],
+    fastFact: 'Research in applied behavior analysis supports using at least 3 consecutive sessions at criterion before calling mastery, because single-session performance has high variability due to fatigue, attention, and environmental factors.',
+    beginnerExplain: [
+      'Imagine a student is learning to read sight words. The IEP goal says they need to correctly read 8 out of 10 words (80%) on 3 tests in a row before the goal is considered met. That standard - 80% correct, 3 tests in a row - is the mastery criterion.',
+      'The "3 in a row" part is what most people miss. Without it, a student who scores 90% on Monday and 50% on Wednesday would still technically have "met" the 80% threshold once. The consecutive requirement says they need to clear 80% three times without a miss - proving the skill is reliable, not just lucky.',
+    ],
+    whenToUse: 'Write mastery criteria when developing any IEP goal, ABA program target, or other behavioral or academic objective. Apply them when interpreting progress monitoring data to determine whether a skill has been acquired, is in maintenance, or needs further instruction.',
+    examples: {
+      headers: ['Criterion format', 'Example', 'What it confirms'],
+      rows: [
+        ['Accuracy only', '80% correct', 'Single-session performance threshold met'],
+        ['Accuracy + consecutive', '80% over 3 consecutive sessions', 'Stable skill, not a one-off result'],
+        ['Accuracy + trials', '8 out of 10 trials', 'Per-session accuracy with explicit denominator'],
+        ['Accuracy + conditions', '80% independently, no prompt', 'Independence from prompts specifically'],
+        ['Rate-based', '20 words per minute', 'Fluency rather than accuracy'],
+      ],
+    },
+    pitfalls: 'The most common mistake is omitting the consecutive sessions requirement, which allows variable performance to trigger a premature mastery call. A second pitfall is counting prompted responses toward the accuracy percentage - this inflates the number and can produce false mastery. Only independent, unprompted correct responses should count unless the goal explicitly includes prompted responding.',
+    faqs: [
+      { q: 'What accuracy percentage should a mastery criterion use?', a: '80% is the most commonly used threshold in IEP goals and ABA programs, but it is not universal or required by law. Skills requiring precision (such as following a 3-step safety procedure) often use 90% or 100%. Skills where near-accuracy is functionally sufficient (like approximating a sound in early speech therapy) may use 70%. The percentage should reflect what level of accuracy is functionally meaningful for the specific skill.' },
+      { q: 'Should prompted responses count toward the mastery percentage?', a: 'Generally no. Most IEP goals require independent performance, so only unprompted correct responses should count. Counting prompted responses inflates accuracy and can produce false mastery - a student performing at 80% with prompts may still be at 40% without them. The exception is a goal that explicitly names prompted responding as acceptable, such as "with a gestural prompt, the student will..."' },
+      { q: 'What happens if a student meets mastery on a goal?', a: 'When mastery is confirmed (all consecutive sessions met criterion), the IEP team documents the goal as met. The team then decides whether to close the goal, replace it with a more advanced target, or move the skill to a maintenance phase with less frequent monitoring. Meeting a goal before the annual IEP review does not automatically change the program - the team must reconvene or note it at the next scheduled review.' },
+    ],
+    quiz: {
+      topic: 'mastery criteria',
+      questions: [
+        {
+          q: 'A student\'s IEP goal has a mastery criterion of 80% over 3 consecutive sessions. Session data: 85%, 82%, 78%, 90%. Is mastery met?',
+          options: ['Yes - the average is above 80%', 'Yes - 3 of 4 sessions are above 80%', 'No - session 3 at 78% breaks the consecutive streak', 'No - 4 total sessions are needed before evaluating'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Session 3 at 78% is below the 80% criterion, breaking the consecutive streak. Session 4 restarts the count at 1, so the current streak is 1 (only session 4 meets criterion). Averaging across sessions does not apply - the consecutive requirement must be met in an unbroken run.',
+        },
+        {
+          q: 'Why do most mastery criteria include a consecutive sessions requirement rather than a single-session threshold?',
+          options: ['To comply with IDEA\'s data collection mandate', 'To prevent a single lucky session from triggering an early mastery call', 'To ensure the student has practiced enough total trials', 'To give teachers more time to collect data'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A single high-accuracy session can be a statistical outlier due to chance, teacher behavior, or environmental factors. The consecutive requirement confirms the skill is stable across different days and conditions - not just a lucky one-off result.',
+        },
+        {
+          q: 'A student answers 7 of 10 items correctly, but 3 of those were prompted. The mastery criterion is 80% independent accuracy. What is the accurate accuracy percentage?',
+          options: ['70% - all correct responses count regardless of prompts', '40% - only the 4 independent correct responses count', '50% - prompted responses are worth half credit', '80% - because the student met the accuracy level with help'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Only independent (unprompted) correct responses count toward mastery when the criterion specifies independent accuracy. 4 independent correct responses out of 10 total opportunities = 40%. Including prompted responses would inflate the percentage and produce false mastery.',
+        },
+        {
+          q: 'Which mastery criterion is most appropriate for a safety skill (e.g., crossing the street independently)?',
+          options: ['70% over 2 consecutive sessions', '80% over 3 consecutive sessions', '90% or 100% over 5 consecutive sessions', 'Any percentage - safety skills don\'t need mastery criteria'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Safety skills require a higher accuracy threshold and longer consecutive run because errors have real-world consequences. A 70-80% accuracy rate means the student makes mistakes 20-30% of the time - acceptable for some academic tasks, but not for skills where mistakes cause harm.',
+        },
+        {
+          q: 'What should happen to an IEP goal once mastery is confirmed?',
+          options: ['The goal automatically closes and the student exits special education', 'The team documents it as met and decides whether to advance, close, or move to maintenance', 'The student must re-demonstrate mastery at the annual IEP review', 'Nothing - goals run until the annual IEP meeting regardless of performance'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'When a goal meets mastery, the IEP team documents it and decides the next step: close the goal if the skill is complete, write a more advanced goal, or move to a maintenance phase with less frequent probing. Meeting a goal does not automatically exit the student from special education - only an eligibility re-evaluation can do that.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+  'developmental-milestone': {
+    definition: [
+      'A developmental milestone is a skill, behavior, or physical achievement that most children reach within a certain age range. Milestones serve as reference points for tracking typical development and identifying children who may benefit from early intervention. They are organized into five domains: gross motor (large muscle movement), fine motor (small muscle and hand coordination), language (communication and understanding), social/emotional (relationships and self-regulation), and cognitive (thinking and problem-solving).',
+      'Milestones are population-based norms, not diagnostic criteria. They represent what most children can do at a given age - not what every child must do. The CDC revised its milestone checklist in 2022 to represent the 75th percentile rather than the 50th, reducing false positives. A child who hasn\'t reached a milestone by the stated age may simply be in the later portion of the normal range, or may benefit from evaluation for a developmental delay.',
+    ],
+    keyTakeaways: [
+      'Milestones are organized into five domains: gross motor, fine motor, language, social/emotional, and cognitive.',
+      'The CDC 2022 revision moved milestone ages to the 75th percentile, reducing false alarms while still flagging genuine delays.',
+      'A delay of 25% or more of chronological age in one domain is typically the threshold for early intervention eligibility in US states.',
+      'Regression (losing previously achieved milestones) is a red flag at any age and always warrants immediate evaluation.',
+      'Premature babies should be compared to corrected age milestones, not chronological age milestones, until at least 24 months.',
+    ],
+    fastFact: 'About 1 in 6 US children has a developmental disability - most are identified through routine milestone screening at well-child visits, with early intervention improving outcomes significantly (CDC, 2022).',
+    beginnerExplain: [
+      'Think of developmental milestones like a roadmap of childhood. The map shows most kids learning to walk around 15 months, say their first words around 12 months, and use two-word phrases by 24 months. If a child is behind on the map in one area - say, language - that\'s a signal to check whether they need extra support.',
+      'Being behind on the map doesn\'t mean something is wrong - some kids take detours. But the earlier a detour is spotted and addressed, the more help the child can get before the gaps widen. That\'s why milestone checks happen at every well-child visit.',
+    ],
+    whenToUse: 'Use developmental milestones to screen for delays at routine well-child visits, assess whether a child qualifies for early intervention services, set baseline expectations for IEP goals, and monitor progress in therapy programs. Always compare premature babies to corrected age milestones, not chronological age.',
+    examples: {
+      headers: ['Domain', 'Age', 'Milestone'],
+      rows: [
+        ['Language', '12 months', 'Says mama or dada with meaning'],
+        ['Language', '18 months', 'Uses at least 10 words'],
+        ['Language', '24 months', 'Uses at least 50 words, starts 2-word phrases'],
+        ['Gross Motor', '15 months', 'Takes a few steps without holding on'],
+        ['Gross Motor', '24 months', 'Runs without falling most of the time'],
+        ['Cognitive', '9 months', 'Looks for objects when dropped out of sight (object permanence)'],
+        ['Social', '15 months', 'Points to show you something interesting'],
+      ],
+    },
+    pitfalls: 'The most common mistake is treating milestones as pass/fail deadlines rather than population-based windows. A child who doesn\'t walk by 12 months is not automatically delayed - the 2022 CDC revision sets 15 months as the expected age. A second mistake is not adjusting for prematurity: a baby born 8 weeks early at 12 months chronological age should be compared to 10-month milestones, not 12-month ones.',
+    faqs: [
+      { q: 'When should I be concerned about my child\'s development?', a: 'Contact your pediatrician if your child loses any skill they previously had, doesn\'t make eye contact or smile socially by 2 months, doesn\'t babble by 12 months, says no words by 16 months, or uses no 2-word phrases by 24 months. These are red flags regardless of their overall developmental profile. For other concerns, a 25% gap between chronological and developmental age is a standard referral threshold.' },
+      { q: 'How is developmental age different from chronological age?', a: 'Chronological age is the calendar age (time since birth). Developmental age is the skill level a child is functioning at, estimated by which milestones they can consistently perform. A 24-month-old functioning at 18-month milestones in language has a chronological age of 24 months but a language developmental age of approximately 18 months. The gap - 6 months or 25% - would typically qualify for a speech language evaluation.' },
+      { q: 'What is a developmental delay vs. a developmental disorder?', a: 'A developmental delay means the child is acquiring skills in the typical sequence, just more slowly - often catching up with appropriate intervention. A developmental disorder means the developmental pattern itself is atypical: skills emerge out of sequence, some are significantly advanced while others are severely behind, or certain skills never develop in the expected way. Autism spectrum disorder is an example of a developmental disorder, not just a delay.' },
+    ],
+    quiz: {
+      topic: 'developmental milestones',
+      questions: [
+        {
+          q: 'According to the 2022 CDC revision, at what age is walking typically expected?',
+          options: ['12 months', '15 months', '18 months', '24 months'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'The 2022 CDC revision moved walking from 12 months to 15 months. The previous 12-month age reflected the 50th percentile; 15 months reflects the 75th percentile. This change reduced false positives while still flagging children who genuinely need evaluation.',
+        },
+        {
+          q: 'What percentage delay in a single domain typically qualifies a child for early intervention in most US states?',
+          options: ['10%', '15%', '25%', '50%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Most US state early intervention programs use 25% below chronological age in a single domain as the eligibility threshold. For a 24-month-old, that means functioning at or below 18 months in one domain. Exact thresholds vary by state.',
+        },
+        {
+          q: 'A parent says their premature baby (born 8 weeks early) is 12 months old and not yet walking. Which age should be used for milestone comparison?',
+          options: ['12 months (chronological)', '10 months (corrected age)', '14 months (adjusted forward)', '12 months - prematurity doesn\'t affect gross motor'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Use corrected age for premature babies until at least 24 months. Corrected age = chronological age minus weeks premature. 12 months minus 8 weeks (2 months) = 10 months. At 10 months, not yet walking is completely within the normal range (walking is expected at 15 months corrected age).',
+        },
+        {
+          q: 'Which of the following is an absolute red flag requiring immediate pediatrician contact at any age?',
+          options: ['Not stacking 2 blocks at 15 months', 'Loss of previously acquired skills', 'Using mostly 2-word phrases at 30 months', 'Not counting to 3 at 36 months'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Regression - losing skills a child previously had - is a red flag at any age and always warrants immediate evaluation. It may indicate autism spectrum disorder, a neurological condition, or a metabolic disorder. The other options are either within normal range or slight delays that warrant monitoring, not emergency evaluation.',
+        },
+        {
+          q: 'What is the primary difference between a developmental delay and a developmental disorder?',
+          options: ['Delays only affect language; disorders affect all domains', 'A delay means slower progress in the typical sequence; a disorder means an atypical pattern', 'Delays are temporary; disorders are permanent', 'Delays are diagnosed by pediatricians; disorders only by psychologists'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A delay means the child is acquiring skills in the typical developmental sequence, just more slowly - often caught up with early intervention. A disorder means the developmental pattern itself is atypical: skills emerge out of sequence, some are advanced while others are severely behind, or certain skills never develop in the expected way.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+  'corrected-age': {
+    definition: [
+      'Corrected age (also called adjusted age or corrected gestational age) is the age of a premature baby calculated from their expected due date rather than their actual birth date. It equals chronological age minus the number of weeks the baby was born early. Full-term pregnancy is defined as 40 weeks, so a baby born at 32 weeks is 8 weeks premature - and their corrected age lags their chronological age by 8 weeks throughout the first 2 years of life.',
+      'Corrected age is used when evaluating whether a premature baby is reaching developmental milestones on schedule. Without it, a 4-month-old born 8 weeks early would be compared to 4-month milestones when their brain and nervous system are developmentally closer to 2 months. The American Academy of Pediatrics recommends using corrected age for developmental milestone tracking during the first 2 years (24 months corrected age). Vaccines, however, are given on the standard chronological schedule - this is a critical exception.',
+    ],
+    keyTakeaways: [
+      'Corrected age = chronological age minus weeks premature (40 minus gestational age at birth).',
+      'Use corrected age for developmental milestones until 24 months corrected age (AAP recommendation).',
+      'Vaccines always follow the chronological age schedule - delaying vaccines for prematurity increases infection risk.',
+      'Late preterm babies (34-36 weeks) need age correction just as much as very or extremely preterm infants.',
+      'Corrected age and chronological age always differ by the same number of weeks - the gap never narrows or grows, it just becomes less clinically relevant after 2 years.',
+    ],
+    fastFact: 'More than 1 in 10 babies worldwide is born preterm - before 37 completed weeks of gestation. In 2020, an estimated 13.4 million preterm births occurred globally (World Health Organization, 2023). Corrected age is the standard adjustment used in pediatric and developmental assessments for all of these babies during the first 2 years of life.',
+    beginnerExplain: [
+      'Think of it like a due date reset. If your baby was due October 1st but arrived August 6th (8 weeks early), their internal developmental clock started at birth - but their brain was wired for an October 1st start. By November 1st, they\'re 3 months old by the calendar, but their brain is expecting to do 1-month-old things. Corrected age is the age counted from that October 1st due date instead of the actual birthday.',
+      'So on November 1st, their corrected age is 1 month. That\'s the age to compare on milestone charts. The gap between calendar age (3 months) and corrected age (1 month) equals exactly how many weeks premature they were - and it stays constant until they\'re about 2 years old.',
+    ],
+    whenToUse: 'Use corrected age whenever you\'re comparing a premature baby\'s development to typical milestone charts - rolling, sitting, reaching, babbling, first words. The rule applies until 24 months corrected age for most preterm babies, and up to 36 months for extremely preterm infants (born before 28 weeks). Do not use corrected age for vaccine scheduling, which always follows chronological age.',
+    examples: {
+      headers: ['Scenario', 'Chronological age', 'Gestational age at birth', 'Corrected age'],
+      rows: [
+        ['Late preterm (35 weeks)', '4 months', '35 weeks (5 weeks early)', '3 months 1 week'],
+        ['Moderate preterm (33 weeks)', '6 months', '33 weeks (7 weeks early)', '4 months 1 week'],
+        ['Very preterm (30 weeks)', '8 months', '30 weeks (10 weeks early)', '5 months 2 weeks'],
+        ['Extremely preterm (26 weeks)', '12 months', '26 weeks (14 weeks early)', '8 months 2 weeks'],
+      ],
+    },
+    pitfalls: 'The most common mistake is applying corrected age to vaccine timing. Vaccines must be given on the chronological schedule from birth, regardless of prematurity. A second pitfall is stopping age correction at 24 months chronological age rather than 24 months corrected age - for a baby born 10 weeks early, that\'s a 2.5-month difference in when to stop. A third: late preterm babies (34-36 weeks) are often skipped for age correction because they look similar to full-term newborns, but they still need correction throughout the first 2 years.',
+    faqs: [
+      { q: 'What is the formula for corrected age?', a: 'Corrected age equals chronological age minus weeks premature. Weeks premature equals 40 minus gestational age at birth. So for a baby born at 30 weeks who is 6 months old: weeks premature = 10, corrected age = 6 months minus 10 weeks = approximately 3 months 2 weeks.' },
+      { q: 'When do you stop using corrected age?', a: 'The American Academy of Pediatrics recommends using corrected age for the first 2 years - meaning 24 months corrected age, not 24 months chronological age. For extremely premature babies born before 28 weeks, some clinicians extend correction to 36 months corrected age. After that, most preterm babies have caught up with their peers in major developmental domains.' },
+      { q: 'Does corrected age apply to growth charts?', a: 'Growth chart correction works differently from developmental milestone correction. For the first weeks after birth, preterm growth charts use corrected gestational age. After the baby reaches their expected due date (40 weeks corrected gestational age), standard chronological age growth charts are used. This is distinct from the developmental milestone correction, which continues until 24 months corrected age.' },
+    ],
+    quiz: {
+      topic: 'corrected age',
+      questions: [
+        {
+          q: 'A baby is born at 33 weeks gestational age. How many weeks premature is she?',
+          options: ['5 weeks', '7 weeks', '33 weeks', '10 weeks'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Weeks premature = 40 - gestational age at birth = 40 - 33 = 7 weeks. Full-term is defined as 40 weeks, so any birth before 40 weeks means that many weeks of adjustment.',
+        },
+        {
+          q: 'A baby born at 28 weeks is now 10 months (approximately 43 weeks) old. What is her corrected age in weeks?',
+          options: ['43 weeks', '31 weeks', '28 weeks', '55 weeks'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Weeks premature = 40 - 28 = 12 weeks. Corrected age = 43 - 12 = 31 weeks (approximately 7 months 1 week). This is the age to use when evaluating developmental milestones.',
+        },
+        {
+          q: 'Which of these should NOT use corrected age?',
+          options: [
+            'Comparing whether a baby has achieved rolling over',
+            'Deciding when to administer the 4-month vaccines',
+            'Evaluating babbling milestones at a developmental screening',
+            'Checking whether sitting without support is on track',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Vaccines are given based on chronological age, not corrected age. The AAP and CDC both recommend the standard immunization schedule from actual birth date, regardless of prematurity. All developmental milestone comparisons - rolling, babbling, sitting - use corrected age.',
+        },
+        {
+          q: 'When does the AAP recommend stopping the use of corrected age for developmental milestone tracking?',
+          options: [
+            '12 months chronological age',
+            '24 months chronological age',
+            '24 months corrected age',
+            '36 months corrected age for all preterm babies',
+          ] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'The AAP recommends using corrected age during the first 2 years of life - meaning until 24 months corrected age, not 24 months chronological age. For a baby born 12 weeks early, those two dates are 3 months apart.',
+        },
+        {
+          q: 'A baby is born at 35 weeks. What prematurity category does this fall into?',
+          options: ['Extremely preterm', 'Very preterm', 'Moderate preterm', 'Late preterm'] as [string, string, string, string],
+          correct: 3 as const,
+          explanation: 'Late preterm is defined as 34-36 weeks gestational age. At 35 weeks, the baby is in the late preterm category. Late preterm babies still need age correction throughout the first 2 years, even though they may look similar to full-term newborns at birth.',
         },
       ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
     },

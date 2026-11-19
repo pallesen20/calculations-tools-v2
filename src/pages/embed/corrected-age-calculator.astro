@@ -1,0 +1,120 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Corrected Age Calculator for Premature Babies - calculations.tools">
+  <section class="calculator-interface">
+    <div class="calculator-container">
+      <div class="calculator-header">
+        <h2>Corrected Age Calculator</h2>
+        <p>Adjusted age for premature babies</p>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="ca-dob">Baby's date of birth</label>
+        <div class="bmi-input-wrap">
+          <input type="date" id="ca-dob" class="bmi-input" />
+        </div>
+      </div>
+      <div class="bmi-field">
+        <label class="bmi-label" for="ca-ga">Gestational age at birth</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="ca-ga" class="bmi-input" placeholder="e.g. 32" />
+          <span class="bmi-unit-tag">weeks</span>
+        </div>
+      </div>
+      <div class="bmi-field">
+        <label class="bmi-label" for="ca-target">Calculate age on this date</label>
+        <div class="bmi-input-wrap">
+          <input type="date" id="ca-target" class="bmi-input" />
+        </div>
+      </div>
+
+      <div id="ca-result"></div>
+
+      <div class="abr-attribution">
+        <a href="https://calculations.tools/health/corrected-age-calculator" target="_blank" rel="noopener">
+          calculations.tools
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/corrected-age-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .calculator-interface {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1.25rem;
+  }
+  .calculator-container {
+    width: 100%;
+    max-width: 420px;
+  }
+  .ca-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .ca-result-block {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 0.85rem;
+  }
+  .ca-result-block--main {
+    background: rgba(167,139,250,0.1);
+    border-color: rgba(167,139,250,0.3);
+  }
+  .ca-result-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.35rem;
+  }
+  .ca-result-block--main .ca-result-label {
+    color: rgba(167,139,250,0.7);
+  }
+  .ca-result-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.3;
+  }
+  .ca-result-sub {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.2rem;
+  }
+  .ca-result-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .ca-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.65rem;
+    background: rgba(255,255,255,0.03);
+    border-radius: 6px;
+    font-size: 0.8rem;
+  }
+  .ca-detail-label { color: rgba(255,255,255,0.5); }
+  .ca-detail-value { color: rgba(255,255,255,0.85); font-weight: 600; }
+  .ca-detail-yes { color: rgba(134,239,172,0.9); }
+  .ca-detail-no { color: rgba(255,255,255,0.5); }
+  .ca-result-note {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.65rem;
+    text-align: center;
+  }
+</style>

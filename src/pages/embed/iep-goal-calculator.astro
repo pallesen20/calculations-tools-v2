@@ -1,0 +1,65 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="IEP Goal Progress Calculator - calculations.tools">
+  <div class="calculator-container">
+    <div class="calculator-header">
+      <h2>IEP Goal Progress Calculator</h2>
+      <p>Accuracy, mastery streak, and projected completion</p>
+    </div>
+
+    <div class="bmi-field">
+      <label class="bmi-label">Mastery criterion</label>
+      <div style="display:flex;gap:0.5rem;align-items:center;margin-top:0.25rem;">
+        <div class="bmi-input-wrap" style="flex:1;">
+          <input type="text" inputmode="decimal" id="igp-mastery" class="bmi-input" value="80" placeholder="80" />
+          <span class="bmi-unit-tag">%</span>
+        </div>
+        <span style="color:rgba(255,255,255,0.4);font-size:0.8rem;white-space:nowrap;">over</span>
+        <div class="bmi-input-wrap" style="flex:1;">
+          <input type="text" inputmode="decimal" id="igp-consecutive" class="bmi-input" value="3" placeholder="3" />
+          <span class="bmi-unit-tag">sessions</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dtt-session-header" style="margin-top:0.75rem;">
+      <span class="dtt-session-label" style="font-size:0.7rem;color:rgba(255,255,255,0.4);">Session</span>
+      <span class="dtt-col-label">Correct</span>
+      <span class="dtt-col-label">Total</span>
+      <span style="width:32px"></span>
+    </div>
+
+    <div id="igp-sessions-container"></div>
+
+    <button id="igp-add-session" class="bmi-unit-btn" style="margin-top:0.5rem;width:100%;padding:0.45rem;">+ Add session</button>
+
+    <div class="bmi-field" style="margin-top:0.75rem;">
+      <label class="bmi-label">Goal dates (optional)</label>
+      <div style="display:flex;gap:0.5rem;margin-top:0.25rem;">
+        <div class="bmi-input-wrap" style="flex:1;">
+          <input type="date" id="igp-goal-start" class="bmi-input" />
+        </div>
+        <span style="color:rgba(255,255,255,0.4);font-size:0.8rem;align-self:center;">to</span>
+        <div class="bmi-input-wrap" style="flex:1;">
+          <input type="date" id="igp-goal-end" class="bmi-input" />
+        </div>
+      </div>
+    </div>
+
+    <div id="igp-result"></div>
+
+    <div style="text-align:center;margin-top:0.75rem;font-size:0.7rem;color:rgba(255,255,255,0.3);">
+      <a href="https://calculations.tools/health/iep-goal-calculator" target="_blank" style="color:rgba(255,255,255,0.3);text-decoration:none;">calculations.tools</a>
+    </div>
+  </div>
+
+  <script src="/js/iep-goal-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .igp-met-cell { color: rgba(134,239,172,0.9); font-weight: 600; }
+  .igp-not-met-cell { color: rgba(252,165,165,0.6); }
+  .igp-status-progress { background: rgba(251,191,36,0.15); color: rgba(251,191,36,0.9); border: 1px solid rgba(251,191,36,0.3); }
+</style>

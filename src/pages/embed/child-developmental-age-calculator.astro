@@ -1,0 +1,54 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="Child Developmental Age Calculator - calculations.tools">
+  <div class="calculator-container">
+    <div class="calculator-header">
+      <h2>Child Developmental Age Calculator</h2>
+      <p>Milestones across 5 domains, ages 0-5 years</p>
+    </div>
+
+    <div class="bmi-field">
+      <label class="bmi-label">Child's current age</label>
+      <div style="display:flex;gap:0.5rem;margin-top:0.25rem;">
+        <div class="bmi-input-wrap" style="flex:1;">
+          <input type="text" inputmode="decimal" id="cda-years" class="bmi-input" placeholder="0" />
+          <span class="bmi-unit-tag">years</span>
+        </div>
+        <div class="bmi-input-wrap" style="flex:1;">
+          <input type="text" inputmode="decimal" id="cda-months" class="bmi-input" placeholder="0" />
+          <span class="bmi-unit-tag">months</span>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:rgba(255,255,255,0.35);margin-top:0.3rem;">For premature babies, use corrected age</p>
+    </div>
+
+    <div id="cda-checklist" style="margin-top:0.75rem;"></div>
+
+    <div id="cda-result" style="margin-top:0.75rem;"></div>
+
+    <div style="text-align:center;margin-top:0.75rem;font-size:0.7rem;color:rgba(255,255,255,0.3);">
+      <a href="https://calculations.tools/health/child-developmental-age-calculator" target="_blank" style="color:rgba(255,255,255,0.3);text-decoration:none;">calculations.tools</a>
+    </div>
+  </div>
+
+  <script src="/js/child-developmental-age-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .cda-domain-section { margin-bottom: 0.75rem; }
+  .cda-domain-header { font-size: 0.78rem; font-weight: 700; color: rgba(167,139,250,0.85); text-transform: uppercase; letter-spacing: 0.05em; padding: 0.3rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 0.4rem; }
+  .cda-milestone-item { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.3rem 0; cursor: pointer; }
+  .cda-milestone-item input[type="checkbox"] { margin-top: 0.1rem; flex-shrink: 0; accent-color: #818cf8; width: 14px; height: 14px; }
+  .cda-milestone-text { font-size: 0.8rem; color: rgba(255,255,255,0.75); flex: 1; line-height: 1.4; }
+  .cda-milestone-age-tag { font-size: 0.65rem; color: rgba(255,255,255,0.3); white-space: nowrap; padding-top: 0.1rem; }
+  .cda-domain-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; margin-top: 0.6rem; }
+  @media (max-width: 480px) { .cda-domain-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 300px) { .cda-domain-grid { grid-template-columns: 1fr 1fr; } }
+  .cda-domain-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 0.5rem 0.3rem; text-align: center; }
+  .cda-domain-card-emoji { font-size: 1rem; margin-bottom: 0.2rem; }
+  .cda-domain-card-label { font-size: 0.6rem; color: rgba(255,255,255,0.4); line-height: 1.3; margin-bottom: 0.25rem; }
+  .cda-domain-card-value { font-size: 0.75rem; font-weight: 700; line-height: 1.2; }
+  .cda-status-moderate { background: rgba(249,115,22,0.15); color: rgba(253,186,116,0.95); border: 1px solid rgba(249,115,22,0.3); }
+</style>

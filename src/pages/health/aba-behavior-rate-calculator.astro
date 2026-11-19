@@ -31,7 +31,7 @@ const quizQuestions = [
     q: 'A BCBA records 24 responses in a 30-minute session. What is the frequency rate?',
     options: ['0.5 RPM', '0.8 RPM', '1.2 RPM', '24 RPM'] as [string, string, string, string],
     correct: 1 as const,
-    explanation: 'Rate = count / time = 24 / 30 = 0.8 responses per minute. Frequency (the raw count) stays at 24 — but rate lets you compare sessions of different lengths on equal terms.',
+    explanation: 'Rate = count / time = 24 / 30 = 0.8 responses per minute. Frequency (the raw count) stays at 24 - but rate lets you compare sessions of different lengths on equal terms.',
   },
   {
     q: 'What is the key difference between frequency and rate in ABA?',
@@ -69,7 +69,7 @@ const sources: Source[] = [
   },
   {
     author: 'Behavior Analyst Certification Board',
-    title: 'BACB Task List (6th ed.) — Section C: Measurement',
+    title: 'BACB Task List (6th ed.) - Section C: Measurement',
     journal: 'BACB',
     year: 2022,
     url: 'https://www.bacb.com/bcba/',
@@ -223,7 +223,10 @@ const schema = [
       <p><strong>Latency:</strong> enter each trial's latency in seconds. Add up to 10 trials. The calculator returns mean latency, minimum, maximum, and range across all valid trials entered.</p>
       <h2 id="measurement-methods">How do BCBAs measure behavior - and which method fits your goal?</h2>
       <p><a href="/glossary/bcba">BCBAs</a> choose a measurement method based on the behavior's physical dimensions, according to the 6th edition BACB Task List (Section C: Measurement, 2022). The wrong method produces numbers that are mathematically correct but clinically meaningless.</p>
-      <p>Frequency and rate are used for discrete, countable behaviors - a vocal response, a hand raise, a correct answer to a math fact. Duration is used for behaviors that extend over time, like on-task engagement or tantrum duration. Latency captures response timing - how quickly a learner follows an instruction.</p>
+      <p>Frequency and rate are used for discrete, countable behaviors - a vocal response, a hand raise, a correct answer to a math fact.</p>
+      <p>Duration is used for behaviors that extend over time, like on-task engagement or tantrum duration.</p>
+      <p>Latency captures response timing - how quickly a learner follows an instruction.</p>
+      <p class="also-see">For tracking correct responses across discrete trials, the <a href="/health/dtt-data-calculator">DTT Data Calculator</a> handles percent correct and mastery status.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -249,7 +252,7 @@ const schema = [
       <h3>The rate formula</h3>
       <Formula expr={f.rate} />
       <p>Example: 36 responses in a 45-minute observation = 36 / 45 = <strong>0.8 RPM</strong>, or 48 RPH.</p>
-      <p>In my clinical work spanning early intensive behavioral intervention with toddlers through school-based programs for teenagers with autism and ADHD, this error shows up constantly in therapist-recorded data.</p>
+      <p>In my clinical work spanning early intensive behavioral intervention with toddlers through <a href="/health/iep-goal-calculator">school-based IEP goals</a> for teenagers with autism and ADHD, this error shows up constantly in therapist-recorded data.</p>
       <p>Session lengths vary because of meltdowns, bathroom breaks, or early pick-ups - and a 10-minute loss in a 30-minute session cuts the raw count by 33% even when the actual behavior level hasn't changed at all.</p>
       <blockquote class="blockquote-observation">
       <p>I convert every frequency count to rate before graphing, without exception, and I require the same in every program I supervise.</p>
@@ -264,13 +267,13 @@ const schema = [
       <p>When I switched to duration recording, we found he was spending anywhere from 20% to 70% of the session in stereotypy depending on the week. The frequency count was masking enormous variability because the vocalizations were getting longer, not more frequent. That discovery completely changed our intervention approach and reinforcement schedule.</p>
       <h2 id="latency-recording">What is latency recording in ABA?</h2>
       <p>Latency is the elapsed time between the presentation of an antecedent stimulus (the SD, or discriminative stimulus) and the onset of the target response. It measures compliance speed, transition efficiency, and the fluency of learned skills.</p>
-      <p>BCBAs establish a baseline first, then set a mastery criterion - often 2-5 seconds for instruction-following (Cooper et al., 2020). Mean latency across trials is the standard summary statistic.</p>
+      <p>BCBAs establish a baseline first, then set a <a href="/health/dtt-data-calculator">mastery criterion</a> - often 2-5 seconds for instruction-following (Cooper et al., 2020). Mean latency across trials is the standard summary statistic.</p>
       <p>Recording minimum and maximum values alongside the mean helps identify trial-to-trial variability. High variability can indicate inconsistent motivation, fatigue effects, or discrimination failures.</p>
       <h3>The latency formula</h3>
       <Formula expr={f.latency} />
       <p>Example: Trial 1 = 6 sec, Trial 2 = 4 sec, Trial 3 = 8 sec, Trial 4 = 5 sec → Mean = 23 / 4 = <strong>5.75 seconds</strong>.</p>
       <p>After more than a decade supervising behavior technicians across early intervention and school settings, I've learned that 3-trial latency averages hide almost everything clinically important.</p>
-      <p>With learners who have autism spectrum disorder or ADHD, latency often deteriorates significantly in the last 10 minutes of a session as satiation or fatigue sets in. If you only collect the first 3 trials, you miss this entirely and your mean looks better than reality.</p>
+      <p>With learners who have autism spectrum disorder or <a href="/health/adhd-break-calculator">ADHD</a>, latency often deteriorates significantly in the last 10 minutes of a session as satiation or fatigue sets in. If you only collect the first 3 trials, you miss this entirely and your mean looks better than reality.</p>
       <blockquote class="blockquote-observation">
       <p>I specify a minimum of 5 trials in every behavior plan I write that uses latency as a dependent variable, and I require that the therapist notes whether trials were collected at the start, middle, or end of the session.</p>
       </blockquote>
@@ -324,24 +327,31 @@ const schema = [
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
-          <span class="tool-icon">🧮</span>
+          <span class="tool-icon">🧩</span>
           <div>
-            <a href="/health/bmi-calculator">BMI Calculator</a>
-            <p>Calculate BMI by age and gender - another key health metric used in clinical settings alongside behavioral assessment.</p>
+            <a href="/health/dtt-data-calculator">DTT Data Calculator</a>
+            <p>Track percent correct, prompted rate, and mastery status across discrete trial sessions - the trial-level complement to this calculator's session-level rate measures.</p>
           </div>
         </li>
         <li>
-          <span class="tool-icon">📊</span>
+          <span class="tool-icon">📋</span>
           <div>
-            <a href="/health/body-fat-calculator">Body Fat Calculator</a>
-            <p>Estimate body fat percentage using clinical formulas - relevant for health and wellness programs that combine ABA with physical health goals.</p>
+            <a href="/health/iep-goal-calculator">IEP Goal Progress Calculator</a>
+            <p>Track IEP goal accuracy and mastery streaks - behavior rate data feeds directly into IEP goal decisions for school-based programs.</p>
           </div>
         </li>
         <li>
-          <span class="tool-icon">📐</span>
+          <span class="tool-icon">🧠</span>
           <div>
-            <a href="/math/percentage-calculator">Percentage Calculator</a>
-            <p>General-purpose percentage calculations - useful for computing mastery thresholds and correct-response rates from raw trial data.</p>
+            <a href="/health/adhd-break-calculator">ADHD Break Calculator</a>
+            <p>Generate focus blocks and break intervals for ADHD - structuring session length is a direct input to consistent behavioral data collection.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🌱</span>
+          <div>
+            <a href="/health/child-developmental-age-calculator">Child Developmental Age Calculator</a>
+            <p>Estimate developmental age by domain from milestone checklists - helps identify which developmental areas ABA behavior programs should target first.</p>
           </div>
         </li>
       </ul>

@@ -116,10 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let recText, recClass;
     if (breakEvenMonths === null) {
-      recText = `Buy wins over ${years} years — saves ${s}${fmt(Math.abs(diff))} vs. building`;
+      recText = `Buy wins over ${years} years - saves ${s}${fmt(Math.abs(diff))} vs. building`;
       recClass = 'bvb-rec bvb-rec-buy';
     } else if (breakEvenMonths <= 12) {
-      recText = `Build wins from year 1 — saves ${s}${fmt(Math.abs(diff))} over ${years} years`;
+      recText = `Build wins from year 1 - saves ${s}${fmt(Math.abs(diff))} over ${years} years`;
       recClass = 'bvb-rec bvb-rec-build';
     } else {
       const beYears = Math.floor(breakEvenMonths / 12);
@@ -127,10 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
       let beStr = beYears > 0 ? `${beYears} year${beYears > 1 ? 's' : ''}` : '';
       if (beMonths > 0) beStr += (beStr ? ', ' : '') + `${beMonths} month${beMonths > 1 ? 's' : ''}`;
       if (breakEvenMonths <= years * 12) {
-        recText = `Build wins after ${beStr} — saves ${s}${fmt(Math.abs(diff))} over ${years} years`;
+        recText = `Build wins after ${beStr} - saves ${s}${fmt(Math.abs(diff))} over ${years} years`;
         recClass = 'bvb-rec bvb-rec-build';
       } else {
-        recText = `Buy wins over ${years} years — build breaks even in ${beStr}`;
+        recText = `Buy wins over ${years} years - build breaks even in ${beStr}`;
         recClass = 'bvb-rec bvb-rec-buy';
       }
     }
