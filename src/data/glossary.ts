@@ -1006,7 +1006,7 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
     category: 'Maternal Health',
     siteCategory: 'Health',
     shortDef: 'Gestational age is the age of a pregnancy measured in weeks and days from the first day of the last menstrual period (LMP). A full-term pregnancy is 40 weeks of gestational age. It differs from fetal age (counted from conception) by approximately two weeks.',
-    relatedTools: ['/health/pregnancy-calculator', '/health/bmi-calculator/pregnancy', '/health/child-developmental-age-calculator'],
+    relatedTools: ['/health/pregnancy-calculator', '/health/bmi-calculator/pregnancy', '/health/child-developmental-age-calculator', '/health/corrected-age-calculator'],
     relatedTerms: ['fetal-age', 'gestational-weight-gain', 'naegeles-rule'],
   },
   {
