@@ -71,10 +71,10 @@ const sources: Source[] = [
   },
   {
     author: 'IRIS Center, Vanderbilt University',
-    title: 'Progress Monitoring: Reading and Math',
+    title: 'Progress Monitoring: Mathematics',
     journal: 'IRIS Center',
     year: 2022,
-    url: 'https://iris.peabody.vanderbilt.edu/module/pmintro/',
+    url: 'https://iris.peabody.vanderbilt.edu/module/pmm/',
   },
   {
     author: 'National Center on Intensive Intervention',
@@ -144,10 +144,9 @@ const schema = [
   }
 ];
 ---
-
 <CalculatorLayout
   title="IEP Goal Progress Calculator"
-  metaTitle="IEP Goal Progress Calculator - Mastery Tracking ᐅ"
+  metaTitle="Free IEP Goal Progress Calculator | BCBA Approved Tool"
   description="Calculate IEP goal accuracy per session, track consecutive mastery streaks, and project goal completion dates. Free tool for special education teachers, BCBAs, and IEP teams."
   canonical="https://calculations.tools/health/iep-goal-calculator"
   tocItems={tocItems}
@@ -162,10 +161,9 @@ const schema = [
     <section class="calculator-interface">
       <div class="calculator-container">
         <div class="calculator-header">
-          <h2>IEP Goal Progress Calculator</h2>
+          <h2>IEP Goal Mastery Tool</h2>
           <p>Accuracy, mastery streak, and projected completion</p>
         </div>
-
         <div class="bmi-field">
           <label class="bmi-label">Mastery criterion</label>
           <div style="display:flex;gap:0.5rem;align-items:center;margin-top:0.25rem;">
@@ -180,18 +178,14 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div class="dtt-session-header" style="margin-top:0.75rem;">
           <span class="dtt-session-label" style="font-size:0.7rem;color:rgba(255,255,255,0.4);">Session</span>
           <span class="dtt-col-label">Correct</span>
           <span class="dtt-col-label">Total</span>
           <span style="width:32px"></span>
         </div>
-
         <div id="igp-sessions-container"></div>
-
         <button id="igp-add-session" class="bmi-unit-btn" style="margin-top:0.5rem;width:100%;padding:0.45rem;">+ Add session</button>
-
         <div class="bmi-field" style="margin-top:0.75rem;">
           <label class="bmi-label">Goal dates (optional)</label>
           <div style="display:flex;gap:0.5rem;margin-top:0.25rem;">
@@ -204,22 +198,18 @@ const schema = [
             </div>
           </div>
         </div>
-
         <div id="igp-result"></div>
         <HealthDisclaimer />
       </div>
     </section>
     <script src="/js/iep-goal-calculator.js" is:inline></script>
   </div>
-
   <div slot="content">
     <div class="seo-container">
-
       <div class="answer-box">
         <div class="answer-box-label">Quick answer</div>
         <p>This calculator takes session-by-session data for an <a href="/glossary/iep">IEP</a> goal - correct responses and total opportunities - and shows accuracy percentage, consecutive mastery streak, and whether the student has met the goal criterion. It also projects a mastery date if you enter IEP start and end dates.</p>
       </div>
-
       <div class="answer-box">
         <div class="answer-box-label">Key takeaways</div>
         <ul>
@@ -230,27 +220,21 @@ const schema = [
           <li>At least 8 data points are recommended before making programming decisions based on trend data (NCII, 2021).</li>
         </ul>
       </div>
-
       <h2 id="iep-goal-mastery">How is IEP goal mastery calculated?</h2>
-      <p>IEP goal mastery is calculated by dividing correct independent responses by total opportunities and multiplying by 100 to get an accuracy percentage. The student must reach a preset threshold - most commonly 80% - across a defined number of consecutive sessions, typically 3. IDEA (2004) requires that all IEP goals be measurable, which means every goal must specify exactly how mastery will be determined.</p>
-
+      <p>IEP goal mastery is calculated by dividing correct independent responses by total opportunities and multiplying by 100 to get an accuracy percentage. The student must reach a preset threshold - most commonly 80% - across a defined number of consecutive sessions, typically 3.</p>
+      <p><a href="https://sites.ed.gov/idea/" target="_blank" rel="noopener noreferrer">IDEA</a> requires that all IEP goals be measurable, which means every goal must specify exactly how mastery will be determined.</p>
       <p>The consecutive sessions requirement is the part teams most often overlook. A student who hits 90% in one session but drops to 60% the next has not demonstrated stable skill acquisition. The consecutive criterion forces a consistent performance window rather than a lucky one-off result.</p>
-
       <Formula expr={f.accuracy} />
-
-      <h3 id="explained-to-beginner">Explained to a beginner</h3>
-      <p>Think of a school spelling test. If the goal is "spell 10 words correctly, 8 out of 10 (80%), on 3 tests in a row," the student hasn't passed after one good day. They need to get 8 or more correct on three separate tests without a bad test breaking the streak. That's exactly what this calculator tracks: the accuracy on each test and how many in a row have crossed the line.</p>
-
-      <h2 id="how-to-use">How to use this calculator</h2>
+      <h3 id="explained-to-beginner">IEP goal mastery explained to a beginner</h3>
+      <p>Think of a school spelling test. If the goal is "spell 10 words correctly, 8 out of 10 (80%), on 3 tests in a row," the student hasn't passed after one good day. They need to get 8 or more correct on three separate tests without a bad test breaking the streak.</p>
+      <p>That's exactly what this calculator tracks: the accuracy on each test and how many in a row have crossed the line.</p>
+      <h2 id="how-to-use">How to use this IEP goal calculator</h2>
       <p>Enter each data collection session by typing the number of correct independent responses and the total number of opportunities. Add sessions with the button below the table. Set the mastery criterion to match the IEP goal as written - commonly 80% over 3 consecutive sessions. The calculator updates in real time and shows the current streak and mastery status.</p>
-
       <p>Entering the goal start and end dates is optional but adds two useful outputs: the percentage of the goal period that has already elapsed, and a projected mastery date based on the current rate of progress. If you're 70% through the goal period but only 50% of the way to mastery, that's an early warning that the program needs review.</p>
-
       <h2 id="mastery-criterion">What is a mastery criterion in an IEP goal?</h2>
       <p>A <a href="/glossary/mastery-criterion">mastery criterion</a> is the specific, measurable standard that defines when a student has achieved an IEP goal. Under IDEA, all IEP goals must be measurable, which means every goal needs a mastery criterion that answers: "How well, how often, and over how many trials?" (IDEA, 2004). Without this, teams cannot objectively determine whether a goal has been met.</p>
-
-      <p>Mastery criteria typically include three components: an accuracy percentage (e.g., 80%), a consistency requirement (e.g., 3 consecutive sessions), and sometimes a condition (e.g., with verbal prompt fading completed). The percentage is the most commonly included element, but the consecutive sessions requirement is what prevents single-session flukes from triggering false mastery calls.</p>
-
+      <p>Mastery criteria typically include three components: an accuracy percentage (e.g., 80%), a consistency requirement (e.g., 3 consecutive sessions), and sometimes a condition (e.g., with verbal prompt fading completed).</p>
+      <p>The percentage is the most commonly included element, but the consecutive sessions requirement is what prevents single-session flukes from triggering false mastery calls.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -269,14 +253,13 @@ const schema = [
           </tbody>
         </table>
       </div>
-
-      <p>When I review IEP progress data in <a href="/health/child-developmental-age-calculator">early intervention</a> and school-based programs, the most common gap I see is goals that specify accuracy but omit the consecutive requirement. A student with highly variable performance can hit 80% one session and 40% the next. Without the consecutive criterion, teams may call mastery prematurely and move on before the skill is truly stable.</p>
-
+      <p>When I review IEP progress data in <a href="/health/child-developmental-age-calculator">early intervention</a> and school-based programs, the most common gap I see is goals that specify accuracy but omit the consecutive requirement.</p>
+      <p>A student with highly variable performance can hit 80% one session and 40% the next. Without the consecutive criterion, teams may call mastery prematurely and move on before the skill is truly stable.</p>
       <h2 id="progress-monitoring">How often should IEP goal progress be monitored?</h2>
-      <p>IDEA requires progress reports to parents at least as often as general education report cards are issued, typically quarterly. But the reporting requirement and the data collection frequency are different things. For students receiving intensive intervention, weekly or biweekly probes are standard practice. The National Center on Intensive Intervention recommends collecting at least 8 data points before drawing any trend conclusions (NCII, 2021).</p>
-
-      <p>The practical minimum for a meaningful progress decision is 4 to 6 sessions of data. With fewer than 4 sessions, the consecutive criterion can be met in one run before enough variability is captured. This is why the calculator's projected mastery date becomes more reliable as you add more sessions - a 2-session trend line is volatile; a 7-session trend is meaningful.</p>
-
+      <p>IDEA requires progress reports to parents at least as often as general education report cards are issued, typically quarterly. But the reporting requirement and the data collection frequency are different things.</p>
+      <p>For students receiving intensive intervention, weekly or biweekly probes are standard practice. The National Center on Intensive Intervention recommends collecting at least 8 data points before drawing any trend conclusions (<a href="https://intensiveintervention.org/data-based-individualization" target="_blank" rel="noopener noreferrer">NCII, 2021</a>).</p>
+      <p>The practical minimum for a meaningful progress decision is 4 to 6 sessions of data. With fewer than 4 sessions, the consecutive criterion can be met in one run before enough variability is captured.</p>
+      <p>This is why the calculator's projected mastery date becomes more reliable as you add more sessions - a 2-session trend line is volatile; a 7-session trend is meaningful.</p>
       <div class="responsive-table">
         <table>
           <thead>
@@ -294,45 +277,37 @@ const schema = [
           </tbody>
         </table>
       </div>
-
       <h2 id="prompted-responses">Should prompted responses count toward IEP goal mastery?</h2>
-      <p>No, in almost all cases. Most IEP goals require that the student perform the skill independently, so only unprompted correct responses should count toward the mastery percentage. Counting prompted responses inflates accuracy and can produce false mastery - a student who performs at 80% with prompts may still be at 40% without them. This same principle applies in <a href="/health/dtt-data-calculator">DTT data collection</a>, where prompted and independent trials are always tracked separately.</p>
-
-      <p>The exception is a goal that explicitly names prompted responding as acceptable, which sometimes appears in goals targeting students with significant support needs. If the goal says "with verbal prompt, the student will..." then prompted responses are part of the target behavior and should be counted. When in doubt, the IEP goal text governs - not general practice.</p>
-
+      <p>No, in almost all cases. Most IEP goals require that the student perform the skill independently, so only unprompted correct responses should count toward the mastery percentage.</p>
+      <p>Counting prompted responses inflates accuracy and can produce false mastery - a student who performs at 80% with prompts may still be at 40% without them. This same principle applies in <a href="/health/dtt-data-calculator">DTT data collection</a>, where prompted and independent trials are always tracked separately.</p>
+      <p>The exception is a goal that explicitly names prompted responding as acceptable, which sometimes appears in goals targeting students with significant support needs.</p>
+      <p>If the goal says "with verbal prompt, the student will..." then prompted responses are part of the target behavior and should be counted. When in doubt, the IEP goal text governs - not general practice.</p>
       <h2 id="not-making-progress">What should you do if a student isn't making progress?</h2>
-      <p>Flat or declining data over 4 to 6 consecutive data points is the standard trigger for reconvening the IEP team. IDEA does not require students to meet every goal, but it does require goals to be reasonably ambitious and for teams to respond when progress is not occurring. The IRIS Center (2022) recommends documenting the lack of progress, reviewing the instructional approach, and considering a formal evaluation update if the student's needs have changed significantly.</p>
-
-      <p>Stalled progress usually points to one of three things: the goal was set too high without a sufficient instructional bridge, the teaching method isn't working, or the data being collected doesn't reflect what's actually being taught. Before changing the goal criterion, review whether sessions are being conducted with fidelity and whether the probe conditions match the instruction conditions.</p>
-
+      <p>Flat or declining data over 4 to 6 consecutive data points is the standard trigger for reconvening the IEP team. IDEA does not require students to meet every goal, but it does require goals to be reasonably ambitious and for teams to respond when progress is not occurring.</p>
+      <p>The <a href="https://iris.peabody.vanderbilt.edu/module/pmm/" target="_blank" rel="noopener noreferrer">IRIS Center</a> recommends documenting the lack of progress, reviewing the instructional approach, and considering a formal evaluation update if the student's needs have changed significantly.</p>
+      <p>Stalled progress usually points to one of three things: the goal was set too high without a sufficient instructional bridge, the teaching method isn't working, or the data being collected doesn't reflect what's actually being taught.</p>
+      <p>Before changing the goal criterion, review whether sessions are being conducted with fidelity and whether the probe conditions match the instruction conditions.</p>
       <h2 id="common-mistakes">Common data recording mistakes in IEP progress monitoring</h2>
-      <p>The most common mistake is recording prompted and independent responses together without distinguishing them. When a team records "8 correct out of 10" without noting that 4 of those 8 were prompted, the resulting accuracy percentage is meaningless for mastery purposes. The second most common issue is using averages instead of consecutive sessions to evaluate the criterion, which can mask performance variability.</p>
-
-      <p>A third mistake is inconsistency in probe conditions. If a student is tested sometimes with 10 opportunities and sometimes with 20, the denominators are different and the percentages aren't directly comparable. For clean progress data, keep the probe format consistent: same number of opportunities, same materials, same time of day where possible.</p>
-
-      <h2 id="faq">Frequently asked questions</h2>
-
+      <p>The most common mistake is recording prompted and independent responses together without distinguishing them. When a team records "8 correct out of 10" without noting that 4 of those 8 were prompted, the resulting accuracy <a href="/math/percentage-calculator">percentage</a> is meaningless for mastery purposes.</p>
+      <p>The second most common issue is using averages instead of consecutive sessions to evaluate the criterion, which can mask performance variability.</p>
+      <p>A third mistake is inconsistency in probe conditions. If a student is tested sometimes with 10 opportunities and sometimes with 20, the <a href="/glossary/denominator">denominators</a> are different and the percentages aren't directly comparable.</p>
+      <p>For clean progress data, keep the probe format consistent: same number of opportunities, same materials, same time of day where possible.</p>
+      <h2 id="faq">FAQs about IEP goal progress</h2>
       <h3>What is a mastery criterion in an IEP goal?</h3>
       <p>A mastery criterion defines exactly what performance level a student must reach for a goal to be considered met. It includes an accuracy percentage (such as 80%), a consistency requirement (such as 3 consecutive sessions), and sometimes a condition (such as independently, without prompts). Goals without a mastery criterion cannot be objectively evaluated under IDEA's measurability requirement.</p>
-
       <h3>How do you calculate percent correct for an IEP goal?</h3>
       <p>Divide the number of correct independent responses by the total number of opportunities, then <a href="/math/percentage-calculator">multiply by 100</a>. Only independent responses count unless the goal specifies otherwise. If a student gets 7 correct out of 10 total - with 2 of those prompted - independent accuracy is 5/10 = 50%, not 70%. Recording method matters for getting this right.</p>
-
       <h3>How often should IEP goal progress be monitored?</h3>
       <p>At minimum, teams must report progress to parents as often as general education report cards are issued, typically quarterly. For students in intensive intervention programs, weekly or biweekly data collection is standard. The National Center on Intensive Intervention recommends at least 8 data points before drawing conclusions from a trend line or making programming changes.</p>
-
       <h3>What happens if a student is not making progress on an IEP goal?</h3>
       <p>The IEP team must reconvene to review the goal and the instruction. IDEA does not require mastery of every goal but does require the team to respond when progress is not occurring. Standard responses include adjusting the instructional strategy, lowering an overambitious intermediate target, or requesting a re-evaluation to update the student's eligibility data.</p>
-
       <h3>Should prompted responses count toward IEP goal mastery?</h3>
       <p>Usually no. Most IEP goals require independent performance, and counting prompted responses inflates accuracy, potentially triggering a false mastery call. The exception is goals that explicitly target prompted performance, such as "with a verbal cue." If the IEP goal text does not specify prompted responding as acceptable, only independent correct responses should count.</p>
-
       <QuizBlock
         topic="IEP goal progress"
         questions={quizQuestions}
         pageUrl="https://calculations.tools/health/iep-goal-calculator"
       />
-
       <h2 id="related-tools">Related tools</h2>
       <ul class="related-tools-list">
         <li>
@@ -364,7 +339,6 @@ const schema = [
           </div>
         </li>
       </ul>
-
     </div>
   </div>
 </CalculatorLayout>
