@@ -22,6 +22,7 @@ const TOOLS: ToolMeta[] = [
   { slug: 'corrected-age-calculator',   name: 'Corrected Age Calculator',                      path: '/health/corrected-age-calculator',   category: 'Health',  priority: 2 },
   { slug: 'dtt-data-calculator',       name: 'DTT Data Calculator',                            path: '/health/dtt-data-calculator',       category: 'Health',  priority: 2 },
   { slug: 'bmi-calculator-menopause', name: 'Menopause BMI & Cardiometabolic Risk Calculator', path: '/health/bmi-calculator/menopause', category: 'Health', priority: 2 },
+  { slug: 'army-fitness-test-calculator', name: 'Army Fitness Test (AFT) Calculator', path: '/health/army-fitness-test-calculator', category: 'Health', priority: 2 },
   { slug: 'loan-payment-calculator',      name: 'Loan Payment Calculator',       path: '/finance/loan-payment-calculator',          category: 'Finance',     priority: 2 },
   { slug: 'compound-interest-calculator', name: 'Compound Interest Calculator',  path: '/finance/compound-interest-calculator',     category: 'Finance',     priority: 2 },
   { slug: 'roi-calculator',               name: 'ROI Calculator',                path: '/finance/roi-calculator',                   category: 'Finance',     priority: 2 },

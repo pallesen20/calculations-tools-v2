@@ -65,26 +65,6 @@ const ogImage = (ogFormula && ogExample)
   ? `https://calculations-image-generator.vercel.app/api/og-web?category=${encodeURIComponent(_category)}&calculator=${encodeURIComponent(title)}&formula=${encodeURIComponent(ogFormula)}&example=${encodeURIComponent(ogExample)}`
   : undefined;
 
-let lastUpdated = '';
-let lastUpdatedISO = '';
-try {
-  const result = execSync(
-    `git log -1 --format="%ci" -- "${_filePath}"`,
-    { encoding: 'utf-8' }
-  ).trim();
-  if (result) {
-    const d = new Date(result);
-    lastUpdated = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    lastUpdatedISO = d.toISOString().split('T')[0];
-  } else {
-    lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    lastUpdatedISO = new Date().toISOString().split('T')[0];
-  }
-} catch {
-  lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  lastUpdatedISO = new Date().toISOString().split('T')[0];
-}
-
 const AUTHOR = {
   "@type": "Person",
   "name": _author.name,
@@ -144,7 +124,6 @@ const augmentedSchema = (_reviewer && REVIEWER_SCHEMA && canonical && _baseSchem
       "url": canonical,
       "name": title,
       "description": description,
-      "lastReviewed": lastUpdatedISO,
       "reviewedBy": REVIEWER_SCHEMA,
       "author": REVIEWER_SCHEMA,
       "audience": {
@@ -153,6 +132,19 @@ const augmentedSchema = (_reviewer && REVIEWER_SCHEMA && canonical && _baseSchem
       }
     }]
   : (_baseSchemas ?? schema);
+
+let lastUpdated = '';
+try {
+  const result = execSync(
+    `git log -1 --format="%ci" -- "${_filePath}"`,
+    { encoding: 'utf-8' }
+  ).trim();
+  lastUpdated = result
+    ? new Date(result).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+} catch {
+  lastUpdated = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
 
 const embedUrl = embedSlug ? `https://calculations.tools/embed/${embedSlug}` : null;
 const iframeSnippet = embedUrl

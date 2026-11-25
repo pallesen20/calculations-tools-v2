@@ -1,0 +1,646 @@
+---
+import CalculatorLayout from '../../layouts/CalculatorLayout.astro';
+import HealthDisclaimer from '../../components/HealthDisclaimer.astro';
+import QuizBlock from '../../components/QuizBlock.astro';
+import type { Source } from '../../components/Sources.astro';
+
+const tocItems = [
+  { id: 'how-to-use', label: 'How to use this calculator' },
+  { id: 'what-is-aft', label: 'What replaced the ACFT in 2025?' },
+  { id: 'explained-to-beginner', label: 'Explained to a beginner' },
+  { id: 'aft-events', label: 'The five AFT events' },
+  { id: 'aft-scoring', label: 'Minimum passing standards' },
+  { id: 'aft-vs-acft', label: 'AFT vs. ACFT: what changed' },
+  { id: 'aft-training', label: 'How to train for each event' },
+  { id: 'faq', label: 'FAQs' },
+  { id: 'quiz', label: 'Quiz: test your knowledge' },
+  { id: 'related-tools', label: 'Related tools' },
+];
+
+const quizQuestions = [
+  {
+    q: 'When did the Army Fitness Test (AFT) officially replace the ACFT?',
+    options: ['January 1, 2025', 'June 1, 2025', 'October 1, 2025', 'March 15, 2025'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'The AFT took effect June 1, 2025, following 18 months of analysis and thousands of test iterations conducted by the Army.',
+  },
+  {
+    q: 'Which event was removed when the ACFT became the AFT?',
+    options: ['Hand-release push-up', '2-mile run', 'Standing power throw', 'Deadlift'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'The Standing Power Throw was dropped from the ACFT when it became the AFT, reducing the event count from six to five.',
+  },
+  {
+    q: 'What is the minimum score required for each individual AFT event?',
+    options: ['50 points', '60 points', '70 points', '75 points'] as [string, string, string, string],
+    correct: 1 as const,
+    explanation: 'Every soldier must score at least 60 points on each of the five events. Failing any single event means failing the AFT overall, regardless of total score.',
+  },
+  {
+    q: 'What is the total minimum score for a soldier in a combat MOS?',
+    options: ['300 points', '320 points', '350 points', '400 points'] as [string, string, string, string],
+    correct: 2 as const,
+    explanation: 'Soldiers in combat specialties must achieve a total of at least 350 points across all five events, with no single event below 60.',
+  },
+  {
+    q: 'Which AFT event uses identical scoring standards for both male and female soldiers?',
+    options: ['2-mile run', 'Deadlift', 'Sprint-drag-carry', 'Plank'] as [string, string, string, string],
+    correct: 3 as const,
+    explanation: 'The plank (PLK) is the only AFT event with identical time standards for all soldiers. All other events use sex-specific or category-specific scoring.',
+  },
+] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[];
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Army Fitness Test (AFT) Calculator",
+    "url": "https://calculations.tools/health/army-fitness-test-calculator",
+    "description": "Calculate your Army Fitness Test scores for all 5 events. Age-graded, sex-normed scoring standards effective June 2025.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use the Army Fitness Test Calculator",
+    "description": "Calculate your AFT score across all five events in under two minutes.",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Select your age group", "text": "Choose your age bracket from the dropdown. The AFT has 10 age groups from 17-21 through 62+, each with different scoring anchors." },
+      { "@type": "HowToStep", "position": 2, "name": "Set your sex and MOS category", "text": "Males always use the M/C scoring column. Females in combat MOSs also use M/C. Females in non-combat MOSs use the F column and the 300-point total minimum." },
+      { "@type": "HowToStep", "position": 3, "name": "Enter your deadlift and push-up performance", "text": "Enter your 3-rep max deadlift in lbs and your maximum hand-release push-ups in 2 minutes." },
+      { "@type": "HowToStep", "position": 4, "name": "Enter your timed event results", "text": "Enter your sprint-drag-carry time, plank hold time, and 2-mile run time in minutes and seconds." },
+      { "@type": "HowToStep", "position": 5, "name": "Review scores and overall result", "text": "Each event shows a 0-100 score and a PASS or FAIL badge. The total score is compared to your MOS minimum (350 for combat, 300 for general)." },
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What replaced the ACFT in 2025?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The Army Fitness Test (AFT) replaced the Army Combat Fitness Test (ACFT) on June 1, 2025. The AFT has five events - the Standing Power Throw was dropped. Per-event minimum is 60 points; total minimum is 350 for combat MOSs or 300 for general MOSs." }
+      },
+      {
+        "@type": "Question",
+        "name": "What events are in the Army Fitness Test?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The AFT has five events: Maximum Deadlift (MDL) - 3-rep max in lbs; Hand-Release Push-Up (HRP) - reps in 2 minutes; Sprint-Drag-Carry (SDC) - 50-meter timed course; Plank (PLK) - timed hold; and 2-Mile Run (2MR)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the minimum score to pass the AFT?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Every soldier must score at least 60 points on each of the five events. Combat MOS soldiers also need a total score of 350 or more. Soldiers in non-combat MOSs need a total of 300 or more. Failing any single event is an automatic overall fail." }
+      },
+      {
+        "@type": "Question",
+        "name": "How is the AFT different from the ACFT?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The AFT dropped the Standing Power Throw from the ACFT's six events. The three-tier MOS category system was simplified to two tiers (combat vs. general). The five remaining events, the 0-100 scoring scale, and the 60-point per-event floor are all unchanged." }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a good AFT score?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Passing minimum is 60 per event and 350 (combat) or 300 (general) total. Competitive scores for promotion consideration typically sit at 400 or above. Scores above 450 place a soldier in roughly the top quartile of their age group." }
+      },
+    ]
+  }
+];
+
+const sources: Source[] = [
+  {
+    author: 'U.S. Army',
+    title: 'Army introduces new fitness test for 2025',
+    journal: 'U.S. Army',
+    year: 2025,
+    url: 'https://www.army.mil/article/285501/army_introduces_new_fitness_test_for_2025',
+  },
+  {
+    author: 'U.S. Army',
+    title: 'Army Fitness Test (AFT)',
+    journal: 'U.S. Army official website',
+    year: 2025,
+    url: 'https://www.army.mil/aft/',
+  },
+];
+---
+<CalculatorLayout
+  title="Army Fitness Test (AFT) Calculator"
+  metaTitle="US Army Fitness Test (AFT) Calculator | ACFT Replacement"
+  description="Score all 5 US Army Fitness Test events - age-graded, gender-normed AFT standards from June 2025, the official ACFT replacement. Deadlift, push-ups, SDC, plank, 2-mile run."
+  canonical="https://calculations.tools/health/army-fitness-test-calculator"
+  tocItems={tocItems}
+  embedSlug="army-fitness-test-calculator"
+  schema={schema}
+  sources={sources}
+  ogFormula="AFT = sum of 5 event scores (each 0-100, min 60 each)"
+  ogExample="Male 22-26: 250 lb deadlift, 42 push-ups, 2:05 SDC, 2:30 plank, 15:45 run = 406 total (pass)"
+>
+  <div slot="calculator">
+    <section class="calculator-interface">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>US Army Fitness Test (AFT) Score</h2>
+          <p>5 events - scoring standards effective June 1, 2025</p>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label" for="aft-age">Age group</label>
+          <div class="bmi-input-wrap">
+            <select id="aft-age" class="bmi-input aft-select">
+              <option value="0">17 - 21</option>
+              <option value="1" selected>22 - 26</option>
+              <option value="2">27 - 31</option>
+              <option value="3">32 - 36</option>
+              <option value="4">37 - 41</option>
+              <option value="5">42 - 46</option>
+              <option value="6">47 - 51</option>
+              <option value="7">52 - 56</option>
+              <option value="8">57 - 61</option>
+              <option value="9">62+</option>
+            </select>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">Sex</label>
+          <div class="bmi-unit-toggle" style="flex:1">
+            <button class="bmi-unit-btn aft-sex-btn active" data-sex="male">Male</button>
+            <button class="bmi-unit-btn aft-sex-btn" data-sex="f">Female</button>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">MOS</label>
+          <div class="bmi-unit-toggle" style="flex:1">
+            <button class="bmi-unit-btn aft-mos-btn active" data-mos="combat">Combat (min 350)</button>
+            <button class="bmi-unit-btn aft-mos-btn" data-mos="general">General (min 300)</button>
+          </div>
+        </div>
+        <p class="aft-col-note">Females in combat MOSs use male/combat (M/C) scoring standards and the 350-point minimum.</p>
+        <div class="aft-divider"></div>
+        <div class="bmi-field">
+          <label class="bmi-label">Deadlift (MDL)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="aft-mdl" class="bmi-input" placeholder="250" />
+            <span class="bmi-unit-tag">lbs</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">Push-ups (HRP)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="aft-hrp" class="bmi-input" placeholder="42" />
+            <span class="bmi-unit-tag">reps</span>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">Sprint-drag-carry (SDC)</label>
+          <div class="aft-time-wrap">
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="aft-sdc-min" class="bmi-input" placeholder="2" />
+              <span class="bmi-unit-tag">min</span>
+            </div>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="aft-sdc-sec" class="bmi-input" placeholder="05" />
+              <span class="bmi-unit-tag">sec</span>
+            </div>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">Plank (PLK)</label>
+          <div class="aft-time-wrap">
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="aft-plk-min" class="bmi-input" placeholder="2" />
+              <span class="bmi-unit-tag">min</span>
+            </div>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="aft-plk-sec" class="bmi-input" placeholder="30" />
+              <span class="bmi-unit-tag">sec</span>
+            </div>
+          </div>
+        </div>
+        <div class="bmi-field">
+          <label class="bmi-label">2-mile run (2MR)</label>
+          <div class="aft-time-wrap">
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="aft-mr2-min" class="bmi-input" placeholder="15" />
+              <span class="bmi-unit-tag">min</span>
+            </div>
+            <div class="bmi-input-wrap">
+              <input type="text" inputmode="decimal" id="aft-mr2-sec" class="bmi-input" placeholder="45" />
+              <span class="bmi-unit-tag">sec</span>
+            </div>
+          </div>
+        </div>
+        <div id="aft-result" class="lbm-result hidden">
+          <div class="aft-events-grid">
+            <div class="aft-event-card">
+              <div class="aft-event-name">MDL</div>
+              <div class="aft-event-score" id="aft-score-mdl">-</div>
+              <div id="aft-badge-mdl" class="aft-event-badge">-</div>
+            </div>
+            <div class="aft-event-card">
+              <div class="aft-event-name">HRP</div>
+              <div class="aft-event-score" id="aft-score-hrp">-</div>
+              <div id="aft-badge-hrp" class="aft-event-badge">-</div>
+            </div>
+            <div class="aft-event-card">
+              <div class="aft-event-name">SDC</div>
+              <div class="aft-event-score" id="aft-score-sdc">-</div>
+              <div id="aft-badge-sdc" class="aft-event-badge">-</div>
+            </div>
+            <div class="aft-event-card">
+              <div class="aft-event-name">PLK</div>
+              <div class="aft-event-score" id="aft-score-plk">-</div>
+              <div id="aft-badge-plk" class="aft-event-badge">-</div>
+            </div>
+            <div class="aft-event-card">
+              <div class="aft-event-name">2MR</div>
+              <div class="aft-event-score" id="aft-score-mr2">-</div>
+              <div id="aft-badge-mr2" class="aft-event-badge">-</div>
+            </div>
+          </div>
+          <div class="aft-total-row">
+            <div class="aft-total-label">Total</div>
+            <div class="aft-total-score" id="aft-total-score">-</div>
+            <div class="aft-min-label">/ <span id="aft-min-total">350</span> min</div>
+            <div id="aft-overall" class="aft-overall-badge">-</div>
+          </div>
+          <div class="aft-result-note" id="aft-result-note"></div>
+          <p class="aft-scoring-note">Scores estimated by linear interpolation between published 60- and 100-point anchors. Official record scores may differ by 1-2 points.</p>
+        </div>
+      </div>
+    </section>
+    <HealthDisclaimer />
+    <script src="/js/army-fitness-test-calculator.js" is:inline></script>
+  </div>
+  <div slot="content">
+    <div class="seo-container">
+      <div class="answer-box">
+        <div class="answer-box-label">Quick answer</div>
+        <p>The Army Fitness Test (AFT) uses five events scored 0-100 each. You need at least 60 per event and a total of 350 (combat MOS) or 300 (general MOS). Scores are age-graded and sex-normed, except the plank - which uses identical standards for everyone.</p>
+      </div>
+      <div class="answer-box">
+        <div class="answer-box-label">Key takeaways</div>
+        <ul>
+          <li>The AFT replaced the ACFT on June 1, 2025 - the Standing Power Throw was dropped, leaving five events.</li>
+          <li>Minimum passing: 60 points per event AND 350 total (combat MOS) or 300 total (general MOS).</li>
+          <li>Females in combat MOSs take the same M/C scoring standards as males - the standard is sex-neutral for combat specialties.</li>
+          <li>The plank is the only event with identical standards regardless of sex or MOS category.</li>
+          <li>Most active-duty soldiers have until January 1, 2026 to meet AFT standards without adverse action (National Guard and Reserve soldiers in combat specialties have until June 1, 2026).</li>
+        </ul>
+      </div>
+      <h2 id="how-to-use">How to use this US Army Fitness Test (AFT) calculator</h2>
+      <p>Select your age group and sex, then choose your MOS category (combat at 350-point minimum, or general at 300). Enter your performance for each of the five events. The calculator scores each event 0-100 and shows your total with an overall pass/fail.</p>
+      <p>You can enter just one or two events to check partial scores while you're still training. The overall result only appears when all five events have values.</p>
+      <h2 id="what-is-aft">What replaced the ACFT in 2025?</h2>
+      <p>The US Army Fitness Test (AFT) officially replaced the US Army Combat Fitness Test (ACFT) on June 1, 2025, under Army Directive 2025-06. The transition followed 18 months of data analysis, with the stated goal of reducing administrative burden while keeping meaningful physical readiness standards.</p>
+      <p>The AFT keeps the five strongest ACFT events and drops the Standing Power Throw. It also simplifies the MOS category system from three tiers to two. Everything else - the 0-100 scoring scale, the age norms, and the 60-point per-event floor - carried over unchanged.</p>
+      <h3 id="explained-to-beginner">AFT score explained to a beginner</h3>
+      <p>Think of each AFT event as a separate mini-exam, each worth 100 points. You need to score at least 60 on every mini-exam or you fail the whole test - getting 95 on the run doesn't save a 55 on the deadlift. All five scores then add up to a total out of 500.</p>
+      <p>For a combat job, your total needs to reach 350. For a general job, it needs to reach 300. So passing the AFT means clearing two hurdles: every individual score must be at least 60, and the sum must hit your MOS minimum.</p>
+      <h2 id="aft-events">The five AFT events</h2>
+      <p>Each event targets a different physical domain. Together they cover muscular strength, muscular endurance, aerobic capacity, and anaerobic power - the full range of soldier readiness (U.S. Army, 2025).</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Abbr.</th>
+              <th>Event</th>
+              <th>What you do</th>
+              <th>Measured in</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>MDL</td>
+              <td>Maximum Deadlift</td>
+              <td>3-repetition max trap-bar deadlift</td>
+              <td>lbs</td>
+            </tr>
+            <tr>
+              <td>HRP</td>
+              <td>Hand-Release Push-Up</td>
+              <td>Push-ups with full hand release at the bottom, max reps in 2 minutes</td>
+              <td>reps</td>
+            </tr>
+            <tr>
+              <td>SDC</td>
+              <td>Sprint-Drag-Carry</td>
+              <td>5-lane 50-meter course: sprint, sled drag, lateral, carry, sprint</td>
+              <td>mm:ss</td>
+            </tr>
+            <tr>
+              <td>PLK</td>
+              <td>Plank</td>
+              <td>Standard forearm plank hold</td>
+              <td>mm:ss</td>
+            </tr>
+            <tr>
+              <td>2MR</td>
+              <td>2-Mile Run</td>
+              <td>Outdoor or approved treadmill two-mile run</td>
+              <td>mm:ss</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The SDC is the only event that requires equipment (a sled and two 40-lb kettle bells). The plank and 2MR can be administered with no gear at all, which is part of why they survived the ACFT redesign.</p>
+      <h2 id="aft-scoring">Minimum passing standards</h2>
+      <p>The tables below show the performance needed for a 60-point score - the lowest score that still counts as a pass. The M/C column applies to all males and to females in combat MOSs. The F column applies to females in non-combat (general) MOSs.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Age group</th>
+              <th>MDL (lbs)</th>
+              <th>HRP (reps)</th>
+              <th>SDC</th>
+              <th>PLK</th>
+              <th>2MR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th colspan="6" class="aft-table-subhead">Male / Combat (M/C) - 60-point minimums</th></tr>
+            <tr><td>17 - 21</td><td>150</td><td>15</td><td>2:28</td><td>1:30</td><td>19:57</td></tr>
+            <tr><td>22 - 26</td><td>150</td><td>14</td><td>2:31</td><td>1:25</td><td>19:45</td></tr>
+            <tr><td>27 - 31</td><td>150</td><td>14</td><td>2:32</td><td>1:20</td><td>19:45</td></tr>
+            <tr><td>32 - 36</td><td>140</td><td>13</td><td>2:36</td><td>1:15</td><td>20:44</td></tr>
+            <tr><td>37 - 41</td><td>140</td><td>12</td><td>2:41</td><td>1:10</td><td>20:44</td></tr>
+            <tr><td>42 - 46</td><td>140</td><td>11</td><td>2:45</td><td>1:10</td><td>22:04</td></tr>
+            <tr><td>47 - 51</td><td>140</td><td>11</td><td>2:53</td><td>1:10</td><td>22:04</td></tr>
+            <tr><td>52 - 56</td><td>140</td><td>10</td><td>3:00</td><td>1:10</td><td>22:50</td></tr>
+            <tr><td>57 - 61</td><td>140</td><td>10</td><td>3:12</td><td>1:10</td><td>23:36</td></tr>
+            <tr><td>62+</td><td>140</td><td>10</td><td>3:16</td><td>1:10</td><td>23:36</td></tr>
+            <tr><th colspan="6" class="aft-table-subhead">Female / Non-combat (F) - 60-point minimums</th></tr>
+            <tr><td>17 - 21</td><td>120</td><td>11</td><td>3:15</td><td>1:30</td><td>22:55</td></tr>
+            <tr><td>22 - 26</td><td>120</td><td>11</td><td>3:15</td><td>1:25</td><td>22:45</td></tr>
+            <tr><td>27 - 31</td><td>120</td><td>11</td><td>3:15</td><td>1:20</td><td>22:45</td></tr>
+            <tr><td>32 - 36</td><td>120</td><td>11</td><td>3:22</td><td>1:15</td><td>22:50</td></tr>
+            <tr><td>37 - 41</td><td>120</td><td>10</td><td>3:27</td><td>1:10</td><td>22:59</td></tr>
+            <tr><td>42 - 46</td><td>120</td><td>10</td><td>3:42</td><td>1:10</td><td>23:15</td></tr>
+            <tr><td>47 - 51</td><td>120</td><td>10</td><td>3:51</td><td>1:10</td><td>23:30</td></tr>
+            <tr><td>52 - 56</td><td>120</td><td>10</td><td>4:03</td><td>1:10</td><td>24:00</td></tr>
+            <tr><td>57 - 61</td><td>120</td><td>10</td><td>4:48</td><td>1:10</td><td>24:48</td></tr>
+            <tr><td>62+</td><td>120</td><td>10</td><td>4:48</td><td>1:10</td><td>25:00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>When I compare the minimum standards across age groups, the deadlift minimum is remarkably stable - 150 lbs through age 36 for M/C, then 140 lbs from 37 onward. That small drop reflects <a href="/glossary/sarcopenia">sarcopenia</a> - the gradual muscle loss that accelerates after 40 - rather than a meaningful change in what combat fitness requires.</p>
+      <p>The 2-mile run, by contrast, adds nearly 4 minutes of allowable time between the 22-26 and 62+ age groups. The run compensates most heavily for age; the deadlift least.</p>
+      <h2 id="aft-vs-acft">AFT vs. ACFT: what changed</h2>
+      <p>The AFT is not a wholesale redesign - it's a targeted trim. Four of the ACFT's six events survived unchanged. The main changes are the removal of one event and a simplification of the MOS tier structure.</p>
+      <div class="responsive-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Change</th>
+              <th>ACFT</th>
+              <th>AFT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Number of events</td>
+              <td>6</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>Removed event</td>
+              <td>Standing Power Throw (SPT)</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>MOS categories</td>
+              <td>3 tiers (Black/Gray/Gold)</td>
+              <td>2 tiers (Combat/General)</td>
+            </tr>
+            <tr>
+              <td>Total minimum (combat)</td>
+              <td>370 (Black)</td>
+              <td>350</td>
+            </tr>
+            <tr>
+              <td>Total minimum (general)</td>
+              <td>270-330 (Gray/Gold)</td>
+              <td>300</td>
+            </tr>
+            <tr>
+              <td>Per-event minimum</td>
+              <td>60 points</td>
+              <td>60 points</td>
+            </tr>
+            <tr>
+              <td>Scoring scale</td>
+              <td>0-100 per event</td>
+              <td>0-100 per event</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The Standing Power Throw required a 10-lb medicine ball, a 12-meter lane, and a tape measure - equipment most units didn't carry in the field. Dropping it makes the AFT significantly easier to administer without a dedicated testing facility.</p>
+      <p>The three-tier MOS system (Black, Gray, Gold) was also simplified to two tiers. Soldiers no longer need to know which tier their MOS falls into - it's binary: combat specialty (350 total) or general (300 total).</p>
+      <h2 id="aft-training">How to train for each event</h2>
+      <p>Targeted event training beats general fitness. Each AFT event responds to a specific stimulus. The minimum passing scores are achievable in 8-16 weeks from a moderate fitness baseline for most events.</p>
+      <p><strong>MDL (Deadlift):</strong> Program trap-bar deadlifts 2x per week at 70-85% of your max. Add Romanian deadlifts for the posterior chain. <a href="/glossary/lean-body-mass">Lean body mass</a> is the primary predictor of deadlift potential - soldiers with more muscle relative to bodyweight reach the 100-point threshold faster. Most soldiers can hit 150 lbs (the M/C minimum) within 8-12 weeks of consistent training from a sedentary baseline.</p>
+      <p><strong>HRP (Hand-release push-ups):</strong> Volume drives progress here. Build 3-4 sets of near-max HRPs daily. Paused push-ups (1-second chest-to-floor pause) develop the specific strength needed for the hand-release position. The 14-rep minimum for 22-26 M/C is well within reach for most soldiers.</p>
+      <p><strong>SDC (Sprint-drag-carry):</strong> Run the actual course. The SDC is a skill event - lateral shuffle technique and sled acceleration matter as much as raw conditioning. A five-lane practice area with the right equipment is the most effective preparation. Athletes who try to train SDC without a sled consistently underperform on test day.</p>
+      <p><strong>PLK (Plank):</strong> Dead bugs, hollow body holds, and anti-rotation exercises build the deep core required for a 3:35+ plank (the M/C 100-point threshold for 22-26). Start at 60-second sets and add 10-15 seconds weekly. The 1:25 minimum is achievable in a few weeks; the 3:35 maximum takes months of progressive training.</p>
+      <p><strong>2MR (2-mile run):</strong> Run three times per week. For soldiers below the passing threshold, Zone 2 running (conversational pace) for 20-30 minutes builds the aerobic base faster than interval work. Once the base is built, 400-meter intervals at goal pace bring times down quickly.</p>
+      <p>In practice, the 2-mile run is the event that holds most soldiers back. When scores fail to improve after weeks of training, it's rarely the deadlift - most people can hit 140 lbs with consistent lifting.</p>
+      <p>The bottleneck is almost always cardiovascular: a 19:45 two-mile for a male under 36 demands serious aerobic conditioning, especially under the fatigue from four prior events.</p>
+      <h2 id="faq">Frequently asked questions about the AFT</h2>
+      <h3>What is the difference between the ACFT and the AFT?</h3>
+      <p>The ACFT had six events and three MOS performance categories (Black, Gray, Gold). The AFT has five events - the Standing Power Throw was dropped - and two MOS categories: Combat (minimum 350) and General (minimum 300). Per-event scoring (0-100 per event, 60-point minimum) is unchanged. The five remaining events are identical to their ACFT counterparts.</p>
+      <h3>What events are in the US Army Fitness Test?</h3>
+      <p>The five AFT events are Maximum Deadlift (MDL), Hand-Release Push-Up (HRP), Sprint-Drag-Carry (SDC), Plank (PLK), and 2-Mile Run (2MR). Events are performed in this order on test day, which means your cardiovascular capacity is tested last - after accumulated muscular fatigue from the first four events.</p>
+      <h3>What is the minimum score to pass the AFT?</h3>
+      <p>You need at least 60 points on each of the five events - no exceptions. If all five events pass individually, you also need a total of 350 or more (combat MOS) or 300 or more (general MOS). Failing any single event is an automatic overall fail regardless of your other scores.</p>
+      <h3>What is a good AFT score?</h3>
+      <p>Passing minimum is 60 per event and 350 (combat) or 300 (general) total. Competitive scores for promotion consideration typically sit at 400 or above. Scores above 450 place a soldier in roughly the top quartile of their age group. A score of 500 represents near-maximum performance and is uncommon outside of elite units.</p>
+      <QuizBlock
+        topic="Army Fitness Test"
+        questions={quizQuestions}
+        pageUrl="https://calculations.tools/health/army-fitness-test-calculator"
+      />
+      <h2 id="related-tools">Related tools</h2>
+      <ul class="related-tools-list">
+        <li>
+          <span class="tool-icon">🏋️</span>
+          <div>
+            <a href="/health/body-fat-calculator">Body fat calculator</a>
+            <p>Estimate your body fat percentage using the Navy tape method - a key physical readiness marker alongside your AFT score.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">💪</span>
+          <div>
+            <a href="/health/ffmi-calculator">FFMI calculator</a>
+            <p>Calculate your Fat-Free Mass Index to understand your muscle-to-height ratio, which correlates with deadlift and push-up performance.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🧬</span>
+          <div>
+            <a href="/health/lean-body-mass-calculator">Lean body mass calculator</a>
+            <p>Calculate your lean mass - the muscle and bone that drives strength and endurance performance on the AFT.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">⚖️</span>
+          <div>
+            <a href="/health/bmi-calculator">BMI calculator</a>
+            <p>Calculate body mass index - useful context alongside physical fitness scores for overall health tracking.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tool-icon">🎯</span>
+          <div>
+            <a href="/health/ideal-weight-calculator">Ideal weight calculator</a>
+            <p>Find the weight range most associated with healthy physical performance for your height using multiple formulas.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</CalculatorLayout>
+<style is:global>
+  .aft-select {
+    cursor: pointer;
+  }
+  .aft-col-note {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: -0.25rem 0 0.5rem;
+    padding: 0;
+    line-height: 1.4;
+  }
+  .aft-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 0.75rem 0 0.5rem;
+  }
+  .aft-time-wrap {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
+  }
+  .aft-time-wrap .bmi-input-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+  .aft-events-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .aft-event-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 0.6rem 0.4rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+  }
+  .aft-event-name {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .aft-event-score {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .aft-event-badge {
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .aft-badge-pass {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+  }
+  .aft-badge-fail {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+  }
+  .aft-badge-max {
+    background: rgba(99, 102, 241, 0.25);
+    color: #a5b4fc;
+  }
+  .aft-total-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 0 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    flex-wrap: wrap;
+  }
+  .aft-total-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .aft-total-score {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+  .aft-min-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    flex: 1;
+  }
+  .aft-overall-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .aft-overall-pass {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+  }
+  .aft-overall-fail {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+  }
+  .aft-result-note {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.4;
+    margin-top: 0.25rem;
+  }
+  .aft-scoring-note {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    line-height: 1.4;
+  }
+  .aft-table-subhead {
+    text-align: left;
+    font-size: 0.7rem;
+    opacity: 0.6;
+    padding-top: 0.75rem;
+    font-weight: 600;
+  }
+</style>

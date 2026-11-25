@@ -710,6 +710,19 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     proTipFix: 'only count a trial as correct if the learner responded to the SD alone, before any prompt was delivered - if you gave a prompt first, it is a prompted trial regardless of whether the response was right',
   },
 
+  'army-fitness-test-calculator': {
+    hookProblem: 'calculate your Army Fitness Test score across all five events before your next official test',
+    character: 'James, a 26-year-old active-duty specialist',
+    exampleSetup: 'He is in the 22-26 age group, male, in a combat MOS. He scored 250 lbs on the deadlift, 42 push-ups, 2:05 on the sprint-drag-carry, 2:30 on the plank, and 15:45 on the two-mile run.',
+    formulaPlain: 'each event is scored 0 to 100 by interpolating between the published 60-point minimum and 100-point maximum for your age group and sex column; the five scores are then added together',
+    exampleWalkthrough: 'deadlift 250 lbs gives 80 points, 42 push-ups gives 84, sprint-drag-carry 2:05 gives 77, plank 2:30 gives 80, two-mile run 15:45 gives 85',
+    exampleResult: '406 total - passing for a combat MOS, which requires 350 or more',
+    exampleImplication: 'James is 56 points above the combat minimum, with the sprint-drag-carry as his weakest event and the best opportunity to improve his total',
+    notableFeature: 'a five-event score grid that shows each event score and a PASS or FAIL badge in one glance, plus an overall result that updates as you type',
+    proTipMistake: 'selecting the wrong MOS category - females in combat MOSs must use the male/combat scoring column and the 350-point minimum, not the female non-combat column',
+    proTipFix: 'if you are female and in a combat MOS, leave Sex set to Male or select the Combat MOS button - the M/C column and 350-point minimum is what applies to you',
+  },
+
   'bmi-calculator-menopause': {
     hookProblem: 'know whether your weight, waist, and menopause history add up to real cardiometabolic risk',
     character: 'Linda, a 57-year-old office manager 5 years past menopause',
