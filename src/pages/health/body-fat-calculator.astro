@@ -19,9 +19,11 @@ const tocItems = [
   { id: 'explained-to-beginner', label: 'Explained to a beginner' },
   { id: 'how-to-measure',       label: 'How to measure' },
   { id: 'bf-categories',    label: 'Body fat categories' },
+  { id: 'bf-averages',      label: 'Average body fat by age' },
   { id: 'navy-method',      label: 'The Navy method' },
   { id: 'method-comparison',label: 'Measurement methods compared' },
   { id: 'how-to-reduce',    label: 'How to reduce body fat' },
+  { id: 'fat-physiology',   label: 'How the body stores and burns fat' },
   { id: 'faq',              label: 'FAQs' },
   { id: 'quiz',             label: 'Quiz: test your knowledge' },
   { id: 'related-tools',    label: 'Related tools' },
@@ -88,6 +90,13 @@ const sources: Source[] = [
     journal: 'Human Kinetics',
     year: 1992,
     url: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1284177/',
+  },
+  {
+    author: 'National Center for Health Statistics',
+    title: 'National Health and Nutrition Examination Survey (NHANES)',
+    journal: 'Centers for Disease Control and Prevention',
+    year: 2004,
+    url: 'https://www.cdc.gov/nchs/nhanes/index.htm',
   },
 ];
 
@@ -343,6 +352,22 @@ const schema = [
       <p>One pattern I notice consistently: users in the upper Acceptable range (22-24% for men, 28-31% for women) who are otherwise active often report normal-to-good blood markers. Metabolic health does not fall off a cliff at those levels.</p>
       <p>The jump to High (25%+ for men, 32%+ for women) is where cardiometabolic risk accumulates noticeably in cohort data - that boundary matters more than chasing Athletic percentages. Postmenopausal women crossing into this zone can use the <a href="/health/bmi-calculator/menopause">postmenopausal cardiometabolic risk tool</a> to combine body composition data with waist circumference, HRT status, and years since menopause.</p>
       <p>For most people, the Fitness-to-Acceptable boundary is the more meaningful target.</p>
+      <h2 id="bf-averages">Average body fat by age in the US</h2>
+      <p>ACE categories tell you what's healthy, but most people also want to know where they stand relative to the typical US adult. The NHANES survey (National Health and Nutrition Examination Survey, CDC, 1999-2004) measured body fat in thousands of Americans across age groups:</p>
+      <div class="responsive-table">
+      <table>
+        <thead>
+          <tr><th>Age group</th><th>Men (avg)</th><th>Women (avg)</th><th>ACE category (men)</th><th>ACE category (women)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>16 – 19</td><td>23%</td><td>35%</td><td>Acceptable</td><td>High</td></tr>
+          <tr><td>20 – 39</td><td>26%</td><td>38%</td><td>High</td><td>High</td></tr>
+          <tr><td>40 – 59</td><td>28%</td><td>41%</td><td>High</td><td>High</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>The data shows that the average American adult falls in the High category by ACE standards - meaning the ACE Acceptable range (18-24% for men, 25-31% for women) is already leaner than the US average. If your calculator result is at or below the Acceptable range, you are leaner than most US adults your age.</p>
+      <p>These are averages, not targets. NHANES measured what people actually have, not what is healthy. Use the ACE categories to assess health risk, and the NHANES data only to understand where you sit relative to the broader population.</p>
       <h2 id="navy-method">The US navy method</h2>
       <p>The Navy circumference method was developed by <a href="https://apps.dtic.mil/sti/citations/ADA148699" target="_blank">Hodgdon and Beckett in 1984</a> at the Naval Health Research Center as a practical, equipment-free alternative to underwater weighing for assessing military fitness.</p>
       <p>The key insight is that waist-to-neck ratio (men) and waist+hip-to-neck ratio (women) predicts body density, from which body fat % can be derived using the Siri equation (495 / density − 450).</p>
@@ -356,14 +381,14 @@ const schema = [
       <p>Neck circumference serves as a proxy for upper-body lean mass. Subtracting it from waist (or waist + hip) creates a ratio that separates midsection fat from total mass.</p>
       <p>A muscular person with a large neck and moderate waist will register lower body fat than the same waist measurement would imply without the neck correction. This is why the Navy method outperforms pure waist-based formulas for people with significant upper-body muscle development.</p>
       <h2 id="method-comparison">Body fat measurement methods compared</h2>
-      <p>This table below correctly compares the different bodt fat measurements methods.</p>
+      <p>The table below compares all commonly used body fat measurement methods by accuracy, cost, and what they require.</p>
       <div class="responsive-table">
       <table>
         <thead>
           <tr><th>Method</th><th>Accuracy (vs DEXA)</th><th>Cost</th><th>Requires</th></tr>
         </thead>
         <tbody>
-          <tr><td>DEXA scan</td><td>Reference standard</td><td>High (£50–200)</td><td>Medical facility</td></tr>
+          <tr><td>DEXA scan</td><td>Reference standard</td><td>High ($100–300)</td><td>Medical facility</td></tr>
           <tr><td>Hydrostatic weighing</td><td>±1 – 2%</td><td>High</td><td>Lab with water tank</td></tr>
           <tr><td>Bod Pod (air displacement)</td><td>±2 – 3%</td><td>Moderate</td><td>Lab</td></tr>
           <tr><td>Skinfold calipers (professional)</td><td>±3 – 4%</td><td>Low</td><td>Trained technician + calipers</td></tr>
@@ -404,6 +429,19 @@ const schema = [
         </tbody>
       </table>
       </div>
+      <h2 id="fat-physiology">How the body stores and burns fat</h2>
+      <p>Body fat is stored as triglycerides inside adipose cells. When you are in a caloric deficit, falling blood glucose and insulin levels signal fat cells to release fatty acids and glycerol into the bloodstream. The fatty acids travel to muscles and organs, where they are broken down through beta-oxidation to produce ATP (cellular energy).</p>
+      <p>When fat is burned, the carbon atoms from fatty acids are oxidized to carbon dioxide (CO2) and water (H2O). Roughly 84% of the mass of oxidized fat leaves the body as exhaled CO2; the remaining 16% is excreted as water. Fat does not convert to muscle and does not "turn into" heat - it is chemically disassembled and exhaled.</p>
+      <h3>What body fat is for</h3>
+      <p>Fat is not just stored energy. It performs critical physiological functions that make it impossible to eliminate entirely:</p>
+      <ul>
+        <li><strong>Hormone production:</strong> Sex hormones including estrogen and testosterone are synthesized from cholesterol stored in fat tissue. This is why very low body fat - below 5% for men, 10-13% for women - causes hormonal disruption and reproductive dysfunction.</li>
+        <li><strong>Organ insulation:</strong> Visceral fat cushions and protects the kidneys, heart, and other organs from mechanical shock.</li>
+        <li><strong>Fat-soluble vitamins:</strong> Vitamins A, D, E, and K require fat for absorption and transport through the bloodstream.</li>
+        <li><strong>Temperature regulation:</strong> Subcutaneous fat (under the skin) provides thermal insulation, particularly in cold environments.</li>
+        <li><strong>Brain function:</strong> The brain is approximately 60% fat by dry weight; dietary fat is essential for myelin sheath maintenance and neurological function.</li>
+      </ul>
+      <p>This is why body fat below essential levels causes serious medical complications, even in otherwise fit individuals. The goal is an optimal range - not minimum possible.</p>
       <h2 id="faq">FAQs</h2>
       <h3>What is a healthy body fat percentage?</h3>
       <p>For men, 14–24% is the Fitness-to-Acceptable range and associated with good health; 6–13% is Athletic. For women, 21–31% is Fitness-to-Acceptable; 14–20% is Athletic. Below 5% for men and 13% for women risks hormonal disruption. Above 25% for men and 32% for women correlates with increased metabolic disease risk.</p>
@@ -417,6 +455,14 @@ const schema = [
       <p>No - waist and hip circumferences change significantly during pregnancy for reasons unrelated to fat mass. The Navy formula will give invalid results. Use the <a href="/health/bmi-calculator/pregnancy">BMI During Pregnancy</a> calculator for gestational weight guidance, or the <a href="/health/pregnancy-calculator">Pregnancy Calculator</a> to track your due date and gestational age.</p>
       <h3>How is this different from the FFMI Calculator?</h3>
       <p>This calculator <em>measures</em> your body fat % using tape measurements. The <a href="/health/ffmi-calculator">FFMI Calculator</a> takes a <em>known</em> body fat % and computes your Fat-Free Mass Index - a measure of muscularity relative to height. A common workflow: measure body fat % here, then enter it into the FFMI Calculator to see where you stand on the muscular development scale.</p>
+      <h3>How does fat actually leave the body when you lose weight?</h3>
+      <p>Primarily through your lungs as carbon dioxide. When fat is metabolized, the carbon atoms in fatty acids are oxidized to CO2, which is exhaled with every breath. About 84% of the mass of oxidized fat leaves as exhaled CO2; the remaining 16% exits as water through urine, sweat, and other routes. Fat does not "melt away" - it is chemically broken down and exhaled.</p>
+      <h3>How much body fat can you safely lose per month?</h3>
+      <p>1-3% of your total body fat mass per month is a sustainable rate that minimizes muscle loss. For a 90 kg person at 25% body fat (22.5 kg fat), that is roughly 0.2-0.7 kg of fat per week. Faster losses are possible but significantly increase the risk of lean mass loss and metabolic adaptation, making it harder to maintain results.</p>
+      <h3>How accurate are body fat scales (BIA)?</h3>
+      <p>Consumer BIA scales typically have ±3-6% error versus DEXA. High-end clinical models approach ±3-5%. Accuracy drops significantly when you are dehydrated, have recently exercised, or measure at different times of day - all of which alter body water content and therefore the electrical impedance reading. The Navy tape method is unaffected by hydration, making it more consistent for tracking progress week to week.</p>
+      <h3>What body fat percentage is dangerous?</h3>
+      <p>Below essential fat levels - under 5% for men, under 10-13% for women - the body cannot maintain normal hormone production, reproductive function, and organ protection. These levels are found only in competitive bodybuilders briefly before competition and are not sustainable. Above 25% for men and 32% for women, risk of cardiovascular disease, type 2 diabetes, and metabolic syndrome increases measurably in population studies.</p>
       <QuizBlock
         topic="body fat"
         questions={quizQuestions}
