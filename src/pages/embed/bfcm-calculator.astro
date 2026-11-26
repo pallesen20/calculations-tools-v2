@@ -1,0 +1,484 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+---
+
+<EmbedLayout title="BFCM Discount Profitability Calculator - calculations.tools">
+  <section class="calculator-interface">
+
+    <div class="calculator-container bmi-container">
+      <div class="calculator-header">
+        <h2>BFCM Profitability: Quick Check</h2>
+        <p>Find your break-even in 30 seconds</p>
+      </div>
+
+      <div class="bfcm-currency-wrap">
+        <button class="bfcm-currency-btn active" data-currency="$">$&nbsp;USD</button>
+        <button class="bfcm-currency-btn" data-currency="€">€&nbsp;EUR</button>
+        <button class="bfcm-currency-btn" data-currency="£">£&nbsp;GBP</button>
+        <button class="bfcm-currency-btn" data-currency="A$">A$&nbsp;AUD</button>
+        <button class="bfcm-currency-btn" data-currency="C$">C$&nbsp;CAD</button>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="bfcm-price">Full price / AOV</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="bfcm-price" class="bmi-input" placeholder="80" />
+          <span class="bmi-unit-tag bfcm-currency-symbol">$</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="bfcm-margin">Gross margin</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="bfcm-margin" class="bmi-input" placeholder="45" />
+          <span class="bmi-unit-tag">%</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="bfcm-discount">Discount you're offering</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="bfcm-discount" class="bmi-input" placeholder="25" />
+          <span class="bmi-unit-tag">%</span>
+        </div>
+      </div>
+
+      <div class="bfcm-divider"></div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="bfcm-normal-units">Normal weekend orders</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="bfcm-normal-units" class="bmi-input" placeholder="200" />
+          <span class="bmi-unit-tag">orders</span>
+        </div>
+      </div>
+
+      <div class="bmi-field">
+        <label class="bmi-label" for="bfcm-sale-units">Expected BFCM orders</label>
+        <div class="bmi-input-wrap">
+          <input type="text" inputmode="decimal" id="bfcm-sale-units" class="bmi-input" placeholder="500" />
+          <span class="bmi-unit-tag">orders</span>
+        </div>
+      </div>
+
+      <div id="bfcm-q-result" class="lbm-result hidden">
+        <div class="bfcm-metrics-grid">
+          <div class="bfcm-metric">
+            <div class="bfcm-metric-label">Discounted price</div>
+            <div class="bfcm-metric-val" id="bfcm-q-discprice">-</div>
+          </div>
+          <div class="bfcm-metric">
+            <div class="bfcm-metric-label">COGS per order</div>
+            <div class="bfcm-metric-val" id="bfcm-q-cogs">-</div>
+          </div>
+          <div class="bfcm-metric">
+            <div class="bfcm-metric-label">GP at full price</div>
+            <div class="bfcm-metric-val" id="bfcm-q-gpfull">-</div>
+          </div>
+          <div class="bfcm-metric">
+            <div class="bfcm-metric-label">GP at BFCM price</div>
+            <div class="bfcm-metric-val" id="bfcm-q-gpdisc">-</div>
+          </div>
+        </div>
+
+        <div class="bfcm-bee-row">
+          <span class="bfcm-bee-label">Break-even volume lift</span>
+          <span class="bfcm-bee-val" id="bfcm-q-bee">-</span>
+        </div>
+
+        <div id="bfcm-q-volume-wrap" class="hidden">
+          <div class="bfcm-compare-row">
+            <div class="bfcm-compare-col">
+              <div class="bfcm-compare-label">Regular weekend profit</div>
+              <div class="bfcm-compare-val" id="bfcm-q-normal-profit">-</div>
+            </div>
+            <div class="bfcm-compare-col">
+              <div class="bfcm-compare-label">Break-even orders</div>
+              <div class="bfcm-compare-val" id="bfcm-q-bee-units">-</div>
+            </div>
+            <div class="bfcm-compare-col">
+              <div class="bfcm-compare-label">BFCM profit</div>
+              <div class="bfcm-compare-val" id="bfcm-q-sale-profit">-</div>
+            </div>
+          </div>
+          <div class="bfcm-delta" id="bfcm-q-delta"></div>
+        </div>
+
+        <div id="bfcm-q-verdict" class="bfcm-verdict-badge hidden"></div>
+      </div>
+    </div>
+
+    <div id="bfcm-scenario-wrap" class="hidden" style="margin-top:1rem">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Discount depth comparison</h2>
+          <p>Your P&L at every discount level - ★ marks your current setting</p>
+        </div>
+        <div id="bfcm-scenario-container"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem">
+      <div class="calculator-container bmi-container">
+        <div class="calculator-header">
+          <h2>Full campaign model</h2>
+          <p>Add all BFCM costs and risk factors</p>
+        </div>
+        <p class="bfcm-sync-note">Synced from quick check above. Update price, margin, discount and orders there.</p>
+
+        <div class="bfcm-section-label">Per-order costs</div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-fulfillment">Fulfillment per order</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-fulfillment" class="bmi-input" placeholder="8" />
+            <span class="bmi-unit-tag bfcm-currency-symbol">$</span>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-payment-fee">Payment processing fee</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-payment-fee" class="bmi-input" value="3" />
+            <span class="bmi-unit-tag">%</span>
+          </div>
+        </div>
+
+        <div class="bfcm-section-label">BFCM risk factors</div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-return-rate">Return rate</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-return-rate" class="bmi-input" value="10" />
+            <span class="bmi-unit-tag">%</span>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-reverse-cost">Reverse logistics cost</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-reverse-cost" class="bmi-input" value="8" />
+            <span class="bmi-unit-tag bfcm-currency-symbol" data-suffix="/return">$/return</span>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-cannibalization">Demand cannibalization</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-cannibalization" class="bmi-input" value="25" />
+            <span class="bmi-unit-tag">%</span>
+          </div>
+        </div>
+
+        <div class="bfcm-section-label">Ad spend</div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-ad-spend">Total BFCM ad budget</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-ad-spend" class="bmi-input" placeholder="2000" />
+            <span class="bmi-unit-tag bfcm-currency-symbol">$</span>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-new-customer-pct">New customers (% of BFCM orders)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-new-customer-pct" class="bmi-input" value="57" />
+            <span class="bmi-unit-tag">%</span>
+          </div>
+        </div>
+
+        <div class="bfcm-section-label">New customer LTV (optional)</div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-repeat-rate">Repeat rate (new BFCM customers)</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-repeat-rate" class="bmi-input" value="14" />
+            <span class="bmi-unit-tag">%</span>
+          </div>
+        </div>
+
+        <div class="bmi-field">
+          <label class="bmi-label" for="bfcm-ltv-order">Average repeat order value</label>
+          <div class="bmi-input-wrap">
+            <input type="text" inputmode="decimal" id="bfcm-ltv-order" class="bmi-input" placeholder="80" />
+            <span class="bmi-unit-tag bfcm-currency-symbol">$</span>
+          </div>
+        </div>
+
+        <div id="bfcm-f-result" class="lbm-result hidden">
+
+          <div class="bfcm-pl-table">
+            <div class="bfcm-pl-row"><span>Revenue</span><span id="bfcm-f-revenue">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-sub"><span>COGS</span><span id="bfcm-f-cogs">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-sub"><span>Fulfillment</span><span id="bfcm-f-fulfillment">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-sub"><span>Payment fees</span><span id="bfcm-f-fees">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-sub"><span>Return costs</span><span id="bfcm-f-returns">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-sub"><span>Ad spend</span><span id="bfcm-f-adspend">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-divider"><span>Contribution (pre-cannibalization)</span><span id="bfcm-f-precan">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-sub"><span>Cannibalization cost</span><span id="bfcm-f-canncost">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-divider"><span>Day-0 campaign profit</span><span id="bfcm-f-day0" class="bfcm-pl-val">-</span></div>
+            <div id="bfcm-f-ltv-row" class="bfcm-pl-row bfcm-pl-sub hidden"><span>New customer LTV contribution</span><span id="bfcm-f-ltv">-</span></div>
+            <div class="bfcm-pl-row bfcm-pl-total"><span>Total campaign value</span><span id="bfcm-f-total" class="bfcm-pl-total-val">-</span></div>
+          </div>
+
+          <div id="bfcm-f-verdict" class="bfcm-verdict-badge" style="margin-top:0.75rem"></div>
+
+          <div id="bfcm-fixit-wrap" class="bfcm-fixit hidden">
+            <div class="bfcm-fixit-header">What needs to change to break even</div>
+            <div class="bfcm-fixit-row">
+              <div class="bfcm-fixit-label">Volume needed</div>
+              <div class="bfcm-fixit-val" id="bfcm-fix-units">-</div>
+              <div class="bfcm-fixit-note" id="bfcm-fix-units-note"></div>
+            </div>
+            <div class="bfcm-fixit-row">
+              <div class="bfcm-fixit-label">Maximum safe discount</div>
+              <div class="bfcm-fixit-val" id="bfcm-fix-discount">-</div>
+              <div class="bfcm-fixit-note" id="bfcm-fix-discount-note"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script src="/js/bfcm-calculator.js" is:inline></script>
+</EmbedLayout>
+
+<style is:global>
+  .bfcm-currency-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+  }
+  .bfcm-currency-btn {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: rgba(255,255,255,0.45);
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.22rem 0.6rem;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .bfcm-currency-btn.active,
+  .bfcm-currency-btn:hover {
+    background: rgba(99,102,241,0.25);
+    border-color: rgba(99,102,241,0.5);
+    color: #fff;
+  }
+  .bfcm-divider {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 0.75rem 0 0.5rem;
+  }
+
+  .bfcm-sync-note {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    margin: -0.25rem 0 0.75rem;
+    line-height: 1.4;
+  }
+
+  .bfcm-section-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    margin: 1rem 0 0.25rem;
+  }
+
+  .bfcm-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .bfcm-metric {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .bfcm-metric-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.2rem;
+  }
+
+  .bfcm-metric-val {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .bfcm-bee-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.75rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+  }
+
+  .bfcm-bee-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 600;
+  }
+
+  .bfcm-bee-val {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .bfcm-compare-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .bfcm-compare-col {
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .bfcm-compare-label {
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.2rem;
+  }
+
+  .bfcm-compare-val {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .bfcm-delta {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .bfcm-verdict-badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    padding: 0.3rem 0.75rem;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+  }
+
+  .bfcm-verdict-pass { background: rgba(34,197,94,0.2); color: #4ade80; }
+  .bfcm-verdict-warn { background: rgba(234,179,8,0.2); color: #fbbf24; }
+  .bfcm-verdict-fail { background: rgba(239,68,68,0.2); color: #f87171; }
+
+  .bfcm-row-current { background: rgba(99,102,241,0.12); font-weight: 600; }
+  .bfcm-tbl-pass { color: #4ade80; font-weight: 700; }
+  .bfcm-tbl-warn { color: #fbbf24; font-weight: 700; }
+  .bfcm-tbl-fail { color: #f87171; font-weight: 700; }
+
+  .bfcm-pl-table {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .bfcm-pl-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    padding: 0.25rem 0;
+  }
+
+  .bfcm-pl-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    padding-left: 0.75rem;
+  }
+
+  .bfcm-pl-divider {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 0.4rem;
+    margin-top: 0.25rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 600;
+  }
+
+  .bfcm-pl-total {
+    border-top: 2px solid rgba(255,255,255,0.15);
+    padding-top: 0.5rem;
+    margin-top: 0.25rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #fff;
+  }
+
+  .bfcm-pl-val { font-weight: 700; }
+  .bfcm-pl-total-val { font-weight: 700; font-size: 1.1rem; }
+  .bfcm-pl-pos { color: #4ade80; }
+  .bfcm-pl-neg { color: #f87171; }
+
+  .bfcm-fixit {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 10px;
+  }
+
+  .bfcm-fixit-header {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #f87171;
+    margin-bottom: 0.6rem;
+  }
+
+  .bfcm-fixit-row {
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(239,68,68,0.15);
+  }
+
+  .bfcm-fixit-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.15rem;
+  }
+
+  .bfcm-fixit-val {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .bfcm-fixit-note {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.35);
+    margin-top: 0.1rem;
+  }
+</style>

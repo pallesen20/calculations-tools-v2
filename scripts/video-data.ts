@@ -592,6 +592,19 @@ export const VIDEO_DATA: Record<string, ToolVideoData> = {
     unitNote: 'If your store labels use imperial units, switch to Imperial mode using the button at the top - enter quantities in oz or lb and the calculator shows results per lb and per oz as the primary units.',
   },
 
+  'bfcm-calculator': {
+    hookProblem: 'figure out whether running a Black Friday / Cyber Monday sale will actually make money',
+    character: 'Sofia, a 34-year-old DTC apparel brand owner',
+    exampleSetup: 'Her average order value is $80, gross margin is 45%, and she\'s planning a 25% off sale. She expects 600 orders over the BFCM weekend vs. her normal 180. Her ad budget is $3,000, fulfillment is $9/order, and return rate runs at 12%.',
+    formulaPlain: 'break-even volume lift equals discount percentage divided by gross margin percentage minus discount percentage',
+    exampleWalkthrough: 'Full-price GP: $36. Discounted GP: $80 × 0.75 − $44 = $16. Break-even lift: 25 / (45 − 25) = 125%, meaning she needs 405 orders just to match a normal weekend. At 600 orders, gross BFCM profit is $9,600. Subtract $3,000 ad spend, $1,296 returns, $5,400 fulfillment, and $1,440 payment fees. Add cannibalization cost of 25% × 600 × $36 = $5,400. Day-0 result: −$6,936.',
+    exampleResult: 'Campaign is loss-making by $6,936 on day 0. Including LTV from new customers at a 14% repeat rate on $80 repeat orders lifts total value to −$3,100.',
+    exampleImplication: 'at a 45% margin and 25% discount, the volume lift and ad spend don\'t overcome the per-order margin erosion. The fix-it panel shows she needs to cut to 15% discount or reach 850 orders to break even.',
+    notableFeature: 'a demand cannibalization input that accounts for BFCM orders that would have happened at full price in December anyway',
+    proTipMistake: 'running the break-even math without including demand cannibalization - brands assume all BFCM orders are incremental when 20-40% would have happened anyway',
+    proTipFix: 'set cannibalization to 25% as a conservative default and check whether the campaign still makes money - if it only works at 0% cannibalization, the margin isn\'t there',
+  },
+
   'build-vs-buy-calculator': {
     hookProblem: 'figure out whether to build a software tool yourself or just pay for a SaaS subscription',
     character: 'Marcus, a 41-year-old head of engineering',

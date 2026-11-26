@@ -9916,4 +9916,395 @@ export const GLOSSARY_CONTENT: Record<string, GlossaryContent> = {
     },
   },
 
+  'customer-lifetime-value': {
+    definition: [
+      'Customer lifetime value (LTV) is the total revenue - or, more usefully, the total gross profit - a business expects to earn from a single customer across their entire relationship with the brand. It is the foundational metric for understanding whether the cost of acquiring a new customer is justified by the future income that customer will generate.',
+      'The simplest revenue-based formula is: LTV = Average Order Value × Purchase Frequency × Customer Lifespan. A profit-based version multiplies that result by gross margin percentage, giving you the economic value rather than the raw revenue figure. For subscription businesses, LTV is often calculated as Average Revenue Per User (ARPU) divided by the monthly churn rate.',
+      'LTV is used in combination with Customer Acquisition Cost (CAC) to assess marketing efficiency. The LTV:CAC ratio should typically be at least 3:1 for a sustainable business - meaning each customer generates three times what it cost to acquire them. During BFCM campaigns, the LTV of new customers acquired via discount is often drastically lower than normal because those customers are more price-driven and less likely to repurchase.',
+    ],
+    keyTakeaways: [
+      'LTV = AOV × Purchase Frequency × Customer Lifespan; for profitability, multiply by gross margin % to get contribution LTV.',
+      'The LTV:CAC ratio should be at least 3:1; below 1:1 means you are losing money on every customer acquired.',
+      'BFCM new customers have significantly lower LTV than other acquisition channels - Ometria\'s 2025 data found only 4% repurchased within 12 months.',
+      'LTV is a prediction, not a measurement - it is only as reliable as the cohort data and churn assumptions behind it.',
+      'Subscription businesses calculate LTV as ARPU / monthly churn rate - a customer paying $50/month with 2% monthly churn has an LTV of $2,500.',
+    ],
+    fastFact: 'The average ecommerce LTV:CAC ratio across industries is 3.5:1, according to ProfitWell benchmarks. SaaS companies typically target ratios above 5:1 because of lower COGS and higher gross margins. Any ratio below 1:1 means the business is effectively paying more to acquire customers than those customers will ever return.',
+    beginnerExplain: [
+      'Think of a coffee shop customer. They visit twice a week, spend $5 each time, and stay loyal for 3 years. Their LTV is 2 × $5 × 52 × 3 = $1,560. If the shop spent $20 on a Facebook ad to get them in the door, the LTV:CAC ratio is 78:1 - a great acquisition.',
+      'Now imagine a customer who comes in once because of a discount promotion and never returns. Their LTV is $4 (the discounted coffee). The same $20 ad cost produced a 0.2:1 ratio - a very bad acquisition. This is the BFCM trap: the discount attracts buyers whose LTV is too low to justify the acquisition cost.',
+    ],
+    whenToUse: 'Use LTV when: deciding how much to spend on paid acquisition; evaluating whether a discount campaign will be profitable when you factor in future repeat purchases; comparing acquisition channels (email vs. paid social vs. organic); setting retention marketing budgets; and deciding whether to offer a loss-leader discount on a first order. The LTV:CAC ratio should be your primary sanity check on any customer acquisition investment.',
+    examples: {
+      headers: ['Customer type', 'AOV', 'Purchases/year', 'Years active', 'Gross margin', 'Contribution LTV'],
+      rows: [
+        ['BFCM new customer (4% repurchase)', '$80', '1.04', '1', '45%', '$37'],
+        ['Normal new customer (25% repurchase)', '$80', '1.25', '2', '45%', '$90'],
+        ['Loyal repeat customer', '$90', '4', '3', '45%', '$486'],
+        ['SaaS subscriber ($50/month, 2% churn)', '$50/mo', '12', '4.2 yrs avg', '80%', '$2,016'],
+      ],
+    },
+    pitfalls: 'The biggest LTV mistake is using revenue LTV instead of gross profit LTV. A customer who spends $500 at a 20% gross margin contributes $100 in profit - not $500. Using the revenue figure massively overstates how much you can afford to spend on acquisition. A second pitfall is using average LTV for decisions that need segment-specific LTV - discount-driven customers and brand-loyal customers have fundamentally different LTV profiles and should not be averaged together.',
+    faqs: [
+      { q: 'What is a good LTV:CAC ratio?', a: 'A ratio of 3:1 is the standard benchmark - each customer generates three times what it cost to acquire them. SaaS companies often target 5:1 or higher due to low marginal costs. Below 1:1 means you are destroying value with every new customer acquired. The ratio also needs to account for payback period - a 5:1 LTV:CAC ratio means nothing if the CAC takes 5 years to pay back.' },
+      { q: 'How does BFCM affect customer LTV?', a: 'Significantly and negatively. BFCM attracts price-driven shoppers who are less likely to repurchase. Ometria\'s 2025 data found only 4% of BFCM new customers made a repeat purchase within 12 months - roughly 6x lower than customers acquired at other times. This means the LTV of a BFCM acquisition is often too low to justify the CAC when ad costs are also elevated.' },
+      { q: 'What is the difference between LTV and CLV?', a: 'They are the same metric. CLV (Customer Lifetime Value) and LTV (Lifetime Value) are used interchangeably in marketing and finance. Some practitioners use LTV specifically for the revenue figure and CLV for the profit-adjusted version, but there is no universal standard. Always clarify whether a quoted figure is revenue-based or gross-profit-based, as the two can differ by 50-80%.' },
+    ],
+    quiz: {
+      topic: 'customer lifetime value',
+      questions: [
+        {
+          q: 'What is the simplest formula for calculating customer lifetime value?',
+          options: [
+            'Revenue / Number of customers',
+            'AOV × Purchase Frequency × Customer Lifespan',
+            'Ad Spend / Number of new customers',
+            'Gross Profit / Customer Acquisition Cost',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'LTV = Average Order Value × Purchase Frequency × Customer Lifespan. For a profit-based version, multiply this by the gross margin percentage to get contribution LTV rather than revenue LTV.',
+        },
+        {
+          q: 'According to Ometria\'s 2025 data cited in this entry, what percentage of BFCM new customers repurchased within 12 months?',
+          options: ['About 25%', 'About 14%', 'About 4%', 'About 33%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Only 4% of BFCM new customers made a repeat purchase within 12 months - roughly 6x lower than customers acquired at other times. This dramatically reduces the LTV of BFCM-acquired customers and makes deep discounting for acquisition very difficult to justify.',
+        },
+        {
+          q: 'What LTV:CAC ratio is the standard benchmark for a sustainable business?',
+          options: ['1:1', '2:1', '3:1', '10:1'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'A 3:1 LTV:CAC ratio is the standard benchmark - each customer generates three times what it cost to acquire them. Below 1:1 means every new customer destroys value. SaaS companies often target 5:1 or higher due to low marginal delivery costs.',
+        },
+        {
+          q: 'What is the most common pitfall when calculating LTV?',
+          options: [
+            'Using too long a customer lifespan estimate',
+            'Using revenue LTV instead of gross profit LTV',
+            'Calculating LTV per product rather than per customer',
+            'Including one-time buyers in the average',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Using revenue LTV instead of gross profit LTV massively overstates how much you can afford to spend on acquisition. A customer spending $500 at 20% gross margin contributes $100 in profit - not $500. Always use profit-adjusted LTV for acquisition budget decisions.',
+        },
+        {
+          q: 'How is LTV calculated for a SaaS subscription business?',
+          options: [
+            'Monthly revenue × 12',
+            'ARPU divided by monthly churn rate',
+            'Total contracts signed × average contract value',
+            'Annual recurring revenue / number of customers',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'For subscription businesses, LTV = ARPU / Monthly Churn Rate. A customer paying $50/month with a 2% monthly churn rate has an expected LTV of $50 / 0.02 = $2,500. This formula captures the statistical expected lifetime given the churn probability.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'demand-cannibalization': {
+    definition: [
+      'Demand cannibalization is the reduction in future full-price sales caused by a promotion that pulls purchase timing forward. When a Black Friday discount persuades a customer to buy today instead of next month, that order is "cannibalized" from your December pipeline - you made the sale, but at a discount you did not need to offer.',
+      'In campaign analysis, cannibalization is measured as the share of promotional orders that would have happened anyway in the near-term future at the regular price. These are not incremental orders - they represent existing demand accelerated, not new demand created. The discount on cannibalized orders is pure margin destruction: revenue that was coming regardless, now arriving at a lower price.',
+      'Separating incremental orders (true new demand) from cannibalized orders (pulled-forward demand) is the central challenge in BFCM profitability analysis. Industry estimates put cannibalization at 20-40% of BFCM revenue for most consumer categories, rising to 50%+ for highly seasonal or year-end-driven categories like gifts, home goods, and apparel.',
+    ],
+    keyTakeaways: [
+      'Cannibalization is not a loss of sales - it is a loss of margin on sales that were coming anyway. The order happens, but at a discounted price instead of full price.',
+      'Industry estimates put BFCM cannibalization at 20-40% for most categories; seasonal businesses with strong December demand can see 50%+ cannibalization.',
+      'Cannibalization is highest when customers have high purchase intent (they were already planning to buy) and lowest when they are genuinely new to the brand.',
+      'The true cost of a cannibalized order is the discount amount on that order - the GP% × full price × discount percentage × number of cannibalized orders.',
+      'Non-seasonal categories (pet food, supplements, consumables) typically have lower cannibalization because purchases are need-driven rather than occasion-driven.',
+    ],
+    fastFact: 'A 2024 analysis by Impact.com found that 59% of Cyber Weekend 2025 shoppers had also purchased during an earlier promotional event in the same season, suggesting the majority of BFCM buyers were already in the purchase funnel before the promotion launched.',
+    beginnerExplain: [
+      'You run a coffee subscription. Every December, 500 customers renew at $50. You run a Black Friday deal: renew early for $35. 300 of those customers take the deal. Those 300 were going to pay $50 anyway - you just gave them a $15 discount they did not need. That\'s $4,500 of margin gone to customers who were already yours.',
+      'The other 200 who didn\'t take the deal either renewed in December at full price, or were truly at risk of churning and the offer saved them. Only that second group represents genuine incremental value. The 300 early renewers are cannibalized orders - existing demand, redirected to a discounted price.',
+    ],
+    whenToUse: 'Model cannibalization when: planning any promotional campaign where your target audience includes existing customers or warm leads; evaluating BFCM, end-of-season, or clearance sales; measuring true campaign incrementality; and setting promotional budgets. High cannibalization doesn\'t automatically mean a campaign is bad - it just means the profitability case must rest on acquiring genuinely new customers, not discounting for existing ones.',
+    examples: {
+      headers: ['Category', 'Estimated cannibalization rate', 'Reason'],
+      rows: [
+        ['Gifts and toys', '40-55%', 'High purchase intent in November-December regardless of promotion'],
+        ['Apparel and fashion', '30-45%', 'Seasonal buying patterns; shoppers plan wardrobe purchases in advance'],
+        ['Consumer electronics', '25-40%', 'Customers often wait for BFCM specifically; pull-forward is intentional'],
+        ['Supplements / consumables', '15-25%', 'Purchases are need-driven; customers buy when they run out, not on schedule'],
+        ['SaaS / digital subscriptions', '10-20%', 'Upgrade intent is relatively independent of seasonal timing'],
+      ],
+    },
+    pitfalls: 'The most dangerous mistake is treating all BFCM revenue as incremental. If 30% of your orders are cannibalized, your campaign break-even threshold is 30% higher than your basic volume-lift formula suggests. A second pitfall is assuming cannibalization is zero for new customer campaigns - even new customers sometimes had existing intent to buy from your category, and your discount simply directed that spend to your brand earlier than it would have arrived.',
+    faqs: [
+      { q: 'How do you measure demand cannibalization?', a: 'The most rigorous approach is a holdout test: withhold the promotion from a matched control group and compare their purchase rates in the following 4-6 weeks against the promoted group. The difference in December sales between the two groups reveals the pull-forward effect. Without a holdout, most analysts use category and seasonality data to estimate a cannibalization rate range (typically 20-40% for BFCM).' },
+      { q: 'Is demand cannibalization the same as market cannibalization?', a: 'No. Market cannibalization refers to a new product stealing sales from an existing product within the same company (e.g., iPhone 16 reducing iPhone 15 sales). Demand cannibalization in a promotional context is about timing - the same customer buying earlier at a discount instead of later at full price. Both involve lost margin, but through different mechanisms.' },
+      { q: 'Does BFCM cannibalization affect different categories differently?', a: 'Yes, significantly. Seasonal categories like gifts, toys, and holiday apparel have the highest cannibalization because customers were already planning to buy in December regardless. Year-round categories like pet food, supplements, and software have lower cannibalization because purchase timing is need-driven rather than calendar-driven. Adjust the cannibalization rate in your campaign model based on your category\'s seasonal demand pattern.' },
+    ],
+    quiz: {
+      topic: 'demand cannibalization',
+      questions: [
+        {
+          q: 'What is demand cannibalization in a promotional context?',
+          options: [
+            'When a new product reduces sales of an older product in the same range',
+            'When promotion-driven orders replace full-price orders that would have happened anyway in a future period',
+            'When competitor discounts reduce your market share during peak season',
+            'When refunds reduce realized revenue after a sale event',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Demand cannibalization in promotions means orders that were coming anyway (at full price) are pulled forward to a discount period. The sale happens, but at a lower margin. This is different from product cannibalization, which is about one product stealing share from another.',
+        },
+        {
+          q: 'According to this entry, what is the typical BFCM cannibalization rate for most consumer categories?',
+          options: ['0-10%', '20-40%', '50-70%', '80-100%'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Industry estimates put BFCM demand cannibalization at 20-40% for most consumer categories, rising to 50%+ for highly seasonal categories like gifts and holiday apparel.',
+        },
+        {
+          q: 'Which category typically has the LOWEST demand cannibalization during BFCM?',
+          options: ['Gifts and toys', 'Apparel and fashion', 'Supplements and consumables', 'Consumer electronics'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Supplements and consumables have the lowest cannibalization (15-25%) because purchases are need-driven - customers buy when they run out, not on a seasonal schedule. Gift and toy purchases are heavily calendar-driven, producing 40-55% cannibalization.',
+        },
+        {
+          q: 'What is the most rigorous way to measure the actual cannibalization rate for a promotion?',
+          options: [
+            'Compare BFCM revenue to the same period last year',
+            'Use a holdout test: withhold the promotion from a matched control group and compare December sales',
+            'Survey customers about whether they planned to buy before the promotion launched',
+            'Calculate the return rate on BFCM orders as a proxy for purchase regret',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A holdout test - withholding the promotion from a matched control group - is the most rigorous approach. Comparing the control group\'s December purchases against the promoted group reveals how much demand was genuinely pulled forward vs. created.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'cpm': {
+    definition: [
+      'CPM (cost per mille, from the Latin for thousand) is the price an advertiser pays for 1,000 ad impressions delivered on a platform such as Meta, Google, TikTok, or programmatic display networks. It is the standard pricing model for brand awareness and reach-based advertising campaigns, and also the benchmark unit used to compare ad inventory efficiency across platforms and time periods.',
+      'CPM is calculated as: CPM = (Ad Spend / Impressions) × 1,000. A campaign that spends $500 to deliver 100,000 impressions has a CPM of $5. Conversely, if a platform quotes a $20 CPM, every 1,000 impressions costs $20, so reaching 1,000,000 people costs $20,000.',
+      'In performance marketing, CPM is an input metric rather than a success metric. What matters is the cost per click (CPC), cost per acquisition (CPA), or return on ad spend (ROAS) - all of which are downstream of CPM and conversion rates. During high-demand advertising periods like BFCM, CPMs spike because all advertisers are competing for the same audience simultaneously, compressing both margin and reach efficiency.',
+    ],
+    keyTakeaways: [
+      'CPM = (Ad Spend / Impressions) × 1,000. A $20 CPM means 1,000 impressions cost $20.',
+      'CPMs spike 35-57% above October baseline during BFCM week 2025, peaking on Black Friday itself, per Biddyco\'s analysis.',
+      'Higher CPM means your fixed ad budget reaches fewer people - directly increasing effective cost per acquisition at the moment your margin per order is also thinner from the discount.',
+      'CPM is an input to ROAS and CPA calculations, not a standalone success metric - a rising CPM is only a problem if conversion rates don\'t rise proportionally.',
+      'CPM varies significantly by platform: Meta CPMs are typically $8-30 for most industries; TikTok runs lower; LinkedIn runs significantly higher ($50-200+).',
+    ],
+    fastFact: 'During Black Friday 2025, the median Meta CPM for consumer brands was 57% higher than the October baseline, rising from about $16 to $32 per thousand impressions, per Biddyco\'s analysis of ad account data. The increase varied by category: home and decor saw the largest CPM spike (+116%), while beauty and supplements saw the smallest (+42%).',
+    beginnerExplain: [
+      'CPM is like a billboard rental price, but measured per 1,000 people who drive past. If the highway normally costs $10 to show your ad to 1,000 cars, that\'s a $10 CPM. During rush hour (Black Friday), everyone wants that billboard, so the price doubles to $20. Same 1,000 people see it - you just paid twice as much.',
+      'The danger in BFCM is the double squeeze: you\'re paying more for each impression (high CPM) and earning less per order (deep discount). Your ad budget is less efficient at the exact moment your margins are thinnest.',
+    ],
+    whenToUse: 'Monitor CPM when: planning BFCM ad budgets (factor in the 35-60% above-baseline cost); comparing ad platform efficiency; forecasting reach for a fixed budget; and evaluating whether a CPM spike is absorbing conversion-rate gains. A rising CPM is not necessarily bad if conversion rates rise proportionally - but during BFCM, both CPM and volume rise together, so the incremental cost of each acquired customer is worth watching closely.',
+    examples: {
+      headers: ['Scenario', 'CPM', 'Budget', 'Impressions reached', 'Effective reach vs. off-peak'],
+      rows: [
+        ['September campaign (baseline)', '$16', '$5,000', '312,500', '100%'],
+        ['Black Friday 2025 (Biddyco data)', '$32', '$5,000', '156,250', '50%'],
+        ['LinkedIn B2B campaign', '$120', '$5,000', '41,667', '13%'],
+        ['TikTok awareness (typical)', '$8', '$5,000', '625,000', '200%'],
+      ],
+    },
+    pitfalls: 'The most common CPM mistake is treating a low CPM as a signal of campaign quality. A $4 CPM that reaches people who never buy is worse than a $30 CPM that reaches high-intent buyers. CPM measures cost per impression, not cost per valuable impression. During BFCM, the spike in CPM is partly offset by higher consumer purchase intent - but whether the net effect is positive depends entirely on your margin at the discounted price, which is why CPM should always be evaluated in context of the full unit economics.',
+    faqs: [
+      { q: 'What is the difference between CPM and CPC?', a: 'CPM (cost per mille) is the cost per 1,000 impressions regardless of whether anyone clicks. CPC (cost per click) is the cost per individual click on the ad. CPM-based buying is used when the goal is reach and brand awareness. CPC-based buying is used when the goal is traffic and direct response. Meta and Google allow both models; for performance marketing, CPC or CPA bidding is more common, though CPM is still the underlying pricing mechanism the platform uses.' },
+      { q: 'Why do CPMs spike during Black Friday?', a: 'All advertisers simultaneously increase their budgets during BFCM, flooding the auction with demand for the same ad inventory. Meta and Google use real-time auctions to allocate impressions, so more competing bids drive prices up. CPMs during the Cyber Five period can be 35-80% above the September baseline for consumer categories, with the highest single-day spike typically on Black Friday itself.' },
+      { q: 'How does a CPM spike affect BFCM campaign profitability?', a: 'A 57% CPM increase means your fixed ad budget reaches roughly 36% fewer people. If you were planning to spend $10,000 to acquire 500 customers at a $20 cost per click, those same 500 customers now cost $31 each - adding $5,500 to your acquisition cost. This directly reduces campaign profit and raises the volume threshold needed to break even, on top of the already-compressed margin from the discount itself.' },
+    ],
+    quiz: {
+      topic: 'CPM advertising',
+      questions: [
+        {
+          q: 'What does CPM stand for and what does it measure?',
+          options: [
+            'Cost Per Message - the cost of each direct message sent in a campaign',
+            'Cost Per Mille - the price paid for 1,000 ad impressions',
+            'Clicks Per Minute - the rate of clicks during a campaign',
+            'Cost Per Match - the cost of matching an ad to a target audience',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'CPM stands for Cost Per Mille (from Latin for thousand). It is the price an advertiser pays for 1,000 ad impressions delivered on a platform. It is the standard pricing unit for display and social media advertising.',
+        },
+        {
+          q: 'If a campaign spends $800 and delivers 200,000 impressions, what is the CPM?',
+          options: ['$0.40', '$4.00', '$40.00', '$400.00'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'CPM = (Ad Spend / Impressions) × 1,000 = ($800 / 200,000) × 1,000 = $4.00. Each 1,000 impressions cost $4.',
+        },
+        {
+          q: 'According to Biddyco\'s 2025 data cited in this entry, by how much did Meta CPMs rise on Black Friday compared to October baseline?',
+          options: ['About 10%', 'About 25%', 'About 57%', 'About 150%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Biddyco\'s 2025 analysis found Meta CPMs were 57% above the October baseline on Black Friday itself, rising from about $16 to $32 per thousand impressions. The full BFCM week averaged 35% above baseline.',
+        },
+        {
+          q: 'Why is a low CPM not automatically a sign of a good campaign?',
+          options: [
+            'Low CPMs only appear during low-traffic periods when budgets run out quickly',
+            'CPM measures cost per impression, not cost per valuable impression - cheap impressions may reach people who never buy',
+            'Platforms artificially lower CPMs for new advertisers to encourage spending',
+            'Low CPMs correlate with lower ad quality scores on most platforms',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'CPM measures the cost of reaching people, not the quality of those people. A $4 CPM that reaches low-intent audiences is worse than a $30 CPM reaching high-intent buyers. CPM should always be evaluated alongside conversion rates and cost per acquisition.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'reverse-logistics': {
+    definition: [
+      'Reverse logistics covers all the processes involved in moving goods from the customer back toward the seller or manufacturer - primarily handling returns, refunds, exchanges, repairs, and end-of-life recycling. In ecommerce, it is the operational and financial cost of a customer sending a product back after purchase.',
+      'Unlike forward logistics (seller to customer), reverse logistics generates no revenue. Each return event involves: the customer initiating a return request; the seller issuing a prepaid label or authorizing a return; transit from customer back to a warehouse or fulfillment center; inspection and sorting (resaleable vs. damaged); and either restocking, liquidating, or disposing of the item. Each step carries a direct cost, typically $5-20 per return depending on category, parcel weight, and geography.',
+      'In ecommerce profitability analysis, reverse logistics cost is modeled as a per-order charge applied to the return rate. If 15% of orders are returned and the reverse logistics cost is $10 per return, the per-order expected return cost is $1.50. This must be subtracted from gross profit alongside fulfillment, payment fees, and cost of goods to arrive at contribution margin.',
+    ],
+    keyTakeaways: [
+      'Reverse logistics cost per return is typically $5-20 for parcel ecommerce, $20-50 for large or heavy items, and can exceed $100 for high-value electronics.',
+      'Returns spike 80% in the first week of December after Black Friday, per ReBound Returns\' 2025 data, then spike again in early January.',
+      'Fashion and footwear have the highest return rates (25-40%); digital goods and consumables have the lowest (near zero).',
+      'The cost of a return includes both the reverse logistics fee AND the restocking write-down if the product cannot be resold at full price.',
+      'COGS is sunk at the time of sale - a return recovers the revenue but not the production or procurement cost of a damaged item.',
+    ],
+    fastFact: 'Salesforce recorded $181 billion in global holiday returns for the 2025 season - 14% of all holiday purchases. ReBound Returns found the first week of December 2024 had the highest return volume on record, up 80% from baseline, with a second January spike of +59%.',
+    beginnerExplain: [
+      'Imagine you sell a $60 jacket. You make $24 gross profit (40% margin). The customer returns it. You issue a $60 refund, pay $8 for a prepaid return label, and receive the jacket back slightly worn - it can only be sold for $40 now. Your net loss on that transaction: $60 (refund) + $8 (return shipping) - $40 (resale value) = $28 out of pocket on a jacket you spent $36 to source.',
+      'That\'s reverse logistics in practice: a cascade of costs that can exceed the original gross profit on the sale. For BFCM campaigns, where margins are already compressed by the discount, a high return rate can turn a marginal campaign into a loss-making one.',
+    ],
+    whenToUse: 'Model reverse logistics costs whenever: calculating campaign profitability for high-return-rate categories (fashion, footwear, electronics); building a BFCM P&L with realistic return assumptions; evaluating whether a generous return policy increases net revenue or decreases it; comparing the economics of different fulfillment models (3PL vs. in-house); and setting pricing floors that account for the full cost of a potential return.',
+    examples: {
+      headers: ['Category', 'Typical return rate', 'Avg reverse logistics cost', 'Expected return cost per order'],
+      rows: [
+        ['Fashion / apparel', '25-35%', '$10', '$2.50-$3.50'],
+        ['Footwear', '25-30%', '$12', '$3.00-$3.60'],
+        ['Consumer electronics', '15-20%', '$15', '$2.25-$3.00'],
+        ['Beauty / skincare', '5-10%', '$8', '$0.40-$0.80'],
+        ['Supplements / food', '2-5%', '$6', '$0.12-$0.30'],
+        ['Digital / software', '0-2%', '$0', '$0'],
+      ],
+    },
+    pitfalls: 'The most common mistake is using a single average return rate when category-level rates vary 10x. A 10% blanket assumption understates the cost for apparel and overstates it for consumables. A second pitfall is ignoring the restocking write-down - returned items in fashion and electronics frequently cannot be resold at full price, turning a simple refund into a larger financial loss. Always model the return rate and reverse logistics cost together with the restocking recovery rate for a complete picture.',
+    faqs: [
+      { q: 'What is the difference between return rate and refund rate?', a: 'Return rate is the percentage of orders where the customer physically sends the product back. Refund rate is the percentage of orders where a monetary refund is issued, which may include cancellations, digital goods refunds, and partial refunds that do not involve a physical return. In ecommerce profitability modeling, return rate × reverse logistics cost is the operational cost driver; refund rate affects revenue recognition.' },
+      { q: 'When do BFCM returns typically peak?', a: 'Returns surge 80% in the first week of December after Black Friday, per ReBound Returns\' 2025 data - driven by purchase regret and gift mismatches. A second smaller spike occurs in early January (+59%) as holiday gifts are returned. This means BFCM return costs land 4-6 weeks after the sale, well after the revenue has been recognized.' },
+      { q: 'How can a business reduce reverse logistics costs?', a: 'The highest-impact levers are: improving sizing guides and product photography to reduce fit-related returns; offering exchanges instead of refunds (customers stay, revenue stays); using regional return hubs to reduce transit cost; implementing restocking quality gates to maximize resale value; and setting a free returns threshold that selects for higher-value, lower-risk orders. Each intervention trades some acquisition friction for lower return cost.' },
+    ],
+    quiz: {
+      topic: 'reverse logistics',
+      questions: [
+        {
+          q: 'What does reverse logistics refer to in ecommerce?',
+          options: [
+            'Shipping products from supplier to warehouse before customer orders',
+            'Moving goods from the customer back to the seller - covering returns, refunds, and exchanges',
+            'Calculating the reverse of a logistics cost to find the break-even margin',
+            'Tracking packages that were delivered to the wrong address',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Reverse logistics covers all processes involved in moving goods from the customer back toward the seller - primarily returns, refunds, exchanges, repairs, and end-of-life disposal. It generates no revenue and carries direct per-return costs of typically $5-20.',
+        },
+        {
+          q: 'According to ReBound Returns\' 2025 data cited in this entry, by how much did returns spike in the first week of December after Black Friday?',
+          options: ['+20%', '+40%', '+80%', '+200%'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'ReBound Returns\' 2025 data found returns surged 80% in the first week of December after Black Friday. A second spike of +59% occurred in early January as holiday gifts were returned.',
+        },
+        {
+          q: 'Which category typically has the highest ecommerce return rate?',
+          options: ['Supplements and food', 'Digital software', 'Fashion and apparel', 'Consumer electronics'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Fashion and apparel typically have the highest return rates at 25-35%, primarily driven by sizing and fit issues. Digital goods have near-zero return rates. Electronics run 15-20%, and consumables are typically 2-5%.',
+        },
+        {
+          q: 'Beyond the direct reverse logistics fee, what additional cost can a return incur?',
+          options: [
+            'The original forward shipping cost is charged again',
+            'A restocking write-down if the item cannot be resold at full price',
+            'A platform penalty fee for high return rates',
+            'An extended warranty obligation on the replacement item',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Returned items - especially in fashion and electronics - frequently cannot be resold at full price. The restocking write-down (the difference between original price and resale value) adds to the reverse logistics fee, turning a simple refund into a larger financial loss. COGS is sunk at time of sale and cannot be recovered if the item is damaged.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
+  'roas': {
+    definition: [
+      'ROAS (return on ad spend) is the ratio of revenue generated to advertising dollars spent. It is calculated as ROAS = Revenue / Ad Spend. A campaign generating $10,000 in revenue from $2,000 in ad spend has a ROAS of 5x (or 500%). It is the most widely reported metric in performance marketing and the standard output of Meta Ads Manager, Google Ads, and most attribution platforms.',
+      'Despite its prevalence, ROAS measures revenue efficiency, not profitability. A 4x ROAS campaign that sells a product at 20% gross margin generates $0.80 of gross profit for every $1 of ad spend - before fulfillment, payment fees, returns, and overhead. The same 4x ROAS on a 70% gross margin product generates $2.80 of gross profit per dollar. The same number, vastly different business outcomes.',
+      'The minimum viable ROAS needed to break even on ad spend alone (excluding all other costs) is 1 / gross margin percentage. At 40% gross margin, you need at least 2.5x ROAS to cover the cost of goods sold. Any ROAS below that threshold means advertising is producing revenue but not profit. This threshold rises significantly when COGS is combined with fulfillment, returns, and payment fees.',
+    ],
+    keyTakeaways: [
+      'ROAS = Revenue / Ad Spend. A 4x ROAS means $4 of revenue per $1 of ad spend.',
+      'ROAS measures revenue efficiency, not profitability - a "good" ROAS at a low gross margin can still produce a loss.',
+      'Break-even ROAS = 1 / Gross Margin %. At 40% gross margin, you need at least 2.5x ROAS just to cover COGS from ad spend.',
+      'During BFCM, ROAS metrics often look attractive because volume is high - but compressed margins from the discount mean each unit of revenue is worth less profit than off-peak.',
+      'Triple Whale 2025 BFCM data: average Meta ROAS was 2.26x across all brands - profitable at 60%+ margin, loss-making at 30% margin at the same ROAS.',
+    ],
+    fastFact: 'Triple Whale\'s 2025 BFCM report found the average Meta ROAS across brands during Cyber Five was 2.26x, up 3.18% year over year. Google ROAS was 3.62x but CPA rose 34% year over year - meaning Google drove more revenue per dollar but at a significantly higher cost per acquisition.',
+    beginnerExplain: [
+      'ROAS is like measuring how many dollars come out of a vending machine for every dollar you put in. If you spend $1 and get $5 back, your ROAS is 5x. That sounds great - until you realize the $5 of products in the machine cost $4 to stock, leaving only $1 of actual profit. ROAS tells you how much came out; it doesn\'t tell you how much you kept.',
+      'During Black Friday, ROAS often looks high because lots of people are buying. But the products are discounted, so each $5 of revenue may only represent $0.75 of profit instead of the usual $1.50. High ROAS during BFCM doesn\'t guarantee a profitable campaign - the full unit economics always matter more than the top-line ratio.',
+    ],
+    whenToUse: 'Use ROAS when: comparing the revenue efficiency of different ad campaigns, channels, or creatives; setting initial bid targets for campaigns; benchmarking against industry averages. Always convert ROAS to a margin-adjusted metric (MER, or Marketing Efficiency Ratio) for profitability decisions - especially on discounted campaigns where gross margin is compressed. Never use ROAS in isolation to approve or kill a campaign that involves significant non-ad costs like fulfillment, returns, or high COGS.',
+    examples: {
+      headers: ['ROAS', 'Gross margin', 'GP per $1 ad spend', 'Covers ad cost?', 'Verdict'],
+      rows: [
+        ['4x', '70%', '$2.80', 'Yes (+$1.80)', 'Profitable'],
+        ['4x', '40%', '$1.60', 'Yes (+$0.60)', 'Profitable (slim)'],
+        ['4x', '20%', '$0.80', 'No (-$0.20)', 'Loss-making'],
+        ['2x', '60%', '$1.20', 'Yes (+$0.20)', 'Barely profitable'],
+        ['2x', '40%', '$0.80', 'No (-$0.20)', 'Loss-making'],
+        ['1x', 'Any', '$margin', 'Only if margin > 100%', 'Almost always a loss'],
+      ],
+    },
+    pitfalls: 'The biggest ROAS pitfall is using it as the primary success metric without anchoring it to gross margin. A "good" ROAS benchmark (commonly 4x) is meaningless without knowing the margin - 4x is excellent at 60% margin and loss-making at 20% margin. A second pitfall is platform ROAS inflation during BFCM: attribution windows are often set to 7-day click, 1-day view, which can credit the ad campaign with organic purchases that would have happened anyway. The apparent ROAS spike during Black Friday is partly real (high intent) and partly attributional noise.',
+    faqs: [
+      { q: 'What is a good ROAS?', a: 'It entirely depends on gross margin. The minimum break-even ROAS is 1 / gross margin%. At 40% margin, break-even is 2.5x; at 60% margin, it is 1.67x. A "good" ROAS for a 70% margin SaaS product is 2x. A "good" ROAS for a 25% margin consumer goods brand needs to be 6x or more to cover all variable costs. Never compare ROAS across categories with different margin profiles.' },
+      { q: 'What is the difference between ROAS and ROI?', a: 'ROAS measures revenue relative to ad spend only: ROAS = Revenue / Ad Spend. ROI measures profit relative to total investment: ROI = (Net Profit / Total Investment) × 100%. ROI accounts for all costs (COGS, fulfillment, overhead) while ROAS accounts only for the ad spend. A campaign can have a high ROAS and a negative ROI if the gross margin is thin and non-ad costs are high.' },
+      { q: 'Why does ROAS look good during BFCM but campaigns can still be unprofitable?', a: 'Three reasons compound during BFCM: (1) the discount reduces gross margin per order, so each unit of revenue is worth less profit; (2) CPMs are 35-60% above baseline, increasing the ad cost per customer acquired; (3) return rates spike in December, reducing net revenue after the fact. ROAS captures the revenue surge but not the margin compression, the CPM increase, or the return wave - which is why a full P&L model is needed alongside ROAS during peak campaigns.' },
+    ],
+    quiz: {
+      topic: 'ROAS',
+      questions: [
+        {
+          q: 'How is ROAS calculated?',
+          options: [
+            'Profit / Ad Spend',
+            'Revenue / Ad Spend',
+            'Ad Spend / Revenue',
+            'Gross Margin / Ad Spend',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'ROAS = Revenue / Ad Spend. A campaign generating $10,000 in revenue from $2,000 in ad spend has a ROAS of 5x. Note that ROAS measures revenue efficiency, not profitability - gross margin must be factored in separately.',
+        },
+        {
+          q: 'At a 40% gross margin, what is the minimum ROAS needed just to cover the cost of goods sold from ad spend?',
+          options: ['1x', '1.67x', '2.5x', '4x'] as [string, string, string, string],
+          correct: 2 as const,
+          explanation: 'Break-even ROAS = 1 / Gross Margin % = 1 / 0.40 = 2.5x. At a 40% gross margin, you need at least 2.5x ROAS for the gross profit to cover the ad spend. Any ROAS below 2.5x means advertising is producing revenue but not enough profit to pay for itself.',
+        },
+        {
+          q: 'Why can the same ROAS produce a profitable campaign for one business but a loss-making one for another?',
+          options: [
+            'ROAS is calculated differently by each advertising platform',
+            'ROAS only measures revenue efficiency, not profitability - gross margin determines how much profit each unit of revenue generates',
+            'Some businesses include returns in their ROAS calculation and others exclude them',
+            'ROAS is only reliable for businesses spending above $10,000 per month on ads',
+          ] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'A 4x ROAS at 70% gross margin produces $2.80 of gross profit per dollar of ad spend. The same 4x ROAS at 20% gross margin produces only $0.80 - not enough to cover the ad spend. ROAS measures revenue per dollar spent; gross margin determines how much of that revenue is actual profit.',
+        },
+        {
+          q: 'According to Triple Whale\'s 2025 BFCM data cited in this entry, what was the average Meta ROAS across brands during Cyber Five?',
+          options: ['1.5x', '2.26x', '3.62x', '5.0x'] as [string, string, string, string],
+          correct: 1 as const,
+          explanation: 'Triple Whale\'s 2025 BFCM data found the average Meta ROAS was 2.26x across all brands, up 3.18% year over year. Google ROAS was 3.62x but came with a 34% increase in cost per acquisition year over year.',
+        },
+      ] satisfies { q: string; options: [string, string, string, string]; correct: 0 | 1 | 2 | 3; explanation: string }[],
+    },
+  },
+
 };
